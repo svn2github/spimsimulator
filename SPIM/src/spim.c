@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 24    3/11/04 7:17a Larus $
+/* $Header: /Software/SPIM/src/spim.c 25    3/11/04 9:25p Larus $
 */
 
 
@@ -50,19 +50,12 @@
 #include <sys/select.h>
 #endif
 
-#ifdef DJGPP
-#define USE_TERMIO
-#define termio termios
-#endif
-
 
 #ifndef WIN32
 #include <sys/time.h>
 
 #ifdef USE_TERMIO
-#ifndef DJGPP
 #include <termio.h>
-#endif
 #include <termios.h>
 #else
 #include <sys/ioctl.h>
@@ -948,19 +941,9 @@ console_to_program ()
 #ifdef USE_TERMIO
       struct termio params;
 
-#ifdef DJGPP
-      tcgetattr((int)console_in.i, &saved_console_state);
-      params = saved_console_state;
-
-      /* Note:  You must include the ICRNL option on DOS
-		IUCLC and IXANY simply are not supported under DJGPP */
-      params.c_iflag &= ~(ISTRIP|INLCR|IGNCR|IXON|IXOFF|INPCK|BRKINT|PARMRK);
-      params.c_iflag |= ICRNL;
-#else
       ioctl (console_in.i, TCGETA, (char *) &saved_console_state);
       params = saved_console_state;
       params.c_iflag &= ~(ISTRIP|IUCLC|INLCR|ICRNL|IGNCR|IXON|IXOFF|IXANY|INPCK|BRKINT|PARMRK);
-#endif
 
       params.c_iflag |= IGNBRK|IGNPAR;
       /*params.c_oflag &= ~OPOST;*/
@@ -969,11 +952,7 @@ console_to_program ()
       params.c_lflag = 0;
       params.c_cc[VMIN] = 1;
       params.c_cc[VTIME] = 1;
-#ifdef DJGPP
-      tcsetattr((int)console_in.i, TCSANOW, &params);
-#else
       ioctl ((int)console_in.i, TCSETA, (char *) &params);
-#endif
 #else
       int flags;
       ioctl ((int) console_in.i, TIOCGETP, (char *) &saved_console_state);
@@ -994,11 +973,7 @@ console_to_spim ()
 {
   if (mapped_io && console_state_saved)
 #ifdef USE_TERMIO
-#ifdef DJGPP
-    tcsetattr((int)console_in.i, &saved_console_state);
-#else
     ioctl ((int) console_in.i, TCSETA, (char *) &saved_console_state);
-#endif
 #else
     ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);
 #endif

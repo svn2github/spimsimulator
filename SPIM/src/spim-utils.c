@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 19    3/11/04 7:17a Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 20    3/11/04 9:25p Larus $
 */
 
 
@@ -95,10 +95,6 @@ initialize_world (char* trap_file)
   data_begins_at_point (DATA_BOT);
   text_begins_at_point (TEXT_BOT);
 
-#ifdef DJGPP
-  trap_file = (char*)searchpath(trap_file);
-#endif
-
   if (trap_file != NULL)
     {
       int old_bare = bare_machine;
@@ -130,7 +126,7 @@ write_startup_message ()
   write_output (message_out,
 		"Copyright 1990-2004 by James R. Larus (larus@cs.wisc.edu).\n");
   write_output (message_out, "All Rights Reserved.\n");
-#if defined(DJGPP) || defined(WIN32)
+#ifdef WIN32
   write_output (message_out, "DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).\n");
   write_output (message_out, "Copyright 1997 by Morgan Kaufmann Publishers, Inc.\n");
 #endif
