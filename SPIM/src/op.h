@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 18    3/01/04 9:09p Larus $
+/* $Header: /Software/SPIM/src/op.h 19    3/01/04 9:30p Larus $
 */
 
 
@@ -292,6 +292,7 @@ OP("mov.d",	Y_MOV_D_OP,	FP_MOV_TYPE_INST,	0x46200006)
 OP("mov.ps",	Y_MOV_PS_OP,	FP_MOV_TYPE_INST,	0x46c00006)	/* MIPS32 Rev 2 */
 OP("mov.s",	Y_MOV_S_OP,	FP_MOV_TYPE_INST,	0x46000006)
 OP("move",	Y_MOVE_POP,	PSEUDO_OP,		-1)
+OP("movf",	Y_MOVF_OP,	FP_MOV_TYPE_INST,	0x00000001)	/* MIPS32 */
 OP("movf.ps",	Y_MOVF_PS_OP,	FP_MOV_TYPE_INST,	0x46c00011)	/* MIPS32 Rev 2 */
 OP("movn.ps",	Y_MOVN_PS_OP,	FP_MOV_TYPE_INST,	0x46c00013)	/* MIPS32 Rev 2 */
 OP("movt.ps",	Y_MOVT_PS_OP,	FP_MOV_TYPE_INST,	0x46c10011)	/* MIPS32 Rev 2 */

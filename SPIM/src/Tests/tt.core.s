@@ -2887,6 +2887,24 @@ lwc1d_:	.byte 0, 0, 0, 0
 	
 
 	.data
+movf_:	.asciiz "Testing MOVF\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 movf_
+	syscall
+
+	li $2 0xf
+	ctc1 $2 $25
+	li $2 0
+	li $3 1
+	li $4 2
+	movf $3 $2 1
+	bne $3 1 fail
+	movf $3 $4 1
+	bne $3 1 fail
+	
+	
+	.data
 mov.s_:	.asciiz "Testing MOV.S\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)

@@ -206,6 +206,7 @@
 %token Y_MOV_D_OP
 %token Y_MOV_PS_OP
 %token Y_MOV_S_OP
+%token Y_MOVF_OP
 %token Y_MOVF_PS_OP
 %token Y_MOVN_PS_OP
 %token Y_MOVT_PS_OP
@@ -433,6 +434,7 @@ int parse_error_occurred;  /* Non-zero => parse resulted in error */
 /* Local functions: */
 
 static imm_expr *branch_offset (int n_inst);
+ static int cc_to_rt (int cc, int nd, int tf);
 static void check_imm_range (imm_expr*, int32, int32);
 static void check_uimm_range (imm_expr*, uint32, uint32);
 static void clear_labels ();
@@ -1202,7 +1204,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		  int nd = opcode_is_nullified_branch($1.i);
 		  int tf = opcode_is_true_branch($1.i);
 		  i_type_inst_free ($1.i,
-				    0 | (nd << 1) | tf,
+				    cc_to_rt (0, nd, tf),
 				    BIN_RS($1.i),
 				    (imm_expr *)$2.p);
 		}
@@ -1214,7 +1216,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		  int nd = opcode_is_nullified_branch($1.i);
 		  int tf = opcode_is_true_branch($1.i);
 		  i_type_inst_free ($1.i,
-				    ($2.i << 2) | (nd << 1) | tf,
+				    cc_to_rt ($2.i, nd, tf),
 				    BIN_RS($1.i),
 				    (imm_expr *)$3.p);
 		}
@@ -1399,6 +1401,12 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 	|	FP_MOVE_OP_REV2	F_DEST	F_SRC1
 		{
 		  mips32_r2_inst ();
+		}
+
+
+	|	Y_MOVF_OP		DEST	SRC1	CC_REG
+		{
+		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
 		}
 
 
@@ -2769,4 +2777,11 @@ static void
 mips32_r2_inst ()
 {
 	yyerror ("Warning: MIPS32 Rev 2 instruction is not implemented. Instruction ignored.");
+}
+
+
+static int
+cc_to_rt (int cc, int nd, int tf)
+{
+  return (cc << 2) | (nd << 1) | tf;
 }
