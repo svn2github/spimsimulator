@@ -1,8 +1,8 @@
-.\" $Header: /Software/SPIM/src/spim.man 5     3/12/04 11:00p Larus $
+.\" $Header: /Software/SPIM/src/spim.man 6     3/14/04 9:24p Larus $
 
 .TH spim 1
 .SH NAME
-spim \- A MIPS R2000/R3000 Simulator
+spim \- A MIPS32 Simulator
 
 .SH SYNTAX
 .B spim
@@ -26,10 +26,8 @@ spim \- A MIPS R2000/R3000 Simulator
 \fI-file file <args>\fP \fI-execute file <args>\fP \|]
 
 .SH DESCRIPTION
-SPIM S20 is a simulator that runs programs for the MIPS R2000/R3000
-RISC computers. (For a description of the real machines, see Gerry
-Kane and Joe Heinrich, \fIMIPS RISC Architecture,\fP Prentice Hall,
-1992.) SPIM can read and immediately execute files containing assembly
+SPIM S20 is a simulator that runs programs for the MIPS32
+RISC computers. SPIM can read and immediately execute files containing assembly
 language or MIPS executable files.  SPIM is a self-contained system
 for running these programs and contains a debugger and interface to a
 few operating system services.

@@ -41,8 +41,6 @@
 	Eliminated coprocessor 3.
 	Made coprocessor 2 operations raise coprocessor unimplemented trap
 	(CpU).
-	Eliminated l.s, l.d, s.s, s.d pseudo ops in favor of LWC1, LDC1,
-	SWC1, SDC1.
 	Modified exceptions and interrupts to conform to MIPS32 (ex when
 	compiled -DMIPS1).
 	Added CP0 timer.
