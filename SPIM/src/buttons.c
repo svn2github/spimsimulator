@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 9     2/15/04 1:25p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 10    2/23/04 4:42a Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -84,7 +84,7 @@ static void load_prompt_destroyed (Widget w, XtPointer client_data,
 				   XtPointer call_data);
 static void list_breakpoint_action (Widget w, XtPointer client_data,
 				    XtPointer call_data);
-static void noop (void);
+static void noop ();
 static void parse_print_value (Widget w, XtPointer client_data,
 			       XtPointer call_data);
 static void parse_set_value (Widget w, XtPointer client_data,
@@ -1095,7 +1095,7 @@ destroy_popup_prompt (Widget w, XtPointer client_data, XtPointer call_data)
 
 
 static void
-noop (void)
+noop ()
 {
 }
 

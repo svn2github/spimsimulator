@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 12    2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/spim.h 13    2/23/04 4:42a Larus $
 */
 
 
@@ -198,19 +198,6 @@ typedef uint32 mem_addr;
 
 
 
-/* Triple containing a string and two integers.	 Used in tables
-   mapping from a name to values. */
-
-typedef struct strint
-{
-  char *name;
-  int value1;
-  int value2;
-} inst_info;
-
-
-
-
 /* A port is either a Unix file descriptor (an int) or a FILE* pointer. */
 
 #include <stdio.h>
@@ -219,11 +206,11 @@ typedef union {int i; FILE* f;} port;
 
 /* Exported functions (from spim.c or xspim.c): */
 
-int console_input_available (void);
+int console_input_available ();
 void control_c_seen (int);
 void error (char *fmt, ...);
 void fatal_error (char *fmt, ...);
-char get_console_char (void);
+char get_console_char ();
 void put_console_char (char c);
 void read_input (char *str, int n);
 int* run_error (char *fmt, ...);

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 14    2/15/04 1:25p Larus $
+/* $Header: /Software/SPIM/src/mem.c 15    2/23/04 4:42a Larus $
 */
 
 
@@ -448,7 +448,7 @@ static long trans_control, trans_buffer, trans_buffer_filled;
    is possible.  If so, update the control registers and buffers. */
 
 void
-check_memory_mapped_IO (void)
+check_memory_mapped_IO ()
 {
   static long mm_io_initialized = 0;
 

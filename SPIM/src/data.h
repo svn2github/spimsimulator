@@ -20,17 +20,17 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.h 6     2/15/04 1:25p Larus $
+/* $Header: /Software/SPIM/src/data.h 7     2/23/04 4:42a Larus $
 */
 
 
 /* Exported functions: */
 
 void align_data (int alignment);
-mem_addr current_data_pc (void);
+mem_addr current_data_pc ();
 void data_begins_at_point (mem_addr addr);
-void enable_data_alignment (void);
-void end_of_assembly_file (void);
+void enable_data_alignment ();
+void end_of_assembly_file ();
 void extern_directive (char *name, int size);
 void increment_data_pc (int value);
 void k_data_begins_at_point (mem_addr addr);

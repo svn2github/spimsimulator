@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 6     2/15/04 1:25p Larus $
+/* $Header: /Software/SPIM/src/data.c 7     2/23/04 4:42a Larus $
 */
 
 
@@ -70,7 +70,7 @@ user_kernel_data_segment (int to_kernel)
 
 
 void
-end_of_assembly_file (void)
+end_of_assembly_file ()
 {
   in_kernel = 0;
   auto_alignment = 1;
@@ -138,7 +138,7 @@ set_data_alignment (int alignment)
 
 
 void
-enable_data_alignment (void)
+enable_data_alignment ()
 {
   auto_alignment = 1;
 }
@@ -159,7 +159,7 @@ set_data_pc (mem_addr addr)
 /* Return the address at which the next datum will be stored.  */
 
 mem_addr
-current_data_pc (void)
+current_data_pc ()
 {
   return (DATA_PC);
 }

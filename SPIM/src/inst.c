@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 12    2/15/04 1:25p Larus $
+/* $Header: /Software/SPIM/src/inst.c 13    2/23/04 4:42a Larus $
 */
 
 #include <stdio.h>
@@ -40,7 +40,7 @@
 
 /* Local functions: */
 
-static int compare_pair_value (inst_info *p1, inst_info *p2);
+static int compare_pair_value (name_val_val *p1, name_val_val *p2);
 static void i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 				   int value_known, int32 value);
 static void inst_cmp (instruction *inst1, instruction *inst2);
@@ -53,7 +53,9 @@ static instruction *mk_r_inst (uint32, int opcode, int rs,
 static char* print_imm_expr (char *buf, unsigned int length, imm_expr *expr,
 			     int base_reg);
 static void produce_immediate (imm_expr *expr, int rt, int value_known, int32 value);
-static void sort_name_table (void);
+static void sort_a_opcode_table ();
+static void sort_i_opcode_table ();
+static void sort_name_table ();
 
 
 /* Local variables: */
@@ -112,7 +114,7 @@ set_text_pc (mem_addr addr)
 /* Return address for next instruction, in appropriate text segment. */
 
 mem_addr
-current_text_pc (void)
+current_text_pc ()
 {
   return (INST_PC);
 }
@@ -569,23 +571,44 @@ free_inst (instruction *inst)
    Table must be sorted before first use since its entries are
    alphabetical on name, not ordered by opcode. */
 
-static int sorted_name_table = 0;	/* Non-zero => table sorted */
+
+/* Sort all instruction table before first use. */
+
+void
+initialize_inst_tables ()
+{
+	sort_name_table ();
+	sort_i_opcode_table ();
+	sort_a_opcode_table ();
+}
 
 
 /* Map from opcode -> name/type. */
 
-static inst_info name_tbl [] = {
+static name_val_val name_tbl [] = {
 #undef OP
 #define OP(NAME, OPCODE, TYPE, R_OPCODE) {NAME, OPCODE, TYPE},
 #include "op.h"
 };
 
 
-/* Compare the VALUE1 field of two INST_INFO entries in the format
+/* Sort the opcode table on their key (the opcode value). */
+
+static void
+sort_name_table ()
+{
+  qsort (name_tbl,
+	 sizeof (name_tbl) / sizeof (name_val_val),
+	 sizeof (name_val_val),
+	 (QSORT_FUNC) compare_pair_value);
+}
+
+
+/* Compare the VALUE1 field of two NAME_VAL_VAL entries in the format
    required by qsort. */
 
 static int
-compare_pair_value (inst_info *p1, inst_info *p2)
+compare_pair_value (name_val_val *p1, name_val_val *p2)
 {
   if (p1->value1 < p2->value1)
     return (-1);
@@ -593,19 +616,6 @@ compare_pair_value (inst_info *p1, inst_info *p2)
     return (1);
   else
     return (0);
-}
-
-
-/* Sort the opcode table on their key (the opcode value). */
-
-static void
-sort_name_table (void)
-{
-  qsort (name_tbl,
-	 sizeof (name_tbl) / sizeof (inst_info),
-	 sizeof (inst_info),
-	 (QSORT_FUNC) compare_pair_value);
-  sorted_name_table = 1;
 }
 
 
@@ -634,10 +644,7 @@ int
 print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
 {
   char *bp = buf;
-  inst_info *entry;
-
-  if (!sorted_name_table)
-    sort_name_table ();
+  name_val_val *entry;
 
   sprintf (buf, "[0x%08x]\t", addr);
   buf += strlen (buf);
@@ -647,8 +654,8 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       buf += strlen (buf);
       return (buf - bp);
     }
-  entry = map_int_to_inst_info (name_tbl,
-				sizeof (name_tbl) / sizeof (inst_info),
+  entry = map_int_to_name_val_val (name_tbl,
+				sizeof (name_tbl) / sizeof (name_val_val),
 				OPCODE (inst));
   if (entry == NULL)
     {
@@ -1186,12 +1193,10 @@ addr_expr_reg (addr_expr *expr)
    opcode (a_opcode).  Table must be sorted before first use since its
    entries are alphabetical on name, not ordered by opcode. */
 
-static int sorted_i_opcode_table = 0; /* Non-zero => table sorted */
-
 
 /* Map from internal opcode -> real opcode */
 
-static inst_info i_opcode_tbl [] = {
+static name_val_val i_opcode_tbl [] = {
 #undef OP
 #define OP(NAME, I_OPCODE, TYPE, A_OPCODE) {NAME, I_OPCODE, (int)A_OPCODE},
 #include "op.h"
@@ -1201,13 +1206,12 @@ static inst_info i_opcode_tbl [] = {
 /* Sort the opcode table on their key (the interal opcode value). */
 
 static void
-sort_i_opcode_table (void)
+sort_i_opcode_table ()
 {
   qsort (i_opcode_tbl,
-	 sizeof (i_opcode_tbl) / sizeof (inst_info),
-	 sizeof (inst_info),
+	 sizeof (i_opcode_tbl) / sizeof (name_val_val),
+	 sizeof (name_val_val),
 	 (QSORT_FUNC) compare_pair_value);
-  sorted_i_opcode_table = 1;
 }
 
 
@@ -1218,24 +1222,20 @@ int32
 inst_encode (instruction *inst)
 {
   int32 a_opcode = 0;
-  inst_info *entry;
+  name_val_val *entry;
 
   if (inst == NULL)
     return (0);
-  if (!sorted_i_opcode_table)
-    sort_i_opcode_table ();
-  if (!sorted_name_table)
-    sort_name_table ();
 
-  entry = map_int_to_inst_info (i_opcode_tbl,
-				sizeof (i_opcode_tbl) / sizeof (inst_info),
+  entry = map_int_to_name_val_val (i_opcode_tbl,
+				sizeof (i_opcode_tbl) / sizeof (name_val_val),
 				OPCODE (inst));
   if (entry == NULL)
     return 0;
 
   a_opcode = entry->value2;
-  entry = map_int_to_inst_info (name_tbl,
-				sizeof (name_tbl) / sizeof (inst_info),
+  entry = map_int_to_name_val_val (name_tbl,
+				sizeof (name_tbl) / sizeof (name_val_val),
 				OPCODE (inst));
 
   switch (entry->value2)
@@ -1362,12 +1362,10 @@ inst_encode (instruction *inst)
    Table must be sorted before first use since its entries are
    alphabetical on name, not ordered by opcode. */
 
-static int sorted_a_opcode_table = 0; /* Non-zero => table sorted */
-
 
 /* Map from internal opcode -> real opcode */
 
-static inst_info a_opcode_tbl [] = {
+static name_val_val a_opcode_tbl [] = {
 #undef OP
 #define OP(NAME, I_OPCODE, TYPE, A_OPCODE) {NAME, (int)A_OPCODE, (int)I_OPCODE},
 #include "op.h"
@@ -1377,13 +1375,12 @@ static inst_info a_opcode_tbl [] = {
 /* Sort the opcode table on their key (the interal opcode value). */
 
 static void
-sort_a_opcode_table (void)
+sort_a_opcode_table ()
 {
   qsort (a_opcode_tbl,
-	 sizeof (a_opcode_tbl) / sizeof (inst_info),
-	 sizeof (inst_info),
+	 sizeof (a_opcode_tbl) / sizeof (name_val_val),
+	 sizeof (name_val_val),
 	 (QSORT_FUNC) compare_pair_value);
-  sorted_a_opcode_table = 1;
 }
 
 
@@ -1394,7 +1391,7 @@ instruction *
   inst_decode (uint32 value)
 {
   int32 a_opcode = value & 0xfc000000;
-  inst_info *entry;
+  name_val_val *entry;
   int32 i_opcode;
 
   if (a_opcode == 0)		/* SPECIAL */
@@ -1416,21 +1413,16 @@ instruction *
     a_opcode |= (value & 0x03e00000);
 
 
-  if (!sorted_a_opcode_table)
-    sort_a_opcode_table ();
-  if (!sorted_name_table)
-    sort_name_table ();
-
-  entry = map_int_to_inst_info (a_opcode_tbl,
-				sizeof (a_opcode_tbl) / sizeof (inst_info),
+  entry = map_int_to_name_val_val (a_opcode_tbl,
+				sizeof (a_opcode_tbl) / sizeof (name_val_val),
 				a_opcode);
   if (entry == NULL)
     return (mk_r_inst (value, 0, 0, 0, 0, 0)); /* Invalid inst */
 
   i_opcode = entry->value2;
 
-  switch (map_int_to_inst_info (name_tbl,
-				sizeof (name_tbl) / sizeof (inst_info),
+  switch (map_int_to_name_val_val (name_tbl,
+				sizeof (name_tbl) / sizeof (name_val_val),
 				i_opcode)->value2)
     {
     case B0_TYPE_INST:
@@ -1566,6 +1558,7 @@ mk_j_inst (uint32 value, int opcode, int target)
   return (inst);
 }
 
+
 
 /* Code to test encode/decode of instructions. */
 

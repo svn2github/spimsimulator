@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 12    2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 13    2/23/04 4:42a Larus $
  */
 
 #include <stdio.h>
@@ -119,18 +119,18 @@ Pixmap mark;
 
 /* Local functions: */
 
-static void center_text_at_PC (void);
+static void center_text_at_PC ();
 static char *check_buf_limit (char *, int *, int *);
-static void create_console_display (void);
-static void display_data_seg (void);
+static void create_console_display ();
+static void display_data_seg ();
 static char *display_values (mem_addr from, mem_addr to, char *buf, int *limit,
 			     int *n);
 static char *display_insts (mem_addr from, mem_addr to, char *buf, int *limit,
 			    int *n);
-static void display_registers (void);
+static void display_registers ();
 static void initialize (AppResources app_res);
 static mem_addr print_partial_line (mem_addr, char *, int *, int *);
-static void show_running (void);
+static void show_running ();
 static void syntax (char *program_name);
 static void write_text_to_window (Widget w, char *s);
 
@@ -375,7 +375,7 @@ initialize (AppResources app_res)
 
 
 static void
-create_console_display (void)
+create_console_display ()
 {
   Arg args[10];
   Cardinal n;
@@ -392,7 +392,7 @@ create_console_display (void)
 }
 
 void
-clear_console_display (void)
+clear_console_display ()
 {
   Arg args[10];
   Cardinal n;
@@ -590,7 +590,7 @@ execute_program (mem_addr pc, int steps, int display, int cont_bkpt)
 
 
 static void
-show_running (void)
+show_running ()
 {
   Arg args[1];
 
@@ -603,7 +603,7 @@ show_running (void)
    and stack segments. */
 
 void
-redisplay_data (void)
+redisplay_data ()
 {
   display_registers ();
   display_data_seg ();
@@ -614,7 +614,7 @@ redisplay_data (void)
    formats. */
 
 static void
-display_registers (void)
+display_registers ()
 {
   static char buf[8 * K];
   int max_buf_len = 8 * K;
@@ -632,7 +632,7 @@ display_registers (void)
 /* Redisplay the text segment and ktext segments if they have changed. */
 
 void
-redisplay_text (void)
+redisplay_text ()
 {
   static String buf = NULL;
   static int max_buf_len = 16 * K;
@@ -663,7 +663,7 @@ redisplay_text (void)
    highlight the instruction. */
 
 static void
-center_text_at_PC (void)
+center_text_at_PC ()
 {
   char buf[100];
   XawTextBlock text;
@@ -717,7 +717,7 @@ center_text_at_PC (void)
    been modified. */
 
 static void
-display_data_seg (void)
+display_data_seg ()
 {
   static String buf = NULL;
   static int max_buf_len = 16 * K;
@@ -833,7 +833,7 @@ read_input (char *str, int str_size)
 
 
 int
-console_input_available (void)
+console_input_available ()
 {
   if (mapped_io)
     return (XtAppPending (app_context));
@@ -843,7 +843,7 @@ console_input_available (void)
 
 
 char
-get_console_char (void)
+get_console_char ()
 {
   XEvent event;
 

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 10    2/15/04 1:25p Larus $
+/* $Header: /Software/SPIM/src/inst.h 11    2/23/04 4:42a Larus $
 */
 
 
@@ -197,13 +197,14 @@ int addr_expr_reg (addr_expr *expr);
 imm_expr *const_imm_expr (int32 value);
 imm_expr *copy_imm_expr (imm_expr *old_expr);
 instruction *copy_inst (instruction *inst);
-mem_addr current_text_pc (void);
+mem_addr current_text_pc ();
 int32 eval_imm_expr (imm_expr *expr);
 void free_inst (instruction *inst);
 void i_type_inst (int opcode, int rt, int rs, imm_expr *expr);
 void i_type_inst_free (int opcode, int rt, int rs, imm_expr *expr);
 void increment_text_pc (int delta);
 imm_expr *incr_expr_offset (imm_expr *expr, int32 value);
+void initialize_inst_tables ();
 instruction *inst_decode (uint32 value);
 int32 inst_encode (instruction *inst);
 int inst_is_breakpoint (mem_addr addr);

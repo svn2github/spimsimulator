@@ -1,4 +1,23 @@
+2004-02-19    <larus@LARUS1>
+
+	* inst.c inst.h spim-utils.c:
+	Sorted instruction tables in advance, rather than on first use.
+
+2004-02-16    <larus@C745660-A>
+
+	* PCSpimView.cpp [Domenico G. Sorrenti (sorrenti@disco.unimib.it)]:
+	Add prompt to ask user whether to reinitialize on reloading a file.
+
 2004-02-15    <larus@C745660-A>
+
+	* MainFrm.cpp MainFrm.h PCSpim.cpp PCSpimView.cpp PCSpimView.h
+	[Matthew Low (mlow@imail.EECS.Berkeley.edu)]:
+	Added menu item to set font in PCSpim.
+
+	* Documentation/spim.tex [Deborah Ariel Pickett
+	(debbiep@mail.csse.monash.edu.au)]:
+	Updated documentation to reflect changes to command line options
+	and new syscalls.	
 
 	* pervasive:
 	Eliminated #ifdef __STDC__. Everyone must have a non-K&R compiler

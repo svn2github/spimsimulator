@@ -316,7 +316,7 @@ initialize_scanner (FILE *in_file)
 
 
 void
-scanner_start_line (void)
+scanner_start_line ()
 {
   current_line = NULL;
   line_returned = 0;
@@ -446,7 +446,7 @@ copy_str (YY_CHAR *str, int chop)
    stream to the begining of the next line. */
 
 void
-print_erroneous_line (void)
+print_erroneous_line ()
 {
   int prefix_length = yytext - current_line;
   int i, c;
@@ -493,7 +493,7 @@ print_erroneous_line (void)
 }
 
 
-static inst_info keyword_tbl [] = {
+static name_val_val keyword_tbl [] = {
 #undef OP
 #define OP(NAME, OPCODE, TYPE, R_OPCODE) {NAME, OPCODE, TYPE},
 #include "op.h"
@@ -503,9 +503,9 @@ static inst_info keyword_tbl [] = {
 static int
 check_keyword (YY_CHAR *id, int allow_pseudo_ops)
 {
-  inst_info *entry =
-    map_string_to_inst_info (keyword_tbl,
-			     sizeof(keyword_tbl) / sizeof (inst_info),
+  name_val_val *entry =
+    map_string_to_name_val_val (keyword_tbl,
+			     sizeof(keyword_tbl) / sizeof (name_val_val),
 			     id);
   if (entry == NULL)
     return (0);
@@ -516,7 +516,7 @@ check_keyword (YY_CHAR *id, int allow_pseudo_ops)
 }
 
 
-static inst_info register_tbl [] = {
+static name_val_val register_tbl [] = {
   {"a0", 4, 0},
   {"a1", 5, 0},
   {"a2", 6, 0},
@@ -567,9 +567,9 @@ register_name_to_number (char *name)
     return atoi (name + 1);
   else
     {
-      inst_info *entry =
-	map_string_to_inst_info (register_tbl,
-				 sizeof (register_tbl) / sizeof (inst_info),
+      name_val_val *entry =
+	map_string_to_name_val_val (register_tbl,
+				 sizeof (register_tbl) / sizeof (name_val_val),
 				 name);
       if (entry == NULL)
 	return (-1);

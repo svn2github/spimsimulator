@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/*   $Header: /Software/SPIM/src/mem.h 6     2/15/04 1:25p Larus $
+/*   $Header: /Software/SPIM/src/mem.h 7     2/23/04 4:42a Larus $
 */
 
 
@@ -248,7 +248,7 @@ mem_word bad_mem_read (mem_addr addr, int mask, mem_word *dest);
 void bad_mem_write (mem_addr addr, mem_word value, int mask);
 instruction *bad_text_read (mem_addr addr);
 void bad_text_write (mem_addr addr, instruction *inst);
-void check_memory_mapped_IO (void);
+void check_memory_mapped_IO ();
 void expand_data (int addl_bytes);
 void expand_k_data (int addl_bytes);
 void expand_stack (int addl_bytes);

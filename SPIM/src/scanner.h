@@ -20,17 +20,17 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/scanner.h 6     2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/scanner.h 7     2/23/04 4:42a Larus $
 */
 
 
 /* Exported functions (besides yylex): */
 
 void initialize_scanner (FILE *in_file);
-void print_erroneous_line (void);
-void scanner_start_line (void);
+void print_erroneous_line ();
+void scanner_start_line ();
 int register_name_to_number (char *name);
-char *source_line (void);
+char *source_line ();
 int yylex ();
 
 /* Exported Variables: */

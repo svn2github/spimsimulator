@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 17    2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/spim.c 18    2/23/04 4:42a Larus $
 */
 
 
@@ -79,19 +79,19 @@
 
 /* Internal functions: */
 
-static void console_to_program (void);
-static void console_to_spim (void);
-static void flush_to_newline (void);
-static int get_opt_int (void);
+static void console_to_program ();
+static void console_to_spim ();
+static void flush_to_newline ();
+static int get_opt_int ();
 static int parse_spim_command (FILE *file, int redo);
 static int print_reg (int reg_no);
 static int print_fp_reg (int reg_no);
 static int print_reg_from_string (char *reg);
 static void print_all_regs (int hex_flag);
-static int read_assembly_command (void);
+static int read_assembly_command ();
 static int str_prefix (char *s1, char *s2, int min_match);
-static void top_level (void);
-static int read_token (void);
+static void top_level ();
+static int read_token ();
 
 
 /* Exported Variables: */
@@ -270,7 +270,7 @@ main (int argc, char **argv)
 /* Top-level read-eval-print loop for SPIM. */
 
 static void
-top_level (void)
+top_level ()
 {
   int redo = 0;			/* Non-zero means reexecute last command */
 
@@ -646,7 +646,7 @@ parse_spim_command (FILE *file, int redo)
    value. */
 
 static int
-read_assembly_command (void)
+read_assembly_command ()
 {
   int token = read_token ();
 
@@ -712,7 +712,7 @@ str_prefix (char *s1, char *s2, int min_match)
    rest of the line, including the newline. */
 
 static int
-get_opt_int (void)
+get_opt_int ()
 {
   int token;
 
@@ -734,7 +734,7 @@ get_opt_int (void)
 /* Flush the rest of the input line up to and including the next newline. */
 
 static void
-flush_to_newline (void)
+flush_to_newline ()
 {
   while (read_token () != Y_NL) ;
 }
@@ -944,7 +944,7 @@ read_input (char *str, int str_size)
 /* Give the console to the program for IO. */
 
 static void
-console_to_program (void)
+console_to_program ()
 {
   if (mapped_io && !console_state_saved)
     {
@@ -993,7 +993,7 @@ console_to_program (void)
 /* Return the console to SPIM. */
 
 static void
-console_to_spim (void)
+console_to_spim ()
 {
   if (mapped_io && console_state_saved)
 #ifdef USE_TERMIO
@@ -1010,7 +1010,7 @@ console_to_spim (void)
 
 
 int
-console_input_available (void)
+console_input_available ()
 {
 #ifndef __CYGWIN32__
   fd_set fdset;
@@ -1031,7 +1031,7 @@ console_input_available (void)
 
 
 char
-get_console_char (void)
+get_console_char ()
 {
   char buf;
 

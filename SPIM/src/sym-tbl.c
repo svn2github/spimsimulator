@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 18    2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 19    2/23/04 4:42a Larus $
 */
 
 
@@ -67,7 +67,7 @@ static label *label_hash_table [LABEL_HASH_TABLE_SIZE];
 /* Initialize the symbol table by removing and freeing old entries. */
 
 void
-initialize_symbol_table (void)
+initialize_symbol_table ()
 {
   int i;
   
@@ -428,7 +428,7 @@ find_symbol_address (char *symbol)
 /* Print all symbols in the table. */
 
 void
-print_symbols (void)
+print_symbols ()
 {
   int i;
   label *l;
@@ -443,7 +443,7 @@ print_symbols (void)
 /* Print all undefined symbols in the table. */
 
 void
-print_undefined_symbols (void)
+print_undefined_symbols ()
 {
   int i;
   label *l;
@@ -460,7 +460,7 @@ print_undefined_symbols (void)
    are undefined. */
 
 char *
-undefined_symbol_string (void)
+undefined_symbol_string ()
 {
   int buffer_length = 128;
   int string_length = 0;

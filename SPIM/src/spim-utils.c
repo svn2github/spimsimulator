@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 13    2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 14    2/23/04 4:42a Larus $
 */
 
 
@@ -47,7 +47,7 @@
 
 static mem_addr copy_int_to_stack (int n);
 static mem_addr copy_str_to_stack (char *s);
-static void delete_all_breakpoints (void);
+static void delete_all_breakpoints ();
 
 
 int exception_occurred;
@@ -88,6 +88,7 @@ initialize_world (char* trap_file)
 	       initial_k_data_size, initial_k_data_limit);
   initialize_registers ();
   program_starting_address = 0;
+  initialize_inst_tables ();
   initialize_symbol_table ();
   k_text_begins_at_point (K_TEXT_BOT);
   k_data_begins_at_point (K_DATA_BOT);
@@ -123,7 +124,7 @@ initialize_world (char* trap_file)
 
 
 void
-write_startup_message (void)
+write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out,
@@ -139,7 +140,7 @@ write_startup_message (void)
 
 
 void
-initialize_registers (void)
+initialize_registers ()
 {
   memclr (FPR, 16 * sizeof (double));
   FGR = (float *) FPR;
@@ -187,7 +188,7 @@ read_assembly_file (char *name)
 
 
 mem_addr
-starting_address (void)
+starting_address ()
 {
   if (PC == 0)
     {
@@ -370,7 +371,7 @@ delete_breakpoint (mem_addr addr)
 
 
 static void
-delete_all_breakpoints (void)
+delete_all_breakpoints ()
 {
   bkpt *b, *n;
 
@@ -386,7 +387,7 @@ delete_all_breakpoints (void)
 /* List all breakpoints. */
 
 void
-list_breakpoints (void)
+list_breakpoints ()
 {
   bkpt *b;
 
@@ -422,11 +423,13 @@ fatal_error (char *fmt, ...)
 }
 #endif
 
-/* Return the entry in the hash TABLE of length LENGTH with key STRING.
+
+/* Return the entry in the linear TABLE of length LENGTH with key STRING.
+   TABLE must be sorted on the key field.
    Return NULL if no such entry exists. */
 
-inst_info *
-map_string_to_inst_info (inst_info tbl[], int tbl_len, char *id)
+name_val_val *
+map_string_to_name_val_val (name_val_val tbl[], int tbl_len, char *id)
 {
   register int low = 0;
   register int hi = tbl_len - 1;
@@ -450,11 +453,12 @@ map_string_to_inst_info (inst_info tbl[], int tbl_len, char *id)
 }
 
 
-/* Return the entry in the hash TABLE of length LENGTH with VALUE1 field NUM.
+/* Return the entry in the linear TABLE of length LENGTH with VALUE1 field NUM.
+   TABLE must be sorted on the VALUE1 field.
    Return NULL if no such entry exists. */
 
-inst_info *
-map_int_to_inst_info (inst_info tbl[], int tbl_len, int num)
+name_val_val *
+map_int_to_name_val_val (name_val_val tbl[], int tbl_len, int num)
 {
   register int low = 0;
   register int hi = tbl_len - 1;
@@ -478,7 +482,7 @@ map_int_to_inst_info (inst_info tbl[], int tbl_len, int num)
 #ifdef NEED_VSPRINTF
 char *
 vsprintf (str, fmt, args)
-     char *str, *fmt;
+     char *str,*fmt;
      va_list *args;
 {
   FILE _strbuf;

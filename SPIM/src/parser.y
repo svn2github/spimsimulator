@@ -40,13 +40,16 @@
 /* MIPS instructions op codes: */
 
 %token Y_ABS_D_OP
+%token Y_ABS_PS_OP
 %token Y_ABS_S_OP
 %token Y_ADDIU_OP
 %token Y_ADDI_OP
 %token Y_ADDU_OP
 %token Y_ADD_D_OP
 %token Y_ADD_OP
+%token Y_ADD_PS_OP
 %token Y_ADD_S_OP
+%token Y_ALNV_PS_OP
 %token Y_ANDI_OP
 %token Y_AND_OP
 %token Y_BC0F_OP
@@ -66,6 +69,8 @@
 %token Y_BLTZ_OP
 %token Y_BNE_OP
 %token Y_BREAK_OP
+%token Y_CEIL_L_D_OP
+%token Y_CEIL_L_S_OP
 %token Y_CFC0_OP
 %token Y_CFC1_OP
 %token Y_CFC2_OP
@@ -78,54 +83,89 @@
 %token Y_CTC1_OP
 %token Y_CTC2_OP
 %token Y_CTC3_OP
+%token Y_CVT_D_L_OP
 %token Y_CVT_D_S_OP
 %token Y_CVT_D_W_OP
+%token Y_CVT_L_D_OP
+%token Y_CVT_L_S_OP
+%token Y_CVT_PS_S_OP
 %token Y_CVT_S_D_OP
+%token Y_CVT_S_L_OP
+%token Y_CVT_S_PL_OP
+%token Y_CVT_S_PU_OP
 %token Y_CVT_S_W_OP
 %token Y_CVT_W_D_OP
 %token Y_CVT_W_S_OP
 %token Y_C_EQ_D_OP
+%token Y_C_EQ_PS_OP
 %token Y_C_EQ_S_OP
 %token Y_C_F_D_OP
+%token Y_C_F_PS_OP
 %token Y_C_F_S_OP
 %token Y_C_LE_D_OP
+%token Y_C_LE_PS_OP
 %token Y_C_LE_S_OP
 %token Y_C_LT_D_OP
+%token Y_C_LT_PS_OP
 %token Y_C_LT_S_OP
 %token Y_C_NGE_D_OP
+%token Y_C_NGE_PS_OP
 %token Y_C_NGE_S_OP
 %token Y_C_NGLE_D_OP
+%token Y_C_NGLE_PS_OP
 %token Y_C_NGLE_S_OP
 %token Y_C_NGL_D_OP
+%token Y_C_NGL_PS_OP
 %token Y_C_NGL_S_OP
 %token Y_C_NGT_D_OP
+%token Y_C_NGT_PS_OP
 %token Y_C_NGT_S_OP
 %token Y_C_OLT_D_OP
+%token Y_C_OLT_PS_OP
 %token Y_C_OLT_S_OP
 %token Y_C_OLE_D_OP
+%token Y_C_OLE_PS_OP
 %token Y_C_OLE_S_OP
 %token Y_C_SEQ_D_OP
+%token Y_C_SEQ_PS_OP
 %token Y_C_SEQ_S_OP
 %token Y_C_SF_D_OP
+%token Y_C_SF_PS_OP
 %token Y_C_SF_S_OP
 %token Y_C_UEQ_D_OP
+%token Y_C_UEQ_PS_OP
 %token Y_C_UEQ_S_OP
 %token Y_C_ULT_D_OP
+%token Y_C_ULT_PS_OP
 %token Y_C_ULT_S_OP
 %token Y_C_ULE_D_OP
+%token Y_C_ULE_PS_OP
 %token Y_C_ULE_S_OP
 %token Y_C_UN_D_OP
+%token Y_C_UN_PS_OP
 %token Y_C_UN_S_OP
+%token Y_DI_OP
 %token Y_DIVU_OP
 %token Y_DIV_D_OP
 %token Y_DIV_OP
 %token Y_DIV_S_OP
+%token Y_EHB_OP
+%token Y_EI_OP
+%token Y_EXT_OP
+%token Y_FLOOR_L_D_OP
+%token Y_FLOOR_L_S_OP
+%token Y_INS_OP
 %token Y_JALR_OP
+%token Y_JALR_HB_OP
 %token Y_JAL_OP
 %token Y_JR_OP
+%token Y_JR_HB_OP
 %token Y_J_OP
 %token Y_LBU_OP
 %token Y_LB_OP
+%token Y_LDXC1_OP
+%token Y_LUXC1_OP
+%token Y_LWXC1_OP
 %token Y_LHU_OP
 %token Y_LH_OP
 %token Y_LUI_OP
@@ -136,32 +176,73 @@
 %token Y_LWL_OP
 %token Y_LWR_OP
 %token Y_LW_OP
+%token Y_MADD_D_OP
+%token Y_MADD_PS_OP
+%token Y_MADD_S_OP
 %token Y_MFC0_OP
 %token Y_MFC1_OP
 %token Y_MFC2_OP
 %token Y_MFC3_OP
+%token Y_MFHC1_OP
+%token Y_MFHC2_OP
 %token Y_MFHI_OP
 %token Y_MFLO_OP
 %token Y_MOV_D_OP
+%token Y_MOV_PS_OP
 %token Y_MOV_S_OP
+%token Y_MOVF_PS_OP
+%token Y_MOVN_PS_OP
+%token Y_MOVT_PS_OP
+%token Y_MOVZ_PS_OP
+%token Y_MSUB_D_OP
+%token Y_MSUB_PS_OP
+%token Y_MSUB_S_OP
 %token Y_MTC0_OP
 %token Y_MTC1_OP
 %token Y_MTC2_OP
 %token Y_MTC3_OP
+%token Y_MTHC1_OP
+%token Y_MTHC2_OP
 %token Y_MTHI_OP
 %token Y_MTLO_OP
 %token Y_MULTU_OP
 %token Y_MULT_OP
 %token Y_MUL_D_OP
+%token Y_MUL_PS_OP
 %token Y_MUL_S_OP
 %token Y_NEG_D_OP
+%token Y_NEG_PS_OP
 %token Y_NEG_S_OP
+%token Y_NMADD_D_OP
+%token Y_NMADD_PS_OP
+%token Y_NMADD_S_OP
+%token Y_NMSUB_D_OP
+%token Y_NMSUB_PS_OP
+%token Y_NMSUB_S_OP
 %token Y_NOR_OP
 %token Y_ORI_OP
 %token Y_OR_OP
+%token Y_PLL_PS_OP
+%token Y_PLU_PS_OP
 %token Y_PFW_OP
+%token Y_PREFX_OP
+%token Y_PUL_PS_OP
+%token Y_PUU_PS_OP
+%token Y_RDHWR_OP
+%token Y_RDPGPR_OP
+%token Y_RECIP_D_OP
+%token Y_RECIP_S_OP
 %token Y_RFE_OP
+%token Y_ROTR_OP
+%token Y_ROTRV_OP
+%token Y_ROUND_L_D_OP
+%token Y_ROUND_L_S_OP
+%token Y_RSQRT_D_OP
+%token Y_RSQRT_S_OP
 %token Y_SB_OP
+%token Y_SDXC1_OP
+%token Y_SEB_OP
+%token Y_SEH_OP
 %token Y_SH_OP
 %token Y_SLLV_OP
 %token Y_SLL_OP
@@ -175,8 +256,10 @@
 %token Y_SRL_OP
 %token Y_SUBU_OP
 %token Y_SUB_D_OP
-%token Y_SUB_OP
+%token Y_SUB_PS_OP
 %token Y_SUB_S_OP
+%token Y_SUB_OP
+%token Y_SUXC1_OP
 %token Y_SWC0_OP
 %token Y_SWC1_OP
 %token Y_SWC2_OP
@@ -184,11 +267,17 @@
 %token Y_SWL_OP
 %token Y_SWR_OP
 %token Y_SW_OP
+%token Y_SWXC1_OP
+%token Y_SYNCI_OP
 %token Y_SYSCALL_OP
 %token Y_TLBP_OP
 %token Y_TLBR_OP
 %token Y_TLBWI_OP
 %token Y_TLBWR_OP
+%token Y_TRUNC_D_OP
+%token Y_TRUNC_S_OP
+%token Y_WRPGPR_OP
+%token Y_WSBH_OP
 %token Y_XORI_OP
 %token Y_XOR_OP
 
@@ -331,17 +420,18 @@ int parse_error_occurred;  /* Non-zero => parse resulted in error */
 static imm_expr *branch_offset (int n_inst);
 static void check_imm_range (imm_expr*, int32, int32);
 static void check_uimm_range (imm_expr*, uint32, uint32);
-static void clear_labels (void);
+static void clear_labels ();
 static label_list *cons_label (label *head, label_list *tail);
 static void div_inst (int op, int rd, int rs, int rt, int const_divisor);
+static void mips32_r2_inst ();
 static void mult_inst (int op, int rd, int rs, int rt);
-static void nop_inst (void);
+static void nop_inst ();
 static void set_eq_inst (int op, int rd, int rs, int rt);
 static void set_ge_inst (int op, int rd, int rs, int rt);
 static void set_gt_inst (int op, int rd, int rs, int rt);
 static void set_le_inst (int op, int rd, int rs, int rt);
 static void store_word_data (int value);
-static void trap_inst (void);
+static void trap_inst ();
 static void yywarn (char*);
 
 
@@ -422,7 +512,7 @@ TERM:	Y_NL
 
 
 
-ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
+ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		{
 		  i_type_inst ($1.i == Y_LD_POP ? Y_LW_OP : $1.i,
 			       $2.i,
@@ -446,13 +536,13 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  free ((addr_expr *)$3.p);
 		}
 
-	|	LOAD_IMM_OP	DEST_REG	UIMM16
+	|	LOAD_IMM_OP	DEST	UIMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, 0, (imm_expr *)$3.p);
 		}
 
 
-	|	Y_LA_POP	DEST_REG	ADDRESS
+	|	Y_LA_POP	DEST	ADDRESS
 		{
 		  if (addr_expr_reg ((addr_expr *)$3.p))
 		    i_type_inst (Y_ADDI_OP, $2.i,
@@ -466,7 +556,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_LI_POP	DEST_REG	IMM32
+	|	Y_LI_POP	DEST	IMM32
 		{
 		  i_type_inst_free (Y_ORI_OP, $2.i, 0, (imm_expr *)$3.p);
 		}
@@ -493,7 +583,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ULW_POP	DEST_REG	ADDRESS
+	|	Y_ULW_POP	DEST	ADDRESS
 		{
 #ifdef BIGENDIAN
 		  i_type_inst (Y_LWL_OP, $2.i,
@@ -517,7 +607,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	ULOADH_POP	DEST_REG	ADDRESS
+	|	ULOADH_POP	DEST	ADDRESS
 		{
 #ifdef BIGENDIAN
 		  i_type_inst (($1.i == Y_ULH_POP ? Y_LB_OP : Y_LBU_OP),
@@ -560,7 +650,19 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	STORE_OP	SOURCE		ADDRESS
+	|	LOADF_INDEX_OP	F_DEST		ADDRESS
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	PREFETCH_OP	ADDRESS
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	STORE_OP	SRC1		ADDRESS
 		{
 		  i_type_inst ($1.i == Y_SD_POP ? Y_SW_OP : $1.i,
 			       $2.i,
@@ -586,7 +688,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_USW_POP	SOURCE		ADDRESS
+	|	Y_USW_POP	SRC1		ADDRESS
 		{
 #ifdef BIGENDIAN
 		  i_type_inst (Y_SWL_OP, $2.i,
@@ -610,7 +712,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_USH_POP	SOURCE		ADDRESS
+	|	Y_USH_POP	SRC1		ADDRESS
 		{
 		  i_type_inst (Y_SB_OP, $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
@@ -650,6 +752,12 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
+	|	STOREF_INDEX_OP	F_DEST		ADDRESS
+		{
+		  mips32_r2_inst ();
+		}
+
+
 	|	SYS_OP
 		{
 		  r_type_inst ($1.i, 0, 0, 0);
@@ -670,7 +778,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ABS_POP		DEST_REG	SRC1
+	|	Y_ABS_POP		DEST	SRC1
 		{
 		  if ($2.i != $3.i)
 		    r_type_inst (Y_ADDU_OP, $2.i, 0, $3.i);
@@ -680,92 +788,105 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_NEG_POP		DEST_REG	SRC1
+	|	Y_NEG_POP		DEST	SRC1
 		{
 		  r_type_inst (Y_SUB_OP, $2.i, 0, $3.i);
 		}
 
 
-	|	Y_NEGU_POP		DEST_REG	SRC1
+	|	Y_NEGU_POP		DEST	SRC1
 		{
 		  r_type_inst (Y_SUBU_OP, $2.i, 0, $3.i);
 		}
 
 
-	|	Y_NOT_POP		DEST_REG	SRC1
+	|	Y_NOT_POP		DEST	SRC1
 		{
 		  r_type_inst (Y_NOR_OP, $2.i, $3.i, 0);
 		}
 
 
-	|	Y_MOVE_POP		DEST_REG	SRC1
+	|	Y_MOVE_POP		DEST	SRC1
 		{
 		  r_type_inst (Y_ADDU_OP, $2.i, 0, $3.i);
 		}
 
 
-	|	BINARY_OP_I	DEST_REG	SRC1		SRC2
+	|	NULLARY_OP_R2
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	UNARY_OP_R2	DEST
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	BINARY_OP_I	DEST	SRC1		SRC2
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
 
-	|	BINARY_OP_I	DEST_REG	SRC1		IMM32
+	|	BINARY_OP_I	DEST	SRC1		IMM32
 		{
 		  i_type_inst_free (op_to_imm_op ($1.i), $2.i, $3.i,
 				    (imm_expr *)$4.p);
 		}
 
 
-	|	BINARY_OP_I	DEST_REG	IMM32
+	|	BINARY_OP_I	DEST	IMM32
 		{
 		  i_type_inst_free (op_to_imm_op ($1.i), $2.i, $2.i,
 				    (imm_expr *)$3.p);
 		}
 
 
-	|	BINARY_OPR_I	DEST_REG	SRC1		SRC2
+	|	BINARY_OPR_I	DEST	SRC1		SRC2
 		{
 		  r_type_inst ($1.i, $2.i, $4.i, $3.i);
 		}
 
 
-	|	BINARY_OPR_I	DEST_REG	SRC1		Y_INT
+	|	BINARY_OPR_I	DEST	SRC1		Y_INT
 		{
 		  r_sh_type_inst (op_to_imm_op ($1.i), $2.i, $3.i, $4.i);
 		}
 
 
-	|	BINARY_OPR_I	DEST_REG	Y_INT
+	|	BINARY_OPR_I	DEST	Y_INT
 		{
 		  r_sh_type_inst (op_to_imm_op ($1.i), $2.i, $2.i, $3.i);
 		}
 
 
-	|	BINARY_IMM_ARITH_OP	DEST_REG	SRC1		IMM16
+	|	BINARY_IMM_ARITH_OP	DEST	SRC1		IMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, $3.i, (imm_expr *)$4.p);
 		}
 
 
-	|	BINARY_IMM_ARITH_OP	DEST_REG	IMM16
+	|	BINARY_IMM_ARITH_OP	DEST	IMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, $2.i, (imm_expr *)$3.p);
 		}
 
-	|	BINARY_IMM_LOGICAL_OP	DEST_REG	SRC1		UIMM16
+
+	|	BINARY_IMM_LOGICAL_OP	DEST	SRC1		UIMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, $3.i, (imm_expr *)$4.p);
 		}
 
 
-	|	BINARY_IMM_LOGICAL_OP	DEST_REG	UIMM16
+	|	BINARY_IMM_LOGICAL_OP	DEST	UIMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, $2.i, (imm_expr *)$3.p);
 		}
 
 
-	|	SHIFT_OP	DEST_REG	SRC1		Y_INT
+	|	SHIFT_OP	DEST	SRC1		Y_INT
 		{
 		  if (($4.i < 0) || (31 < $4.i))
 		    yywarn("Shift distance can only be in the range 0..31");
@@ -773,19 +894,31 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	SHIFT_OP	DEST_REG	SRC1		SRC2
+	|	SHIFT_OP	DEST	SRC1		SRC2
 		{
 		  r_type_inst (imm_op_to_op ($1.i), $2.i, $4.i, $3.i);
 		}
 
 
-	|	BINARY_OP_NOI	DEST_REG	SRC1		SRC2
+	|	SHIFT_OP_R2	DEST	SRC1		Y_INT
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	SHIFTV_OP_R2	DEST	SRC1		SRC2
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	BINARY_OP_NOI	DEST	SRC1		SRC2
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
 
-	|	BINARY_OP_NOI	DEST_REG	SRC1		IMM32
+	|	BINARY_OP_NOI	DEST	SRC1		IMM32
 		{
 		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
@@ -803,7 +936,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	BINARY_OP_NOI	DEST_REG	IMM32
+	|	BINARY_OP_NOI	DEST	IMM32
 		{
 		  check_uimm_range ((imm_expr *)$3.p, UIMM_MIN, UIMM_MAX);
 		  if (bare_machine && !accept_pseudo_insts)
@@ -822,13 +955,19 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	SUB_OP	DEST_REG	SRC1		SRC2
+	|	BINARY_OP_R2	DEST	SRC1
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	SUB_OP	DEST	SRC1		SRC2
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
 
-	|	SUB_OP	DEST_REG	SRC1		IMM32
+	|	SUB_OP	DEST	SRC1		IMM32
 		{
 		  int val = eval_imm_expr ((imm_expr *)$4.p);
 
@@ -845,7 +984,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	SUB_OP	DEST_REG	IMM32
+	|	SUB_OP	DEST	IMM32
 		{
 		  int val = eval_imm_expr ((imm_expr *)$3.p);
 
@@ -862,7 +1001,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	DIV_POP		DEST_REG	SRC1
+	|	DIV_POP		DEST	SRC1
 		{
 		  /* The hardware divide operation (ignore 1st arg) */
 		  if ($1.i != Y_DIV_OP && $1.i != Y_DIVU_OP)
@@ -871,13 +1010,13 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		    r_type_inst ($1.i, 0, $2.i, $3.i);
 		}
 
-	|	DIV_POP		DEST_REG	SRC1		SRC2
+	|	DIV_POP		DEST	SRC1		SRC2
 		{
 		  /* Pseudo divide operations */
 		  div_inst ($1.i, $2.i, $3.i, $4.i, 0);
 		}
 
-	|	DIV_POP		DEST_REG	SRC1		IMM32
+	|	DIV_POP		DEST	SRC1		IMM32
 		{
 		  if (zero_imm ((imm_expr *)$4.p))
 		    yyerror ("Divide by zero");
@@ -890,12 +1029,12 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	MUL_POP		DEST_REG	SRC1		SRC2
+	|	MUL_POP		DEST	SRC1		SRC2
 		{
 		  mult_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	MUL_POP		DEST_REG	SRC1		IMM32
+	|	MUL_POP		DEST	SRC1		IMM32
 		{
 		  if (zero_imm ((imm_expr *)$4.p))
 		    /* Optimize: n * 0 == 0 */
@@ -915,7 +1054,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ROR_POP	DEST_REG	SRC1		SRC2
+	|	Y_ROR_POP	DEST	SRC1		SRC2
 		{
 		  r_type_inst (Y_SUBU_OP, 1, 0, $4.i);
 		  r_type_inst (Y_SLLV_OP, 1, 1, $3.i);
@@ -924,7 +1063,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ROL_POP	DEST_REG	SRC1		SRC2
+	|	Y_ROL_POP	DEST	SRC1		SRC2
 		{
 		  r_type_inst (Y_SUBU_OP, 1, 0, $4.i);
 		  r_type_inst (Y_SRLV_OP, 1, 1, $3.i);
@@ -933,7 +1072,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ROR_POP	DEST_REG	SRC1		IMM32
+	|	Y_ROR_POP	DEST	SRC1		IMM32
 		{
 		  long dist = eval_imm_expr ((imm_expr *)$4.p);
 
@@ -945,7 +1084,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ROL_POP	DEST_REG	SRC1		IMM32
+	|	Y_ROL_POP	DEST	SRC1		IMM32
 		{
 		  long dist = eval_imm_expr ((imm_expr *)$4.p);
 
@@ -958,12 +1097,18 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 
 
-	|	SET_LE_POP	DEST_REG	SRC1		SRC2
+	|	BF_OP_R2	F_DEST		F_SRC2	Y_INT	Y_INT
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	SET_LE_POP	DEST	SRC1		SRC2
 		{
 		  set_le_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_LE_POP	DEST_REG	SRC1		IMM32
+	|	SET_LE_POP	DEST	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -974,12 +1119,12 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	SET_GT_POP	DEST_REG	SRC1		SRC2
+	|	SET_GT_POP	DEST	SRC1		SRC2
 		{
 		  set_gt_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_GT_POP	DEST_REG	SRC1		IMM32
+	|	SET_GT_POP	DEST	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -991,12 +1136,12 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 
 
-	|	SET_GE_POP	DEST_REG	SRC1		SRC2
+	|	SET_GE_POP	DEST	SRC1		SRC2
 		{
 		  set_ge_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_GE_POP	DEST_REG	SRC1		IMM32
+	|	SET_GE_POP	DEST	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -1007,12 +1152,12 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	SET_EQ_POP	DEST_REG	SRC1		SRC2
+	|	SET_EQ_POP	DEST	SRC1		SRC2
 		{
 		  set_eq_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_EQ_POP	DEST_REG	SRC1		IMM32
+	|	SET_EQ_POP	DEST	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -1199,25 +1344,43 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 
 
-	|	MOVE_COP_OP	COP_REG		COP_REG
+	|	FP_MOVE_OP	F_DEST	F_SRC1
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, 0);
 		}
 
 
-	|	MOV_FROM_HILO_OP	REG
+	|	FP_MOVE_OP_R2	F_DEST	F_SRC1
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	FP_MOVEC_OP_R2	F_DEST	F_SRC1	/* ToDo: CC */
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	FP_MOVE_TEST_OP_R2	F_DEST	F_SRC1	REG
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	MOVE_FROM_HILO_OP	REG
 		{
 		  r_type_inst ($1.i, $2.i, 0, 0);
 		}
 
 
-	|	MOV_TO_HILO_OP	REG
+	|	MOVE_TO_HILO_OP	REG
 		{
 		  r_type_inst ($1.i, 0, $2.i, 0);
 		}
 
 
-	|	MOV_COP_OP	REG		COP_REG
+	|	MOVE_COP_OP	REG		COP_REG
 		{
 		  if ($1.i == Y_MFC1_D_POP)
 		    {
@@ -1234,6 +1397,12 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
+	|	MOVE_COP_OP_R2	REG		COP_REG
+		{
+		  mips32_r2_inst ();
+		}
+
+
 	|	CTL_COP_OP	COP_REG		COP_REG
 		{
 		  r_type_inst ($1.i, $3.i, 0, $2.i);
@@ -1246,9 +1415,27 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
+	|	FP_UNARY_OP_R2	F_DEST		F_SRC1
+		{
+		  mips32_r2_inst ();
+		}
+
+
 	|	FP_BINARY_OP	F_DEST		F_SRC1		F_SRC2
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
+		}
+
+
+	|	FP_BINARY_OP_R2	F_DEST		F_SRC1		F_SRC2
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	FP_TERNARY_OP_R2	F_DEST		F_SRC1		F_SRC2	FP_REGISTER
+		{
+		  mips32_r2_inst ();
 		}
 
 
@@ -1258,15 +1445,33 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
+	|	FP_CONVERT_OP_R2	F_DEST		F_SRC2
+		{
+		  mips32_r2_inst ();
+		}
+
+
 	|	FP_NEG_OP	F_DEST		F_SRC2
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, 0);
 		}
 
 
+	|	FP_NEG_OP_R2	F_DEST		F_SRC2
+		{
+		  mips32_r2_inst ();
+		}
+
+
 	|	FP_CMP_OP	F_SRC1		F_SRC2
 		{
 		  r_cond_type_inst ($1.i, $2.i, $3.i);
+		}
+
+
+	|	FP_CMP_OP_R2	F_SRC1		F_SRC2
+		{
+		  mips32_r2_inst ();
 		}
 	;
 
@@ -1288,7 +1493,8 @@ LOAD_COP:	Y_LWC0_OP
 	|	Y_LWC3_OP
 	;
 
-LOAD_IMM_OP:	Y_LUI_OP;
+LOAD_IMM_OP:	Y_LUI_OP
+	;
 
 
 ULOADH_POP:	Y_ULH_POP
@@ -1300,6 +1506,14 @@ LOADF_OP:	Y_LWC1_OP
 	|	Y_L_D_POP
 	;
 
+LOADF_INDEX_OP:	Y_LDXC1_OP
+	|	Y_LUXC1_OP
+	|	Y_LWXC1_OP
+	;
+
+PREFETCH_OP:	Y_PREFX_OP
+	|	Y_SYNCI_OP
+	;
 
 STORE_OP:	Y_SB_OP
 	|	Y_SH_OP
@@ -1319,11 +1533,21 @@ STOREF_OP:	Y_SWC1_OP
 	|	Y_S_D_POP
 	;
 
+STOREF_INDEX_OP:	Y_SDXC1_OP
+	|	Y_SUXC1_OP
+	|	Y_SWXC1_OP
+	;
 
-SYS_OP:		Y_RFE_OP
+SYS_OP:	Y_RFE_OP
 	|	Y_SYSCALL_OP
 	;
 
+NULLARY_OP_R2:	Y_EHB_OP
+	;
+
+UNARY_OP_R2:	Y_DI_OP
+	|	Y_EI_OP
+	;
 
 /* These binary operations have immediate analogues. */
 
@@ -1341,13 +1565,13 @@ BINARY_OPR_I:	Y_SLLV_OP
 	|	Y_SRLV_OP
 	;
 
-BINARY_IMM_ARITH_OP: Y_ADDI_OP
+BINARY_IMM_ARITH_OP:	Y_ADDI_OP
 	|	Y_ADDIU_OP
 	|	Y_SLTI_OP
 	|	Y_SLTIU_OP
 	;
 
-BINARY_IMM_LOGICAL_OP: Y_ANDI_OP
+BINARY_IMM_LOGICAL_OP:	Y_ANDI_OP
 	|	Y_ORI_OP
 	|	Y_XORI_OP
 	;
@@ -1357,11 +1581,27 @@ SHIFT_OP:	Y_SLL_OP
 	|	Y_SRL_OP
 	;
 
+SHIFT_OP_R2:	Y_ROTR_OP
+	;
+
+SHIFTV_OP_R2:	Y_ROTRV_OP
+	;
+
+
 /* These binary operations do not have immediate analogues. */
 
-BINARY_OP_NOI:	Y_NOR_OP ;
+BINARY_OP_NOI:	Y_NOR_OP
+	;
 
-SUB_OP:		Y_SUB_OP
+BINARY_OP_R2:	Y_RDHWR_OP
+	|	Y_RDPGPR_OP
+	|	Y_SEB_OP
+	|	Y_SEH_OP
+	|	Y_WRPGPR_OP
+	|	Y_WSBH_OP
+	;
+
+SUB_OP:	Y_SUB_OP
 	|	Y_SUBU_OP
 	;
 
@@ -1394,6 +1634,10 @@ SET_EQ_POP:	Y_SEQ_POP
 
 MULT_OP:	Y_MULT_OP
 	|	Y_MULTU_OP
+	;
+
+BF_OP_R2:	Y_EXT_OP
+	|	Y_INS_OP
 	;
 
 NULLARY_BR_OP:	Y_BC0T_OP
@@ -1435,29 +1679,27 @@ BR_LE_POP:	Y_BLE_POP
 	|	Y_BLEU_POP
 	;
 
-J_OPS:		Y_J_OP
+J_OPS:	Y_J_OP
 	|	Y_JR_OP
+	|	Y_JR_HB_OP { yywarn("Warning:IPS32 Rev 2 '.HB' extension is not implemented and is ignored"); }
 	|	Y_JAL_OP
 	|	Y_JALR_OP
+	|	Y_JALR_HB_OP { yywarn("Warning:IPS32 Rev 2 '.HB' extension is not implemented and is ignored"); }
 	;
 
-B_OP:		Y_B_POP
+B_OP:	Y_B_POP
 	|	Y_BAL_POP
 	;
 
-MOVE_COP_OP:	Y_MOV_S_OP
-	|	Y_MOV_D_OP
-	;
-
-MOV_FROM_HILO_OP:	Y_MFHI_OP
+MOVE_FROM_HILO_OP:	Y_MFHI_OP
 	|	Y_MFLO_OP
 	;
 
-MOV_TO_HILO_OP:	Y_MTHI_OP
+MOVE_TO_HILO_OP:	Y_MTHI_OP
 	|	Y_MTLO_OP
 	;
 
-MOV_COP_OP:	Y_MFC0_OP
+MOVE_COP_OP:	Y_MFC0_OP
 	|	Y_MFC1_OP
 	|	Y_MFC1_D_POP
 	|	Y_MFC2_OP
@@ -1467,6 +1709,12 @@ MOV_COP_OP:	Y_MFC0_OP
 	|	Y_MTC1_D_POP
 	|	Y_MTC2_OP
 	|	Y_MTC3_OP
+	;
+
+MOVE_COP_OP_R2:	Y_MFHC1_OP
+	|	Y_MFHC2_OP
+	|	Y_MTHC1_OP
+	|	Y_MTHC2_OP
 	;
 
 CTL_COP_OP:	Y_CFC0_OP
@@ -1479,8 +1727,36 @@ CTL_COP_OP:	Y_CFC0_OP
 	|	Y_CTC3_OP
 	;
 
+/* Floating point operations */
+
+FP_MOVE_OP:	Y_MOV_S_OP
+	|	Y_MOV_D_OP
+	;
+
+FP_MOVE_OP_R2:	Y_MOV_PS_OP
+	;
+
+FP_MOVEC_OP_R2:	Y_MOVF_PS_OP
+	|	Y_MOVT_PS_OP
+	;
+
+FP_MOVE_TEST_OP_R2:	Y_MOVN_PS_OP
+	|	Y_MOVZ_PS_OP
+	;
+
 FP_ABS_OP:	Y_ABS_S_OP
 	|	Y_ABS_D_OP
+	;
+
+FP_UNARY_OP_R2:	Y_ABS_PS_OP
+	|	Y_RECIP_D_OP
+	|	Y_RECIP_S_OP
+	|	Y_ROUND_L_D_OP
+	|	Y_ROUND_L_S_OP
+	|	Y_RSQRT_D_OP
+	|	Y_RSQRT_S_OP
+	|	Y_TRUNC_D_OP
+	|	Y_TRUNC_S_OP
 	;
 
 FP_BINARY_OP:	Y_ADD_S_OP
@@ -1493,6 +1769,29 @@ FP_BINARY_OP:	Y_ADD_S_OP
 	|	Y_SUB_D_OP
 	;
 
+FP_BINARY_OP_R2:	Y_ADD_PS_OP
+	|	Y_MUL_PS_OP
+	|	Y_PLL_PS_OP
+	|	Y_PLU_PS_OP
+	|	Y_PUL_PS_OP
+	|	Y_PUU_PS_OP
+	;
+
+FP_TERNARY_OP_R2:	Y_ALNV_PS_OP
+	|	Y_MADD_D_OP
+	|	Y_MADD_PS_OP
+	|	Y_MADD_S_OP
+	|	Y_MSUB_D_OP
+	|	Y_MSUB_PS_OP
+	|	Y_MSUB_S_OP
+	|	Y_NMADD_D_OP
+	|	Y_NMADD_PS_OP
+	|	Y_NMADD_S_OP
+	|	Y_NMSUB_D_OP
+	|	Y_NMSUB_PS_OP
+	|	Y_NMSUB_S_OP
+	;
+
 FP_CONVERT_OP:	Y_CVT_D_S_OP
 	|	Y_CVT_D_W_OP
 	|	Y_CVT_S_D_OP
@@ -1501,8 +1800,24 @@ FP_CONVERT_OP:	Y_CVT_D_S_OP
 	|	Y_CVT_W_S_OP
 	;
 
+FP_CONVERT_OP_R2:	Y_CEIL_L_D_OP
+	|	Y_CEIL_L_S_OP
+	|	Y_CVT_D_L_OP
+	|	Y_CVT_L_D_OP
+	|	Y_CVT_L_S_OP
+	|	Y_CVT_PS_S_OP
+	|	Y_CVT_S_L_OP
+	|	Y_CVT_S_PL_OP
+	|	Y_CVT_S_PU_OP
+	|	Y_FLOOR_L_D_OP
+	|	Y_FLOOR_L_S_OP
+	;
+
 FP_NEG_OP:	Y_NEG_S_OP
 	|	Y_NEG_D_OP
+	;
+
+FP_NEG_OP_R2:	Y_NEG_PS_OP
 	;
 
 FP_CMP_OP:	Y_C_F_S_OP
@@ -1537,6 +1852,24 @@ FP_CMP_OP:	Y_C_F_S_OP
 	|	Y_C_NGE_D_OP
 	|	Y_C_LE_D_OP
 	|	Y_C_NGT_D_OP
+	;
+
+FP_CMP_OP_R2:	Y_C_EQ_PS_OP
+	|	Y_C_F_PS_OP
+	|	Y_C_LT_PS_OP
+	|	Y_C_LE_PS_OP
+	|	Y_C_NGE_PS_OP
+	|	Y_C_NGL_PS_OP
+	|	Y_C_NGLE_PS_OP
+	|	Y_C_NGT_PS_OP
+	|	Y_C_OLE_PS_OP
+	|	Y_C_OLT_PS_OP
+	|	Y_C_SEQ_PS_OP
+	|	Y_C_SF_PS_OP
+	|	Y_C_UEQ_PS_OP
+	|	Y_C_ULE_PS_OP
+	|	Y_C_ULT_PS_OP
+	|	Y_C_UN_PS_OP
 	;
 
 
@@ -1950,8 +2283,6 @@ ABS_ADDR:	Y_INT
 		}
 	;
 
-DEST_REG:	REGISTER ;
-
 SRC1:		REGISTER ;
 
 SRC2:		REGISTER ;
@@ -1959,8 +2290,6 @@ SRC2:		REGISTER ;
 DEST:		REGISTER ;
 
 REG:		REGISTER ;
-
-SOURCE:		REGISTER ;
 
 REGISTER:	Y_REG
 		{
@@ -2105,7 +2434,7 @@ cons_label (label *head, label_list *tail)
 
 
 static void
-clear_labels (void)
+clear_labels ()
 {
   label_list *n;
 
@@ -2163,14 +2492,14 @@ imm_op_to_op (int opcode)
 
 
 static void
-nop_inst (void)
+nop_inst ()
 {
   r_type_inst (Y_SLL_OP, 0, 0, 0); /* = 0 */
 }
 
 
 static void
-trap_inst (void)
+trap_inst ()
 {
   r_type_inst (Y_BREAK_OP, 0, 0, 0);
 }
@@ -2357,4 +2686,11 @@ yywarn (char *s)
 {
   error ("spim: (parser) %s on line %d of file %s\n", s, line_no, input_file_name);
   print_erroneous_line ();
+}
+
+
+static void
+mips32_r2_inst ()
+{
+	yyerror ("Warning: MIPS32 Rev 2 instruction is not implemented. Instruction ignored.");
 }
