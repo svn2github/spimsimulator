@@ -118,7 +118,7 @@ void CSetValueDlg::OnOK()
 	  return;
 	}
       else
-	SET_MEM_WORD (addr, nValue);
+	set_mem_word (addr, nValue);
     }
 
   CDialog::OnOK();
