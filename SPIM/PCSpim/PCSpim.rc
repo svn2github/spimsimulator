@@ -200,7 +200,7 @@ CAPTION "About PCSpim"
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "PCSpim Version 1.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
+    LTEXT           "PCSpim Version 7.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
     LTEXT           "Copyright © 1990-2004 by James R. Larus (larus@cs.wisc.edu). Portions © Morgan Kaufmann Publishers.",
                     IDC_COPYRIGHT,40,27,204,55
     DEFPUSHBUTTON   "OK",IDOK,212,7,32,14,WS_GROUP
@@ -244,10 +244,10 @@ BEGIN
                     WS_TABSTOP,18,87,59,10
     CONTROL         "Allow &pseudo instructions",IDC_PSEUDO,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,18,101,85,10
-    CONTROL         "&Load exception file",IDC_LOADTRAP,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,18,117,102,10
+    CONTROL         "&Load exception file",IDC_LOADEXCEPTION,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,18,117,102,10
     LTEXT           "&Exception file:",IDC_STATIC,30,131,28,8
-    EDITTEXT        IDC_TRAPFILE,30,142,146,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EXCEPTIONFILE,30,142,146,14,ES_AUTOHSCROLL
     CONTROL         "&Mapped I/O",IDC_MAPPED,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,187,87,55,10
     CONTROL         "&Quiet",IDC_QUIET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
@@ -301,8 +301,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION 7,0,0,0
+ PRODUCTVERSION 7,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -319,15 +319,15 @@ BEGIN
         BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "PCSPIM MFC Application\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "PCSPIM Application\0"
+            VALUE "FileVersion", "7.0.0.0\0"
             VALUE "InternalName", "PCSPIM\0"
             VALUE "LegalCopyright", "Copyright © 1990-2004 by James R. Larus\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "PCSPIM.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "PCSPIM Application\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "ProductVersion", "7.0.0.0\0"
             VALUE "SpecialBuild", "\0"
         END
     END

@@ -1329,16 +1329,15 @@ void CPCSpimView::ProcessCommandLine()
 	-exception		Load exception handler (default)\n\
 	-noexception		Do not load exception handler\n\
 	-exception_file <file>	Specify exception handler in place of default\n\
-	-trap			Load exception handler (default)\n\
-	-notrap			Do not load exception handler\n\
-	-trap_file <file>	Specify exception handler in place of default\n\
 	-quiet			Do not print warnings\n\
 	-noquiet		Print warnings (default)\n\
 	-mapped_io		Enable memory-mapped IO\n\
 	-nomapped_io		Do not enable memory-mapped IO (default)\n\
 	-file <file> <args>	Assembly code file and arguments to program\n"
 		"Note that if -file is specified, it must be the last option.",
-		i, argv[i], argv[0]);
+		i,
+		argv[i],
+		argv[0]);
 
   MessageBox(strMsg, "PCSpim -- Error processing command line.",
 	     MB_OK | MB_ICONEXCLAMATION);
