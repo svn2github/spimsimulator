@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 23    3/21/04 3:30p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 24    3/25/04 9:18p Larus $
  */
 
 #include <stdio.h>
@@ -369,10 +369,10 @@ initialize (AppResources app_res)
     app_width = TEXTWIDTH * 4 * 22;
   command_hspace = 8;
   command_vspace = 8;
-  command_height = (button_height * 3) + (command_vspace * 4) + 2;
-  reg_min_height = 17 * TEXTHEIGHT + 4;
+  command_height = (button_height * 2) + (command_vspace * 3);
+  reg_min_height = 15 * TEXTHEIGHT + 4;
   reg_max_height = reg_min_height + 10 * TEXTHEIGHT + 4;
-  segment_height = 10 * TEXTHEIGHT + 4;
+  segment_height = 8 * TEXTHEIGHT + 4;
   display_height = 8 * TEXTHEIGHT + 4;
   print_gpr_hex = app_res.hex_gpr;
   print_fpr_hex = app_res.hex_fpr;

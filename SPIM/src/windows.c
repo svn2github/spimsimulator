@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/windows.c 7     3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/windows.c 8     3/25/04 9:18p Larus $
  */
 
 
@@ -80,6 +80,7 @@ create_reg_window (Widget parent, Dimension reg_min_height,
   XtSetArg (args[n], XtNlength, 0); n++;
   XtSetArg (args[n], XtNuseStringInPlace, True); n++;
   XtSetArg (args[n], XtNdisplayCaret, False); n++;
+  XtSetArg (args[n], XtNscrollVertical, XawtextScrollAlways); n++;
   register_window = XtCreateManagedWidget ("register", asciiTextWidgetClass,
 					   parent, args, n);
 }
@@ -97,8 +98,7 @@ create_command_panel (Widget parent, Dimension app_width,
   XtSetArg (args[n], XtNwidth, app_width); n++;
   XtSetArg (args[n], XtNmin, command_height); n++;
   XtSetArg (args[n], XtNmax, command_height); n++;
-  XtSetArg (args[n], XtNpreferredPaneSize, 2*button_height + 3 * command_vspace);
-  n++;
+  XtSetArg (args[n], XtNpreferredPaneSize, 2*button_height + 3 * command_vspace);  n++;
   XtSetArg (args[n], XtNhSpace, command_hspace); n++;
   XtSetArg (args[n], XtNvSpace, command_vspace); n++;
   XtSetArg (args[n], XtNallowResize, False); n++;
@@ -132,7 +132,7 @@ create_text_window (Widget parent, Dimension segment_height)
   XtSetArg (args[n], XtNborderWidth, 0); n++;
   XtSetArg (args[n], XtNdisplayCaret, True); n++;
   XtSetArg (args[n], XtNdisplayCaret, False); n++;
-  XtSetArg (args[n], XtNscrollVertical, XawtextScrollWhenNeeded); n++;
+  XtSetArg (args[n], XtNscrollVertical, XawtextScrollAlways); n++;
   text_window = XtCreateManagedWidget ("file", asciiTextWidgetClass, parent,
 				       args, n);
 }
@@ -162,7 +162,7 @@ create_data_window (Widget parent, Dimension segment_height)
   XtSetArg (args[n], XtNstring, ""); n++;
   XtSetArg (args[n], XtNborderWidth, 0); n++;
   XtSetArg (args[n], XtNdisplayCaret, False); n++;
-  XtSetArg (args[n], XtNscrollVertical, XawtextScrollWhenNeeded); n++;
+  XtSetArg (args[n], XtNscrollVertical, XawtextScrollAlways); n++;
   data_window = XtCreateManagedWidget ("file", asciiTextWidgetClass, parent,
 				       args, n);
 }
@@ -179,7 +179,7 @@ create_display_window (Widget parent, Dimension display_height)
   XtSetArg (args[n], XtNborderWidth, 0); n++;
   XtSetArg (args[n], XtNdisplayCaret, False); n++;
   XtSetArg (args[n], XtNdisplayNonprinting, False); n++;
-  XtSetArg (args[n], XtNscrollVertical, XawtextScrollWhenNeeded); n++;
+  XtSetArg (args[n], XtNscrollVertical, XawtextScrollAlways); n++;
   XtSetArg (args[n], XtNwrap, "line"); n++;
   message = XtCreateManagedWidget ("display", asciiTextWidgetClass, parent,
 				   args, n);

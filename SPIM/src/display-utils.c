@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 19    3/21/04 2:05p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 20    3/25/04 9:18p Larus $
 */
 
 
@@ -52,13 +52,13 @@ format_registers (str_stream *ss, int print_gpr_hex, int print_fpr_hex)
      "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7",
      "t8", "t9", "k0", "k1", "gp", "sp", "s8", "ra"};
 
-  ss_printf (ss, " PC     = %08x    ", PC);
-  ss_printf (ss, " EPC    = %08x    ", CP0_EPC);
-  ss_printf (ss, " Cause  = %08x    ", CP0_Cause);
+  ss_printf (ss, " PC      = %08x   ", PC);
+  ss_printf (ss, "EPC     = %08x  ", CP0_EPC);
+  ss_printf (ss, " Cause   = %08x  ", CP0_Cause);
   ss_printf (ss, " BadVAddr= %08x\n", CP0_BadVAddr);
-  ss_printf (ss, " Status = %08x    ", CP0_Status);
-  ss_printf (ss, " HI     = %08x    ", HI);
-  ss_printf (ss, " LO     = %08x\n", LO);
+  ss_printf (ss, " Status  = %08x   ", CP0_Status);
+  ss_printf (ss, "HI      = %08x  ", HI);
+  ss_printf (ss, " LO      = %08x\n", LO);
 
   if (print_gpr_hex)
     grstr = "R%-2d (%2s) = %08x", grfill = "  ";
@@ -78,10 +78,10 @@ format_registers (str_stream *ss, int print_gpr_hex, int print_fpr_hex)
       ss_printf (ss, "\n");
     }
 
-  ss_printf (ss, "\n FIR    = %08x    ", FIR);
-  ss_printf (ss, " FCSR   = %08x    ", FCSR);
-  ss_printf (ss, " FCCR   = %08x    ", FCCR);
-  ss_printf (ss, " FEXR   = %08x\n", FEXR);
+  ss_printf (ss, "\n FIR    = %08x   ", FIR);
+  ss_printf (ss, " FCSR    = %08x   ", FCSR);
+  ss_printf (ss, " FCCR   = %08x  ", FCCR);
+  ss_printf (ss, " FEXR    = %08x\n", FEXR);
   ss_printf (ss, " FENR   = %08x\n", FENR);
 
   ss_printf (ss, "\t\t\t      Double Floating Point Registers\n");
@@ -191,7 +191,7 @@ format_insts (str_stream *ss, mem_addr from, mem_addr to)
 void
 format_data_segs (str_stream *ss)
 {
-  ss_printf (ss, "\n\tDATA\n");
+  ss_printf (ss, "\tDATA\n");
   format_mem (ss, DATA_BOT, data_top);
 
   ss_printf (ss, "\n\tSTACK\n");
