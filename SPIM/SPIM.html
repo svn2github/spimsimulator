@@ -14,7 +14,7 @@ larus@microsoft.com</a></P>
 <P style="margin-top: 0; margin-bottom: 0">&nbsp;</P>
 <P style="margin-top: 0; margin-bottom: 0"><i>Formerly:</i> Professor, Computer 
 Sciences Department, University of Wisconsin-Madison</P>
-<P style="margin-top: 0; margin-bottom: 0"><i>Currently:</i> Assistant Director, Microsoft Research<BR>&nbsp;</P>
+<P style="margin-top: 0; margin-bottom: 0"><i>Currently:</i> Senior Researcher, Microsoft Research<BR>&nbsp;</P>
 </CENTER>
 <P><B>spim</B> is a self-contained simulator that will run MIPS32 assembly language programs. It reads and immediately executes assembly language 
 code for this processor. <B>spim</B> provides a simple debugger and minimal set 
@@ -58,41 +58,70 @@ Windows interface.</P>
     <TD align=middle width=128><B>Form</B></TD>
     <TD align=middle width=382><B>File</B></TD></TR>
   <TR>
-    <TD width=451>Unix or Linux system</TD>
+    <TD width=451>Unix or Linux system<br>
+    Mac OS X</TD>
     <TD width=96 align="center"><i>spim<BR>xspim</i></TD>
-    <TD width=128>Source code</TD>
+    <TD width=128 align="center">Source code</TD>
     <TD width=382><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A> 
       or<A href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z"><BR></A><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</A></TD></TR>
   <TR>
+    <TD width=451>Linux</TD>
+    <TD width=96 align="center"><i>spim<br>
+    xspim</i></TD>
+    <TD width=128 align="center"><font SIZE="3">Binary RPM for Fedora Core 1</font></TD>
+    <TD width=382>
+    <a href="http://www.cs.berkeley.edu/~liblit/sampler/downloads/">
+    http://www.cs.berkeley.edu/~liblit/sampler/downloads/</a> 
+    </TD></TR>
+  <TR>
     <TD width=451 rowSpan=2>Microsoft Windows<BR>(Windows  98, NT, 2000, XP)<p>
     (spim 7.0 and later no longer runs on Windows 95. Use version 6.5 or 
     earlier.)</TD>
     <TD width=96 rowSpan=2 align="center"><i>spim<BR>PCSpim</i></TD>
-    <TD width=128>Executable</TD>
+    <TD width=128 align="center">Executable</TD>
     <TD width=382><a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">
     http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a> 
     </TD></TR>
   <TR>
-    <TD width=128>Source code</TD>
+    <TD width=128 align="center">Source code</TD>
     <TD width=382><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</A></TD></TR>
   </TBODY></TABLE></CENTER></DIV>
-<P>To run <i>spim</i> or <i>xspim</i> on a Unix or Linux system, copy either the compressed 
+<ul>
+  <li>
+<P style="margin-top: 6">To run <i>spim</i> or <i>xspim</i> on a Unix or Linux system, copy either the compressed 
 tar file (<A 
 href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A>) 
 or the gzip'ed tar file (<A 
 href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</A>).&nbsp; 
-Both files contains source code and must be compiled on a particular system.</P>
-<P>To run <i>PCspim</i> on a PC under Microsoft Windows, download the file
+Both files contains source code and must be compiled on your system.</P>
+  </li>
+  <li>
+<P style="margin-top: 6">Ben Liblit of the <i>Cooperative Bug Isolation Project</i> 
+(<a href="http://www.cs.berkeley.edu/~liblit/sampler/">http://www.cs.berkeley.edu/~liblit/sampler</a>) 
+has a compiled version of <b>spim </b>for Fedora Core 1. It contains the 
+project's low-overhead monitoring code, which can help find bugs in <b>spim</b>. 
+If you are running Linux, this package can save you time and trouble compiling 
+and installing <b>spim</b>, help me find bugs, and also aid an interesting 
+research project.</P>
+  </li>
+  <li>
+<P style="margin-top: 6">To run <i>PCspim</i> under Microsoft Windows, download the file
 <a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">
 http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>, unzip it, and run <i>setup.exe</i>.</P>
-<P>Source for the PC version (both <i>PCspim</i> and <i>spim</i>) is available separately in 
+  </li>
+  <li>
+<P style="margin-top: 6">Source for the PC version (both <i>PCspim</i> and <i>spim</i>) is available separately in 
 the file <A 
       href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</A>. 
-</P><P>There is no specific Macintosh version of <B>spim</B>. However, the Unix version of xspim can be compiled and run on Mac 
+</P></li>
+  <li><P style="margin-top: 6">There is no  Macintosh version of <B>spim</B>. However, the Unix version of 
+  <i>xspim</i> will compile and run on Mac 
 OS X. </P>
+  </li>
+</ul>
 <HR width="100%">
 
 <H2 align=center><font size="+2">Installation</font></H2>
