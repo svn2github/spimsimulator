@@ -494,7 +494,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 	|	Y_LI_S_POP	F_DEST		Y_FP
 		{
-		  float x = * ((double *) $3.p);
+		  float x = (float) *((double *) $3.p);
 		  int *y = (int *) &x;
 
 		  i_type_inst (Y_ORI_OP, 1, 0, const_imm_expr (*y));
