@@ -55,11 +55,13 @@
 %token Y_BC0F_OP
 %token Y_BC0T_OP
 %token Y_BC1F_OP
+%token Y_BC1FL_OP
 %token Y_BC1T_OP
+%token Y_BC1TL_OP
 %token Y_BC2F_OP
+%token Y_BC2FL_OP
 %token Y_BC2T_OP
-%token Y_BC3F_OP
-%token Y_BC3T_OP
+%token Y_BC2TL_OP
 %token Y_BEQ_OP
 %token Y_BGEZ_OP
 %token Y_BGEZAL_OP
@@ -122,7 +124,6 @@
 %token Y_CFC0_OP
 %token Y_CFC1_OP
 %token Y_CFC2_OP
-%token Y_CFC3_OP
 %token Y_COP0_OP
 %token Y_COP1_OP
 %token Y_COP2_OP
@@ -130,7 +131,6 @@
 %token Y_CTC0_OP
 %token Y_CTC1_OP
 %token Y_CTC2_OP
-%token Y_CTC3_OP
 %token Y_CVT_D_L_OP
 %token Y_CVT_D_S_OP
 %token Y_CVT_D_W_OP
@@ -172,7 +172,6 @@
 %token Y_LWC0_OP
 %token Y_LWC1_OP
 %token Y_LWC2_OP
-%token Y_LWC3_OP
 %token Y_LWL_OP
 %token Y_LWR_OP
 %token Y_LWXC1_OP
@@ -182,7 +181,6 @@
 %token Y_MFC0_OP
 %token Y_MFC1_OP
 %token Y_MFC2_OP
-%token Y_MFC3_OP
 %token Y_MFHC1_OP
 %token Y_MFHC2_OP
 %token Y_MFHI_OP
@@ -200,7 +198,6 @@
 %token Y_MTC0_OP
 %token Y_MTC1_OP
 %token Y_MTC2_OP
-%token Y_MTC3_OP
 %token Y_MTHC1_OP
 %token Y_MTHC2_OP
 %token Y_MTHI_OP
@@ -264,7 +261,6 @@
 %token Y_SWC0_OP
 %token Y_SWC1_OP
 %token Y_SWC2_OP
-%token Y_SWC3_OP
 %token Y_SWL_OP
 %token Y_SWR_OP
 %token Y_SWXC1_OP
@@ -1168,9 +1164,33 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	NULLARY_BR_OP	LABEL
+	|	COPROC_BR_OP	LABEL
 		{
 		  i_type_inst_free ($1.i, 0, 0, (imm_expr *)$2.p);
+		}
+
+
+	|	COPROC1_BR_OP	LABEL
+		{
+		  /* RS and RT fields contain information on test */
+		  int nd = ($1.i == Y_BC1FL_OP) | ($1.i == Y_BC1TL_OP);
+		  int tf = ($1.i == Y_BC1T_OP) | ($1.i == Y_BC1TL_OP);
+		  i_type_inst_free ($1.i,
+				    0 | (nd << 1) | tf,
+				    BIN_RS($1.i),
+				    (imm_expr *)$2.p);
+		}
+
+
+	|	COPROC1_BR_OP	CC_REG	LABEL
+		{
+		  /* RS and RT fields contain information on test */
+		  int nd = ($1.i == Y_BC1FL_OP) | ($1.i == Y_BC1TL_OP);
+		  int tf = ($1.i == Y_BC1T_OP) | ($1.i == Y_BC1TL_OP);
+		  i_type_inst_free ($1.i,
+				    ($2.i << 2) | (nd << 1) | tf,
+				    BIN_RS($1.i),
+				    (imm_expr *)$3.p);
 		}
 
 
@@ -1356,7 +1376,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_MOVEC_OP_REV2	F_DEST	F_SRC1	/* ToDo: CC */
+	|	FP_MOVEC_OP_REV2	F_DEST	F_SRC1	CC_REG
 		{
 		  mips32_r2_inst ();
 		}
@@ -1465,7 +1485,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 
 	|	FP_CMP_OP	F_SRC1		F_SRC2
 		{
-		  r_cond_type_inst ($1.i, $2.i, $3.i);
+		  r_cond_type_inst ($1.i, $2.i, $3.i, 0);
+		}
+
+
+	|	FP_CMP_OP	CC_REG	F_SRC1		F_SRC2
+		{
+		  r_cond_type_inst ($1.i, $3.i, $4.i, $2.i);
 		}
 
 
@@ -1490,7 +1516,6 @@ LOAD_OP:	Y_LB_OP
 
 LOAD_COP:	Y_LWC0_OP
 	|	Y_LWC2_OP
-	|	Y_LWC3_OP
 	;
 
 LOAD_IMM_OP:	Y_LUI_OP
@@ -1525,7 +1550,6 @@ STORE_OP:	Y_SB_OP
 
 STORE_COP:	Y_SWC0_OP
 	|	Y_SWC2_OP
-	|	Y_SWC3_OP
 	;
 
 STOREF_OP:	Y_SWC1_OP
@@ -1640,14 +1664,18 @@ BF_OP_REV2:	Y_EXT_OP
 	|	Y_INS_OP
 	;
 
-NULLARY_BR_OP:	Y_BC0T_OP
-	|	Y_BC1T_OP
-	|	Y_BC2T_OP
-	|	Y_BC3T_OP
-	|	Y_BC0F_OP
-	|	Y_BC1F_OP
+COPROC_BR_OP:	Y_BC0F_OP
+	|	Y_BC0T_OP
 	|	Y_BC2F_OP
-	|	Y_BC3F_OP
+	|	Y_BC2FL_OP
+	|	Y_BC2T_OP
+	|	Y_BC2TL_OP
+	;
+
+COPROC1_BR_OP:	Y_BC1F_OP
+	|	Y_BC1FL_OP
+	|	Y_BC1T_OP
+	|	Y_BC1TL_OP
 	;
 
 UNARY_BR_OP:	Y_BGEZ_OP
@@ -1703,12 +1731,10 @@ MOVE_COP_OP:	Y_MFC0_OP
 	|	Y_MFC1_OP
 	|	Y_MFC1_D_POP
 	|	Y_MFC2_OP
-	|	Y_MFC3_OP
 	|	Y_MTC0_OP
 	|	Y_MTC1_OP
 	|	Y_MTC1_D_POP
 	|	Y_MTC2_OP
-	|	Y_MTC3_OP
 	;
 
 MOVE_COP_OP_REV2:	Y_MFHC1_OP
@@ -1720,11 +1746,9 @@ MOVE_COP_OP_REV2:	Y_MFHC1_OP
 CTL_COP_OP:	Y_CFC0_OP
 	|	Y_CFC1_OP
 	|	Y_CFC2_OP
-	|	Y_CFC3_OP
 	|	Y_CTC0_OP
 	|	Y_CTC1_OP
 	|	Y_CTC2_OP
-	|	Y_CTC3_OP
 	;
 
 /* Floating point operations */
@@ -2310,6 +2334,14 @@ FP_REGISTER:	Y_FP_REG
 		{
 		  if ($1.i < 0 || $1.i > 31)
 		    yyerror ("FP register number out of range");
+		  $$ = $1;
+		}
+
+
+CC_REG:	       Y_INT
+		{
+		  if ($1.i < 0 || $1.i > 7)
+		    yyerror ("CC register number out of range");
 		  $$ = $1;
 		}
 

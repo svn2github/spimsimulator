@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 13    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 14    2/27/04 11:16p Larus $
  */
 
 #include <stdio.h>
@@ -87,12 +87,6 @@ reg_word R[32];
 reg_word HI, LO;
 int HI_present, LO_present;
 mem_addr PC, nPC;
-double *FPR;			/* Dynamically allocate so overlay */
-float *FGR;			/* is possible */
-int *FWR;			/* is possible */
-int FP_reg_present;		/* Presence bits for FP registers */
-int FP_reg_poison;		/* Poison bits for FP registers */
-int FP_spec_load;		/* Is register waiting for a speculative ld */
 reg_word CpCond[4], CCR[4][32], CPR[4][32];
 
 int bare_machine;		/* Non-Zero => simulate bare machine */

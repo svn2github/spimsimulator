@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 13    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/inst.c 14    2/27/04 11:16p Larus $
 */
 
 #include <stdio.h>
@@ -412,124 +412,126 @@ r_sh_type_inst (int opcode, int rd, int rt, int shamt)
 
 
 /* Return a floating-point compare instruction with the given OPCODE,
-   FS, and FT fields.*/
+   FS, FT, and CC fields.*/
 
 void
-r_cond_type_inst (int opcode, int rs, int rt)
+r_cond_type_inst (int opcode, int fs, int ft, int cc)
 {
-  instruction *inst = make_r_type_inst (opcode, 0, rs, rt);
+  instruction *inst = make_r_type_inst (opcode, 0, fs, ft);
+  SET_IMM(inst, 0);
+  SET_FD(inst, cc << 2);
 
   switch (opcode)
     {
     case Y_C_EQ_D_OP:
     case Y_C_EQ_S_OP:
       {
-	COND(inst) = COND_EQ;
+	SET_COND(inst, COND_EQ);
 	break;
       }
 
     case Y_C_LE_D_OP:
     case Y_C_LE_S_OP:
       {
-	COND(inst) = COND_IN | COND_LT | COND_EQ;
+	SET_COND(inst, COND_IN | COND_LT | COND_EQ);
 	break;
       }
 
     case Y_C_LT_D_OP:
     case Y_C_LT_S_OP:
       {
-	COND(inst) = COND_IN | COND_LT;
+	SET_COND(inst, COND_IN | COND_LT);
 	break;
       }
 
     case Y_C_NGE_D_OP:
     case Y_C_NGE_S_OP:
       {
-	COND(inst) = COND_IN | COND_LT | COND_UN;
+	SET_COND(inst, COND_IN | COND_LT | COND_UN);
 	break;
       }
 
     case Y_C_NGLE_D_OP:
     case Y_C_NGLE_S_OP:
       {
-	COND(inst) = COND_IN | COND_UN;
+	SET_COND(inst, COND_IN | COND_UN);
 	break;
       }
 
     case Y_C_NGL_D_OP:
     case Y_C_NGL_S_OP:
       {
-	COND(inst) = COND_IN | COND_EQ | COND_UN;
+	SET_COND(inst, COND_IN | COND_EQ | COND_UN);
 	break;
       }
 
     case Y_C_NGT_D_OP:
     case Y_C_NGT_S_OP:
       {
-	COND(inst) = COND_IN | COND_LT | COND_EQ | COND_UN;
+	SET_COND(inst, COND_IN | COND_LT | COND_EQ | COND_UN);
 	break;
       }
 
     case Y_C_OLT_D_OP:
     case Y_C_OLT_S_OP:
       {
-	COND(inst) = COND_LT;
+	SET_COND(inst, COND_LT);
 	break;
       }
 
     case Y_C_OLE_D_OP:
     case Y_C_OLE_S_OP:
       {
-	COND(inst) = COND_LT | COND_EQ;
+	SET_COND(inst, COND_LT | COND_EQ);
 	break;
       }
 
     case Y_C_SEQ_D_OP:
     case Y_C_SEQ_S_OP:
       {
-	COND(inst) = COND_IN | COND_EQ;
+	SET_COND(inst, COND_IN | COND_EQ);
 	break;
       }
 
     case Y_C_SF_D_OP:
     case Y_C_SF_S_OP:
       {
-	COND(inst) = COND_IN;
+	SET_COND(inst, COND_IN);
 	break;
       }
 
     case Y_C_F_D_OP:
     case Y_C_F_S_OP:
       {
-	COND(inst) = 0;
+	SET_COND(inst, 0);
 	break;
       }
 
     case Y_C_UEQ_D_OP:
     case Y_C_UEQ_S_OP:
       {
-	COND(inst) = COND_EQ | COND_UN;
+	SET_COND(inst, COND_EQ | COND_UN);
 	break;
       }
 
     case Y_C_ULT_D_OP:
     case Y_C_ULT_S_OP:
       {
-	COND(inst) = COND_LT | COND_UN;
+	SET_COND(inst, COND_LT | COND_UN);
 	break;
       }
 
     case Y_C_ULE_D_OP:
     case Y_C_ULE_S_OP:
       {
-	COND(inst) = COND_LT | COND_EQ | COND_UN;
+	SET_COND(inst, COND_LT | COND_EQ | COND_UN);
 	break;
       }
 
     case Y_C_UN_D_OP:
     case Y_C_UN_S_OP:
       {
-	COND(inst) = COND_UN;
+	SET_COND(inst, COND_UN);
 	break;
       }
     }
@@ -667,8 +669,8 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
   buf += strlen (buf);
   switch (entry->value2)
     {
-    case B0_TYPE_INST:
-      sprintf (buf, " %d", IDISP (inst));
+    case BC_TYPE_INST:
+      sprintf (buf, "%d %d", CC (inst), IDISP (inst));
       buf += strlen (buf);
       break;
 
@@ -704,6 +706,11 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
 
     case R1d_TYPE_INST:
       sprintf (buf, " $%d", RD (inst));
+      buf += strlen (buf);
+      break;
+
+    case R2ts_TYPE_INST:
+      sprintf (buf, " $%d, $%d", RT (inst), FS (inst));
       buf += strlen (buf);
       break;
 
@@ -773,16 +780,9 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       buf += strlen (buf);
       break;
 
-    case CP_TYPE_INST:
-      sprintf (buf, " $%d, $%d", RT (inst), RD (inst));
-      buf += strlen (buf);
-      break;
-
     case NOARG_TYPE_INST:
       break;
 
-    case ASM_DIR:
-    case PSEUDO_OP:
     default:
       fatal_error ("Unknown instruction type in print_inst\n");
     }
@@ -863,7 +863,9 @@ opcode_is_branch (int opcode)
     case Y_BNE_OP:
     case Y_BNEZ_POP:
     case Y_BC1F_OP:
+    case Y_BC1FL_OP:
     case Y_BC1T_OP:
+    case Y_BC1TL_OP:
       return (1);
 
     default:
@@ -903,7 +905,6 @@ opcode_is_load_store (int opcode)
     case Y_LWC0_OP: return (1);
     case Y_LWC1_OP: return (1);
     case Y_LWC2_OP: return (1);
-    case Y_LWC3_OP: return (1);
     case Y_LWL_OP: return (1);
     case Y_LWR_OP: return (1);
     case Y_SB_OP: return (1);
@@ -912,7 +913,6 @@ opcode_is_load_store (int opcode)
     case Y_SWC0_OP: return (1);
     case Y_SWC1_OP: return (1);
     case Y_SWC2_OP: return (1);
-    case Y_SWC3_OP: return (1);
     case Y_SWL_OP: return (1);
     case Y_SWR_OP: return (1);
     case Y_L_D_POP: return (1);
@@ -1240,8 +1240,9 @@ inst_encode (instruction *inst)
 
   switch (entry->value2)
     {
-    case B0_TYPE_INST:
+    case BC_TYPE_INST:
       return (a_opcode
+	      | REGS (CC (inst) << 2, 16)
 	      | (IOFFSET (inst) & 0xffff));
 
     case B1_TYPE_INST:
@@ -1275,6 +1276,11 @@ inst_encode (instruction *inst)
     case R1d_TYPE_INST:
       return (a_opcode
 	      | REGS (RD (inst), 11));
+
+    case R2ts_TYPE_INST:
+      return (a_opcode
+	      | REGS (RT (inst), 16)
+	      | REGS (FS (inst), 11));
 
     case R2td_TYPE_INST:
       return (a_opcode
@@ -1341,16 +1347,9 @@ inst_encode (instruction *inst)
       return (a_opcode
 	      | TARGET (inst));
 
-    case CP_TYPE_INST:
-      return (a_opcode
-	      | REGS (RT (inst), 16)
-	      | REGS (RD (inst), 11));
-
     case NOARG_TYPE_INST:
       return (a_opcode);
 
-    case ASM_DIR:
-    case PSEUDO_OP:
     default:
       fatal_error ("Unknown instruction type in inst_encoding\n");
       return (0);		/* Not reached */
@@ -1384,11 +1383,9 @@ sort_a_opcode_table ()
 }
 
 
-#define REG(V,O) ((V) >> O) & 0x1f
-
 
 instruction *
-  inst_decode (uint32 value)
+inst_decode (uint32 value)
 {
   int32 a_opcode = value & 0xfc000000;
   name_val_val *entry;
@@ -1425,91 +1422,85 @@ instruction *
 				sizeof (name_tbl) / sizeof (name_val_val),
 				i_opcode)->value2)
     {
-    case B0_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, 0, 0, value & 0xffff));
+    case BC_TYPE_INST:
+      return (mk_i_inst (value, i_opcode, BIN_RS(value), BIN_RT(value),
+			 value & 0xffff));
 
     case B1_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, REG (value, 21), 0, value & 0xffff));
+      return (mk_i_inst (value, i_opcode, BIN_RS (value), 0, value & 0xffff));
 
     case I1t_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, REG (value, 21), REG (value, 16),
+      return (mk_i_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
 			 value & 0xffff));
 
     case I2_TYPE_INST:
     case B2_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, REG (value, 21), REG (value, 16),
+      return (mk_i_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
 			 value & 0xffff));
 
     case I2a_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, REG (value, 21), REG (value, 16),
+      return (mk_i_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
 			 value & 0xffff));
 
     case R1s_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 21), 0, 0, 0));
+      return (mk_r_inst (value, i_opcode, BIN_RS (value), 0, 0, 0));
 
     case R1d_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, 0, REG (value, 11), 0));
+      return (mk_r_inst (value, i_opcode, 0, 0, BIN_RD (value), 0));
+
+    case R2ts_TYPE_INST:
+      return (mk_r_inst (value, i_opcode, 0, BIN_RT (value), BIN_FS (value), 0));
 
     case R2td_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, REG (value, 16), REG (value, 11),
-			 0));
+      return (mk_r_inst (value, i_opcode, 0, BIN_RT (value), BIN_RD (value), 0));
 
     case R2st_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 21), REG (value, 16),
-			 0, 0));
+      return (mk_r_inst (value, i_opcode, BIN_RS (value), BIN_RT (value), 0, 0));
 
     case R2ds_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 21), 0, REG (value, 11),
-			 0));
+      return (mk_r_inst (value, i_opcode, BIN_RS (value), 0, BIN_RD (value), 0));
 
     case R2sh_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, REG (value, 16), REG (value, 11),
-			 REG (value, 6)));
+      return (mk_r_inst (value, i_opcode, 0, BIN_RT (value), BIN_RD (value),
+			 BIN_SA (value)));
 
     case R3_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 21), REG (value, 16),
-			 REG (value, 11), 0));
+      return (mk_r_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
+			 BIN_RD (value), 0));
 
     case R3sh_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 21), REG (value, 16),
-			 REG (value, 11), 0));
+      return (mk_r_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
+			 BIN_RD (value), 0));
 
     case FP_I2a_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, REG (value, 21), REG (value, 16),
+      return (mk_i_inst (value, i_opcode, BIN_BASE (value), BIN_FT (value),
 			 value & 0xffff));
 
     case FP_R2ds_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 11), 0, REG (value, 6),
-			 0));
+      return (mk_r_inst (value, i_opcode, BIN_FS (value), 0, BIN_FD (value), 0));
 
     case FP_CMP_TYPE_INST:
       {
-	instruction *inst = mk_r_inst (value, i_opcode, REG (value, 11),
-				       REG (value, 16), 0, 0);
+	instruction *inst = mk_r_inst (value, i_opcode, BIN_FS (value),
+				       BIN_FT (value), 0, 0);
 	SET_COND (inst, value & 0xf);
 	return (inst);
       }
 
     case FP_R3_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 11), REG (value, 16),
-			 REG (value, 6), 0));
+      return (mk_r_inst (value, i_opcode, BIN_FS (value), BIN_FT (value),
+			 BIN_FD (value), 0));
 
     case FP_MOV_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, REG (value, 11), 0, REG (value, 6),
-			 0));
+      return (mk_r_inst (value, i_opcode, BIN_FS (value), 0, BIN_FD (value), 0));
 
     case J_TYPE_INST:
       return (mk_j_inst (value, i_opcode, value & 0x2ffffff));
 
-    case CP_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, REG (value, 16), REG (value, 11),
-			 0));
 
     case NOARG_TYPE_INST:
       return (mk_r_inst (value, i_opcode, 0, 0, 0, 0));
 
-    case ASM_DIR:
-    case PSEUDO_OP:
     default:
       return (mk_r_inst (value, 0, 0, 0, 0, 0)); /* Invalid inst */
     }

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 14    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 15    2/27/04 11:16p Larus $
 */
 
 
@@ -79,7 +79,7 @@ initialize_world (char* trap_file)
 {
   /* Allocate the floating point registers */
   if (FGR == NULL)
-    FPR = (double *) xmalloc (16 * sizeof (double));
+    FPR = (double *) xmalloc (FPR_LENGTH * sizeof (double));
   /* Allocate the memory */
   make_memory (initial_text_size,
 	       initial_data_size, initial_data_limit,
@@ -142,10 +142,16 @@ write_startup_message ()
 void
 initialize_registers ()
 {
-  memclr (FPR, 16 * sizeof (double));
+  memclr (FPR, FPR_LENGTH * sizeof (double));
   FGR = (float *) FPR;
   FWR = (int *) FPR;
-  memclr (R, 32 * sizeof (reg_word));
+  FIR = 0x10000 | 0x8000;	/* Double & single implemented */
+  FCSR = 0x0;
+  FCCR = 0x0;
+  FEXR = 0x0;
+  FENR = 0x0;
+
+  memclr (R, R_LENGTH * sizeof (reg_word));
   R[29] = STACK_TOP - BYTES_PER_WORD - 4096; /* Initialize $sp */
   HI = LO = 0;
   PC = 0;

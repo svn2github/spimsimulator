@@ -28,6 +28,7 @@
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
+#include "reg.h"
 #include "sym-tbl.h"
 #include "parser.h"
 #include "scanner.h"
@@ -156,23 +157,28 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 			      current_line_no = line_no;
 			      current_line = yytext;
 			    }
+
 			  if (!only_id && token != 0)
 			    {
+			      /* Keyword */
 			      yylval.i = token;
 			      current_line = yytext;
 			      return (token);
 			    }
+
 			  if (only_id && token != 0)
 			    yyerror ("Cannot use opcodes as labels");
 
 			  if ((l = label_is_defined (yytext)) != NULL
 			      && l->const_flag)
 			    {
+			      /* Defined label */
 			      yylval.i = (int) l->addr;
 			      return (Y_INT);
 			    }
 			  else
 			    {
+			      /* Not-yet defined label */
 			      yylval.p = (char*) str_copy (yytext);
 			      return (Y_ID);
 			    }
@@ -181,19 +187,31 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 
 \$[a-zA-Z0-9_\.$]+	{
 			  int reg_no = register_name_to_number (yytext + 1);
+
 			  if (current_line == NULL)
 			    {
 			      current_line_no = line_no;
 			      current_line = yytext;
 			    }
+
 			  if (reg_no != -1
-			      && *(yytext + 1) == 'f' && *(yytext + 2) != 'p')
+			      && *(yytext + 1) == 'f'
+			      && *(yytext + 2) != 'p')
 			    {
+			      /* Floating point register ($f0) */
 			      yylval.i = reg_no;
 			      return (Y_FP_REG);
 			    }
-			  else if (reg_no < 0 || reg_no > 31)
+
+			  if (0 <= reg_no && reg_no < R_LENGTH)
 			    {
+			      /* Register ($r0) */
+			      yylval.i = reg_no;
+			      return (Y_REG);
+			    }
+			  else
+			    {
+			      /* Otherwise, an integer or identifier */
 			      label *l = label_is_defined (yytext);
 
 			      if (l != NULL && l->const_flag)
@@ -206,11 +224,6 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 				  yylval.p = (char*) str_copy (yytext);
 				  return (Y_ID);
 				}
-			    }
-			  else
-			    {
-			      yylval.i = reg_no;
-			      return (Y_REG);
 			    }
 			}
 
@@ -553,7 +566,6 @@ static name_val_val register_tbl [] = {
   {"v1", 3, 0},
   {"zero", 0, 0}
 };
-
 
 int
 register_name_to_number (char *name)

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 18    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/spim.c 19    2/27/04 11:16p Larus $
 */
 
 
@@ -784,7 +784,7 @@ print_reg_from_string (char* reg_num)
   else if (streq (s1, "lo"))
     write_output (message_out, "LO = 0x%08x (%d)\n", LO, LO);
   else if (streq (s1, "fpcond"))
-    write_output (message_out, "FpCond = 0x%08x (%d)\n", FpCond, FpCond);
+    write_output (message_out, "FCSR = 0x%08x (%d)\n", FCSR, FCSR);
   else if (streq (s1, "cause"))
     write_output (message_out, "Cause = 0x%08x (%d)\n", Cause, Cause);
   else if (streq (s1, "epc"))

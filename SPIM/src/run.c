@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 14    2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/run.c 15    2/27/04 11:16p Larus $
 */
 
 
@@ -57,6 +57,7 @@ long atol (const char *);
 /* Local functions: */
 
 static void long_multiply (reg_word v1, reg_word v2);
+static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
 
 
 #define SIGN_BIT(X) ((X) & 0x80000000)
@@ -74,41 +75,50 @@ static void long_multiply (reg_word v1, reg_word v2);
    the result of executing a delayed instruction in a delay slot.  Here
    we execute the second branch. */
 
-#define BRANCH_INST(TEST, TARGET)			\
-		{					\
-		  if (TEST)				\
-		    {					\
-		      mem_addr target = (TARGET);	\
-		      if (delayed_branches)		\
-		      /* +4 since jump in delay slot */	\
-		      target += BYTES_PER_WORD;		\
-		      JUMP_INST (target)		\
-		     }					\
+#define BRANCH_INST(TEST, TARGET, NULLIFY)			\
+		{						\
+		  if (TEST)					\
+		    {						\
+		      mem_addr target = (TARGET);		\
+		      if (delayed_branches)			\
+			{					\
+			  /* +4 since jump in delay slot */	\
+			  target += BYTES_PER_WORD;		\
+			}					\
+		      JUMP_INST (target)			\
+		     }						\
+		  else if (NULLIFY)				\
+		    {						\
+		      /* If test fails and nullify bit set, skip\
+			 instruction in delay slot. */		\
+		      PC += BYTES_PER_WORD;			\
+		    }						\
 		 }
 
 
-#define JUMP_INST(TARGET)				\
-		{					\
-		  if (delayed_branches)			\
-		    {					\
-		      run_spim (PC + BYTES_PER_WORD, 1, display); \
-		    }					\
+#define JUMP_INST(TARGET)					\
+		{						\
+		  if (delayed_branches)				\
+		    {						\
+		      run_spim (PC + BYTES_PER_WORD, 1, display);\
+		    }						\
 		    /* -4 since PC is bumped after this inst */	\
-		    PC = (TARGET) - BYTES_PER_WORD;	\
+		    PC = (TARGET) - BYTES_PER_WORD;		\
 		 }
 
 
-/* If the delayed_load flag is false, the result from a load is available immediate.
-   If the delayed_load flag is true, the result from a load is not available until the
-   subsequent instruction has executed (as in the real machine). We need a two element
-   shift register for the value and its destination, as the instruction following the
-   load can itself be a load instruction. */
+/* If the delayed_load flag is false, the result from a load is available
+   immediate.  If the delayed_load flag is true, the result from a load is
+   not available until the subsequent instruction has executed (as in the
+   real machine). We need a two element shift register for the value and its
+   destination, as the instruction following the load can itself be a load
+   instruction. */
 
 #define LOAD_INST(OP, ADDR, DEST_A, MASK)			\
 		 {						\
 		  reg_word tmp;					\
 		  OP (tmp, (ADDR));				\
-		  LOAD_INST_BASE(DEST_A, (tmp & (MASK)))	\
+		  LOAD_INST_BASE (DEST_A, (tmp & (MASK)))	\
 		 }
 
 
@@ -190,7 +200,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    {
 	      exception_occurred = 0;
 	      EPC = ROUND_DOWN (PC, BYTES_PER_WORD);
-	      handle_exception();
+	      handle_exception ();
 	      continue;
 	    }
 	  else if (inst == NULL)
@@ -256,26 +266,26 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_BC0F_OP:
 	    case Y_BC2F_OP:
-	    case Y_BC3F_OP:
 	      BRANCH_INST (CpCond[OPCODE (inst) - Y_BC0F_OP] == 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst), 0);
 	      break;
 
 	    case Y_BC0T_OP:
 	    case Y_BC2T_OP:
-	    case Y_BC3T_OP:
 	      BRANCH_INST (CpCond[OPCODE (inst) - Y_BC0T_OP] != 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst), 0);
 	      break;
 
 	    case Y_BEQ_OP:
 	      BRANCH_INST (R[RS (inst)] == R[RT (inst)],
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BGEZ_OP:
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BGEZAL_OP:
@@ -284,22 +294,26 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      else
 		R[31] = PC + BYTES_PER_WORD;
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BGTZ_OP:
 	      BRANCH_INST (R[RS (inst)] != 0 && SIGN_BIT (R[RS (inst)]) == 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BLEZ_OP:
 	      BRANCH_INST (R[RS (inst)] == 0 || SIGN_BIT (R[RS (inst)]) != 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BLTZ_OP:
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BLTZAL_OP:
@@ -308,12 +322,14 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      else
 		R[31] = PC + BYTES_PER_WORD;
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BNE_OP:
 	      BRANCH_INST (R[RS (inst)] != R[RT (inst)],
-			   PC + IDISP (inst));
+			   PC + IDISP (inst),
+			   0);
 	      break;
 
 	    case Y_BREAK_OP:
@@ -325,7 +341,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_CFC0_OP:
 	    case Y_CFC2_OP:
-	    case Y_CFC3_OP:
 	      R[RT (inst)] = CCR[OPCODE (inst) - Y_CFC0_OP][RD (inst)];
 	      break;
 
@@ -338,7 +353,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_CTC0_OP:
 	    case Y_CTC2_OP:
-	    case Y_CTC3_OP:
 	      CCR[OPCODE (inst) - Y_CTC0_OP][RD (inst)] = R[RT (inst)];
 	      break;
 
@@ -427,7 +441,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_LWC0_OP:
 	    case Y_LWC2_OP:
-	    case Y_LWC3_OP:
 	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
 			 &CPR[OPCODE (inst) - Y_LWC0_OP][RT (inst)],
 			 0xffffffff);
@@ -440,7 +453,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		register int byte = addr & 0x3;
 		reg_word reg_val = R[RT (inst)];
 
-		READ_MEM_WORD(word, addr & 0xfffffffc);
+		READ_MEM_WORD (word, addr & 0xfffffffc);
 		if ((!exception_occurred) || ((Cause >> 2) > LAST_REAL_EXCEPT))
 #ifdef BIGENDIAN
 		  switch (byte)
@@ -492,7 +505,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		register int byte = addr & 0x3;
 		reg_word reg_val = R[RT (inst)];
 
-		READ_MEM_WORD(word, addr & 0xfffffffc);
+		READ_MEM_WORD (word, addr & 0xfffffffc);
 		if ((!exception_occurred) || ((Cause >> 2) > LAST_REAL_EXCEPT))
 #ifdef BIGENDIAN
 		  switch (byte)
@@ -539,7 +552,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MFC0_OP:
 	    case Y_MFC2_OP:
-	    case Y_MFC3_OP:
 	      R[RT (inst)] = CPR[OPCODE (inst) - Y_MFC0_OP][RD (inst)];
 	      break;
 
@@ -553,7 +565,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MTC0_OP:
 	    case Y_MTC2_OP:
-	    case Y_MTC3_OP:
 	      CPR[OPCODE (inst) - Y_MTC0_OP][RD (inst)] = R[RT (inst)];
 	      break;
 
@@ -739,7 +750,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_SWC0_OP:
 	    case Y_SWC2_OP:
-	    case Y_SWC3_OP:
 	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst),
 			    CPR[OPCODE (inst) - Y_SWC0_OP][RT (inst)]);
 	      break;
@@ -869,7 +879,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	      /* FPA Operations */
 
-
 	    case Y_ABS_S_OP:
 	      SET_FPR_S (FD (inst), fabs (FPR_S (FS (inst))));
 	      break;
@@ -889,14 +898,18 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_BC1F_OP:
-	      BRANCH_INST (FpCond == 0,
-			   PC + IDISP (inst));
-	      break;
-
+	    case Y_BC1FL_OP:
 	    case Y_BC1T_OP:
-	      BRANCH_INST (FpCond == 1,
-			   PC + IDISP (inst));
-	      break;
+	    case Y_BC1TL_OP:
+	      {
+		int cc = CC (inst);
+		int nd = ND (inst);	/* 1 => nullify */
+		int tf = TF (inst);	/* 0 => BC1F, 1 => BC1T */
+		BRANCH_INST ((FCCR & (1 << cc)) == (tf << cc),
+			     PC + IDISP (inst),
+			     nd);
+		break;
+	      }
 
 	    case Y_C_F_S_OP:
 	    case Y_C_UN_S_OP:
@@ -917,30 +930,21 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      {
 		float v1 = FPR_S (FS (inst)), v2 = FPR_S (FT (inst));
 		double dv1 = v1, dv2 = v2;
-		int less, equal, unordered;
 		int cond = COND (inst);
+		int cc = FD (inst);
 
 		if (NaN (dv1) || NaN (dv2))
 		  {
-		    less = 0;
-		    equal = 0;
-		    unordered = 1;
 		    if (cond & COND_IN)
-		      RAISE_EXCEPTION (INVALID_EXCEPT, break);
+		      {
+			RAISE_EXCEPTION (INVALID_EXCEPT, break);
+		      }
+		    set_fpu_cc (cond, cc, 0, 0, 1);
 		  }
 		else
 		  {
-		    less = v1 < v2;
-		    equal = v1 == v2;
-		    unordered = 0;
+		    set_fpu_cc (cond, cc, v1 < v2, v1 == v2, 0);
 		  }
-		FpCond = 0;
-		if (cond & COND_LT)
-		  FpCond |= less;
-		if (cond & COND_EQ)
-		  FpCond |= equal;
-		if (cond & COND_UN)
-		  FpCond |= unordered;
 	      }
 	      break;
 
@@ -962,39 +966,43 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_C_NGT_D_OP:
 	      {
 		double v1 = FPR_D (FS (inst)), v2 = FPR_D (FT (inst));
-		int less, equal, unordered;
 		int cond = COND (inst);
+		int cc = FD (inst);
 
 		if (NaN (v1) || NaN (v2))
 		  {
-		    less = 0;
-		    equal = 0;
-		    unordered = 1;
 		    if (cond & COND_IN)
-		      RAISE_EXCEPTION (INVALID_EXCEPT, break);
+		      {
+			RAISE_EXCEPTION (INVALID_EXCEPT, break);
+		      }
+		    set_fpu_cc (cond, cc, 0, 0, 1);
 		  }
 		else
 		  {
-		    less = v1 < v2;
-		    equal = v1 == v2;
-		    unordered = 0;
+		    set_fpu_cc (cond, cc, v1 < v2, v1 == v2, 0);
 		  }
-		FpCond = 0;
-		if (cond & COND_LT)
-		  FpCond |= less;
-		if (cond & COND_EQ)
-		  FpCond |= equal;
-		if (cond & COND_UN)
-		  FpCond |= unordered;
 	      }
 	      break;
 
 	    case Y_CFC1_OP:
-	      R[RT (inst)] = FCR[RD (inst)]; /* RD not FS */
+	      R[RT (inst)] = FCR[FS (inst)];
 	      break;
 
 	    case Y_CTC1_OP:
-	      FCR[RD (inst)] = R[RT (inst)]; /* RD not FS */
+	      FCR[FS (inst)] = R[RT (inst)];
+
+	      /* FCC bits in FCSR and FCCR are linked, so ensure they remain
+		 identical. */
+	      if (FCCR_REG == FS (inst))
+		{
+		  FCSR = (FCSR & ~0xfe400000)
+		    | ((FCCR & 0xfe) << 24)
+		    | ((FCCR & 0x1) << 23);
+		}
+	      else if (FCSR_REG == FS (inst))
+		{
+		  FCCR = ((FCSR >> 24) & 0xfe) | ((FCSR >> 23) & 0x1);
+		}
 	      break;
 
 	    case Y_CVT_D_S_OP:
@@ -1064,7 +1072,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MFC1_OP:
 	      {
-		float val = FGR[RD (inst)]; /* RD not FS */
+		float val = FGR[RD (inst)];
 		reg_word *vp = (reg_word *) &val;
 
 		R[RT (inst)] = *vp; /* Fool coercion */
@@ -1084,7 +1092,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word word = R[RT (inst)];
 		float *wp = (float *) &word;
 
-		FGR[RD (inst)] = *wp; /* RD not FS, fool coercion */
+		FGR[RD (inst)] = *wp; /* fool coercion */
 		break;
 	      }
 
@@ -1187,4 +1195,28 @@ long_multiply (reg_word v1, reg_word v2)
 
   LO = (bd & 0xffff) | ((mid2 & 0xffff) << 16);
   HI = ac + (carry_mid << 16) + ((mid2 >> 16) & 0xffff);
+}
+
+
+static void
+set_fpu_cc (int cond, int cc, int less, int equal, int unordered)
+{
+  int result;
+  int fcsr_bit;
+
+  result = 0;
+  if (cond & COND_LT) result |= less;
+  if (cond & COND_EQ) result |= equal;
+  if (cond & COND_UN) result |= unordered;
+
+  FCCR = (FCCR & ~(1 << cc)) | (result << cc);
+  if (0 == cc)
+    {
+      fcsr_bit = 23;
+    }
+  else
+    {
+      fcsr_bit = 24 + cc;
+    }
+  FCSR = (FCSR & ~(1 << fcsr_bit)) | (result << fcsr_bit);
 }
