@@ -520,13 +520,13 @@ OPT_LBL: ID ':' {
 						       : current_data_pc (),
 						       0),
 					 this_line_labels);
-				if ($1.p) free($1.p);
+			     free ((char*)$1.p);
 			 }
 
 	|	ID '=' Y_INT
 		{
 		  label *l = record_label ((char*)$1.p, (mem_addr)$3.i, 1);
-		  if ($1.p) free($1.p);
+		  free ((char*)$1.p);
 
 		  l->const_flag = 1;
 		  clear_labels ();
@@ -812,24 +812,24 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	CACHE_OPS	Y_INT	ADDRESS
 		{
-		  i_type_inst_free($1.i, $2.i, 0, (imm_expr *)$3.p);
+		  i_type_inst_free ($1.i, $2.i, 0, (imm_expr *)$3.p);
 		}
 
 
 	|	TLB_OPS
 		{
-		  r_type_inst($1.i, 0, 0, 0);
+		  r_type_inst ($1.i, 0, 0, 0);
 		}
 
 
 	|	Y_SYNC_OP
 		{
-		  r_type_inst($1.i, 0, 0, 0);
+		  r_type_inst ($1.i, 0, 0, 0);
 		}
 
 	|	Y_SYNC_OP	Y_INT
 		{
-		  r_type_inst($1.i, $2.i, 0, 0);
+		  r_type_inst ($1.i, $2.i, 0, 0);
 		}
 
 
@@ -971,7 +971,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 	|	SHIFT_OPS	DEST	SRC1	Y_INT
 		{
 		  if (($4.i < 0) || (31 < $4.i))
-		    yywarn("Shift distance can only be in the range 0..31");
+		    yywarn ("Shift distance can only be in the range 0..31");
 		  r_sh_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
@@ -1260,22 +1260,22 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 	|	BR_COP_OPS	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = opcode_is_nullified_branch($1.i);
-		  int tf = opcode_is_true_branch($1.i);
+		  int nd = opcode_is_nullified_branch ($1.i);
+		  int tf = opcode_is_true_branch ($1.i);
 		  i_type_inst_free ($1.i,
 				    cc_to_rt (0, nd, tf),
-				    BIN_RS($1.i),
+				    BIN_RS ($1.i),
 				    (imm_expr *)$2.p);
 		}
 
 	|	BR_COP_OPS	CC_REG	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = opcode_is_nullified_branch($1.i);
-		  int tf = opcode_is_true_branch($1.i);
+		  int nd = opcode_is_nullified_branch ($1.i);
+		  int tf = opcode_is_true_branch ($1.i);
 		  i_type_inst_free ($1.i,
 				    cc_to_rt ($2.i, nd, tf),
-				    BIN_RS($1.i),
+				    BIN_RS ($1.i),
 				    (imm_expr *)$3.p);
 		}
 
@@ -1665,7 +1665,7 @@ STOREFP_INDEX_OPS:	Y_SDXC1_OP
 SYS_OPS:	Y_RFE_OP
 		{
 #ifdef MIPS1
-			yywarn("RFE should only be used when SPIM is compiled as a MIPS-I processor");
+			yywarn ("RFE should only be used when SPIM is compiled as a MIPS-I processor");
 #endif
 		}
 	|	Y_SYSCALL_OP
@@ -1688,7 +1688,7 @@ TLB_OPS:	Y_TLBP_OP
 NULLARY_OPS:	Y_ERET_OP
 		{
 #ifdef MIPS1
-			yywarn("ERET should only be used when SPIM is compiled as a MIPS32 processor");
+			yywarn ("ERET should only be used when SPIM is compiled as a MIPS32 processor");
 #endif
 		}
 	;
@@ -1852,10 +1852,10 @@ BR_LE_POPS:	Y_BLE_POP
 
 J_OPS:	Y_J_OP
 	|	Y_JR_OP
-	|	Y_JR_HB_OP { yywarn("Warning:IPS32 Rev 2 '.HB' extension is not implemented and is ignored"); }
+	|	Y_JR_HB_OP { yywarn ("Warning:IPS32 Rev 2 '.HB' extension is not implemented and is ignored"); }
 	|	Y_JAL_OP
 	|	Y_JALR_OP
-	|	Y_JALR_HB_OP { yywarn("Warning:IPS32 Rev 2 '.HB' extension is not implemented and is ignored"); }
+	|	Y_JALR_HB_OP { yywarn ("Warning:IPS32 Rev 2 '.HB' extension is not implemented and is ignored"); }
 	;
 
 B_OPS:	Y_B_POP
@@ -2124,7 +2124,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 		  if (lookup_label ((char*)$2.p)->addr == 0)
 		  {
 		    (void)record_label ((char*)$2.p, current_data_pc (), 1);
-		    if ($1.p) free($1.p);
+		    free ((char*)$2.p);
 		  }
 		  increment_data_pc ($3.i);
 		}
@@ -2165,7 +2165,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 	|	Y_DOUBLE_DIR
 		{
 		  store_op = store_double;
-		  if (data_dir) set_data_alignment(3);
+		  if (data_dir) set_data_alignment (3);
 		}
 		FP_EXPR_LST
 		{
@@ -2220,7 +2220,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 	|	Y_GLOBAL_DIR	ID
 		{
 		  (void)make_label_global ((char*)$2.p);
-		  if ($2.p) free($2.p);
+		  free ((char*)$2.p);
 		}
 
 
@@ -2243,7 +2243,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 				      ? current_text_pc ()
 				      : current_data_pc (),
 				      1);
-		  if ($1.p) free($1.p);
+		  free ((char*)$2.p);
 		}
 
 
@@ -2395,19 +2395,19 @@ ADDR:		'(' REGISTER ')'
 	|	Y_ID
 		{
 		  $$.p = make_addr_expr (0, (char*)$1.p, 0);
-		  if ($1.p) free ((char*)$1.p);
+		  free ((char*)$1.p);
 		}
 
 	|	Y_ID '(' REGISTER ')'
 		{
 		  $$.p = make_addr_expr (0, (char*)$1.p, $3.i);
-		  if ($1.p) free ((char*)$1.p);
+		  free ((char*)$1.p);
 		}
 
 	|	Y_ID '+' ABS_ADDR
 		{
 		  $$.p = make_addr_expr ($3.i, (char*)$1.p, 0);
-		  if ($1.p) free ((char*)$1.p);
+		  free ((char*)$1.p);
 		}
 
 	|	ABS_ADDR '+' ID
@@ -2418,19 +2418,19 @@ ADDR:		'(' REGISTER ')'
 	|	Y_ID '-' ABS_ADDR
 		{
 		  $$.p = make_addr_expr (- $3.i, (char*)$1.p, 0);
-		  if ($1.p) free ((char*)$1.p);
+		  free ((char*)$1.p);
 		}
 
 	|	Y_ID '+' ABS_ADDR '(' REGISTER ')'
 		{
 		  $$.p = make_addr_expr ($3.i, (char*)$1.p, $5.i);
-		  if ($1.p) free ((char*)$1.p);
+		  free ((char*)$1.p);
 		}
 
 	|	Y_ID '-' ABS_ADDR '(' REGISTER ')'
 		{
 		  $$.p = make_addr_expr (- $3.i, (char*)$1.p, $5.i);
-		  if ($1.p) free ((char*)$1.p);
+		  free ((char*)$1.p);
 		}
 	;
 
@@ -2439,13 +2439,13 @@ BR_IMM32:	{only_id = 1;} IMM32 {only_id = 0; $$ = $2;}
 
 IMM16:	IMM32
 		{
-		  check_imm_range($1.p, IMM_MIN, IMM_MAX);
+		  check_imm_range ($1.p, IMM_MIN, IMM_MAX);
 		  $$ = $1;
 		}
 
 UIMM16:	IMM32
 		{
-		  check_uimm_range($1.p, UIMM_MIN, UIMM_MAX);
+		  check_uimm_range ($1.p, UIMM_MIN, UIMM_MAX);
 		  $$ = $1;
 		}
 
@@ -2659,7 +2659,7 @@ clear_labels ()
 
   for ( ; this_line_labels != NULL; this_line_labels = n)
     {
-      resolve_label_uses(this_line_labels->head);
+      resolve_label_uses (this_line_labels->head);
       n = this_line_labels->tail;
       free (this_line_labels);
     }
@@ -2853,7 +2853,7 @@ initialize_parser (char *file_name)
 
 
 static void
-check_imm_range(imm_expr* expr, int32 min, int32 max)
+check_imm_range (imm_expr* expr, int32 min, int32 max)
 {
   if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
     {
@@ -2873,7 +2873,7 @@ check_imm_range(imm_expr* expr, int32 min, int32 max)
 
 
 static void
-check_uimm_range(imm_expr* expr, uint32 min, uint32 max)
+check_uimm_range (imm_expr* expr, uint32 min, uint32 max)
 {
   if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
     {
@@ -2895,7 +2895,7 @@ void
 yyerror (char *s)
 {
   parse_error_occurred = 1;
-  clear_labels();
+  clear_labels ();
   yywarn (s);
 }
 

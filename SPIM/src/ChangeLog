@@ -1,7 +1,37 @@
+2004-07-07    <larus@HomeMachine>
+
+	* Released SPIM 7.0
+
+	* data.c (lcomm_directive) Philipp Lucas [phlucas@cs.uni-sb.de]:
+
+2004-06-27    <larus@HomeMachine>
+
+	* parser.y Philipp Lucas [phlucas@cs.uni-sb.de]:
+	Freed wrong YACC variable in .comm and .label.
+
+2004-06-05    <larus@HomeMachine>
+
+	* PCSpim:
+	Add Solution for building PCSpim with VC7 (PCSpim.VC7).
+
+	* op.h [Dave]:
+	Modified some FP opcodes to correct values.
+
+2004-05-08    <larus@HomeMachine>
+
+	* spim.c, xspim.c:
+	Removed unused variable cycle_level.
+
+2004-05-02    <larus@HomeMachine>
+
+	* MainFrame.{cpp,h}, PCSpimView.{cpp,h}:
+	Fixed updating of status line in PCSpim to conform to MFC convention
+
 2004-04-24    <larus@HomeMachine>
 
 	* parser.y run.c op.h:
 	Changed MUL instruction from pseduo op to actual instruction.
+	Fixed encoding of several instructions to correspond to hardware.
 
 2004-03-28    <larus@HomeMachine>
 

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 10    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/data.c 11    7/07/04 7:47p Larus $
 */
 
 
@@ -199,17 +199,26 @@ extern_directive (char *name, int size)
 void
 lcomm_directive (char *name, int size)
 {
-  label *sym = lookup_label (name);
-
   if (!bare_machine
       && size > 0 && size <= SMALL_DATA_SEG_MAX_SIZE
       && next_gp_item_addr + size < gp_midpoint + 32*K)
     {
+      label *sym = record_label (name, next_gp_item_addr, 1);
       sym->gp_flag = 1;
-      sym->addr = next_gp_item_addr;
+
       next_gp_item_addr += size;
+      /* Don't need to initialize since memory starts with 0's */
     }
-  /* Don't need to initialize since memory starts with 0's */
+  else
+    {
+      record_label (name, next_data_pc, 1);
+
+      for ( ; size > 0; size --)
+	{
+	  set_mem_byte (DATA_PC, 0);
+	  BUMP_DATA_PC(1);
+	}
+    }
 }
 
 
