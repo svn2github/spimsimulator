@@ -4012,39 +4012,39 @@ ushd:	.word 0 0
 	la $2 ushd
 	sw $0 0($2)
 	sw $0 4($2)
-	li $3 -1
+	li $3 0x01020304
 	ush $3 0($2)
 	lw $4 0($2)
-	bne $4 0xffff fail
+	bne $4 0x0304 fail
 	lw $4 4($2)
 	bne $4 0 fail
 
 	sw $0 0($2)
 	sw $0 4($2)
-	li $3 -1
+	li $3 0x01020304
 	ush $3 1($2)
 	lw $4 0($2)
-	bne $4 0xffff00 fail
+	bne $4 0x030400 fail
 	lw $4 4($2)
 	bne $4 0 fail
 
 	sw $0 0($2)
 	sw $0 4($2)
-	li $3 -1
+	li $3 0x01020304
 	ush $3 2($2)
 	lw $4 0($2)
-	bne $4 0xffff0000 fail
+	bne $4 0x03040000 fail
 	lw $4 4($2)
 	bne $4 0 fail
 
 	sw $0 0($2)
 	sw $0 4($2)
-	li $3 -1
+	li $3 0x01020304
 	ush $3 3($2)
 	lw $4 0($2)
-	bne $4 0xff000000 fail
+	bne $4 0x04000000 fail
 	lw $4 4($2)
-	bne $4 0xff fail
+	bne $4 0x03 fail
 
 
 	.data
