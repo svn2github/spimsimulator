@@ -1,7 +1,7 @@
 // SPIM S20 MIPS simulator.
 // Definitions for the SPIM S20.
 //
-// Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+// Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
 // ALL RIGHTS RESERVED.
 // Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 //
@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/pcspim/MainFrm.cpp 5     12/24/00 1:16p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 6     2/15/04 1:07p Larus $ */
 
 // MainFrm.cpp : implementation of the CMainFrame class
 //

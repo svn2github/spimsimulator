@@ -2,7 +2,7 @@
    X interface to SPIM
    (Derived from an earlier work by Alan Siow.)
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 7     2/01/01 8:57p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 8     2/15/04 1:07p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -1199,7 +1199,7 @@ help_action (w, ignore, ignored)
 #endif
 {
   static char * msg = "\nSPIM is a MIPS R2000 simulator.\n\
-Copyright (C) 1990-2000 by James R. Larus, larus@cs.wisc.edu\n\n\
+Copyright (C) 1990-2004 by James R. Larus, larus@cs.wisc.edu\n\n\
 quit  -- Exit from the simulator\n\
 load -- Read a file into memory\n\
 run -- Execute a program\n\

@@ -1,6 +1,6 @@
 # SPIM S20 MIPS simulator.
 # A simple torture test for the bare SPIM simulator.
-# Copyright (C) 1990-2000 James Larus, larus@cs.wisc.edu.
+# Copyright (C) 1990-2004 James Larus, larus@cs.wisc.edu.
 # ALL RIGHTS RESERVED.
 #
 # SPIM is distributed under the following conditions:
@@ -81,7 +81,7 @@ d:	.word 101
 	addiu $3, $0, 0
 	lui $4 0x1000
 	lw $3 0x18($4)		# address of d
-	addu $0, $0, $0		# Nop
+	addu $3, $0, 5
 	addiu $2, $3, 0		# Delayed instruction
 	addiu $2, $0, 101
 	bne $2 $3 fail

@@ -200,7 +200,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "PCSpim Version 1.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
-    LTEXT           "Copyright © 1990-2000 by James R. Larus (larus@cs.wisc.edu). Portions © Morgan Kaufmann Publishers.",
+    LTEXT           "Copyright © 1990-2004 by James R. Larus (larus@cs.wisc.edu). Portions © Morgan Kaufmann Publishers.",
                     IDC_COPYRIGHT,40,27,204,55
     DEFPUSHBUTTON   "OK",IDOK,212,7,32,14,WS_GROUP
 END
@@ -321,7 +321,7 @@ BEGIN
             VALUE "FileDescription", "PCSPIM MFC Application\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "PCSPIM\0"
-            VALUE "LegalCopyright", "Copyright © 1990-2003 by James R. Larus\0"
+            VALUE "LegalCopyright", "Copyright © 1990-2004 by James R. Larus\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "PCSPIM.EXE\0"
             VALUE "PrivateBuild", "\0"

@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Description of a SPIM S20 instruction.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 8     1/04/03 8:58a Larus $
+/* $Header: /Software/SPIM/src/inst.h 9     2/15/04 1:07p Larus $
 */
 
 

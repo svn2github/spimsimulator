@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
   Utilities for displaying machine contents.
 
-  Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
+  Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
   ALL RIGHTS RESERVED.
 
   SPIM is distributed under the following conditions:
@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 9     2/14/04 10:27a Larus $
+  $Header: /Software/SPIM/src/display-utils.c 10    2/15/04 1:07p Larus $
 */
 
 

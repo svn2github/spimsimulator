@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    X interface to SPIM
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu)
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu)
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.h 6     1/12/02 4:16p Larus $
+/* $Header: /Software/SPIM/src/xspim.h 7     2/15/04 1:07p Larus $
  */
 
 

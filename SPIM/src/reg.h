@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Declarations of registers and code for accessing them.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 4     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/reg.h 5     2/15/04 1:07p Larus $
 */
 
 
