@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 20    3/25/04 9:18p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 21    3/27/04 4:50p Larus $
 */
 
 
@@ -138,27 +138,27 @@ format_registers (str_stream *ss, int print_gpr_hex, int print_fpr_hex)
       {
 	/* Use pointers to cast to ints without invoking float->int conversion
 	   so we can just print the bits. */
-	ss_printf (ss, fpstr, i, *(int *)&FGR[i]);
+	ss_printf (ss, fpstr, i, *(int *)&FPR_S(i));
 	ss_printf (ss, fpfill);
 
-	ss_printf (ss, fpstr, i+8, *(int *)&FGR[i+8]);
+	ss_printf (ss, fpstr, i+8, *(int *)&FPR_S(i+8));
 	ss_printf (ss, fpfill);
 
-	ss_printf (ss, fpstr, i+16, *(int *)&FGR[i+16]);
+	ss_printf (ss, fpstr, i+16, *(int *)&FPR_S(i+16));
 	ss_printf (ss, fpfill);
 
-	ss_printf (ss, fpstr, i+24, *(int *)&FGR[i+24]);
+	ss_printf (ss, fpstr, i+24, *(int *)&FPR_S(i+24));
 	ss_printf (ss, "\n");
       }
   else for (i = 0; i < 8; i += 1)
     {
-      ss_printf (ss, fpstr, i, FGR[i]);
+      ss_printf (ss, fpstr, i, FPR_S(i));
       ss_printf (ss, fpfill);
-      ss_printf (ss, fpstr, i+8, FGR[i+8]);
+      ss_printf (ss, fpstr, i+8, FPR_S(i+8));
       ss_printf (ss, fpfill);
-      ss_printf (ss, fpstr, i+16, FGR[i+16]);
+      ss_printf (ss, fpstr, i+16, FPR_S(i+16));
       ss_printf (ss, fpfill);
-      ss_printf (ss, fpstr, i+24, FGR[i+24]);
+      ss_printf (ss, fpstr, i+24, FPR_S(i+24));
       ss_printf (ss, "\n");
     }
 }

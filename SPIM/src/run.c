@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 52    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/run.c 53    3/27/04 4:50p Larus $
 */
 
 
@@ -1403,24 +1403,24 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		if ((addr & 0x3) != 0)
 		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
-		LOAD_INST ((reg_word *) &FGR[FT (inst)],
+		LOAD_INST ((reg_word *) &FPR_S(FT (inst)),
 			   read_mem_word (addr),
 			   0xffffffff);
-		LOAD_INST ((reg_word *) &FGR[FT (inst) + 1],
+		LOAD_INST ((reg_word *) &FPR_S(FT (inst) + 1),
 			   read_mem_word (addr + sizeof(mem_word)),
 			   0xffffffff);
 		break;
 	      }
 
 	    case Y_LWC1_OP:
-	      LOAD_INST ((reg_word *) &FGR[FT (inst)],
+	      LOAD_INST ((reg_word *) &FPR_S(FT (inst)),
 			 read_mem_word (R[BASE (inst)] + IOFFSET (inst)),
 			 0xffffffff);
 	      break;
 
 	    case Y_MFC1_OP:
 	      {
-		float val = FGR[FS (inst)];
+		float val = FPR_S(FS (inst));
 		reg_word *vp = (reg_word *) &val;
 
 		R[RT (inst)] = *vp; /* Fool coercion */
@@ -1519,7 +1519,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word word = R[RT (inst)];
 		float *wp = (float *) &word;
 
-		FGR[FS (inst)] = *wp; /* fool coercion */
+		SET_FPR_S(FS (inst), *wp); /* fool coercion */
 		break;
 	      }
 
@@ -1586,7 +1586,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_SWC1_OP:
 	      {
-		float val = FGR[RT (inst)];
+		float val = FPR_S(RT (inst));
 		reg_word *vp = (reg_word *) &val;
 
 		set_mem_word (R[BASE (inst)] + IOFFSET (inst), *vp);

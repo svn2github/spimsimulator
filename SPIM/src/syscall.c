@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/syscall.c 3     3/21/04 2:05p Larus $ */
+/* $Header: /Software/SPIM/src/syscall.c 4     3/27/04 4:50p Larus $ */
 
 #ifndef WIN32
 #include <unistd.h>
@@ -92,7 +92,7 @@ do_syscall ()
 	static char str [256];
 
 	read_input (str, 256);
-	FGR [REG_FRES] = (float) atof (str);
+	FPR_S (REG_FRES) = (float) atof (str);
 	break;
       }
 

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 13    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/reg.h 14    3/27/04 4:50p Larus $
 */
 
 
@@ -165,20 +165,7 @@ extern float *FGR;		/* is possible */
 extern int *FWR;		/* is possible */
 
 
-#ifdef LITTLEENDIAN
 #define FPR_S(REGNO)	(FGR[REGNO])
-#else
-/* Flip low-order bit of register number, so that even and odd 32-bit float
-   registers reverse and correctly overlap the double registers:
-
-   0              63              0              63
-   -----------------              -----------------
-   |   1   |   0   |	  =>      |   0   |   1   |
-   -----------------              -----------------
-
-   Fortunately, this is not necessary on little endian machines. */
-#define FPR_S(REGNO)	(FGR[(REGNO) ^ 0x1])
-#endif
 
 #define FPR_D(REGNO)	(((REGNO) & 0x1) \
 			 ? (run_error ("Odd FP double register number\n") , 0.0) \
@@ -187,11 +174,7 @@ extern int *FWR;		/* is possible */
 #define FPR_W(REGNO)	(FWR[REGNO])
 
 
-#ifdef LITTLEENDIAN
 #define SET_FPR_S(REGNO, VALUE)	{FGR[REGNO] = (float) (VALUE);}
-#else
-#define SET_FPR_S(REGNO, VALUE)	{FGR[(REGNO) ^ 0x1] = (float) (VALUE);}
-#endif
 
 #define SET_FPR_D(REGNO, VALUE) {if ((REGNO) & 0x1) \
 				 run_error ("Odd FP double register number\n"); \
