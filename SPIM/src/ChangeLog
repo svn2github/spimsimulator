@@ -1,7 +1,11 @@
 2004-02-15    <larus@C745660-A>
 
-	* mips-syscall.c spim-syscall.h spim.c xspim.c spim.h [Akim
-	Demaille (akim@epita.fr)]:
+	* mem.c [Akim Demaille (akim@epita.fr)]:
+	Word align all segments, in particular, ensure that sbrk returns
+	word-aligned addresses.
+
+	* mips-syscall.c spim-syscall.h spim.c xspim.c spim.h
+	SpimSupport.cpp [Akim Demaille (akim@epita.fr)]:
 	Added new syscall (EXIT2_SYSCALL) that takes argument that is
 	passed to spim's exit() call.
 	

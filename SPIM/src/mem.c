@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 11    2/14/04 10:27a Larus $
+/* $Header: /Software/SPIM/src/mem.c 12    2/15/04 9:41a Larus $
 */
 
 
@@ -132,6 +132,7 @@ make_memory (text_size,
 {
   if (data_size <= 65536)
     data_size = 65536;
+  data_size = ROUND_UP(data_size, BYTES_PER_WORD); /* Keep word aligned */
 
   if (text_seg == NULL)
     text_seg = (instruction **) xmalloc (BYTES_TO_INST(text_size));
@@ -143,6 +144,7 @@ make_memory (text_size,
   memclr (text_seg, BYTES_TO_INST(text_size));
   text_top = TEXT_BOT + text_size;
 
+  data_size = ROUND_UP(data_size, BYTES_PER_WORD); /* Keep word aligned */
   if (data_seg == NULL)
     data_seg = (mem_word *) xmalloc (data_size);
   else
@@ -153,6 +155,7 @@ make_memory (text_size,
   data_top = DATA_BOT + data_size;
   data_size_limit = data_limit;
 
+  stack_size = ROUND_UP(stack_size, BYTES_PER_WORD); /* Keep word aligned */
   if (stack_seg == NULL)
     stack_seg = (mem_word *) xmalloc (stack_size);
   else
@@ -175,6 +178,7 @@ make_memory (text_size,
   memclr (k_text_seg, BYTES_TO_INST(k_text_size));
   k_text_top = K_TEXT_BOT + k_text_size;
 
+  k_data_size = ROUND_UP(k_data_size, BYTES_PER_WORD); /* Keep word aligned */
   if (k_data_seg == NULL)
     k_data_seg = (mem_word *) xmalloc (k_data_size);
   else
@@ -219,8 +223,9 @@ expand_data (addl_bytes)
      int addl_bytes;
 #endif
 {
+  int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = data_top - DATA_BOT;
-  int new_size = old_size + addl_bytes;
+  int new_size = old_size + delta;
   register BYTE_TYPE *p;
 
   if (addl_bytes < 0 || (source_file && new_size > data_size_limit))
@@ -235,7 +240,7 @@ expand_data (addl_bytes)
 
   data_seg_b = (BYTE_TYPE *) data_seg;
   data_seg_h = (short *) data_seg;
-  data_top += addl_bytes;
+  data_top += delta;
 
   /* Zero new memory */
   for (p = data_seg_b + old_size; p < data_seg_b + new_size; )
@@ -256,8 +261,9 @@ expand_stack (addl_bytes)
      int addl_bytes;
 #endif
 {
+  int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = STACK_TOP - stack_bot;
-  int new_size = old_size + MAX (addl_bytes, old_size);
+  int new_size = old_size + MAX (delta, old_size);
   mem_word *new_seg;
   register mem_word *po, *pn;
 
@@ -294,8 +300,9 @@ expand_k_data (addl_bytes)
      int addl_bytes;
 #endif
 {
+  int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = k_data_top - K_DATA_BOT;
-  int new_size = old_size + addl_bytes;
+  int new_size = old_size + delta;
   register BYTE_TYPE *p;
 
   if (addl_bytes < 0 || (source_file && new_size > k_data_size_limit))
@@ -310,7 +317,7 @@ expand_k_data (addl_bytes)
 
   k_data_seg_b = (BYTE_TYPE *) k_data_seg;
   k_data_seg_h = (short *) k_data_seg;
-  k_data_top += addl_bytes;
+  k_data_top += delta;
 
   /* Zero new memory */
   for (p = k_data_seg_b + old_size / BYTES_PER_WORD;
