@@ -101,11 +101,11 @@ void CSetValueDlg::OnOK()
   else if (reg_no > 0)
     R[reg_no] = nValue;
   else if (streq(m_strAddress, "status"))
-    Status_Reg = nValue;
+    CP0_Status = nValue;
   else if (streq(m_strAddress, "pc"))
     PC = nValue;
   else if (streq (m_strAddress, "epc"))
-    EPC = nValue;
+    CP0_EPC = nValue;
   else
     {
       mem_addr addr;

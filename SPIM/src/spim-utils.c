@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 15    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 16    3/06/04 4:32p Larus $
 */
 
 
@@ -51,6 +51,8 @@ static void delete_all_breakpoints ();
 
 
 int exception_occurred;
+
+int running_in_delay_slot = 0;
 
 mem_addr program_starting_address = 0;
 
@@ -145,22 +147,29 @@ initialize_registers ()
   memclr (FPR, FPR_LENGTH * sizeof (double));
   FGR = (float *) FPR;
   FWR = (int *) FPR;
-  FIR = 0x10000 | 0x8000;	/* Double & single implemented */
-  FCSR = 0x0;
-  FCCR = 0x0;
-  FEXR = 0x0;
-  FENR = 0x0;
 
   memclr (R, R_LENGTH * sizeof (reg_word));
   R[29] = STACK_TOP - BYTES_PER_WORD - 4096; /* Initialize $sp */
   HI = LO = 0;
   PC = 0;
-  Cause = 0;
-  EPC = 0;
-  Status_Reg = 0;
-  BadVAddr = 0;
-  Context = 0;
-  PRId = 0;
+
+  CP0_BadVAddr = 0;
+  CP0_Count = 0;
+  CP0_Compare = 0;
+  CP0_Status = (CP0_Status_CU & 0x30000000) | CP0_Status_IM | CP0_Status_UM | CP0_Status_IE;
+  CP0_Cause = 0;
+  CP0_EPC = 0;
+#ifdef BIGENDIAN
+  CP0_Config =  CP0_Config_BE;
+#else
+  CP0_Config = 0;
+#endif
+
+  FIR = FIR_W | FIR_D | FIR_S;	/* Word, double, & single implemented */
+  FCSR = 0x0;
+  FCCR = 0x0;
+  FEXR = 0x0;
+  FENR = 0x0;
 }
 
 
@@ -292,6 +301,7 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt)
 
       delete_breakpoint (addr);
       exception_occurred = 0;
+      running_in_delay_slot = 0;
       run_spim (addr, 1, display);
       add_breakpoint (addr);
       steps -= 1;
@@ -299,10 +309,11 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt)
     }
 
   exception_occurred = 0;
+  running_in_delay_slot = 0;
   if (!run_spim (pc, steps, display))
     /* Can't restart program */
     PC = 0;
-  if (exception_occurred && Cause == (BKPT_EXCPT << 2))
+  if (exception_occurred && CP0_ExCode == BKPT_EXCPT)
     return (1);
   else
     return (0);

@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 7     2/15/04 5:54p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 8     3/06/04 4:34p Larus $ */
 
 // MainFrm.cpp : implementation of the CMainFrame class
 //
@@ -175,7 +175,7 @@ void CMainFrame::UpdateSettingsStatus()
 {
   CString strTxt;
 
-  strTxt.Format("PC=0x%08x  EPC=0x%08x  Cause=0x%08x", PC, EPC, Cause);
+  strTxt.Format("PC=0x%08x  EPC=0x%08x  Cause=0x%08x", PC, CP0_EPC, CP0_Cause);
   m_wndStatusBar.SetPaneText(1, strTxt);
   strTxt.Format("%s", bare_machine ? "BARE" : "");
   m_wndStatusBar.SetPaneText(2, strTxt);

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 8     2/28/04 11:23a Larus $
+/* $Header: /Software/SPIM/src/reg.h 9     3/06/04 4:32p Larus $
 */
 
 
@@ -59,6 +59,56 @@ extern mem_addr PC, nPC;
 /* $gp registers */
 
 #define REG_GP		28
+
+
+
+/* The Coprocessor registers: */
+
+extern reg_word CCR[4][32], CPR[4][32];
+
+
+
+/* Exeception handling registers (Coprocessor 0): */
+
+#define CP0_BadVAddr	(CPR[0][8])
+
+#define CP0_Count	(CPR[0][9]) /* ToDo */
+
+#define CP0_Compare	(CPR[0][11]) /* ToDo */
+
+#define CP0_Status	(CPR[0][12])
+/* Implemented fields: */
+#define CP0_Status_CU	0xf0000000
+#define CP0_Status_IM	0x00000300
+#define CP0_Status_UM	0x00000010
+#define CP0_Status_ERL	0x00000004
+#define CP0_Status_EXL	0x00000002
+#define CP0_Status_IE	0x00000001
+#define CP0_Status_Mask (CP0_Status_CU		\
+			 | CP0_Status_UM	\
+			 | CP0_Status_IM	\
+			 | CP0_Status_ERL	\
+			 | CP0_Status_EXL	\
+			 | CP0_Status_IE)
+#define CP0_USER_MODE	(CP0_Status & CP0_Status_UM)
+#define CP0_INTERRUPTS_ON (CP0_Status & CP0_Status_IE)
+
+#define CP0_Cause	(CPR[0][13])
+/* Implemented fields: */
+#define CP0_Cause_BD	0x80000000
+#define CP0_Cause_IP	0x00000300
+#define CP0_Cause_ExcCode 0x0000003c
+#define CP0_ExCode	((CP0_Cause & CP0_Cause_ExcCode) >> 2)
+#define SET_CP0_ExCode(V) CP0_Cause = (CP0_Cause & ~CP0_Cause_ExcCode) | ((V) << 2)
+
+#define CP0_EPC		(CPR[0][14])
+
+#define CP0_Config	(CPR[0][16])
+/* Implemented fields: */
+#define CP0_Config_BE	0x000080000
+#define CP0_Config_AT	0x000060000
+#define CP0_Config_AR	0x00001c000
+#define CP0_Config_MT	0x000000380
 
 
 
@@ -117,44 +167,31 @@ extern int *FWR;		/* is possible */
 
 #define FCR		(CPR[1])
 
+
 #define FIR_REG		0
-#define FIR		(CPR[1][FIR_REG])
+#define FIR		(FCR[FIR_REG])
+/* Implemented fields: */
+#define FIR_W		0x0008000
+#define FIR_D		0x0001000
+#define FIR_S		0x0000800
+#define FIR_MASK	(FIR_W | FIR_D | FIR_S)
 
 #define FCCR_REG	25
-#define FCCR		(CPR[1][FCCR_REG])
+#define FCCR		(FCR[FCCR_REG])
+/* Implemented fields: */
+#define FCCR_FCC	0x000000ff
+#define FCCR_MASK	(FCCR_FCC)
 
 #define FEXR_REG	26
-#define FEXR		(CPR[1][FEXR_REG])
+#define FEXR		(FCR[FEXR_REG])
+/* No implemented fields */
 
 #define FENR_REG	28
-#define FENR		(CPR[1][FENR_REG])
+#define FENR		(FCR[FENR_REG])
+/* No implemented fields */
 
 #define FCSR_REG	31
-#define FCSR		(CPR[1][FCSR_REG])
-
-
-
-
-/* The Coprocessor registers: */
-
-extern reg_word CCR[4][32], CPR[4][32];
-
-
-/* Exeception handling registers (Coprocoessor 0): */
-
-extern int exception_occurred;
-
-#define EntryHI         (CPR[0][0])
-#define EntryLO         (CPR[0][1])
-#define Index           (CPR[0][2])
-#define Random          (CPR[0][3])
-#define Context		(CPR[0][4])
-#define BadVAddr	(CPR[0][8])
-#define Status_Reg	(CPR[0][12])
-#define Cause		(CPR[0][13])
-#define EPC		(CPR[0][14])
-#define PRId		(CPR[0][15])
-
-
-#define USER_MODE	(Status_Reg & 0x2)
-#define INTERRUPTS_ON	(Status_Reg & 0x1)
+#define FCSR		(FCR[FCSR_REG])
+/* Implemented fields: */
+#define FCSR_FCC	0xfe800000
+#define FCSR_MASK	(FCSR_FCC)

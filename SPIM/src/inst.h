@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 14    3/06/04 10:04a Larus $
+/* $Header: /Software/SPIM/src/inst.h 15    3/06/04 4:32p Larus $
 */
 
 
@@ -154,20 +154,30 @@ typedef struct inst_s
 
 /* Raise an exception! */
 
-#define RAISE_EXCEPTION(CAUSE, MISC)					\
+extern int exception_occurred;
+
+extern int running_in_delay_slot;
+
+
+#define RAISE_EXCEPTION(EXCODE, MISC)					\
 	{								\
-	  if (((CAUSE)<= LAST_REAL_EXCEPT) || (Status_Reg & 0x1))	\
+	  if (((EXCODE)<= LAST_REAL_EXCEPT) || CP0_INTERRUPTS_ON)	\
 	    {								\
-	      Cause = (CAUSE) << 2;					\
+	      SET_CP0_ExCode(EXCODE);					\
 	      exception_occurred = 1;					\
-	      EPC = PC;							\
-	      Status_Reg = (Status_Reg & 0xffffffc0) | ((Status_Reg & 0xf) << 2); \
+	      if (running_in_delay_slot && (CP0_Cause & CP0_Cause_BD))	\
+		/* Address of branch */					\
+		CP0_EPC = PC - BYTES_PER_WORD;				\
+	      else							\
+		CP0_EPC = PC;						\
+	      /* MIPS-I only */						\
+	      CP0_Status = (CP0_Status & 0xffffffc0) | ((CP0_Status & 0xf) << 2); \
 	      MISC;							\
 	    }								\
 	}								\
 
 
-/* Recognized exceptions (see Ch. 5): */
+/* Recognized exceptions: */
 
 #define INT_EXCPT	0
 #define MOD_EXCPT	1
@@ -180,12 +190,12 @@ typedef struct inst_s
 #define SYSCALL_EXCPT	8
 #define BKPT_EXCPT	9
 #define RI_EXCPT	10
-#define CPU_EXCPT	11
+#define CpU_EXCPT	11
 #define OVF_EXCPT	12
 #define TRAP_EXCPT	13
 
 
-/* Floating point exceptions (Ch. 8): */
+/* Floating point exceptions: */
 
 #define INEXACT_EXCEPT	13
 #define INVALID_EXCEPT	14

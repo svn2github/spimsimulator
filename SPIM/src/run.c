@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 40    3/06/04 2:13p Larus $
+/* $Header: /Software/SPIM/src/run.c 41    3/06/04 4:32p Larus $
 */
 
 
@@ -101,7 +101,9 @@ static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
 		{						\
 		  if (delayed_branches)				\
 		    {						\
+		      running_in_delay_slot = 1;		\
 		      run_spim (PC + BYTES_PER_WORD, 1, display);\
+		      running_in_delay_slot = 0;		\
 		    }						\
 		    /* -4 since PC is bumped after this inst */	\
 		    PC = (TARGET) - BYTES_PER_WORD;		\
@@ -200,7 +202,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	  if (exception_occurred)
 	    {
 	      exception_occurred = 0;
-	      EPC = ROUND_DOWN (PC, BYTES_PER_WORD);
+	      CP0_EPC = ROUND_DOWN (PC, BYTES_PER_WORD);
 	      handle_exception ();
 	      continue;
 	    }
@@ -529,7 +531,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word reg_val = R[RT (inst)];
 
 		READ_MEM_WORD (word, addr & 0xfffffffc);
-		if ((!exception_occurred) || ((Cause >> 2) > LAST_REAL_EXCEPT))
+		if ((!exception_occurred) || (CP0_ExCode > LAST_REAL_EXCEPT))
 #ifdef BIGENDIAN
 		  switch (byte)
 		    {
@@ -581,7 +583,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word reg_val = R[RT (inst)];
 
 		READ_MEM_WORD (word, addr & 0xfffffffc);
-		if ((!exception_occurred) || ((Cause >> 2) > LAST_REAL_EXCEPT))
+		if ((!exception_occurred) || (CP0_ExCode > LAST_REAL_EXCEPT))
 #ifdef BIGENDIAN
 		  switch (byte)
 		    {
@@ -747,7 +749,10 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;		/* Memory details not implemented */
 
 	    case Y_RFE_OP:
-	      Status_Reg = (Status_Reg & 0xfffffff0) | ((Status_Reg & 0x3c) >> 2);
+	      /* This is MIPS-I, not compatible with MIPS32 or the
+	       definition of the bits in the CP0 Status register in that
+	       architecture. */
+	      CP0_Status = (CP0_Status & 0xfffffff0) | ((CP0_Status & 0x3c) >> 2);
 	      break;
 
 	    case Y_SB_OP:
@@ -1034,16 +1039,20 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_TLBP_OP:
-	      break;		/* Memory details not implemented */
+	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      break;
 
 	    case Y_TLBR_OP:
-	      break;		/* Memory details not implemented */
+	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      break;
 
 	    case Y_TLBWI_OP:
-	      break;		/* Memory details not implemented */
+	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      break;
 
 	    case Y_TLBWR_OP:
-	      break;		/* Memory details not implemented */
+	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      break;
 
 	    case Y_TLT_OP:
 	      if (R[RS (inst)] < R[RT (inst)])
@@ -1198,17 +1207,27 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_CTC1_OP:
 	      FCR[FS (inst)] = R[RT (inst)];
 
-	      /* FCC bits in FCSR and FCCR are linked, so ensure they remain
-		 identical. */
-	      if (FCCR_REG == FS (inst))
+	      if (FIR_REG == FS (inst))
 		{
+		  /* Read only register */
+		  FIR = FIR_MASK;
+		}
+	      else if (FCCR_REG == FS (inst))
+		{
+		  /* FCC bits in FCSR and FCCR linked */
 		  FCSR = (FCSR & ~0xfe400000)
 		    | ((FCCR & 0xfe) << 24)
 		    | ((FCCR & 0x1) << 23);
+		  FCCR &= FCCR_MASK;
 		}
 	      else if (FCSR_REG == FS (inst))
 		{
+		  /* FCC bits in FCSR and FCCR linked */
 		  FCCR = ((FCSR >> 24) & 0xfe) | ((FCSR >> 23) & 0x1);
+		  FCSR &= FCSR_MASK;
+		  if ((R[RT (inst)] & ~FCSR_MASK) != 0)
+		    /* Trying to set unsupported mode */
+		    RAISE_EXCEPTION (INVALID_EXCEPT, {});
 		}
 	      break;
 
@@ -1304,7 +1323,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      {
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		if (addr & 0x3)
-		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
+		  RAISE_EXCEPTION (ADDRL_EXCPT, CP0_BadVAddr = addr);
 
 		LOAD_INST (READ_MEM_WORD, addr,
 			   (reg_word *) &FGR[FT (inst)], 0xffffffff);
@@ -1461,7 +1480,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word *vp = (reg_word *) &val;
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		if (addr & 0x3)
-		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
+		  RAISE_EXCEPTION (ADDRL_EXCPT, CP0_BadVAddr = addr);
 
 		SET_MEM_WORD (addr, *vp);
 		SET_MEM_WORD (addr + sizeof(mem_word), *(vp + 1));
@@ -1519,8 +1538,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	  if (exception_occurred)
 	    {
-	      if ((Cause >> 2) > LAST_REAL_EXCEPT)
-		EPC = PC - BYTES_PER_WORD;
+	      if (CP0_ExCode > LAST_REAL_EXCEPT)
+		CP0_EPC = PC - BYTES_PER_WORD;
 
 	      handle_exception ();
 	    }

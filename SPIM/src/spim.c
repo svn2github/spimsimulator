@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 20    2/28/04 8:51a Larus $
+/* $Header: /Software/SPIM/src/spim.c 21    3/06/04 4:32p Larus $
 */
 
 
@@ -786,20 +786,13 @@ print_reg_from_string (char* reg_num)
   else if (streq (s1, "fpcond"))
     write_output (message_out, "FCSR = 0x%08x (%d)\n", FCSR, FCSR);
   else if (streq (s1, "cause"))
-    write_output (message_out, "Cause = 0x%08x (%d)\n", Cause, Cause);
+    write_output (message_out, "Cause = 0x%08x (%d)\n", CP0_Cause, CP0_Cause);
   else if (streq (s1, "epc"))
-    write_output (message_out, "EPC = 0x%08x (%d)\n", EPC, EPC);
+    write_output (message_out, "EPC = 0x%08x (%d)\n", CP0_EPC, CP0_EPC);
   else if (streq (s1, "status"))
-    write_output (message_out, "Status = 0x%08x (%d)\n",
-		  Status_Reg, Status_Reg);
+    write_output (message_out, "Status = 0x%08x (%d)\n", CP0_Status, CP0_Status);
   else if (streq (s1, "badvaddr"))
-    write_output (message_out, "BadVAddr = 0x%08x (%d)\n",
-		  BadVAddr, BadVAddr);
-  else if (streq (s1, "context"))
-    write_output (message_out, "Context = 0x%08x (%d)\n",
-		  Context, Context);
-  else if (streq (s1, "prid"))
-    write_output (message_out, "PRId = 0x%08x (%d)\n", PRId, PRId);
+    write_output (message_out, "BadVAddr = 0x%08x (%d)\n", CP0_BadVAddr, CP0_BadVAddr);
   else
     return (0);
 
