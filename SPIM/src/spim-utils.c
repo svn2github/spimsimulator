@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /u/l/a/larus/Software/SPIM/src/RCS/spim-utils.c,v 3.57 1998/01/14 22:09:43 larus Exp $
+/* $Header: /Software/SPIM/src/spim-utils.c 7     12/19/00 9:17p Larus $
 */
 
 
@@ -148,7 +148,7 @@ write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out,
-		"Copyright 1990-1998 by James R. Larus (larus@cs.wisc.edu).\n");
+		"Copyright 1990-2000 by James R. Larus (larus@cs.wisc.edu).\n");
   write_output (message_out, "All Rights Reserved.\n");
 #if defined(DJGPP) || defined(WIN32)
   write_output (message_out, "DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).\n");

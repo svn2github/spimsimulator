@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /u/l/a/larus/Software/SPIM/RCS/buttons.c,v 3.45 1997/07/09 22:08:29 larus Exp $
+/* $Header: /Software/SPIM/src/buttons.c 4     12/19/00 9:17p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -1178,7 +1178,7 @@ help_action (w, ignore, ignored)
 #endif
 {
   static char * msg = "\nSPIM is a MIPS R2000 simulator.\n\
-Copyright (C) 1990-1998 by James R. Larus, larus@cs.wisc.edu\n\n\
+Copyright (C) 1990-2000 by James R. Larus, larus@cs.wisc.edu\n\n\
 quit  -- Exit from the simulator\n\
 load -- Read a file into memory\n\
 run -- Execute a program\n\

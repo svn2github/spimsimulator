@@ -39,9 +39,9 @@ the spim program provides a DOS interface and PCSpim provides a Windows
 interface.
 
 SPIM is copyrighted by me and can be freely used for non-commercial
-purposes.  You can copy a compressed tar file from
+purposes.  You can get source and compiled files from:
 
-	ftp.cs.wisc.edu:pub/spim/spim.tar.Z.
+	http://www.cs.wisc.edu/~larus/spim.html
 
 SPIM comes with documentation, however Appendix A of Hennessy & Patterson,
 "Computer Organization and Design: The Hardware/Software Interface," Morgan
@@ -54,10 +54,9 @@ Computer Sciences Department
 1210 West Dayton Street
 University of Wisconsin
 Madison, WI 53706
-
 larus@cs.wisc.edu
-(608) 262-9519
 
+Current Address: Microsoft Research, larus@microsoft.com
 
 
 Older versions of SPIM (available from ftp.cs.wisc.edu:pub/spim/Old_Versions) also
