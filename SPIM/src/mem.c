@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 26    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/mem.c 27    11/27/04 11:03a Larus $
 */
 
 
@@ -586,7 +586,7 @@ static int trans_buffer_full_timer = 0;
 
 
 /* Check if input is available and output is possible.  If so, update the
-   control registers and buffers. */
+   memory-mapped control registers and buffers. */
 
 void
 check_memory_mapped_IO ()
@@ -598,12 +598,16 @@ check_memory_mapped_IO ()
     }
   else if (console_input_available ())
     {
-      /* Read new char into the buffer and raise an interrupt. */
+      /* Read new char into the buffer and raise an interrupt, if interrupts
+	 are enabled for device. */
       /* assert(recv_buffer_full_timer == 0); */
       recv_buffer = get_console_char ();
       recv_control |= RECV_READY;
       recv_buffer_full_timer = RECV_INTERVAL;
-      RAISE_INTERRUPT (RECV_INT_LEVEL);
+      if (recv_control & RECV_INT_ENABLE)
+	{
+	  RAISE_INTERRUPT (RECV_INT_LEVEL);
+	}
     }
 
   if (trans_buffer_full_timer > 0)
@@ -613,15 +617,19 @@ check_memory_mapped_IO ()
     }
   else if (!(trans_control & TRANS_READY))
     {
-      /* Done writing: empty the buffer and raise an interrupt. */
+      /* Done writing: empty the buffer and raise an interrupt, if interrupts
+	 are enabled for device. */
       /* assert(trans_buffer_full_timer == 0); */
       trans_control |= TRANS_READY;
-      RAISE_INTERRUPT (TRANS_INT_LEVEL);
+      if (trans_control & TRANS_INT_ENABLE)
+	{
+	  RAISE_INTERRUPT (TRANS_INT_LEVEL);
+	}
     }
 }
 
 
-/* Invoked on a write in the memory-mapped IO area. */
+/* Invoked on a write to the memory-mapped IO area. */
 
 static void
 write_memory_mapped_IO (mem_addr addr, mem_word value)
@@ -629,33 +637,61 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
   switch (addr)
     {
     case TRANS_CTRL_ADDR:
-      trans_control = ((trans_control & ~TRANS_INT_ENABLE)
-		       | (value & TRANS_INT_ENABLE));
-
-      if ((trans_control & TRANS_READY) && (trans_control & TRANS_INT_ENABLE))
+      /* Program can only set the interrupt enable, not ready, bit. */
+      if (value & TRANS_INT_ENABLE)
 	{
-	  /* Raise interrupt on enabling a ready transmitter */
-	  RAISE_INTERRUPT (TRANS_INT_LEVEL);
+	  /* Enable interrupts: */
+	  trans_control |= TRANS_INT_ENABLE;
+	  if (trans_control & TRANS_READY)
+	    {
+	      /* Raise interrupt on enabling a ready transmitter */
+	      RAISE_INTERRUPT (TRANS_INT_LEVEL);
+	    }
+	}
+      else
+	{
+	  /* Disable interrupts: */
+	  trans_control &= ~TRANS_INT_ENABLE;
+	  CLEAR_INTERRUPT (TRANS_INT_LEVEL); /* Clear IP bit in Cause */
 	}
       break;
 
     case TRANS_BUFFER_ADDR:
-      if (trans_control & TRANS_READY) /* Ignore write of char if not ready */
+      /* Ignore write if device is not ready. */
+      if (trans_control & TRANS_READY)
 	{
-	  /* Write char */
+	  /* Write char: */
 	  trans_buffer = value & 0xff;
 	  put_console_char ((char)trans_buffer);
+	  /* Device is busy for a while: */
 	  trans_control &= ~TRANS_READY;
 	  trans_buffer_full_timer = TRANS_LATENCY;
+          CLEAR_INTERRUPT (TRANS_INT_LEVEL); /* Clear IP bit in Cause */
 	}
       break;
 
     case RECV_CTRL_ADDR:
-      recv_control = ((recv_control & ~RECV_INT_ENABLE)
-		      | (value & RECV_INT_ENABLE));
+      /* Program can only set the interrupt enable, not ready, bit. */
+      if (value & RECV_INT_ENABLE)
+	{
+	  /* Enable interrupts: */
+	  recv_control |= RECV_INT_ENABLE;
+	  if (recv_control & RECV_READY)
+	    {
+	      /* Raise interrupt on enabling a ready receiver */
+	      RAISE_INTERRUPT (RECV_INT_LEVEL);
+	    }
+	}
+      else
+	{
+	  /* Disable interrupts: */
+	  recv_control &= ~RECV_INT_ENABLE;
+	  CLEAR_INTERRUPT (RECV_INT_LEVEL); /* Clear IP bit in Cause */
+	}
       break;
 
     case RECV_BUFFER_ADDR:
+      /* Nop: program can't change buffer. */
       break;
 
     default:
@@ -683,6 +719,7 @@ read_memory_mapped_IO (mem_addr addr)
     case RECV_BUFFER_ADDR:
       recv_control &= ~RECV_READY; /* Buffer now empty */
       recv_buffer_full_timer = 0;
+      CLEAR_INTERRUPT (RECV_INT_LEVEL); /* Clear IP bit in Cause */
       return (recv_buffer & 0xff);
 
     default:

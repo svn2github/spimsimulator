@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 21    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/inst.h 22    11/27/04 11:03a Larus $
 */
 
 
@@ -174,6 +174,12 @@ extern int exception_occurred;
 	{								\
 	/* Set IP (pending) bit for interrupt level. */			\
 	CP0_Cause |= (1 << ((LEVEL) + 8));				\
+	}								\
+
+#define CLEAR_INTERRUPT(LEVEL)						\
+	{								\
+	/* Clear IP (pending) bit for interrupt level. */		\
+	CP0_Cause &= ~(1 << ((LEVEL) + 8));				\
 	}								\
 
 /* Recognized exceptions: */

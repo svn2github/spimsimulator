@@ -1,3 +1,53 @@
+2004-11-27    <Jim@LS1>
+
+	* mem.c (check_memory_mapped_IO) [Deborah debbiep@csse.monash.edu.au]:
+	Clearing the transmitter or receiver interrupt enable bits also
+	clear interrupt pending bits in Cause register. Transmitter and
+	receiver interrupt enable bits now operate properly (ie prevent
+	interrupts when cleared).
+
+2004-11-26    <Jim@LS1>
+
+	* xspim.c (console_input_available) [Daniel Stearns dstearns@csc.calpoly.edu]:
+	Code to poll for a console input character in X windows blocked and
+	prevented any output until input occured.
+
+2004-11-23    <Jim@LS1>
+
+	* exceptions.s (__excp) [pwhite@mailhaven.com]:
+	Correct typos in comments
+
+2004-11-13    <Jim@LS1>
+
+	* op.h [lau@det.ua.pt]:
+	Type of "mul" instruction was wrong, which lead to it being
+	printed with out destination register.
+
+2004-10-19    <Jim@LS1>
+
+	* inst.c (inst_decode):
+	Do not printf with format string from user input (comment).
+
+2004-10-18    <Jim@LS1>
+
+	* inst.c (format_an_inst):
+	Do not print breakpoint instruction. Instead, print underlying instruction.
+
+	* PCSpimView.cpp:
+	Do not single step when PC = 0;
+
+	* spim-utils.c, spim.c:
+	Clean up stack initialization code.
+
+	* spim-utils.c:
+	Change R[29] -> R[REG_SP].
+
+2004-09-28    <Jim@LS1>
+
+	* op.h:
+	Table had same opcode for beq and beql, which caused unparing
+	error that unparsed beq as beql.
+
 2004-09-26    <Jim@LS1>
 
 	* spim.c, Configure:
@@ -12,13 +62,13 @@
 	* spim-utils.c [J.P. Mellor [jpmellor@rose-hulman.edu]]:
 	Turn off EXL bit after break instruction, since break is handled by
 	SPIM, not MIPS, code and the bit was never getting cleared.
-	
+
 	* Move to VC7.0 (Visual Studio.NET).
 
 2004-09-12    <larus@HomeMachine>
 
 	* Released SPIM 7.0b (on Windows) to propagate changes.
-	
+
 	* PCSpimView.cpp:
 	Set default path for exceptions.s to C:\Program Files\PCSpim, the
 	default installation directory.
