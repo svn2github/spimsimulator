@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 16    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/mem.c 17    2/28/04 7:04a Larus $
 */
 
 
@@ -39,7 +39,7 @@ mem_addr PC, nPC;
 double *FPR;			/* Dynamically allocate so overlay */
 float *FGR;			/* is possible */
 int *FWR;			/* is possible */
-reg_word CpCond[4], CCR[4][32], CPR[4][32];
+reg_word CCR[4][32], CPR[4][32];
 
 instruction **text_seg;
 int text_modified;		/* Non-zero means text segment was written */

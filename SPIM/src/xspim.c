@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 14    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 15    2/28/04 7:04a Larus $
  */
 
 #include <stdio.h>
@@ -83,11 +83,6 @@ typedef struct _AppResources
 
 /* Not local, but not export so all files don't need setjmp.h */
 jmp_buf spim_top_level_env; /* For ^C */
-reg_word R[32];
-reg_word HI, LO;
-int HI_present, LO_present;
-mem_addr PC, nPC;
-reg_word CpCond[4], CCR[4][32], CPR[4][32];
 
 int bare_machine;		/* Non-Zero => simulate bare machine */
 int delayed_branches;		/* Non-Zero => simulate delayed branches */

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 6     2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/reg.h 7     2/28/04 7:04a Larus $
 */
 
 
@@ -137,7 +137,7 @@ extern int *FWR;		/* is possible */
 
 /* The Coprocessor registers: */
 
-extern reg_word CpCond[4], CCR[4][32], CPR[4][32];
+extern reg_word CCR[4][32], CPR[4][32];
 
 
 /* Exeception handling registers (Coprocoessor 0): */
