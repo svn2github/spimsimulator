@@ -1,3 +1,17 @@
+2004-08-22    <larus@HomeMachine>
+
+	* Released SPIM 7.0a to propagate changes.
+
+	* Updated spim.html with new COD files.
+
+	* Makefile, Imakefile, Makefile.std: Eliminate dependence in
+	syscall.o on spim-syscall.h.
+
+2004-07-11    <larus@HomeMachine>
+
+	* Makefile [Michael L. Miller [mmiller2@terpalum.umd.edu]]:
+	Regenerated with updated Imakefile, to reflect file name changes.
+
 2004-07-07    <larus@HomeMachine>
 
 	* Released SPIM 7.0
@@ -10,7 +24,7 @@
 
 2004-06-27    <larus@HomeMachine>
 
-	* parser.y Philipp Lucas [phlucas@cs.uni-sb.de]:
+	* parser.y [Philipp Lucas [phlucas@cs.uni-sb.de]]:
 	Freed wrong YACC variable in .comm and .label.
 
 2004-06-05    <larus@HomeMachine>

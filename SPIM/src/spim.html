@@ -24,8 +24,8 @@ of operating system services.<b> spim</b> does <u>not</u> execute binary
 set. (It omits some complex floating point comparisons and 
 rounding modes 
 and details of the memory system page tables.) The MIPS architecture has several 
-variants that differ in minor ways (in particular, the MIPS64), which means that 
-<B>spim</B> will not run programs compiled for recent SGI 
+variants that differ in various ways (in particular, the MIPS64), which means that 
+<B>spim</B> will not run programs compiled for all MIPS-based 
 processors. MIPS compilers also generate a number of assembler directives that
 <b>spim</b> cannot process. These directives can be safely deleted.</P>
 <P>Earlier versions of <B>spim</B> (before 7.0) implemented the MIPS-I 
@@ -50,24 +50,26 @@ Windows interface.</P>
 <H2 align=center><B><FONT size=+2>Downloading SPIM</FONT></B></H2>
 <DIV align=center>
 <CENTER>
-<TABLE width=663 border=1>
+<TABLE width=732 border=1>
   <TBODY>
   <TR>
-    <TD align=middle width=279><B>Platform</B></TD>
-    <TD align=middle width=128><b>Program</b></TD>
+    <TD align=middle width=451><B>Platform</B></TD>
+    <TD align=middle width=96><b>Program</b></TD>
     <TD align=middle width=128><B>Form</B></TD>
     <TD align=middle width=382><B>File</B></TD></TR>
   <TR>
-    <TD width=279>Unix or Linux system</TD>
-    <TD width=128 align="center"><i>spim<BR>xspim</i></TD>
+    <TD width=451>Unix or Linux system</TD>
+    <TD width=96 align="center"><i>spim<BR>xspim</i></TD>
     <TD width=128>Source code</TD>
     <TD width=382><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A> 
       or<A href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z"><BR></A><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</A></TD></TR>
   <TR>
-    <TD width=279 rowSpan=2>Microsoft Windows<BR>(Windows 95, 98, NT, 2000, XP)</TD>
-    <TD width=128 rowSpan=2 align="center"><i>spim<BR>PCSpim</i></TD>
+    <TD width=451 rowSpan=2>Microsoft Windows<BR>(Windows  98, NT, 2000, XP)<p>
+    (spim 7.0 and later no longer runs on Windows 95. Use version 6.5 or 
+    earlier.)</TD>
+    <TD width=96 rowSpan=2 align="center"><i>spim<BR>PCSpim</i></TD>
     <TD width=128>Executable</TD>
     <TD width=382><a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">
     http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a> 
@@ -224,13 +226,31 @@ before running the test.)</li>
 <H2 align=center><font size="+2">Resources</font></H2>
 <ul style="margin-top: 12">
   <li>
-<P style="margin-top: 12; margin-bottom: 2">Morgan Kaufmann has generously provided an on-line version of Appendix A from 
-Hennessy &amp; Patterson, <A 
-href="http://www.mkp.com/books_catalog/1-55860-428-6.asp"><I>Computer 
-Organization and Design: The Hardware/Software Interface</I></A> (as a <A 
-href="http://www.cs.wisc.edu/~larus/SPIM/cod-appa.pdf">Adobe PDF file</A>). This 
-is a  complete and more up-to-date version of documentation included 
-with <B>spim</B>. 
+<P style="margin-top: 12; margin-bottom: 2">Elsevier (aka Morgan Kaufmann) has 
+generously provided the <b>spim </b>documentation (Appendix A) from the third 
+edition of Hennessy &amp; Patterson, <I>
+<a href="http://books.elsevier.com/us/mk/us/subindex.asp?isbn=1558606041&country=United+States&community=mk&mscssid=T3GQV69C1T2T8NHKQJH2H7ANRW84FXW3">Computer 
+Organization and Design: The Hardware/Software Interface</a></I>. This 
+documentation is far more complete and  up-to-date than the documentation 
+included in the <B>spim</B> distribution. The COD documentation includes:<ul style="margin-top: 6">
+  <li>
+<P style="margin-top: 12; margin-bottom: 2">&nbsp;<i>Appendix A: Assemblers, 
+Linkers, and the SPIM Simulator</i> (<a href="HP_AppA.pdf">PDF</a>). An overview 
+and reference manual for <b>spim</b> and the MIPS32 instruction set.</li>
+  <li>
+<P style="margin-top: 12; margin-bottom: 2"><i>Getting Started with spim</i> (<a href="spim.pdf">PDF</a>). 
+Overview of the console version of <b>spim</b> (both Unix and Windows).</li>
+  <li>
+<P style="margin-top: 12; margin-bottom: 2"><i>Getting Started with xspim</i> (<a href="xspim.pdf">PDF</a>). 
+Overview of the X-windows version of <b>spim</b>.</li>
+  <li>
+<P style="margin-top: 12; margin-bottom: 2"><i>Getting Starting with PCSpim</i> 
+(<a href="PCSpim.pdf">PDF</a>). Overview of the Microsoft Windows version of <b>
+spim</b>.</li>
+  <li>
+<P style="margin-top: 12; margin-bottom: 2"><i>SPIM Command-Line Options</i> (<a href="SPIM_command-line.pdf">PDF</a>). 
+Overview of the command line options of <b>spim</b> (all versions).</li>
+</ul>
   </li>
   <li> 
 <P style="margin-top: 12; margin-bottom: 2">The documentation included with <B>spim</B> is also online (as a <A 
@@ -238,35 +258,36 @@ href="http://www.cs.wisc.edu/~larus/SPIM/spim_documentation.ps">postscript</A>
 or <A href="http://www.cs.wisc.edu/~larus/SPIM/spim_documentation.pdf">Adobe PDF 
 file</A>). This document is for the original <B>spim</B> (pre-version 7.0), 
 which simulated the MIPS-I architecture rather than MIPS32, and so differs in 
-many minor aspects from the current version of <B>spim.</B> Appendix A of Hennessy &amp; Patterson, <A 
-href="http://www.mkp.com/books_catalog/1-55860-428-6.asp"><I>Computer 
-Organization and Design: The Hardware/Software Interface</I></A> (above), is 
+many minor aspects from the current version of <B>spim.</B> Appendix A of Hennessy &amp; Patterson, <I>
+<a href="http://books.elsevier.com/us/mk/us/subindex.asp?isbn=1558606041&country=United+States&community=mk&mscssid=T3GQV69C1T2T8NHKQJH2H7ANRW84FXW3">Computer 
+Organization and Design: The Hardware/Software Interface</a></I> (above), is 
 more up-to-date and correct..</P>
   </li>
-  <li>
-<P style="margin-top: 12; margin-bottom: 2">There is some documentation for the Windows interface to <B>spim</B>:
-<A href="http://www.cs.wisc.edu/~larus/SPIM/spimwin.pdf">Adobe PDF file</A>.</li>
   <li> 
-<P style="margin-top: 12; margin-bottom: 2">The best book on MIPS programming is: Dominic Sweetman, <A 
-href="http://www.mkp.com/books_catalog/areas/computer_architecture.asp#MIPS programming"><I>See 
-MIPS Run,</I></A> Morgan Kaufmann, San Francisco, CA, 1999, ISBN 
-1-55860-410-3.</li>
-  <li> 
-<P style="margin-top: 12; margin-bottom: 2">MIPS, Inc. has excellent  free 
+<P style="margin-top: 12; margin-bottom: 2">The best book on MIPS programming 
+is: Dominic Sweetman, <I>
+<a href="http://books.elsevier.com/us/mk/us/subindex.asp?isbn=1558604103&country=United+States&community=mk&mscssid=T3GQV69C1T2T8NHKQJH2H7ANRW84FXW3">See 
+MIPS Run,</a></I> Morgan Kaufmann, San Francisco, CA, 1999, ISBN 
+1-55860-410-3. MIPS, Inc. has excellent  free 
 documentation on the MIPS32 architecture on their website (registration 
-required):<br>
-<br>
+required):<ul style="margin-top: 12">
+  <li> 
+<P style="margin-top: 12; margin-bottom: 2">
 <a href="http://mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00082-2B-MIPS32INT-AFP-02.00.pdf/getDownload">
 MIPS32™ Architecture for Programmers Volume I: Introduction to the MIPS32™ 
-Architecture</a> <span class="doclibrary_details">v2.00 (1249 KB)<br>
-</span>&nbsp;<br>
+Architecture</a> <span class="doclibrary_details">v2.00 (1249 KB)</span></li>
+  <li> 
+<P style="margin-top: 12; margin-bottom: 2">
 <a href="http://mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00086-2B-MIPS32BIS-AFP-02.00.pdf/getDownload">
 MIPS32™ Architecture for Programmers Volume II: The MIPS32™ Instruction Set</a>
-<span class="doclibrary_details">v2.00 (3258 KB)<br>
-</span>&nbsp;<br>
+<span class="doclibrary_details">v2.00 (3258 KB)</span></li>
+  <li> 
+<P style="margin-top: 12; margin-bottom: 2">
 <a href="http://mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00090-2B-MIPS32PRA-AFP-02.00.pdf/getDownload">
 MIPS32™ Architecture for Programmers Volume III: The MIPS32™ Privileged Resource 
 Architecture</a> <span class="doclibrary_details">v2.00 (1507 KB)</span></li>
+</ul>
+  </li>
   <li> 
 <P style="margin-top: 12; margin-bottom: 2">An old reference manual for the MIPS architecture (including processors 
 subsequent to the R2000/R3000) is: Gerry Kane and Joe Heinrich, <I>MIPS&nbsp;RISC 
@@ -276,9 +297,9 @@ Architecture</I>, Prentice Hall, Englewood Cliffs, N.J. 07632 ISBN 0-13-1059254.
   <li> 
 
 <P style="margin-top: 12; margin-bottom: 2">Another good book for MIPS R2000 and R3000 programmers is: Erin Farquhar and 
-Philip Bunce, <A 
-href="http://www.mkp.com/books_catalog/areas/computer_architecture.asp#MIPS programming"><I>The 
-MIPS Programmer's Handbook,</I></A> Morgan Kaufmann, San Francisco, CA, 1994, 
+Philip Bunce, <I>
+<a href="http://books.elsevier.com/us/mk/us/subindex.asp?isbn=1558602976&country=United+States&community=mk&mscssid=T3GQV69C1T2T8NHKQJH2H7ANRW84FXW3">The 
+MIPS Programmer's Handbook,</a></I> Morgan Kaufmann, San Francisco, CA, 1994, 
 ISBN 1-55860-297-6.</P>
   </li>
   <li>
@@ -299,7 +320,7 @@ commercial product, and it offers a limited time trial version.</P>
 <HR width="100%">
 
 <H2 align=center>Changes in Latest Version</H2>
-<P align=left>The current version of <B>spim</B> is 7.0 (July 2004), which is a 
+<P align=left>The current version of <B>spim</B> is 7.0 (August 2004), which is a 
 major release that contains a significant number of changes from version 6.5:</P>
 <ul>
   <li>

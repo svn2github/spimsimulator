@@ -1375,7 +1375,6 @@ syscall.o: inst.h
 syscall.o: mem.h
 syscall.o: reg.h
 syscall.o: sym-tbl.h
-syscall.o: spim-syscall.h
 syscall.o: syscall.h
 run.o: spim.h
 run.o: spim-utils.h

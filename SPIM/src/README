@@ -150,7 +150,7 @@ inst.c, inst.h
 mem.c, mem.h
 	Code to maintain memory.
 
-mips-syscall.c, mips-syscall.h
+syscall.c, syscall.h
 	Code to handle system calls and exceptions.
 
 op.h
