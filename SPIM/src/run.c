@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 11    2/14/04 12:09p Larus $
+/* $Header: /Software/SPIM/src/run.c 12    2/14/04 3:41p Larus $
 */
 
 
@@ -82,49 +82,70 @@ static void long_multiply ();
    the result of executing a delayed instruction in a delay slot.  Here
    we execute the second branch. */
 
-#define BRANCH_INST(TEST, TARGET) {if (TEST)				\
-				    {					\
-				      mem_addr target = (TARGET);	\
-				      if (delayed_branches)		\
-					/* +4 since jump in delay slot */\
-					target += BYTES_PER_WORD;	\
-				      JUMP_INST (target)		\
-				    }					\
-				  }
+#define BRANCH_INST(TEST, TARGET)			\
+		{					\
+		  if (TEST)				\
+		    {					\
+		      mem_addr target = (TARGET);	\
+		      if (delayed_branches)		\
+		      /* +4 since jump in delay slot */	\
+		      target += BYTES_PER_WORD;		\
+		      JUMP_INST (target)		\
+		     }					\
+		 }
 
 
-#define JUMP_INST(TARGET) {if (delayed_branches)			\
-			    run_spim (PC + BYTES_PER_WORD, 1, display);	\
-			  /* -4 since PC is bumped after this inst */	\
-			  PC = (TARGET) - BYTES_PER_WORD;		\
-			  }
+#define JUMP_INST(TARGET)				\
+		{					\
+		  if (delayed_branches)			\
+		    {					\
+		      run_spim (PC + BYTES_PER_WORD, 1, display); \
+		    }					\
+		    /* -4 since PC is bumped after this inst */	\
+		    PC = (TARGET) - BYTES_PER_WORD;	\
+		 }
 
 
-/* Result from load is available immediate, but no program should ever have
-   assumed otherwise because of exceptions.*/
+/* If the delayed_load flag is false, the result from a load is available immediate.
+   If the delayed_load flag is true, the result from a load is not available until the
+   subsequent instruction has executed (as in the real machine). We need a two element
+   shift register for the value and its destination, as the instruction following the
+   load can itself be a load instruction. */
 
-#define LOAD_INST(OP, ADDR, DEST_A, MASK)				\
-				 {reg_word tmp;				\
-				   OP (tmp, (ADDR));			\
-				   *(DEST_A) = tmp & (MASK);		\
-				 }
-
-
-#define DELAYED_UPDATE(A, D) {if (delayed_addr1 != NULL)		\
-				fatal_error("Two calls to DELAYED_UPDATE\n");\
-				delayed_addr1 = A; delayed_value1 = D;	\
-			      }
+#define LOAD_INST(OP, ADDR, DEST_A, MASK)			\
+		 {						\
+		  reg_word tmp;					\
+		  OP (tmp, (ADDR));				\
+		  LOAD_INST_BASE(DEST_A, (tmp & (MASK)))	\
+		 }
 
 
-#define DO_DELAYED_UPDATE() if (delayed_loads)				\
-			       {					\
-				 /* Check for delayed updates */	\
-				 if (delayed_addr2 != NULL)		\
-				   *delayed_addr2 = delayed_value2;	\
-				 delayed_addr2 = delayed_addr1;		\
-				 delayed_value2 = delayed_value1;	\
-				 delayed_addr1 = NULL;			\
-			       }
+#define LOAD_INST_BASE(DEST_A, VALUE)				\
+		{						\
+		  if (delayed_loads)				\
+		    {						\
+		      delayed_load_addr1 = (DEST_A);		\
+		      delayed_load_value1 = (VALUE); 		\
+		    }						\
+		    else					\
+		    {						\
+		      *(DEST_A) = (VALUE);			\
+		    }						\
+		 }
+
+
+#define DO_DELAYED_UPDATE()					\
+		if (delayed_loads)				\
+		  {						\
+		    /* Check for delayed updates */		\
+		    if (delayed_load_addr2 != NULL)		\
+		      {						\
+			*delayed_load_addr2 = delayed_load_value2; \
+		      }						\
+		    delayed_load_addr2 = delayed_load_addr1;	\
+		    delayed_load_value2 = delayed_load_value1;	\
+		    delayed_load_addr1 = NULL;			\
+		   }
 
 
 
@@ -146,8 +167,8 @@ run_spim (initial_PC, steps_to_run, display)
 #endif
 {
   register instruction *inst;
-  static reg_word *delayed_addr1 = NULL, delayed_value1;
-  static reg_word *delayed_addr2 = NULL, delayed_value2;
+  static reg_word *delayed_load_addr1 = NULL, delayed_load_value1;
+  static reg_word *delayed_load_addr2 = NULL, delayed_load_value2;
   int step, step_size, next_step;
 
   PC = initial_PC;
@@ -435,50 +456,48 @@ run_spim (initial_PC, steps_to_run, display)
 		register int byte = addr & 0x3;
 		reg_word reg_val = R[RT (inst)];
 
-		LOAD_INST (READ_MEM_WORD, addr & 0xfffffffc, &word,
-			   0xffffffff);
-		DO_DELAYED_UPDATE ();
-
+		READ_MEM_WORD(word, addr & 0xfffffffc);
 		if ((!exception_occurred) || ((Cause >> 2) > LAST_REAL_EXCEPT))
 #ifdef BIGENDIAN
 		  switch (byte)
 		    {
 		    case 0:
-		      R[RT (inst)] = word;
+		      word = word;
 		      break;
 
 		    case 1:
-		      R[RT (inst)] = ((word & 0xffffff) << 8) | (reg_val & 0xff);
+		      word = ((word & 0xffffff) << 8) | (reg_val & 0xff);
 		      break;
 
 		    case 2:
-		      R[RT (inst)] = ((word & 0xffff) << 16) | (reg_val & 0xffff);
+		      word = ((word & 0xffff) << 16) | (reg_val & 0xffff);
 		      break;
 
 		    case 3:
-		      R[RT (inst)] = ((word & 0xff) << 24) | (reg_val & 0xffffff);
+		      word = ((word & 0xff) << 24) | (reg_val & 0xffffff);
 		      break;
 		    }
 #else
 		switch (byte)
 		  {
 		  case 0:
-		    R[RT (inst)] = ((word & 0xff) << 24) | (reg_val & 0xffffff);
+		    word = ((word & 0xff) << 24) | (reg_val & 0xffffff);
 		    break;
 
 		  case 1:
-		    R[RT (inst)] = ((word & 0xffff) << 16) | (reg_val & 0xffff);
+		    word = ((word & 0xffff) << 16) | (reg_val & 0xffff);
 		    break;
 
 		  case 2:
-		    R[RT (inst)] = ((word & 0xffffff) << 8) | (reg_val & 0xff);
+		    word = ((word & 0xffffff) << 8) | (reg_val & 0xff);
 		    break;
 
 		  case 3:
-		    R[RT (inst)] = word;
+		    word = word;
 		    break;
 		  }
 #endif
+		LOAD_INST_BASE (&R[RT (inst)], word);
 		break;
 	      }
 
@@ -489,57 +508,48 @@ run_spim (initial_PC, steps_to_run, display)
 		register int byte = addr & 0x3;
 		reg_word reg_val = R[RT (inst)];
 
-		LOAD_INST (READ_MEM_WORD, addr & 0xfffffffc, &word, 0xffffffff);
-		DO_DELAYED_UPDATE ();
-
+		READ_MEM_WORD(word, addr & 0xfffffffc);
 		if ((!exception_occurred) || ((Cause >> 2) > LAST_REAL_EXCEPT))
 #ifdef BIGENDIAN
 		  switch (byte)
 		    {
 		    case 0:
-		      R[RT (inst)] = (reg_val & 0xffffff00)
-			| ((unsigned)(word & 0xff000000) >> 24);
+		      word = (reg_val & 0xffffff00) | ((unsigned)(word & 0xff000000) >> 24);
 		      break;
 
 		    case 1:
-		      R[RT (inst)] = (reg_val & 0xffff0000)
-			| ((unsigned)(word & 0xffff0000) >> 16);
+		      word = (reg_val & 0xffff0000) | ((unsigned)(word & 0xffff0000) >> 16);
 		      break;
 
 		    case 2:
-		      R[RT (inst)] = (reg_val & 0xff000000)
-			| ((unsigned)(word & 0xffffff00) >> 8);
+		      word = (reg_val & 0xff000000) | ((unsigned)(word & 0xffffff00) >> 8);
 		      break;
 
 		    case 3:
-		      R[RT (inst)] = word;
+		      word = word;
 		      break;
 		    }
 #else
 		switch (byte)
 		  {
-		    /* NB: The description of the little-endian case in Kane is
-		       totally wrong. */
-		  case 0:	/* 3 in book */
-		    R[RT (inst)] = word;
+		  case 0:
+		    word = word;
 		    break;
 
-		  case 1:	/* 0 in book */
-		    R[RT (inst)] = (reg_val & 0xff000000)
-		      | ((word & 0xffffff00) >> 8);
+		  case 1:
+		    word = (reg_val & 0xff000000) | ((word & 0xffffff00) >> 8);
 		    break;
 
-		  case 2:	/* 1 in book */
-		    R[RT (inst)] = (reg_val & 0xffff0000)
-		      | ((word & 0xffff0000) >> 16);
+		  case 2:
+		    word = (reg_val & 0xffff0000) | ((word & 0xffff0000) >> 16);
 		    break;
 
-		  case 3:	/* 2 in book */
-		    R[RT (inst)] = (reg_val & 0xffffff00)
-		      | ((word & 0xff000000) >> 24);
+		  case 3:
+		    word = (reg_val & 0xffffff00) | ((word & 0xff000000) >> 24);
 		    break;
 		  }
 #endif
+		LOAD_INST_BASE (&R[RT (inst)], word);
 		break;
 	      }
 

@@ -1,5 +1,9 @@
 2004-02-14    <larus@C745660-A>
 
+	* run.c [Bob Britton (BBritton@csuchico.edu)]:
+	Correctly implement delayed load instructions. (Nobody ever use
+	them before?)
+
 	* parser.y:
 	Record labels on line with syntax error.
 
