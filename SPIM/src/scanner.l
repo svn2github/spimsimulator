@@ -471,6 +471,9 @@ print_erroneous_line ()
       current_line = NULL;
     }
 
+
+  if (1024 <= prefix_length) return;
+
   error ("	  ");
   for (i = 0; i < prefix_length; i ++) buffer[i] = ' ';
   buffer[i] = '\0';
