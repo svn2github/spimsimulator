@@ -1,3 +1,8 @@
+2005-02-12    <Jim@LS1>
+
+	* PCSpim:
+	Use correct help file in install process.
+
 2005-02-05    <Jim@LS1>
 
 	* scanner.l [Joe Pfeiffer pfeiffer@cs.nmsu.edu]:
