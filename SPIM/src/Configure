@@ -42,8 +42,8 @@ if ./endian; then
   # Big endian
   rm -f Tests/tt.s Tests/tt.OK configuration
   cd Tests
-  ln -s tt.be.s tt.s
-  ln -s tt.be.OK tt.OK
+  ln -s tt.be.s tt.endian.s
+  ln -s tt.be.OK tt.endian.OK
   cd ..
   echo "-DBIGENDIAN" > configuration
   echo I believe this is a big-endian machine.
@@ -51,8 +51,8 @@ else
   # Little endian
   rm -f Tests/tt.s Tests/tt.OK configuration
   cd Tests
-  ln -s tt.le.s tt.s
-  ln -s tt.le.OK tt.OK
+  ln -s tt.le.s tt.endian.s
+  ln -s tt.le.OK tt.endian.OK
   cd ..
   echo "-DLITTLEENDIAN" > configuration
   echo I believe this is a little-endian machine.

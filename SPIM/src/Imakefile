@@ -173,13 +173,20 @@ test:	spim
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
 
-	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "trap_handler not installed. Type: make install"; exit 1; else true; fi
+	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "Trap Handler not installed; do make install"; exit 1; else true; fi
 	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
-	$(CSH) -c "./spim -file Tests/tt.s < Tests/tt.in >& Tests/tt.out"
-	tail +6 Tests/tt.OK > std_out
+	$(CSH) -c "./spim.exe -file Tests/tt.core.s < Tests/tt.in >& Tests/tt.out"
+	tail +6 Tests/tt.core.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
-	diff std_out new_out
+	diff -w std_out new_out
+	@echo
+	@echo
+	$(CSH) -c "./spim.exe -file Tests/tt.endian.s >& Tests/tt.out"
+	tail +6 Tests/tt.endian.OK > std_out
+	tail +6 Tests/tt.out > new_out
+	@echo The next command should not produce any output:
+	diff -w std_out new_out
 	@echo
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out

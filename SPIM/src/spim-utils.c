@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Misc. routines for SPIM.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
    Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 10    1/05/02 1:27p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 11    2/14/04 10:27a Larus $
 */
 
 
@@ -148,7 +148,7 @@ write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out,
-		"Copyright 1990-2002 by James R. Larus (larus@cs.wisc.edu).\n");
+		"Copyright 1990-2003 by James R. Larus (larus@cs.wisc.edu).\n");
   write_output (message_out, "All Rights Reserved.\n");
 #if defined(DJGPP) || defined(WIN32)
   write_output (message_out, "DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).\n");

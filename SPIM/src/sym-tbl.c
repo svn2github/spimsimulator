@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Code to maintain symbol table to resolve symbolic labels.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 14    1/01/03 5:20p Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 15    2/14/04 10:27a Larus $
 */
 
 

@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Code to create, maintain and access memory.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 10    1/01/03 7:45p Larus $
+/* $Header: /Software/SPIM/src/mem.c 11    2/14/04 10:27a Larus $
 */
 
 

@@ -1,9 +1,32 @@
-2003-01-04    <larus@C745660-A>
+2004-02-14    <larus@C745660-A>
+
+	* Configure Imakefile Makefile.cygwin Makefile.std Tests/tt.le.s
+	Tests/tt.be.s Tests/tt.core.s Tests/tt.core.OK Tests/tt.endian.OK:
+	Factored torture tests into endian-indpendent and endian-dependent pieces.
+
+2003-01-04    <larus@HomeMachine>
+
+	* Version 6.5 released.
+
+	* spim.c PCSpimView.cpp:
+	If started with only one argument, assume it is a file
+	name. [From: Armin Mueller [arm.in@web.de]]
+
+	* :
+	Added Alt-F4 shortcut to PCSpim.
+
+	* trap.handler:
+	Return to instruction at EPC on interrupt. Comment code
+	better. [From: Nuno Lau [mailto:lau@det.ua.pt]]
+
+	* spim.c:
+	Partioned print_reg into 3 cases, to avoid casting int to char* on
+	64 bit machine. [From: Ken Swarner [mailto:kswarner@siena.edu]]
 
 	* spim.html:
 	Cleaned up file and added installation instructions.
 
-2003-01-03    <larus@C745660-A>
+2003-01-03    <larus@HomeMachine>
 
 	* README:
 	Typo in README. [From: Ian Langworth [bass@ccs.neu.edu]]
@@ -69,7 +92,7 @@
 2002-01-01    <larus@HomeMachine>
 
 	* Release SPIM 6.4
-	
+
 	* PCSpimView.cpp:
 	Ensure that register and data segment windows do not shift focus
 	when underlying values change.  [From: Vollmar, Kenneth R

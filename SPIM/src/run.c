@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Execute SPIM instructions.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
    Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 9     1/01/03 9:51p Larus $
+/* $Header: /Software/SPIM/src/run.c 10    2/14/04 10:27a Larus $
 */
 
 
