@@ -3650,7 +3650,7 @@ fp_s9:	.float 9.0
 	la $a0 sqrt.s_
 	syscall
 
-	ldc1 $f2 fp_d9
+	ldc1 $f2 fp_s9
 	sqrt.s $f0 $f2
 	mul.s $f4 $f0 $f0
 	c.eq.s $f2 $f4
