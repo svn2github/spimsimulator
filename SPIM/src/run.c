@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 18    2/28/04 10:52a Larus $
+/* $Header: /Software/SPIM/src/run.c 19    2/28/04 11:23a Larus $
 */
 
 
@@ -1054,6 +1054,22 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		}
 	      break;
 
+	    case Y_CEIL_W_D_OP:
+	      {
+		double val = FPR_D (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)ceil (val));
+		break;
+	      }
+
+	    case Y_CEIL_W_S_OP:
+	      {
+		double val = (double)FPR_S (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)ceil (val));
+		break;
+	      }
+
 	    case Y_CVT_D_S_OP:
 	      {
 		double val = FPR_S (FS (inst));
@@ -1088,7 +1104,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_CVT_W_D_OP:
 	      {
-		int val = (int)FPR_D (FS (inst));
+		int val = (int32)FPR_D (FS (inst));
 
 		SET_FPR_W (FD (inst), val);
 		break;
@@ -1096,7 +1112,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_CVT_W_S_OP:
 	      {
-		int val = (int)FPR_S (FS (inst));
+		int val = (int32)FPR_S (FS (inst));
 
 		SET_FPR_W (FD (inst), val);
 		break;

@@ -128,6 +128,8 @@
 %token Y_CACHE_OP
 %token Y_CEIL_L_D_OP
 %token Y_CEIL_L_S_OP
+%token Y_CEIL_W_D_OP
+%token Y_CEIL_W_S_OP
 %token Y_CFC0_OP
 %token Y_CFC1_OP
 %token Y_CFC2_OP
@@ -1827,7 +1829,9 @@ FP_TERNARY_OP_REV2:	Y_ALNV_PS_OP
 	|	Y_NMSUB_S_OP
 	;
 
-FP_CONVERT_OP:	Y_CVT_D_S_OP
+FP_CONVERT_OP:	Y_CEIL_W_D_OP
+	|	Y_CEIL_W_S_OP
+	|	Y_CVT_D_S_OP
 	|	Y_CVT_D_W_OP
 	|	Y_CVT_S_D_OP
 	|	Y_CVT_S_W_OP

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 7     2/28/04 7:04a Larus $
+/* $Header: /Software/SPIM/src/reg.h 8     2/28/04 11:23a Larus $
 */
 
 
@@ -110,7 +110,7 @@ extern int *FWR;		/* is possible */
 				 run_error ("Odd FP double register number\n"); \
 				 else FPR[(REGNO) / 2] = (double) (VALUE);}
 
-#define SET_FPR_W(REGNO, VALUE) {FWR[REGNO] = (int) (VALUE);}
+#define SET_FPR_W(REGNO, VALUE) {FWR[REGNO] = (int32) (VALUE);}
 
 
 /* Floating point control registers: */

@@ -2344,6 +2344,55 @@ l471:
 
 
 	.data
+ceil.w.d_:	.asciiz "Testing CEIL.W.D\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 ceil.w.d_
+	syscall
+
+	lwc1 $f2 fp_d0
+	lwc1 $f3 fp_d0+4
+	ceil.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 0 fail
+
+	lwc1 $f2 fp_d1
+	lwc1 $f3 fp_d1+4
+	ceil.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+	lwc1 $f2 fp_d1p5
+	lwc1 $f3 fp_d1p5+4
+	ceil.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 2 fail
+	
+	
+	.data
+ceil.w.s_:	.asciiz "Testing CEIL.W.S\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 ceil.w.s_
+	syscall
+
+	lwc1 $f2 fp_s0
+	ceil.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 0 fail
+
+	lwc1 $f2 fp_s1
+	ceil.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+	lwc1 $f2 fp_s1p5
+	ceil.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 2 fail
+
+
+	.data
 cvt.d.s_:	.asciiz "Testing CVT.D.S\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)
