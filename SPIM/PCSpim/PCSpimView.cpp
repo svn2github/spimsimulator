@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 20    5/02/04 12:59p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 21    9/12/04 4:51p Larus $ */
 
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
@@ -38,7 +38,7 @@
 
 
 #ifndef EXCEPTION_FILE_PATH
-#define EXCEPTION_FILE_PATH "D:\\Larus\\Software\\SPIM\\src\\exceptions.s"
+#define EXCEPTION_FILE_PATH "C:\\Program Files\\PCSpim\\exceptions.s"
 #endif
 
 
