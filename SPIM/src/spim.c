@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 29    3/13/04 7:46a Larus $
+/* $Header: /Software/SPIM/src/spim.c 30    3/14/04 7:46p Larus $
 */
 
 
@@ -42,12 +42,12 @@
 #endif
 
 #include <sys/types.h>
+#include <sys/select.h>
 
 #ifdef _AIX
 #ifndef NBBY
 #define NBBY 8
 #endif
-#include <sys/select.h>
 #endif
 
 
