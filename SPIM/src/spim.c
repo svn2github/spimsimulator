@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 33    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/spim.c 34    5/08/04 9:06a Larus $
 */
 
 
@@ -106,7 +106,6 @@ int quiet;			/* Non-Zero => no warning messages */
 port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
-int cycle_level;		/* Non-zero => cycle level mode */
 int spim_return_value;		/* Value returned when spim exits */
 
 /* Local variables: */
@@ -139,7 +138,6 @@ main (int argc, char **argv)
   delayed_loads = 0;
   accept_pseudo_insts = 1;
   quiet = 0;
-  cycle_level = 0;
   spim_return_value = 0;
 
   /* Input comes directly (not through stdio): */

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 24    3/25/04 9:18p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 25    5/08/04 9:06a Larus $
  */
 
 #include <stdio.h>
@@ -92,7 +92,6 @@ int quiet;			/* Non-Zero => no warning messages */
 port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
-int cycle_level;		/* Non-zero => cycle level mode */
 int spim_return_value;		/* Value returned when spim exits */
 
 XtAppContext app_con;
@@ -302,7 +301,6 @@ initialize (AppResources app_res)
   delayed_loads = 0;
   accept_pseudo_insts = 1;
   quiet = 0;
-  cycle_level = 0;
 
   if (app_res.bare)
     {
