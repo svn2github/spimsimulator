@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 25    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/inst.c 26    10/18/04 10:04p Larus $
 */
 
 #include <stdio.h>
@@ -656,6 +656,15 @@ format_an_inst (str_stream *ss, instruction *inst, mem_addr addr)
 {
   name_val_val *entry;
   int line_start = ss_length (ss);
+
+  if (inst_is_breakpoint (addr))
+    {
+      delete_breakpoint (addr);
+      ss_printf (ss, "*");
+      format_an_inst (ss, read_mem_inst (addr), addr);
+      add_breakpoint (addr);
+      return;
+    }
 
   ss_printf (ss, "[0x%08x]\t", addr);
   if (inst == NULL)
