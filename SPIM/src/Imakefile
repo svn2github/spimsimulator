@@ -102,6 +102,9 @@ DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERS
 
 SYS_LIBRARIES = -lm
 
+# Use csh, tcsh, or bash, but not sh:
+SH = csh
+
 #
 
 #
