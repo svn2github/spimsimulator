@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 14    2/14/04 12:35p Larus $
+/* $Header: /Software/SPIM/src/spim.c 15    2/15/04 8:25a Larus $
 */
 
 
@@ -228,7 +228,7 @@ main (argc, argv)
 	  quiet = 1;
 	else if (streq (argv [i], "-noquiet"))
 	  quiet = 0;
-	else if (streq (argv [i], "-file"))
+	else if (streq (argv [i], "-file") && (i + 1 < argc))
 	  {
 	    argv_ptr = i + 1;
 	    if (!assembly_file_read)

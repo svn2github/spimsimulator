@@ -1,3 +1,8 @@
+2004-02-15    <larus@C745660-A>
+
+	* spim.c [Matt Harren (math@cs.berkeley.edu)]:
+	Handle boundary case for -file without name.
+
 2004-02-14    <larus@C745660-A>
 
 	* run.c [Bob Britton (BBritton@csuchico.edu)]:
