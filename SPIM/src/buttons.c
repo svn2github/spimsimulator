@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 13    3/12/04 10:59p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 14    3/14/04 8:35p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -333,7 +333,7 @@ read_assm_file_action (Widget w, XtPointer client_data, XtPointer call_data)
 
   free (xspim_file_name);
   xspim_file_name = str_copy (value);
-  read_file (value, 1);
+  read_file (value);
 
   destroy_popup_prompt (NULL, (XtPointer) dialog, (XtPointer) NULL);
 }
@@ -531,8 +531,6 @@ add_reload_button (Widget parent)
 static void
 reload_action (Widget w, XtPointer client_data, XtPointer call_data)
 {
-  int assem_or_exec = (int) client_data;
-
   if (xspim_file_name == NULL)
     return;
 
@@ -540,7 +538,7 @@ reload_action (Widget w, XtPointer client_data, XtPointer call_data)
   initialize_world (load_exception_handler ? exception_handler_file_name : NULL);
   write_startup_message ();
   stack_initialized = 0;
-  read_file (xspim_file_name, assem_or_exec);
+  read_file (xspim_file_name);
 }
 
 

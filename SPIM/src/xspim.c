@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 18    3/13/04 7:46a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 19    3/14/04 8:35p Larus $
  */
 
 #include <stdio.h>
@@ -64,7 +64,6 @@ typedef struct _AppResources
   Boolean quiet;
   Boolean mapped_io;
   char *filename;
-  char *ex_filename;
   char *display2;
   Boolean hex_gpr;
   Boolean hex_fpr;
@@ -173,8 +172,6 @@ static XtResource resources[] =
 
   {"filename", "Filename", XtRString, sizeof (char *),
    XtOffset (AppResources *, filename), XtRString, NULL},
-  {"ex_filename", "Ex_Filename", XtRString, sizeof (char *),
-   XtOffset (AppResources *, ex_filename), XtRString, NULL},
   {"display2", "Display2", XtRString, sizeof (char *),
    XtOffset (AppResources *, display2), XtRString, NULL},
   {"hexGpr", "DisplayHex", XtRBoolean, sizeof (Boolean),
@@ -261,7 +258,6 @@ static Dimension command_hspace;
 static Dimension command_vspace;
 static int console_is_visible;
 static Dimension display_height;
-static char *ex_file_name = NULL;
 static char *file_name = NULL;
 static Dimension reg_min_height;
 static Dimension reg_max_height;
@@ -331,11 +327,6 @@ initialize (AppResources app_res)
 
   if (app_res.filename)
     file_name = app_res.filename;
-  if (app_res.ex_filename)
-    {
-      ex_file_name = app_res.ex_filename;
-      load_exception_handler = 0;
-    }
 
   if (app_res.textFont == NULL)
     app_res.textFont = XtNewString ("8x13");
@@ -404,8 +395,8 @@ main (int argc, char **argv)
 			      XtNumber (options), &argc, argv,
 			      fallback_resources, NULL, ZERO);
 
-  if (argc != 1)
-    syntax (argv[0]);
+  if (argc >= 0 && argv[argc] != NULL && argv[argc][0] == '-')
+    syntax (argv[0]);		/* Bad command line argument */
 
   XtGetApplicationResources (toplevel, (XtPointer) &app_res, resources,
 			     XtNumber (resources), NULL, ZERO);
@@ -453,19 +444,20 @@ main (int argc, char **argv)
     initial_k_data_size = atoi (app_res.initial_k_data_size);
   if (app_res.initial_k_data_limit != NULL)
     initial_k_data_limit = atoi (app_res.initial_k_data_limit);
+
   write_startup_message ();
   initialize_world (load_exception_handler ? exception_file_name : NULL);
 
+  if (file_name == NULL && argc >= 0 && argv[argc] != NULL)
+    {
+      /* First unprocessed argument */
+      file_name = argv[argc];
+    }
+
   if (file_name)
     {
-      read_file (file_name, 1);
+      read_file (file_name);
       record_file_name_for_prompt (file_name);
-    }
-  else if (ex_file_name)
-    {
-      initialize_world (0);	/* Don't have a exception handler loaded. */
-      read_file (ex_file_name, 0);
-      record_file_name_for_prompt (ex_file_name);
     }
   else
     {
@@ -530,14 +522,15 @@ popup_console (Widget w, XtPointer client_data, XtPointer call_data)
 
 
 void
-read_file (char *name, int assembly_file)
+read_file (char *name)
 {
   int error_flag;
 
   if (*name == '\0')
     error_flag = 1;
-  else if (assembly_file)
+  else
     error_flag = read_assembly_file (name);
+
   if (!error_flag)
     {
       PC = find_symbol_address (DEFAULT_RUN_LOCATION);

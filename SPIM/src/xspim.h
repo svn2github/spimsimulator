@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.h 10    3/12/04 11:00p Larus $
+/* $Header: /Software/SPIM/src/xspim.h 11    3/14/04 8:35p Larus $
  */
 
 
@@ -39,7 +39,7 @@
 void clear_console_display ();
 void execute_program (mem_addr pc, int steps, int display, int cont_bkpt);
 void popup_console (Widget w, XtPointer client_data, XtPointer call_data);
-void read_file (char *name, int assembly_file);
+void read_file (char *name);
 void redisplay_data ();
 void redisplay_text ();
 void start_program (mem_addr addr);
