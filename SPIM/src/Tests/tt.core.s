@@ -1524,6 +1524,16 @@ srlv_:	.asciiz "Testing SRLV\n"
 
 
 	.data
+ssnop_:	.asciiz "Testing SSNOP\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 nop_
+	syscall
+
+	ssnop		# How do we test it??
+
+
+	.data
 sub_:	.asciiz "Testing SUB\n"
 sub1_:	.asciiz "Expect an overflow exceptions:\n  "
 	.text
@@ -4003,6 +4013,7 @@ negu_:	.asciiz "Testing NEGU\n"
 	bne $2 -101 fail
 	negu $2 $0
 	bne $2 0 fail
+
 
 	.data
 nop_:	.asciiz "Testing NOP\n"

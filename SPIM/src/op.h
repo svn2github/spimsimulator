@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 32    3/04/04 9:20p Larus $
+/* $Header: /Software/SPIM/src/op.h 33    3/06/04 8:21a Larus $
 */
 
 
@@ -393,6 +393,7 @@ OP("sra",	Y_SRA_OP,	R2sh_TYPE_INST,		0x00000003)
 OP("srav",	Y_SRAV_OP,	R3sh_TYPE_INST,		0x00000007)
 OP("srl",	Y_SRL_OP,	R2sh_TYPE_INST,		0x00000002)
 OP("srlv",	Y_SRLV_OP,	R3sh_TYPE_INST,		0x00000006)
+OP("ssnop",	Y_SSNOP_OP,	R2sh_TYPE_INST,		0x00000040)	/* MIPS32 */
 OP("sub",	Y_SUB_OP,	R3_TYPE_INST,		0x00000022)
 OP("sub.d",	Y_SUB_D_OP,	FP_R3_TYPE_INST,	0x46200001)
 OP("sub.ps",	Y_SUB_PS_OP,	FP_R3_TYPE_INST,	0x46600001)	/* MIPS32 Rev 2 */

@@ -290,6 +290,7 @@
 %token Y_SRAV_OP
 %token Y_SRL_OP
 %token Y_SRLV_OP
+%token Y_SSNOP_OP
 %token Y_SUB_D_OP
 %token Y_SUB_OP
 %token Y_SUB_PS_OP
@@ -808,6 +809,12 @@ ASM_CODE:	LOAD_OPS		DEST	ADDRESS
 	|	Y_NOP_POP
 		{
 		  nop_inst ();
+		}
+
+
+	|	Y_SSNOP_OP
+		{
+		  r_sh_type_inst (Y_SLL_OP, 0, 0, 1); /* SLL r0 r0 1 */
 		}
 
 
