@@ -401,19 +401,48 @@ copy_str (str, chop)
 	    new_len -= 1;
 	    continue;
 	  }
+	case '0':		/* \nnn */
+	case '1':
+	case '2':
+	case '3':
+	  {
+	    YY_CHAR c2 = *(str + 2), c3 = *(str + 3);
+	    int b = (*(str + 1) - '0') << 3;
+
+	    if ('0' <= c2 && c2 <= '7')
+	      b = (c2 - '0') << 3;
+	    else
+	      yyerror ("Bad character in \\ooo construct in string");
+
+	    if ('0' <= c3 && c3 <= '7')
+	      b += c3 - '0';
+	    else
+	      yyerror ("Bad character in \\ooo construct in string");
+
+	    *n ++ = (YY_CHAR) b;
+	    str += 4;
+	    new_len -= 3;
+	    continue;
+	  }
 	case 'X':
 	  {
-	    YY_CHAR c1 = *(str + 2), c2 = *(str + 3);
+	    YY_CHAR c2 = *(str + 2), c3 = *(str + 3);
 	    int b = 0;
 
-	    if ('0' <= c1 && c1 <= '9') b = c1 - '0';
-	    else if ('A' <= c1 && c1 <= 'F') b = c1 - 'A' + 10;
-	    else yyerror ("Bad character in \\X construct in string");
+	    if ('0' <= c2 && c2 <= '9')
+	      b = c2 - '0';
+	    else if ('A' <= c2 && c2 <= 'F')
+	      b = c2 - 'A' + 10;
+	    else
+	      yyerror ("Bad character in \\X construct in string");
 
 	    b <<= 4;
-	    if ('0' <= c2 && c2 <= '9') b += c2 - '0';
-	    else if ('A' <= c2 && c2 <= 'F') b += c2 - 'A' + 10;
-	    else yyerror ("Bad character in \\X construct in string");
+	    if ('0' <= c3 && c3 <= '9')
+	      b += c3 - '0';
+	    else if ('A' <= c3 && c3 <= 'F')
+	      b += c3 - 'A' + 10;
+	    else
+	      yyerror ("Bad character in \\X construct in string");
 
 	    *n ++ = (YY_CHAR) b;
 	    str += 4;

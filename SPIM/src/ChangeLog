@@ -1,5 +1,8 @@
 2004-02-14    <larus@C745660-A>
 
+	* scanner.l [P. Augustyniak silvathraec@rpg.pl]:
+	Added \ooo constants to strings.
+
 	* mips-syscall.c [Shaunak Pawagi (shaunak@cs.sunysb.edu)]:
 	Only print 8 digits for single precision floats.
 
