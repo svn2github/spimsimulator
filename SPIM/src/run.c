@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 33    3/03/04 9:54p Larus $
+/* $Header: /Software/SPIM/src/run.c 34    3/04/04 7:00a Larus $
 */
 
 
@@ -1379,6 +1379,22 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      SET_FPR_D (FD (inst), -FPR_D (FS (inst)));
 	      break;
 
+	    case Y_ROUND_W_D_OP:
+	      {
+		double val = FPR_D (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)(val + 0.5)); /* Casting truncates */
+		break;
+	      }
+
+	    case Y_ROUND_W_S_OP:
+	      {
+		double val = (double)FPR_S (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)(val + 0.5)); /* Casting truncates */
+		break;
+	      }
+
 	    case Y_SUB_S_OP:
 	      SET_FPR_S (FD (inst), FPR_S (FS (inst)) - FPR_S (FT (inst)));
 	      break;
@@ -1393,6 +1409,22 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word *vp = (reg_word *) &val;
 
 		SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), *vp);
+		break;
+	      }
+
+	    case Y_TRUNC_W_D_OP:
+	      {
+		double val = FPR_D (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)val); /* Casting truncates */
+		break;
+	      }
+
+	    case Y_TRUNC_W_S_OP:
+	      {
+		double val = (double)FPR_S (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)val); /* Casting truncates */
 		break;
 	      }
 

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 27    3/03/04 9:54p Larus $
+/* $Header: /Software/SPIM/src/op.h 28    3/04/04 7:00a Larus $
 */
 
 
@@ -361,8 +361,10 @@ OP("rol",	Y_ROL_POP,	PSEUDO_OP,		-1)
 OP("ror",	Y_ROR_POP,	PSEUDO_OP,		-1)
 OP("rotr",	Y_ROTR_OP,	R2sh_TYPE_INST,		0x00200002)	/* MIPS32 Rev 2 */
 OP("rotrv",	Y_ROTRV_OP,	R2sh_TYPE_INST,		0x00200003)	/* MIPS32 Rev 2 */
-OP("round.l.d",Y_ROUND_L_D_OP,	FP_R2ds_TYPE_INST,	0x46200008)	/* MIPS32 Rev 2 */
-OP("round.l.s",Y_ROUND_L_S_OP,	FP_R2ds_TYPE_INST,	0x46000008)	/* MIPS32 Rev 2 */
+OP("round.l.d",	Y_ROUND_L_D_OP,	FP_R2ds_TYPE_INST,	0x46200008)	/* MIPS32 Rev 2 */
+OP("round.l.s",	Y_ROUND_L_S_OP,	FP_R2ds_TYPE_INST,	0x46000008)	/* MIPS32 Rev 2 */
+OP("round.w.d",	Y_ROUND_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000b)	/* MIPS32 */
+OP("round.w.s",	Y_ROUND_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000b)	/* MIPS32 */
 OP("rsqrt.d",	Y_RSQRT_D_OP,	FP_R2ds_TYPE_INST,	0x46200016)	/* MIPS32 Rev 2 */
 OP("rsqrt.s",	Y_RSQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000016)	/* MIPS32 Rev 2 */
 OP("s.d",	Y_S_D_POP,	PSEUDO_OP,		-1)
@@ -411,8 +413,10 @@ OP("tlbp",	Y_TLBP_OP,	NOARG_TYPE_INST,	0x42000008)
 OP("tlbr",	Y_TLBR_OP,	NOARG_TYPE_INST,	0x42000001)
 OP("tlbwi",	Y_TLBWI_OP,	NOARG_TYPE_INST,	0x42000002)
 OP("tlbwr",	Y_TLBWR_OP,	NOARG_TYPE_INST,	0x42000006)
-OP("trunc.d",	Y_TRUNC_D_OP,	FP_R2ds_TYPE_INST,	0x46200009)	/* MIPS32 Rev 2 */
-OP("trunc.s",	Y_TRUNC_S_OP,	FP_R2ds_TYPE_INST,	0x46000009)	/* MIPS32 Rev 2 */
+OP("trunc.l.d",	Y_TRUNC_L_D_OP,	FP_R2ds_TYPE_INST,	0x46200009)	/* MIPS32 Rev 2 */
+OP("trunc.l.s",	Y_TRUNC_L_S_OP,	FP_R2ds_TYPE_INST,	0x46000009)	/* MIPS32 Rev 2 */
+OP("trunc.w.d",	Y_TRUNC_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000c)	/* MIPS32 */
+OP("trunc.w.s",	Y_TRUNC_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000c)	/* MIPS32 */
 OP("ulh",	Y_ULH_POP,	PSEUDO_OP,		-1)
 OP("ulhu",	Y_ULHU_POP,	PSEUDO_OP,		-1)
 OP("ulw",	Y_ULW_POP,	PSEUDO_OP,		-1)

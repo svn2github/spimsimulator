@@ -267,6 +267,8 @@
 %token Y_ROTRV_OP
 %token Y_ROUND_L_D_OP
 %token Y_ROUND_L_S_OP
+%token Y_ROUND_W_D_OP
+%token Y_ROUND_W_S_OP
 %token Y_RSQRT_D_OP
 %token Y_RSQRT_S_OP
 %token Y_SB_OP
@@ -304,8 +306,10 @@
 %token Y_TLBR_OP
 %token Y_TLBWI_OP
 %token Y_TLBWR_OP
-%token Y_TRUNC_D_OP
-%token Y_TRUNC_S_OP
+%token Y_TRUNC_L_D_OP
+%token Y_TRUNC_L_S_OP
+%token Y_TRUNC_W_D_OP
+%token Y_TRUNC_W_S_OP
 %token Y_WRPGPR_OP
 %token Y_WSBH_OP
 %token Y_XOR_OP
@@ -1501,7 +1505,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_UNARY_OP_REV2	F_DEST		F_SRC1
+	|	FP_UNARY_OPS	F_DEST		F_SRC2
+		{
+		  r_type_inst ($1.i, $2.i, $3.i, 0);
+		}
+
+
+	|	FP_UNARY_OPS_REV2	F_DEST		F_SRC2
 		{
 		  mips32_r2_inst ();
 		}
@@ -1520,30 +1530,6 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 
 
 	|	FP_TERNARY_OP_REV2	F_DEST		F_SRC1		F_SRC2	FP_REGISTER
-		{
-		  mips32_r2_inst ();
-		}
-
-
-	|	FP_CONVERT_OP	F_DEST		F_SRC2
-		{
-		  r_type_inst ($1.i, $2.i, $3.i, 0);
-		}
-
-
-	|	FP_CONVERT_OP_REV2	F_DEST		F_SRC2
-		{
-		  mips32_r2_inst ();
-		}
-
-
-	|	FP_NEG_OP	F_DEST		F_SRC2
-		{
-		  r_type_inst ($1.i, $2.i, $3.i, 0);
-		}
-
-
-	|	FP_NEG_OP_REV2	F_DEST		F_SRC2
 		{
 		  mips32_r2_inst ();
 		}
@@ -1882,15 +1868,45 @@ FP_ABS_OP:	Y_ABS_S_OP
 	|	Y_ABS_D_OP
 	;
 
-FP_UNARY_OP_REV2:	Y_ABS_PS_OP
+FP_UNARY_OPS:	Y_CEIL_W_D_OP
+	|	Y_CEIL_W_S_OP
+	|	Y_CVT_D_S_OP
+	|	Y_CVT_D_W_OP
+	|	Y_CVT_S_D_OP
+	|	Y_CVT_S_W_OP
+	|	Y_CVT_W_D_OP
+	|	Y_CVT_W_S_OP
+	|	Y_FLOOR_W_D_OP
+	|	Y_FLOOR_W_S_OP
+	|	Y_NEG_S_OP
+	|	Y_NEG_D_OP
+	|	Y_ROUND_W_D_OP
+	|	Y_ROUND_W_S_OP
+	|	Y_TRUNC_W_D_OP
+	|	Y_TRUNC_W_S_OP
+	;
+
+FP_UNARY_OPS_REV2:	Y_ABS_PS_OP
+	|	Y_CEIL_L_D_OP
+	|	Y_CEIL_L_S_OP
+	|	Y_CVT_D_L_OP
+	|	Y_CVT_L_D_OP
+	|	Y_CVT_L_S_OP
+	|	Y_CVT_PS_S_OP
+	|	Y_CVT_S_L_OP
+	|	Y_CVT_S_PL_OP
+	|	Y_CVT_S_PU_OP
+	|	Y_FLOOR_L_D_OP
+	|	Y_FLOOR_L_S_OP
+	|	Y_NEG_PS_OP
 	|	Y_RECIP_D_OP
 	|	Y_RECIP_S_OP
 	|	Y_ROUND_L_D_OP
 	|	Y_ROUND_L_S_OP
 	|	Y_RSQRT_D_OP
 	|	Y_RSQRT_S_OP
-	|	Y_TRUNC_D_OP
-	|	Y_TRUNC_S_OP
+	|	Y_TRUNC_L_D_OP
+	|	Y_TRUNC_L_S_OP
 	;
 
 FP_BINARY_OP:	Y_ADD_S_OP
@@ -1924,38 +1940,6 @@ FP_TERNARY_OP_REV2:	Y_ALNV_PS_OP
 	|	Y_NMSUB_D_OP
 	|	Y_NMSUB_PS_OP
 	|	Y_NMSUB_S_OP
-	;
-
-FP_CONVERT_OP:	Y_CEIL_W_D_OP
-	|	Y_CEIL_W_S_OP
-	|	Y_CVT_D_S_OP
-	|	Y_CVT_D_W_OP
-	|	Y_CVT_S_D_OP
-	|	Y_CVT_S_W_OP
-	|	Y_CVT_W_D_OP
-	|	Y_CVT_W_S_OP
-	|	Y_FLOOR_W_D_OP
-	|	Y_FLOOR_W_S_OP
-	;
-
-FP_CONVERT_OP_REV2:	Y_CEIL_L_D_OP
-	|	Y_CEIL_L_S_OP
-	|	Y_CVT_D_L_OP
-	|	Y_CVT_L_D_OP
-	|	Y_CVT_L_S_OP
-	|	Y_CVT_PS_S_OP
-	|	Y_CVT_S_L_OP
-	|	Y_CVT_S_PL_OP
-	|	Y_CVT_S_PU_OP
-	|	Y_FLOOR_L_D_OP
-	|	Y_FLOOR_L_S_OP
-	;
-
-FP_NEG_OP:	Y_NEG_S_OP
-	|	Y_NEG_D_OP
-	;
-
-FP_NEG_OP_REV2:	Y_NEG_PS_OP
 	;
 
 FP_CMP_OP:	Y_C_F_S_OP

@@ -3346,6 +3346,57 @@ fp_dm3:	.double -3.0
 
 
 	.data
+round.w.d_:	.asciiz "Testing ROUND.W.D\n"
+fp_d1p6:.double 1.6
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 round.w.d_
+	syscall
+
+	lwc1 $f2 fp_d0
+	lwc1 $f3 fp_d0+4
+	round.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 0 fail
+
+	lwc1 $f2 fp_d1
+	lwc1 $f3 fp_d1+4
+	round.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+	lwc1 $f2 fp_d1p6
+	lwc1 $f3 fp_d1p6+4
+	round.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 2 fail
+
+
+	.data
+round.w.s_:	.asciiz "Testing ROUND.W.S\n"
+fp_s1p6:.float 1.6
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 round.w.s_
+	syscall
+
+	lwc1 $f2 fp_s0
+	round.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 0 fail
+
+	lwc1 $f2 fp_s1
+	round.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+	lwc1 $f2 fp_s1p6
+	round.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 2 fail
+
+
+	.data
 sub.s_:	.asciiz "Testing SUB.S\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)
@@ -3424,6 +3475,55 @@ sub.d_:	.asciiz "Testing SUB.D\n"
 	mfc1 $7 $f5
 	bne $4 $6 fail
 	bne $5 $7 fail
+
+
+	.data
+trunc.w.d_:	.asciiz "Testing TRUNC.W.D\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 trunc.w.d_
+	syscall
+
+	lwc1 $f2 fp_d0
+	lwc1 $f3 fp_d0+4
+	trunc.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 0 fail
+
+	lwc1 $f2 fp_d1
+	lwc1 $f3 fp_d1+4
+	trunc.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+	lwc1 $f2 fp_d1p6
+	lwc1 $f3 fp_d1p6+4
+	trunc.w.d $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+
+	.data
+trunc.w.s_:	.asciiz "Testing TRUNC.W.S\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 trunc.w.s_
+	syscall
+
+	lwc1 $f2 fp_s0
+	trunc.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 0 fail
+
+	lwc1 $f2 fp_s1
+	trunc.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
+
+	lwc1 $f2 fp_s1p6
+	trunc.w.s $f0 $f2
+	mfc1 $6 $f0
+	bne $6 1 fail
 
 
 # SWC1 tested previously
