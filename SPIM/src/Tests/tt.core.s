@@ -385,6 +385,17 @@ div2_:	.asciiz "Expect exception caused by divide by 0:\n  "
 	mfhi $5
 	bne $5 0 fail
 
+	li $2 0x80000000
+	li $4 0xffffffff
+	div $5 $2 $4	# Overflows, but should not cause overflow
+
+	li $2 1
+	li $4 0xffffffff
+	div $5 $2 $4
+	bne $5 -1 fail
+	mfhi $5
+	bne $5 0 fail
+
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 div2_
 	syscall
@@ -418,6 +429,17 @@ divu2_:	.asciiz "Expect exception caused by divide by 0:\n  "
 	bne $5 0 fail
 	mfhi $5
 	bne $5 4 fail
+
+	li $2 0x80000000
+	li $4 0xffffffff
+	divu $5 $2 $4	# Overflows, but should not cause overflow
+
+	li $2 1
+	li $4 0xffffffff
+	divu $5 $2 $4
+	bne $5 0 fail
+	mfhi $5
+	bne $5 1 fail
 
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 divu2_
