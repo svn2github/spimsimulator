@@ -1,14 +1,46 @@
-2000-12-24    <larus@C745660-A>
+2001-02-01    <larus@C745660-A>
+
+	* spim.c spim.h trap.handler:
+	Added commands to dump text segment (in binary). [From: Brian
+	R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
+
+	* buttons.c:
+	Allow character literal in set-value dialog box. [From: Brian
+	R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
+
+	* mips-syscall.c spim-syscall.h Documentation\spim.tex:
+	Added system call to print a character and read a character.
+	[From: Brian R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
+
+	* xspim.c xspim.h buttons.c:
+	Add button to clear xspim console. [From: Brian R. Gaeke
+	brg@pasteur.EECS.Berkeley.EDU].
+
+2001-01-14    <larus@C745660-A>
+
+	* spim.c:
+	Fix print_all_regs to define the stack allocated buffer's length
+	as a constant, not a variable.  This wasn't ANSI C and upset Sun's
+	compiler. [From: Matt.Simmons@eng.sun.com]
+
+2000-12-25    <larus@HomeMachine>
+
+	* Release 6.3.
+
+	* IMakefile, Makefile.cygwin Makefile.st:
+	Rename SH to CSH.
+
+2000-12-24    <larus@HomeMachine>
 
 	* Makefile.std:
 	Set defaults to work under Linux.
 
-2000-12-23    <larus@C745660-A>
+2000-12-23    <larus@HomeMachine>
 
 	* MainFrm.cpp MainFrm.cpp PCSpim.cpp:
 	When frame resized, resize panes.
 
-2000-12-22    <larus@C745660-A>
+2000-12-22    <larus@HomeMachine>
 
 	* PCView.cpp:
 	Refresh all windows before initialization finished when user had

@@ -91,7 +91,7 @@ YFLAGS = -d
 YCFLAGS =
 LDFLAGS = -lm
 XLDFLAGS = -L$(TOPDIR)/lib -lXaw -lXmu -lXt -lXext -lX11
-SH = bash
+CSH = bash
 
 # lex.yy.c is usually compiled with -O to speed it up.
 
@@ -128,7 +128,7 @@ configuration:
 test:	spim.exe
 	/bin/rm -f Tests/tt.out std_out new_out
 	@echo
-	$(SH) -c "./spim.exe -bare -notrap -file Tests/tt.bare.s >& Tests/tt.out"
+	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -139,7 +139,7 @@ test:	spim.exe
 
 	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "Trap Handler not installed; do make install"; exit 1; else true; fi
 	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
-	$(SH) -c "./spim.exe -file Tests/tt.s < Tests/tt.in >& Tests/tt.out"
+	$(CSH) -c "./spim.exe -file Tests/tt.s < Tests/tt.in >& Tests/tt.out"
 	tail +6 Tests/tt.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -152,7 +152,7 @@ test:	spim.exe
 # tt.alu.bare.s needs to be converted in places for big-endian machines.
 
 test_bare: spim.exe
-	$(SH) -c "./spim.exe -bare -notrap -file Tests/tt.alu.bare.s >& Tests/tt.out"
+	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.alu.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.alu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -161,7 +161,7 @@ test_bare: spim.exe
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
 
-	$(SH) -c "./spim.exe -bare -notrap -file Tests/tt.fpu.bare.s >& Tests/tt.out"
+	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.fpu.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.fpu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
