@@ -775,6 +775,8 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 	|	SHIFT_OP	DEST_REG	SRC1		Y_INT
 		{
+		  if (($4.i < 0) || (31 < $4.i))
+		    yywarn("Shift distance can only be in the range 0..31");
 		  r_sh_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
@@ -942,7 +944,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		{
 		  long dist = eval_imm_expr ((imm_expr *)$4.p);
 
-		  check_imm_range ((imm_expr *)$4.p, -31, 31);
+		  check_imm_range ((imm_expr *)$4.p, 0, 31);
 		  r_sh_type_inst (Y_SLL_OP, 1, $3.i, -dist);
 		  r_sh_type_inst (Y_SRL_OP, $2.i, $3.i, dist);
 		  r_type_inst (Y_OR_OP, $2.i, $2.i, 1);
@@ -954,7 +956,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		{
 		  long dist = eval_imm_expr ((imm_expr *)$4.p);
 
-		  check_imm_range ((imm_expr *)$4.p, -31, 31);
+		  check_imm_range ((imm_expr *s)$4.p, 0, 31);
 		  r_sh_type_inst (Y_SRL_OP, 1, $3.i, -dist);
 		  r_sh_type_inst (Y_SLL_OP, $2.i, $3.i, dist);
 		  r_type_inst (Y_OR_OP, $2.i, $2.i, 1);
