@@ -626,9 +626,9 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		  int *x = (int *) $3.p;
 
 		  i_type_inst (Y_ORI_OP, 1, 0, const_imm_expr (*x));
-		  r_type_inst (Y_MTC1_OP, 0, $2.i, 1);
+		  r_co_type_inst (Y_MTC1_OP, 0, $2.i, 1);
 		  i_type_inst (Y_ORI_OP, 1, 0, const_imm_expr (*(x+1)));
-		  r_type_inst (Y_MTC1_OP, 0, $2.i + 1, 1);
+		  r_co_type_inst (Y_MTC1_OP, 0, $2.i + 1, 1);
 		}
 
 
@@ -638,7 +638,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		  int *y = (int *) &x;
 
 		  i_type_inst (Y_ORI_OP, 1, 0, const_imm_expr (*y));
-		  r_type_inst (Y_MTC1_OP, 0, $2.i, 1);
+		  r_co_type_inst (Y_MTC1_OP, 0, $2.i, 1);
 		}
 
 
@@ -1442,7 +1442,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	FP_MOVE_OPS	F_DEST	F_SRC1
 		{
-		  r_type_inst ($1.i, $2.i, $3.i, 0);
+		  r_co_type_inst ($1.i, $2.i, $3.i, 0);
 		}
 
 
@@ -1452,7 +1452,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		}
 
 
-	|	FP_MOVER_OPS	DEST	SRC1	CC_REG
+	|	MOVEC_OPS	DEST	SRC1	CC_REG
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
 		}
@@ -1460,13 +1460,13 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	FP_MOVEC_OPS	F_DEST	F_SRC1	REG
 		{
-		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
+		  r_co_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
 
 	|	FP_MOVECC_OPS	F_DEST	F_SRC1	CC_REG
 		{
-		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
+		  r_co_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
 		}
 
 
@@ -1504,16 +1504,16 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		{
 		  if ($1.i == Y_MFC1_D_POP)
 		    {
-		      r_type_inst (Y_MFC1_OP, 0, $3.i, $2.i);
-		      r_type_inst (Y_MFC1_OP, 0, $3.i + 1, $2.i + 1);
+		      r_co_type_inst (Y_MFC1_OP, 0, $3.i, $2.i);
+		      r_co_type_inst (Y_MFC1_OP, 0, $3.i + 1, $2.i + 1);
 		    }
 		  else if ($1.i == Y_MTC1_D_POP)
 		    {
-		      r_type_inst (Y_MTC1_OP, 0, $3.i, $2.i);
-		      r_type_inst (Y_MTC1_OP, 0, $3.i + 1, $2.i + 1);
+		      r_co_type_inst (Y_MTC1_OP, 0, $3.i, $2.i);
+		      r_co_type_inst (Y_MTC1_OP, 0, $3.i + 1, $2.i + 1);
 		    }
 		  else
-		    r_type_inst ($1.i, 0, $3.i, $2.i);
+		    r_co_type_inst ($1.i, 0, $3.i, $2.i);
 		}
 
 
@@ -1525,13 +1525,13 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	CTL_COP_OPS	REG	COP_REG
 		{
-		  r_type_inst ($1.i, 0, $3.i, $2.i);
+		  r_co_type_inst ($1.i, 0, $3.i, $2.i);
 		}
 
 
 	|	FP_UNARY_OPS	F_DEST	F_SRC2
 		{
-		  r_type_inst ($1.i, $2.i, $3.i, 0);
+		  r_co_type_inst ($1.i, $2.i, $3.i, 0);
 		}
 
 
@@ -1543,7 +1543,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	FP_BINARY_OPS	F_DEST	F_SRC1	F_SRC2
 		{
-		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
+		  r_co_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
 
@@ -1901,7 +1901,7 @@ FP_MOVE_OPS_REV2:	Y_MOV_PS_OP
 	;
 
 
-FP_MOVER_OPS:	Y_MOVF_OP
+MOVEC_OPS:	Y_MOVF_OP
 	|	Y_MOVT_OP
 	;
 

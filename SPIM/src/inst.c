@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 22    3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/inst.c 23    3/12/04 10:12p Larus $
 */
 
 #include <stdio.h>
@@ -398,6 +398,18 @@ r_type_inst (int opcode, int rd, int rs, int rt)
 }
 
 
+/* Return a register-type instruction with the given OPCODE, FD, FS, and FT
+   fields. */
+
+void
+r_co_type_inst (int opcode, int fd, int fs, int ft)
+{
+  instruction *inst = make_r_type_inst (opcode, fs, 0, ft);
+  SET_FD (inst, fd);
+  store_instruction (inst);
+}
+
+
 /* Return a register-shift instruction with the given OPCODE, RD, RT, and
    SHAMT fields.*/
 
@@ -405,7 +417,6 @@ void
 r_sh_type_inst (int opcode, int rd, int rt, int shamt)
 {
   instruction *inst = make_r_type_inst (opcode, rd, 0, rt);
-
   SET_SHAMT(inst, shamt & 0x1f);
   store_instruction (inst);
 }
@@ -417,10 +428,8 @@ r_sh_type_inst (int opcode, int rd, int rt, int shamt)
 void
 r_cond_type_inst (int opcode, int fs, int ft, int cc)
 {
-  instruction *inst = make_r_type_inst (opcode, 0, fs, ft);
-  SET_IMM(inst, 0);
+  instruction *inst = make_r_type_inst (opcode, fs, 0, ft);
   SET_FD(inst, cc << 2);
-
   switch (opcode)
     {
     case Y_C_EQ_D_OP:

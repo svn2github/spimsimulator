@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 18    3/11/04 10:15p Larus $
+/* $Header: /Software/SPIM/src/inst.h 19    3/12/04 10:12p Larus $
 */
 
 
@@ -88,6 +88,7 @@ typedef struct inst_s
 #define OPCODE(INST)		(INST)->opcode
 #define SET_OPCODE(INST, VAL)	(INST)->opcode = (short)(VAL)
 
+
 #define RS(INST)		(INST)->r_t.r_i.rs
 #define SET_RS(INST, VAL)	(INST)->r_t.r_i.rs = (unsigned char)(VAL)
 
@@ -97,33 +98,39 @@ typedef struct inst_s
 #define RD(INST)		(INST)->r_t.r_i.r_i.r.rd
 #define SET_RD(INST, VAL)	(INST)->r_t.r_i.r_i.r.rd = (unsigned char)(VAL)
 
-#define FS(INST)		RS(INST)
-#define SET_FS(INST, VAL)	SET_RS(INST, VAL)
+
+#define FS(INST)		RD(INST)
+#define SET_FS(INST, VAL)	SET_RD(INST, VAL)
 
 #define FT(INST)		RT(INST)
 #define SET_FT(INST, VAL)	SET_RT(INST, VAL)
 
-#define FD(INST)		RD(INST)
-#define SET_FD(INST, VAL)	SET_RD(INST, VAL)
+#define FD(INST)		SHAMT(INST)
+#define SET_FD(INST, VAL)	SET_SHAMT(INST, VAL)
 
-#define BASE(INST)		RS(INST)
-#define SET_BASE(INST, VAL)	SET_RS(INST, VAL)
 
 #define SHAMT(INST)		(INST)->r_t.r_i.r_i.r.shamt
 #define SET_SHAMT(INST, VAL)	(INST)->r_t.r_i.r_i.r.shamt = (unsigned char)(VAL)
 
 #define IMM(INST)		(INST)->r_t.r_i.r_i.imm
 #define SET_IMM(INST, VAL)	(INST)->r_t.r_i.r_i.imm = (short)(VAL)
+
+
+#define BASE(INST)		RS(INST)
+#define SET_BASE(INST, VAL)	SET_RS(INST, VAL)
+
 #define IOFFSET(INST)		IMM(INST)
 #define SET_IOFFSET(INST, VAL)	SET_IMM(INST, VAL)
 #define IDISP(INST)		(SIGN_EX (IOFFSET (INST) << 2))
 
-#define COND(INST)		SHAMT(INST)
-#define SET_COND(INST, VAL)	SET_SHAMT(INST, VAL)
+
+#define COND(INST)		RS(INST)
+#define SET_COND(INST, VAL)	SET_RS(INST, VAL)
 
 #define CC(INST)		(RT(INST) >> 2)
 #define ND(INST)		((RT(INST) & 0x2) >> 1)
 #define TF(INST)		(RT(INST) & 0x1)
+
 
 #define TARGET(INST)		(INST)->r_t.target
 #define SET_TARGET(INST, VAL)	(INST)->r_t.target = (mem_addr)(VAL)
@@ -239,6 +246,7 @@ int opcode_is_jump (int opcode);
 int opcode_is_load_store (int opcode);
 void print_inst (mem_addr addr);
 int print_inst_internal (char *buf, int len, instruction *inst, mem_addr addr);
+void r_co_type_inst (int opcode, int fd, int fs, int ft);
 void r_cond_type_inst (int opcode, int fs, int ft, int cc);
 void r_sh_type_inst (int opcode, int rd, int rt, int shamt);
 void r_type_inst (int opcode, int rd, int rs, int rt);
