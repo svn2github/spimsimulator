@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 16    2/28/04 10:36a Larus $
+/* $Header: /Software/SPIM/src/inst.c 17    2/28/04 4:54p Larus $
 */
 
 #include <stdio.h>
@@ -965,6 +965,7 @@ opcode_is_load_store (int opcode)
     case Y_LBU_OP:
     case Y_LH_OP:
     case Y_LHU_OP:
+    case Y_LL_OP:
     case Y_LW_OP:
     case Y_LWC0_OP:
     case Y_LWC1_OP:
@@ -974,6 +975,7 @@ opcode_is_load_store (int opcode)
     case Y_S_D_POP:
     case Y_S_S_POP:
     case Y_SB_OP:
+    case Y_SC_OP:
     case Y_SH_OP:
     case Y_SW_OP:
     case Y_SWC0_OP:

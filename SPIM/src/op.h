@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 16    2/28/04 4:36p Larus $
+/* $Header: /Software/SPIM/src/op.h 17    2/28/04 4:54p Larus $
 */
 
 
@@ -264,6 +264,7 @@ OP("lhu",	Y_LHU_OP,	I2a_TYPE_INST,		0x94000000)
 OP("li",	Y_LI_POP,	PSEUDO_OP,		-1)
 OP("li.d",	Y_LI_D_POP,	PSEUDO_OP,		-1)
 OP("li.s",	Y_LI_S_POP,	PSEUDO_OP,		-1)
+OP("ll",	Y_LL_OP,	I2a_TYPE_INST,		0xb0000000)	/* MIPS32 */
 OP("lui",	Y_LUI_OP,	I1t_TYPE_INST,		0x3c000000)
 OP("luxc1",	Y_LUXC1_OP,	FP_R3_TYPE_INST,	0x4c000005)	/* MIPS32 Rev 2 */
 OP("lw",	Y_LW_OP,	I2a_TYPE_INST,		0x8c000000)
@@ -351,6 +352,7 @@ OP("rsqrt.s",	Y_RSQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000016)	/* MIPS32 Rev 2 */
 OP("s.d",	Y_S_D_POP,	PSEUDO_OP,		-1)
 OP("s.s",	Y_S_S_POP,	PSEUDO_OP,		-1)
 OP("sb",	Y_SB_OP,	I2a_TYPE_INST,		0xa0000000)
+OP("sc",	Y_SC_OP,	I2a_TYPE_INST,		0xe0000000)	/* MIPS32 */
 OP("sd",	Y_SD_POP,	PSEUDO_OP,		-1)
 OP("sdxc1",	Y_SDXC1_OP,	FP_R3_TYPE_INST,	0x46000009)	/* MIPS32 Rev 2 */
 OP("seb",	Y_SEB_OP,	R2td_TYPE_INST,		0x7c000420)	/* MIPS32 Rev 2 */

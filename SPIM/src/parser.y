@@ -182,6 +182,7 @@
 %token Y_LH_OP
 %token Y_LHU_OP
 %token Y_LUI_OP
+%token Y_LL_OP
 %token Y_LUXC1_OP
 %token Y_LW_OP
 %token Y_LWC0_OP
@@ -252,6 +253,7 @@
 %token Y_RSQRT_D_OP
 %token Y_RSQRT_S_OP
 %token Y_SB_OP
+%token Y_SC_OP
 %token Y_SDXC1_OP
 %token Y_SEB_OP
 %token Y_SEH_OP
@@ -1529,11 +1531,12 @@ LOAD_OP:	Y_LB_OP
 	|	Y_LBU_OP
 	|	Y_LH_OP
 	|	Y_LHU_OP
+	|	Y_LL_OP
 	|	Y_LW_OP
 	|	Y_LWL_OP
 	|	Y_LWR_OP
-	|	Y_LD_POP
 	|	Y_PFW_OP
+	|	Y_LD_POP
 	;
 
 LOAD_COP:	Y_LWC0_OP
@@ -1565,6 +1568,7 @@ PREFETCH_OP:	Y_PREFX_OP
 	;
 
 STORE_OP:	Y_SB_OP
+	|	Y_SC_OP
 	|	Y_SH_OP
 	|	Y_SW_OP
 	|	Y_SWL_OP

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 22    2/28/04 4:36p Larus $
+/* $Header: /Software/SPIM/src/run.c 23    2/28/04 4:54p Larus $
 */
 
 
@@ -501,6 +501,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 			 &R[RT (inst)], 0xffff);
 	      break;
 
+	    case Y_LL_OP:
+	      /* Uniprocess, so this instruction is just a load */
+	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
+			 &R[RT (inst)], 0xffffffff);
+	      break;
+
 	    case Y_LUI_OP:
 	      R[RT (inst)] = (IMM (inst) << 16) & 0xffff0000;
 	      break;
@@ -704,6 +710,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_SB_OP:
 	      SET_MEM_BYTE (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
+	      break;
+
+	    case Y_SC_OP:
+	      /* Uniprocessor, so instruction is just a store */
+	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
 	    case Y_SH_OP:
