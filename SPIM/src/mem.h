@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/*   $Header: /Software/SPIM/src/mem.h 8     3/07/04 4:10p Larus $
+/*   $Header: /Software/SPIM/src/mem.h 9     3/09/04 9:53p Larus $
 */
 
 
@@ -118,6 +118,7 @@ extern mem_addr k_data_top;
 #define RECV_READY		0x1
 #define RECV_INT_ENABLE		0x2
 
+#define RECV_INT_LEVEL		1 /* HW Interrupt 1 */
 #define RECV_INT_MASK		CP0_Cause_IP3 /* HW Interrupt 1 */
 
 
@@ -128,6 +129,7 @@ extern mem_addr k_data_top;
 #define TRANS_READY		0x1
 #define TRANS_INT_ENABLE	0x2
 
+#define TRANS_INT_LEVEL		0 /* HW Interrupt 0 */
 #define TRANS_INT_MASK		CP0_Cause_IP2 /* HW Interrupt 0 */
 
 

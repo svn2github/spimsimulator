@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 15    3/07/04 10:02p Larus $
+/* $Header: /Software/SPIM/src/spim.h 16    3/09/04 9:53p Larus $
 */
 
 
@@ -203,7 +203,7 @@ typedef uint32 mem_addr;
 
 /* Iterval (in milliseconds) for the hardware timer in CP0. */
 
-#define TIMER_TICK_MS 1
+#define TIMER_TICK_MS 10	/* 100 times per second */
 
 
 

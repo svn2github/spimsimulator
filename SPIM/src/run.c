@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 44    3/09/04 8:06p Larus $
+/* $Header: /Software/SPIM/src/run.c 45    3/09/04 9:53p Larus $
 */
 
 
@@ -88,7 +88,7 @@ static void unsigned_multiply (reg_word v1, reg_word v2);
 
 /* True when delayed_branches is true and instruction is executing in delay
 slot of another instruction. */
-static int running_in_delay_slot = 0; 
+static int running_in_delay_slot = 0;
 
 
 /* Executed delayed branch and jump instructions by running the
@@ -476,6 +476,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_ERET_OP:
+	      {
+		mem_addr tmp = CP0_EPC;
+
+		JUMP_INST (tmp); /* Jump to EPC */
+	      }
 	      break;
 
 	    case Y_J_OP:
@@ -748,11 +753,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		  break;
 
 		case CP0_Status_Reg:
-		  CPR[0][FS (inst)] &= CP0_Status_Mask;
-		  CP0_Status |= ((CP0_Status_CU & 0x30000000)
-				 | CP0_Status_IM
-				 | CP0_Status_UM
-				 | CP0_Status_IE);
+		  CP0_Status &= CP0_Status_Mask;
+		  CP0_Status |= ((CP0_Status_CU & 0x30000000) | CP0_Status_UM);
 		  break;
 
 		case CP0_Cause_Reg:
@@ -1620,7 +1622,7 @@ timer_signal_handler (int signum)
   CP0_Count += 1;
   if (CP0_Count == CP0_Compare)
     {
-      RAISE_EXCEPTION (ExcCode_Int, CP0_Cause |= CP0_Cause_IP7);
+      RAISE_INTERRUPT (7, CP0_Cause |= CP0_Cause_IP7);
     }
 
   /* Re-enable the timer */
@@ -1764,11 +1766,22 @@ set_fpu_cc (int cond, int cc, int less, int equal, int unordered)
 
 
 void
+raise_interrupt (int level)
+{
+  if (CP0_Status & (1 << (level + CP0_Status_IM0)))
+    {
+      /* Interrupt not masked */
+      CP0_Cause |= (1 << (level + CP0_Cause_IP0)); /* Mark pending */
+      raise_exception(ExcCode_Int);
+    }
+}
+
+
+void
 raise_exception (int excode)
 {
   if (ExcCode_Int != excode
-      || ((CP0_Status & CP0_Status_IE) /* Allow interrupt if IE and !ERL and !EXL */
-	  && !(CP0_Status & CP0_Status_ERL)
+      || ((CP0_Status & CP0_Status_IE) /* Allow interrupt if IE and !EXL */
 	  && !(CP0_Status & CP0_Status_EXL)))
     {
       /* Ignore interrupt exception when interrupts disabled.  */
@@ -1788,7 +1801,6 @@ raise_exception (int excode)
 	  if ((CP0_Status & CP0_Status_EXL) == 0)
 	    {
 	      CP0_EPC = ROUND_DOWN (PC, BYTES_PER_WORD);	/* Instruction address */
-	      CP0_Cause |= CP0_Cause_BD;
 	    }
 	}
       /* ToDo: set CE field of Cause register to coprocessor causing exception */

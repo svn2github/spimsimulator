@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 10    3/07/04 4:10p Larus $
+/* $Header: /Software/SPIM/src/reg.h 11    3/09/04 9:53p Larus $
 */
 
 
@@ -87,15 +87,21 @@ extern reg_word CCR[4][32], CPR[4][32];
 #define CP0_Status	(CPR[0][CP0_Status_Reg])
 /* Implemented fields: */
 #define CP0_Status_CU	0xf0000000
-#define CP0_Status_IM	0x00000300
+#define CP0_Status_IM	0x0000ff00
+#define CP0_Status_IM7   0x00008000 /* HW Int 5 */
+#define CP0_Status_IM6   0x00004000 /* HW Int 4 */
+#define CP0_Status_IM5   0x00002000 /* HW Int 3 */
+#define CP0_Status_IM4   0x00001000 /* HW Int 2 */
+#define CP0_Status_IM3   0x00000800 /* HW Int 1 */
+#define CP0_Status_IM2   0x00000400 /* HW Int 0 */
+#define CP0_Status_IM1   0x00000200 /* SW Int 1 */
+#define CP0_Status_IM0   0x00000100 /* SW Int 0 */
 #define CP0_Status_UM	0x00000010
-#define CP0_Status_ERL	0x00000004
 #define CP0_Status_EXL	0x00000002
 #define CP0_Status_IE	0x00000001
 #define CP0_Status_Mask (CP0_Status_CU		\
 			 | CP0_Status_UM	\
 			 | CP0_Status_IM	\
-			 | CP0_Status_ERL	\
 			 | CP0_Status_EXL	\
 			 | CP0_Status_IE)
 
@@ -104,13 +110,15 @@ extern reg_word CCR[4][32], CPR[4][32];
 #define CP0_Cause	(CPR[0][CP0_Cause_Reg])
 /* Implemented fields: */
 #define CP0_Cause_BD	0x80000000
-#define CP0_Cause_IP	0x00000300
+#define CP0_Cause_IP	0x0000ff00
 #define CP0_Cause_IP7   0x00008000 /* HW Int 5 */
 #define CP0_Cause_IP6   0x00004000 /* HW Int 4 */
 #define CP0_Cause_IP5   0x00002000 /* HW Int 3 */
 #define CP0_Cause_IP4   0x00001000 /* HW Int 2 */
 #define CP0_Cause_IP3   0x00000800 /* HW Int 1 */
 #define CP0_Cause_IP2   0x00000400 /* HW Int 0 */
+#define CP0_Cause_IP1   0x00000200 /* SW Int 1 */
+#define CP0_Cause_IP0   0x00000100 /* SW Int 0 */
 #define CP0_Cause_ExcCode 0x0000003c
 #define CP0_Cause_Mask	(CP0_Cause_BD		\
 			 | CP0_Cause_IP		\
