@@ -85,7 +85,7 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
 
 CC = gcc
-CFLAGS = $(DEFINES)
+CFLAGS = $(DEFINES) -g
 IFLAGS = -I$(X_INCLUDE_DIR)
 YFLAGS = -d
 YCFLAGS =
@@ -132,7 +132,7 @@ test:	spim.exe
 	tail +6 Tests/tt.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
-	diff std_out new_out
+	diff -w std_out new_out
 	@echo
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
@@ -143,7 +143,7 @@ test:	spim.exe
 	tail +6 Tests/tt.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
-	diff std_out new_out
+	diff -w std_out new_out
 	@echo
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
@@ -156,7 +156,7 @@ test_bare: spim.exe
 	tail +6 Tests/tt.alu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
-	diff std_out new_out
+	diff -w std_out new_out
 	@echo
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
@@ -165,7 +165,7 @@ test_bare: spim.exe
 	tail +6 Tests/tt.fpu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
-	diff std_out new_out
+	diff -w std_out new_out
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
 
@@ -201,7 +201,7 @@ SRC = spim-utils.c run.c mem.c inst.c data.c sym-tbl.c y.tab.o lex.yy.o \
 y.tab.h: y.tab.c
 
 y.tab.c: parser.y
-	yacc $(YFLAGS) parser.y
+	bison $(YFLAGS) parser.y
 
 y.tab.o: y.tab.c
 	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c y.tab.c
