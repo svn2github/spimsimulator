@@ -86,7 +86,7 @@ s2:	.word 0
 
 	mfc0 $k0 $13		# Cause register
 	srl $a0 $k0 2		# Extract ExcCode Field
-	andi $a0 $a0 0xf
+	andi $a0 $a0 0x1f
 
 	# Print information about exception.
 	#
@@ -96,7 +96,7 @@ s2:	.word 0
 
 	li $v0 1		# syscall 1 (print_int)
 	srl $a0 $k0 2		# Extract ExcCode Field
-	andi $a0 $a0 0xf
+	andi $a0 $a0 0x1f
 	syscall
 
 	li $v0 4		# syscall 4 (print_str)
@@ -122,7 +122,7 @@ ok_pc:
 	syscall
 
 	srl $a0 $k0 2		# Extract ExcCode Field
-	andi $a0 $a0 0xf
+	andi $a0 $a0 0x1f
 	bne $a0 0 ret		# 0 means exception was an interrupt
 	nop
 
