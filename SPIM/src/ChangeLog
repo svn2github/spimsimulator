@@ -1,6 +1,16 @@
+2005-01-02    <Jim@LS1>
+
+	* Version 7.1 released.
+
+	* Switched Windows installer to Microsoft .msi installer, instead
+	of InstallShield.
+
+	* exceptions.s [Pervin, William J pervin@utdallas.edu]:
+	Masked exception code with 4 bit (not 5 bit) mask.
+
 2004-11-27    <Jim@LS1>
 
-	* mem.c (check_memory_mapped_IO) [Deborah debbiep@csse.monash.edu.au]:
+	* mem.c inst.h (check_memory_mapped_IO) [Deborah debbiep@csse.monash.edu.au]:
 	Clearing the transmitter or receiver interrupt enable bits also
 	clear interrupt pending bits in Cause register. Transmitter and
 	receiver interrupt enable bits now operate properly (ie prevent
@@ -21,7 +31,7 @@
 
 	* op.h [lau@det.ua.pt]:
 	Type of "mul" instruction was wrong, which lead to it being
-	printed with out destination register.
+	printed without destination register.
 
 2004-10-19    <Jim@LS1>
 
@@ -85,8 +95,8 @@
 
 	* Updated spim.html with new COD files.
 
-	* Makefile, Imakefile, Makefile.std: Eliminate dependence in
-	syscall.o on spim-syscall.h.
+	* Makefile, Imakefile, Makefile.std:
+	Eliminate dependence in syscall.o on spim-syscall.h.
 
 2004-07-11    <larus@HomeMachine>
 

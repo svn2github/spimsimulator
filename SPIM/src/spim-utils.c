@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 27    10/18/04 9:31p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 28    1/02/05 7:59p Larus $
 */
 
 
