@@ -351,11 +351,6 @@ case), so it does not return to the instruction executed after the trapping
 instruction.</P>
     </li>
     <li>
-<P align=left>Memory mapped IO does not work properly under Cygwin on Windows 
-because of an interaction with the timer. Commenting out the timer fixes the 
-problem.</P>
-    </li>
-    <li>
 <P align=left>Handling of newlines and carriage returns is inconsistent between 
 platforms. When a program prints a newline, PCSpim also prints a carriage 
 return, spim and xspim don't. Or, is this consistent with the underlying 
