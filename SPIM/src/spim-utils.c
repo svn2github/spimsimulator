@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 8     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 9     12/24/01 11:17a Larus $
 */
 
 
@@ -129,8 +129,8 @@ initialize_world (trap_file)
 
       if (!bare_machine)
       {
-	record_label ("main", 0, 0);
 	make_label_global ("main"); /* In case .globl main forgotten */
+	record_label ("main", 0, 0);
       }
     }
   initialize_scanner (stdin);
