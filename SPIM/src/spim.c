@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 27    3/12/04 5:59p Larus $
+/* $Header: /Software/SPIM/src/spim.c 28    3/12/04 11:00p Larus $
 */
 
 
@@ -110,8 +110,9 @@ int spim_return_value;		/* Value returned when spim exits */
 
 /* Local variables: */
 
-static int load_trap_handler = 1; /* Non-zero => load standard trap handler */
-char *trap_file = DEFAULT_TRAP_HANDLER;
+/* Non-zero => load standard exception handler */
+static int load_exception_handler = 1;
+char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 static int console_state_saved;
 #ifdef USE_TERMIO
 static struct termio saved_console_state;
@@ -154,7 +155,7 @@ main (int argc, char **argv)
       )
     {
       /* Only one argument without '-' is a file name. */
-      initialize_world (load_trap_handler ? trap_file : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL);
       assembly_file_read |= !read_assembly_file (argv[1]);
     }
   else
@@ -185,6 +186,15 @@ main (int argc, char **argv)
       {
 	delayed_loads = 1;
       }
+    else if (streq (argv [i], "-exception") || streq (argv [i], "-e"))
+      load_exception_handler = 1;
+    else if (streq (argv [i], "-noexception") || streq (argv [i], "-ne"))
+      load_exception_handler = 0;
+    else if (streq (argv [i], "-exception_file") || streq (argv [i], "-ef"))
+      {
+	exception_file_name = argv[++i];
+	load_exception_handler = 1;
+      }
     else if (streq (argv [i], "-mapped_io") || streq (argv [i], "-mio"))
       mapped_io = 1;
     else if (streq (argv [i], "-nomapped_io") || streq (argv [i], "-nmio"))
@@ -198,13 +208,13 @@ main (int argc, char **argv)
     else if (streq (argv [i], "-noquiet") || streq (argv [i], "-nq"))
       quiet = 0;
     else if (streq (argv [i], "-trap") || streq (argv [i], "-t"))
-      load_trap_handler = 1;
+      load_exception_handler = 1;
     else if (streq (argv [i], "-notrap") || streq (argv [i], "-nt"))
-      load_trap_handler = 0;
+      load_exception_handler = 0;
     else if (streq (argv [i], "-trap_file") || streq (argv [i], "-tf"))
       {
-	trap_file = argv[++i];
-	load_trap_handler = 1;
+	exception_file_name = argv[++i];
+	load_exception_handler = 1;
       }
     else if (streq (argv [i], "-stext") || streq (argv [i], "-st"))
       initial_text_size = atoi (argv[++i]);
@@ -228,7 +238,7 @@ main (int argc, char **argv)
 	argv_ptr = i + 1;
 	if (!assembly_file_read)
 	  {
-	    initialize_world (load_trap_handler ? trap_file : NULL);
+	    initialize_world (load_exception_handler ? exception_file_name : NULL);
 	  }
 	assembly_file_read |= !read_assembly_file (argv[++i]);
 	break;			/* Everything that follows is argv */
@@ -240,7 +250,7 @@ main (int argc, char **argv)
 	argv_ptr = i;
 	if (!assembly_file_read)
 	  {
-	    initialize_world (load_trap_handler ? trap_file : NULL);
+	    initialize_world (load_exception_handler ? exception_file_name : NULL);
 	  }
 	assembly_file_read |= !read_assembly_file (argv[i]);
 	break;			/* Everything that follows is argv */
@@ -251,9 +261,12 @@ main (int argc, char **argv)
 	-asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n\
 	-delayed_branches	Execute delayed branches\n\
 	-delayed_loads		Execute delayed loads\n\
-	-trap			Load trap handler (default)\n\
-	-notrap			Do not load trap handler\n\
-	-trap_file <file>	Specify trap handler in place of default\n\
+	-exception		Load exception handler (default)\n\
+	-noexception		Do not load exception handler\n\
+	-exception_file <file>	Specify exception handler in place of default\n\
+	-trap			Load exception handler (default)\n\
+	-notrap			Do not load exception handler\n\
+	-trap_file <file>	Specify exception handler in place of default\n\
 	-quiet			Do not print warnings\n\
 	-noquiet		Print warnings (default)\n\
 	-mapped_io		Enable memory-mapped IO\n\
@@ -263,7 +276,7 @@ main (int argc, char **argv)
 
   if (!assembly_file_read)
     {
-      initialize_world (load_trap_handler ? trap_file : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL);
       top_level ();
     }
   else /* assembly_file_read */
@@ -513,7 +526,7 @@ parse_spim_command (FILE *file, int redo)
 
     case REINITIALIZE_CMD:
       flush_to_newline ();
-      initialize_world (load_trap_handler ? trap_file : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL);
       write_startup_message ();
       prev_cmd = NOP_CMD;
       return (0);

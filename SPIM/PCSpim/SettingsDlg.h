@@ -40,11 +40,11 @@ public:
 	BOOL	m_fBare;
 	BOOL	m_fDelayedBranches;
 	BOOL	m_fDelayedLoads;
-	BOOL	m_fLoadTrap;
+	BOOL	m_fLoadException;
 	BOOL	m_fMappedIO;
 	BOOL	m_fAllowPseudo;
 	BOOL	m_fQuiet;
-	CString	m_strTrapFile;
+	CString	m_strExceptionFile;
 	BOOL	m_fFPRegHex;
 	BOOL	m_fGenRegHex;
 	BOOL	m_fSaveWinPos;
@@ -66,7 +66,7 @@ protected:
 	afx_msg void OnBrowse();
 	virtual void OnOK();
 	virtual BOOL OnInitDialog();
-	afx_msg void OnLoadtrap();
+	afx_msg void OnLoadException();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

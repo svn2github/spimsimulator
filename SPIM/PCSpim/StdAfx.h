@@ -59,7 +59,7 @@ class CPCSpimView;
 
 GLOBAL CPCSpimView *g_pView;
 GLOBAL BOOL			g_fSaveWinPos;
-GLOBAL BOOL			g_fLoadTrapHandler;
+GLOBAL BOOL			g_fLoadExceptionHandler;
 GLOBAL BOOL			g_fRunning;
 GLOBAL BOOL			g_fGenRegHex;
 GLOBAL BOOL			g_fFPRegHex;

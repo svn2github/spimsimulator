@@ -1,4 +1,4 @@
-.\" $Header: /Software/SPIM/src/xspim.man 5     12/24/00 1:37p Larus $
+.\" $Header: /Software/SPIM/src/xspim.man 6     3/12/04 11:00p Larus $
 .TH spim 1
 .SH NAME
 xspim \- A MIPS R2000/R3000 Simulator
@@ -6,7 +6,7 @@ xspim \- A MIPS R2000/R3000 Simulator
 .SH SYNTAX
 .B xspim
 [\|\fI-asm/-bare\fP
-	\fI-trap/-notrap\fP
+	\fI-exception/-noexception\fP
 	\fI-quiet/-noquiet\fP
 	\fI-mapped_io/-nomapped_io\fP
 .br
@@ -58,10 +58,10 @@ Simulate a bare MIPS machine without pseudo-instructions or the
 additional addressing modes provided by the assembler.  Implies
 \fI-quiet\fP.
 
-.IP \fB-trap\fP 10
+.IP \fB-exception\fP 10
 Load the standard exception handler and startup code.  This is the default.
 
-.IP \fB-notrap\fP 10
+.IP \fB-noexception\fP 10
 Do not load the standard exception handler and startup code.  This
 exception handler handles exceptions.  When an exception occurs, SPIM
 jumps to location 0x80000080, which must contain code to service the

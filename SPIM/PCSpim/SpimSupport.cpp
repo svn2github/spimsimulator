@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/SpimSupport.cpp 4     2/15/04 1:07p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/SpimSupport.cpp 5     3/12/04 11:01p Larus $ */
 
 #include "stdafx.h"
 
@@ -36,7 +36,7 @@ int delayed_branches;		 /* Non-zero => simulate delayed branches */
 int delayed_loads;		 /* Non-zero => simulate delayed loads */
 int quiet;			 /* Non-zero => no warning messages */
 int source_file;		 /* Non-zero => program is source, not binary */
-char * trap_file = NULL;	 /* The path from which to load the trap handler, if desired */
+char * exception_file_name = NULL; /* The path from which to load the exception handler, if desired */
 port message_out, console_out;
 int mapped_io;			 /* Non-zero => activate memory-mapped IO */
 int spim_return_value;		/* Value returned when spim exits */

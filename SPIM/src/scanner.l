@@ -392,6 +392,7 @@ scan_escape (YY_CHAR **str)
 	char message[] = "Bad character \\X";
 	message[strlen (message) - 1] = first;
 	yyerror (message);
+	return '\0';
       }
     }
 }

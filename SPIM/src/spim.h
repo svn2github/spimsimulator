@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 18    3/12/04 5:34p Larus $
+/* $Header: /Software/SPIM/src/spim.h 19    3/12/04 11:00p Larus $
 */
 
 
@@ -153,7 +153,7 @@ typedef uint32 mem_addr;
 #define DEFAULT_RUN_LOCATION "__start"
 
 
-/* Name of the symbol marking the end of the trap handler */
+/* Name of the symbol marking the end of the exception handler */
 
 #define END_OF_TRAP_HANDLER_SYMBOL "__eoth"
 
@@ -232,7 +232,7 @@ extern int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 extern int delayed_branches;	/* Non-zero => simulate delayed branches */
 extern int delayed_loads;	/* Non-zero => simulate delayed loads */
 extern int quiet;		/* Non-zero => no warning messages */
-extern char *trap_file;		/* Path of file containing trap handler */
+extern char *exception_file_name;/* Path of file containing exception handler */
 extern int force_break;		/* Non-zero => stop interpreter loop  */
 extern int parser_error_occurred; /* Non-zero => parse resulted in error */
 extern int spim_return_value;	/* Value returned when spim exits */

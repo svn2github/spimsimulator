@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.h 8     2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/spim-utils.h 9     3/12/04 11:00p Larus $
 */
 
 
@@ -44,7 +44,7 @@ void delete_breakpoint (mem_addr addr);
 void fatal_error (char *fmt, ...);
 void initialize_registers ();
 void initialize_run_stack (int argc, char **argv);
-void initialize_world (char* trap_file);
+void initialize_world (char* exception_file_name);
 char *insts_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *string_len);
 void list_breakpoints ();
 name_val_val *map_int_to_name_val_val (name_val_val tbl[], int tbl_len, int num);

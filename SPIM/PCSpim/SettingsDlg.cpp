@@ -48,11 +48,11 @@ CSettingsDlg::CSettingsDlg(CWnd* pParent /*=NULL*/)
 	m_fBare = FALSE;
 	m_fDelayedBranches = FALSE;
 	m_fDelayedLoads = FALSE;
-	m_fLoadTrap = FALSE;
+	m_fLoadException = FALSE;
 	m_fMappedIO = FALSE;
 	m_fAllowPseudo = FALSE;
 	m_fQuiet = FALSE;
-	m_strTrapFile = _T("");
+	m_strExceptionFile = _T("");
 	m_fFPRegHex = FALSE;
 	m_fGenRegHex = FALSE;
 	m_fSaveWinPos = FALSE;
@@ -67,11 +67,11 @@ void CSettingsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_BARE, m_fBare);
 	DDX_Check(pDX, IDC_DELAYEDBRANCHES, m_fDelayedBranches);
 	DDX_Check(pDX, IDC_DELAYEDLOADS, m_fDelayedLoads);
-	DDX_Check(pDX, IDC_LOADTRAP, m_fLoadTrap);
+	DDX_Check(pDX, IDC_LOADEXCEPTION, m_fLoadException);
 	DDX_Check(pDX, IDC_MAPPED, m_fMappedIO);
 	DDX_Check(pDX, IDC_PSEUDO, m_fAllowPseudo);
 	DDX_Check(pDX, IDC_QUIET, m_fQuiet);
-	DDX_Text(pDX, IDC_TRAPFILE, m_strTrapFile);
+	DDX_Text(pDX, IDC_EXCEPTIONFILE, m_strExceptionFile);
 	DDX_Check(pDX, IDC_FPREG_HEX, m_fFPRegHex);
 	DDX_Check(pDX, IDC_GENREG_HEX, m_fGenRegHex);
 	DDX_Check(pDX, IDC_SAVEWINPOS, m_fSaveWinPos);
@@ -82,7 +82,7 @@ void CSettingsDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CSettingsDlg, CDialog)
 	//{{AFX_MSG_MAP(CSettingsDlg)
 	ON_BN_CLICKED(IDC_BROWSE, OnBrowse)
-	ON_BN_CLICKED(IDC_LOADTRAP, OnLoadtrap)
+	ON_BN_CLICKED(IDC_LOADEXCEPTION, OnLoadException)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -106,7 +106,7 @@ void CSettingsDlg::OnBrowse()
   if (dlg.DoModal() != IDOK)
     return;
 
-  m_strTrapFile = dlg.GetPathName();
+  m_strExceptionFile = dlg.GetPathName();
   UpdateData(FALSE);
 }
 
@@ -138,15 +138,15 @@ void CSettingsDlg::OnOK()
   delayed_loads = m_fDelayedLoads;
   pApp->WriteSetting(SPIM_REG_DELAYEDLOADS, delayed_loads);
 
-  g_fLoadTrapHandler = m_fLoadTrap;
-  pApp->WriteSetting(SPIM_REG_LOADTRAP, g_fLoadTrapHandler);
+  g_fLoadExceptionHandler = m_fLoadException;
+  pApp->WriteSetting(SPIM_REG_LOADEXCEPTION, g_fLoadExceptionHandler);
 
-  if (m_fLoadTrap)
+  if (m_fLoadException)
     {
-      delete [] trap_file;
-      trap_file = new TCHAR[m_strTrapFile.GetLength() + 1];
-      lstrcpy(trap_file, m_strTrapFile);
-      pApp->WriteSetting(SPIM_REG_TRAPFILE, trap_file);
+      delete [] exception_file_name;
+      exception_file_name = new TCHAR[m_strExceptionFile.GetLength() + 1];
+      lstrcpy(exception_file_name, m_strExceptionFile);
+      pApp->WriteSetting(SPIM_REG_EXCEPTIONFILE, exception_file_name);
     }
 
   mapped_io = m_fMappedIO;
@@ -183,15 +183,15 @@ BOOL CSettingsDlg::OnInitDialog()
   m_fAllowPseudo = pApp->GetSetting(SPIM_REG_PSEUDO, TRUE);
   m_fQuiet = pApp->GetSetting(SPIM_REG_QUIET, FALSE);
   m_fMappedIO = pApp->GetSetting(SPIM_REG_MAPPEDIO, TRUE);
-  m_fLoadTrap = pApp->GetSetting(SPIM_REG_LOADTRAP, TRUE);
+  m_fLoadException = pApp->GetSetting(SPIM_REG_LOADEXCEPTION, TRUE);
   m_fGenRegHex = pApp->GetSetting(SPIM_REG_GENREG_HEX, TRUE);
   m_fFPRegHex = pApp->GetSetting(SPIM_REG_FPREG_HEX, FALSE);
-  m_strTrapFile = trap_file;
+  m_strExceptionFile = exception_file_name;
   m_fSaveWinPos = g_fSaveWinPos;
 
   UpdateData(FALSE);
 
-  GetDlgItem(IDC_TRAPFILE)->EnableWindow(m_fLoadTrap);
+  GetDlgItem(IDC_EXCEPTIONFILE)->EnableWindow(m_fLoadException);
 
   return TRUE;  // return TRUE unless you set the focus to a control
   // EXCEPTION: OCX Property Pages should return FALSE
@@ -200,14 +200,14 @@ BOOL CSettingsDlg::OnInitDialog()
 
 BOOL CSettingsDlg::CheckValid()
 {
-  m_strTrapFile.TrimLeft();
-  m_strTrapFile.TrimRight();
+  m_strExceptionFile.TrimLeft();
+  m_strExceptionFile.TrimRight();
 
   OFSTRUCT ofs;
-  if (m_fLoadTrap && (HFILE_ERROR == OpenFile(m_strTrapFile, &ofs, OF_EXIST)))
+  if (m_fLoadException && (HFILE_ERROR == OpenFile(m_strExceptionFile, &ofs, OF_EXIST)))
     {
-      MessageBox("The specified trap file does not exist.\n\n"
-		 "Please specify an existing file, or turn off trap file loading.",
+      MessageBox("The specified exception file does not exist.\n\n"
+		 "Please specify an existing file, or turn off exception file loading.",
 		 NULL, MB_OK | MB_ICONEXCLAMATION);
       return FALSE;
     }
@@ -216,8 +216,8 @@ BOOL CSettingsDlg::CheckValid()
 }
 
 
-void CSettingsDlg::OnLoadtrap()
+void CSettingsDlg::OnLoadException()
 {
-  GetDlgItem(IDC_TRAPFILE)->EnableWindow(IsDlgButtonChecked(IDC_LOADTRAP));
+  GetDlgItem(IDC_EXCEPTIONFILE)->EnableWindow(IsDlgButtonChecked(IDC_LOADEXCEPTION));
 }
 

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 21    3/12/04 5:34p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 22    3/12/04 11:00p Larus $
 */
 
 
@@ -75,7 +75,7 @@ mem_addr initial_k_data_limit = K_DATA_LIMIT;
 /* Initialize or reinitialize the state of the machine. */
 
 void
-initialize_world (char* trap_file)
+initialize_world (char* exception_file_name)
 {
   /* Allocate the floating point registers */
   if (FGR == NULL)
@@ -95,18 +95,18 @@ initialize_world (char* trap_file)
   data_begins_at_point (DATA_BOT);
   text_begins_at_point (TEXT_BOT);
 
-  if (trap_file != NULL)
+  if (exception_file_name != NULL)
     {
       int old_bare = bare_machine;
       int old_accept = accept_pseudo_insts;
 
-      bare_machine = 0;		/* Trap handler uses extended machine */
+      bare_machine = 0;		/* Exception handler uses extended machine */
       accept_pseudo_insts = 1;
-      if (read_assembly_file (trap_file))
-	fatal_error ("Cannot read trap handler: %s\n", trap_file);
+      if (read_assembly_file (exception_file_name))
+	fatal_error ("Cannot read exception handler: %s\n", exception_file_name);
       bare_machine = old_bare;
       accept_pseudo_insts = old_accept;
-      write_output (message_out, "Loaded: %s\n", trap_file);
+      write_output (message_out, "Loaded: %s\n", exception_file_name);
 
       if (!bare_machine)
       {

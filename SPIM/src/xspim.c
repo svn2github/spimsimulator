@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 16    3/11/04 7:17a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 17    3/12/04 11:00p Larus $
  */
 
 #include <stdio.h>
@@ -59,8 +59,8 @@ typedef struct _AppResources
   Boolean delayed_loads;
   Boolean pseudo;
   Boolean asmm;
-  Boolean trap;
-  char *trap_file;
+  Boolean exception;
+  char *exception_file_name;
   Boolean quiet;
   Boolean mapped_io;
   char *filename;
@@ -100,8 +100,8 @@ Widget message, console = NULL;
 XtAppContext app_context;
 XFontStruct *text_font;
 Dimension button_width;
-int load_trap_handler;
-char *trap_file = DEFAULT_TRAP_HANDLER;
+int load_exception_handler;
+char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 Pixmap mark;
 
 
@@ -162,10 +162,10 @@ static XtResource resources[] =
    XtOffset (AppResources *, pseudo), XtRImmediate, (XtPointer)True},
   {"asm",  "Asm",  XtRBoolean, sizeof (Boolean),
    XtOffset (AppResources *, asmm), XtRImmediate, False},
-  {"trap", "Trap", XtRBoolean, sizeof (Boolean),
-   XtOffset (AppResources *, trap), XtRImmediate, (XtPointer) True},
-  {"trap_file", "Trap_File", XtRString, sizeof (char *),
-   XtOffset (AppResources *, trap_file), XtRString, NULL},
+  {"exception", "Exception", XtRBoolean, sizeof (Boolean),
+   XtOffset (AppResources *, exception), XtRImmediate, (XtPointer) True},
+  {"exception_file_name", "Exception_File_Name", XtRString, sizeof (char *),
+   XtOffset (AppResources *, exception_file_name), XtRString, NULL},
   {"quiet", "Quiet", XtRBoolean, sizeof (Boolean),
    XtOffset (AppResources *, quiet), XtRImmediate, False},
   {"mapped_io", "Mapped_IO", XtRBoolean, sizeof (Boolean),
@@ -209,16 +209,18 @@ static XrmOptionDescRec options[] =
   {"-delayed_branches", "delayed_branches", XrmoptionNoArg, "True"},
   {"-delayed_loads", "delayed_loads", XrmoptionNoArg, "True"},
   {"-nopseudo", "pseudo", XrmoptionNoArg, "False"},
-  {"-trap",   "trap", XrmoptionNoArg, "True"},
-  {"-notrap", "trap", XrmoptionNoArg, "False"},
-  {"-trap_file", "trap_file", XrmoptionSepArg, NULL},
+  {"-exception",   "exception", XrmoptionNoArg, "True"},
+  {"-noexception", "exception", XrmoptionNoArg, "False"},
+  {"-exception_file_name", "exception_file_name", XrmoptionSepArg, NULL},
+  {"-trap",   "exception", XrmoptionNoArg, "True"},
+  {"-notrap", "exception", XrmoptionNoArg, "False"},
+  {"-trap_file_name", "exception_file_name", XrmoptionSepArg, NULL},
   {"-quiet",  "quiet", XrmoptionNoArg, "True"},
   {"-noquiet","quiet", XrmoptionNoArg, "False"},
   {"-mapped_io",  "mapped_io", XrmoptionNoArg, "True"},
   {"-nomapped_io","mapped_io", XrmoptionNoArg, "False"},
 
   {"-file",   "filename", XrmoptionSepArg, NULL},
-  {"-execute","ex_filename", XrmoptionSepArg, NULL},
   {"-d2",     "display2", XrmoptionSepArg, NULL},
   {"-hexgpr", "hexGpr", XrmoptionNoArg, "True"},
   {"-nohexgpr", "hexGpr", XrmoptionNoArg, "False"},
@@ -306,15 +308,15 @@ initialize (AppResources app_res)
   else
     accept_pseudo_insts = 0;
 
-  if (app_res.trap)
-    load_trap_handler = 1;
+  if (app_res.exception)
+    load_exception_handler = 1;
   else
-    load_trap_handler = 0;
+    load_exception_handler = 0;
 
-  if (app_res.trap_file)
+  if (app_res.exception_file_name)
     {
-      trap_file = app_res.trap_file;
-      load_trap_handler = 1;
+      exception_file_name = app_res.exception_file_name;
+      load_exception_handler = 1;
     }
 
   if (app_res.quiet)
@@ -332,7 +334,7 @@ initialize (AppResources app_res)
   if (app_res.ex_filename)
     {
       ex_file_name = app_res.ex_filename;
-      load_trap_handler = 0;
+      load_exception_handler = 0;
     }
 
   if (app_res.textFont == NULL)
@@ -452,7 +454,7 @@ main (int argc, char **argv)
   if (app_res.initial_k_data_limit != NULL)
     initial_k_data_limit = atoi (app_res.initial_k_data_limit);
   write_startup_message ();
-  initialize_world (load_trap_handler ? trap_file : NULL);
+  initialize_world (load_exception_handler ? exception_file_name : NULL);
 
   if (file_name)
     {
@@ -461,7 +463,7 @@ main (int argc, char **argv)
     }
   else if (ex_file_name)
     {
-      initialize_world (0);	/* Don't have a trap handler loaded. */
+      initialize_world (0);	/* Don't have a exception handler loaded. */
       read_file (ex_file_name, 0);
       record_file_name_for_prompt (ex_file_name);
     }
@@ -483,11 +485,22 @@ syntax (char *program_name)
 {
   XtDestroyApplicationContext (app_context);
   fprintf (stderr, "Usage:\n %s", program_name);
-  fprintf (stderr, "\t[ -bare/-asm ] [ -trap/-notrap ] [ -quiet/noquiet ]\n");
-  fprintf (stderr, "\t[ -delayed_branches][ -delayed_loads]\n");
-  fprintf (stderr, "\t[ -pseudo/-nopseudo][ -mapped_io/-nomapped_io ]\n");
-  fprintf (stderr, "\t[ -d2 <display> ] [ -file/-execute <filename> ]\n");
-  fprintf (stderr, "\t[ -s<seg> <size>] [ -l<seg> <size>]\n");
+
+  fprintf (stderr, "-bare			Bare machine (no pseudo-ops, delayed branches and loads)\n");
+  fprintf (stderr, "-asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n");
+  fprintf (stderr, "-delayed_branches	Execute delayed branches\n");
+  fprintf (stderr, "-delayed_loads		Execute delayed loads\n");
+  fprintf (stderr, "-exception		Load exception handler (default)\n");
+  fprintf (stderr, "-noexception		Do not load exception handler\n");
+  fprintf (stderr, "-exception_file <file>	Specify exception handler in place of default\n");
+  fprintf (stderr, "-trap			Load exception handler (default)\n");
+  fprintf (stderr, "-notrap			Do not load exception handler\n");
+  fprintf (stderr, "-trap_file <file>	Specify exception handler in place of default\n");
+  fprintf (stderr, "-quiet			Do not print warnings\n");
+  fprintf (stderr, "-noquiet		Print warnings (default)\n");
+  fprintf (stderr, "-mapped_io		Enable memory-mapped IO\n");
+  fprintf (stderr, "-nomapped_io		Do not enable memory-mapped IO (default)\n");
+  fprintf (stderr, "-file <file> <args>	Assembly code file and arguments to program\n")");
   exit (1);
 }
 

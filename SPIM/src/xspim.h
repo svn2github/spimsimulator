@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.h 9     2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/xspim.h 10    3/12/04 11:00p Larus $
  */
 
 
@@ -52,6 +52,6 @@ extern Widget message, console;
 extern XtAppContext app_context;
 extern XFontStruct *text_font;
 extern Dimension button_width;
-extern int load_trap_handler;
+extern int load_exception_handler;
 extern char *load_file;
 extern Pixmap mark;
