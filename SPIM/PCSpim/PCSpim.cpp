@@ -139,21 +139,6 @@ BOOL CPCSpimApp::InitInstance()
     {
       return FALSE;
     }
-
-  // If no window position info in registry, start with windows neatly tiled.
-  // Cannot position windows until client rectangle is fully initialized, so
-  // this cannot be called from its logical place in the PCSpimView initialization
-  // code.
-  //
-  RECT r;
-  CPCSpimApp *pApp = (CPCSpimApp *)AfxGetApp();
-  if (!pApp->GetSetting(SPIM_REG_REGISTERSPOS, &r))
-    {
-      RECT r;
-      g_pView->GetClientRect(&r);
-      g_pView->TileWindows(r.right - r.left, r.bottom - r.top, r.bottom);
-    }
-
   return TRUE;
 }
 

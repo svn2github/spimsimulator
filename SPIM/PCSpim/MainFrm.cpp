@@ -46,6 +46,7 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
+	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
 	// Global help commands
 	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder)
@@ -169,27 +170,6 @@ LPCTSTR CMainFrame::GetTitleBase()
   return m_strTitle;
 }
 
-LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-{
-  switch (message)
-    {
-    case WM_SIZE:
-      if (wParam == SIZE_MINIMIZED)
-	{
-	  g_pView->m_fConsoleMinimized = TRUE;
-	  g_pView->GetConsole()->ShowWindow(SW_HIDE);
-	}
-      else if (wParam == SIZE_RESTORED)
-	{
-	  g_pView->m_fConsoleMinimized = FALSE;
-	}
-      break;
-    }
-
-  return CFrameWnd::WindowProc(message, wParam, lParam);
-}
-
-
 void CMainFrame::UpdateSettingsStatus()
 {
   CString strTxt;
@@ -203,3 +183,23 @@ void CMainFrame::UpdateSettingsStatus()
   strTxt.Format("%s", delayed_loads ? "DELAY LD" : "");
   m_wndStatusBar.SetPaneText(4, strTxt);
   }
+
+void CMainFrame::OnSize(UINT nType, int cx, int cy)
+{
+  CFrameWnd::OnSize(nType, cx, cy);
+
+  if (nType == SIZE_MINIMIZED)
+    {
+      g_pView->m_fConsoleMinimized = TRUE;
+      g_pView->GetConsole()->ShowWindow(SW_HIDE);
+    }
+  else if (nType == SIZE_RESTORED)
+    {
+      g_pView->m_fConsoleMinimized = FALSE;
+      g_pView->GetConsole()->ShowWindow(SW_SHOWMAXIMIZED);
+    }
+
+  RECT r;
+  g_pView->GetClientRect(&r);
+  g_pView->TileWindows(r.right - r.left, r.bottom - r.top, r.bottom);
+}
