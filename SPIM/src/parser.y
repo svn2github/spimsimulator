@@ -135,10 +135,7 @@
 %token Y_CFC2_OP
 %token Y_CLO_OP
 %token Y_CLZ_OP
-%token Y_COP0_OP
-%token Y_COP1_OP
 %token Y_COP2_OP
-%token Y_COP3_OP
 %token Y_CTC0_OP
 %token Y_CTC1_OP
 %token Y_CTC2_OP
@@ -1568,6 +1565,12 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 	|	FP_CMP_OPS_REV2	F_SRC1	F_SRC2
 		{
 		  mips32_r2_inst ();
+		}
+
+
+	|	Y_COP2_OP	IMM32
+		{
+		  i_type_inst_free ($1.i, 0, 0, (imm_expr *)$2.p);
 		}
 	;
 

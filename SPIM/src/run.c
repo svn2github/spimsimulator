@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 39    3/06/04 10:54a Larus $
+/* $Header: /Software/SPIM/src/run.c 40    3/06/04 2:13p Larus $
 */
 
 
@@ -86,7 +86,7 @@ static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
 			  /* +4 since jump in delay slot */	\
 			  target += BYTES_PER_WORD;		\
 			}					\
-		      JUMP_INST (target)			\
+		      JUMP_INST(target)				\
 		     }						\
 		  else if (NULLIFY)				\
 		    {						\
@@ -269,15 +269,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_BC2FL_OP:
 	    case Y_BC2T_OP:
 	    case Y_BC2TL_OP:
-	      {
-		int cc = CC (inst);
-		int nd = ND (inst);	/* 1 => nullify */
-		int tf = TF (inst);	/* 0 => BC2F, 1 => BC2T */
-		BRANCH_INST (((CPR[2][FCCR_REG]) & (1 << cc)) == (tf << cc),
-			     PC + IDISP (inst),
-			     nd);
-		break;
-	      }
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      break;
 
 	    case Y_BEQ_OP:
 	      BRANCH_INST (R[RS (inst)] == R[RT (inst)],
@@ -390,8 +383,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;		/* Memory details not implemented */
 
 	    case Y_CFC0_OP:
+	      R[RT (inst)] = CCR[0][RD (inst)];
+	      break;
+
 	    case Y_CFC2_OP:
-	      R[RT (inst)] = CCR[OPCODE (inst) - Y_CFC0_OP][RD (inst)];
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_CLO_OP:
@@ -416,16 +412,16 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		break;
 	      }
 
-	    case Y_COP0_OP:
-	    case Y_COP1_OP:
 	    case Y_COP2_OP:
-	    case Y_COP3_OP:
-	      CCR[OPCODE (inst) - Y_COP0_OP][RD (inst)] = R[RT (inst)];
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_CTC0_OP:
+	      CCR[0][RD (inst)] = R[RT (inst)];
+	      break;
+
 	    case Y_CTC2_OP:
-	      CCR[OPCODE (inst) - Y_CTC0_OP][RD (inst)] = R[RT (inst)];
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_DIV_OP:
@@ -518,22 +514,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_LDC2_OP:
-	      {
-		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
-		if (addr & 0x3)
-		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
-
-		LOAD_INST (READ_MEM_WORD, addr,
-			   &CPR[2][RT (inst)], 0xffffffff);
-		LOAD_INST (READ_MEM_WORD, addr + sizeof(mem_word),
-			   &CPR[2][RT (inst) + 1], 0xffffffff);
-		break;
-	      }
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      break;
 
 	    case Y_LWC2_OP:
-	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
-			 &CPR[2][RT (inst)],
-			 0xffffffff);
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_LWL_OP:
@@ -669,8 +654,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      }
 
 	    case Y_MFC0_OP:
+	      R[RT (inst)] = CPR[0][FS (inst)];
+	      break;
+
 	    case Y_MFC2_OP:
-	      R[RT (inst)] = CPR[OPCODE (inst) - Y_MFC0_OP][FS (inst)];
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_MFHI_OP:
@@ -720,8 +708,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      }
 
 	    case Y_MTC0_OP:
+	      CPR[0][FS (inst)] = R[RT (inst)];
+	      break;
+
 	    case Y_MTC2_OP:
-	      CPR[OPCODE (inst) - Y_MTC0_OP][FS (inst)] = R[RT (inst)];
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_MTHI_OP:
@@ -769,15 +760,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SDC2_OP:
-	      {
-		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
-		if (addr & 0x3)
-		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
-
-		SET_MEM_WORD (addr, CPR[2][RT (inst)]);
-		SET_MEM_WORD (addr + sizeof(mem_word), CPR[2][RT (inst) + 1]);
-		break;
-	      }
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      break;
 
 	    case Y_SH_OP:
 	      SET_MEM_HALF (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
@@ -906,7 +890,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SWC2_OP:
-	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), CPR[2][RT (inst)]);
+	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_SWL_OP:

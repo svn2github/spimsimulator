@@ -335,11 +335,11 @@ break_:	.asciiz "Testing BREAK\nExpect a exception message:\n  "
 	break 3
 
 
-# COPz is not implemented or checked
+# COPz is not checked
 
 
 	.data
-ccp_:	.asciiz "Testing move to/from coprocessor control z\n"
+ccp_:	.asciiz "Testing move to/from coprocessor control 0/1\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 ccp_
@@ -352,10 +352,6 @@ ccp_:	.asciiz "Testing move to/from coprocessor control z\n"
 	li $2 0x7f7f
 	ctc1 $2 $3
 	cfc1 $4 $3
-	bne $2 $4 fail
-	li $2 0x7f7f
-	ctc2 $2 $3
-	cfc2 $4 $3
 	bne $2 $4 fail
 
 
@@ -607,39 +603,9 @@ ldd_:	.word 1, -1, 0, 0x8000000
 	ld $3 1001($t5)
 
 
-	.data
-ldc2_:	.asciiz "Testing LDC2\n"
-	.align 2
-ldc2d_:	.word 0x7f7f7f7f, 0xf7f7f7f7
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 ldc2_
-	syscall
+# LDC2 not tested
 
-	la $2 ldc2d_
-	ldc2 $0 0($2)
-	mfc2 $3, $f0
-	mfc2 $4, $f1
-	lw $5 0($2)
-	bne $5 $3 fail
-	lw $5 4($2)
-	bne $5 $4 fail
-
-
-	.data
-lwc2_:	.asciiz "Testing LWC2\n"
-	.align 2
-lwc2d_:.word 0x7f7f7f7f
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 lwc2_
-	syscall
-
-	la $2 lwc2d_
-	lwc2 $0 0($2)
-	mfc2 $3 $0
-	lw $4 0($2)
-	bne $4 $3 fail
+# LWC2 not tested
 
 	.data
 lh_:	.asciiz "Testing LH\n"
@@ -870,10 +836,6 @@ mcp_:	.asciiz "Testing move to/from coprocessor z\n"
 	mfc1.d $6 $4
 	bne $2 $6 fail
 	bne $3 $7 fail
-	li $2 0x7f7f
-	mtc2 $2 $3
-	mfc2 $4 $3
-	bne $2 $4 fail
 
 
 	.data
@@ -1308,29 +1270,7 @@ sdc1d_:	.word 0, 0
 	bne $5 $4 fail
 
 
-	.data
-sdc2_:	.asciiz "Testing SDC2\n"
-	.align 2
-sdc2d_:	.word 0, 0
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 sdc2_
-	syscall
-
-	li $3, 0x7f7f7f7f
-	li $4, 0xf7f7f7f7
-	la $2 sdc2d_
-	mtc2 $3, $0
-	mtc2 $4, $1
-	sdc2 $0 0($2)
-	lw $5 0($2)
-	bne $5 $3 fail
-	lw $5 4($2)
-	bne $5 $4 fail
-
-
-# SH is endian-specific
-
+# SDC2 not tested
 
 	.data
 sll_:	.asciiz "Testing SLL\n"
@@ -3172,9 +3112,9 @@ ldc1d_:	.word 0x7f7f7f7f, 0xf7f7f7f7
 	syscall
 
 	la $2 ldc1d_
-	ldc2 $0 0($2)
-	mfc2 $3, $f0
-	mfc2 $4, $f1
+	ldc1 $f0 0($2)
+	mfc1 $3, $f0
+	mfc1 $4, $f1
 	lw $5 0($2)
 	bne $5 $3 fail
 	lw $5 4($2)
