@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 17    2/28/04 4:54p Larus $
+/* $Header: /Software/SPIM/src/inst.c 18    3/02/04 7:14a Larus $
 */
 
 #include <stdio.h>
@@ -710,7 +710,7 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       break;
 
     case R2ts_TYPE_INST:
-      sprintf (buf, " $%d, $%d", RT (inst), FS (inst));
+      sprintf (buf, " $%d, $f%d", RT (inst), FS (inst));
       buf += strlen (buf);
       break;
 
@@ -770,8 +770,11 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       buf += strlen (buf);
       break;
 
-    case FP_MOV_TYPE_INST:
-      sprintf (buf, " $f%d, $f%d", FD (inst), FS (inst));
+    case FP_MOVC_TYPE_INST:
+      if (OPCODE (inst) == Y_MOVF_OP)
+	sprintf (buf, " $%d, $%d, %d", FD (inst), FS (inst), CC (inst));
+      else
+	sprintf (buf, " $f%d, $f%d, %d", FD (inst), FS (inst), CC (inst));
       buf += strlen (buf);
       break;
 
@@ -1405,8 +1408,9 @@ inst_encode (instruction *inst)
 	      | REGS (FS (inst), 11)
 	      | REGS (FD (inst), 6));
 
-    case FP_MOV_TYPE_INST:
+    case FP_MOVC_TYPE_INST:
       return (a_opcode
+	      | REGS (CC (inst), 18)
 	      | REGS (FS (inst), 11)
 	      | REGS (FD (inst), 6));
 
@@ -1452,36 +1456,36 @@ sort_a_opcode_table ()
 
 
 instruction *
-inst_decode (uint32 value)
+inst_decode (uint32 val)
 {
-  int32 a_opcode = value & 0xfc000000;
+  int32 a_opcode = val & 0xfc000000;
   name_val_val *entry;
   int32 i_opcode;
 
   if (a_opcode == 0)		/* SPECIAL */
-    a_opcode |= (value & 0x3f);
+    a_opcode |= (val & 0x3f);
   else if (a_opcode == 0x04000000) /* BCOND */
-    a_opcode |= (value & 0x001f0000);
+    a_opcode |= (val & 0x001f0000);
   else if (a_opcode == 0x40000000) /* COP0 */
-    a_opcode |= (value & 0x03e00000) | (value & 0x1f);
+    a_opcode |= (val & 0x03e00000) | (val & 0x1f);
   else if (a_opcode == 0x44000000) /* COP1 */
     {
-      a_opcode |= (value & 0x03e00000);
-      if ((value & 0xff000000) == 0x45000000)
-	a_opcode |= (value & 0x00010000); /* BC1f/t */
+      a_opcode |= (val & 0x03e00000);
+      if ((val & 0xff000000) == 0x45000000)
+	a_opcode |= (val & 0x00010000); /* BC1f/t */
       else
-	a_opcode |= (value & 0x3f);
+	a_opcode |= (val & 0x3f);
     }
   else if (a_opcode == 0x48000000 /* COPz */
 	   || a_opcode == 0x4c000000)
-    a_opcode |= (value & 0x03e00000);
+    a_opcode |= (val & 0x03e00000);
 
 
   entry = map_int_to_name_val_val (a_opcode_tbl,
 				sizeof (a_opcode_tbl) / sizeof (name_val_val),
 				a_opcode);
   if (entry == NULL)
-    return (mk_r_inst (value, 0, 0, 0, 0, 0)); /* Invalid inst */
+    return (mk_r_inst (val, 0, 0, 0, 0, 0)); /* Invalid inst */
 
   i_opcode = entry->value2;
 
@@ -1490,92 +1494,86 @@ inst_decode (uint32 value)
 				i_opcode)->value2)
     {
     case BC_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, BIN_RS(value), BIN_RT(value),
-			 value & 0xffff));
+      return (mk_i_inst (val, i_opcode, BIN_RS(val), BIN_RT(val),
+			 val & 0xffff));
 
     case B1_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, BIN_RS (value), 0, value & 0xffff));
+      return (mk_i_inst (val, i_opcode, BIN_RS(val), 0, val & 0xffff));
 
     case I1t_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
-			 value & 0xffff));
+      return (mk_i_inst (val, i_opcode, BIN_RS(val), BIN_RT(val),
+			 val & 0xffff));
 
     case I2_TYPE_INST:
     case B2_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
-			 value & 0xffff));
+      return (mk_i_inst (val, i_opcode, BIN_RS(val), BIN_RT(val),
+			 val & 0xffff));
 
     case I2a_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
-			 value & 0xffff));
+      return (mk_i_inst (val, i_opcode, BIN_RS(val), BIN_RT(val),
+			 val & 0xffff));
 
     case R1s_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_RS (value), 0, 0, 0));
+      return (mk_r_inst (val, i_opcode, BIN_RS(val), 0, 0, 0));
 
     case R1d_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, 0, BIN_RD (value), 0));
+      return (mk_r_inst (val, i_opcode, 0, 0, BIN_RD(val), 0));
 
     case R2ts_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, BIN_RT (value), BIN_FS (value), 0));
+      return (mk_r_inst (val, i_opcode, 0, BIN_RT(val), BIN_FS(val), 0));
 
     case R2td_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, BIN_RT (value), BIN_RD (value), 0));
+      return (mk_r_inst (val, i_opcode, 0, BIN_RT(val), BIN_RD(val), 0));
 
     case R2st_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_RS (value), BIN_RT (value), 0, 0));
+      return (mk_r_inst (val, i_opcode, BIN_RS(val), BIN_RT(val), 0, 0));
 
     case R2ds_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_RS (value), 0, BIN_RD (value), 0));
+      return (mk_r_inst (val, i_opcode, BIN_RS(val), 0, BIN_RD(val), 0));
 
     case R2sh_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, BIN_RT (value), BIN_RD (value),
-			 BIN_SA (value)));
+      return (mk_r_inst (val, i_opcode, 0, BIN_RT(val), BIN_RD(val), BIN_SA(val)));
 
     case R3_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
-			 BIN_RD (value), 0));
+      return (mk_r_inst (val, i_opcode, BIN_RS(val), BIN_RT(val), BIN_RD(val), 0));
 
     case R3sh_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_RS (value), BIN_RT (value),
-			 BIN_RD (value), 0));
+      return(mk_r_inst (val, i_opcode, BIN_RS(val), BIN_RT(val), BIN_RD(val), 0));
 
     case FP_I2a_TYPE_INST:
-      return (mk_i_inst (value, i_opcode, BIN_BASE (value), BIN_FT (value),
-			 value & 0xffff));
+      return (mk_i_inst (val, i_opcode, BIN_BASE(val), BIN_FT(val), val & 0xffff));
 
     case FP_R2ds_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_FS (value), 0, BIN_FD (value), 0));
+      return (mk_r_inst (val, i_opcode, BIN_FS(val), 0, BIN_FD(val), 0));
 
     case FP_CMP_TYPE_INST:
       {
-	instruction *inst = mk_r_inst (value, i_opcode, BIN_FS (value),
-				       BIN_FT (value), 0, 0);
-	SET_COND (inst, value & 0xf);
+	instruction *inst = mk_r_inst (val, i_opcode, BIN_FS (val), BIN_FT (val), 0, 0);
+	SET_COND (inst, val & 0xf);
 	return (inst);
       }
 
     case FP_R3_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_FS (value), BIN_FT (value),
-			 BIN_FD (value), 0));
+      return (mk_r_inst (val, i_opcode, BIN_FS(val), BIN_FT(val), BIN_FD(val), 0));
 
-    case FP_MOV_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, BIN_FS (value), 0, BIN_FD (value), 0));
+    case FP_MOVC_TYPE_INST:
+      return (mk_r_inst (val, i_opcode, BIN_FS(val), BIN_RT(val), BIN_FD(val), 0));
 
     case J_TYPE_INST:
-      return (mk_j_inst (value, i_opcode, value & 0x2ffffff));
+      return (mk_j_inst (val, i_opcode, val & 0x2ffffff));
 
 
     case NOARG_TYPE_INST:
-      return (mk_r_inst (value, i_opcode, 0, 0, 0, 0));
+      return (mk_r_inst (val, i_opcode, 0, 0, 0, 0));
 
     default:
-      return (mk_r_inst (value, 0, 0, 0, 0, 0)); /* Invalid inst */
+      return (mk_r_inst (val, 0, 0, 0, 0, 0)); /* Invalid inst */
     }
 }
 
 
 static instruction *
-mk_r_inst (uint32 value, int opcode, int rs, int rt, int rd, int shamt)
+mk_r_inst (uint32 val, int opcode, int rs, int rt, int rd, int shamt)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1584,14 +1582,14 @@ mk_r_inst (uint32 value, int opcode, int rs, int rt, int rd, int shamt)
   SET_RT (inst, rt);
   SET_RD (inst, rd);
   SET_SHAMT (inst, shamt);
-  SET_ENCODING (inst, value);
+  SET_ENCODING (inst, val);
   SET_EXPR (inst, NULL);
   return (inst);
 }
 
 
 static instruction *
-mk_i_inst (uint32 value, int opcode, int rs, int rt, int offset)
+mk_i_inst (uint32 val, int opcode, int rs, int rt, int offset)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1599,19 +1597,19 @@ mk_i_inst (uint32 value, int opcode, int rs, int rt, int offset)
   SET_RS (inst, rs);
   SET_RT (inst, rt);
   SET_IOFFSET (inst, offset);
-  SET_ENCODING (inst, value);
+  SET_ENCODING (inst, val);
   SET_EXPR (inst, NULL);
   return (inst);
 }
 
 static instruction *
-mk_j_inst (uint32 value, int opcode, int target)
+mk_j_inst (uint32 val, int opcode, int target)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
   SET_OPCODE (inst, opcode);
   SET_TARGET (inst, target);
-  SET_ENCODING (inst, value);
+  SET_ENCODING (inst, val);
   SET_EXPR (inst, NULL);
   return (inst);
 }
