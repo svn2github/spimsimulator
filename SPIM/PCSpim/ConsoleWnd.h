@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/pcspim/ConsoleWnd.h 3     12/24/01 3:56p Larus $ */
 
 #ifndef _CONSOLEWND_H
 #define _CONSOLEWND_H
@@ -44,6 +44,7 @@ public:
 	BOOL AreKeysAvailable();
 	void WriteText(LPCTSTR strText);
 	CConsoleWnd();
+	void GetWindowText(CString &rstring) { m_reText.GetWindowText(rstring); }; 
 
 // Attributes
 public:
