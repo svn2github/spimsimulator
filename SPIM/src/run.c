@@ -442,30 +442,30 @@ run_spim (initial_PC, steps_to_run, display)
 		      break;
 
 		    case 1:
-		      R[RT (inst)] = (word & 0xffffff) << 8 | (reg_val & 0xff);
+		      R[RT (inst)] = ((word & 0xffffff) << 8) | (reg_val & 0xff);
 		      break;
 
 		    case 2:
-		      R[RT (inst)] = (word & 0xffff) << 16 | (reg_val & 0xffff);
+		      R[RT (inst)] = ((word & 0xffff) << 16) | (reg_val & 0xffff);
 		      break;
 
 		    case 3:
-		      R[RT (inst)] = (word & 0xff) << 24 | (reg_val & 0xffffff);
+		      R[RT (inst)] = ((word & 0xff) << 24) | (reg_val & 0xffffff);
 		      break;
 		    }
 #else
 		switch (byte)
 		  {
 		  case 0:
-		    R[RT (inst)] = (word & 0xff) << 24 | (reg_val & 0xffffff);
+		    R[RT (inst)] = ((word & 0xff) << 24) | (reg_val & 0xffffff);
 		    break;
 
 		  case 1:
-		    R[RT (inst)] = (word & 0xffff) << 16 | (reg_val & 0xffff);
+		    R[RT (inst)] = ((word & 0xffff) << 16) | (reg_val & 0xffff);
 		    break;
 
 		  case 2:
-		    R[RT (inst)] = (word & 0xffffff) << 8 | (reg_val & 0xff);
+		    R[RT (inst)] = ((word & 0xffffff) << 8) | (reg_val & 0xff);
 		    break;
 
 		  case 3:
