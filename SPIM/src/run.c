@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 20    2/28/04 3:25p Larus $
+/* $Header: /Software/SPIM/src/run.c 21    2/28/04 3:33p Larus $
 */
 
 
@@ -1147,6 +1147,22 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_DIV_D_OP:
 	      SET_FPR_D (FD (inst), FPR_D (FS (inst)) / FPR_D (FT (inst)));
 	      break;
+
+	    case Y_FLOOR_W_D_OP:
+	      {
+		double val = FPR_D (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)floor (val));
+		break;
+	      }
+
+	    case Y_FLOOR_W_S_OP:
+	      {
+		double val = (double)FPR_S (FS (inst));
+
+		SET_FPR_W (FD (inst), (int32)floor (val));
+		break;
+	      }
 
 	    case Y_LWC1_OP:
 	      {

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 14    2/28/04 3:25p Larus $
+/* $Header: /Software/SPIM/src/op.h 15    2/28/04 3:33p Larus $
 */
 
 
@@ -205,7 +205,7 @@ OP("cache",	Y_CACHE_OP,	I2_TYPE_INST,		0xbc000000)	/* MIPS32 */
 OP("ceil.l.d",	Y_CEIL_L_D_OP,	FP_R2ds_TYPE_INST,	0x4620000a)	/* MIPS32 Rev 2 */
 OP("ceil.l.s",	Y_CEIL_L_S_OP,	FP_R2ds_TYPE_INST,	0x4600000a)	/* MIPS32 Rev 2 */
 OP("ceil.w.d",	Y_CEIL_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000e)	/* MIPS32 */
-OP("ceil.w.s",	Y_CEIL_W_S_OP,	FP_R2ds_TYPE_INST,	0x4620000e)	/* MIPS32 */
+OP("ceil.w.s",	Y_CEIL_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000e)	/* MIPS32 */
 OP("cfc0",	Y_CFC0_OP,	R2ts_TYPE_INST,		0x40400000)
 OP("cfc1",	Y_CFC1_OP,	R2ts_TYPE_INST,		0x44400000)
 OP("cfc2",	Y_CFC2_OP,	R2ts_TYPE_INST,		0x48400000)
@@ -239,10 +239,12 @@ OP("divu",	Y_DIVU_OP,	R2st_TYPE_INST,		0x0000001b)
 OP("ehb",	Y_EHB_OP,	I1t_TYPE_INST,		0x000000c0)	/* MIPS32 Rev 2 */
 OP("ei",	Y_EI_OP,	I1t_TYPE_INST,		0x41606020)	/* MIPS32 Rev 2 */
 OP("ext",	Y_EXT_OP,	FP_R2ds_TYPE_INST,	0x7c000000)	/* MIPS32 Rev 2 */
-OP("floor.l.d",Y_FLOOR_L_D_OP,	FP_R2ds_TYPE_INST,	0x4620000b)	/* MIPS32 Rev 2 */
-OP("floor.l.s",Y_FLOOR_L_S_OP,	FP_R2ds_TYPE_INST,	0x4600000b)	/* MIPS32 Rev 2 */
+OP("floor.l.d",	Y_FLOOR_L_D_OP,	FP_R2ds_TYPE_INST,	0x4620000b)	/* MIPS32 Rev 2 */
+OP("floor.l.s",	Y_FLOOR_L_S_OP,	FP_R2ds_TYPE_INST,	0x4600000b)	/* MIPS32 Rev 2 */
+OP("floor.w.d",	Y_FLOOR_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000f)	/* MIPS32 */
+OP("floor.w.s",	Y_FLOOR_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000f)	/* MIPS32 */
 OP("ins",	Y_INS_OP,	FP_R2ds_TYPE_INST,	0x7c000004)	/* MIPS32 Rev 2 */
-OP("j",	Y_J_OP,		J_TYPE_INST,		0x08000000)
+OP("j",		Y_J_OP,		J_TYPE_INST,		0x08000000)
 OP("jal",	Y_JAL_OP,	J_TYPE_INST,		0x0c000000)
 OP("jalr",	Y_JALR_OP,	R2ds_TYPE_INST,		0x00000009)
 OP("jalr.hb",	Y_JALR_HB_OP,	R2ds_TYPE_INST,		0x00000409)	/* MIPS32 Rev 2 */

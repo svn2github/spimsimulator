@@ -165,6 +165,8 @@
 %token Y_EXT_OP
 %token Y_FLOOR_L_D_OP
 %token Y_FLOOR_L_S_OP
+%token Y_FLOOR_W_D_OP
+%token Y_FLOOR_W_S_OP
 %token Y_INS_OP
 %token Y_J_OP
 %token Y_JAL_OP
@@ -1850,6 +1852,8 @@ FP_CONVERT_OP:	Y_CEIL_W_D_OP
 	|	Y_CVT_S_W_OP
 	|	Y_CVT_W_D_OP
 	|	Y_CVT_W_S_OP
+	|	Y_FLOOR_W_D_OP
+	|	Y_FLOOR_W_S_OP
 	;
 
 FP_CONVERT_OP_REV2:	Y_CEIL_L_D_OP
