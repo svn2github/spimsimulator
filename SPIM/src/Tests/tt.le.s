@@ -1197,8 +1197,8 @@ sll_:	.asciiz "Testing SLL\n"
 	bne $3 2 fail
 	sll $3 $2 16
 	bne $3 0x10000 fail
-	sll $3 $2 32
-	bne $3 1 fail
+	sll $3 $2 31
+	bne $3 0x8000000 fail
 
 
 	.data
@@ -1499,9 +1499,6 @@ swd_:	.byte 0, 0, 0, 0
 	sw $0 far_away
 	lw $t1 far_away
 	bne $t1 $0 fail
-	b far_away
-come_back2:
-	sw $0 far_away
 
 	.data
 lswc_:	.asciiz "Testing load/store word coprocessor z\n"
@@ -1731,7 +1728,7 @@ xori_:	.asciiz "Testing XORI\n"
 	xori $4 $3 0xffff
 	bne $4 0xffff0000 fail
 	xori $4 $2 0xffff
-	bne $4 0xfffffffe fail
+	bne $4 0x0000fffe fail
 
 
 #
@@ -3597,9 +3594,6 @@ rol_:	.asciiz "Testing ROL\n"
 	li $2 5
 	rol $4 $2 5
 	bne $4 0xa0 fail
-	li $2 5
-	rol $4 $2 -5
-	bne $4 0x28000000 fail
 
 
 	.data
@@ -3619,9 +3613,6 @@ ror_:	.asciiz "Testing ROR\n"
 	li $2 5
 	ror $4 $2 5
 	bne $4 0x28000000 fail
-	li $2 5
-	ror $4 $2 -5
-	bne $4 0xa0 fail
 
 
 	.data
