@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 22    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 23    3/21/04 3:30p Larus $
  */
 
 #include <stdio.h>
@@ -632,7 +632,7 @@ static void
 display_registers ()
 {
   Arg args [2];
-  static str_stream* ss;
+  static str_stream ss;
 
   ss_clear (&ss);
   format_registers (&ss, print_gpr_hex, print_fpr_hex);
@@ -656,7 +656,7 @@ redisplay_text ()
 
   ss_clear (&ss);
 
-  format_inst (&ss, TEXT_BOT, text_top);
+  format_insts (&ss, TEXT_BOT, text_top);
   ss_printf (&ss, "\n\tKERNEL\n");
   format_insts (&ss, K_TEXT_BOT, k_text_top);
 

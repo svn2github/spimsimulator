@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/string-stream.c 1     3/21/04 2:04p Larus $
+  $Header: /Software/SPIM/src/string-stream.c 2     3/21/04 3:30p Larus $
 */
 
 #include <stdlib.h>
@@ -84,11 +84,6 @@ ss_to_string (str_stream* ss)
 }
 
 
-#ifdef WIN32
-/* Named differently on Windows */
-#define vsnprintf _vsnprintf
-#endif
-
 void
 ss_printf (str_stream* ss, char* fmt, ...)
 {
@@ -101,7 +96,13 @@ ss_printf (str_stream* ss, char* fmt, ...)
   if (0 == ss->initialized) ss_init(ss);
 
   free_space = ss->max_length - ss->empty_pos;
-  while ((n = vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) < 0)
+#ifdef WIN32
+  /* Returns -1 when buffer is too small */
+  while ((n = _vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) < 0)
+#else
+  /* Returns necessary space when buffer is too small */
+  while ((n = vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) >= free_space)
+#endif
     {
       /* Not enough room to store output: double buffer size and try again */
       ss->max_length = 2 * ss->max_length;
