@@ -1,5 +1,9 @@
 2004-02-14    <larus@C745660-A>
 
+	* spim.html [Shaunak Pawagi (shaunak@cs.sunysb.edu)]:
+	Correct -delayed-branches and -delayed-loads to -delayed_branches
+	and -delayed_loads.
+
 	* spim.c [Jos Hulzink (josh@stack.nl)]:
 	Incorrect ifdef around vprintf.
 	
