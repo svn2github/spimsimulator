@@ -1165,10 +1165,8 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 	|	COPROC_BR_OP	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = ($1.i == Y_BC1FL_OP) || ($1.i == Y_BC1TL_OP)
-		    || ($1.i == Y_BC2FL_OP) || ($1.i == Y_BC2TL_OP);
-		  int tf = ($1.i == Y_BC1T_OP) || ($1.i == Y_BC1TL_OP)
-		    || ($1.i == Y_BC2T_OP) || ($1.i == Y_BC2TL_OP);
+		  int nd = opcode_is_nullified_branch($1.i);
+		  int tf = opcode_is_true_branch($1.i);
 		  i_type_inst_free ($1.i,
 				    0 | (nd << 1) | tf,
 				    BIN_RS($1.i),
@@ -1179,10 +1177,8 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 	|	COPROC_BR_OP	CC_REG	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = ($1.i == Y_BC1FL_OP) || ($1.i == Y_BC1TL_OP)
-		    || ($1.i == Y_BC2FL_OP) || ($1.i == Y_BC2TL_OP);
-		  int tf = ($1.i == Y_BC1T_OP) || ($1.i == Y_BC1TL_OP)
-		    || ($1.i == Y_BC2T_OP) || ($1.i == Y_BC2TL_OP);
+		  int nd = opcode_is_nullified_branch($1.i);
+		  int tf = opcode_is_true_branch($1.i);
 		  i_type_inst_free ($1.i,
 				    ($2.i << 2) | (nd << 1) | tf,
 				    BIN_RS($1.i),

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 9     2/27/04 11:25p Larus $
+/* $Header: /Software/SPIM/src/op.h 10    2/28/04 7:18a Larus $
 */
 
 
@@ -116,7 +116,7 @@ OP("addu",	Y_ADDU_OP,	R3_TYPE_INST,		0x00000021)
 OP("alnv.ps",	Y_ALNV_PS_OP,	FP_R4_TYPE_INST,	0x4c00001e)	/* MIPS32 Rev 2 */
 OP("and",	Y_AND_OP,	R3_TYPE_INST,		0x00000024)
 OP("andi",	Y_ANDI_OP,	I2_TYPE_INST,		0x30000000)
-OP("b",	Y_B_POP,	PSEUDO_OP,		-1)
+OP("b",		Y_B_POP,	PSEUDO_OP,		-1)
 OP("bal",	Y_BAL_POP,	PSEUDO_OP,		-1)
 OP("bc1f",	Y_BC1F_OP,	BC_TYPE_INST,		0x45000000)
 OP("bc1fl",	Y_BC1FL_OP,	BC_TYPE_INST,		0x45020000)	/* MIPS32 */

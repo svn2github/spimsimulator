@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 14    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/inst.c 15    2/28/04 7:18a Larus $
 */
 
 #include <stdio.h>
@@ -837,13 +837,22 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
 
 
 
-/* Return non-zero if an INSTRUCTION is a conditional branch. */
+/* Return non-zero if SPIM OPCODE (e.g. Y_...) represents a conditional
+   branch. */
 
 int
 opcode_is_branch (int opcode)
 {
   switch (opcode)
     {
+    case Y_BC1F_OP:
+    case Y_BC1FL_OP:
+    case Y_BC1T_OP:
+    case Y_BC1TL_OP:
+    case Y_BC2F_OP:
+    case Y_BC2FL_OP:
+    case Y_BC2T_OP:
+    case Y_BC2TL_OP:
     case Y_BEQ_OP:
     case Y_BEQZ_POP:
     case Y_BGE_POP:
@@ -862,10 +871,6 @@ opcode_is_branch (int opcode)
     case Y_BLTZAL_OP:
     case Y_BNE_OP:
     case Y_BNEZ_POP:
-    case Y_BC1F_OP:
-    case Y_BC1FL_OP:
-    case Y_BC1T_OP:
-    case Y_BC1TL_OP:
       return (1);
 
     default:
@@ -874,7 +879,50 @@ opcode_is_branch (int opcode)
 }
 
 
-/* Return non-zero if an INSTRUCTION is an conditional branch (jump). */
+/* Return non-zero if SPIM OPCODE represents a nullified (e.g., Y_...L_OP)
+   conditional branch. */
+
+int
+opcode_is_nullified_branch (int opcode)
+{
+  switch (opcode)
+    {
+    case Y_BC1FL_OP:
+    case Y_BC1TL_OP:
+    case Y_BC2FL_OP:
+    case Y_BC2TL_OP:
+    case Y_BGEZAL_OP:
+    case Y_BLTZAL_OP:
+      return (1);
+
+    default:
+      return (0);
+    }
+}
+
+
+/* Return non-zero if SPIM OPCODE (e.g. Y_...) represents a conditional
+   branch on a true condition. */
+
+int
+opcode_is_true_branch (int opcode)
+{
+  switch (opcode)
+    {
+    case Y_BC1T_OP:
+    case Y_BC1TL_OP:
+    case Y_BC2T_OP:
+    case Y_BC2TL_OP:
+      return (1);
+
+    default:
+      return (0);
+    }
+}
+
+
+/* Return non-zero if SPIM OPCODE (e.g. Y_...) is an conditional branch
+   (jump). */
 
 int
 opcode_is_jump (int opcode)
@@ -890,36 +938,39 @@ opcode_is_jump (int opcode)
     }
 }
 
-/* Return non-zero if an INSTRUCTION is a load or store. */
+/* Return non-zero if SPIM OPCODE (e.g. Y_...) is a load or store. */
 
 int
 opcode_is_load_store (int opcode)
 {
   switch (opcode)
     {
-    case Y_LB_OP: return (1);
-    case Y_LBU_OP: return (1);
-    case Y_LH_OP: return (1);
-    case Y_LHU_OP: return (1);
-    case Y_LW_OP: return (1);
-    case Y_LWC0_OP: return (1);
-    case Y_LWC1_OP: return (1);
-    case Y_LWC2_OP: return (1);
-    case Y_LWL_OP: return (1);
-    case Y_LWR_OP: return (1);
-    case Y_SB_OP: return (1);
-    case Y_SH_OP: return (1);
-    case Y_SW_OP: return (1);
-    case Y_SWC0_OP: return (1);
-    case Y_SWC1_OP: return (1);
-    case Y_SWC2_OP: return (1);
-    case Y_SWL_OP: return (1);
-    case Y_SWR_OP: return (1);
-    case Y_L_D_POP: return (1);
-    case Y_L_S_POP: return (1);
-    case Y_S_D_POP: return (1);
-    case Y_S_S_POP: return (1);
-    default: return (0);
+    case Y_L_D_POP:
+    case Y_L_S_POP:
+    case Y_LB_OP:
+    case Y_LBU_OP:
+    case Y_LH_OP:
+    case Y_LHU_OP:
+    case Y_LW_OP:
+    case Y_LWC0_OP:
+    case Y_LWC1_OP:
+    case Y_LWC2_OP:
+    case Y_LWL_OP:
+    case Y_LWR_OP:
+    case Y_S_D_POP:
+    case Y_S_S_POP:
+    case Y_SB_OP:
+    case Y_SH_OP:
+    case Y_SW_OP:
+    case Y_SWC0_OP:
+    case Y_SWC1_OP:
+    case Y_SWC2_OP:
+    case Y_SWL_OP:
+    case Y_SWR_OP:
+      return (1);
+
+    default:
+      return (0);
     }
 }
 

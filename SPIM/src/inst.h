@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 12    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/inst.h 13    2/28/04 7:18a Larus $
 */
 
 
@@ -238,6 +238,8 @@ imm_expr *lower_bits_of_expr (imm_expr *old_expr);
 addr_expr *make_addr_expr (int offs, char *sym, int reg_no);
 imm_expr *make_imm_expr (int offs, char *sym, int pc_rel);
 int opcode_is_branch (int opcode);
+int opcode_is_nullified_branch (int opcode);
+int opcode_is_true_branch (int opcode);
 int opcode_is_jump (int opcode);
 int opcode_is_load_store (int opcode);
 void print_inst (mem_addr addr);
