@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 8     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/run.c 9     1/01/03 9:51p Larus $
 */
 
 
@@ -338,7 +338,10 @@ run_spim (initial_PC, steps_to_run, display)
 	      break;
 
 	    case Y_DIV_OP:
-	      if (R[RT (inst)] != 0)
+	      /* The behavior of this instruction is undefined on divide by
+		 zero or overflow. */
+	      if (R[RT (inst)] != 0
+		  && (R[RS (inst)] != 0x80000000 && R[RT (inst)] != 0xffffffff))
 		{
 		  LO = (reg_word) R[RS (inst)] / (reg_word) R[RT (inst)];
 		  HI = (reg_word) R[RS (inst)] % (reg_word) R[RT (inst)];
@@ -346,7 +349,10 @@ run_spim (initial_PC, steps_to_run, display)
 	      break;
 
 	    case Y_DIVU_OP:
-	      if (R[RT (inst)] != 0)
+	      /* The behavior of this instruction is undefined on divide by
+		 zero or overflow. */
+	      if (R[RT (inst)] != 0
+		  && (R[RS (inst)] != 0x80000000 && R[RT (inst)] != 0xffffffff))
 		{
 		  LO = ((u_reg_word) R[RS (inst)] / (u_reg_word) R[RT (inst)]);
 		  HI = ((u_reg_word) R[RS (inst)] % (u_reg_word) R[RT (inst)]);
