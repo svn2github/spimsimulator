@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=PCSpim - Win32 Debug
+CFG=PCSpim - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,11 +13,12 @@ CFG=PCSpim - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "pcspim.mak" CFG="PCSpim - Win32 Debug"
+!MESSAGE NMAKE /f "pcspim.mak" CFG="PCSpim - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "PCSpim - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "PCSpim - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -27,6 +28,9 @@ CFG=PCSpim - Win32 Debug
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
+
+!IF  "$(CFG)" == "PCSpim - Win32 Debug"
+
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir ".\Debug"
@@ -39,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 6.2 of January 6 1999\"" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 6.3 of December 25, 2000\"" /c
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -51,9 +55,42 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386
 # ADD LINK32 /nologo /subsystem:windows /debug /machine:I386
 # SUBTRACT LINK32 /profile
+
+!ELSEIF  "$(CFG)" == "PCSpim - Win32 Release"
+
+# PROP BASE Use_MFC 6
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "PCSpim___Win32_Release"
+# PROP BASE Intermediate_Dir "PCSpim___Win32_Release"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 6
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "Release"
+# PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 6.3 of December 25, 2000\"" /c
+# ADD CPP /nologo /MD /W3 /GX /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 6.3 of December 25, 2000\"" /c
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386
+# SUBTRACT BASE LINK32 /profile
+# ADD LINK32 /nologo /subsystem:windows /incremental:no /machine:I386
+# SUBTRACT LINK32 /profile /debug
+
+!ENDIF 
+
 # Begin Target
 
 # Name "PCSpim - Win32 Debug"
+# Name "PCSpim - Win32 Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -104,6 +141,9 @@ SOURCE=.\PCSpim.cpp
 # Begin Source File
 
 SOURCE=.\hlp\PCSpim.hpj
+
+!IF  "$(CFG)" == "PCSpim - Win32 Debug"
+
 # Begin Custom Build - Making help file...
 OutDir=.\Debug
 ProjDir=.
@@ -114,6 +154,22 @@ InputPath=.\hlp\PCSpim.hpj
 	$(ProjDir)\makehelp.bat $(OutDir)
 
 # End Custom Build
+
+!ELSEIF  "$(CFG)" == "PCSpim - Win32 Release"
+
+# Begin Custom Build - Making help file...
+OutDir=.\Release
+ProjDir=.
+TargetName=pcspim
+InputPath=.\hlp\PCSpim.hpj
+
+"$(OutDir)\$(TargetName).hlp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	$(ProjDir)\makehelp.bat $(OutDir)
+
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -288,14 +344,17 @@ SOURCE=.\res\Toolbar.bmp
 # Begin Source File
 
 SOURCE=..\src\parser.y
+
+!IF  "$(CFG)" == "PCSpim - Win32 Debug"
+
 # Begin Custom Build
-InputDir=\larus\Software\SPIM\src
+InputDir=\Larus\Software\SPIM\src
 InputPath=..\src\parser.y
 InputName=parser
 
 BuildCmds= \
 	cd $(InputDir) \
-	"D:\Program Files\cygwin\bin\bison"  -d -y $(InputName).y \
+	"C:\Program Files\cygwin\bin\bison"  -d -y $(InputName).y \
 	
 
 "$(InputDir)\y.tab.c" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -304,20 +363,61 @@ BuildCmds= \
 "$(InputDir)\y.tab.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
+
+!ELSEIF  "$(CFG)" == "PCSpim - Win32 Release"
+
+# Begin Custom Build
+InputDir=\Larus\Software\SPIM\src
+InputPath=..\src\parser.y
+InputName=parser
+
+BuildCmds= \
+	cd $(InputDir) \
+	"C:\Program Files\cygwin\bin\bison"  -d -y $(InputName).y \
+	
+
+"$(InputDir)\y.tab.c" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputDir)\y.tab.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\src\scanner.l
+
+!IF  "$(CFG)" == "PCSpim - Win32 Debug"
+
 # Begin Custom Build
-InputDir=\larus\Software\SPIM\src
+InputDir=\Larus\Software\SPIM\src
 InputPath=..\src\scanner.l
 InputName=scanner
 
 "$(InputDir)\lex.yy.c" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	cd $(InputDir) 
-	"D:\Program Files\cygwin\bin\flex" -I -8 $(InputName).l 
+	"C:\Program Files\cygwin\bin\flex" -I -8 $(InputName).l 
 	
 # End Custom Build
+
+!ELSEIF  "$(CFG)" == "PCSpim - Win32 Release"
+
+# Begin Custom Build
+InputDir=\Larus\Software\SPIM\src
+InputPath=..\src\scanner.l
+InputName=scanner
+
+"$(InputDir)\lex.yy.c" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	cd $(InputDir) 
+	"C:\Program Files\cygwin\bin\flex" -I -8 $(InputName).l 
+	
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Target
 # End Project
