@@ -125,6 +125,7 @@
 %token Y_C_UN_D_OP
 %token Y_C_UN_PS_OP
 %token Y_C_UN_S_OP
+%token Y_CACHE_OP
 %token Y_CEIL_L_D_OP
 %token Y_CEIL_L_S_OP
 %token Y_CFC0_OP
@@ -763,6 +764,12 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 	|	SYS_OP
 		{
 		  r_type_inst ($1.i, 0, 0, 0);
+		}
+
+
+	|	Y_CACHE_OP		Y_INT	ADDRESS
+		{
+		  i_type_inst_free($1.i, $2.i, 0, (imm_expr *)$3.p);
 		}
 
 
@@ -1562,7 +1569,7 @@ STOREF_INDEX_OP:	Y_SDXC1_OP
 	|	Y_SWXC1_OP
 	;
 
-SYS_OP:	Y_RFE_OP
+SYS_OP:		Y_RFE_OP
 	|	Y_SYSCALL_OP
 	;
 

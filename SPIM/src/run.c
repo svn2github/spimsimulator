@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 17    2/28/04 10:36a Larus $
+/* $Header: /Software/SPIM/src/run.c 18    2/28/04 10:52a Larus $
 */
 
 
@@ -384,6 +384,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		RAISE_EXCEPTION (BKPT_EXCPT, return (1))
 	      else
 		RAISE_EXCEPTION (BKPT_EXCPT, break);
+
+	    case Y_CACHE_OP:
+	      break;		/* not implemented */
 
 	    case Y_CFC0_OP:
 	    case Y_CFC2_OP:

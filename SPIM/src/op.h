@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 11    2/28/04 10:36a Larus $
+/* $Header: /Software/SPIM/src/op.h 12    2/28/04 10:52a Larus $
 */
 
 
@@ -201,6 +201,7 @@ OP("c.ult.s",	Y_C_ULT_S_OP,	FP_CMP_TYPE_INST,	0x46000035)
 OP("c.un.d",	Y_C_UN_D_OP,	FP_CMP_TYPE_INST,	0x46200031)
 OP("c.un.ps",	Y_C_UN_PS_OP,	FP_CMP_TYPE_INST,	0x46600031)	/* MIPS32 Rev 2 */
 OP("c.un.s",	Y_C_UN_S_OP,	FP_CMP_TYPE_INST,	0x46000031)
+OP("cache",	Y_CACHE_OP,	I2_TYPE_INST,		0xbc000000)	/* MIPS32 */
 OP("ceil.l.d",	Y_CEIL_L_D_OP,	FP_R2ds_TYPE_INST,	0x4620000a)	/* MIPS32 Rev 2 */
 OP("ceil.l.s",	Y_CEIL_L_S_OP,	FP_R2ds_TYPE_INST,	0x4600000a)	/* MIPS32 Rev 2 */
 OP("cfc0",	Y_CFC0_OP,	R2ts_TYPE_INST,		0x40400000)
