@@ -42,16 +42,16 @@
 %token Y_ABS_D_OP
 %token Y_ABS_PS_OP
 %token Y_ABS_S_OP
-%token Y_ADDIU_OP
-%token Y_ADDI_OP
-%token Y_ADDU_OP
 %token Y_ADD_D_OP
 %token Y_ADD_OP
 %token Y_ADD_PS_OP
 %token Y_ADD_S_OP
+%token Y_ADDI_OP
+%token Y_ADDIU_OP
+%token Y_ADDU_OP
 %token Y_ALNV_PS_OP
-%token Y_ANDI_OP
 %token Y_AND_OP
+%token Y_ANDI_OP
 %token Y_BC0F_OP
 %token Y_BC0T_OP
 %token Y_BC1F_OP
@@ -61,14 +61,62 @@
 %token Y_BC3F_OP
 %token Y_BC3T_OP
 %token Y_BEQ_OP
-%token Y_BGEZAL_OP
 %token Y_BGEZ_OP
+%token Y_BGEZAL_OP
 %token Y_BGTZ_OP
 %token Y_BLEZ_OP
-%token Y_BLTZAL_OP
 %token Y_BLTZ_OP
+%token Y_BLTZAL_OP
 %token Y_BNE_OP
 %token Y_BREAK_OP
+%token Y_C_EQ_D_OP
+%token Y_C_EQ_PS_OP
+%token Y_C_EQ_S_OP
+%token Y_C_F_D_OP
+%token Y_C_F_PS_OP
+%token Y_C_F_S_OP
+%token Y_C_LE_D_OP
+%token Y_C_LE_PS_OP
+%token Y_C_LE_S_OP
+%token Y_C_LT_D_OP
+%token Y_C_LT_PS_OP
+%token Y_C_LT_S_OP
+%token Y_C_NGE_D_OP
+%token Y_C_NGE_PS_OP
+%token Y_C_NGE_S_OP
+%token Y_C_NGL_D_OP
+%token Y_C_NGL_PS_OP
+%token Y_C_NGL_S_OP
+%token Y_C_NGLE_D_OP
+%token Y_C_NGLE_PS_OP
+%token Y_C_NGLE_S_OP
+%token Y_C_NGT_D_OP
+%token Y_C_NGT_PS_OP
+%token Y_C_NGT_S_OP
+%token Y_C_OLE_D_OP
+%token Y_C_OLE_PS_OP
+%token Y_C_OLE_S_OP
+%token Y_C_OLT_D_OP
+%token Y_C_OLT_PS_OP
+%token Y_C_OLT_S_OP
+%token Y_C_SEQ_D_OP
+%token Y_C_SEQ_PS_OP
+%token Y_C_SEQ_S_OP
+%token Y_C_SF_D_OP
+%token Y_C_SF_PS_OP
+%token Y_C_SF_S_OP
+%token Y_C_UEQ_D_OP
+%token Y_C_UEQ_PS_OP
+%token Y_C_UEQ_S_OP
+%token Y_C_ULE_D_OP
+%token Y_C_ULE_PS_OP
+%token Y_C_ULE_S_OP
+%token Y_C_ULT_D_OP
+%token Y_C_ULT_PS_OP
+%token Y_C_ULT_S_OP
+%token Y_C_UN_D_OP
+%token Y_C_UN_PS_OP
+%token Y_C_UN_S_OP
 %token Y_CEIL_L_D_OP
 %token Y_CEIL_L_S_OP
 %token Y_CFC0_OP
@@ -96,86 +144,38 @@
 %token Y_CVT_S_W_OP
 %token Y_CVT_W_D_OP
 %token Y_CVT_W_S_OP
-%token Y_C_EQ_D_OP
-%token Y_C_EQ_PS_OP
-%token Y_C_EQ_S_OP
-%token Y_C_F_D_OP
-%token Y_C_F_PS_OP
-%token Y_C_F_S_OP
-%token Y_C_LE_D_OP
-%token Y_C_LE_PS_OP
-%token Y_C_LE_S_OP
-%token Y_C_LT_D_OP
-%token Y_C_LT_PS_OP
-%token Y_C_LT_S_OP
-%token Y_C_NGE_D_OP
-%token Y_C_NGE_PS_OP
-%token Y_C_NGE_S_OP
-%token Y_C_NGLE_D_OP
-%token Y_C_NGLE_PS_OP
-%token Y_C_NGLE_S_OP
-%token Y_C_NGL_D_OP
-%token Y_C_NGL_PS_OP
-%token Y_C_NGL_S_OP
-%token Y_C_NGT_D_OP
-%token Y_C_NGT_PS_OP
-%token Y_C_NGT_S_OP
-%token Y_C_OLT_D_OP
-%token Y_C_OLT_PS_OP
-%token Y_C_OLT_S_OP
-%token Y_C_OLE_D_OP
-%token Y_C_OLE_PS_OP
-%token Y_C_OLE_S_OP
-%token Y_C_SEQ_D_OP
-%token Y_C_SEQ_PS_OP
-%token Y_C_SEQ_S_OP
-%token Y_C_SF_D_OP
-%token Y_C_SF_PS_OP
-%token Y_C_SF_S_OP
-%token Y_C_UEQ_D_OP
-%token Y_C_UEQ_PS_OP
-%token Y_C_UEQ_S_OP
-%token Y_C_ULT_D_OP
-%token Y_C_ULT_PS_OP
-%token Y_C_ULT_S_OP
-%token Y_C_ULE_D_OP
-%token Y_C_ULE_PS_OP
-%token Y_C_ULE_S_OP
-%token Y_C_UN_D_OP
-%token Y_C_UN_PS_OP
-%token Y_C_UN_S_OP
 %token Y_DI_OP
-%token Y_DIVU_OP
 %token Y_DIV_D_OP
 %token Y_DIV_OP
 %token Y_DIV_S_OP
+%token Y_DIVU_OP
 %token Y_EHB_OP
 %token Y_EI_OP
 %token Y_EXT_OP
 %token Y_FLOOR_L_D_OP
 %token Y_FLOOR_L_S_OP
 %token Y_INS_OP
-%token Y_JALR_OP
-%token Y_JALR_HB_OP
-%token Y_JAL_OP
-%token Y_JR_OP
-%token Y_JR_HB_OP
 %token Y_J_OP
-%token Y_LBU_OP
+%token Y_JAL_OP
+%token Y_JALR_HB_OP
+%token Y_JALR_OP
+%token Y_JR_HB_OP
+%token Y_JR_OP
 %token Y_LB_OP
+%token Y_LBU_OP
 %token Y_LDXC1_OP
-%token Y_LUXC1_OP
-%token Y_LWXC1_OP
-%token Y_LHU_OP
 %token Y_LH_OP
+%token Y_LHU_OP
 %token Y_LUI_OP
+%token Y_LUXC1_OP
+%token Y_LW_OP
 %token Y_LWC0_OP
 %token Y_LWC1_OP
 %token Y_LWC2_OP
 %token Y_LWC3_OP
 %token Y_LWL_OP
 %token Y_LWR_OP
-%token Y_LW_OP
+%token Y_LWXC1_OP
 %token Y_MADD_D_OP
 %token Y_MADD_PS_OP
 %token Y_MADD_S_OP
@@ -205,11 +205,11 @@
 %token Y_MTHC2_OP
 %token Y_MTHI_OP
 %token Y_MTLO_OP
-%token Y_MULTU_OP
-%token Y_MULT_OP
 %token Y_MUL_D_OP
 %token Y_MUL_PS_OP
 %token Y_MUL_S_OP
+%token Y_MULT_OP
+%token Y_MULTU_OP
 %token Y_NEG_D_OP
 %token Y_NEG_PS_OP
 %token Y_NEG_S_OP
@@ -220,11 +220,11 @@
 %token Y_NMSUB_PS_OP
 %token Y_NMSUB_S_OP
 %token Y_NOR_OP
-%token Y_ORI_OP
 %token Y_OR_OP
+%token Y_ORI_OP
+%token Y_PFW_OP
 %token Y_PLL_PS_OP
 %token Y_PLU_PS_OP
-%token Y_PFW_OP
 %token Y_PREFX_OP
 %token Y_PUL_PS_OP
 %token Y_PUU_PS_OP
@@ -244,29 +244,29 @@
 %token Y_SEB_OP
 %token Y_SEH_OP
 %token Y_SH_OP
-%token Y_SLLV_OP
 %token Y_SLL_OP
-%token Y_SLTIU_OP
-%token Y_SLTI_OP
-%token Y_SLTU_OP
+%token Y_SLLV_OP
 %token Y_SLT_OP
-%token Y_SRAV_OP
+%token Y_SLTI_OP
+%token Y_SLTIU_OP
+%token Y_SLTU_OP
 %token Y_SRA_OP
-%token Y_SRLV_OP
+%token Y_SRAV_OP
 %token Y_SRL_OP
-%token Y_SUBU_OP
+%token Y_SRLV_OP
 %token Y_SUB_D_OP
+%token Y_SUB_OP
 %token Y_SUB_PS_OP
 %token Y_SUB_S_OP
-%token Y_SUB_OP
+%token Y_SUBU_OP
 %token Y_SUXC1_OP
+%token Y_SW_OP
 %token Y_SWC0_OP
 %token Y_SWC1_OP
 %token Y_SWC2_OP
 %token Y_SWC3_OP
 %token Y_SWL_OP
 %token Y_SWR_OP
-%token Y_SW_OP
 %token Y_SWXC1_OP
 %token Y_SYNCI_OP
 %token Y_SYSCALL_OP
@@ -278,59 +278,59 @@
 %token Y_TRUNC_S_OP
 %token Y_WRPGPR_OP
 %token Y_WSBH_OP
-%token Y_XORI_OP
 %token Y_XOR_OP
+%token Y_XORI_OP
 
 
 /* Assembler pseudo operations op codes: */
 
 %token Y_ABS_POP
+%token Y_B_POP
 %token Y_BAL_POP
 %token Y_BEQZ_POP
-%token Y_BGEU_POP
 %token Y_BGE_POP
-%token Y_BGTU_POP
+%token Y_BGEU_POP
 %token Y_BGT_POP
-%token Y_BLEU_POP
+%token Y_BGTU_POP
 %token Y_BLE_POP
-%token Y_BLTU_POP
+%token Y_BLEU_POP
 %token Y_BLT_POP
+%token Y_BLTU_POP
 %token Y_BNEZ_POP
-%token Y_B_POP
-%token Y_LA_POP
-%token Y_LD_POP
-%token Y_LI_POP
-%token Y_LI_D_POP
-%token Y_LI_S_POP
 %token Y_L_D_POP
 %token Y_L_S_POP
+%token Y_LA_POP
+%token Y_LD_POP
+%token Y_LI_D_POP
+%token Y_LI_POP
+%token Y_LI_S_POP
 %token Y_MFC1_D_POP
-%token Y_MTC1_D_POP
 %token Y_MOVE_POP
-%token Y_MULOU_POP
-%token Y_MULO_POP
+%token Y_MTC1_D_POP
 %token Y_MUL_POP
-%token Y_NEGU_POP
+%token Y_MULO_POP
+%token Y_MULOU_POP
 %token Y_NEG_POP
+%token Y_NEGU_POP
 %token Y_NOP_POP
 %token Y_NOT_POP
-%token Y_REMU_POP
 %token Y_REM_POP
+%token Y_REMU_POP
 %token Y_ROL_POP
 %token Y_ROR_POP
-%token Y_SD_POP
-%token Y_SEQ_POP
-%token Y_SGEU_POP
-%token Y_SGE_POP
-%token Y_SGTU_POP
-%token Y_SGT_POP
-%token Y_SLEU_POP
-%token Y_SLE_POP
-%token Y_SNE_POP
 %token Y_S_D_POP
 %token Y_S_S_POP
-%token Y_ULHU_POP
+%token Y_SD_POP
+%token Y_SEQ_POP
+%token Y_SGE_POP
+%token Y_SGEU_POP
+%token Y_SGT_POP
+%token Y_SGTU_POP
+%token Y_SLE_POP
+%token Y_SLEU_POP
+%token Y_SNE_POP
 %token Y_ULH_POP
+%token Y_ULHU_POP
 %token Y_ULW_POP
 %token Y_USH_POP
 %token Y_USW_POP
@@ -347,9 +347,9 @@
 %token Y_COMM_DIR
 %token Y_DATA_DIR
 %token Y_DOUBLE_DIR
+%token Y_END_DIR
 %token Y_ENDB_DIR
 %token Y_ENDR_DIR
-%token Y_END_DIR
 %token Y_ENT_DIR
 %token Y_ERR_DIR
 %token Y_EXTERN_DIR
@@ -359,8 +359,8 @@
 %token Y_FRAME_DIR
 %token Y_GLOBAL_DIR
 %token Y_HALF_DIR
-%token Y_K_TEXT_DIR
 %token Y_K_DATA_DIR
+%token Y_K_TEXT_DIR
 %token Y_LABEL_DIR
 %token Y_LCOMM_DIR
 %token Y_LIVEREG_DIR
@@ -812,13 +812,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	NULLARY_OP_R2
+	|	NULLARY_OP_REV2
 		{
 		  mips32_r2_inst ();
 		}
 
 
-	|	UNARY_OP_R2	DEST
+	|	UNARY_OP_REV2	DEST
 		{
 		  mips32_r2_inst ();
 		}
@@ -900,13 +900,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	SHIFT_OP_R2	DEST	SRC1		Y_INT
+	|	SHIFT_OP_REV2	DEST	SRC1		Y_INT
 		{
 		  mips32_r2_inst ();
 		}
 
 
-	|	SHIFTV_OP_R2	DEST	SRC1		SRC2
+	|	SHIFTV_OP_REV2	DEST	SRC1		SRC2
 		{
 		  mips32_r2_inst ();
 		}
@@ -955,7 +955,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	BINARY_OP_R2	DEST	SRC1
+	|	BINARY_OP_REV2	DEST	SRC1
 		{
 		  mips32_r2_inst ();
 		}
@@ -1097,7 +1097,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 
 
 
-	|	BF_OP_R2	F_DEST		F_SRC2	Y_INT	Y_INT
+	|	BF_OP_REV2	F_DEST		F_SRC2	Y_INT	Y_INT
 		{
 		  mips32_r2_inst ();
 		}
@@ -1350,19 +1350,19 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_MOVE_OP_R2	F_DEST	F_SRC1
+	|	FP_MOVE_OP_REV2	F_DEST	F_SRC1
 		{
 		  mips32_r2_inst ();
 		}
 
 
-	|	FP_MOVEC_OP_R2	F_DEST	F_SRC1	/* ToDo: CC */
+	|	FP_MOVEC_OP_REV2	F_DEST	F_SRC1	/* ToDo: CC */
 		{
 		  mips32_r2_inst ();
 		}
 
 
-	|	FP_MOVE_TEST_OP_R2	F_DEST	F_SRC1	REG
+	|	FP_MOVE_TEST_OP_REV2	F_DEST	F_SRC1	REG
 		{
 		  mips32_r2_inst ();
 		}
@@ -1397,7 +1397,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	MOVE_COP_OP_R2	REG		COP_REG
+	|	MOVE_COP_OP_REV2	REG		COP_REG
 		{
 		  mips32_r2_inst ();
 		}
@@ -1415,7 +1415,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_UNARY_OP_R2	F_DEST		F_SRC1
+	|	FP_UNARY_OP_REV2	F_DEST		F_SRC1
 		{
 		  mips32_r2_inst ();
 		}
@@ -1427,13 +1427,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_BINARY_OP_R2	F_DEST		F_SRC1		F_SRC2
+	|	FP_BINARY_OP_REV2	F_DEST		F_SRC1		F_SRC2
 		{
 		  mips32_r2_inst ();
 		}
 
 
-	|	FP_TERNARY_OP_R2	F_DEST		F_SRC1		F_SRC2	FP_REGISTER
+	|	FP_TERNARY_OP_REV2	F_DEST		F_SRC1		F_SRC2	FP_REGISTER
 		{
 		  mips32_r2_inst ();
 		}
@@ -1445,7 +1445,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_CONVERT_OP_R2	F_DEST		F_SRC2
+	|	FP_CONVERT_OP_REV2	F_DEST		F_SRC2
 		{
 		  mips32_r2_inst ();
 		}
@@ -1457,7 +1457,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_NEG_OP_R2	F_DEST		F_SRC2
+	|	FP_NEG_OP_REV2	F_DEST		F_SRC2
 		{
 		  mips32_r2_inst ();
 		}
@@ -1469,7 +1469,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_CMP_OP_R2	F_SRC1		F_SRC2
+	|	FP_CMP_OP_REV2	F_SRC1		F_SRC2
 		{
 		  mips32_r2_inst ();
 		}
@@ -1542,10 +1542,10 @@ SYS_OP:	Y_RFE_OP
 	|	Y_SYSCALL_OP
 	;
 
-NULLARY_OP_R2:	Y_EHB_OP
+NULLARY_OP_REV2:	Y_EHB_OP
 	;
 
-UNARY_OP_R2:	Y_DI_OP
+UNARY_OP_REV2:	Y_DI_OP
 	|	Y_EI_OP
 	;
 
@@ -1581,10 +1581,10 @@ SHIFT_OP:	Y_SLL_OP
 	|	Y_SRL_OP
 	;
 
-SHIFT_OP_R2:	Y_ROTR_OP
+SHIFT_OP_REV2:	Y_ROTR_OP
 	;
 
-SHIFTV_OP_R2:	Y_ROTRV_OP
+SHIFTV_OP_REV2:	Y_ROTRV_OP
 	;
 
 
@@ -1593,7 +1593,7 @@ SHIFTV_OP_R2:	Y_ROTRV_OP
 BINARY_OP_NOI:	Y_NOR_OP
 	;
 
-BINARY_OP_R2:	Y_RDHWR_OP
+BINARY_OP_REV2:	Y_RDHWR_OP
 	|	Y_RDPGPR_OP
 	|	Y_SEB_OP
 	|	Y_SEH_OP
@@ -1636,7 +1636,7 @@ MULT_OP:	Y_MULT_OP
 	|	Y_MULTU_OP
 	;
 
-BF_OP_R2:	Y_EXT_OP
+BF_OP_REV2:	Y_EXT_OP
 	|	Y_INS_OP
 	;
 
@@ -1711,7 +1711,7 @@ MOVE_COP_OP:	Y_MFC0_OP
 	|	Y_MTC3_OP
 	;
 
-MOVE_COP_OP_R2:	Y_MFHC1_OP
+MOVE_COP_OP_REV2:	Y_MFHC1_OP
 	|	Y_MFHC2_OP
 	|	Y_MTHC1_OP
 	|	Y_MTHC2_OP
@@ -1733,14 +1733,14 @@ FP_MOVE_OP:	Y_MOV_S_OP
 	|	Y_MOV_D_OP
 	;
 
-FP_MOVE_OP_R2:	Y_MOV_PS_OP
+FP_MOVE_OP_REV2:	Y_MOV_PS_OP
 	;
 
-FP_MOVEC_OP_R2:	Y_MOVF_PS_OP
+FP_MOVEC_OP_REV2:	Y_MOVF_PS_OP
 	|	Y_MOVT_PS_OP
 	;
 
-FP_MOVE_TEST_OP_R2:	Y_MOVN_PS_OP
+FP_MOVE_TEST_OP_REV2:	Y_MOVN_PS_OP
 	|	Y_MOVZ_PS_OP
 	;
 
@@ -1748,7 +1748,7 @@ FP_ABS_OP:	Y_ABS_S_OP
 	|	Y_ABS_D_OP
 	;
 
-FP_UNARY_OP_R2:	Y_ABS_PS_OP
+FP_UNARY_OP_REV2:	Y_ABS_PS_OP
 	|	Y_RECIP_D_OP
 	|	Y_RECIP_S_OP
 	|	Y_ROUND_L_D_OP
@@ -1769,7 +1769,7 @@ FP_BINARY_OP:	Y_ADD_S_OP
 	|	Y_SUB_D_OP
 	;
 
-FP_BINARY_OP_R2:	Y_ADD_PS_OP
+FP_BINARY_OP_REV2:	Y_ADD_PS_OP
 	|	Y_MUL_PS_OP
 	|	Y_PLL_PS_OP
 	|	Y_PLU_PS_OP
@@ -1777,7 +1777,7 @@ FP_BINARY_OP_R2:	Y_ADD_PS_OP
 	|	Y_PUU_PS_OP
 	;
 
-FP_TERNARY_OP_R2:	Y_ALNV_PS_OP
+FP_TERNARY_OP_REV2:	Y_ALNV_PS_OP
 	|	Y_MADD_D_OP
 	|	Y_MADD_PS_OP
 	|	Y_MADD_S_OP
@@ -1800,7 +1800,7 @@ FP_CONVERT_OP:	Y_CVT_D_S_OP
 	|	Y_CVT_W_S_OP
 	;
 
-FP_CONVERT_OP_R2:	Y_CEIL_L_D_OP
+FP_CONVERT_OP_REV2:	Y_CEIL_L_D_OP
 	|	Y_CEIL_L_S_OP
 	|	Y_CVT_D_L_OP
 	|	Y_CVT_L_D_OP
@@ -1817,7 +1817,7 @@ FP_NEG_OP:	Y_NEG_S_OP
 	|	Y_NEG_D_OP
 	;
 
-FP_NEG_OP_R2:	Y_NEG_PS_OP
+FP_NEG_OP_REV2:	Y_NEG_PS_OP
 	;
 
 FP_CMP_OP:	Y_C_F_S_OP
@@ -1854,7 +1854,7 @@ FP_CMP_OP:	Y_C_F_S_OP
 	|	Y_C_NGT_D_OP
 	;
 
-FP_CMP_OP_R2:	Y_C_EQ_PS_OP
+FP_CMP_OP_REV2:	Y_C_EQ_PS_OP
 	|	Y_C_F_PS_OP
 	|	Y_C_LT_PS_OP
 	|	Y_C_LE_PS_OP
