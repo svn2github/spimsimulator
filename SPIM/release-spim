@@ -1,0 +1,35 @@
+#!c:/progra~1/cygwin/bin/bash
+#
+# Shell script to create clean tar file under Cygwin.
+#
+# Usage: release-spim <source-dir> <target-dir>
+#
+
+SRC=src
+TGT=spim-7.0
+
+pushd $SRC
+make -f Makefile.cygwin clean
+rm -f vssver.scc */vssver.scc *~ */*~
+rm -f Tests/tt.endian.s
+popd
+
+rm -fr $TGT
+cp -pr $SRC $TGT
+
+pushd $TGT
+for f in * ; do
+  if test -f $f ; then
+    cat $f | tr -d "\r" > $f.xxx;
+    mv $f.xxx $f;
+  else
+    for fs in $f/* ; do
+      if test -f $fs ; then
+        cat $fs | tr -d "\r" > $fs.xxx;
+        mv $fs.xxx $fs;
+      fi;
+    done;
+  fi;
+done
+chmod +x Configure
+popd
