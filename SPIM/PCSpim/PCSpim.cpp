@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpim.cpp 5     3/14/04 7:51p Larus $ */
 
 // PCSpim.cpp : Defines the class behaviors for the application.
 //

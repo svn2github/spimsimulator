@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/util.h 4     3/14/04 7:51p Larus $ */
 
 #ifndef _UTIL_H_
 #define _UTIL_H_

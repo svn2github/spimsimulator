@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 6     3/14/04 7:51p Larus $ */
 
 // PCSpimView.h : interface of the CPCSpimView class
 //

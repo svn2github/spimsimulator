@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/SpimReg.h 7     3/14/04 7:51p Larus $ */
 
 #ifndef SPIMREG_H
 #define SPIMREG_H

@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/StdAfx.cpp 4     3/14/04 7:51p Larus $ */
 
 // stdafx.cpp : source file that includes just the standard includes
 //	PCSpim.pch will be the pre-compiled header

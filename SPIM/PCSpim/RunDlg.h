@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/RunDlg.h 4     3/14/04 7:51p Larus $ */
 
 // RunDlg.h : header file
 //

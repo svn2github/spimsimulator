@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/StdAfx.h 5     3/14/04 7:51p Larus $ */
 
 // stdafx.h : include file for standard system include files,
 //  or project specific include files that are used frequently, but

@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/Regman.h 4     3/14/04 7:51p Larus $ */
 
 #ifndef _REGMAN_H_
 #define _REGMAN_H_
