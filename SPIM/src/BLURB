@@ -35,7 +35,7 @@ It also include a large torture test to verify a port to a new machine.
 SPIM implements both a simple, terminal-style interface and a visual
 windowing interface.  On Unix, the spim program provides the terminal
 interface and the xspim program provides the X window interface.  On PCs,
-the spim program provides a DOS interface and pcspim provides a Windows
+the spim program provides a DOS interface and PCSpim provides a Windows
 interface.
 
 SPIM is copyrighted by me and can be freely used for non-commercial

@@ -40,8 +40,9 @@ to use another compiler, set the environment variable CC to its name, e.g.:
 	% setenv CC gcc
 
 
-Next, edit the first few non-comment lines of Imakefile (or Makefile.std, if
-you use that instead) to set the pathnames for your system:
+Next, edit the first few non-comment lines of Imakefile (or Makefile.std or
+Makefile.cygwin, if you use one of those instead) to set the pathnames for
+your system:
 
 	TRAP_DIR  -- The full pathname of the directory in which to install
 		     the SPIM trap handler.
@@ -54,15 +55,10 @@ you use that instead) to set the pathnames for your system:
 
 In general, the remaining parameters need not be changed.
 
-
-Then type:
+Then, if using Imakefile type:
 
 	% xmkmf
 	% make
-
-(Note: on RS6000's running AIX, you should edit the Makefile to use the c89
-compiler rather than cc.)
-
 
 If you want an X-window version of SPIM, also type:
 
@@ -70,7 +66,7 @@ If you want an X-window version of SPIM, also type:
 
 
 If you do not have X-windows or the program xmkmf, edit the makefile in
-Makefile.std and type:
+Makefile.std or Makefile.cygwin and type:
 
 	% make -f Makefile.std test
 	% make -f Makefile.std xspim
@@ -99,7 +95,7 @@ installed before running the test.)
 
 SPIM works well on Windows.  You can easily build spim (the non-windowing
 version) using the Cygwin port of the GNU tools (see www.cygwin.com).  The
-Windows version of spim is called pcspim and is distributed through:
+Windows version of spim is called PCSpim and is distributed through:
 
 	www.cs.wisc.edu/~larus/spim.html
 
@@ -128,9 +124,14 @@ Imakefile
 	Input file for the xmkmf program, which produces Makefile for your
 	system.
 
+Makefile.cygwin
+	This makefile builds spim (but not xspim--use PCSpim instead) under
+	the Cygnus Cygwin tools running on Windows.  Very cool and very
+	convenient.
+
 Makefile.std
-	The descriptor file for make program.  Only use this file if you
-	do not have xmkmf (see Imakefile).
+	A default makefile.  Only use this file if you do not have xmkmf
+	(see Imakefile).
 
 README	This file.
 
