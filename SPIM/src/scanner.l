@@ -602,7 +602,8 @@ source_line ()
       /* Find end of line: */
       for (eol1 = current_line; *eol1 != '\0' && *eol1 != '\n'; ) eol1 += 1;
 
-      /* Ran into null byte, probably from yylex.  Look further for newline */
+      /* Ran into null byte, inserted by yylex. In necessary, look further
+	 for newline */
       if (*eol1 == '\0' && yy_hold_char != '\n')
 	{
 	  null1 = eol1;
@@ -611,11 +612,15 @@ source_line ()
 	    eol1 += 1;
 	}
 
+      /* Save end-of-line character and null terminate string so it can
+	 be printed. */
       c1 = *eol1;
       *eol1 = '\0';
 
       r = (char *) xmalloc (eol1 - current_line + 10);
       sprintf (r, "%d: %s", current_line_no, current_line);
+
+      /* Restore end-of-line character and, if necessary, yylex's null byte. */
       *eol1 = c1;
       if (null1 != NULL)
 	{
