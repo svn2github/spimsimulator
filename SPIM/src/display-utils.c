@@ -246,7 +246,7 @@ int *max_buf_len, *string_len;
 
   sprintf (&buf[*string_len], "\n\tSTACK\n");
   *string_len += strlen (&buf[*string_len]);
-  buf = mem_as_string (R[29],
+  buf = mem_as_string (ROUND_DOWN (R[29], BYTES_PER_WORD),
     STACK_TOP - 4096,
     buf,
     max_buf_len,
@@ -279,7 +279,7 @@ int *max_buf_len, *string_len;
 #endif
 {
   mem_word val;
-  mem_addr i = ROUND (from, BYTES_PER_WORD);
+  mem_addr i = ROUND_UP (from, BYTES_PER_WORD);
   int j;
   
   i = print_partial_line (i, buf, max_buf_len, string_len);

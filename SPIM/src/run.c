@@ -184,7 +184,7 @@ run_spim (initial_PC, steps_to_run, display)
 	  if (exception_occurred)
 	    {
 	      exception_occurred = 0;
-	      EPC = PC & 0xfffffffc; /* Round down */
+	      EPC = ROUND_DOWN (PC, BYTES_PER_WORD);
 	      handle_exception();
 	      continue;
 	    }

@@ -42,8 +42,8 @@ typedef union {int i; void* p;} intptr_union;
 
 /* Round V to next greatest B boundary */
 
-#define ROUND(V, B) (((int) V + (B-1)) & ~(B-1))
-
+#define ROUND_UP(V, B) (((int) V + (B-1)) & ~(B-1))
+#define ROUND_DOWN(V, B) (((int) V) & ~(B-1))
 
 /* Sign-extend an int16 to an int32 */
 
