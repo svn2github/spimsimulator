@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 17    3/09/04 9:53p Larus $
+/* $Header: /Software/SPIM/src/inst.h 18    3/11/04 10:15p Larus $
 */
 
 
@@ -163,10 +163,10 @@ extern int exception_occurred;
 	}								\
 
 
-#define RAISE_INTERRUPT(LEVEL, MISC)					\
+#define RAISE_INTERRUPT(LEVEL)						\
 	{								\
-	raise_interrupt(LEVEL);						\
-	MISC;								\
+	/* Set IP (pending) bit for interrupt level. */			\
+	CP0_Cause |= (1 << ((LEVEL) + 8));				\
 	}								\
 
 /* Recognized exceptions: */
@@ -242,7 +242,6 @@ int print_inst_internal (char *buf, int len, instruction *inst, mem_addr addr);
 void r_cond_type_inst (int opcode, int fs, int ft, int cc);
 void r_sh_type_inst (int opcode, int rd, int rt, int shamt);
 void r_type_inst (int opcode, int rd, int rs, int rt);
-void raise_interrupt(int level);
 void raise_exception(int excode);
 instruction *set_breakpoint (mem_addr addr);
 void store_instruction (instruction *inst);

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 11    3/09/04 9:53p Larus $
+/* $Header: /Software/SPIM/src/reg.h 12    3/11/04 10:15p Larus $
 */
 
 
@@ -88,14 +88,14 @@ extern reg_word CCR[4][32], CPR[4][32];
 /* Implemented fields: */
 #define CP0_Status_CU	0xf0000000
 #define CP0_Status_IM	0x0000ff00
-#define CP0_Status_IM7   0x00008000 /* HW Int 5 */
-#define CP0_Status_IM6   0x00004000 /* HW Int 4 */
-#define CP0_Status_IM5   0x00002000 /* HW Int 3 */
-#define CP0_Status_IM4   0x00001000 /* HW Int 2 */
-#define CP0_Status_IM3   0x00000800 /* HW Int 1 */
-#define CP0_Status_IM2   0x00000400 /* HW Int 0 */
-#define CP0_Status_IM1   0x00000200 /* SW Int 1 */
-#define CP0_Status_IM0   0x00000100 /* SW Int 0 */
+#define CP0_Status_IM7  0x00008000 /* HW Int 5 */
+#define CP0_Status_IM6  0x00004000 /* HW Int 4 */
+#define CP0_Status_IM5  0x00002000 /* HW Int 3 */
+#define CP0_Status_IM4  0x00001000 /* HW Int 2 */
+#define CP0_Status_IM3  0x00000800 /* HW Int 1 */
+#define CP0_Status_IM2  0x00000400 /* HW Int 0 */
+#define CP0_Status_IM1  0x00000200 /* SW Int 1 */
+#define CP0_Status_IM0  0x00000100 /* SW Int 0 */
 #define CP0_Status_UM	0x00000010
 #define CP0_Status_EXL	0x00000002
 #define CP0_Status_IE	0x00000001

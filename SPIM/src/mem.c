@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 22    3/11/04 7:17a Larus $
+/* $Header: /Software/SPIM/src/mem.c 23    3/11/04 10:15p Larus $
 */
 
 
@@ -604,7 +604,7 @@ check_memory_mapped_IO ()
 	  recv_buffer_filled = RECV_LATENCY;
 	  if ((recv_control & RECV_INT_ENABLE)
 	      && (CP0_Status & RECV_INT_MASK))
-	    RAISE_INTERRUPT (RECV_INT_LEVEL, CP0_Cause |= RECV_INT_MASK);
+	    RAISE_INTERRUPT (RECV_INT_LEVEL);
 	}
     }
   else if (recv_buffer_filled <= 0)
@@ -620,7 +620,7 @@ check_memory_mapped_IO ()
 	  trans_buffer_filled = 0;
 	  if ((trans_control & TRANS_INT_ENABLE)
 	      && (CP0_Cause & TRANS_INT_MASK))
-	    RAISE_INTERRUPT (TRANS_INT_LEVEL, CP0_Cause |= TRANS_INT_MASK)
+	    RAISE_INTERRUPT (TRANS_INT_LEVEL);
 	}
     }
 }
@@ -641,7 +641,7 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
 	  && (trans_control & TRANS_INT_ENABLE)
 	  && (CP0_Cause & TRANS_INT_MASK))
 	/* Raise an interrupt immediately on enabling a ready xmitter */
-	RAISE_INTERRUPT (TRANS_INT_LEVEL, CP0_Cause |= TRANS_INT_MASK)
+	RAISE_INTERRUPT (TRANS_INT_LEVEL);
       break;
 
     case TRANS_BUFFER_ADDR:

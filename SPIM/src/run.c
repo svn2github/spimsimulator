@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 48    3/11/04 9:22p Larus $
+/* $Header: /Software/SPIM/src/run.c 49    3/11/04 10:15p Larus $
 */
 
 
@@ -207,6 +207,19 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	   have changed. */
 	check_memory_mapped_IO ();
       /* else run inner loop for all steps */
+
+      if ((CP0_Status & CP0_Status_IE)
+	  && !(CP0_Status & CP0_Status_EXL)
+	  && ((CP0_Cause & CP0_Cause_IP) & (CP0_Status & CP0_Status_IM)))
+	{
+	  /* There is an interrupt to process if IE bit set, EXL bit not
+	     set, and non-masked IP bit set */
+	  raise_exception (ExcCode_Int);
+	  /* Handle interrupt now, before instruction executes, so that
+	     EPC points to unexecuted instructions, which is the one to
+	     return to. */
+	  handle_exception ();
+	}
 
 #ifdef WIN32
       SleepEx(0, TRUE);	      /* Put thread in awaitable state for WaitableTimer */
@@ -403,8 +416,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      if (RD (inst) == 1)
 		/* Debugger breakpoint */
 		RAISE_EXCEPTION (ExcCode_Bp, return (1))
-		  else
-		    RAISE_EXCEPTION (ExcCode_Bp, break);
+	      else
+		RAISE_EXCEPTION (ExcCode_Bp, break);
 
 	    case Y_CACHE_OP:
 	      break;		/* Memory details not implemented */
@@ -815,7 +828,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		 architecture. */
 	      CP0_Status = (CP0_Status & 0xfffffff0) | ((CP0_Status & 0x3c) >> 2);
 #else
-	      RAISE_EXCEPTION (ExcCode_RI, {}); /* Not instruction in MIPS32 */
+	      RAISE_EXCEPTION (ExcCode_RI, {}); /* Not MIPS32 instruction */
 #endif
 	      break;
 
@@ -1628,7 +1641,7 @@ timer_signal_handler (int signum)
   CP0_Count += 1;
   if (CP0_Count == CP0_Compare)
     {
-      RAISE_INTERRUPT (7, CP0_Cause |= CP0_Cause_IP7);
+      RAISE_INTERRUPT (7);
     }
 
   /* Re-enable the timer */
@@ -1772,18 +1785,6 @@ set_fpu_cc (int cond, int cc, int less, int equal, int unordered)
 
 
 void
-raise_interrupt (int level)
-{
-  if (CP0_Status & (1 << (level + CP0_Status_IM0)))
-    {
-      /* Interrupt not masked */
-      CP0_Cause |= (1 << (level + CP0_Cause_IP0)); /* Mark pending */
-      raise_exception(ExcCode_Int);
-    }
-}
-
-
-void
 raise_exception (int excode)
 {
   if (ExcCode_Int != excode
@@ -1797,7 +1798,9 @@ raise_exception (int excode)
 	  /* In delay slot */
 	  if ((CP0_Status & CP0_Status_EXL) == 0)
 	    {
-	      CP0_EPC = ROUND_DOWN (PC - BYTES_PER_WORD, BYTES_PER_WORD); /* Branch addr */
+	      /* Branch's addr */
+	      CP0_EPC = ROUND_DOWN (PC - BYTES_PER_WORD, BYTES_PER_WORD);
+	      /* Set BD bit to record that instruction is in delay slot */
 	      CP0_Cause |= CP0_Cause_BD;
 	    }
 	}
@@ -1806,7 +1809,8 @@ raise_exception (int excode)
 	  /* Not in delay slot */
 	  if ((CP0_Status & CP0_Status_EXL) == 0)
 	    {
-	      CP0_EPC = ROUND_DOWN (PC, BYTES_PER_WORD);	/* Instruction address */
+	      /* Faulting instruction's address */
+	      CP0_EPC = ROUND_DOWN (PC, BYTES_PER_WORD);
 	    }
 	}
       /* ToDo: set CE field of Cause register to coprocessor causing exception */
