@@ -91,6 +91,8 @@ static YY_CHAR *copy_str ();
 			 return (Y_NL);
 			}
 
+[\r]			{ /* Ignore carrage returns */ }
+
 [;]			{
 			 return (Y_NL);
 			}
