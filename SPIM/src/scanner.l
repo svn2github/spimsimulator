@@ -453,17 +453,29 @@ print_erroneous_line ()
 
   if (current_line == NULL) return;
 
-  error ("	  ");
-  c = *(current_line + prefix_length);
-  *(current_line + prefix_length) = '\0';
-  error ("%s", current_line);
-  *(current_line + prefix_length) = (char)c;
-  error ("%s", yytext);
+  /* Print part of line that has been consumed. */
+  if (0 <= prefix_length)
+    {
+      /* yytext and current_line point to same line */
+      error ("	  ");
+      c = *(current_line + prefix_length);
+      *(current_line + prefix_length) = '\0';
+      error ("%s", current_line);
+      *(current_line + prefix_length) = (char)c;
+      error ("%s", yytext);
+    }
+  else
+    {
+      /* yytext and current_line point to different lines */
+      error ("	  ");
+      error ("%s", current_line);
+      prefix_length = strlen(current_line);
+    }
 
-  /* Flush the rest of the line. */
+  /* Flush the rest of the line (not consumed) from lex input. */
   if (*yytext != '\n')
     {
-      while ((c = input ()) != '\n' && c != EOF)
+      while ((c = input ()) != '\n' && c != EOF && c != 1)
 	*bp ++ = (char)c;
       *bp = '\0';
       error ("%s\n", buffer);
@@ -471,9 +483,8 @@ print_erroneous_line ()
       current_line = NULL;
     }
 
-
+  /* Print marker to point at which consumption stopped. */
   if (1024 <= prefix_length) return;
-
   error ("	  ");
   for (i = 0; i < prefix_length; i ++) buffer[i] = ' ';
   buffer[i] = '\0';
