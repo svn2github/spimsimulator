@@ -870,7 +870,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	DIV_OP		DEST_REG	SRC1
+	|	DIV_POP		DEST_REG	SRC1
 		{
 		  /* The hardware divide operation (ignore 1st arg) */
 		  if ($1.i != Y_DIV_OP && $1.i != Y_DIVU_OP)
@@ -1370,10 +1370,6 @@ BINARY_OP_NOI:	Y_NOR_OP ;
 
 SUB_OP:		Y_SUB_OP
 	|	Y_SUBU_OP
-	;
-
-DIV_OP:		Y_DIV_OP
-	|	Y_DIVU_OP
 	;
 
 DIV_POP:	Y_DIV_OP
