@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 5     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 6     2/01/01 8:44p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -718,6 +718,7 @@ reload_action (w, client_data, call_data)
 
 #define CLEAR_REGS 1
 #define CLEAR_MEM_REGS 2
+#define CLEAR_CONSOLE 3
 
 #ifdef __STDC__
 static void
@@ -746,6 +747,11 @@ add_clear_button (parent)
 				 args, ONE);
   XtAddCallback (entry, XtNcallback, clear_program_state_action,
 		 (XtPointer) CLEAR_MEM_REGS);
+
+  entry = XtCreateManagedWidget ("console display", smeBSBObjectClass, menu,
+				 args, ONE);
+  XtAddCallback (entry, XtNcallback, clear_program_state_action,
+		 (XtPointer) CLEAR_CONSOLE);
 }
 
 
@@ -774,6 +780,11 @@ clear_program_state_action (w, client_data, call_data)
       initialize_world (load_trap_handler ? trap_file : NULL);
       write_startup_message ();
       stack_initialized = 0;
+      break;
+
+    case CLEAR_CONSOLE:
+      write_output (message_out, "Console display cleared\n\n");
+      clear_console_display ();
       break;
 
     default:

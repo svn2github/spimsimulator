@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 7     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 8     2/01/01 8:44p Larus $
  */
 
 #include <stdio.h>
@@ -111,7 +111,7 @@ int pipe_out;
 int cycle_level;		/* Non-zero => cycle level mode */
 
 XtAppContext app_con;
-Widget message, console;
+Widget message, console = NULL;
 XtAppContext app_context;
 XFontStruct *text_font;
 Dimension button_width;
@@ -125,6 +125,7 @@ Pixmap mark;
 #ifdef __STDC__
 static void center_text_at_PC (void);
 static char *check_buf_limit (char *, int *, int *);
+static create_console_display (void);
 static void display_data_seg (void);
 static char *display_values (mem_addr from, mem_addr to, char *buf, int *limit,
 			     int *n);
@@ -140,6 +141,7 @@ static void write_text_to_window (Widget w, char *s);
 #else
 static void center_text_at_PC ();
 static char *check_buf_limit ();
+static create_console_display ();
 static void display_data_seg ();
 static char *display_values ();
 static char *display_insts ();
@@ -295,6 +297,7 @@ static Dimension segment_height;
 static Widget shell1;
 static int spim_is_running = 0;
 static Widget toplevel;
+static Widget pane1;
 
 
 
@@ -396,6 +399,44 @@ initialize (app_res)
 
 
 #ifdef __STDC__
+static void
+create_console_display (void)
+#else
+static void
+create_console_display ()
+#endif
+{
+  Arg args[10];
+  Cardinal n;
+
+  n = 0;
+  XtSetArg (args[n], XtNeditType, XawtextAppend); n++;
+  XtSetArg (args[n], XtNscrollVertical, XawtextScrollWhenNeeded); n++;
+  XtSetArg (args[n], XtNpreferredPaneSize, TEXTHEIGHT * 24); n++;
+  XtSetArg (args[n], XtNwidth, TEXTWIDTH * 80); n++;
+  console = XtCreateManagedWidget ("console", asciiTextWidgetClass, pane1,
+				   args, n);
+  XawTextEnableRedisplay (console);
+  console_out.f = (FILE*) console;
+}
+
+#ifdef __STDC__
+void
+clear_console_display (void)
+#else
+void
+clear_console_display ()
+#endif
+{
+  Arg args[10];
+  Cardinal n;
+
+  XtSetArg (args[0], XtNstring, "");
+  XtSetValues(console, args, 1);
+}
+
+
+#ifdef __STDC__
 int
 main (int argc, char **argv)
 #else
@@ -405,11 +446,9 @@ main (argc, argv)
      char **argv;
 #endif
 {
-  Widget toplevel2, pane1;
+  Widget toplevel2;
   AppResources app_res;
   Display *display;
-  Arg args[10];
-  Cardinal n;
 
   toplevel = XtAppInitialize (&app_context, "Xspim", options,
 			      XtNumber (options), &argc, argv,
@@ -440,15 +479,7 @@ main (argc, argv)
 			       toplevel, NULL, ZERO);
   pane1 = XtCreateManagedWidget ("pane1", panedWidgetClass, shell1,
 				 NULL, ZERO);
-  n = 0;
-  XtSetArg (args[n], XtNeditType, XawtextAppend); n++;
-  XtSetArg (args[n], XtNscrollVertical, XawtextScrollWhenNeeded); n++;
-  XtSetArg (args[n], XtNpreferredPaneSize, TEXTHEIGHT * 24); n++;
-  XtSetArg (args[n], XtNwidth, TEXTWIDTH * 80); n++;
-  console = XtCreateManagedWidget ("console", asciiTextWidgetClass, pane1,
-				   args, n);
-  XawTextEnableRedisplay (console);
-  console_out.f = (FILE*) console;
+  create_console_display ();
 
   create_sub_windows (toplevel, app_width, reg_min_height, reg_max_height,
 		      command_height, command_hspace, command_vspace,
