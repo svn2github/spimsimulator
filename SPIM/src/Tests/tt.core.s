@@ -1250,6 +1250,40 @@ sdd_:	.word 0, 0, 0, 0
 
 
 	.data
+swc1_:	.asciiz "Testing SWC1\n"
+	.align 2
+swc1d_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 swc1_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	la $2 swc1d_
+	mtc1 $3, $0
+	swc1 $f0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+
+
+	.data
+s.s_:	.asciiz "Testing S.S\n"
+	.align 2
+s.sd_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 s.s_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	la $2 s.sd_
+	mtc1 $3, $0
+	s.s $f0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+
+
+	.data
 sdc1_:	.asciiz "Testing SDC1\n"
 	.align 2
 sdc1d_:	.word 0, 0
@@ -1264,6 +1298,27 @@ sdc1d_:	.word 0, 0
 	mtc1 $3, $0
 	mtc1 $4, $1
 	sdc1 $f0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+	lw $5 4($2)
+	bne $5 $4 fail
+
+
+	.data
+s.d_:	.asciiz "Testing S.D\n"
+	.align 2
+s.dd_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 s.d_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	li $4, 0xf7f7f7f7
+	la $2 s.dd_
+	mtc1 $3, $0
+	mtc1 $4, $1
+	s.d $f0 0($2)
 	lw $5 0($2)
 	bne $5 $3 fail
 	lw $5 4($2)
@@ -3120,6 +3175,26 @@ ldc1d_:	.word 0x7f7f7f7f, 0xf7f7f7f7
 	lw $5 4($2)
 	bne $5 $4 fail
 
+
+	.data
+l.d_:	.asciiz "Testing L.D\n"
+	.align 2
+l.dd_:	.word 0x7f7f7f7f, 0xf7f7f7f7
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 l.d_
+	syscall
+
+	la $2 l.dd_
+	l.d $f0 0($2)
+	mfc1 $3, $f0
+	mfc1 $4, $f1
+	lw $5 0($2)
+	bne $5 $3 fail
+	lw $5 4($2)
+	bne $5 $4 fail
+
+
 	.data
 lwc1_:	.asciiz "Testing LWC1\n"
 	.align 2
@@ -3131,6 +3206,22 @@ lwc1d_:	.word 0x7f7f7f7f
 
 	la $2 lwc1d_
 	lwc1 $f0 0($2)
+	mfc1 $3 $f0
+	lw $4 0($2)
+	bne $4 $3 fail
+
+
+	.data
+l.s_:	.asciiz "Testing L.S\n"
+	.align 2
+l.sd_:	.word 0x7f7f7f7f
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 l.s_
+	syscall
+
+	la $2 l.sd_
+	l.s $f0 0($2)
 	mfc1 $3 $f0
 	lw $4 0($2)
 	bne $4 $3 fail
@@ -3677,9 +3768,6 @@ trunc.w.s_:	.asciiz "Testing TRUNC.W.S\n"
 	trunc.w.s $f0 $f2
 	mfc1 $6 $f0
 	bne $6 1 fail
-
-
-# SWC1 tested previously
 
 
 #
