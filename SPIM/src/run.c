@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 21    2/28/04 3:33p Larus $
+/* $Header: /Software/SPIM/src/run.c 22    2/28/04 4:36p Larus $
 */
 
 
@@ -509,6 +509,19 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
 			 &R[RT (inst)], 0xffffffff);
 	      break;
+
+	    case Y_LDC2_OP:
+	      {
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		if (addr & 0x3)
+		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
+
+		LOAD_INST (READ_MEM_WORD, addr,
+			   &CPR[2][RT (inst)], 0xffffffff);
+		LOAD_INST (READ_MEM_WORD, addr + sizeof(mem_word),
+			   &CPR[2][RT (inst) + 1], 0xffffffff);
+		break;
+	      }
 
 	    case Y_LWC0_OP:
 	    case Y_LWC2_OP:
@@ -1164,14 +1177,23 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		break;
 	      }
 
-	    case Y_LWC1_OP:
+	    case Y_LDC1_OP:
 	      {
-		reg_word *wp = (reg_word *) &FGR[FT (inst)];
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		if (addr & 0x3)
+		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
 
-		LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst), wp,
-			   0xffffffff);
+		LOAD_INST (READ_MEM_WORD, addr,
+			   (reg_word *) &FGR[FT (inst)], 0xffffffff);
+		LOAD_INST (READ_MEM_WORD, addr + sizeof(mem_word),
+			   (reg_word *) &FGR[FT (inst) + 1], 0xffffffff);
 		break;
 	      }
+
+	    case Y_LWC1_OP:
+	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
+			 (reg_word *) &FGR[FT (inst)], 0xffffffff);
+	      break;
 
 	    case Y_MFC1_OP:
 	      {

@@ -176,6 +176,8 @@
 %token Y_JR_OP
 %token Y_LB_OP
 %token Y_LBU_OP
+%token Y_LDC1_OP
+%token Y_LDC2_OP
 %token Y_LDXC1_OP
 %token Y_LH_OP
 %token Y_LHU_OP
@@ -644,7 +646,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	LOADF_OP	F_DEST		ADDRESS
+	|	LOADF_POP	F_DEST		ADDRESS
 		{
 		  i_type_inst (Y_LWC1_OP, $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
@@ -1535,6 +1537,9 @@ LOAD_OP:	Y_LB_OP
 	;
 
 LOAD_COP:	Y_LWC0_OP
+	|	Y_LDC1_OP
+	|	Y_LWC1_OP
+	|	Y_LDC2_OP
 	|	Y_LWC2_OP
 	;
 
@@ -1546,8 +1551,7 @@ ULOADH_POP:	Y_ULH_POP
 	|	Y_ULHU_POP
 	;
 
-LOADF_OP:	Y_LWC1_OP
-	|	Y_L_S_POP
+LOADF_POP:	Y_L_S_POP
 	|	Y_L_D_POP
 	;
 

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 15    2/28/04 3:33p Larus $
+/* $Header: /Software/SPIM/src/op.h 16    2/28/04 4:36p Larus $
 */
 
 
@@ -256,6 +256,8 @@ OP("la",	Y_LA_POP,	PSEUDO_OP,		-1)
 OP("lb",	Y_LB_OP,	I2a_TYPE_INST,		0x80000000)
 OP("lbu",	Y_LBU_OP,	I2a_TYPE_INST,		0x90000000)
 OP("ld",	Y_LD_POP,	PSEUDO_OP,		-1)
+OP("ldc1",	Y_LDC1_OP,	FP_I2a_TYPE_INST,	0xd4000000)	/* MIPS32 */
+OP("ldc2",	Y_LDC2_OP,	I2a_TYPE_INST,		0xd8000000)	/* MIPS32 */
 OP("ldxc1",	Y_LDXC1_OP,	FP_R3_TYPE_INST,	0x4c000001)	/* MIPS32 Rev 2 */
 OP("lh",	Y_LH_OP,	I2a_TYPE_INST,		0x84000000)
 OP("lhu",	Y_LHU_OP,	I2a_TYPE_INST,		0x94000000)
