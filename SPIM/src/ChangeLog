@@ -1,3 +1,9 @@
+2004-09-04    <larus@HomeMachine>
+
+	* Tests/tt.core.s:
+	Test for SQRT.S used double constant, which failed on SPARC (but
+	not x86).
+
 2004-08-22    <larus@HomeMachine>
 
 	* Released SPIM 7.0a to propagate changes.
