@@ -772,10 +772,26 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
 {
   int nLoaded;
   CString strLoadMsg;
+  int result;
 
  l_TryLoad:
-  // Reset the simulator
-  OnSimulatorReinitialize();
+
+  if (m_strCurFilename.IsEmpty())
+  {
+    // Reset the simulator before loading first file
+    OnSimulatorReinitialize();
+  }
+  else if (IDYES == (result = MessageBox("Clear program and reinitialize simulator before loading?",
+					  NULL, MB_YESNOCANCEL | MB_ICONQUESTION)))
+  {
+    // Reset the simulator if requested
+    OnSimulatorReinitialize();
+  }
+  else if (IDCANCEL == result)
+  {
+    // Quit before loading file
+    return;
+  }
 
   g_pView->SetMessageCapture(TRUE);
   nLoaded = read_assembly_file((char *)strFilename);
@@ -815,8 +831,7 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
 		}
 
 		// They didn't want to try to reload.
-		write_output(message_out, 
-					 "Load failed. Check code and simulator settings and try again.\n");
+		write_output(message_out,"Load terminated. Check code and simulator settings and try again.\n");
 	  }
 	  else
 	  {
