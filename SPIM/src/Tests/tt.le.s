@@ -18,7 +18,7 @@
 # PURPOSE.
 #
 
-# $Header: /u/faculty/larus/Software/larus/SPIM/Tests/RCS/tt.le.s,v 1.43 1995/01/18 15:37:13 larus Exp $
+# $Header: /u/l/a/larus/Software/SPIM/src/Tests/RCS/tt.le.s,v 1.44 1999/01/12 05:57:03 larus Exp $
 
 
 	.data
@@ -1495,6 +1495,13 @@ swd_:	.byte 0, 0, 0, 0
 	sw $3 1000($t5)
 	sw $3 1001($t5)
 
+	lw $t0 far_away
+	sw $0 far_away
+	lw $t1 far_away
+	bne $t1 $0 fail
+	b far_away
+come_back2:
+	sw $0 far_away
 
 	.data
 lswc_:	.asciiz "Testing load/store word coprocessor z\n"

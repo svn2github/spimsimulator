@@ -27,7 +27,7 @@
 
 %start LINE
 
-%token Y_EOF 0
+%token Y_EOF
 
 %token Y_NL
 %token Y_INT

@@ -21,7 +21,6 @@
 
 # $Header: /u/faculty/larus/Software/larus/SPIM/Tests/RCS/tt.be.s,v 1.39 1995/01/18 15:37:13 larus Exp $
 
-
 	.data
 saved_ret_pc:	.word 0		# Holds PC to return from main
 m3:	.asciiz "The next few lines should contain exception error messages\n"
@@ -1504,8 +1503,8 @@ swd_:	.byte 0, 0, 0, 0
 	lw $t0 far_away
 	sw $0 far_away
 	lw $t1 far_away
-	bne $1 $0 fail
-	jmp far_away
+	bne $t1 $0 fail
+	b far_away
 come_back2:
 	sw $0 far_away
 

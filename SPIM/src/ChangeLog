@@ -1,6 +1,15 @@
+Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
+
+	* tt.be.s tt.le.s:
+	New tests from PC port.
+
+	* parser.y scanner.l inst.c:
+	New EOF code did not work with bison, which does not allow a
+	non-terminal with the value 0.
+
 1999-01-07  Jim Larus  <larus@drh-alpha.dns.microsoft.com>
 
-	*  spim.c xspim.c:
+	* spim.c xspim.c:
 	Report undefined symbols before running program.
 
 1998-12-16    <larus@JIM>
@@ -12,14 +21,14 @@
 
 	* parser.y:
 	Allow pseudo ops with -pseudo flg.
-	
+
 	* parser.y parser.h sym-tbl.c spim.h spim-utils.c sym-tbl.h
 	Test/tt.be.s:
 	Bogus main undefined error if parser failed before main.
-	
+
 	* mem.c:
 	Shift was incorrect.
-	
+
 	* spim.h:
 	Redefine 1000K as K * K.
 
@@ -28,7 +37,7 @@
 	* mem.c:
 	Force redraw of screen after updating text/data in bad address
 	handler.
-	
+
 	* sym-tbl.c:
 	Did not adjust high 16 bits in forward ref to symbol in LW/ST
 	inststruction.
@@ -56,7 +65,7 @@
 	* spim.c sym-tbl.{c,h} display-utils.c PCSpim.rc PCSpimView.cpp
 	resourc.h RunDlg.cpp RunDlg.h SettingsDlg.cpp SpimReg.h:
 	Print undefined symbols before running program.
-	
+
 1998-12-05    <larus@JIM>
 
 	* parser.y:
@@ -68,20 +77,20 @@
 	Invoke yacc and lex from within VS.
 
 1998-12-01    <larus@JIM>
-	
+
 	* pcspim.dsp pcspim.opt PCSpimView.cpp pcspim.plg xspim.c
 	spim-utils.h display-utils.h:
 	Share common code for formating machine contents.
-	
+
 1998-11-22    <larus@JIM>
 
 	* pcspim.dsp PCSpim.clw PCSpim.aps MakeHelp.bat PCSpim.hpj
 	pcspim.plg pcspim.opt pcspim.ncb:
 	Fix helfile compile.
-	
+
 	* pcspim.plg PCSPIMView.cpp:
 	Default printing FP registers to FP format.
-	
+
 	* pcspim.dsp pcspim.plg pcspim.opt mem.c inst.h inst.c sym-tbl.c
 	scanner.l:
 	Eliminated warnings from VC6.0 at level 4.

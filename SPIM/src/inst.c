@@ -33,8 +33,8 @@
 #include "reg.h"
 #include "sym-tbl.h"
 #include "parser.h"
-#include "y.tab.h"
 #include "scanner.h"
+#include "y.tab.h"
 #include "data.h"
 
 

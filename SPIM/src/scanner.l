@@ -57,6 +57,8 @@ static double scan_float;	/* Where FP values are kept */
 
 static int line_returned = 0;	/* Returned current line yet? */
 
+static int eof_returned = 0;	/* Return EOF token yet? */
+
 
 /* Local functions: */
 
@@ -67,6 +69,9 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 static int check_keyword ();
 static YY_CHAR *copy_str ();
 #endif
+
+
+#undef yywrap
 
 %}
 
@@ -91,7 +96,12 @@ static YY_CHAR *copy_str ();
 			}
 
 
-"#".*			{
+[\001]		{	/* Marker character inserted to allow scanner to
+				   return Y_EOF before returning hard EOF. */
+			  return (Y_EOF);
+			}
+
+"#".*		{
 				/* Ignore comments */
 			}
 
@@ -288,6 +298,7 @@ static YY_CHAR *copy_str ();
 			  yyerror ("Unknown character");
 			}
 
+
 %%
 
 
@@ -309,6 +320,7 @@ initialize_scanner (in_file)
   line_no = 1;
   current_line = NULL;
   line_returned = 0;
+  eof_returned = 0;
 }
 
 
@@ -325,9 +337,24 @@ scanner_start_line ()
 }
 
 
-int yywrap ()
+/* Use yywrap to insert a marker character, which causes the
+   scanner to return Y_EOF, before return a hard EOF.  This
+   wouldn't be necessary, except that bison does not allow
+   the parser to use EOF (= 0) as a non-terminal */
+
+int yywrap()
 {
-  return 1;
+	if (eof_returned)
+		return (1);
+	else
+	{
+		unput ('\001');
+		eof_returned = 1;
+#ifdef FLEX_SCANNER
+		yy_did_buffer_switch_on_eof = 1;
+#endif
+		return (0);
+	}
 }
 
 
