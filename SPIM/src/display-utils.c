@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 7     12/24/00 1:37p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 8     1/01/03 8:25p Larus $
 */
 
 
@@ -110,19 +110,19 @@ int *string_len;
       
       /* Use pointers to cast to ints without invoking float->int conversion
       so we can just print the bits. */
-      r1 = (int *)&FGR[i]; r2 = (int *)&FGR[i+1];
+      r1 = (int *)&FPR[i]; r2 = r1 + 1;
       sprintf (bufp, fpstr, 2*i, *r1, *r2); bufp += strlen (bufp);
       sprintf (bufp, fpfill); bufp += strlen (bufp);
       
-      r1 = (int *)&FGR[i+4]; r2 = (int *)&FGR[i+4+1];
+      r1 = (int *)&FPR[i+4]; r2 = r1 + 1;
       sprintf (bufp, fpstr, 2*i+8, *r1, *r2); bufp += strlen (bufp);
       sprintf (bufp, fpfill); bufp += strlen (bufp);
       
-      r1 = (int *)&FGR[i+8]; r2 = (int *)&FGR[i+8+1];
+      r1 = (int *)&FPR[i+8]; r2 = r1 + 1;
       sprintf (bufp, fpstr, 2*i+16, *r1, *r2); bufp += strlen (bufp);
       sprintf (bufp, fpfill); bufp += strlen (bufp);
       
-      r1 = (int *)&FGR[i+12]; r2 = (int *)&FGR[i+12+1];
+      r1 = (int *)&FPR[i+12]; r2 = r1 + 1;
       sprintf (bufp, fpstr, 2*i+24, *r1, *r2); bufp += strlen (bufp);
       sprintf (bufp, "\n"); bufp += 1;
     }
