@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 26    3/01/04 10:23p Larus $
+/* $Header: /Software/SPIM/src/run.c 27    3/02/04 6:12a Larus $
 */
 
 
@@ -671,7 +671,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MFC0_OP:
 	    case Y_MFC2_OP:
-	      R[RT (inst)] = CPR[OPCODE (inst) - Y_MFC0_OP][RD (inst)];
+	      R[RT (inst)] = CPR[OPCODE (inst) - Y_MFC0_OP][FS (inst)];
 	      break;
 
 	    case Y_MFHI_OP:
@@ -684,7 +684,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MTC0_OP:
 	    case Y_MTC2_OP:
-	      CPR[OPCODE (inst) - Y_MTC0_OP][RD (inst)] = R[RT (inst)];
+	      CPR[OPCODE (inst) - Y_MTC0_OP][FS (inst)] = R[RT (inst)];
 	      break;
 
 	    case Y_MTHI_OP:
@@ -1219,7 +1219,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MFC1_OP:
 	      {
-		float val = FGR[RD (inst)];
+		float val = FGR[FS (inst)];
 		reg_word *vp = (reg_word *) &val;
 
 		R[RT (inst)] = *vp; /* Fool coercion */
@@ -1264,7 +1264,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word word = R[RT (inst)];
 		float *wp = (float *) &word;
 
-		FGR[RD (inst)] = *wp; /* fool coercion */
+		FGR[FS (inst)] = *wp; /* fool coercion */
 		break;
 	      }
 
