@@ -111,6 +111,8 @@ typedef struct inst_s
 #define SET_IMM(INST, VAL)	(INST)->r_t.r_i.r_i.imm = (short)(VAL)
 #define IOFFSET(INST)		IMM(INST)
 #define SET_IOFFSET(INST, VAL)	SET_IMM(INST, VAL)
+#define IDISP(INST)		(SIGN_EX (IOFFSET (INST) << 2))
+
 #define COND(INST)			IMM(INST)
 #define SET_COND(INST, VAL)	SET_IMM(INST, VAL)
 

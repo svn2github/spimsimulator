@@ -777,12 +777,12 @@ print_inst_internal (buf, length, inst, addr)
   switch (entry->value2)
     {
     case B0_TYPE_INST:
-      sprintf (buf, " %d", SIGN_EX (IMM (inst) << 2));
+      sprintf (buf, " %d", IDISP (inst));
       buf += strlen (buf);
       break;
 
     case B1_TYPE_INST:
-      sprintf (buf, " $%d %d", RS (inst), SIGN_EX (IMM (inst) << 2));
+      sprintf (buf, " $%d %d", RS (inst), IDISP (inst));
       buf += strlen (buf);
       break;
 
@@ -797,8 +797,7 @@ print_inst_internal (buf, length, inst, addr)
       break;
 
     case B2_TYPE_INST:
-      sprintf (buf, " $%d, $%d, %d", RS (inst), RT (inst),
-	       SIGN_EX (IMM (inst) << 2));
+      sprintf (buf, " $%d, $%d, %d", RS (inst), RT (inst), IDISP (inst));
       buf += strlen (buf);
       break;
 

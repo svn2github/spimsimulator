@@ -253,24 +253,24 @@ run_spim (initial_PC, steps_to_run, display)
 	    case Y_BC2F_OP:
 	    case Y_BC3F_OP:
 	      BRANCH_INST (CpCond[OPCODE (inst) - Y_BC0F_OP] == 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BC0T_OP:
 	    case Y_BC2T_OP:
 	    case Y_BC3T_OP:
 	      BRANCH_INST (CpCond[OPCODE (inst) - Y_BC0T_OP] != 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BEQ_OP:
 	      BRANCH_INST (R[RS (inst)] == R[RT (inst)],
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BGEZ_OP:
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BGEZAL_OP:
@@ -279,22 +279,22 @@ run_spim (initial_PC, steps_to_run, display)
 	      else
 		R[31] = PC + BYTES_PER_WORD;
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BGTZ_OP:
 	      BRANCH_INST (R[RS (inst)] != 0 && SIGN_BIT (R[RS (inst)]) == 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BLEZ_OP:
 	      BRANCH_INST (R[RS (inst)] == 0 || SIGN_BIT (R[RS (inst)]) != 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BLTZ_OP:
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BLTZAL_OP:
@@ -303,12 +303,12 @@ run_spim (initial_PC, steps_to_run, display)
 	      else
 		R[31] = PC + BYTES_PER_WORD;
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BNE_OP:
 	      BRANCH_INST (R[RS (inst)] != R[RT (inst)],
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BREAK_OP:
@@ -890,12 +890,12 @@ run_spim (initial_PC, steps_to_run, display)
 
 	    case Y_BC1F_OP:
 	      BRANCH_INST (FpCond == 0,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_BC1T_OP:
 	      BRANCH_INST (FpCond == 1,
-			   PC + (SIGN_EX (IOFFSET (inst)) << 2));
+			   PC + IDISP (inst));
 	      break;
 
 	    case Y_C_F_S_OP:

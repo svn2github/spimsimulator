@@ -47,7 +47,7 @@ typedef union {int i; void* p;} intptr_union;
 
 /* Sign-extend an int16 to an int32 */
 
-#define SIGN_EX(X) ((X) & 0x8000 ? (X) | 0xffff0000 : (X))
+#define SIGN_EX(X) (((X) & 0x8000) ? ((X) | 0xffff0000) : (X))
 
 
 #ifdef MIN			/* Some systems define these in system includes */
