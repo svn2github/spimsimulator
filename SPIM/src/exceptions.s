@@ -81,8 +81,8 @@ s2:	.word 0
 	.set noat
 	move $k1 $at		# Save $at
 	.set at
-	sw $v0 s1		# Not re-entrent and we can't trust $sp
-	sw $a0 s2		# But, we need to use these registers
+	sw $v0 s1		# Not re-entrant and we can't trust $sp
+	sw $a0 s2		# But we need to use these registers
 
 	mfc0 $k0 $13		# Cause register
 	srl $a0 $k0 2		# Extract ExcCode Field
