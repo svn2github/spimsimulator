@@ -469,6 +469,8 @@ SPIM does not distinguish various parts of the data segment ({\tt
       read\_string & 8 & {\tt \$a0} = buffer, {\tt \$a1} = length & \\
       sbrk & 9 & {\tt \$a0} = amount & address (in {\tt \$v0}) \\
       exit & 10 & & \\
+      print\_character & 11 & {\tt \$a0} = integer & \\
+      read\_character & 12 & char (in {\tt \$v0}) \\
      \hline
   \end{tabular}
   \end{center}
