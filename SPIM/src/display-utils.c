@@ -45,8 +45,8 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
 char *
 registers_as_string (buf, max_buf_len, string_len, print_gpr_hex, print_fpr_hex)
 char *buf;
-int max_buf_len;
-int string_len;
+int *max_buf_len;
+int *string_len;
 #endif
 {
   int i;

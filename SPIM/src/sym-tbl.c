@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Code to maintain symbol table to resolve symbolic labels.
 
-   Copyright (C) 1990-1995 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-1998 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -78,20 +78,21 @@ void
 initialize_symbol_table ()
 #endif
 {
-  register int i = LABEL_HASH_TABLE_SIZE;
-  register label **l = label_hash_table;
-
-  for ( ; i > 0; i--, l ++)
+  int i;
+  label *l;
+  
+  for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
+    for (l = label_hash_table [i]; l != NULL; l = l->next)
     {
-      register label *x, *n;
+      label *x, *n;
 
-      for (x = *l; x != NULL; x = n)
+      for (x = label_hash_table [i]; x != NULL; x = n)
 	{
 	  free (x->name);
 	  n = x->next;
 	  free (x);
 	}
-      *l = NULL;
+      label_hash_table [i] = NULL;
     }
   local_labels = NULL;
 }
@@ -114,10 +115,10 @@ get_hash (name, slot_no, entry)
      label **entry;
 #endif
 {
-  register int hi;
-  register int i;
-  register label *lab;
-  register int len;
+  int hi;
+  int i;
+  label *lab;
+  int len;
 
   /* Compute length of name in len.  */
   for (len = 0; name[len]; len++);
@@ -147,11 +148,11 @@ get_hash (name, slot_no, entry)
 
 #ifdef __STDC__
 label *
-label_is_defined (register char *name)
+label_is_defined (char *name)
 #else
 label *
 label_is_defined (name)
-     register char *name;
+     char *name;
 #endif
 {
   int hi;
@@ -168,11 +169,11 @@ label_is_defined (name)
 
 #ifdef __STDC__
 label *
-lookup_label (register char *name)
+lookup_label (char *name)
 #else
 label *
 lookup_label (name)
-     register char *name;
+     char *name;
 #endif
 {
   int hi;
@@ -320,8 +321,8 @@ resolve_label_uses (sym)
      label *sym;
 #endif
 {
-  register label_use *use;
-  register label_use *next_use;
+  label_use *use;
+  label_use *next_use;
 
   for (use = sym->uses; use != NULL; use = next_use)
     {
@@ -447,7 +448,7 @@ void
 flush_local_labels ()
 #endif
 {
-  register label *l;
+  label *l;
 
   for (l = local_labels; l != NULL; l = l->next_local)
     {
@@ -506,11 +507,78 @@ void
 print_symbols ()
 #endif
 {
-  register int i;
-  register label *l;
+  int i;
+  label *l;
 
   for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
     for (l = label_hash_table [i]; l != NULL; l = l->next)
       write_output (message_out, "%s%s at 0x%08x\n",
 		    l->global_flag ? "g\t" : "\t", l->name, l->addr);
+}
+
+
+/* Print all undefined symbols in the table. */
+
+#ifdef __STDC__
+void
+print_undefined_symbols (void)
+#else
+void
+print_undefined_symbols ()
+#endif
+{
+  int i;
+  label *l;
+
+  for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
+    for (l = label_hash_table [i]; l != NULL; l = l->next)
+      if (l->addr == 0)
+	write_output (message_out, "%s\n", l->name);
+}
+
+
+/* Return a string containing the names of all undefined symbols in the
+   table, seperated by a newline character.  Return NULL if no symbols
+   are undefined. */
+
+#ifdef __STDC__
+char *
+undefined_symbol_string (void)
+#else
+char *
+undefined_symbol_string ()
+#endif
+{
+  int buffer_length = 128;
+  int string_length = 0;
+  char *buffer = malloc(buffer_length);
+
+  int i;
+  label *l;
+  
+  for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
+    for (l = label_hash_table[i]; l != NULL; l = l->next)
+      if (l->addr == 0)
+      {
+	int name_length = strlen(l->name);
+	int after_length = string_length + name_length + 2;
+	if (buffer_length < after_length)
+	{
+	  buffer_length = MAX (2 * buffer_length, 2 * after_length);
+	  buffer = realloc (buffer, buffer_length);
+	}
+	memcpy (buffer + string_length, l->name, name_length);
+	string_length += name_length;
+	buffer[string_length] = '\n';
+	string_length += 1;
+	buffer[string_length + 1] = '\0'; /* After end of string */
+      }
+
+  if (string_length != 0)
+    return (buffer);
+  else
+  {
+    free (buffer);
+    return (NULL);
+  };
 }

@@ -61,9 +61,11 @@ label *label_is_defined (char *name);
 label *lookup_label (char *name);
 label *make_label_global (char *name);
 void print_symbols (void);
+void print_undefined_symbols (void);
 label *record_label (char *name, mem_addr address, int resolve_uses);
 void record_data_uses_symbol (mem_addr location, label *sym);
 void record_inst_uses_symbol (instruction *inst, label *sym);
+char *undefined_symbol_string (void);
 void resolve_a_label (label *sym, instruction *inst);
 void resolve_label_uses (label *sym);
 #else
@@ -73,10 +75,12 @@ void initialize_symbol_table ();
 label *label_is_defined ();
 label *lookup_label ();
 label *make_label_global ();
+void print_undefined_symbols ();
 void print_symbols ();
 label *record_label ();
 void record_data_uses_symbol ();
 void record_inst_uses_symbol ();
+char *undefined_symbol_string (void);
 void resolve_a_label ();
 void resolve_label_uses ();
 #endif

@@ -49,6 +49,8 @@
 #define termio termios
 #endif
 
+
+#ifndef WIN32
 #include <sys/time.h>
 
 #ifdef USE_TERMIO
@@ -59,6 +61,7 @@
 #else
 #include <sys/ioctl.h>
 #include <sgtty.h>
+#endif
 #endif
 
 #ifdef __STDC__
@@ -236,8 +239,11 @@ main (argc, argv)
       console_to_program ();
       initialize_run_stack (argc - argv_ptr, &argv[argv_ptr]);
       if (!setjmp (spim_top_level_env))
+      {
+	print_undefined_symbols();
 	run_program (find_symbol_address (DEFAULT_RUN_LOCATION),
 		     DEFAULT_RUN_STEPS, 0, 0);
+      }
       console_to_spim ();
     }
 
@@ -360,9 +366,12 @@ parse_spim_command (file, redo)
 	initialize_run_stack (0, 0);
 	console_to_program ();
 	if (addr)
+	{
+	  print_undefined_symbols();
 	  if (run_program (addr, DEFAULT_RUN_STEPS, 0, 0))
 	    write_output (message_out, "Breakpoint encountered at 0x%08x\n",
 			  PC);
+	}
 	console_to_spim ();
 
 	prev_cmd = RUN_CMD;
