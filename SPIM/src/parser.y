@@ -633,11 +633,14 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  i_type_inst (Y_SB_OP, $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
 			       addr_expr_imm ((addr_expr *)$3.p));
-		  r_sh_type_inst (Y_SRL_OP, 1, $2.i, 8);
-		  i_type_inst_free (Y_SB_OP, 1,
+
+		  yywarn ("Warning: Expansion of USH modifies its first argument");
+		  r_sh_type_inst (Y_SRL_OP, $2.i, $2.i, 8);
+		  i_type_inst_free (Y_SB_OP, $2.i,
 				    addr_expr_reg ((addr_expr *)$3.p),
 				    incr_expr_offset (addr_expr_imm ((addr_expr *)$3.p),
 						      1));
+
 		  free (((addr_expr *)$3.p)->imm);
 		  free ((addr_expr *)$3.p);
 		}
