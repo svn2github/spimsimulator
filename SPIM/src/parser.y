@@ -235,6 +235,7 @@
 %token Y_MUL_D_OP
 %token Y_MUL_PS_OP
 %token Y_MUL_S_OP
+%token Y_MUL_OP
 %token Y_MULT_OP
 %token Y_MULTU_OP
 %token Y_NEG_D_OP
@@ -357,7 +358,6 @@
 %token Y_MFC1_D_POP
 %token Y_MOVE_POP
 %token Y_MTC1_D_POP
-%token Y_MUL_POP
 %token Y_MULO_POP
 %token Y_MULOU_POP
 %token Y_NEG_POP
@@ -1130,6 +1130,20 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		}
 
 
+	|	MULT_OPS3	DEST	SRC1	SRC2
+		{
+		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
+		}
+
+	|	MULT_OPS3	DEST	SRC1	IMM32
+		{
+		  /* Special case, for backward compatibility with pseudo-op
+		     MULT instruction */
+		  i_type_inst_free (Y_ORI_OP, 1, 0, (imm_expr *)$4.p); /* Use $at */
+		  r_type_inst ($1.i, $2.i, $3.i, 1);
+		}
+
+
 	|	Y_ROR_POP	DEST	SRC1	SRC2
 		{
 		  r_type_inst (Y_SUBU_OP, 1, 0, $4.i);
@@ -1754,8 +1768,7 @@ DIV_POPS:	Y_DIV_OP
 	|	Y_REMU_POP
 	;
 
-MUL_POPS:	Y_MUL_POP
-	|	Y_MULO_POP
+MUL_POPS:	Y_MULO_POP
 	|	Y_MULOU_POP
 	;
 
@@ -1781,6 +1794,9 @@ MULT_OPS:	Y_MULT_OP
 	|	Y_MADDU_OP
 	|	Y_MSUB_OP
 	|	Y_MSUBU_OP
+	;
+
+MULT_OPS3: Y_MUL_OP
 	;
 
 BF_OPS_REV2:	Y_EXT_OP

@@ -1,3 +1,8 @@
+2004-04-24    <larus@HomeMachine>
+
+	* parser.y run.c op.h:
+	Changed MUL instruction from pseduo op to actual instruction.
+
 2004-03-28    <larus@HomeMachine>
 
 	* run.c:

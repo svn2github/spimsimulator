@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 38    3/14/04 7:44p Larus $
+/* $Header: /Software/SPIM/src/op.h 39    4/24/04 9:55a Larus $
 */
 
 
@@ -159,7 +159,7 @@ OP("bltzal",	Y_BLTZAL_OP,	B1_TYPE_INST,		0x04100000)
 OP("bltzall",	Y_BLTZALL_OP,	B1_TYPE_INST,		0x04120000)	/* MIPS32 */
 OP("bltzl",	Y_BLTZL_OP,	B1_TYPE_INST,		0x04020000)	/* MIPS32 */
 OP("bne",	Y_BNE_OP,	B2_TYPE_INST,		0x14000000)
-OP("bnel",	Y_BNEL_OP,	B2_TYPE_INST,		0x44000000)	/* MIPS32 */
+OP("bnel",	Y_BNEL_OP,	B2_TYPE_INST,		0x54000000)	/* MIPS32 */
 OP("bnez",	Y_BNEZ_POP,	PSEUDO_OP,		-1)
 
 OP("break",	Y_BREAK_OP,	R1d_TYPE_INST,		0x0000000d)
@@ -227,7 +227,7 @@ OP("cfc2",	Y_CFC2_OP,	FP_R2ts_TYPE_INST,	0x48400000)
 OP("clo",	Y_CLO_OP,	R3_TYPE_INST,		0x70000021)
 OP("clz",	Y_CLZ_OP,	R3_TYPE_INST,		0x70000020)
 
-OP("cop2",	Y_COP2_OP,	J_TYPE_INST,		0x48200000)
+OP("cop2",	Y_COP2_OP,	J_TYPE_INST,		0x4a000000)
 
 OP("ctc0",	Y_CTC0_OP,	FP_R2ts_TYPE_INST,	0x40c00000)
 OP("ctc1",	Y_CTC1_OP,	FP_R2ts_TYPE_INST,	0x44c00000)
@@ -292,7 +292,7 @@ OP("li",	Y_LI_POP,	PSEUDO_OP,		-1)
 OP("li.d",	Y_LI_D_POP,	PSEUDO_OP,		-1)
 OP("li.s",	Y_LI_S_POP,	PSEUDO_OP,		-1)
 
-OP("ll",	Y_LL_OP,	I2a_TYPE_INST,		0xb0000000)	/* MIPS32 */
+OP("ll",	Y_LL_OP,	I2a_TYPE_INST,		0xc0000000)	/* MIPS32 */
 
 OP("lui",	Y_LUI_OP,	I1t_TYPE_INST,		0x3c000000)
 OP("luxc1",	Y_LUXC1_OP,	FP_R3_TYPE_INST,	0x4c000005)	/* MIPS32 Rev 2 */
@@ -360,7 +360,7 @@ OP("mthc2",	Y_MTHC2_OP,	R2td_TYPE_INST,		0x48e00000)	/* MIPS32 Rev 2 */
 OP("mthi",	Y_MTHI_OP,	R1s_TYPE_INST,		0x00000011)
 OP("mtlo",	Y_MTLO_OP,	R1s_TYPE_INST,		0x00000013)
 
-OP("mul",	Y_MUL_POP,	PSEUDO_OP,		-1)
+OP("mul",	Y_MUL_OP,	R2st_TYPE_INST,		0x70000002)	/* MIPS32 */
 OP("mul.d",	Y_MUL_D_OP,	FP_R3_TYPE_INST,	0x46200002)
 OP("mul.ps",	Y_MUL_PS_OP,	FP_R3_TYPE_INST,	0x46c00002)	/* MIPS32 Rev 2 */
 OP("mul.s",	Y_MUL_S_OP,	FP_R3_TYPE_INST,	0x46000002)
@@ -391,7 +391,7 @@ OP("ori",	Y_ORI_OP,	I2_TYPE_INST,		0x34000000)
 OP("pll.ps",	Y_PLL_PS_OP,	FP_R3_TYPE_INST,	0x46c0002c)	/* MIPS32 Rev 2 */
 OP("plu.ps",	Y_PLU_PS_OP,	FP_R3_TYPE_INST,	0x46c0002d)	/* MIPS32 Rev 2 */
 
-OP("pref",	Y_PREF_OP,	I2_TYPE_INST,		0xbb000000)	/* MIPS32 */
+OP("pref",	Y_PREF_OP,	I2_TYPE_INST,		0xcc000000)	/* MIPS32 */
 OP("prefx",	Y_PREFX_OP,	R2st_TYPE_INST,		0x4600000f)	/* MIPS32 Rev 2 */
 OP("pul.ps",	Y_PUL_PS_OP,	FP_R3_TYPE_INST,	0x46c0002e)	/* MIPS32 Rev 2 */
 OP("puu.ps",	Y_PUU_PS_OP,	FP_R3_TYPE_INST,	0x46c0002f)	/* MIPS32 Rev 2 */

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 54    3/28/04 9:04a Larus $
+/* $Header: /Software/SPIM/src/run.c 55    4/24/04 9:55a Larus $
 */
 
 
@@ -822,6 +822,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MTLO_OP:
 	      LO = R[RS (inst)];
+	      break;
+
+	    case Y_MUL_OP:
+	      signed_multiply(R[RS (inst)], R[RT (inst)]);
+	      R[RD (inst)] = LO;
 	      break;
 
 	    case Y_MULT_OP:
