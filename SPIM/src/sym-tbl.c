@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 12    12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 13    12/24/01 10:20a Larus $
 */
 
 
@@ -381,7 +381,7 @@ resolve_a_label_sub (sym, inst, pc)
 	  || SYMBOL_IS_DEFINED (EXPR (inst)->symbol))
 	{
 	  int32 value;
-	  int32 mask;
+	  int32 field_mask;
 
 	  if (opcode_is_branch (OPCODE (inst)))
 	    {
@@ -395,19 +395,25 @@ resolve_a_label_sub (sym, inst, pc)
 		val -= 1;
 
 	      value = val;
-	      mask = 0xffff;
+	      field_mask = 0xffff;
 	    }
 	  else if (opcode_is_jump (OPCODE (inst)))
 	    {
-	      /* Drop low two bits since instructions are on word boundaries. */
-	      value = eval_imm_expr (EXPR (inst)) >> 2;
-	      mask = 0x03fffffff;
+	      value = eval_imm_expr (EXPR (inst));
+		  if ((value & 0xf0000000) != (pc & 0xf0000000))
+		  {
+			  error ("Target of jump differs in high-order 4 bits from instruction pc 0x%x\n", pc);
+		  }
+		  /* Drop high four bits, since they come from the PC and the
+			 low two bits since instructions are on word boundaries. */
+	      value = (value & 0x0fffffff) >> 2;
+	      field_mask = 0xffffffff;	/* Already checked that value fits in instruction */
 	    }
 	  else if (opcode_is_load_store (OPCODE (inst)))
 	    {
 	      /* Label's location is an address */
 	      value = eval_imm_expr (EXPR (inst));
-	      mask = 0xffff;
+	      field_mask = 0xffff;
 
 	      if (value & 0x8000)
 		{
@@ -428,10 +434,10 @@ resolve_a_label_sub (sym, inst, pc)
 	    {
 	      /* Label's location is a value */
 	      value = eval_imm_expr (EXPR (inst));
-	      mask = 0xffff;
+	      field_mask = 0xffff;
 	    }
 
-	  if ((value & ~mask) != 0 && (value & ~mask) != 0xffff0000)
+	  if ((value & ~field_mask) != 0 && (value & ~field_mask) != 0xffff0000)
 	    {
 	      error ("Immediate value is too large for field: ");
 	      print_inst (pc);

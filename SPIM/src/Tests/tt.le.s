@@ -433,6 +433,17 @@ j_:	.asciiz "Testing J\n"
 
 	j l17
 	j fail
+
+	.ktext
+	nop		# These instructions aren't executed, but
+	j l17a		# cause parser errors since high 4 bits
+l17a:			# don't match
+	j l17b
+
+	.text
+l17b:	nop
+	j l17a	# Correctly flagged as error here.
+
 l17:
 
 
