@@ -1,3 +1,21 @@
+2005-02-05    <Jim@LS1>
+
+	* scanner.l [Joe Pfeiffer pfeiffer@cs.nmsu.edu]:
+	Added work-around for bug in 2.5.31 that left yytext_ptr undefined.
+
+	* exceptions.s [Herman Harrison herman.harrison@utdallas.edu]:
+	Restore epilogue code restored $at then used pseduo instructions
+	that smashed it.
+
+	* PCSpimView.{cpp,h} 
+	Cleared filename when reinitializing simulator, which broke next
+	reload command.
+
+2005-01-10    <Jim@LS1>
+
+	* Repackage and rerelease PCSpim_7.1.zip to include mfc71.dll and
+	msvc71.dll, which weren't originally included.
+
 2005-01-02    <Jim@LS1>
 
 	* Version 7.1 released.

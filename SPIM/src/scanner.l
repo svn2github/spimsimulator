@@ -327,6 +327,14 @@ scanner_start_line ()
 }
 
 
+/* This is a work-around for a bug in flex v 2.5.31 (but not earlier or
+   later versions such as 2.5.4) that left this symbol undefined. */
+
+#ifndef yytext_ptr
+#define yytext_ptr yytext
+#endif
+
+
 /* Use yywrap to insert a marker character, which causes the
    scanner to return Y_EOF, before return a hard EOF.  This
    wouldn't be necessary, except that bison does not allow
