@@ -2,7 +2,7 @@
    X interface to SPIM
    (Derived from an earlier work by Alan Siow.)
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 10    1/01/03 9:34p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 11    2/15/04 9:10a Larus $
  */
 
 #include <stdio.h>
@@ -109,6 +109,7 @@ port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
 int cycle_level;		/* Non-zero => cycle level mode */
+int spim_return_value;		/* Value returned when spim exits */
 
 XtAppContext app_con;
 Widget message, console = NULL;
@@ -450,6 +451,8 @@ main (argc, argv)
   AppResources app_res;
   Display *display;
 
+  spim_return_value = 0;
+
   toplevel = XtAppInitialize (&app_context, "Xspim", options,
 			      XtNumber (options), &argc, argv,
 			      fallback_resources, NULL, ZERO);
@@ -526,7 +529,7 @@ main (argc, argv)
     }
 
   XtAppMainLoop (app_context);
-  return (0);
+  return (spim_return_value);
 }
 
 

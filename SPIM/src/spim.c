@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Terminal interface for SPIM simulator.
 
-   Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
    Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 15    2/15/04 8:25a Larus $
+/* $Header: /Software/SPIM/src/spim.c 16    2/15/04 9:10a Larus $
 */
 
 
@@ -129,7 +129,7 @@ port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
 int cycle_level;		/* Non-zero => cycle level mode */
-
+int spim_return_value;		/* Value returned when spim exits */
 
 /* Local variables: */
 
@@ -168,6 +168,7 @@ main (argc, argv)
   quiet = 0;
   source_file = 0;
   cycle_level = 0;
+  spim_return_value = 0;
 
   /* Input comes directly (not through stdio): */
   console_in.i = 0;
@@ -288,7 +289,8 @@ main (argc, argv)
       console_to_spim ();
     }
 
-  return (0);
+  spim_return_value = 0;
+  return (spim_return_value);
 }
 
 

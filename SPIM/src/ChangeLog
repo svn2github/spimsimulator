@@ -1,5 +1,10 @@
 2004-02-15    <larus@C745660-A>
 
+	* mips-syscall.c spim-syscall.h spim.c xspim.c spim.h [Akim
+	Demaille (akim@epita.fr)]:
+	Added new syscall (EXIT2_SYSCALL) that takes argument that is
+	passed to spim's exit() call.
+	
 	* sym-tbl.c [Matt Harren (math@cs.berkeley.edu)]:
 	Copied garbage byte after name of undefined symbols.
 

@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Definitions for the SPIM S20.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
    Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 10    2/01/01 9:34p Larus $
+/* $Header: /Software/SPIM/src/spim.h 11    2/15/04 9:10a Larus $
 */
 
 
@@ -264,7 +264,7 @@ extern int source_file;		/* Non-zero => program is source, not binary */
 extern char *trap_file;		/* Path of file containing trap handler */
 extern int force_break;		/* Non-zero => stop interpreter loop  */
 extern int parser_error_occurred; /* Non-zero => parse resulted in error */
-
+extern int spim_return_value;	/* Value returned when spim exits */
 
 /* Actual type of structure pointed to depends on X/terminal interface */
 extern port message_out, console_out, console_in;
