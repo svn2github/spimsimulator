@@ -389,11 +389,13 @@ OPT_LBL: ID ':' {
 						       : current_data_pc (),
 						       0),
 					 this_line_labels);
+				if ($1.p) free($1.p);
 			 }
 
 	|	ID '=' Y_INT
 		{
 		  label *l = record_label ((char*)$1.p, (mem_addr)$3.i, 1);
+		  if ($1.p) free($1.p);
 
 		  l->const_flag = 1;
 		  clear_labels ();
@@ -1558,7 +1560,10 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 		{
 		  align_data (2);
 		  if (lookup_label ((char*)$2.p)->addr == 0)
+		  {
 		    record_label ((char*)$2.p, current_data_pc (), 1);
+			if ($1.p) free($1.p);
+		  }
 		  increment_data_pc ($3.i);
 		}
 
@@ -1653,6 +1658,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 	|	Y_GLOBAL_DIR	ID
 		{
 		  make_label_global ((char*)$2.p);
+		  if ($2.p) free($2.p);
 		}
 
 
@@ -1675,6 +1681,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 				? current_text_pc ()
 				: current_data_pc (),
 				1);
+		  if ($1.p) free($1.p);
 		}
 
 

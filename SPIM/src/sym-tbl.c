@@ -79,21 +79,20 @@ initialize_symbol_table ()
 #endif
 {
   int i;
-  label *l;
   
   for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
-    for (l = label_hash_table [i]; l != NULL; l = l->next)
+  {
+    label *x, *n;
+    
+    for (x = label_hash_table [i]; x != NULL; x = n)
     {
-      label *x, *n;
-
-      for (x = label_hash_table [i]; x != NULL; x = n)
-	{
-	  free (x->name);
-	  n = x->next;
-	  free (x);
-	}
-      label_hash_table [i] = NULL;
+      free (x->name);
+      n = x->next;
+      free (x);
     }
+    label_hash_table [i] = NULL;
+  }
+  
   local_labels = NULL;
 }
 
@@ -215,7 +214,6 @@ record_label (name, address, resolve_uses)
 {
   label *l = lookup_label (name);
 
-  free (name);
   if (!l->gp_flag)
     {
       if (l->addr != 0)
@@ -253,7 +251,6 @@ make_label_global (name)
 {
   label *l = lookup_label (name);
 
-  free (name);
   l->global_flag = 1;
   return (l);
 }

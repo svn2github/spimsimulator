@@ -126,6 +126,12 @@ initialize_world (trap_file)
       bare_machine = old_bare;
       accept_pseudo_insts = old_accept;
       write_output (message_out, "Loaded: %s\n", trap_file);
+
+      if (!bare_machine)
+      {
+	record_label ("main", 0, 0);
+	make_label_global ("main"); /* In case .globl main forgotten */
+      }
     }
   initialize_scanner (stdin);
   delete_all_breakpoints ();
@@ -142,7 +148,7 @@ write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out,
-		"Copyright 1990-1997 by James R. Larus (larus@cs.wisc.edu).\n");
+		"Copyright 1990-1998 by James R. Larus (larus@cs.wisc.edu).\n");
   write_output (message_out, "All Rights Reserved.\n");
 #if defined(DJGPP) || defined(WIN32)
   write_output (message_out, "DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).\n");
