@@ -586,8 +586,18 @@ execute_program (pc, steps, display, cont_bkpt)
 {
   if (!setjmp (spim_top_level_env))
     {
+      char *undefs = undefined_symbol_string ();
+      if (undefs != NULL)
+	{
+	  write_output (message_out, "The following symbols are undefined:\n");
+	  write_output (message_out, undefs);
+	  write_output (message_out, "\n");
+	  free (undefs);
+	}
+
       spim_is_running = 1;
       show_running ();
+
       if (run_program (pc, steps, display, cont_bkpt))
 	continue_prompt (0);
     }
@@ -645,7 +655,7 @@ display_registers ()
   int string_len = 0;
   Arg args [2];
 
-  buf = registers_as_string (buf, &max_buf_len, &string_len);
+  registers_as_string (buf, &max_buf_len, &string_len, print_gpr_hex, print_fpr_hex);
 
   XtSetArg (args[0], XtNstring, (String)buf);
   XtSetArg (args[1], XtNlength, string_len);

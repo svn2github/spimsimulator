@@ -240,7 +240,14 @@ main (argc, argv)
       initialize_run_stack (argc - argv_ptr, &argv[argv_ptr]);
       if (!setjmp (spim_top_level_env))
       {
-	print_undefined_symbols();
+	char *undefs = undefined_symbol_string ();
+	if (undefs != NULL)
+	  {
+	    write_output (message_out, "The following symbols are undefined:\n");
+	    write_output (message_out, undefs);
+	    write_output (message_out, "\n");
+	    free (undefs);
+	  }
 	run_program (find_symbol_address (DEFAULT_RUN_LOCATION),
 		     DEFAULT_RUN_STEPS, 0, 0);
       }
@@ -367,7 +374,15 @@ parse_spim_command (file, redo)
 	console_to_program ();
 	if (addr)
 	{
-	  print_undefined_symbols();
+	  char *undefs = undefined_symbol_string ();
+	  if (undefs != NULL)
+	    {
+	      write_output (message_out, "The following symbols are undefined:\n");
+	      write_output (message_out, undefs);
+	      write_output (message_out, "\n");
+	      free (undefs);
+	    }
+
 	  if (run_program (addr, DEFAULT_RUN_STEPS, 0, 0))
 	    write_output (message_out, "Breakpoint encountered at 0x%08x\n",
 			  PC);
