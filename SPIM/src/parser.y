@@ -27,6 +27,8 @@
 
 %start LINE
 
+%token Y_EOF 0
+
 %token Y_NL
 %token Y_INT
 %token Y_ID
@@ -374,13 +376,12 @@ static char *input_file_name;	/* Name of file being parsed */
 
 LINE:		{scanner_start_line (); } LBL_CMD ;
 
-LBL_CMD:	OPT_LBL NON_EMPTY_CMD
-        |
-                CMD
+LBL_CMD:	OPT_LBL CMD
+        |	CMD
         ;
 
 
-OPT_LBL:	ID ':' {
+OPT_LBL: ID ':' {
 			   this_line_labels =
 			     cons_label (record_label ((char*)$1.p,
 						       text_dir
@@ -397,32 +398,31 @@ OPT_LBL:	ID ':' {
 		  l->const_flag = 1;
 		  clear_labels ();
 		}
-
-	|
 	;
 
 
-NON_EMPTY_CMD:	ASM_CODE Y_NL
+CMD:	ASM_CODE
 		{
 		  clear_labels ();
-		  LINE_PARSE_DONE;
 		}
+		TERM
 
-	|	ASM_DIRECTIVE	Y_NL
+	|	ASM_DIRECTIVE
 		{
 		  clear_labels ();
-		  LINE_PARSE_DONE;
 		}
+		TERM
 
-	|	Y_NL
+	|	TERM
+    ;
+
+
+TERM:	Y_NL
 		{
-		  LINE_PARSE_DONE;
+			LINE_PARSE_DONE;
 		}
-        ;
 
-CMD:
-                NON_EMPTY_CMD
-	|
+	|	Y_EOF
 		{
 		  clear_labels ();
 		  FILE_PARSE_DONE;
