@@ -616,7 +616,7 @@ CXXPROJECT_DEFINES =
 # SPIM S20 MIPS Simulator.
 # Imakefile for SPIM.
 #
-# Copyright (C) 1992-1996 by James Larus (larus@cs.wisc.edu).
+# Copyright (C) 1992-2000 by James Larus (larus@cs.wisc.edu).
 # ALL RIGHTS RESERVED.
 #
 # SPIM is distributed under the following conditions:

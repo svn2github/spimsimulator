@@ -2,7 +2,7 @@
    X interface to SPIM
    (Derived from an earlier work by Alan Siow.)
 
-   Copyright (C) 1990-1998 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:

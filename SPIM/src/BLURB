@@ -7,6 +7,8 @@
 			  University of Wisconsin
 			     larus@cs.wisc.edu
 
+	   New Address: Microsoft Research (larus@microsoft.com)
+
 
 SPIM S20 is a software simulator that runs assembly language programs for
 the MIPS R2000/R3000 RISC computers.  SPIM can read and immediately run
@@ -33,7 +35,7 @@ It also include a large torture test to verify a port to a new machine.
 SPIM implements both a simple, terminal-style interface and a visual
 windowing interface.  On Unix, the spim program provides the terminal
 interface and the xspim program provides the X window interface.  On PCs,
-the spim program provides a DOS interface and pcspim provides a Windows 95
+the spim program provides a DOS interface and pcspim provides a Windows
 interface.
 
 SPIM is copyrighted by me and can be freely used for non-commercial
