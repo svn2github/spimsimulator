@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 14    3/14/04 8:35p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 15    3/15/04 7:32p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -46,8 +46,8 @@
 #include "spim-utils.h"
 #include "xspim.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "scanner.h"
 #include "sym-tbl.h"
 #include "buttons.h"
@@ -535,7 +535,7 @@ reload_action (Widget w, XtPointer client_data, XtPointer call_data)
     return;
 
   write_output (message_out, "Memory and registers cleared\n\n");
-  initialize_world (load_exception_handler ? exception_handler_file_name : NULL);
+  initialize_world (load_exception_handler ? exception_file_name : NULL);
   write_startup_message ();
   stack_initialized = 0;
   read_file (xspim_file_name);
@@ -593,7 +593,7 @@ clear_program_state_action (Widget w, XtPointer client_data,
 
     case CLEAR_MEM_REGS:
       write_output (message_out, "Memory and registers cleared\n\n");
-      initialize_world (load_exception_handler ? exception_handler_filename : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL);
       write_startup_message ();
       stack_initialized = 0;
       break;

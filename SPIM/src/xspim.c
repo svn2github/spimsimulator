@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 19    3/14/04 8:35p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 20    3/15/04 7:32p Larus $
  */
 
 #include <stdio.h>
@@ -42,8 +42,8 @@
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "y.tab.h"
 #include "buttons.h"
 #include "windows.h"
@@ -200,37 +200,61 @@ static XtResource resources[] =
 
 static XrmOptionDescRec options[] =
 {
-  {"-bare",   "bare", XrmoptionNoArg, "True"},
   {"-asm",    "asmm",  XrmoptionNoArg, "True"},
-  {"-pseudo",   "pseudo", XrmoptionNoArg, "True"},
+  {"-a",    "asmm",  XrmoptionNoArg, "True"},
+  {"-bare",   "bare", XrmoptionNoArg, "True"},
+  {"-b",   "bare", XrmoptionNoArg, "True"},
   {"-delayed_branches", "delayed_branches", XrmoptionNoArg, "True"},
+  {"-db", "delayed_branches", XrmoptionNoArg, "True"},
   {"-delayed_loads", "delayed_loads", XrmoptionNoArg, "True"},
-  {"-nopseudo", "pseudo", XrmoptionNoArg, "False"},
+  {"-dl", "delayed_loads", XrmoptionNoArg, "True"},
   {"-exception",   "exception", XrmoptionNoArg, "True"},
+  {"-e",   "exception", XrmoptionNoArg, "True"},
   {"-noexception", "exception", XrmoptionNoArg, "False"},
+  {"-ne", "exception", XrmoptionNoArg, "False"},
   {"-exception_file_name", "exception_file_name", XrmoptionSepArg, NULL},
-  {"-trap",   "exception", XrmoptionNoArg, "True"},
-  {"-notrap", "exception", XrmoptionNoArg, "False"},
-  {"-trap_file_name", "exception_file_name", XrmoptionSepArg, NULL},
-  {"-quiet",  "quiet", XrmoptionNoArg, "True"},
-  {"-noquiet","quiet", XrmoptionNoArg, "False"},
+  {"-ef", "exception_file_name", XrmoptionSepArg, NULL},
   {"-mapped_io",  "mapped_io", XrmoptionNoArg, "True"},
+  {"-mio",  "mapped_io", XrmoptionNoArg, "True"},
   {"-nomapped_io","mapped_io", XrmoptionNoArg, "False"},
-
+  {"-nmio","mapped_io", XrmoptionNoArg, "False"},
+  {"-pseudo",   "pseudo", XrmoptionNoArg, "True"},
+  {"-p",   "pseudo", XrmoptionNoArg, "True"},
+  {"-nopseudo", "pseudo", XrmoptionNoArg, "False"},
+  {"-np", "pseudo", XrmoptionNoArg, "False"},
+  {"-quiet",  "quiet", XrmoptionNoArg, "True"},
+  {"-q",  "quiet", XrmoptionNoArg, "True"},
+  {"-noquiet","quiet", XrmoptionNoArg, "False"},
+  {"-nq","quiet", XrmoptionNoArg, "False"},
+  {"-trap",   "exception", XrmoptionNoArg, "True"},
+  {"-t",   "exception", XrmoptionNoArg, "True"},
+  {"-notrap", "exception", XrmoptionNoArg, "False"},
+  {"-nt", "exception", XrmoptionNoArg, "False"},
+  {"-trap_file_name", "exception_file_name", XrmoptionSepArg, NULL},
+  {"-tf", "exception_file_name", XrmoptionSepArg, NULL},
+  {"-stext", "stext", XrmoptionSepArg, NULL},
+  {"-st", "stext", XrmoptionSepArg, NULL},
+  {"-sdata", "sdata", XrmoptionSepArg, NULL},
+  {"-sd", "sdata", XrmoptionSepArg, NULL},
+  {"-ldata", "ldata", XrmoptionSepArg, NULL},
+  {"-ld", "ldata", XrmoptionSepArg, NULL},
+  {"-sstack", "sstack", XrmoptionSepArg, NULL},
+  {"-ss", "sstack", XrmoptionSepArg, NULL},
+  {"-lstack", "lstack", XrmoptionSepArg, NULL},
+  {"-ls", "lstack", XrmoptionSepArg, NULL},
+  {"-sktext", "sktext", XrmoptionSepArg, NULL},
+  {"-skt", "sktext", XrmoptionSepArg, NULL},
+  {"-skdata", "skdata", XrmoptionSepArg, NULL},
+  {"-skd", "skdata", XrmoptionSepArg, NULL},
+  {"-lkdata", "lkdata", XrmoptionSepArg, NULL},
+  {"-lkd", "lkdata", XrmoptionSepArg, NULL},
   {"-file",   "filename", XrmoptionSepArg, NULL},
+  {"-f",   "filename", XrmoptionSepArg, NULL},
   {"-d2",     "display2", XrmoptionSepArg, NULL},
   {"-hexgpr", "hexGpr", XrmoptionNoArg, "True"},
   {"-nohexgpr", "hexGpr", XrmoptionNoArg, "False"},
   {"-hexfpr", "hexFpr", XrmoptionNoArg, "True"},
   {"-nohexfpr", "hexFpr", XrmoptionNoArg, "False"},
-  {"-stext", "stext", XrmoptionSepArg, NULL},
-  {"-sdata", "sdata", XrmoptionSepArg, NULL},
-  {"-ldata", "ldata", XrmoptionSepArg, NULL},
-  {"-sstack", "sstack", XrmoptionSepArg, NULL},
-  {"-lstack", "lstack", XrmoptionSepArg, NULL},
-  {"-sktext", "sktext", XrmoptionSepArg, NULL},
-  {"-skdata", "skdata", XrmoptionSepArg, NULL},
-  {"-lkdata", "lkdata", XrmoptionSepArg, NULL}
 };
 
 
@@ -489,7 +513,7 @@ syntax (char *program_name)
   fprintf (stderr, "-noquiet		Print warnings (default)\n");
   fprintf (stderr, "-mapped_io		Enable memory-mapped IO\n");
   fprintf (stderr, "-nomapped_io		Do not enable memory-mapped IO (default)\n");
-  fprintf (stderr, "-file <file> <args>	Assembly code file and arguments to program\n")");
+  fprintf (stderr, "-file <file> <args>	Assembly code file and arguments to program\n");
   exit (1);
 }
 
