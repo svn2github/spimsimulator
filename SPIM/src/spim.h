@@ -106,13 +106,13 @@ typedef uint32 mem_addr;
 /* Initial size of text segment. */
 
 #ifndef TEXT_SIZE
-#define TEXT_SIZE	256*K	/* 1/4 MB */
+#define TEXT_SIZE	(256*K)	/* 1/4 MB */
 #endif
 
 /* Initial size of k_text segment. */
 
 #ifndef K_TEXT_SIZE
-#define K_TEXT_SIZE	64*K	/* 64 KB */
+#define K_TEXT_SIZE	(64*K)	/* 64 KB */
 #endif
 
 /* The data segment must be larger than 64K since we immediate grab
@@ -122,25 +122,25 @@ typedef uint32 mem_addr;
 /* Initial size of data segment. */
 
 #ifndef DATA_SIZE
-#define DATA_SIZE	256*K	/* 1/4 MB */
+#define DATA_SIZE	(256*K)	/* 1/4 MB */
 #endif
 
 /* Maximum size of data segment. */
 
 #ifndef DATA_LIMIT
-#define DATA_LIMIT	1000*K	/* 1 MB */
+#define DATA_LIMIT	(K*K)	/* 1 MB */
 #endif
 
 /* Initial size of k_data segment. */
 
 #ifndef K_DATA_SIZE
-#define K_DATA_SIZE	64*K	/* 64 KB */
+#define K_DATA_SIZE	(64*K)	/* 64 KB */
 #endif
 
 /* Maximum size of k_data segment. */
 
 #ifndef K_DATA_LIMIT
-#define K_DATA_LIMIT	1000*K	/* 1 MB */
+#define K_DATA_LIMIT	(K*K)	/* 1 MB */
 #endif
 
 /* The stack grows down automatically. */
@@ -148,13 +148,13 @@ typedef uint32 mem_addr;
 /* Initial size of stack segment. */
 
 #ifndef STACK_SIZE
-#define STACK_SIZE	64*K	/* 64 KB */
+#define STACK_SIZE	(64*K)	/* 64 KB */
 #endif
 
 /* Maximum size of stack segment. */
 
 #ifndef STACK_LIMIT
-#define STACK_LIMIT	256*K	/* 1 MB */
+#define STACK_LIMIT	(256*K)	/* 1 MB */
 #endif
 
 
