@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 17    2/28/04 4:54p Larus $
+/* $Header: /Software/SPIM/src/op.h 18    3/01/04 9:09p Larus $
 */
 
 
@@ -274,9 +274,11 @@ OP("lwc2",	Y_LWC2_OP,	I2a_TYPE_INST,		0xc8000000)
 OP("lwl",	Y_LWL_OP,	I2a_TYPE_INST,		0x88000000)
 OP("lwr",	Y_LWR_OP,	I2a_TYPE_INST,		0x98000000)
 OP("lwxc1",	Y_LWXC1_OP,	FP_R3_TYPE_INST,	0x4c000000)	/* MIPS32 Rev 2 */
+OP("madd",	Y_MADD_OP,	R2st_TYPE_INST,		0x70000000)	/* MIPS32 */
 OP("madd.d",	Y_MADD_D_OP,	FP_R4_TYPE_INST,	0x4c000001)	/* MIPS32 Rev 2 */
 OP("madd.ps",	Y_MADD_PS_OP,	FP_R4_TYPE_INST,	0x4c000006)	/* MIPS32 Rev 2 */
 OP("madd.s",	Y_MADD_S_OP,	FP_R4_TYPE_INST,	0x4c000000)	/* MIPS32 Rev 2 */
+OP("maddu",	Y_MADDU_OP,	R2st_TYPE_INST,		0x70000001)	/* MIPS32 */
 OP("mfc0",	Y_MFC0_OP,	R2td_TYPE_INST,		0x40000000)
 OP("mfc1",	Y_MFC1_OP,	R2ts_TYPE_INST,		0x44000000)
 OP("mfc1.d",	Y_MFC1_D_POP,	PSEUDO_OP,		-1)

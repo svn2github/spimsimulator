@@ -191,9 +191,11 @@
 %token Y_LWL_OP
 %token Y_LWR_OP
 %token Y_LWXC1_OP
+%token Y_MADD_OP
 %token Y_MADD_D_OP
 %token Y_MADD_PS_OP
 %token Y_MADD_S_OP
+%token Y_MADDU_OP
 %token Y_MFC0_OP
 %token Y_MFC1_OP
 %token Y_MFC2_OP
@@ -1690,6 +1692,8 @@ SET_EQ_POP:	Y_SEQ_POP
 
 MULT_OP:	Y_MULT_OP
 	|	Y_MULTU_OP
+	|	Y_MADD_OP
+	|	Y_MADDU_OP
 	;
 
 BF_OP_REV2:	Y_EXT_OP

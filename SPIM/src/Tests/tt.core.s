@@ -809,6 +809,80 @@ lwd_:	.word 1, -1, 0, 0x8000000
 
 
 	.data
+madd_:	.asciiz "Testing MADD\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 madd_
+	syscall
+
+	mthi $0
+	mtlo $0
+	
+	madd $0 $0
+	mfhi $3
+	bnez $3 fail
+	mflo $3
+	bnez $3 fail
+
+	li $4, 1
+	madd $4 $4
+	mfhi $3
+	bnez $3 fail
+	mflo $3
+	bne $3 1 fail
+
+	li $4, -1
+	madd $3 $4
+	mfhi $3
+	bnez $3 fail
+	mflo $3
+	bnez $3 fail
+
+	li $4, 0x10000
+	madd $4 $4
+	mfhi $3
+	bne $3 1 fail
+	mflo $3
+	bne $3 0 fail
+
+	li $4, 0x10000
+	madd $4 $4
+	mfhi $3
+	bne $3 2 fail
+	mflo $3
+	bne $3 0 fail
+
+	.data
+maddu_:	.asciiz "Testing MADDU\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 maddu_
+	syscall
+
+	mthi $0
+	mtlo $0
+	
+	maddu $0 $0
+	mfhi $3
+	bnez $3 fail
+	mflo $3
+	bnez $3 fail
+
+	li $4, 1
+	maddu $4 $4
+	mfhi $3
+	bnez $3 fail
+	mflo $3
+	bne $3 1 fail
+
+	li $4, -1
+	maddu $4 $4
+	mfhi $3
+	bne $3 0xfffffffe fail
+	mflo $3
+	bne $3 2 fail
+	
+	.data
 mcp_:	.asciiz "Testing move to/from coprocessor z\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)

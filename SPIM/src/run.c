@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 23    2/28/04 4:54p Larus $
+/* $Header: /Software/SPIM/src/run.c 24    3/01/04 9:09p Larus $
 */
 
 
@@ -56,7 +56,8 @@ long atol (const char *);
 
 /* Local functions: */
 
-static void long_multiply (reg_word v1, reg_word v2);
+static void signed_multiply (reg_word v1, reg_word v2);
+static void unsigned_multiply (reg_word v1, reg_word v2);
 static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
 
 
@@ -640,6 +641,34 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		break;
 	      }
 
+	    case Y_MADD_OP:
+	      {
+		reg_word lo = LO, hi = HI;
+		reg_word tmp;
+		signed_multiply(R[RS (inst)], R[RT (inst)]);
+		tmp = LO + lo;
+		if (tmp < LO || tmp < lo)
+		  /* Overflow */
+		  hi += 1;
+		LO = tmp;
+		HI += hi;
+		break;
+	      }
+
+	    case Y_MADDU_OP:
+	      {
+		reg_word lo = LO, hi = HI;
+		reg_word tmp;
+		unsigned_multiply(R[RS (inst)], R[RT (inst)]);
+		tmp = LO + lo;
+		if (tmp < LO || tmp < lo)
+		  /* Overflow */
+		  hi += 1;
+		LO = tmp;
+		HI += hi;
+		break;
+	      }
+
 	    case Y_MFC0_OP:
 	    case Y_MFC2_OP:
 	      R[RT (inst)] = CPR[OPCODE (inst) - Y_MFC0_OP][RD (inst)];
@@ -667,29 +696,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_MULT_OP:
-	      {
-		reg_word v1 = R[RS (inst)], v2 = R[RT (inst)];
-		int neg_sign = 0;
-
-		if (v1 < 0)
-		  v1 = - v1, neg_sign = 1;
-		if (v2 < 0)
-		  v2 = - v2, neg_sign = ! neg_sign;
-
-		long_multiply (v1, v2);
-		if (neg_sign)
-		  {
-		    LO = ~ LO;
-		    HI = ~ HI;
-		    LO += 1;
-		    if (LO == 0)
-		      HI += 1;
-		  }
-	      }
+	      signed_multiply(R[RS (inst)], R[RT (inst)]);
 	      break;
 
 	    case Y_MULTU_OP:
-	      long_multiply (R[RS (inst)], R[RT (inst)]);
+	      unsigned_multiply (R[RS (inst)], R[RT (inst)]);
 	      break;
 
 	    case Y_NOR_OP:
@@ -1303,7 +1314,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
  overflow. */
 
 static void
-long_multiply (reg_word v1, reg_word v2)
+unsigned_multiply (reg_word v1, reg_word v2)
 {
   register u_reg_word a, b, c, d;
   register u_reg_word bd, ad, cb, ac;
@@ -1333,6 +1344,27 @@ long_multiply (reg_word v1, reg_word v2)
   HI = ac + (carry_mid << 16) + ((mid2 >> 16) & 0xffff);
 }
 
+
+static void
+signed_multiply (reg_word v1, reg_word v2)
+{
+  int neg_sign = 0;
+
+  if (v1 < 0)
+    v1 = - v1, neg_sign = 1;
+  if (v2 < 0)
+    v2 = - v2, neg_sign = ! neg_sign;
+
+  unsigned_multiply (v1, v2);
+  if (neg_sign)
+    {
+      LO = ~ LO;
+      HI = ~ HI;
+      LO += 1;
+      if (LO == 0)
+	HI += 1;
+    }
+}
 
 static void
 set_fpu_cc (int cond, int cc, int less, int equal, int unordered)
