@@ -158,11 +158,11 @@ BEGIN
     END
     POPUP "&Window"
     BEGIN
-        MENUITEM "&Next\tCtrl+F6",              ID_WINDOW_NEXT
-        MENUITEM "&Previous\tShift+Ctrl+F6",    ID_WINDOW_PREVIOUS
-        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+//        MENUITEM "&Next\tCtrl+F6",              ID_WINDOW_NEXT
+//        MENUITEM "&Previous\tShift+Ctrl+F6",    ID_WINDOW_PREVIOUS
+//        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
         MENUITEM "&Tile",                       ID_WINDOW_TILE
-        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGEICONS
+//        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGEICONS
         MENUITEM SEPARATOR
         MENUITEM "&1 Messages",                 ID_WINDOW_MESSAGES
         MENUITEM "&2 Text Segment",             ID_WINDOW_TEXTSEG

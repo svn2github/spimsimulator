@@ -933,8 +933,6 @@ void CPCSpimView::OnWindowPrevious()
 
 void CPCSpimView::OnWindowCascade()
 {
-// Make a nop since windows are tiled.
-#if 0
   CWnd *pWnd;
   long x, y, cx, cy;
   long cpixTitlebar = GetSystemMetrics(SM_CYCAPTION) +
@@ -969,7 +967,6 @@ void CPCSpimView::OnWindowCascade()
       pWnd = pWnd->GetNextWindow(GW_HWNDPREV);
     }
   EndDeferWindowPos(hdwp);
-#endif
 }
 
 
