@@ -433,6 +433,7 @@
 #include <stdio.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "reg.h"

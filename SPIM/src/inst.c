@@ -20,13 +20,14 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 24    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/inst.c 25    3/21/04 2:05p Larus $
 */
 
 #include <stdio.h>
 #include <string.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "reg.h"
@@ -41,6 +42,7 @@
 /* Local functions: */
 
 static int compare_pair_value (name_val_val *p1, name_val_val *p2);
+static void format_imm_expr (str_stream *ss, imm_expr *expr, int base_reg);
 static void i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 				   int value_known, int32 value);
 static void inst_cmp (instruction *inst1, instruction *inst2);
@@ -48,7 +50,6 @@ static instruction *make_r_type_inst (int opcode, int rd, int rs, int rt);
 static instruction *mk_i_inst (int32 value, int opcode, int rs, int rt, int offset);
 static instruction *mk_j_inst (int32, int opcode, int target);
 static instruction *mk_r_inst (int32, int opcode, int rs, int rt, int rd, int shamt);
-static char* print_imm_expr (char *buf, int length, imm_expr *expr, int base_reg);
 static void produce_immediate (imm_expr *expr, int rt, int value_known, int32 value);
 static void sort_a_opcode_table ();
 static void sort_i_opcode_table ();
@@ -633,7 +634,7 @@ void
 print_inst (mem_addr addr)
 {
   instruction *inst;
-  char buf [1024];
+  static str_stream ss;
 
   exception_occurred = 0;
   inst = read_mem_inst (addr);
@@ -643,155 +644,133 @@ print_inst (mem_addr addr)
       error ("Can't print instruction not in text segment (0x%08x)\n", addr);
       return;
     }
-  print_inst_internal (buf, sizeof(buf), inst, addr);
-  write_output (message_out, buf);
+
+  ss_clear (&ss);
+  format_an_inst (&ss, inst, addr);
+  write_output (message_out, ss_to_string (&ss));
 }
 
 
-int
-print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
+void
+format_an_inst (str_stream *ss, instruction *inst, mem_addr addr)
 {
-  char *bp = buf;
   name_val_val *entry;
+  int line_start = ss_length (ss);
 
-  sprintf (buf, "[0x%08x]\t", addr);
-  buf += strlen (buf);
+  ss_printf (ss, "[0x%08x]\t", addr);
   if (inst == NULL)
     {
-      sprintf (buf, "<none>\n");
-      buf += strlen (buf);
-      return (buf - bp);
+      ss_printf (ss, "<none>\n");
+      return;
     }
+
   entry = map_int_to_name_val_val (name_tbl,
-				sizeof (name_tbl) / sizeof (name_val_val),
-				OPCODE (inst));
+				   sizeof (name_tbl) / sizeof (name_val_val),
+				   OPCODE (inst));
   if (entry == NULL)
     {
-      sprintf (buf, "<unknown instruction %d>\n", OPCODE (inst));
-      buf += strlen (buf);
-      return (buf - bp);
+      ss_printf (ss, "<unknown instruction %d>\n", OPCODE (inst));
+      return;
     }
-  sprintf (buf, "0x%08x  %s", (uint32)ENCODING (inst), entry->name);
-  buf += strlen (buf);
+
+  ss_printf (ss, "0x%08x  %s", (uint32)ENCODING (inst), entry->name);
   switch (entry->value2)
     {
     case BC_TYPE_INST:
-      sprintf (buf, "%d %d", CC (inst), IDISP (inst));
-      buf += strlen (buf);
+      ss_printf (ss, "%d %d", CC (inst), IDISP (inst));
       break;
 
     case B1_TYPE_INST:
-      sprintf (buf, " $%d %d", RS (inst), IDISP (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d %d", RS (inst), IDISP (inst));
       break;
 
     case I1s_TYPE_INST:
-      sprintf (buf, " $%d, %d", RS (inst), IMM (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, %d", RS (inst), IMM (inst));
       break;
 
     case I1t_TYPE_INST:
-      sprintf (buf, " $%d, %d", RT (inst), IMM (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, %d", RT (inst), IMM (inst));
       break;
 
     case I2_TYPE_INST:
-      sprintf (buf, " $%d, $%d, %d", RT (inst), RS (inst), IMM (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d, %d", RT (inst), RS (inst), IMM (inst));
       break;
 
     case B2_TYPE_INST:
-      sprintf (buf, " $%d, $%d, %d", RS (inst), RT (inst), IDISP (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d, %d", RS (inst), RT (inst), IDISP (inst));
       break;
 
     case I2a_TYPE_INST:
-      sprintf (buf, " $%d, %d($%d)", RT (inst), IMM (inst), BASE (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, %d($%d)", RT (inst), IMM (inst), BASE (inst));
       break;
 
     case R1s_TYPE_INST:
-      sprintf (buf, " $%d", RS (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d", RS (inst));
       break;
 
     case R1d_TYPE_INST:
-      sprintf (buf, " $%d", RD (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d", RD (inst));
       break;
 
     case R2td_TYPE_INST:
-      sprintf (buf, " $%d, $%d", RT (inst), RD (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d", RT (inst), RD (inst));
       break;
 
     case R2st_TYPE_INST:
-      sprintf (buf, " $%d, $%d", RS (inst), RT (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d", RS (inst), RT (inst));
       break;
 
     case R2ds_TYPE_INST:
-      sprintf (buf, " $%d, $%d", RD (inst), RS (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d", RD (inst), RS (inst));
       break;
 
     case R2sh_TYPE_INST:
       if (ENCODING (inst) == 0)
 	{
-	  buf -= 3;		/* zap sll */
-	  sprintf (buf, "nop");
+	  ss_erase (ss, 3);	/* zap sll */
+	  ss_printf (ss, "nop");
 	}
       else
-	sprintf (buf, " $%d, $%d, %d", RD (inst), RT (inst), SHAMT (inst));
-      buf += strlen (buf);
+	ss_printf (ss, " $%d, $%d, %d", RD (inst), RT (inst), SHAMT (inst));
       break;
 
     case R3_TYPE_INST:
-      sprintf (buf, " $%d, $%d, $%d", RD (inst), RS (inst), RT (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d, $%d", RD (inst), RS (inst), RT (inst));
       break;
 
     case R3sh_TYPE_INST:
-      sprintf (buf, " $%d, $%d, $%d", RD (inst), RT (inst), RS (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $%d, $%d", RD (inst), RT (inst), RS (inst));
       break;
 
     case FP_I2a_TYPE_INST:
-      sprintf (buf, " $f%d, %d($%d)", FT (inst), IMM (inst), BASE (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $f%d, %d($%d)", FT (inst), IMM (inst), BASE (inst));
       break;
 
     case FP_R2ds_TYPE_INST:
-      sprintf (buf, " $f%d, $f%d", FD (inst), FS (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $f%d, $f%d", FD (inst), FS (inst));
       break;
 
     case FP_R2ts_TYPE_INST:
-      sprintf (buf, " $%d, $f%d", RT (inst), FS (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $%d, $f%d", RT (inst), FS (inst));
       break;
 
     case FP_CMP_TYPE_INST:
-      sprintf (buf, " $f%d, $f%d", FS (inst), FT (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $f%d, $f%d", FS (inst), FT (inst));
       break;
 
     case FP_R3_TYPE_INST:
-      sprintf (buf, " $f%d, $f%d, $f%d", FD (inst), FS (inst), FT (inst));
-      buf += strlen (buf);
+      ss_printf (ss, " $f%d, $f%d, $f%d", FD (inst), FS (inst), FT (inst));
       break;
 
     case FP_MOVC_TYPE_INST:
       if (OPCODE (inst) == Y_MOVF_OP)
-	sprintf (buf, " $%d, $%d, %d", FD (inst), FS (inst), CC (inst));
+	ss_printf (ss, " $%d, $%d, %d", FD (inst), FS (inst), CC (inst));
       else
-	sprintf (buf, " $f%d, $f%d, %d", FD (inst), FS (inst), CC (inst));
-      buf += strlen (buf);
+	ss_printf (ss, " $f%d, $f%d, %d", FD (inst), FS (inst), CC (inst));
       break;
 
     case J_TYPE_INST:
-      sprintf (buf, " 0x%08x", TARGET (inst) << 2);
-      buf += strlen (buf);
+      ss_printf (ss, " 0x%08x", TARGET (inst) << 2);
       break;
 
     case NOARG_TYPE_INST:
@@ -803,49 +782,28 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
 
   if (EXPR (inst) != NULL && EXPR (inst)->symbol != NULL)
     {
-      sprintf (buf, " [");
-      buf += strlen (buf);
+      ss_printf (ss, " [");
       if (opcode_is_load_store (OPCODE (inst)))
-	buf = print_imm_expr (buf, length - (buf - bp) - 2, EXPR (inst), BASE (inst));
+	format_imm_expr (ss, EXPR (inst), BASE (inst));
       else
-	buf = print_imm_expr (buf, length - (buf - bp) - 2, EXPR (inst), -1);
-      sprintf (buf, "]");
-      buf += strlen (buf);
+	format_imm_expr (ss, EXPR (inst), -1);
+      ss_printf (ss, "]");
     }
 
-  if (SOURCE (inst) != NULL && 10 < length - (buf - bp))
+  if (SOURCE (inst) != NULL)
     {
       /* Comment is source line text of current line. */
-      int gap_length = 57 - (buf - bp);
-      int n = strlen (SOURCE (inst));
-      int remaining;
-
+      int gap_length = 57 - (ss_length (ss) - line_start);
       for ( ; 0 < gap_length; gap_length -= 1)
 	{
-	  sprintf (buf, " ");
-	  buf += 1;
+	  ss_printf (ss, " ");
 	}
 
-      strcpy (buf, "; ");
-      buf += strlen (buf);
-
-      remaining = length - (buf - bp);
-      if (n < remaining - 2)
-	{
-	  strncpy (buf, SOURCE (inst), n + 1);
-	  buf += n;
-	}
-      else
-	{
-	  strncpy (buf, SOURCE (inst), remaining - 3);
-	  strncpy (buf + remaining - 3, "...", 3);
-	  buf += remaining;
-	}
+      ss_printf (ss, "; ");
+      ss_printf (ss, SOURCE (inst));
     }
 
-  sprintf (buf, "\n");
-  buf += strlen (buf);
-  return (buf - bp);
+  ss_printf (ss, "\n");
 }
 
 
@@ -1152,64 +1110,30 @@ eval_imm_expr (imm_expr *expr)
 
 /* Print the EXPRESSION. */
 
-static char*
-print_imm_expr (char *buf, int length, imm_expr *expr, int base_reg)
+static void
+format_imm_expr (str_stream *ss, imm_expr *expr, int base_reg)
 {
-  char lbuf[100];
-  char* lbp = lbuf;
-
   if (expr->symbol != NULL)
     {
-      int n = strlen (expr->symbol->name);
-      if (n < length)
-	{
-	  strncpy (buf, expr->symbol->name, length);
-	  buf += n;
-	  length -= n;
-	}
-      else
-	{
-	  strncpy (buf, expr->symbol->name, length - 3);
-	  strncpy (buf + length - 3, "...", 3);
-	  buf += length;
-	  length = 0;
-	}
+      ss_printf (ss, expr->symbol->name);
     }
 
-  *lbp = '\0';
   if (expr->pc_relative)
-    sprintf (lbp, "-0x%08x", (unsigned int)-expr->offset);
+    ss_printf (ss, "-0x%08x", (unsigned int)-expr->offset);
   else if (expr->offset < -10)
-    sprintf (lbp, "-%d (-0x%08x)", -expr->offset, (unsigned int)-expr->offset);
+    ss_printf (ss, "-%d (-0x%08x)", -expr->offset, (unsigned int)-expr->offset);
   else if (expr->offset > 10)
-    sprintf (lbp, "+%d (0x%08x)", expr->offset, (unsigned int)expr->offset);
-  lbp += strlen(lbp);
+    ss_printf (ss, "+%d (0x%08x)", expr->offset, (unsigned int)expr->offset);
 
   if (base_reg != -1 && expr->symbol != NULL &&
       (expr->offset > 10 || expr->offset < -10))
     {
       if (expr->offset == 0 && base_reg != 0)
-	sprintf (lbp, "+0");
+	ss_printf (ss, "+0");
+
       if (expr->offset != 0 || base_reg != 0)
-	sprintf (lbp, "($%d)", base_reg);
+	ss_printf (ss, "($%d)", base_reg);
     }
-  lbp += strlen (lbp);
-
-  if (length <= 0)
-    { }
-  else if (strlen (lbuf) < length)
-    {
-      strncpy (buf, lbuf, length);
-      buf += strlen (buf);
-    }
-  else
-    {
-      strncpy (buf, lbuf, length - 3);
-      strncpy (buf + length - 3, "...", 3);
-      buf += length;
-    }
-
-  return (buf);
 }
 
 
@@ -1645,15 +1569,14 @@ test_assembly (instruction *inst)
 static void
 inst_cmp (instruction *inst1, instruction *inst2)
 {
-  char buf[1024];
+  static str_stream ss;
 
+  ss_clear (&ss);
   if (memcmp (inst1, inst2, sizeof (instruction) - 4) != 0)
     {
-      printf ("=================== Not Equal ===================\n");
-      print_inst_internal (buf, sizeof(buf), inst1, 0);
-      printf ("%s\n", buf);
-      print_inst_internal (buf, sizeof(buf), inst2, 0);
-      printf ("%s\n", buf);
-      printf ("=================== Not Equal ===================\n");
+      ss_printf (&ss, "=================== Not Equal ===================\n");
+      format_an_inst (&ss, inst1, 0);
+      format_an_inst (&ss, inst2, 0);
+      ss_printf (&ss, "=================== Not Equal ===================\n");
     }
 }

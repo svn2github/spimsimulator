@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 15    3/15/04 7:32p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 16    3/21/04 2:05p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -43,6 +43,7 @@
 #include <ctype.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "xspim.h"
 #include "inst.h"

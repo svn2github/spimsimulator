@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 51    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/run.c 52    3/21/04 2:05p Larus $
 */
 
 
@@ -46,6 +46,7 @@
 #endif
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "reg.h"

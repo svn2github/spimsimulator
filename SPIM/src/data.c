@@ -20,11 +20,12 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 9     3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/data.c 10    3/21/04 2:05p Larus $
 */
 
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "reg.h"

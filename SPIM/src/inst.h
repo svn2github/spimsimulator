@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 20    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/inst.h 21    3/21/04 2:05p Larus $
 */
 
 
@@ -225,6 +225,7 @@ imm_expr *copy_imm_expr (imm_expr *old_expr);
 instruction *copy_inst (instruction *inst);
 mem_addr current_text_pc ();
 int32 eval_imm_expr (imm_expr *expr);
+void format_an_inst (str_stream *ss, instruction *inst, mem_addr addr);
 void free_inst (instruction *inst);
 void i_type_inst (int opcode, int rt, int rs, imm_expr *expr);
 void i_type_inst_free (int opcode, int rt, int rs, imm_expr *expr);
@@ -245,7 +246,6 @@ int opcode_is_true_branch (int opcode);
 int opcode_is_jump (int opcode);
 int opcode_is_load_store (int opcode);
 void print_inst (mem_addr addr);
-int print_inst_internal (char *buf, int len, instruction *inst, mem_addr addr);
 void r_co_type_inst (int opcode, int fd, int fs, int ft);
 void r_cond_type_inst (int opcode, int fs, int ft, int cc);
 void r_sh_type_inst (int opcode, int rd, int rt, int shamt);

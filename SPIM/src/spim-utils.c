@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 23    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 24    3/21/04 2:05p Larus $
 */
 
 
@@ -31,6 +31,7 @@
 #include <stdarg.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "data.h"
@@ -409,27 +410,6 @@ list_breakpoints ()
 
 
 /* Utility routines */
-
-/* Print the error message then exit. */
-
-#ifndef WIN32
-/*VARARGS0*/
-void
-fatal_error (char *fmt, ...)
-{
-  va_list args;
-  va_start (args, fmt);
-  fmt = va_arg (args, char *);
-
-#ifdef NO_VFPRINTF
-  _doprnt (fmt, args, stderr);
-#else
-  vfprintf (stderr, fmt, args);
-#endif
-  exit (-1);
-  /*NOTREACHED*/
-}
-#endif
 
 
 /* Return the entry in the linear TABLE of length LENGTH with key STRING.

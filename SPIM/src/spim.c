@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 32    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/spim.c 33    3/21/04 2:05p Larus $
 */
 
 
@@ -65,6 +65,7 @@
 #include <stdarg.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "reg.h"
@@ -858,16 +859,14 @@ print_reg_from_string (char* reg_num)
 }
 
 
-#define MAX_BUF_LEN 32000
-
 static void
 print_all_regs (int hex_flag)
 {
-  int max_buf_len = MAX_BUF_LEN;
-  char buf[MAX_BUF_LEN];
-  int count;
-  (void)registers_as_string (buf, &max_buf_len, &count, hex_flag, hex_flag);
-  write_output (message_out, "%s\n", buf);
+  static str_stream ss;
+
+  ss_clear (&ss);
+  format_registers (&ss, hex_flag, hex_flag);
+  write_output (message_out, "%s\n", ss_to_string (&ss));
 }
 
 
@@ -887,6 +886,24 @@ error (char *fmt, ...)
   vfprintf (stderr, fmt, args);
 #endif
   va_end (args);
+}
+
+
+/* Print the error message then exit. */
+
+void
+fatal_error (char *fmt, ...)
+{
+  va_list args;
+  va_start (args, fmt);
+  fmt = va_arg (args, char *);
+
+#ifdef NO_VFPRINTF
+  _doprnt (fmt, args, stderr);
+#else
+  vfprintf (stderr, fmt, args);
+#endif
+  exit (-1);
 }
 
 

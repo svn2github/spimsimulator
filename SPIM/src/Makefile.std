@@ -109,7 +109,7 @@ LEXCFLAGS = -O
 
 
 OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
-       syscall.o display-utils.o
+       syscall.o display-utils.o string-stream.o
 
 
 XOBJS = windows.o buttons.o

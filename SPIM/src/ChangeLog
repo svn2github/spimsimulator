@@ -1,3 +1,9 @@
+2004-03-21    <larus@LARUS1>
+
+	* pervasive:
+	Cleaned up splint warnings.
+	Replaced sprintf calls with str-stream abstraction.
+
 2004-03-12    <larus@LARUS1>
 
 	* pervasive:
