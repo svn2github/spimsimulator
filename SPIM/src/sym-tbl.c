@@ -387,10 +387,9 @@ resolve_a_label_sub (sym, inst, pc)
 	    {
 	      int val;
 
-	      /* Drop low two bits since instructions are on word
-		 boundaries. */
-	      val = eval_imm_expr (EXPR (inst));
-	      val >>= 2;	/* Seperate to force sign-extension */
+	      /* Drop low two bits since instructions are on word boundaries. */
+	      val = SIGN_EX (eval_imm_expr (EXPR (inst)));   /* 16->32 bits */
+	      val = (val >> 2) & 0xffff;	    /* right shift, 32->16 bits */
 
 	      if (bare_machine)	/* Delayed branch */
 		val -= 1;
@@ -400,8 +399,7 @@ resolve_a_label_sub (sym, inst, pc)
 	    }
 	  else if (opcode_is_jump (OPCODE (inst)))
 	    {
-	      /* Drop low two bits since instructions are on word
-		 boundaries. */
+	      /* Drop low two bits since instructions are on word boundaries. */
 	      value = eval_imm_expr (EXPR (inst)) >> 2;
 	      mask = 0x03fffffff;
 	    }
