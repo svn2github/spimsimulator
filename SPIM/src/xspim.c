@@ -640,144 +640,20 @@ static void
 display_registers ()
 #endif
 {
-  int i;
-  static String buf;
-  String bufp;
-  char *grstr, *fpstr;
-  char *grfill, *fpfill;
+  static char buf[8 * K];
+  int max_buf_len = 8 * K;
+  int string_len = 0;
   Arg args [2];
-  static char *reg_names[] = {"r0", "at", "v0", "v1", "a0", "a1", "a2", "a3",
-			      "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7",
-			      "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7",
-			      "t8", "t9", "k0", "k1", "gp", "sp", "s8", "ra"};
 
-  if (buf == NULL)
-    buf = (String) malloc (8 * K);
-  *buf = '\0';
-  bufp = buf;
+  buf = registers_as_string (buf, &max_buf_len, &string_len);
 
-  sprintf (bufp, " PC     = %08x    ", PC); bufp += strlen (bufp);
-  sprintf (bufp, " EPC    = %08x    ", EPC); bufp += strlen (bufp);
-  sprintf (bufp, " Cause  = %08x    ", Cause); bufp += strlen (bufp);
-  sprintf (bufp, " BadVAddr= %08x\n", BadVAddr); bufp += strlen (bufp);
-  sprintf (bufp, " Status = %08x    ", Status_Reg); bufp += strlen (bufp);
-  sprintf (bufp, " HI     = %08x    ", HI); bufp += strlen (bufp);
-  sprintf (bufp, " LO     = %08x\n", LO); bufp += strlen (bufp);
-
-  if (print_gpr_hex)
-    grstr = "R%-2d (%2s) = %08x", grfill = "  ";
-  else
-    grstr = "R%-2d (%2s) = %-10d", grfill = " ";
-  sprintf (bufp, "\t\t\t\t General Registers\n"); bufp += strlen (bufp);
-  for (i = 0; i < 8; i++)
-    {
-      sprintf (bufp, grstr, i, reg_names[i], R[i]);
-      bufp += strlen (bufp);
-      sprintf (bufp, grfill); bufp += strlen (bufp);
-      sprintf (bufp, grstr, i+8, reg_names[i+8], R[i+8]);
-      bufp += strlen (bufp);
-      sprintf (bufp, grfill); bufp += strlen (bufp);
-      sprintf (bufp, grstr, i+16, reg_names[i+16], R[i+16]);
-      bufp += strlen (bufp);
-      sprintf (bufp, grfill); bufp += strlen (bufp);
-      sprintf (bufp, grstr, i+24, reg_names[i+24], R[i+24]);
-      bufp += strlen (bufp);
-      sprintf (bufp, "\n");
-      bufp += 1;
-    }
-
-  if (print_fpr_hex)
-    fpstr = "FP%-2d=%08x,%08x", fpfill = " ";
-  else
-    fpstr = "FP%-2d = %-10.4g", fpfill = "  ";
-  sprintf (bufp, "\t\t\t      Double Floating Point Registers\n");
-  bufp += strlen (bufp);
-  if (print_fpr_hex)
-    for (i = 0; i < 4; i += 1)
-      {
-	int *r1, *r2;
-
-	/* Use pointers to cast to ints without invoking float->int conversion
-	   so we can just print the bits. */
-	r1 = (int *)&FGR[i]; r2 = (int *)&FGR[i+1];
-	sprintf (bufp, fpstr, 2*i, *r1, *r2); bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-
-	r1 = (int *)&FGR[i+4]; r2 = (int *)&FGR[i+4+1];
-	sprintf (bufp, fpstr, 2*i+8, *r1, *r2); bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-
-	r1 = (int *)&FGR[i+8]; r2 = (int *)&FGR[i+8+1];
-	sprintf (bufp, fpstr, 2*i+16, *r1, *r2); bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-
-	r1 = (int *)&FGR[i+12]; r2 = (int *)&FGR[i+12+1];
-	sprintf (bufp, fpstr, 2*i+24, *r1, *r2); bufp += strlen (bufp);
-	sprintf (bufp, "\n"); bufp += 1;
-      }
-  else for (i = 0; i < 4; i += 1)
-    {
-      sprintf (bufp, fpstr, 2*i, FPR[i]);
-      bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      sprintf (bufp, fpstr, 2*i+8, FPR[i+4]);
-      bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      sprintf (bufp, fpstr, 2*i+16, FPR[i+8]);
-      bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      sprintf (bufp, fpstr, 2*i+24, FPR[i+12]);
-      bufp += strlen (bufp);
-      sprintf (bufp, "\n");
-      bufp += 1;
-    }
-
-  if (print_fpr_hex)
-    fpstr = "FP%-2d=%08x", fpfill = " ";
-  else
-    fpstr = "FP%-2d = %-10.4g", fpfill = "  ";
-  sprintf (bufp, "\t\t\t      Single Floating Point Registers\n");
-  bufp += strlen (bufp);
-  if (print_fpr_hex)
-    for (i = 0; i < 8; i += 1)
-      {
-	/* Use pointers to cast to ints without invoking float->int conversion
-	   so we can just print the bits. */
-	sprintf (bufp, fpstr, i, *(int *)&FGR[i]); bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-
-	sprintf (bufp, fpstr, i+8, *(int *)&FGR[i+8]); bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-
-	sprintf (bufp, fpstr, i+16, *(int *)&FGR[i+16]); bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-
-	sprintf (bufp, fpstr, i+24, *(int *)&FGR[i+24]); bufp += strlen (bufp);
-	sprintf (bufp, "\n"); bufp += 1;
-      }
-  else for (i = 0; i < 8; i += 1)
-    {
-      sprintf (bufp, fpstr, i, FGR[i]);
-      bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      sprintf (bufp, fpstr, i+8, FGR[i+8]);
-      bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      sprintf (bufp, fpstr, i+16, FGR[i+16]);
-      bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      sprintf (bufp, fpstr, i+24, FGR[i+24]);
-      bufp += strlen (bufp);
-      sprintf (bufp, "\n");
-      bufp += 1;
-    }
-  XtSetArg (args[0], XtNstring, buf);
-  XtSetArg (args[1], XtNlength, bufp - buf);
+  XtSetArg (args[0], XtNstring, (String)buf);
+  XtSetArg (args[1], XtNlength, string_len);
   XtSetValues (register_window, args, TWO);
 }
 
 
-/* Redisplay the text segment and ktext segments. */
+/* Redisplay the text segment and ktext segments if they have changed. */
 
 #ifdef __STDC__
 void
@@ -787,62 +663,28 @@ void
 redisplay_text ()
 #endif
 {
-  static String buf;
-  int limit, n;
+  static String buf = NULL;
+  static int max_buf_len = 16 * K;
+  int string_len = 0;
   Arg args [2];
 
   if (!text_modified)
     return;
+
   if (buf == NULL)
-    buf = (String) malloc (16*K);
+    buf = (String) malloc (max_buf_len);
   *buf = '\0';
-  limit = 16*K;
-  n = 0;
-  buf = display_insts (TEXT_BOT, text_top, buf, &limit, &n);
-  sprintf (&buf[n], "\n\tKERNEL\n");
-  n += strlen (&buf[n]);
-  buf = display_insts (K_TEXT_BOT, k_text_top, buf, &limit, &n);
+
+  buf = insts_as_string (TEXT_BOT, text_top, buf, &max_buf_len, &string_len);
+  sprintf (&buf[string_len], "\n\tKERNEL\n");
+  string_len += strlen (&buf[string_len]);
+  buf = insts_as_string (K_TEXT_BOT, k_text_top, buf, &max_buf_len, &string_len);
 
   XtSetArg (args[0], XtNstring, buf);
-  XtSetArg (args[1], XtNlength, limit);
+  XtSetArg (args[1], XtNlength, string_len);
   XtSetValues (text_window, args, TWO);
+
   text_modified = 0;
-}
-
-
-/* Write a printable representation of the instructions in memory
-   address FROM...TO to buffer BUF, which is of size LIMIT and whose next
-   free location is N.  Return the, possible realloc'ed, buffer. */
-
-#ifdef __STDC__
-static char *
-display_insts (mem_addr from, mem_addr to, char *buf, int *limit, int *n)
-#else
-static char *
-display_insts (from, to, buf, limit, n)
-     mem_addr from, to;
-     char *buf;
-     int *limit, *n;
-#endif
-{
-  instruction *inst;
-  mem_addr i;
-
-  for (i = from; i < to; i += 4)
-    {
-      READ_MEM_INST (inst, i);
-      if (inst != NULL)
-	{
-	  *n += print_inst_internal (&buf[*n], 1*K, inst, i);
-	  if ((*limit - *n) < 1*K)
-	    {
-	      *limit = 2 * *limit;
-	      if ((buf = (char *) realloc (buf, *limit)) == 0)
-		fatal_error ("realloc failed\n");
-	    }
-	}
-    }
-  return (buf);
 }
 
 
@@ -916,164 +758,24 @@ static void
 display_data_seg ()
 #endif
 {
-  static String buf;
-  int limit, n;
+  static String buf = NULL;
+  static int max_buf_len = 16 * K;
+  int string_len = 0;
   Arg args [2];
 
   if (!data_modified)
     return;
 
   if (buf == NULL)
-    buf = (String) malloc (16*K);
-  *buf = '\0';
-  limit = 16*K;
-  n = 0;
+    buf = (char *) malloc (max_buf_len);
 
-  sprintf (&buf[n], "\n\tDATA\n");
-  n += strlen (&buf[n]);
-  buf = display_values (DATA_BOT, data_top, buf, &limit, &n);
-  sprintf (&buf[n], "\n\tSTACK\n");
-  n += strlen (&buf[n]);
-  buf = display_values (R[29],
-			STACK_TOP - 4096,
-			buf,
-			&limit,
-			&n);
-  sprintf (&buf[n], "\n\tKERNEL DATA\n");
-  n += strlen (&buf[n]);
-  buf = display_values (K_DATA_BOT, k_data_top, buf, &limit, &n);
+  buf = data_seg_as_string(buf, &max_buf_len, &string_len);
 
   XtSetArg (args[0], XtNstring, buf);
-  XtSetArg (args[1], XtNlength, limit);
+  XtSetArg (args[1], XtNlength, string_len);
   XtSetValues (data_window, args, TWO);
+
   data_modified = 0;
-}
-
-
-#define BYTES_PER_LINE (4*BYTES_PER_WORD)
-
-
-/* Write a printable representation of the data in memory address
-   FROM...TO to buffer BUF, which is of size LIMIT and whose next free
-   location is N.  Return the, possible realloc'ed, buffer. */
-
-#ifdef __STDC__
-static char *
-display_values (mem_addr from, mem_addr to, char *buf, int *limit, int *n)
-#else
-static char *
-display_values (from, to, buf, limit, n)
-     mem_addr from, to;
-     char *buf;
-     int *limit, *n;
-#endif
-{
-  mem_word val;
-  mem_addr i = ROUND (from, BYTES_PER_WORD);
-  int j;
-
-  i = print_partial_line (i, buf, limit, n);
-
-  for ( ; i < to; )
-    {
-      /* Look for a block of 4 or more zero memory words */
-      for (j = 0; i + j < to; j += BYTES_PER_WORD)
-	{
-	  READ_MEM_WORD (val, i + j);
-	  if (val != 0)
-	    break;
-	}
-      if (i + j < to)
-	j -= BYTES_PER_WORD;
-
-      if (j >= 4 * BYTES_PER_WORD)
-	{
-	  sprintf (&buf[*n], "[0x%08x]...[0x%08x]	0x00000000\n",
-		   i, i + j);
-	  buf = check_buf_limit (buf, limit, n);
-	  i = i + j;
-
-	  i = print_partial_line (i, buf, limit, n);
-	}
-      else
-	{
-	  /* Otherwise, print the next four words on a single line */
-	  sprintf (&buf[*n], "[0x%08x]		      ", i);
-	  *n += strlen (&buf[*n]);
-	  do
-	    {
-	      READ_MEM_WORD (val, i);
-	      sprintf (&buf[*n], "  0x%08x", val);
-	      *n += strlen (&buf[*n]);
-	      i += BYTES_PER_WORD;
-	    }
-	  while (i % BYTES_PER_LINE != 0);
-	  sprintf (&buf[*n], "\n");
-	  buf = check_buf_limit (buf, limit, n);
-	}
-    }
-  return (buf);
-}
-
-
-
-/* Check to see if the buffer is getting too full and, if so,
-   reallocate it. */
-
-#ifdef __STDC__
-static char *
-check_buf_limit (char *buf, int *limit, int *n)
-#else
-static char *
-check_buf_limit (buf, limit, n)
-     char *buf;
-     int *limit, *n;
-#endif
-{
-  *n += strlen (&buf[*n]);
-  if ((*limit - *n) < 1*K)
-    {
-      *limit = 2 * *limit;
-      if ((buf = (char *) realloc (buf, *limit)) == 0)
-	fatal_error ("realloc failed\n");
-    }
-  return (buf);
-}
-
-
-
-/* Print out a line containing a fraction of a quadword.  */
-
-#ifdef __STDC__
-static mem_addr
-print_partial_line (mem_addr i, char *buf, int *limit, int *n)
-#else
-static mem_addr
-print_partial_line (i, buf, limit, n)
-     mem_addr i;
-     char *buf;
-     int *limit, *n;
-#endif
-{
-  mem_word val;
-
-  if ((i % BYTES_PER_LINE) != 0)
-    {
-      sprintf (&buf[*n], "[0x%08x]		      ", i);
-      buf = check_buf_limit (buf, limit, n);
-
-      for (; (i % BYTES_PER_LINE) != 0; i += BYTES_PER_WORD)
-	{
-	  READ_MEM_WORD (val, i);
-	  sprintf (&buf[*n], "  0x%08x", val);
-	  buf = check_buf_limit (buf, limit, n);
-	}
-
-      sprintf (&buf[*n], "\n");
-      buf = check_buf_limit (buf, limit, n);
-    }
-
-  return (i);
 }
 
 
