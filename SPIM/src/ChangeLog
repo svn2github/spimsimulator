@@ -1,4 +1,10 @@
-2001-02-01    <larus@C745660-A>
+2001-02-08    <larus@HomeMachine>
+
+	* parser.y:
+	Did not handle rem pseudo op properly, which caused a fatal error
+	or core dump. [From: Rigel Freden]
+
+2001-02-01    <larus@HomeMachine>
 
 	* spim.c spim.h trap.handler:
 	Added commands to dump text segment (in binary). [From: Brian
@@ -16,7 +22,7 @@
 	Add button to clear xspim console. [From: Brian R. Gaeke
 	brg@pasteur.EECS.Berkeley.EDU].
 
-2001-01-14    <larus@C745660-A>
+2001-01-14    <larus@HomeMachine>
 
 	* spim.c:
 	Fix print_all_regs to define the stack allocated buffer's length

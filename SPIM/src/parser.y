@@ -870,7 +870,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	DIV_POP		DEST_REG	SRC1
+	|	DIV_OP		DEST_REG	SRC1
 		{
 		  /* The hardware divide operation (ignore 1st arg) */
 		  if ($1.i != Y_DIV_OP && $1.i != Y_DIVU_OP)
@@ -1370,6 +1370,10 @@ BINARY_OP_NOI:	Y_NOR_OP ;
 
 SUB_OP:		Y_SUB_OP
 	|	Y_SUBU_OP
+	;
+
+DIV_OP:		Y_DIV_OP
+	|	Y_DIVU_OP
 	;
 
 DIV_POP:	Y_DIV_OP
@@ -2250,15 +2254,19 @@ div_inst (op, rd, rs, rt, const_divisor)
       i_type_inst_free (Y_BNE_OP, 0, rt, branch_offset (2));
       trap_inst ();
     }
+
   if (op == Y_DIV_OP || op == Y_REM_POP)
     r_type_inst (Y_DIV_OP, 0, rs, rt);
   else
     r_type_inst (Y_DIVU_OP, 0, rs, rt);
+
   if (rd != 0)
     {
       if (op == Y_DIV_OP || op == Y_DIVU_OP)
+	/* Quotient */
 	r_type_inst (Y_MFLO_OP, rd, 0, 0);
       else
+	/* Remainder */
 	r_type_inst (Y_MFHI_OP, rd, 0, 0);
     }
 }
