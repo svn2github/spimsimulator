@@ -1,3 +1,21 @@
+2000-12-05    <larus@C745660-A>
+
+	* Tests/tt.le.s Tests/tt.be.s:
+	Fix regression tests to work with stricter parser and changes to spim.
+
+	* Makefile.std Imakefile:
+	Change "csh" to an environment variable so shell can be changed.
+
+	* spim.c (console_input_available):
+	Comment out code to compile spim under cygwin on windows.
+
+	* spim-utils.c (read_assembly_file):
+	Open file as text (for windows).
+
+	* run.c (run_spim):
+	LWL failed with gcc (cygwin) because missing parens screwed
+	associativity.
+
 2000-12-04    <larus@C745660-A>
 
 	* parser.y scanner.l inst.h tt.be.s tt.le.s

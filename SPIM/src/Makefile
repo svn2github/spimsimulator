@@ -795,7 +795,7 @@ lex.yy.o: lex.yy.c
 test:	spim
 	/bin/rm -f Tests/tt.out std_out new_out
 	@echo
-	csh -c "./spim -bare -notrap -file Tests/tt.bare.s >& Tests/tt.out"
+	bash -c "./spim -bare -notrap -file Tests/tt.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -806,7 +806,7 @@ test:	spim
 
 	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "trap_handler not installed. Type: make install"; exit 1; else true; fi
 	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
-	csh -c "./spim -file Tests/tt.s < Tests/tt.in >& Tests/tt.out"
+	bash -c "./spim -file Tests/tt.s < Tests/tt.in >& Tests/tt.out"
 	tail +6 Tests/tt.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -819,7 +819,7 @@ test:	spim
 # tt.alu.bare.s needs to be converted in places for big-endian machines.
 
 test_bare:
-	csh -c "./spim -bare -notrap -file Tests/tt.alu.bare.s >& Tests/tt.out"
+	bash -c "./spim -bare -notrap -file Tests/tt.alu.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.alu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -828,7 +828,7 @@ test_bare:
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
 
-	csh -c "./spim -bare -notrap -file Tests/tt.fpu.bare.s >& Tests/tt.out"
+	bash -c "./spim -bare -notrap -file Tests/tt.fpu.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.fpu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
