@@ -90,6 +90,7 @@ static void flush_to_newline (void);
 static int get_opt_int (void);
 static int parse_spim_command (FILE *file, int redo);
 static int print_reg (int reg_no, int type_code);
+static void print_all_regs (int hex_flag);
 static int read_assembly_command (void);
 static int str_prefix (char *s1, char *s2, int min_match);
 static void top_level (void);
@@ -101,6 +102,7 @@ static void flush_to_newline ();
 static int get_opt_int ();
 static int parse_spim_command ();
 static int print_reg ();
+static void print_all_regs ();
 static int read_assembly_command ();
 static int str_prefix ();
 static void top_level ();
@@ -302,23 +304,25 @@ int arg;
 
 /* SPIM commands */
 
-#define UNKNOWN_CMD		0
-#define EXIT_CMD		1
-#define READ_CMD		2
-#define RUN_CMD			3
-#define STEP_CMD		4
-#define PRINT_CMD		5
-#define PRINT_SYM_CMD		6
-#define REINITIALIZE_CMD	7
-#define ASM_CMD			8
-#define REDO_CMD		9
-#define NOP_CMD			10
-#define HELP_CMD		11
-#define CONTINUE_CMD		12
-#define SET_BKPT_CMD		13
-#define DELETE_BKPT_CMD		14
-#define LIST_BKPT_CMD		15
-
+enum {
+  UNKNOWN_CMD = 0,
+  EXIT_CMD,
+  READ_CMD,
+  RUN_CMD,
+  STEP_CMD,
+  PRINT_CMD,
+  PRINT_SYM_CMD,
+  PRINT_ALL_REGS_CMD,
+  REINITIALIZE_CMD,
+  ASM_CMD,
+  REDO_CMD,
+  NOP_CMD,
+  HELP_CMD,
+  CONTINUE_CMD,
+  SET_BKPT_CMD,
+  DELETE_BKPT_CMD,
+  LIST_BKPT_CMD
+};
 
 /* Parse a SPIM command from the FILE and execute it.  If REDO is non-zero,
    don't read a new command; just rexecute the previous one.
@@ -480,6 +484,18 @@ parse_spim_command (file, redo)
       prev_cmd = NOP_CMD;
       return (0);
 
+    case PRINT_ALL_REGS_CMD:
+      {
+	int hex_flag = 0;
+	int token = (redo ? prev_token : read_token ());
+	if (token == Y_ID && streq(yylval.p, "hex"))
+	  hex_flag = 1;
+	print_all_regs (hex_flag);
+	if (!redo) flush_to_newline ();
+	prev_cmd = NOP_CMD;
+	return (0);
+      }
+
     case REINITIALIZE_CMD:
       flush_to_newline ();
       initialize_world (load_trap_handler ? trap_file : NULL);
@@ -521,7 +537,11 @@ parse_spim_command (file, redo)
       write_output (message_out,
 		    "print ADDR -- Print contents of memory at ADDRESS\n");
       write_output (message_out,
-		    "print_symbols -- Print a list of all symbols\n");
+		    "print_symbols -- Print all global symbols\n");
+      write_output (message_out,
+		    "print_all_regs -- Print all MIPS registers\n");
+      write_output (message_out,
+		    "print_all_regs hex -- Print all MIPS registers in hex\n");
       write_output (message_out,
 		    "reinitialize -- Clear the memory and registers\n");
       write_output (message_out,
@@ -599,8 +619,10 @@ read_assembly_command ()
     return (EXIT_CMD);
   else if (str_prefix ((char *) yylval.p, "print", 1))
     return (PRINT_CMD);
-  else if (str_prefix ((char *) yylval.p, "print_symbols", 6))
+  else if (str_prefix ((char *) yylval.p, "print_symbols", 7))
     return (PRINT_SYM_CMD);
+  else if (str_prefix ((char *) yylval.p, "print_all_regs", 7))
+    return (PRINT_ALL_REGS_CMD);
   else if (str_prefix ((char *) yylval.p, "run", 2))
     return (RUN_CMD);
   else if (str_prefix ((char *) yylval.p, "read", 2))
@@ -765,6 +787,22 @@ print_reg (reg_no, type_code)
     }
 
   return (1);
+}
+
+#ifdef __STDC__
+static void
+print_all_regs (int hex_flag)
+#else
+static void
+print_all_regs (hex_flag)
+     int hex_flag;
+#endif
+{
+  int max_buf_len = 32000;
+  char buf[max_buf_len];
+  int count;
+  registers_as_string (buf, &max_buf_len, &count, hex_flag, hex_flag);
+  write_output (message_out, "%s\n", buf);
 }
 
 
