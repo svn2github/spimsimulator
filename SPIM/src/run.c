@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 15    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/run.c 16    2/27/04 11:25p Larus $
 */
 
 
@@ -264,17 +264,19 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      R[RT (inst)] = R[RS (inst)] & (0xffff & IMM (inst));
 	      break;
 
-	    case Y_BC0F_OP:
 	    case Y_BC2F_OP:
-	      BRANCH_INST (CpCond[OPCODE (inst) - Y_BC0F_OP] == 0,
-			   PC + IDISP (inst), 0);
-	      break;
-
-	    case Y_BC0T_OP:
+	    case Y_BC2FL_OP:
 	    case Y_BC2T_OP:
-	      BRANCH_INST (CpCond[OPCODE (inst) - Y_BC0T_OP] != 0,
-			   PC + IDISP (inst), 0);
-	      break;
+	    case Y_BC2TL_OP:
+	      {
+		int cc = CC (inst);
+		int nd = ND (inst);	/* 1 => nullify */
+		int tf = TF (inst);	/* 0 => BC2F, 1 => BC2T */
+		BRANCH_INST (((CPR[2][FCCR_REG]) & (1 << cc)) == (tf << cc),
+			     PC + IDISP (inst),
+			     nd);
+		break;
+	      }
 
 	    case Y_BEQ_OP:
 	      BRANCH_INST (R[RS (inst)] == R[RT (inst)],

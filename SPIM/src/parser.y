@@ -52,8 +52,6 @@
 %token Y_ALNV_PS_OP
 %token Y_AND_OP
 %token Y_ANDI_OP
-%token Y_BC0F_OP
-%token Y_BC0T_OP
 %token Y_BC1F_OP
 %token Y_BC1FL_OP
 %token Y_BC1T_OP
@@ -1166,15 +1164,11 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 
 	|	COPROC_BR_OP	LABEL
 		{
-		  i_type_inst_free ($1.i, 0, 0, (imm_expr *)$2.p);
-		}
-
-
-	|	COPROC1_BR_OP	LABEL
-		{
 		  /* RS and RT fields contain information on test */
-		  int nd = ($1.i == Y_BC1FL_OP) | ($1.i == Y_BC1TL_OP);
-		  int tf = ($1.i == Y_BC1T_OP) | ($1.i == Y_BC1TL_OP);
+		  int nd = ($1.i == Y_BC1FL_OP) || ($1.i == Y_BC1TL_OP)
+		    || ($1.i == Y_BC2FL_OP) || ($1.i == Y_BC2TL_OP);
+		  int tf = ($1.i == Y_BC1T_OP) || ($1.i == Y_BC1TL_OP)
+		    || ($1.i == Y_BC2T_OP) || ($1.i == Y_BC2TL_OP);
 		  i_type_inst_free ($1.i,
 				    0 | (nd << 1) | tf,
 				    BIN_RS($1.i),
@@ -1182,11 +1176,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	COPROC1_BR_OP	CC_REG	LABEL
+	|	COPROC_BR_OP	CC_REG	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = ($1.i == Y_BC1FL_OP) | ($1.i == Y_BC1TL_OP);
-		  int tf = ($1.i == Y_BC1T_OP) | ($1.i == Y_BC1TL_OP);
+		  int nd = ($1.i == Y_BC1FL_OP) || ($1.i == Y_BC1TL_OP)
+		    || ($1.i == Y_BC2FL_OP) || ($1.i == Y_BC2TL_OP);
+		  int tf = ($1.i == Y_BC1T_OP) || ($1.i == Y_BC1TL_OP)
+		    || ($1.i == Y_BC2T_OP) || ($1.i == Y_BC2TL_OP);
 		  i_type_inst_free ($1.i,
 				    ($2.i << 2) | (nd << 1) | tf,
 				    BIN_RS($1.i),
@@ -1664,18 +1660,14 @@ BF_OP_REV2:	Y_EXT_OP
 	|	Y_INS_OP
 	;
 
-COPROC_BR_OP:	Y_BC0F_OP
-	|	Y_BC0T_OP
+COPROC_BR_OP:	Y_BC1F_OP
+	|	Y_BC1FL_OP
+	|	Y_BC1T_OP
+	|	Y_BC1TL_OP
 	|	Y_BC2F_OP
 	|	Y_BC2FL_OP
 	|	Y_BC2T_OP
 	|	Y_BC2TL_OP
-	;
-
-COPROC1_BR_OP:	Y_BC1F_OP
-	|	Y_BC1FL_OP
-	|	Y_BC1T_OP
-	|	Y_BC1TL_OP
 	;
 
 UNARY_BR_OP:	Y_BGEZ_OP
