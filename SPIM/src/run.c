@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 16    2/27/04 11:25p Larus $
+/* $Header: /Software/SPIM/src/run.c 17    2/28/04 10:36a Larus $
 */
 
 
@@ -284,20 +284,36 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 			   0);
 	      break;
 
+	    case Y_BEQL_OP:
+	      BRANCH_INST (R[RS (inst)] == R[RT (inst)],
+			   PC + IDISP (inst),
+			   1);
+	      break;
+
 	    case Y_BGEZ_OP:
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
 			   PC + IDISP (inst),
 			   0);
 	      break;
 
+	    case Y_BGEZL_OP:
+	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
+			   PC + IDISP (inst),
+			   1);
+	      break;
+
 	    case Y_BGEZAL_OP:
-	      if (delayed_branches)
-		R[31] = PC + 2 * BYTES_PER_WORD;
-	      else
-		R[31] = PC + BYTES_PER_WORD;
+	      R[31] = PC + (delayed_branches ? 2 * BYTES_PER_WORD : BYTES_PER_WORD);
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
 			   PC + IDISP (inst),
 			   0);
+	      break;
+
+	    case Y_BGEZALL_OP:
+	      R[31] = PC + (delayed_branches ? 2 * BYTES_PER_WORD : BYTES_PER_WORD);
+	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) == 0,
+			   PC + IDISP (inst),
+			   1);
 	      break;
 
 	    case Y_BGTZ_OP:
@@ -306,10 +322,22 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 			   0);
 	      break;
 
+	    case Y_BGTZL_OP:
+	      BRANCH_INST (R[RS (inst)] != 0 && SIGN_BIT (R[RS (inst)]) == 0,
+			   PC + IDISP (inst),
+			   1);
+	      break;
+
 	    case Y_BLEZ_OP:
 	      BRANCH_INST (R[RS (inst)] == 0 || SIGN_BIT (R[RS (inst)]) != 0,
 			   PC + IDISP (inst),
 			   0);
+	      break;
+
+	    case Y_BLEZL_OP:
+	      BRANCH_INST (R[RS (inst)] == 0 || SIGN_BIT (R[RS (inst)]) != 0,
+			   PC + IDISP (inst),
+			   1);
 	      break;
 
 	    case Y_BLTZ_OP:
@@ -318,20 +346,36 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 			   0);
 	      break;
 
+	    case Y_BLTZL_OP:
+	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
+			   PC + IDISP (inst),
+			   1);
+	      break;
+
 	    case Y_BLTZAL_OP:
-	      if (delayed_branches)
-		R[31] = PC + 2 * BYTES_PER_WORD;
-	      else
-		R[31] = PC + BYTES_PER_WORD;
+	      R[31] = PC + (delayed_branches ? 2 * BYTES_PER_WORD : BYTES_PER_WORD);
 	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
 			   PC + IDISP (inst),
 			   0);
+	      break;
+
+	    case Y_BLTZALL_OP:
+	      R[31] = PC + (delayed_branches ? 2 * BYTES_PER_WORD : BYTES_PER_WORD);
+	      BRANCH_INST (SIGN_BIT (R[RS (inst)]) != 0,
+			   PC + IDISP (inst),
+			   1);
 	      break;
 
 	    case Y_BNE_OP:
 	      BRANCH_INST (R[RS (inst)] != R[RT (inst)],
 			   PC + IDISP (inst),
 			   0);
+	      break;
+
+	    case Y_BNEL_OP:
+	      BRANCH_INST (R[RS (inst)] != R[RT (inst)],
+			   PC + IDISP (inst),
+			   1);
 	      break;
 
 	    case Y_BREAK_OP:

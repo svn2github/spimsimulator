@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 15    2/28/04 7:18a Larus $
+/* $Header: /Software/SPIM/src/inst.c 16    2/28/04 10:36a Larus $
 */
 
 #include <stdio.h>
@@ -854,22 +854,30 @@ opcode_is_branch (int opcode)
     case Y_BC2T_OP:
     case Y_BC2TL_OP:
     case Y_BEQ_OP:
+    case Y_BEQL_OP:
     case Y_BEQZ_POP:
     case Y_BGE_POP:
     case Y_BGEU_POP:
     case Y_BGEZ_OP:
     case Y_BGEZAL_OP:
+    case Y_BGEZALL_OP:
+    case Y_BGEZL_OP:
     case Y_BGT_POP:
     case Y_BGTU_POP:
     case Y_BGTZ_OP:
+    case Y_BGTZL_OP:
     case Y_BLE_POP:
     case Y_BLEU_POP:
     case Y_BLEZ_OP:
+    case Y_BLEZL_OP:
     case Y_BLT_POP:
     case Y_BLTU_POP:
     case Y_BLTZ_OP:
     case Y_BLTZAL_OP:
+    case Y_BLTZALL_OP:
+    case Y_BLTZL_OP:
     case Y_BNE_OP:
+    case Y_BNEL_OP:
     case Y_BNEZ_POP:
       return (1);
 
@@ -891,8 +899,14 @@ opcode_is_nullified_branch (int opcode)
     case Y_BC1TL_OP:
     case Y_BC2FL_OP:
     case Y_BC2TL_OP:
-    case Y_BGEZAL_OP:
-    case Y_BLTZAL_OP:
+    case Y_BEQL_OP:
+    case Y_BGEZALL_OP:
+    case Y_BGEZL_OP:
+    case Y_BGTZL_OP:
+    case Y_BLEZL_OP:
+    case Y_BLTZALL_OP:
+    case Y_BLTZL_OP:
+    case Y_BNEL_OP:
       return (1);
 
     default:

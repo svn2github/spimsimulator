@@ -1605,7 +1605,7 @@ fp_dm1:	.double -1.0
 
 
 	.data
-bc1f_:	.asciiz "Testing BC1F\n"
+bc1f_:	.asciiz "Testing BC1F and BC1T\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 bc1f_
@@ -1625,25 +1625,6 @@ l205:	c.eq.s $f0 $f4
 l206:
 
 
-	.data
-bc1fl_:	.asciiz "Testing BC1FL\n"
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 bc1fl_
-	syscall
-
-	lwc1 $f0 fp_s1
-	lwc1 $f2 fp_s1
-	lwc1 $f4 fp_s1p5
-	c.eq.s $f0 $f2
-	bc1fl fail
-	j fail
-l205a:	c.eq.s $f0 $f4
-	bc1tl fail
-	j fail
-	bc1fl l206a
-	j fail
-l206a:
 
 
 # ToDo: Check order/unordered exception in floating point comparison.

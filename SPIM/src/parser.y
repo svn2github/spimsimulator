@@ -61,13 +61,21 @@
 %token Y_BC2T_OP
 %token Y_BC2TL_OP
 %token Y_BEQ_OP
+%token Y_BEQL_OP
 %token Y_BGEZ_OP
 %token Y_BGEZAL_OP
+%token Y_BGEZALL_OP
+%token Y_BGEZL_OP
 %token Y_BGTZ_OP
+%token Y_BGTZL_OP
 %token Y_BLEZ_OP
+%token Y_BLEZL_OP
 %token Y_BLTZ_OP
 %token Y_BLTZAL_OP
+%token Y_BLTZALL_OP
+%token Y_BLTZL_OP
 %token Y_BNE_OP
+%token Y_BNEL_OP
 %token Y_BREAK_OP
 %token Y_C_EQ_D_OP
 %token Y_C_EQ_PS_OP
@@ -1667,11 +1675,17 @@ COPROC_BR_OP:	Y_BC1F_OP
 	;
 
 UNARY_BR_OP:	Y_BGEZ_OP
+	|	Y_BGEZL_OP
 	|	Y_BGEZAL_OP
+	|	Y_BGEZALL_OP
 	|	Y_BGTZ_OP
+	|	Y_BGTZL_OP
 	|	Y_BLEZ_OP
+	|	Y_BLEZL_OP
 	|	Y_BLTZ_OP
+	|	Y_BLTZL_OP
 	|	Y_BLTZAL_OP
+	|	Y_BLTZALL_OP
 	;
 
 UNARY_BR_POP:	Y_BEQZ_POP
@@ -1679,7 +1693,9 @@ UNARY_BR_POP:	Y_BEQZ_POP
 	;
 
 BINARY_BR_OP:	Y_BEQ_OP
+	|	Y_BEQL_OP
 	|	Y_BNE_OP
+	|	Y_BNEL_OP
 	;
 
 BR_GT_POP:	Y_BGT_POP

@@ -126,55 +126,44 @@ configuration:
 #
 
 test:	spim.exe
-	/bin/rm -f Tests/tt.out std_out new_out
 	@echo
-	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& Tests/tt.out"
-	tail +6 Tests/tt.bare.OK > std_out
-	tail +6 Tests/tt.out > new_out
-	@echo The next command should not produce any output:
-	diff -w std_out new_out
+	@echo "Testing tt.bare.s:"
+	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& test.out"
+	@tail -2 test.out
 	@echo
-	@echo
-	/bin/rm -f Tests/tt.out std_out new_out
 
 	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "Trap Handler not installed; do make install"; exit 1; else true; fi
 	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
-	$(CSH) -c "./spim.exe -file Tests/tt.core.s < Tests/tt.in >& Tests/tt.out"
-	tail +6 Tests/tt.core.OK > std_out
-	tail +6 Tests/tt.out > new_out
-	@echo The next command should not produce any output:
-	diff -w std_out new_out
+
+	@echo
+	@echo "Testing tt.core.s:"
+	$(CSH) -c "./spim.exe -file Tests/tt.core.s < Tests/tt.in >& test.out"
+	@tail -2 test.out
+	@echo
+
+	@echo
+	@echo "Testing tt.endian.s:"
+	$(CSH) -c "./spim.exe -file Tests/tt.endian.s >& test.out"
+	@tail -2 test.out
 	@echo
 	@echo
-	$(CSH) -c "./spim.exe -file Tests/tt.endian.s >& Tests/tt.out"
-	tail +6 Tests/tt.endian.OK > std_out
-	tail +6 Tests/tt.out > new_out
-	@echo The next command should not produce any output:
-	diff -w std_out new_out
-	@echo
-	@echo
-	/bin/rm -f Tests/tt.out std_out new_out
 
 # This test currently only works for little-endian machines.  The file
 # tt.alu.bare.s needs to be converted in places for big-endian machines.
 
 test_bare: spim.exe
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.alu.bare.s >& Tests/tt.out"
-	tail +6 Tests/tt.alu.bare.OK > std_out
-	tail +6 Tests/tt.out > new_out
-	@echo The next command should not produce any output:
-	diff -w std_out new_out
 	@echo
+	@echo "Testing tt.alu.bare.s:"
+	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.alu.bare.s >& test.out"
+	@tail -2 test.out
 	@echo
-	/bin/rm -f Tests/tt.out std_out new_out
 
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.fpu.bare.s >& Tests/tt.out"
-	tail +6 Tests/tt.fpu.bare.OK > std_out
-	tail +6 Tests/tt.out > new_out
-	@echo The next command should not produce any output:
-	diff -w std_out new_out
 	@echo
-	/bin/rm -f Tests/tt.out std_out new_out
+	@echo "Testing tt.fpt.bare.s:"
+	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.fpu.bare.s >& test.out"
+	@tail -2 test.out
+	@echo
+	@echo
 
 #
 
