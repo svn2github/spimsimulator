@@ -1,7 +1,7 @@
 // SPIM S20 MIPS simulator.
 // Definitions for the SPIM S20.
 //
-// Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+// Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
 // ALL RIGHTS RESERVED.
 // Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 //
@@ -109,6 +109,8 @@ CPCSpimView::CPCSpimView()
   m_nForceStop = 0;
   m_fConsoleMinimized = TRUE;
   m_fSimulatorInitialized = FALSE;
+
+  m_strCurFilename.Empty();
 }
 
 
@@ -346,6 +348,11 @@ void CPCSpimView::Initialize()
   ProcessCommandLine();
 
   InitializeSimulator();
+
+  if (!m_strCurFilename.IsEmpty())
+  {
+    LoadFile(m_strCurFilename);	// From command line
+  }
 }
 
 void CPCSpimView::InitializeSimulator()
@@ -1182,6 +1189,7 @@ void CPCSpimView::ProcessCommandLine()
 {
   LPTSTR argv[256];
   int argc;
+  int i;
 
   // Initialize argc & argv variables.
   LPTSTR szCmdLine = GetCommandLine();
@@ -1190,7 +1198,7 @@ void CPCSpimView::ProcessCommandLine()
   else
     argv[0] = strtok(GetCommandLine(), WHITESPACE);
 
-  for (argc = 1; ; ++argc)
+  for (argc = 1; ; argc += 1)
     {
       LPTSTR szParam = strtok(NULL, WHITESPACE);
       if (szParam == NULL)
@@ -1199,35 +1207,42 @@ void CPCSpimView::ProcessCommandLine()
       argv[argc] = szParam;
     }
 
-  for (int i = 1; i < argc; i++)
+  if (argc == 2)
+  {
+    // Only one argument better be a file name.
+    //
+    m_strCurFilename = argv[1];
+  }
+  else
+    for (i = 1; i < argc; i++)
     {
       if ((argv[i][0] != '/') &&
-	  (argv[i][0] != '-'))
+	(argv[i][0] != '-'))
 	goto l_ErrorMsg;
-
+      
       ++argv[i];
-
+      
       if (streq (argv [i], "-bare"))
-	{
-	  bare_machine = 1;
-	  delayed_branches = 1;
-	  delayed_loads = 1;
-	  quiet = 1;
-	}
+      {
+	bare_machine = 1;
+	delayed_branches = 1;
+	delayed_loads = 1;
+	quiet = 1;
+      }
       else if (streq (argv [i], "-asm"))
-	{
-	  bare_machine = 0;
-	  delayed_branches = 0;
-	  delayed_loads = 0;
-	}
+      {
+	bare_machine = 0;
+	delayed_branches = 0;
+	delayed_loads = 0;
+      }
       else if (streq (argv [i], "-delayed_branches"))
-	{
-	  delayed_branches = 1;
-	}
+      {
+	delayed_branches = 1;
+      }
       else if (streq (argv [i], "-delayed_loads"))
-	{
-	  delayed_loads = 1;
-	}
+      {
+	delayed_loads = 1;
+      }
       else if (streq (argv[i], "pseudo"))
 	accept_pseudo_insts = 1;
       else if (streq (argv[i], "nopseudo"))
@@ -1261,23 +1276,23 @@ void CPCSpimView::ProcessCommandLine()
       else if (streq (argv[i], "lkdata"))
 	initial_k_data_limit = atoi (argv[++i]);
       else if (streq (argv[i], "trap_file"))
-	{
-	  trap_file = argv[++i];
-	  g_fLoadTrapHandler = 1;
-	}
+      {
+	trap_file = argv[++i];
+	g_fLoadTrapHandler = 1;
+      }
       else if (streq (argv[i], "file"))
+      {
+	m_strCurFilename = argv[++i];
+	
+	g_strCmdLine = "";
+	for (int j = i; j < argc; j++)
 	{
-	  LoadFile(argv[++i]);
-
-	  g_strCmdLine = "";
-	  for (int j = i; j < argc; j++)
-	    {
-	      g_strCmdLine += argv[j];
-	      g_strCmdLine += " ";
-	    }
-	  g_strCmdLine.TrimRight();
-	  break;
+	  g_strCmdLine += argv[j];
+	  g_strCmdLine += " ";
 	}
+	g_strCmdLine.TrimRight();
+	break;
+      }
       else
 	goto l_ErrorMsg;
     }

@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Terminal interface for SPIM simulator.
 
-   Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-2003 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
    Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 
@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 11    2/01/01 9:34p Larus $
+/* $Header: /Software/SPIM/src/spim.c 12    1/04/03 3:31p Larus $
 */
 
 
@@ -89,7 +89,9 @@ static void console_to_spim (void);
 static void flush_to_newline (void);
 static int get_opt_int (void);
 static int parse_spim_command (FILE *file, int redo);
-static int print_reg (int reg_no, int type_code);
+static int print_reg (int reg_no);
+static int print_fp_reg (int reg_no);
+static int print_reg_from_string (char *reg);
 static void print_all_regs (int hex_flag);
 static int read_assembly_command (void);
 static int str_prefix (char *s1, char *s2, int min_match);
@@ -102,6 +104,8 @@ static void flush_to_newline ();
 static int get_opt_int ();
 static int parse_spim_command ();
 static int print_reg ();
+static int print_fp_reg ();
+static int print_reg_from_string ();
 static void print_all_regs ();
 static int read_assembly_command ();
 static int str_prefix ();
@@ -171,93 +175,100 @@ main (argc, argv)
 
   write_startup_message ();
 
-  for (i = 1; i < argc; i++)
+  if (argc == 2)
     {
+      /* Only one argument better be a file name. */
+      initialize_world (load_trap_handler ? trap_file : NULL);
+      assembly_file_read |= !read_assembly_file (argv[++i]);
+    }
+  else
+    for (i = 1; i < argc; i++)
+      {
 #ifdef WIN32
-      /* On Windows, support "/option" as well as "-option" */
-      if (argv [i][0] == '/')
-	argv [i][0] = '-';
+	/* On Windows, support "/option" as well as "-option" */
+	if (argv [i][0] == '/')
+	  argv [i][0] = '-';
 #endif
 
-      if (streq (argv [i], "-bare"))
-	{
-	  bare_machine = 1;
-	  delayed_branches = 1;
-	  delayed_loads = 1;
-	  quiet = 1;
-	}
-      else if (streq (argv [i], "-asm"))
-	{
-	  bare_machine = 0;
-	  delayed_branches = 0;
-	  delayed_loads = 0;
-	}
-      else if (streq (argv [i], "-delayed_branches"))
-	{
-	  delayed_branches = 1;
-	}
-      else if (streq (argv [i], "-delayed_loads"))
-	{
-	  delayed_loads = 1;
-	}
-      else if (streq (argv [i], "-pseudo"))
-	accept_pseudo_insts = 1;
-      else if (streq (argv [i], "-nopseudo"))
-	accept_pseudo_insts = 0;
-      else if (streq (argv [i], "-trap"))
-	load_trap_handler = 1;
-      else if (streq (argv [i], "-notrap"))
-	load_trap_handler = 0;
-      else if (streq (argv [i], "-trap_file"))
-	{
-	  trap_file = argv[++i];
+	if (streq (argv [i], "-bare"))
+	  {
+	    bare_machine = 1;
+	    delayed_branches = 1;
+	    delayed_loads = 1;
+	    quiet = 1;
+	  }
+	else if (streq (argv [i], "-asm"))
+	  {
+	    bare_machine = 0;
+	    delayed_branches = 0;
+	    delayed_loads = 0;
+	  }
+	else if (streq (argv [i], "-delayed_branches"))
+	  {
+	    delayed_branches = 1;
+	  }
+	else if (streq (argv [i], "-delayed_loads"))
+	  {
+	    delayed_loads = 1;
+	  }
+	else if (streq (argv [i], "-pseudo"))
+	  accept_pseudo_insts = 1;
+	else if (streq (argv [i], "-nopseudo"))
+	  accept_pseudo_insts = 0;
+	else if (streq (argv [i], "-trap"))
 	  load_trap_handler = 1;
-	}
-      else if (streq (argv [i], "-quiet"))
-	quiet = 1;
-      else if (streq (argv [i], "-noquiet"))
-	quiet = 0;
-      else if (streq (argv [i], "-file"))
-	{
-	  argv_ptr = i + 1;
-	  if (!assembly_file_read)
-	    {
-	      initialize_world (load_trap_handler ? trap_file : NULL);
-	    }
-	  assembly_file_read |= !read_assembly_file (argv[++i]);
-	  break;			/* Everything that follows is argv */
-	}
-      else if (streq (argv [i], "-mapped_io"))
-	mapped_io = 1;
-      else if (streq (argv [i], "-nomapped_io"))
-	mapped_io = 0;
-      else if (streq (argv [i], "-stext"))
-	initial_text_size = atoi (argv[++i]);
-      else if (streq (argv [i], "-sdata"))
-	initial_data_size = atoi (argv[++i]);
-      else if (streq (argv [i], "-ldata"))
-	initial_data_limit = atoi (argv[++i]);
-      else if (streq (argv [i], "-sstack"))
-	initial_stack_size = atoi (argv[++i]);
-      else if (streq (argv [i], "-lstack"))
-	initial_stack_limit = atoi (argv[++i]);
+	else if (streq (argv [i], "-notrap"))
+	  load_trap_handler = 0;
+	else if (streq (argv [i], "-trap_file"))
+	  {
+	    trap_file = argv[++i];
+	    load_trap_handler = 1;
+	  }
+	else if (streq (argv [i], "-quiet"))
+	  quiet = 1;
+	else if (streq (argv [i], "-noquiet"))
+	  quiet = 0;
+	else if (streq (argv [i], "-file"))
+	  {
+	    argv_ptr = i + 1;
+	    if (!assembly_file_read)
+	      {
+		initialize_world (load_trap_handler ? trap_file : NULL);
+	      }
+	    assembly_file_read |= !read_assembly_file (argv[++i]);
+	    break;			/* Everything that follows is argv */
+	  }
+	else if (streq (argv [i], "-mapped_io"))
+	  mapped_io = 1;
+	else if (streq (argv [i], "-nomapped_io"))
+	  mapped_io = 0;
+	else if (streq (argv [i], "-stext"))
+	  initial_text_size = atoi (argv[++i]);
+	else if (streq (argv [i], "-sdata"))
+	  initial_data_size = atoi (argv[++i]);
+	else if (streq (argv [i], "-ldata"))
+	  initial_data_limit = atoi (argv[++i]);
+	else if (streq (argv [i], "-sstack"))
+	  initial_stack_size = atoi (argv[++i]);
+	else if (streq (argv [i], "-lstack"))
+	  initial_stack_limit = atoi (argv[++i]);
 
-      else if (streq (argv [i], "-sktext"))
-	initial_k_text_size = atoi (argv[++i]);
-      else if (streq (argv [i], "-skdata"))
-	initial_k_data_size = atoi (argv[++i]);
-      else if (streq (argv [i], "-lkdata"))
-	initial_k_data_limit = atoi (argv[++i]);
-      else
-	error ("usage: spim -bare/-asm -trap/-notrap -trap_file <file> -quiet/-noquiet -mapped_io/-nomapped_io -file <file> <args>\n");
-    }
+	else if (streq (argv [i], "-sktext"))
+	  initial_k_text_size = atoi (argv[++i]);
+	else if (streq (argv [i], "-skdata"))
+	  initial_k_data_size = atoi (argv[++i]);
+	else if (streq (argv [i], "-lkdata"))
+	  initial_k_data_limit = atoi (argv[++i]);
+	else
+	  error ("usage: spim -bare/-asm -trap/-notrap -trap_file <file> -quiet/-noquiet -mapped_io/-nomapped_io -file <file> <args>\n");
+      }
 
   if (!assembly_file_read)
     {
       initialize_world (load_trap_handler ? trap_file : NULL);
       top_level ();
     }
-  else if (assembly_file_read)
+  else /* assembly_file_read */
     {
       console_to_program ();
       initialize_run_stack (argc - argv_ptr, &argv[argv_ptr]);
@@ -466,13 +477,13 @@ parse_spim_command (file, redo)
 	  {
 	    if (redo) loc += 1;
 	    else loc = yylval.i;
-	    print_reg (loc, 0);
+	    print_reg (loc);
 	  }
 	else if (token == Y_FP_REG)
 	  {
 	    if (redo) loc += 2;
 	    else loc = yylval.i;
-	    print_reg (loc, 1);
+	    print_fp_reg (loc);
 	  }
 	else if (token == Y_INT)
 	  {
@@ -482,7 +493,7 @@ parse_spim_command (file, redo)
 	  }
 	else if (token == Y_ID)
 	  {
-	    if (!print_reg (yylval.i, 2))
+	    if (!print_reg_from_string ((char *) yylval.p))
 	      {
 		if (redo) loc += 4;
 		else loc = find_symbol_address ((char *) yylval.p);
@@ -794,82 +805,90 @@ flush_to_newline ()
 }
 
 
-/* Print register number N.  TYPE code indicate which register set to use.
+/* Print register number N.
    Return non-zero if register N was valid register string. */
 
 #ifdef __STDC__
 static int
-print_reg (int reg_no, int type_code)
+print_reg (int reg_no)
 #else
 static int
-print_reg (reg_no, type_code)
+print_reg (reg_no)
      int reg_no;
-     int type_code;
 #endif
 {
-  switch (type_code)
-    {
-    case 0:
-      write_output (message_out, "Reg %d = 0x%08x (%d)\n",
-		 reg_no, R[reg_no], R[reg_no]);
-      break;
+  write_output (message_out, "Reg %d = 0x%08x (%d)\n", reg_no, R[reg_no], R[reg_no]);
+  return (1);
+}
 
-    case 1:
-      if ((reg_no & 1) == 0)
-	write_output (message_out, "FP reg %d = %g (double)\n",
-		      reg_no, FPR_D (reg_no));
 
-      write_output (message_out, "FP reg %d = %g (single)\n",
-		 reg_no, FPR_S (reg_no));
-      break;
+#ifdef __STDC__
+static int
+print_fp_reg (int reg_no)
+#else
+static int
+print_fp_reg (reg_no)
+     int reg_no;
+#endif
+{
+  if ((reg_no & 1) == 0)
+    write_output (message_out, "FP reg %d = %g (double)\n", reg_no, FPR_D (reg_no));
+  write_output (message_out, "FP reg %d = %g (single)\n", reg_no, FPR_S (reg_no));
+  return (1);
+}
 
-    case 2:
-      {
-	char *rn = (char *) reg_no;
-	char s[100];
-	char *s1 = s;
 
-	/* Conver to lower case */
-	while (*rn != '\0' && s1 - s < 100)
-	  *s1++ = tolower (*rn++);
-	*s1 = '\0';
-	/* Drop leading $ */
-	if (s[0] == '$')
-	  s1 = s + 1;
-	else
-	  s1 = s;
+#ifdef __STDC__
+static int
+print_reg_from_string (char* reg_num)
+#else
+static int
+print_reg_from_string (reg_num)
+     char* reg_num;
+#endif
+{
+  char s[100];
+  char *s1 = s;
 
-	if (streq (s1, "pc"))
-	  write_output (message_out, "PC = 0x%08x (%d)\n", PC, PC);
-	else if (streq (s1, "hi"))
-	  write_output (message_out, "HI = 0x%08x (%d)\n", HI, HI);
-	else if (streq (s1, "lo"))
-	  write_output (message_out, "LO = 0x%08x (%d)\n", LO, LO);
-	else if (streq (s1, "fpcond"))
-	  write_output (message_out, "FpCond = 0x%08x (%d)\n", FpCond, FpCond);
-	else if (streq (s1, "cause"))
-	  write_output (message_out, "Cause = 0x%08x (%d)\n", Cause, Cause);
-	else if (streq (s1, "epc"))
-	  write_output (message_out, "EPC = 0x%08x (%d)\n", EPC, EPC);
-	else if (streq (s1, "status"))
-	  write_output (message_out, "Status = 0x%08x (%d)\n",
-		     Status_Reg, Status_Reg);
-	else if (streq (s1, "badvaddr"))
-	  write_output (message_out, "BadVAddr = 0x%08x (%d)\n",
-		     BadVAddr, BadVAddr);
-	else if (streq (s1, "context"))
-	  write_output (message_out, "Context = 0x%08x (%d)\n",
-			Context, Context);
-	else if (streq (s1, "prid"))
-	  write_output (message_out, "PRId = 0x%08x (%d)\n", PRId, PRId);
-	else
-	  return (0);
-	break;
-      }
-    }
+  /* Conver to lower case */
+  while (*reg_num != '\0' && s1 - s < 100)
+    *s1++ = tolower (*reg_num++);
+  *s1 = '\0';
+  /* Drop leading $ */
+  if (s[0] == '$')
+    s1 = s + 1;
+  else
+    s1 = s;
+
+  if (streq (s1, "pc"))
+    write_output (message_out, "PC = 0x%08x (%d)\n", PC, PC);
+  else if (streq (s1, "hi"))
+    write_output (message_out, "HI = 0x%08x (%d)\n", HI, HI);
+  else if (streq (s1, "lo"))
+    write_output (message_out, "LO = 0x%08x (%d)\n", LO, LO);
+  else if (streq (s1, "fpcond"))
+    write_output (message_out, "FpCond = 0x%08x (%d)\n", FpCond, FpCond);
+  else if (streq (s1, "cause"))
+    write_output (message_out, "Cause = 0x%08x (%d)\n", Cause, Cause);
+  else if (streq (s1, "epc"))
+    write_output (message_out, "EPC = 0x%08x (%d)\n", EPC, EPC);
+  else if (streq (s1, "status"))
+    write_output (message_out, "Status = 0x%08x (%d)\n",
+		  Status_Reg, Status_Reg);
+  else if (streq (s1, "badvaddr"))
+    write_output (message_out, "BadVAddr = 0x%08x (%d)\n",
+		  BadVAddr, BadVAddr);
+  else if (streq (s1, "context"))
+    write_output (message_out, "Context = 0x%08x (%d)\n",
+		  Context, Context);
+  else if (streq (s1, "prid"))
+    write_output (message_out, "PRId = 0x%08x (%d)\n", PRId, PRId);
+  else
+    return (0);
 
   return (1);
 }
+
 
 #define MAX_BUF_LEN 32000
 
