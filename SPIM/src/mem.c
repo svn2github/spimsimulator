@@ -383,7 +383,13 @@ bad_mem_read (addr, mask, dest)
 	return (0xffff & tmp);
 
       case 0x3:
-	return (ENCODING (text_seg [(addr - TEXT_BOT) >> 2]));
+	{
+	instruction *inst = text_seg [(addr - TEXT_BOT) >> 2];
+	if (inst == NULL)
+	  return 0;
+	else
+	  return (ENCODING (inst));
+	}
 
       default:
 	run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);

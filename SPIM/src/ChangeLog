@@ -1,5 +1,13 @@
 2000-12-10    <larus@C745660-A>
 
+	* mem.c (bad_mem_read):
+	Printing of instruction bits failed when no instruction at
+	address. [From: John Bruce Zuckerman (johnz@cs.tamu.edu)]
+
+	* spim.h display-utils.c mips-syscall.c run.c:
+	Handle display of stack better when $sp points to non-word
+	boundary. [Matt Simmons, (simmonmt@eng.sun.com)]
+
 	* parser.y:
 	Change generated NOP to sll $0, $0, 0 to be consistent. [From:
 	Robert Greenfield (rhg@gpfn.sk.ca)]
