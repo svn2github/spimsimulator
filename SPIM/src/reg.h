@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 14    3/27/04 4:50p Larus $
+/* $Header: /Software/SPIM/src/reg.h 15    4/21/04 9:19p Larus $
 */
 
 
@@ -119,7 +119,7 @@ extern reg_word CCR[4][32], CPR[4][32];
 #define CP0_Cause_IP2   0x00000400 /* HW Int 0 */
 #define CP0_Cause_IP1   0x00000200 /* SW Int 1 */
 #define CP0_Cause_IP0   0x00000100 /* SW Int 0 */
-#define CP0_Cause_ExcCode 0x0000003c
+#define CP0_Cause_ExcCode 0x0000007c
 #define CP0_Cause_Mask	(CP0_Cause_BD		\
 			 | CP0_Cause_IP		\
 			 | CP0_Cause_IP7	\
