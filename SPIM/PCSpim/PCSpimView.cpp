@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 21    9/12/04 4:51p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 22    2/05/05 3:53p Jim $ */
 
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
@@ -394,14 +394,17 @@ void CPCSpimView::InitializeSimulator()
     }
 }
 
-
 void CPCSpimView::OnSimulatorReinitialize()
 {
-  InitializeSimulator();
+  ReinitializeSimulator();
   m_strCurFilename.Empty();
-  write_output(message_out, "Memory and registers cleared and the simulator reinitialized.\n\n");
 }
 
+void CPCSpimView::ReinitializeSimulator()
+{
+	write_output(message_out, "Memory and registers cleared and the simulator reinitialized.\n\n");
+	InitializeSimulator();
+}
 
 void CPCSpimView::OnSimulatorClearRegisters()
 {
@@ -492,10 +495,7 @@ void CPCSpimView::OnSimulatorRun()
       addr = starting_address ();
     }
 
-  if (addr != 0)
-    {
-      ExecuteProgram(addr, DEFAULT_RUN_STEPS, 0, 0);
-    }
+    ExecuteProgram(addr, DEFAULT_RUN_STEPS, 0, 0);
 }
 
 
@@ -505,40 +505,43 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
 				 int display,
 				 int cont_bkpt)
 {
-  g_fRunning = TRUE;
-  ShowRunning();
-
-  while (1)
+    if (pc != 0)
     {
-      if (0 != run_program(pc, steps, display, cont_bkpt))
-	{
-	  UpdateStatusDisplay();
-	  HighlightCurrentInstruction();
+	g_fRunning = TRUE;
+	ShowRunning();
 
-	  // If we hit a breakpoint, and the user doesn't
-	  // want to continue, then stop.
-	  if (!AskContinue(FALSE))
+	while (1)
+	{
+	    if (0 != run_program(pc, steps, display, cont_bkpt))
 	    {
-	      break;
+		UpdateStatusDisplay();
+		HighlightCurrentInstruction();
+
+		// If we hit a breakpoint, and the user doesn't
+		// want to continue, then stop.
+		if (!AskContinue(FALSE))
+		{
+		    break;
+		}
+
+		// Step over breakpoint
+		run_program(PC, 1, 0, 1);
+		pc = PC;
 	    }
-
-	  // Step over breakpoint
-	  run_program(PC, 1, 0, 1);
-	  pc = PC;
+	    else
+	    {
+		break;
+	    }
 	}
-      else
+
+	if (::IsWindow(m_hWnd))	// We may have ended while running.
 	{
-	  break;
+	    UpdateStatusDisplay();
+	    HighlightCurrentInstruction();
+
+	    g_fRunning = FALSE;
+	    ShowRunning();
 	}
-    }
-
-  if (::IsWindow(m_hWnd))	// We may have ended while running.
-    {
-      UpdateStatusDisplay();
-      HighlightCurrentInstruction();
-
-      g_fRunning = FALSE;
-      ShowRunning();
     }
 }
 
@@ -745,14 +748,14 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
 
   if (m_strCurFilename.IsEmpty())
   {
-    // Reset the simulator before loading first file
-    OnSimulatorReinitialize();
+	  // Reset the simulator before loading first file
+	  ReinitializeSimulator();
   }
   else if (IDYES == (result = MessageBox("Clear program and reinitialize simulator before loading?",
-					  NULL, MB_YESNOCANCEL | MB_ICONQUESTION)))
+	  NULL, MB_YESNOCANCEL | MB_ICONQUESTION)))
   {
-    // Reset the simulator if requested
-    OnSimulatorReinitialize();
+	  // Reset the simulator if requested
+	  ReinitializeSimulator();
   }
   else if (IDCANCEL == result)
   {
@@ -761,7 +764,7 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
   }
 
   g_pView->SetMessageCapture(TRUE);
-  nLoaded = read_assembly_file((char *)strFilename);
+  nLoaded = read_assembly_file((char*)strFilename);
   strLoadMsg = g_pView->GetMessageCaptureBuf();
   g_pView->SetMessageCapture(FALSE);
 
@@ -771,7 +774,7 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
 
   if (nLoaded != 0)
     {
-      strLoadMsg.Format("Could not open %s for reading.", strFilename);
+      strLoadMsg.Format("Could not open %s for reading.", (char*)strFilename);
       MessageBox(strLoadMsg, NULL, MB_OK | MB_ICONEXCLAMATION);
     }
   else if (!strLoadMsg.IsEmpty())
@@ -825,7 +828,7 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
       UpdateStatusDisplay();
       HighlightCurrentInstruction();
 
-      write_output(message_out, "%s successfully loaded\n", strFilename);
+      write_output(message_out, "%s successfully loaded\n", (char*)strFilename);
     }
 }
 
@@ -859,7 +862,7 @@ void CPCSpimView::ShowRunning()
 
 void CPCSpimView::OnSimulatorStep()
 {
-  ExecuteProgram(PC, 1, 1, 1);
+    ExecuteProgram(PC, 1, 1, 1);
 }
 
 

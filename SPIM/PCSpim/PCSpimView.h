@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 8     5/02/04 12:59p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 9     2/05/05 3:53p Jim $ */
 
 // PCSpimView.h : interface of the CPCSpimView class
 //
@@ -141,6 +141,7 @@ private:
 	void ExecuteProgram(mem_addr pc, int steps, int display, int cont_bkpt);
 	void InitializeSimulator();
 	void Initialize();
+	void ReinitializeSimulator();
 };
 
 #ifndef _DEBUG  // debug version in PCSpimView.cpp
