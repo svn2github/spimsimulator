@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 9     12/24/01 11:01a Larus $
+/* $Header: /Software/SPIM/src/mem.c 10    1/01/03 7:45p Larus $
 */
 
 
@@ -238,8 +238,7 @@ expand_data (addl_bytes)
   data_top += addl_bytes;
 
   /* Zero new memory */
-  for (p = data_seg_b + old_size / BYTES_PER_WORD;
-       p < data_seg_b + new_size / BYTES_PER_WORD; )
+  for (p = data_seg_b + old_size; p < data_seg_b + new_size; )
     *p ++ = 0;
 }
 
