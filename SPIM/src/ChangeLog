@@ -1,5 +1,8 @@
 2004-02-14    <larus@C745660-A>
 
+	* spim.c [Jos Hulzink (josh@stack.nl)]:
+	Incorrect ifdef around vprintf.
+	
 	* spim.c [Marvin Solomon (solomon@cs.wisc.edu)]:
 	Core dumped when passed one argument.
 

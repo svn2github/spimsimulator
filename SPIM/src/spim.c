@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 13    2/14/04 12:09p Larus $
+/* $Header: /Software/SPIM/src/spim.c 14    2/14/04 12:35p Larus $
 */
 
 
@@ -969,7 +969,7 @@ va_dcl
 
   console_to_spim ();
 
-#ifdef VFPRINTF
+#ifdef NO_VFPRINTF
   _doprnt (fmt, args, stderr);
 #else
   vfprintf (stderr, fmt, args);
