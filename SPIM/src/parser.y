@@ -2207,7 +2207,7 @@ static void
 nop_inst ()
 #endif
 {
-  r_type_inst (Y_OR_OP, 0, 0, 0);
+  r_type_inst (Y_SLL_OP, 0, 0, 0); /* = 0 */
 }
 
 

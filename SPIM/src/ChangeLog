@@ -1,5 +1,9 @@
 2000-12-10    <larus@C745660-A>
 
+	* parser.y:
+	Change generated NOP to sll $0, $0, 0 to be consistent. [From:
+	Robert Greenfield (rhg@gpfn.sk.ca)]
+
 	* inst.c (i_type_inst_full_word and resolve_a_label_sub):
 	Sign-extension fixup code for high 16 bits of lw/sw added fixup
 	twice into instruction immediate field. [From: Robert Greenfield
