@@ -1668,6 +1668,16 @@ sdc2d_:	.word 0, 0
 
 
 	.data
+sync_:	.asciiz "Testing SYNC\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 nop_
+	syscall
+
+	sync
+	
+
+	.data
 syscall_:.asciiz "Testing SYSCALL\n"
 syscall1_:.asciiz "The next line should contain: -1, -1.000000, -2.000000\n"
 syscall2_:.asciiz ", "

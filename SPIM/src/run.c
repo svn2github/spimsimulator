@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 36    3/04/04 9:20p Larus $
+/* $Header: /Software/SPIM/src/run.c 37    3/06/04 8:38a Larus $
 */
 
 
@@ -387,7 +387,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		RAISE_EXCEPTION (BKPT_EXCPT, break);
 
 	    case Y_CACHE_OP:
-	      break;		/* not implemented */
+	      break;		/* Memory details not implemented */
 
 	    case Y_CFC0_OP:
 	    case Y_CFC2_OP:
@@ -753,7 +753,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_PREF_OP:
-	      break;		/* not implemented */
+	      break;		/* Memory details not implemented */
 
 	    case Y_RFE_OP:
 	      Status_Reg = (Status_Reg & 0xfffffff0) | ((Status_Reg & 0x3c) >> 2);
@@ -1440,6 +1440,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), *vp);
 		break;
 	      }
+
+	    case Y_SYNC_OP:
+	      break;		/* Memory details not implemented */
 
 	    case Y_TRUNC_W_D_OP:
 	      {

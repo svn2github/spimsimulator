@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 33    3/06/04 8:21a Larus $
+/* $Header: /Software/SPIM/src/op.h 34    3/06/04 8:38a Larus $
 */
 
 
@@ -406,6 +406,7 @@ OP("swc2",	Y_SWC2_OP,	I2a_TYPE_INST,		0xe8000000)
 OP("swl",	Y_SWL_OP,	I2a_TYPE_INST,		0xa8000000)
 OP("swr",	Y_SWR_OP,	I2a_TYPE_INST,		0xb8000000)
 OP("swxc1",	Y_SWXC1_OP,	FP_R3_TYPE_INST,	0x46000008)	/* MIPS32 Rev 2 */
+OP("sync",	Y_SYNC_OP,	NOARG_TYPE_INST,	0x0000000f)	/* MIPS32 */
 OP("synci",	Y_SYNCI_OP,	I2_TYPE_INST,		0x04140000)	/* MIPS32 Rev 2 */
 OP("syscall",	Y_SYSCALL_OP,	NOARG_TYPE_INST,	0x0000000c)
 OP("tlbp",	Y_TLBP_OP,	NOARG_TYPE_INST,	0x42000008)

@@ -303,6 +303,7 @@
 %token Y_SWL_OP
 %token Y_SWR_OP
 %token Y_SWXC1_OP
+%token Y_SYNC_OP
 %token Y_SYNCI_OP
 %token Y_SYSCALL_OP
 %token Y_TLBP_OP
@@ -687,12 +688,6 @@ ASM_CODE:	LOAD_OPS		DEST	ADDRESS
 		}
 
 
-	|	PREFETCH_OP	ADDRESS
-		{
-		  mips32_r2_inst ();
-		}
-
-
 	|	STORE_OPS	SRC1		ADDRESS
 		{
 		  i_type_inst ($1.i == Y_SD_POP ? Y_SW_OP : $1.i,
@@ -792,9 +787,27 @@ ASM_CODE:	LOAD_OPS		DEST	ADDRESS
 		}
 
 
+	|	PREFETCH_OP	ADDRESS
+		{
+		  mips32_r2_inst ();
+		}
+
+
 	|	CACHE_OPS		Y_INT	ADDRESS
 		{
 		  i_type_inst_free($1.i, $2.i, 0, (imm_expr *)$3.p);
+		}
+
+
+	|	Y_SYNC_OP
+		{
+		  r_type_inst($1.i, 0, 0, 0);
+		}
+
+
+	|	Y_SYNC_OP		Y_INT
+		{
+		  r_type_inst($1.i, $2.i, 0, 0);
 		}
 
 
