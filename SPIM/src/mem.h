@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/*   $Header: /Software/SPIM/src/mem.h 9     3/09/04 9:53p Larus $
+/*   $Header: /Software/SPIM/src/mem.h 10    3/10/04 8:14p Larus $
 */
 
 
@@ -132,123 +132,11 @@ extern mem_addr k_data_top;
 #define TRANS_INT_LEVEL		0 /* HW Interrupt 0 */
 #define TRANS_INT_MASK		CP0_Cause_IP2 /* HW Interrupt 0 */
 
-
-
-
-/* Translate from SPIM memory address to physical address */
-
-#define MEM_ADDRESS(ADDR)						   \
-((((mem_addr) (ADDR) >= TEXT_BOT) && ((mem_addr) (ADDR) < text_top))	   \
- ? (mem_addr) (ADDR) - TEXT_BOT + (char*) text_seg			   \
- : ((((mem_addr) (ADDR) >= DATA_BOT) && ((mem_addr) (ADDR) < data_top))	   \
-    ? (mem_addr) (ADDR) - DATA_BOT + (char*) data_seg		   \
-    : ((((mem_addr) (ADDR) >= stack_bot) && ((mem_addr) (ADDR) < STACK_TOP)) \
-       ? (mem_addr) (ADDR) - stack_bot + (char*) stack_seg		   \
-       : ((((mem_addr) (ADDR) >= K_TEXT_BOT) && ((mem_addr) (ADDR) < k_text_top)) \
-	  ? (mem_addr) (ADDR) - K_TEXT_BOT + (char*) k_text_seg		   \
-	  : ((((mem_addr) (ADDR) >= K_DATA_BOT) && ((mem_addr) (ADDR) < k_data_top)) \
-	     ? (mem_addr) (ADDR) - K_DATA_BOT + (char*) k_data_seg	   \
-	     : (void*)run_error ("Memory address out of bounds\n"))))))
-
-#define READ_MEM_INST(LOC, ADDR)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   if (_addr_ >= TEXT_BOT && _addr_ < text_top && !(_addr_ & 0x3))	   \
-     LOC = text_seg [(_addr_ - TEXT_BOT) >> 2];				   \
-   else if (_addr_ >= K_TEXT_BOT && _addr_ < k_text_top && !(_addr_ & 0x3))\
-     LOC = k_text_seg [(_addr_ - K_TEXT_BOT) >> 2];			   \
-   else LOC = bad_text_read (_addr_);}
-
-
-#define READ_MEM_BYTE(LOC, ADDR)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   if (_addr_ >= DATA_BOT && _addr_ < data_top)				   \
-    LOC = data_seg_b [_addr_ - DATA_BOT];				   \
-   else if (_addr_ >= stack_bot && _addr_ < STACK_TOP)			   \
-     LOC = stack_seg_b [_addr_ - stack_bot];				   \
-   else if (_addr_ >= K_DATA_BOT && _addr_ < k_data_top)		   \
-    LOC = k_data_seg_b [_addr_ - K_DATA_BOT];				   \
-   else									   \
-     LOC = bad_mem_read (_addr_, 0, (mem_word *)&LOC);}
-
-
-#define READ_MEM_HALF(LOC, ADDR)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   if (_addr_ >= DATA_BOT && _addr_ < data_top && !(_addr_ & 0x1))	   \
-     LOC = data_seg_h [(_addr_ - DATA_BOT) >> 1];			   \
-  else if (_addr_ >= stack_bot && _addr_ < STACK_TOP && !(_addr_ & 0x1))   \
-    LOC = stack_seg_h [(_addr_ - stack_bot) >> 1];			   \
-   else if (_addr_ >= K_DATA_BOT && _addr_ < k_data_top && !(_addr_ & 0x1))\
-     LOC = k_data_seg_h [(_addr_ - K_DATA_BOT) >> 1];			   \
-  else									   \
-    LOC = bad_mem_read (_addr_, 0x1, (mem_word *)&LOC);}
-
-
-#define READ_MEM_WORD(LOC, ADDR)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   if (_addr_ >= DATA_BOT && _addr_ < data_top && !(_addr_ & 0x3))	   \
-     LOC = data_seg [(_addr_ - DATA_BOT) >> 2];				   \
-  else if (_addr_ >= stack_bot && _addr_ < STACK_TOP && !(_addr_ & 0x3))   \
-    LOC = stack_seg [(_addr_ - stack_bot) >> 2];			   \
-   else if (_addr_ >= K_DATA_BOT && _addr_ < k_data_top && !(_addr_ & 0x3))\
-     LOC = k_data_seg [(_addr_ - K_DATA_BOT) >> 2];			   \
-  else									   \
-    LOC = bad_mem_read (_addr_, 0x3, (mem_word *)&LOC);}
-
-
-#define SET_MEM_INST(ADDR, INST)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   text_modified = 1;							   \
-   if (_addr_ >= TEXT_BOT && _addr_ < text_top && !(_addr_ & 0x3))	   \
-     text_seg [(_addr_ - TEXT_BOT) >> 2] = INST;			   \
-   else if (_addr_ >= K_TEXT_BOT && _addr_ < k_text_top && !(_addr_ & 0x3))\
-     k_text_seg [(_addr_ - K_TEXT_BOT) >> 2] = INST;			   \
-   else bad_text_write (_addr_, INST);}
-
-
-#define SET_MEM_BYTE(ADDR, VALUE)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   data_modified = 1;							   \
-   if (_addr_ >= DATA_BOT && _addr_ < data_top)				   \
-     data_seg_b [_addr_ - DATA_BOT] = (unsigned char) (VALUE);		   \
-   else if (_addr_ >= stack_bot && _addr_ < STACK_TOP)			   \
-     stack_seg_b [_addr_ - stack_bot] = (unsigned char) (VALUE);	   \
-   else if (_addr_ >= K_DATA_BOT && _addr_ < k_data_top)		   \
-     k_data_seg_b [_addr_ - K_DATA_BOT] = (unsigned char) (VALUE);	   \
-   else bad_mem_write (_addr_, VALUE, 0);}
-
-
-#define SET_MEM_HALF(ADDR, VALUE)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   data_modified = 1;							   \
-   if (_addr_ >= DATA_BOT && _addr_ < data_top && !(_addr_ & 0x1))	   \
-     data_seg_h [(_addr_ - DATA_BOT) >> 1] = (unsigned short) (VALUE);	   \
-   else if (_addr_ >= stack_bot && _addr_ < STACK_TOP && !(_addr_ & 0x1))  \
-     stack_seg_h [(_addr_ - stack_bot) >> 1] = (unsigned short) (VALUE);   \
-   else if (_addr_ >= K_DATA_BOT && _addr_ < k_data_top && !(_addr_ & 0x1))\
-     k_data_seg_h [(_addr_ - K_DATA_BOT) >> 1] = (unsigned short) (VALUE); \
-   else bad_mem_write (_addr_, VALUE, 0x1);}
-
-
-#define SET_MEM_WORD(ADDR, VALUE)					   \
-{register mem_addr _addr_ = (mem_addr) (ADDR);				   \
-   data_modified = 1;							   \
-   if (_addr_ >= DATA_BOT && _addr_ < data_top && !(_addr_ & 0x3))	   \
-     data_seg [(_addr_ - DATA_BOT) >> 2] = (mem_word) (VALUE);		   \
-   else if (_addr_ >= stack_bot && _addr_ < STACK_TOP && !(_addr_ & 0x3))  \
-     stack_seg [(_addr_ - stack_bot) >> 2] = (mem_word) (VALUE);	   \
-   else if (_addr_ >= K_DATA_BOT && _addr_ < k_data_top && !(_addr_ & 0x3))\
-     k_data_seg [(_addr_ - K_DATA_BOT) >> 2] = (mem_word) (VALUE);	   \
-   else bad_mem_write (_addr_, VALUE, 0x3);}
-
 
 
 
 /* Exported functions: */
 
-mem_word bad_mem_read (mem_addr addr, int mask, mem_word *dest);
-void bad_mem_write (mem_addr addr, mem_word value, int mask);
-instruction *bad_text_read (mem_addr addr);
-void bad_text_write (mem_addr addr, instruction *inst);
 void check_memory_mapped_IO ();
 void expand_data (int addl_bytes);
 void expand_k_data (int addl_bytes);
@@ -256,4 +144,13 @@ void expand_stack (int addl_bytes);
 void make_memory (int text_size, int data_size, int data_limit,
 		  int stack_size, int stack_limit, int k_text_size,
 		  int k_data_size, int k_data_limit);
+void* mem_reference(mem_addr addr);
 void print_mem (mem_addr addr);
+instruction* read_mem_inst(mem_addr addr);
+reg_word read_mem_byte(mem_addr addr);
+reg_word read_mem_half(mem_addr addr);
+reg_word read_mem_word(mem_addr addr);
+void set_mem_inst(mem_addr addr, instruction* inst);
+void set_mem_byte(mem_addr addr, reg_word value);
+void set_mem_half(mem_addr addr, reg_word value);
+void set_mem_word(mem_addr addr, reg_word value);

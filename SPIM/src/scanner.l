@@ -363,8 +363,8 @@ int yywrap()
 static YY_CHAR *
 copy_str (YY_CHAR *str, int chop)
 {
-  register int new_len = strlen (str) - chop;
-  register YY_CHAR *new_str = (YY_CHAR *) xmalloc (new_len + 1), *n;
+  int new_len = strlen (str) - chop;
+  YY_CHAR *new_str = (YY_CHAR *) xmalloc (new_len + 1), *n;
 
   for (n = new_str; *str != '\0' && new_len > 0; new_len -= 1)
     if (*str == '\\')
@@ -570,7 +570,7 @@ static name_val_val register_tbl [] = {
 int
 register_name_to_number (char *name)
 {
-  register int c1 = *name, c2 = *(name + 1);
+  int c1 = *name, c2 = *(name + 1);
 
   if ('0' <= c1 && c1 <= '9'
       && (c2 == '\0' || (('0' <= c2 && c2 <= '9') && *(name + 2) == '\0')))

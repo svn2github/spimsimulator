@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 11    3/09/04 8:06p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 12    3/10/04 8:14p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -700,7 +700,7 @@ set_value_action (char *location_str, char *value_str)
       if (eptr == location_str)
 	error ("Unknown register selected: %s\n", location_str);
       else
-	SET_MEM_WORD (addr, value);
+	set_mem_word (addr, value);
     }
   redisplay_data ();
 }

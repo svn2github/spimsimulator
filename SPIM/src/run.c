@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 45    3/09/04 9:53p Larus $
+/* $Header: /Software/SPIM/src/run.c 46    3/10/04 8:14p Larus $
 */
 
 
@@ -48,8 +48,8 @@
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "sym-tbl.h"
 #include "y.tab.h"
 #include "mips-syscall.h"
@@ -141,11 +141,9 @@ static int running_in_delay_slot = 0;
    destination, as the instruction following the load can itself be a load
    instruction. */
 
-#define LOAD_INST(OP, ADDR, DEST_A, MASK)			\
+#define LOAD_INST(DEST_A, LD, MASK)				\
 		 {						\
-		  reg_word tmp;					\
-		  OP (tmp, (ADDR));				\
-		  LOAD_INST_BASE (DEST_A, (tmp & (MASK)))	\
+		  LOAD_INST_BASE (DEST_A, (LD & (MASK)))	\
 		 }
 
 
@@ -186,7 +184,7 @@ static int running_in_delay_slot = 0;
 int
 run_spim (mem_addr initial_PC, int steps_to_run, int display)
 {
-  register instruction *inst;
+  instruction *inst;
   static reg_word *delayed_load_addr1 = NULL, delayed_load_value1;
   static reg_word *delayed_load_addr2 = NULL, delayed_load_value2;
   int step, step_size, next_step;
@@ -224,7 +222,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	  R[0] = 0;		/* Maintain invariant value */
 
-	  READ_MEM_INST (inst, PC);
+	  inst = read_mem_inst (PC);
 
 	  if (exception_occurred) /* In reading instruction */
 	    {
@@ -258,8 +256,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    {
 	    case Y_ADD_OP:
 	      {
-		register reg_word vs = R[RS (inst)], vt = R[RT (inst)];
-		register reg_word sum = vs + vt;
+		reg_word vs = R[RS (inst)], vt = R[RT (inst)];
+		reg_word sum = vs + vt;
 
 		if (ARITH_OVFL (sum, vs, vt))
 		  RAISE_EXCEPTION (ExcCode_Ov, break);
@@ -269,8 +267,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_ADDI_OP:
 	      {
-		register reg_word vs = R[RS (inst)], imm = (short) IMM (inst);
-		register reg_word sum = vs + imm;
+		reg_word vs = R[RS (inst)], imm = (short) IMM (inst);
+		reg_word sum = vs + imm;
 
 		if (ARITH_OVFL (sum, vs, imm))
 		  RAISE_EXCEPTION (ExcCode_Ov, break);
@@ -516,29 +514,34 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_LB_OP:
-	      LOAD_INST (READ_MEM_BYTE, R[BASE (inst)] + IOFFSET (inst),
-			 &R[RT (inst)], 0xffffffff);
+	      LOAD_INST (&R[RT (inst)],
+			 read_mem_byte (R[BASE (inst)] + IOFFSET (inst)),
+			 0xffffffff);
 	      break;
 
 	    case Y_LBU_OP:
-	      LOAD_INST (READ_MEM_BYTE, R[BASE (inst)] + IOFFSET (inst),
-			 &R[RT (inst)], 0xff);
+	      LOAD_INST (&R[RT (inst)],
+			 read_mem_byte (R[BASE (inst)] + IOFFSET (inst)),
+			 0xff);
 	      break;
 
 	    case Y_LH_OP:
-	      LOAD_INST (READ_MEM_HALF, R[BASE (inst)] + IOFFSET (inst),
-			 &R[RT (inst)], 0xffffffff);
+	      LOAD_INST (&R[RT (inst)],
+			 read_mem_half (R[BASE (inst)] + IOFFSET (inst)),
+			 0xffffffff);
 	      break;
 
 	    case Y_LHU_OP:
-	      LOAD_INST (READ_MEM_HALF, R[BASE (inst)] + IOFFSET (inst),
-			 &R[RT (inst)], 0xffff);
+	      LOAD_INST (&R[RT (inst)],
+			 read_mem_half (R[BASE (inst)] + IOFFSET (inst)),
+			 0xffff);
 	      break;
 
 	    case Y_LL_OP:
 	      /* Uniprocess, so this instruction is just a load */
-	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
-			 &R[RT (inst)], 0xffffffff);
+	      LOAD_INST (&R[RT (inst)],
+			 read_mem_word (R[BASE (inst)] + IOFFSET (inst)),
+			 0xffffffff);
 	      break;
 
 	    case Y_LUI_OP:
@@ -546,8 +549,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_LW_OP:
-	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
-			 &R[RT (inst)], 0xffffffff);
+	      LOAD_INST (&R[RT (inst)],
+			 read_mem_word (R[BASE (inst)] + IOFFSET (inst)),
+			 0xffffffff);
 	      break;
 
 	    case Y_LDC2_OP:
@@ -560,12 +564,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_LWL_OP:
 	      {
-		register mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		reg_word word;	/* Can't be register */
-		register int byte = addr & 0x3;
+		int byte = addr & 0x3;
 		reg_word reg_val = R[RT (inst)];
 
-		READ_MEM_WORD (word, addr & 0xfffffffc);
+		word = read_mem_word (addr & 0xfffffffc);
 		if (!exception_occurred)
 #ifdef BIGENDIAN
 		  switch (byte)
@@ -612,12 +616,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_LWR_OP:
 	      {
-		register mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		reg_word word;	/* Can't be register */
-		register int byte = addr & 0x3;
+		int byte = addr & 0x3;
 		reg_word reg_val = R[RT (inst)];
 
-		READ_MEM_WORD (word, addr & 0xfffffffc);
+		word = read_mem_word (addr & 0xfffffffc);
 		if (!exception_occurred)
 #ifdef BIGENDIAN
 		  switch (byte)
@@ -817,12 +821,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SB_OP:
-	      SET_MEM_BYTE (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
+	      set_mem_byte (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
 	    case Y_SC_OP:
 	      /* Uniprocessor, so instruction is just a store */
-	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
+	      set_mem_word (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
 	    case Y_SDC2_OP:
@@ -830,7 +834,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SH_OP:
-	      SET_MEM_HALF (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
+	      set_mem_half (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
 	    case Y_SLL_OP:
@@ -937,8 +941,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_SUB_OP:
 	      {
-		register reg_word vs = R[RS (inst)], vt = R[RT (inst)];
-		register reg_word diff = vs - vt;
+		reg_word vs = R[RS (inst)], vt = R[RT (inst)];
+		reg_word diff = vs - vt;
 
 		if (SIGN_BIT (vs) != SIGN_BIT (vt)
 		    && SIGN_BIT (vs) != SIGN_BIT (diff))
@@ -952,7 +956,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SW_OP:
-	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
+	      set_mem_word (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
 	    case Y_SWC2_OP:
@@ -961,12 +965,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_SWL_OP:
 	      {
-		register mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		mem_word data;
 		reg_word reg = R[RT (inst)];
-		register int byte = addr & 0x3;
+		int byte = addr & 0x3;
 
-		READ_MEM_WORD (data, (addr & 0xfffffffc));
+		data = read_mem_word (addr & 0xfffffffc);
 #ifdef BIGENDIAN
 		switch (byte)
 		  {
@@ -1006,18 +1010,18 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		    break;
 		  }
 #endif
-		SET_MEM_WORD (addr & 0xfffffffc, data);
+		set_mem_word (addr & 0xfffffffc, data);
 		break;
 	      }
 
 	    case Y_SWR_OP:
 	      {
-		register mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		mem_word data;
 		reg_word reg = R[RT (inst)];
-		register int byte = addr & 0x3;
+		int byte = addr & 0x3;
 
-		READ_MEM_WORD (data, (addr & 0xfffffffc));
+		data = read_mem_word (addr & 0xfffffffc);
 #ifdef BIGENDIAN
 		switch (byte)
 		  {
@@ -1057,7 +1061,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		    break;
 		  }
 #endif
-		SET_MEM_WORD (addr & 0xfffffffc, data);
+		set_mem_word (addr & 0xfffffffc, data);
 		break;
 	      }
 
@@ -1386,16 +1390,19 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		if (addr & 0x3)
 		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
-		LOAD_INST (READ_MEM_WORD, addr,
-			   (reg_word *) &FGR[FT (inst)], 0xffffffff);
-		LOAD_INST (READ_MEM_WORD, addr + sizeof(mem_word),
-			   (reg_word *) &FGR[FT (inst) + 1], 0xffffffff);
+		LOAD_INST ((reg_word *) &FGR[FT (inst)],
+			   read_mem_word (addr),
+			   0xffffffff);
+		LOAD_INST ((reg_word *) &FGR[FT (inst) + 1],
+			   read_mem_word (addr + sizeof(mem_word)),
+			   0xffffffff);
 		break;
 	      }
 
 	    case Y_LWC1_OP:
-	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
-			 (reg_word *) &FGR[FT (inst)], 0xffffffff);
+	      LOAD_INST ((reg_word *) &FGR[FT (inst)],
+			 read_mem_word (R[BASE (inst)] + IOFFSET (inst)),
+			 0xffffffff);
 	      break;
 
 	    case Y_MFC1_OP:
@@ -1543,8 +1550,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		if (addr & 0x3)
 		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
-		SET_MEM_WORD (addr, *vp);
-		SET_MEM_WORD (addr + sizeof(mem_word), *(vp + 1));
+		set_mem_word (addr, *vp);
+		set_mem_word (addr + sizeof(mem_word), *(vp + 1));
 		break;
 	      }
 
@@ -1569,7 +1576,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		float val = FGR[RT (inst)];
 		reg_word *vp = (reg_word *) &val;
 
-		SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), *vp);
+		set_mem_word (R[BASE (inst)] + IOFFSET (inst), *vp);
 		break;
 	      }
 
@@ -1691,9 +1698,9 @@ start_CP0_timer ()
 static void
 unsigned_multiply (reg_word v1, reg_word v2)
 {
-  register u_reg_word a, b, c, d;
-  register u_reg_word bd, ad, cb, ac;
-  register u_reg_word mid, mid2, carry_mid = 0;
+  u_reg_word a, b, c, d;
+  u_reg_word bd, ad, cb, ac;
+  u_reg_word mid, mid2, carry_mid = 0;
 
   a = (v1 >> 16) & 0xffff;
   b = v1 & 0xffff;

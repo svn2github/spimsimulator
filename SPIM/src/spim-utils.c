@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 17    3/07/04 4:10p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 18    3/10/04 8:14p Larus $
 */
 
 
@@ -34,8 +34,8 @@
 #include "spim-utils.h"
 #include "inst.h"
 #include "data.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "scanner.h"
 #include "parser.h"
 #include "y.tab.h"
@@ -258,7 +258,7 @@ initialize_run_stack (int argc, char **argv)
 
   R[REG_A0] = argc;
 
-  SET_MEM_WORD (R[29], argc);	/* Leave argc on stack */
+  set_mem_word (R[29], argc);	/* Leave argc on stack */
 }
 
 
@@ -268,7 +268,7 @@ copy_str_to_stack (char *s)
   int i = strlen (s);
   while (i >= 0)
     {
-      SET_MEM_BYTE (R[29], s[i]);
+      set_mem_byte (R[29], s[i]);
       R[29] -= 1;
       i -= 1;
     }
@@ -279,7 +279,7 @@ copy_str_to_stack (char *s)
 static mem_addr
 copy_int_to_stack (int n)
 {
-  SET_MEM_WORD (R[29], n);
+  set_mem_word (R[29], n);
   R[29] -= BYTES_PER_WORD;
   return ((mem_addr) R[29] + BYTES_PER_WORD);
 }
@@ -366,7 +366,7 @@ delete_breakpoint (mem_addr addr)
       {
 	bkpt *n;
 
-	SET_MEM_INST (addr, b->inst);
+	set_mem_inst (addr, b->inst);
 	if (p == NULL)
 	  bkpts = b->next;
 	else
@@ -444,13 +444,13 @@ fatal_error (char *fmt, ...)
 name_val_val *
 map_string_to_name_val_val (name_val_val tbl[], int tbl_len, char *id)
 {
-  register int low = 0;
-  register int hi = tbl_len - 1;
+  int low = 0;
+  int hi = tbl_len - 1;
 
   while (low <= hi)
     {
-      register int mid = (low + hi) / 2;
-      register char *idp = id, *np = tbl[mid].name;
+      int mid = (low + hi) / 2;
+      char *idp = id, *np = tbl[mid].name;
 
       while (*idp == *np && *idp != '\0') {idp ++; np ++;}
 
@@ -473,12 +473,12 @@ map_string_to_name_val_val (name_val_val tbl[], int tbl_len, char *id)
 name_val_val *
 map_int_to_name_val_val (name_val_val tbl[], int tbl_len, int num)
 {
-  register int low = 0;
-  register int hi = tbl_len - 1;
+  int low = 0;
+  int hi = tbl_len - 1;
 
   while (low <= hi)
     {
-      register int mid = (low + hi) / 2;
+      int mid = (low + hi) / 2;
 
       if (tbl[mid].value1 == num)
 	return (&tbl[mid]);

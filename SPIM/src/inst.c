@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 21    3/06/04 10:04a Larus $
+/* $Header: /Software/SPIM/src/inst.c 22    3/10/04 8:14p Larus $
 */
 
 #include <stdio.h>
@@ -29,8 +29,8 @@
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "sym-tbl.h"
 #include "parser.h"
 #include "scanner.h"
@@ -152,7 +152,7 @@ store_instruction (instruction *inst)
   else if (text_dir)
     {
       exception_occurred = 0;
-      SET_MEM_INST (INST_PC, inst);
+      set_mem_inst (INST_PC, inst);
       if (exception_occurred)
 	error ("Invalid address (0x%08x) for instruction\n", INST_PC);
       else
@@ -630,7 +630,7 @@ print_inst (mem_addr addr)
   char buf [1024];
 
   exception_occurred = 0;
-  READ_MEM_INST (inst, addr);
+  inst = read_mem_inst (addr);
 
   if (exception_occurred)
     {
@@ -1002,13 +1002,10 @@ opcode_is_load_store (int opcode)
 int
 inst_is_breakpoint (mem_addr addr)
 {
-  instruction *old_inst;
-
   if (break_inst == NULL)
     break_inst = make_r_type_inst (Y_BREAK_OP, 1, 0, 0);
 
-  READ_MEM_INST (old_inst, addr);
-  return (old_inst == break_inst);
+  return (read_mem_inst (addr) == break_inst);
 }
 
 
@@ -1024,10 +1021,11 @@ set_breakpoint (mem_addr addr)
     break_inst = make_r_type_inst (Y_BREAK_OP, 1, 0, 0);
 
   exception_occurred = 0;
-  READ_MEM_INST (old_inst, addr);
+  old_inst = read_mem_inst (addr);
   if (old_inst == break_inst)
     return (NULL);
-  SET_MEM_INST (addr, break_inst);
+
+  set_mem_inst (addr, break_inst);
   if (exception_occurred)
     return (NULL);
   else

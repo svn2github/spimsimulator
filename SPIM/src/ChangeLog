@@ -9,7 +9,8 @@
 	SWC1, SDC1.
 	Modified exceptions and interrupts to conform to MIPS32 (ex when
 	compiled -DMIPS1).
-
+	Added CP0 timer.
+	
 2004-02-19    <larus@LARUS1>
 
 	* inst.c inst.h spim-utils.c:

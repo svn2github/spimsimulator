@@ -20,15 +20,15 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 20    3/09/04 9:53p Larus $
+/* $Header: /Software/SPIM/src/mem.c 21    3/10/04 8:14p Larus $
 */
 
 
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 
 /* Exported Variables: */
 
@@ -64,7 +64,11 @@ mem_addr k_data_top;
 
 /* Local functions: */
 
-static void free_instructions (register instruction **inst, int n);
+static mem_word bad_mem_read (mem_addr addr, int mask);
+static void bad_mem_write (mem_addr addr, mem_word value, int mask);
+static instruction *bad_text_read (mem_addr addr);
+static void bad_text_write (mem_addr addr, instruction *inst);
+static void free_instructions (instruction **inst, int n);
 static mem_word read_memory_mapped_IO (mem_addr addr);
 static void write_memory_mapped_IO (mem_addr addr, mem_word value);
 
@@ -177,7 +181,7 @@ make_memory (int text_size, int data_size, int data_limit,
 /* Free the storage used by the old instructions in memory. */
 
 static void
-free_instructions (register instruction **inst, int n)
+free_instructions (instruction **inst, int n)
 {
   for ( ; n > 0; n --, inst ++)
     if (*inst)
@@ -193,7 +197,7 @@ expand_data (int addl_bytes)
   int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = data_top - DATA_BOT;
   int new_size = old_size + delta;
-  register BYTE_TYPE *p;
+  BYTE_TYPE *p;
 
   if (addl_bytes < 0 || (source_file && new_size > data_size_limit))
     {
@@ -226,7 +230,7 @@ expand_stack (int addl_bytes)
   int old_size = STACK_TOP - stack_bot;
   int new_size = old_size + MAX (delta, old_size);
   mem_word *new_seg;
-  register mem_word *po, *pn;
+  mem_word *po, *pn;
 
   if (addl_bytes < 0 || (source_file && new_size > stack_size_limit))
     {
@@ -258,7 +262,7 @@ expand_k_data (int addl_bytes)
   int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = k_data_top - K_DATA_BOT;
   int new_size = old_size + delta;
-  register BYTE_TYPE *p;
+  BYTE_TYPE *p;
 
   if (addl_bytes < 0 || (source_file && new_size > k_data_size_limit))
     {
@@ -282,9 +286,144 @@ expand_k_data (int addl_bytes)
 
 
 
-/* Handle the infrequent and erroneous cases in the memory access macros. */
+/* Access memory */
 
-instruction *
+void*
+mem_reference(mem_addr addr)
+{
+  if ((addr >= TEXT_BOT) && (addr < text_top))
+    return addr - TEXT_BOT + (char*) text_seg;
+  else if ((addr >= DATA_BOT) && (addr < data_top))
+    return addr - DATA_BOT + (char*) data_seg;
+  else if ((addr >= stack_bot) && (addr < STACK_TOP))
+    return addr - stack_bot + (char*) stack_seg;
+  else if ((addr >= K_TEXT_BOT) && (addr < k_text_top))
+    return addr - K_TEXT_BOT + (char*) k_text_seg;
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top))
+    return addr - K_DATA_BOT + (char*) k_data_seg;
+  else
+    {
+      run_error ("Memory address out of bounds\n");
+      return NULL;
+    }
+}
+
+
+instruction*
+read_mem_inst(mem_addr addr)
+{
+  if (addr >= TEXT_BOT && addr < text_top && !(addr & 0x3))
+    return text_seg [(addr - TEXT_BOT) >> 2];
+  else if (addr >= K_TEXT_BOT && addr < k_text_top && !(addr & 0x3))
+    return k_text_seg [(addr - K_TEXT_BOT) >> 2];
+  else
+    return bad_text_read (addr);
+}
+
+
+reg_word
+read_mem_byte(mem_addr addr)
+{
+  if (addr >= DATA_BOT && addr < data_top)
+    return data_seg_b [addr - DATA_BOT];
+  else if (addr >= stack_bot && addr < STACK_TOP)
+    return stack_seg_b [addr - stack_bot];
+  else if (addr >= K_DATA_BOT && addr < k_data_top)
+    return k_data_seg_b [addr - K_DATA_BOT];
+  else
+    return bad_mem_read (addr, 0);
+}
+
+
+reg_word
+read_mem_half(mem_addr addr)
+{
+  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x1))
+    return data_seg_h [(addr - DATA_BOT) >> 1];
+  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x1))
+    return stack_seg_h [(addr - stack_bot) >> 1];
+  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x1))
+    return k_data_seg_h [(addr - K_DATA_BOT) >> 1];
+  else
+    return bad_mem_read (addr, 0x1);
+}
+
+
+reg_word
+read_mem_word(mem_addr addr)
+{
+  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x3))
+    return data_seg [(addr - DATA_BOT) >> 2];
+  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x3))
+    return stack_seg [(addr - stack_bot) >> 2];
+  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x3))
+    return k_data_seg [(addr - K_DATA_BOT) >> 2];
+  else
+    return bad_mem_read (addr, 0x3);
+}
+
+
+void
+set_mem_inst(mem_addr addr, instruction* inst)
+{
+  text_modified = 1;
+  if (addr >= TEXT_BOT && addr < text_top && !(addr & 0x3))
+    text_seg [(addr - TEXT_BOT) >> 2] = inst;
+  else if (addr >= K_TEXT_BOT && addr < k_text_top && !(addr & 0x3))
+    k_text_seg [(addr - K_TEXT_BOT) >> 2] = inst;
+  else
+    bad_text_write (addr, inst);
+}
+
+
+void
+set_mem_byte(mem_addr addr, reg_word value)
+{
+  data_modified = 1;
+  if (addr >= DATA_BOT && addr < data_top)
+    data_seg_b [addr - DATA_BOT] = (BYTE_TYPE) value;
+  else if (addr >= stack_bot && addr < STACK_TOP)
+    stack_seg_b [addr - stack_bot] = (BYTE_TYPE) value;
+  else if (addr >= K_DATA_BOT && addr < k_data_top)
+    k_data_seg_b [addr - K_DATA_BOT] = (BYTE_TYPE) value;
+  else
+    bad_mem_write (addr, value, 0);
+}
+
+
+void
+set_mem_half(mem_addr addr, reg_word value)
+{
+  data_modified = 1;
+  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x1))
+    data_seg_h [(addr - DATA_BOT) >> 1] = (short) value;
+  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x1))
+    stack_seg_h [(addr - stack_bot) >> 1] = (short) value;
+  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x1))
+    k_data_seg_h [(addr - K_DATA_BOT) >> 1] = (short) value;
+  else
+    bad_mem_write (addr, value, 0x1);
+}
+
+
+void
+set_mem_word(mem_addr addr, reg_word value)
+{
+  data_modified = 1;
+  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x3))
+    data_seg [(addr - DATA_BOT) >> 2] = (mem_word) value;
+  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x3))
+    stack_seg [(addr - stack_bot) >> 2] = (mem_word) value;
+  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x3))
+    k_data_seg [(addr - K_DATA_BOT) >> 2] = (mem_word) value;
+  else
+    bad_mem_write (addr, value, 0x3);
+}
+
+
+/* Handle the infrequent and erroneous cases in memory accesses. */
+
+static instruction *
 bad_text_read (mem_addr addr)
 {
   RAISE_EXCEPTION (ExcCode_IBE, CP0_BadVAddr = addr);
@@ -292,16 +431,16 @@ bad_text_read (mem_addr addr)
 }
 
 
-void
+static void
 bad_text_write (mem_addr addr, instruction *inst)
 {
   RAISE_EXCEPTION (ExcCode_IBE, CP0_BadVAddr = addr);
-  SET_MEM_WORD (addr, ENCODING (inst));
+  set_mem_word (addr, ENCODING (inst));
 }
 
 
-mem_word
-bad_mem_read (mem_addr addr, int mask, mem_word *dest)
+static mem_word
+bad_mem_read (mem_addr addr, int mask)
 {
   mem_word tmp;
 
@@ -347,7 +486,6 @@ bad_mem_read (mem_addr addr, int mask, mem_word *dest)
     {
       /* Grow stack segment */
       expand_stack (stack_bot - addr + 4);
-      *dest = 0;		/* Newly allocated memory */
       return (0);
     }
   else if (MM_IO_BOT <= addr && addr <= MM_IO_TOP)
@@ -359,7 +497,7 @@ bad_mem_read (mem_addr addr, int mask, mem_word *dest)
 }
 
 
-void
+static void
 bad_mem_write (mem_addr addr, mem_word value, int mask)
 {
   mem_word tmp;
@@ -574,13 +712,13 @@ print_mem (mem_addr addr)
     print_inst (addr);
   else if (DATA_BOT <= addr && addr < data_top)
     {
-      READ_MEM_WORD (value, addr);
+      value = read_mem_word (addr);
       write_output (message_out, "Data seg @ 0x%08x (%d) = 0x%08x (%d)\n",
 		    addr, addr, value, value);
     }
   else if (stack_bot <= addr && addr < STACK_TOP)
     {
-      READ_MEM_WORD (value, addr);
+      value = read_mem_word (addr);
       write_output (message_out, "Stack seg @ 0x%08x (%d) = 0x%08x (%d)\n",
 		    addr, addr, value, value);
     }
@@ -588,7 +726,7 @@ print_mem (mem_addr addr)
     print_inst (addr);
   else if (K_DATA_BOT <= addr && addr < k_data_top)
     {
-      READ_MEM_WORD (value, addr);
+      value = read_mem_word (addr);
       write_output (message_out,
 		    "Kernel Data seg @ 0x%08x (%d) = 0x%08x (%d)\n",
 		    addr, addr, value, value);

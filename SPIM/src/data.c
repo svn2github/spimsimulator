@@ -20,15 +20,15 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 7     2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/data.c 8     3/10/04 8:14p Larus $
 */
 
 
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "sym-tbl.h"
 #include "parser.h"
 #include "run.h"
@@ -218,12 +218,12 @@ void
 store_string (char *string, int length, int null_terminate)
 {
   for ( ; length > 0; string ++, length --) {
-    SET_MEM_BYTE (DATA_PC, *string);
+    set_mem_byte (DATA_PC, *string);
     BUMP_DATA_PC(1);
   }
   if (null_terminate)
     {
-      SET_MEM_BYTE (DATA_PC, 0);
+      set_mem_byte (DATA_PC, 0);
       BUMP_DATA_PC(1);
     }
 }
@@ -234,7 +234,7 @@ store_string (char *string, int length, int null_terminate)
 void
 store_byte (int value)
 {
-  SET_MEM_BYTE (DATA_PC, value);
+  set_mem_byte (DATA_PC, value);
   BUMP_DATA_PC (1);
 }
 
@@ -256,7 +256,7 @@ store_half (int value)
     }
   else
     {
-      SET_MEM_HALF (DATA_PC, value);
+      set_mem_half (DATA_PC, value);
       BUMP_DATA_PC (BYTES_PER_WORD / 2);
     }
 }
@@ -279,7 +279,7 @@ store_word (int value)
     }
   else
     {
-      SET_MEM_WORD (DATA_PC, value);
+      set_mem_word (DATA_PC, value);
       BUMP_DATA_PC (BYTES_PER_WORD);
     }
 }
@@ -297,9 +297,9 @@ store_double (double *value)
     }
   else
     {
-      SET_MEM_WORD (DATA_PC, * ((mem_word *) value));
+      set_mem_word (DATA_PC, *((mem_word *) value));
       BUMP_DATA_PC (BYTES_PER_WORD);
-      SET_MEM_WORD (DATA_PC, * (((mem_word *) value) + 1));
+      set_mem_word (DATA_PC, *(((mem_word *) value) + 1));
       BUMP_DATA_PC (BYTES_PER_WORD);
     }
 }
@@ -320,7 +320,7 @@ store_float (double *value)
     }
   else
     {
-      SET_MEM_WORD (DATA_PC, *((mem_word *) vp));
+      set_mem_word (DATA_PC, *((mem_word *) vp));
       BUMP_DATA_PC (BYTES_PER_WORD);
     }
 }

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 19    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 20    3/10/04 8:14p Larus $
 */
 
 
@@ -28,6 +28,7 @@
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
+#include "reg.h"
 #include "mem.h"
 #include "data.h"
 #include "parser.h"
@@ -263,7 +264,7 @@ resolve_label_uses (label *sym)
       resolve_a_label_sub (sym, use->inst, use->addr);
       if (use->inst != NULL && use->addr >= DATA_BOT && use->addr < stack_bot)
 	{
-	  SET_MEM_WORD (use->addr, inst_encode (use->inst));
+	  set_mem_word (use->addr, inst_encode (use->inst));
 	  free_inst (use->inst);
 	}
       next_use = use->next;
@@ -290,7 +291,7 @@ resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
   if (inst == NULL)
     {
       /* Memory data: */
-      SET_MEM_WORD (pc, sym->addr);
+      set_mem_word (pc, sym->addr);
     }
   else
     {
@@ -340,7 +341,7 @@ resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
 		{
   		  /* LW/SW sign extends offset. Compensate by adding 1 to high 16 bits. */
 		  instruction* prev_inst;
-		  READ_MEM_INST (prev_inst, pc - BYTES_PER_WORD);
+		  prev_inst = read_mem_inst (pc - BYTES_PER_WORD);
 		  if (prev_inst != NULL
 		      && OPCODE (prev_inst) == Y_LUI_OP
 		      && EXPR (inst)->symbol == EXPR (prev_inst)->symbol

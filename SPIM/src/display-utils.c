@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 16    3/07/04 4:10p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 17    3/10/04 8:14p Larus $
 */
 
 
@@ -27,8 +27,8 @@
 #include "spim-utils.h"
 #include "inst.h"
 #include "data.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "run.h"
 #include "sym-tbl.h"
 
@@ -206,7 +206,7 @@ insts_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *s
   
   for (i = from; i < to; i += 4)
   {
-    READ_MEM_INST (inst, i);
+    inst = read_mem_inst (i);
     if (inst != NULL)
     {
       *string_len += print_inst_internal (&buf[*string_len], 1*K, inst, i);
@@ -271,7 +271,7 @@ mem_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *str
     /* Look for a block of 4 or more zero memory words */
     for (j = 0; i + j < to; j += BYTES_PER_WORD)
     {
-      READ_MEM_WORD (val, i + j);
+      val = read_mem_word (i + j);
       if (val != 0)
 	break;
     }
@@ -294,7 +294,7 @@ mem_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *str
       *string_len += strlen (&buf[*string_len]);
       do
       {
-	READ_MEM_WORD (val, i);
+	val = read_mem_word (i);
 	sprintf (&buf[*string_len], "  0x%08x", val);
 	*string_len += strlen (&buf[*string_len]);
 	i += BYTES_PER_WORD;
@@ -341,7 +341,7 @@ print_partial_line (mem_addr i, char *buf, int *max_buf_len, int *string_len)
     
     for (; (i % BYTES_PER_LINE) != 0; i += BYTES_PER_WORD)
     {
-      READ_MEM_WORD (val, i);
+      val = read_mem_word (i);
       sprintf (&buf[*string_len], "  0x%08x", val);
       buf = check_buf_limit (buf, max_buf_len, string_len);
     }

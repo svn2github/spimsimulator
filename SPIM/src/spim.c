@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 22    3/09/04 8:06p Larus $
+/* $Header: /Software/SPIM/src/spim.c 23    3/10/04 8:14p Larus $
 */
 
 
@@ -75,8 +75,8 @@
 #include "spim.h"
 #include "spim-utils.h"
 #include "inst.h"
-#include "mem.h"
 #include "reg.h"
+#include "mem.h"
 #include "parser.h"
 #include "sym-tbl.h"
 #include "scanner.h"
