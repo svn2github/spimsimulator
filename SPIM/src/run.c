@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 28    3/03/04 6:19a Larus $
+/* $Header: /Software/SPIM/src/run.c 29    3/03/04 7:01a Larus $
 */
 
 
@@ -1259,6 +1259,21 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      {
 		int cc = CC (inst);
 		if ((FCCR & (1 << cc)) != 0)
+		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
+		break;
+
+	      }
+
+	    case Y_MOVN_D_OP:
+	      {
+		if (R[RT (inst)] != 0)
+		  SET_FPR_D (FD (inst), FPR_D (FS (inst)));
+		break;
+	      }
+
+	    case Y_MOVN_S_OP:
+	      {
+		if (R[RT (inst)] != 0)
 		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
 		break;
 

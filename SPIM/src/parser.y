@@ -211,7 +211,9 @@
 %token Y_MOVF_PS_OP
 %token Y_MOVF_S_OP
 %token Y_MOVN_OP
+%token Y_MOVN_D_OP
 %token Y_MOVN_PS_OP
+%token Y_MOVN_S_OP
 %token Y_MOVT_PS_OP
 %token Y_MOVZ_PS_OP
 %token Y_MSUB_D_OP
@@ -1395,13 +1397,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 
 
 
-	|	FP_MOVE_OP	       F_DEST	F_SRC1
+	|	FP_MOVE_OPS	       F_DEST	F_SRC1
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, 0);
 		}
 
 
-	|	FP_MOVE_OP_REV2		F_DEST	F_SRC1
+	|	FP_MOVE_OPS_REV2		F_DEST	F_SRC1
 		{
 		  mips32_r2_inst ();
 		}
@@ -1413,19 +1415,25 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	FP_MOVEC_OP		F_DEST	F_SRC1	CC_REG
+	|	FP_MOVEC_OPS	F_DEST	F_SRC1	REG
+		{
+		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
+		}
+
+
+	|	FP_MOVECC_OPS		F_DEST	F_SRC1	CC_REG
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
 		}
 
 
-	|	FP_MOVEC_OP_REV2	F_DEST	F_SRC1	CC_REG
+	|	FP_MOVECC_OPS_REV2	F_DEST	F_SRC1	CC_REG
 		{
 		  mips32_r2_inst ();
 		}
 
 
-	|	FP_MOVE_TEST_OP_REV2	F_DEST	F_SRC1	REG
+	|	FP_MOVEC_OPS_REV2	F_DEST	F_SRC1	REG
 		{
 		  mips32_r2_inst ();
 		}
@@ -1819,24 +1827,31 @@ CTL_COP_OP:	Y_CFC0_OP
 
 /* Floating point operations */
 
-FP_MOVE_OP:	Y_MOV_S_OP
+FP_MOVE_OPS:	Y_MOV_S_OP
 	|	Y_MOV_D_OP
 	;
 
-FP_MOVE_OP_REV2:	Y_MOV_PS_OP
+FP_MOVE_OPS_REV2:	Y_MOV_PS_OP
 	;
 
-FP_MOVEC_OP:	Y_MOVF_D_OP
+
+FP_MOVEC_OPS:	Y_MOVN_D_OP
+	|	Y_MOVN_S_OP
+	;
+
+FP_MOVEC_OPS_REV2:	Y_MOVN_PS_OP
+	|	Y_MOVZ_PS_OP
+	;
+
+
+FP_MOVECC_OPS:	Y_MOVF_D_OP
 	|	Y_MOVF_S_OP
 	;
 
-FP_MOVEC_OP_REV2:	Y_MOVF_PS_OP
+FP_MOVECC_OPS_REV2:	Y_MOVF_PS_OP
 	|	Y_MOVT_PS_OP
 	;
 
-FP_MOVE_TEST_OP_REV2:	Y_MOVN_PS_OP
-	|	Y_MOVZ_PS_OP
-	;
 
 FP_ABS_OP:	Y_ABS_S_OP
 	|	Y_ABS_D_OP
