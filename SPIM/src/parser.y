@@ -349,6 +349,8 @@
 %token Y_BNEZ_POP
 %token Y_LA_POP
 %token Y_LD_POP
+%token Y_L_D_POP
+%token Y_L_S_POP
 %token Y_LI_D_POP
 %token Y_LI_POP
 %token Y_LI_S_POP
@@ -366,6 +368,8 @@
 %token Y_REMU_POP
 %token Y_ROL_POP
 %token Y_ROR_POP
+%token Y_S_D_POP
+%token Y_S_S_POP
 %token Y_SD_POP
 %token Y_SEQ_POP
 %token Y_SGE_POP
@@ -1610,6 +1614,8 @@ LOADC_OPS:	Y_LDC2_OP
 
 LOADFP_OPS:	Y_LDC1_OP
 	|	Y_LWC1_OP
+	|	Y_L_D_POP { $$.i = Y_LDC1_OP; }
+	|	Y_L_S_POP { $$.i = Y_LWC1_OP; }
 	;
 
 LOADFP_INDEX_OPS:	Y_LDXC1_OP
@@ -1628,6 +1634,8 @@ STORE_OPS:	Y_SB_OP
 
 STOREC_OPS:	Y_SWC2_OP
 	|	Y_SDC2_OP
+	|	Y_S_D_POP { $$.i = Y_SDC1_OP; }
+	|	Y_S_S_POP { $$.i = Y_SWC1_OP; }
 	;
 
 STOREFP_OPS:	Y_SWC1_OP

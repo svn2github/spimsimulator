@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 37    3/07/04 4:10p Larus $
+/* $Header: /Software/SPIM/src/op.h 38    3/14/04 7:44p Larus $
 */
 
 
@@ -275,6 +275,9 @@ OP("jalr.hb",	Y_JALR_HB_OP,	R2ds_TYPE_INST,		0x00000409)	/* MIPS32 Rev 2 */
 OP("jr",	Y_JR_OP,	R1s_TYPE_INST,		0x00000008)
 OP("jr.hb",	Y_JR_HB_OP,	R1s_TYPE_INST,		0x00000408)	/* MIPS32 Rev 2 */
 
+OP("l.d",	Y_L_D_POP,	PSEUDO_OP,		-1)
+OP("l.s",	Y_L_S_POP,	PSEUDO_OP,		-1)
+
 OP("la",	Y_LA_POP,	PSEUDO_OP,		-1)
 OP("lb",	Y_LB_OP,	I2a_TYPE_INST,		0x80000000)
 OP("lbu",	Y_LBU_OP,	I2a_TYPE_INST,		0x90000000)
@@ -416,6 +419,9 @@ OP("round.w.s",	Y_ROUND_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000b)	/* MIPS32 */
 
 OP("rsqrt.d",	Y_RSQRT_D_OP,	FP_R2ds_TYPE_INST,	0x46200016)	/* MIPS32 Rev 2 */
 OP("rsqrt.s",	Y_RSQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000016)	/* MIPS32 Rev 2 */
+
+OP("s.d",	Y_S_D_POP,	PSEUDO_OP,		-1)
+OP("s.s",	Y_S_S_POP,	PSEUDO_OP,		-1)
 
 OP("sb",	Y_SB_OP,	I2a_TYPE_INST,		0xa0000000)
 OP("sc",	Y_SC_OP,	I2a_TYPE_INST,		0xe0000000)	/* MIPS32 */
