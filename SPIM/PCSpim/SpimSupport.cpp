@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/SpimSupport.cpp 5     3/12/04 11:01p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/SpimSupport.cpp 6     3/21/04 11:18a Larus $ */
 
 #include "stdafx.h"
 
@@ -168,7 +168,7 @@ void read_input(char *str, int str_size)
 }
 
 
-int* run_error (char *fmt, ...)
+void run_error (char *fmt, ...)
 {
   va_list args;
   char io_buffer [IO_BUFFSIZE];
@@ -181,8 +181,6 @@ int* run_error (char *fmt, ...)
 
   // Force a break;
   force_break = 1;
-
-  return 0;
 }
 
 

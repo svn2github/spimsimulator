@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 50    3/12/04 5:34p Larus $
+/* $Header: /Software/SPIM/src/run.c 51    3/21/04 11:18a Larus $
 */
 
 
@@ -1334,7 +1334,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_CVT_D_W_OP:
 	      {
-		double val = FPR_W (FS (inst));
+		double val = (double)FPR_W (FS (inst));
 
 		SET_FPR_D (FD (inst), val);
 		break;
@@ -1399,7 +1399,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_LDC1_OP:
 	      {
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
-		if (addr & 0x3)
+		if ((addr & 0x3) != 0)
 		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
 		LOAD_INST ((reg_word *) &FGR[FT (inst)],
@@ -1559,7 +1559,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		double val = FPR_D (RT (inst));
 		reg_word *vp = (reg_word *) &val;
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
-		if (addr & 0x3)
+		if ((addr & 0x3) != 0)
 		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
 		set_mem_word (addr, *vp);

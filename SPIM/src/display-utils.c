@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 17    3/10/04 8:14p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 18    3/21/04 11:18a Larus $
 */
 
 
@@ -34,7 +34,7 @@
 
 
 static char *check_buf_limit (char *buf, int *max_buf_len, int *string_len);
-static mem_addr print_partial_line (mem_addr i, char *buf, int *max_buf_len, int *string_len);
+static char* print_partial_line (mem_addr *i, char *buf, int *max_buf_len, int *string_len);
 
 
 /* Write the contents of the machine's registers, in a wide variety of
@@ -49,16 +49,16 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
   char *grstr, *fpstr;
   char *grfill, *fpfill;
   static char *reg_names[] =
-  {"r0", "at", "v0", "v1", "a0", "a1", "a2", "a3",
-   "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7",
-   "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7",
-   "t8", "t9", "k0", "k1", "gp", "sp", "s8", "ra"};
-  
+    {"r0", "at", "v0", "v1", "a0", "a1", "a2", "a3",
+     "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7",
+     "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7",
+     "t8", "t9", "k0", "k1", "gp", "sp", "s8", "ra"};
+
   if (buf == NULL)
     fatal_error ("NULL buf pointer");
   *buf = '\0';
   bufp = buf;
-  
+
   sprintf (bufp, " PC     = %08x    ", PC); bufp += strlen (bufp);
   sprintf (bufp, " EPC    = %08x    ", CP0_EPC); bufp += strlen (bufp);
   sprintf (bufp, " Cause  = %08x    ", CP0_Cause); bufp += strlen (bufp);
@@ -66,7 +66,7 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
   sprintf (bufp, " Status = %08x    ", CP0_Status); bufp += strlen (bufp);
   sprintf (bufp, " HI     = %08x    ", HI); bufp += strlen (bufp);
   sprintf (bufp, " LO     = %08x\n", LO); bufp += strlen (bufp);
-  
+
   if (print_gpr_hex)
     grstr = "R%-2d (%2s) = %08x", grfill = "  ";
   else
@@ -74,22 +74,22 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
 
   sprintf (bufp, "\t\t\t\t General Registers\n"); bufp += strlen (bufp);
   for (i = 0; i < 8; i++)
-  {
-    sprintf (bufp, grstr, i, reg_names[i], R[i]);
-    bufp += strlen (bufp);
-    sprintf (bufp, grfill); bufp += strlen (bufp);
-    sprintf (bufp, grstr, i+8, reg_names[i+8], R[i+8]);
-    bufp += strlen (bufp);
-    sprintf (bufp, grfill); bufp += strlen (bufp);
-    sprintf (bufp, grstr, i+16, reg_names[i+16], R[i+16]);
-    bufp += strlen (bufp);
-    sprintf (bufp, grfill); bufp += strlen (bufp);
-    sprintf (bufp, grstr, i+24, reg_names[i+24], R[i+24]);
-    bufp += strlen (bufp);
-    sprintf (bufp, "\n");
-    bufp += 1;
-  }
-  
+    {
+      sprintf (bufp, grstr, i, reg_names[i], R[i]);
+      bufp += strlen (bufp);
+      sprintf (bufp, grfill); bufp += strlen (bufp);
+      sprintf (bufp, grstr, i+8, reg_names[i+8], R[i+8]);
+      bufp += strlen (bufp);
+      sprintf (bufp, grfill); bufp += strlen (bufp);
+      sprintf (bufp, grstr, i+16, reg_names[i+16], R[i+16]);
+      bufp += strlen (bufp);
+      sprintf (bufp, grfill); bufp += strlen (bufp);
+      sprintf (bufp, grstr, i+24, reg_names[i+24], R[i+24]);
+      bufp += strlen (bufp);
+      sprintf (bufp, "\n");
+      bufp += 1;
+    }
+
 
   sprintf (bufp, "\n FIR    = %08x    ", FIR); bufp += strlen (bufp);
   sprintf (bufp, " FCSR   = %08x    ", FCSR); bufp += strlen (bufp);
@@ -107,28 +107,28 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
 
   if (print_fpr_hex)
     for (i = 0; i < 4; i += 1)
-    {
-      int *r1, *r2;
-      
-      /* Use pointers to cast to ints without invoking float->int conversion
-      so we can just print the bits. */
-      r1 = (int *)&FPR[i]; r2 = r1 + 1;
-      sprintf (bufp, fpstr, 2*i, *r1, *r2); bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      
-      r1 = (int *)&FPR[i+4]; r2 = r1 + 1;
-      sprintf (bufp, fpstr, 2*i+8, *r1, *r2); bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      
-      r1 = (int *)&FPR[i+8]; r2 = r1 + 1;
-      sprintf (bufp, fpstr, 2*i+16, *r1, *r2); bufp += strlen (bufp);
-      sprintf (bufp, fpfill); bufp += strlen (bufp);
-      
-      r1 = (int *)&FPR[i+12]; r2 = r1 + 1;
-      sprintf (bufp, fpstr, 2*i+24, *r1, *r2); bufp += strlen (bufp);
-      sprintf (bufp, "\n"); bufp += 1;
-    }
-    else for (i = 0; i < 4; i += 1)
+      {
+	int *r1, *r2;
+
+	/* Use pointers to cast to ints without invoking float->int conversion
+	   so we can just print the bits. */
+	r1 = (int *)&FPR[i]; r2 = r1 + 1;
+	sprintf (bufp, fpstr, 2*i, *r1, *r2); bufp += strlen (bufp);
+	sprintf (bufp, fpfill); bufp += strlen (bufp);
+
+	r1 = (int *)&FPR[i+4]; r2 = r1 + 1;
+	sprintf (bufp, fpstr, 2*i+8, *r1, *r2); bufp += strlen (bufp);
+	sprintf (bufp, fpfill); bufp += strlen (bufp);
+
+	r1 = (int *)&FPR[i+8]; r2 = r1 + 1;
+	sprintf (bufp, fpstr, 2*i+16, *r1, *r2); bufp += strlen (bufp);
+	sprintf (bufp, fpfill); bufp += strlen (bufp);
+
+	r1 = (int *)&FPR[i+12]; r2 = r1 + 1;
+	sprintf (bufp, fpstr, 2*i+24, *r1, *r2); bufp += strlen (bufp);
+	sprintf (bufp, "\n"); bufp += 1;
+      }
+  else for (i = 0; i < 4; i += 1)
     {
       sprintf (bufp, fpstr, 2*i, FPR[i]);
       bufp += strlen (bufp);
@@ -144,46 +144,46 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
       sprintf (bufp, "\n");
       bufp += 1;
     }
-    
-    if (print_fpr_hex)
-      fpstr = "FP%-2d=%08x", fpfill = " ";
-    else
-      fpstr = "FP%-2d = %#-13.6g", fpfill = " ";
-    sprintf (bufp, "\t\t\t      Single Floating Point Registers\n");
-    bufp += strlen (bufp);
-    if (print_fpr_hex)
-      for (i = 0; i < 8; i += 1)
+
+  if (print_fpr_hex)
+    fpstr = "FP%-2d=%08x", fpfill = " ";
+  else
+    fpstr = "FP%-2d = %#-13.6g", fpfill = " ";
+  sprintf (bufp, "\t\t\t      Single Floating Point Registers\n");
+  bufp += strlen (bufp);
+  if (print_fpr_hex)
+    for (i = 0; i < 8; i += 1)
       {
-      /* Use pointers to cast to ints without invoking float->int conversion
-	so we can just print the bits. */
+	/* Use pointers to cast to ints without invoking float->int conversion
+	   so we can just print the bits. */
 	sprintf (bufp, fpstr, i, *(int *)&FGR[i]); bufp += strlen (bufp);
 	sprintf (bufp, fpfill); bufp += strlen (bufp);
-	
+
 	sprintf (bufp, fpstr, i+8, *(int *)&FGR[i+8]); bufp += strlen (bufp);
 	sprintf (bufp, fpfill); bufp += strlen (bufp);
-	
+
 	sprintf (bufp, fpstr, i+16, *(int *)&FGR[i+16]); bufp += strlen (bufp);
 	sprintf (bufp, fpfill); bufp += strlen (bufp);
-	
+
 	sprintf (bufp, fpstr, i+24, *(int *)&FGR[i+24]); bufp += strlen (bufp);
 	sprintf (bufp, "\n"); bufp += 1;
       }
-      else for (i = 0; i < 8; i += 1)
-      {
-	sprintf (bufp, fpstr, i, FGR[i]);
-	bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-	sprintf (bufp, fpstr, i+8, FGR[i+8]);
-	bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-	sprintf (bufp, fpstr, i+16, FGR[i+16]);
-	bufp += strlen (bufp);
-	sprintf (bufp, fpfill); bufp += strlen (bufp);
-	sprintf (bufp, fpstr, i+24, FGR[i+24]);
-	bufp += strlen (bufp);
-	sprintf (bufp, "\n");
-	bufp += 1;
-      }
+  else for (i = 0; i < 8; i += 1)
+    {
+      sprintf (bufp, fpstr, i, FGR[i]);
+      bufp += strlen (bufp);
+      sprintf (bufp, fpfill); bufp += strlen (bufp);
+      sprintf (bufp, fpstr, i+8, FGR[i+8]);
+      bufp += strlen (bufp);
+      sprintf (bufp, fpfill); bufp += strlen (bufp);
+      sprintf (bufp, fpstr, i+16, FGR[i+16]);
+      bufp += strlen (bufp);
+      sprintf (bufp, fpfill); bufp += strlen (bufp);
+      sprintf (bufp, fpstr, i+24, FGR[i+24]);
+      bufp += strlen (bufp);
+      sprintf (bufp, "\n");
+      bufp += 1;
+    }
 
   *string_len = bufp - buf;
   if (*max_buf_len <= *string_len)
@@ -203,22 +203,22 @@ insts_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *s
 {
   instruction *inst;
   mem_addr i;
-  
+
   for (i = from; i < to; i += 4)
-  {
-    inst = read_mem_inst (i);
-    if (inst != NULL)
     {
-      *string_len += print_inst_internal (&buf[*string_len], 1*K, inst, i);
-      if ((*max_buf_len - *string_len) < 1*K)
-      {
-	/* Low memory: double buffer size and continue. */
-	*max_buf_len = 2 * *max_buf_len;
-	if ((buf = (char *) realloc (buf, *max_buf_len)) == 0)
-	  fatal_error ("realloc failed\n");
-      }
+      inst = read_mem_inst (i);
+      if (inst != NULL)
+	{
+	  *string_len += print_inst_internal (&buf[*string_len], 1*K, inst, i);
+	  if ((*max_buf_len - *string_len) < 1*K)
+	    {
+	      /* Low memory: double buffer size and continue. */
+	      *max_buf_len = 2 * *max_buf_len;
+	      if ((buf = (char *) realloc (buf, (size_t)*max_buf_len)) == 0)
+		fatal_error ("realloc failed\n");
+	    }
+	}
     }
-  }
   return (buf);
 }
 
@@ -263,47 +263,49 @@ mem_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *str
   mem_word val;
   mem_addr i = ROUND_UP (from, BYTES_PER_WORD);
   int j;
-  
-  i = print_partial_line (i, buf, max_buf_len, string_len);
-  
+
+  buf = print_partial_line (&i, buf, max_buf_len, string_len);
+
   for ( ; i < to; )
-  {
-    /* Look for a block of 4 or more zero memory words */
-    for (j = 0; i + j < to; j += BYTES_PER_WORD)
     {
-      val = read_mem_word (i + j);
-      if (val != 0)
-	break;
+      /* Count consecutive zero words */
+      for (j = 0; (i + (uint32) j * BYTES_PER_WORD) < to; j += 1)
+	{
+	  val = read_mem_word (i + (uint32) j * BYTES_PER_WORD);
+	  if (val != 0)
+	    {
+	      break;
+	    }
+	}
+
+      if (j >= 4)
+	{
+	  /* Block of 4 or more zero memory words: */
+	  sprintf (&buf[*string_len], "[0x%08x]...[0x%08x]	0x00000000\n",
+		   i,
+		   i + (uint32) j * BYTES_PER_WORD);
+	  buf = check_buf_limit (buf, max_buf_len, string_len);
+
+	  i = i + (uint32) j * BYTES_PER_WORD;
+	  buf = print_partial_line (&i, buf, max_buf_len, string_len);
+	}
+      else
+	{
+	  /* Fewer than 4 zero words, print them on a single line: */
+	  sprintf (&buf[*string_len], "[0x%08x]		      ", i);
+	  *string_len += strlen (&buf[*string_len]);
+	  do
+	    {
+	      val = read_mem_word (i);
+	      sprintf (&buf[*string_len], "  0x%08x", (unsigned int)val);
+	      *string_len += strlen (&buf[*string_len]);
+	      i += BYTES_PER_WORD;
+	    }
+	  while (i % BYTES_PER_LINE != 0);
+	  sprintf (&buf[*string_len], "\n");
+	  buf = check_buf_limit (buf, max_buf_len, string_len);
+	}
     }
-    if (i + j < to)
-      j -= BYTES_PER_WORD;
-    
-    if (j >= 4 * BYTES_PER_WORD)
-    {
-      sprintf (&buf[*string_len], "[0x%08x]...[0x%08x]	0x00000000\n",
-	i, i + j);
-      buf = check_buf_limit (buf, max_buf_len, string_len);
-      i = i + j;
-      
-      i = print_partial_line (i, buf, max_buf_len, string_len);
-    }
-    else
-    {
-      /* Otherwise, print the next four words on a single line */
-      sprintf (&buf[*string_len], "[0x%08x]		      ", i);
-      *string_len += strlen (&buf[*string_len]);
-      do
-      {
-	val = read_mem_word (i);
-	sprintf (&buf[*string_len], "  0x%08x", val);
-	*string_len += strlen (&buf[*string_len]);
-	i += BYTES_PER_WORD;
-      }
-      while (i % BYTES_PER_LINE != 0);
-      sprintf (&buf[*string_len], "\n");
-      buf = check_buf_limit (buf, max_buf_len, string_len);
-    }
-  }
   return (buf);
 }
 
@@ -317,11 +319,11 @@ check_buf_limit (char *buf, int *max_buf_len, int *string_len)
 {
   *string_len += strlen (&buf[*string_len]);
   if ((*max_buf_len - *string_len) < 1*K)
-  {
-    *max_buf_len = 2 * *max_buf_len;
-    if ((buf = (char *) realloc (buf, *max_buf_len)) == 0)
-      fatal_error ("realloc failed\n");
-  }
+    {
+      *max_buf_len = 2 * *max_buf_len;
+      if ((buf = (char *) realloc (buf, (size_t)*max_buf_len)) == 0)
+	fatal_error ("realloc failed\n");
+    }
   return (buf);
 }
 
@@ -329,27 +331,28 @@ check_buf_limit (char *buf, int *max_buf_len, int *string_len)
 
 /* Print out a line containing a fraction of a quadword.  */
 
-static mem_addr
-print_partial_line (mem_addr i, char *buf, int *max_buf_len, int *string_len)
+static char *
+print_partial_line (mem_addr *i, char *buf, int *max_buf_len, int *string_len)
 {
   mem_word val;
-  
-  if ((i % BYTES_PER_LINE) != 0)
-  {
-    sprintf (&buf[*string_len], "[0x%08x]		      ", i);
-    buf = check_buf_limit (buf, max_buf_len, string_len);
-    
-    for (; (i % BYTES_PER_LINE) != 0; i += BYTES_PER_WORD)
+  mem_addr addr = *i;
+
+  if ((addr % BYTES_PER_LINE) != 0)
     {
-      val = read_mem_word (i);
-      sprintf (&buf[*string_len], "  0x%08x", val);
+      sprintf (&buf[*string_len], "[0x%08x]		      ", addr);
+      buf = check_buf_limit (buf, max_buf_len, string_len);
+
+      for (; (addr % BYTES_PER_LINE) != 0; addr += BYTES_PER_WORD)
+	{
+	  val = read_mem_word (addr);
+	  sprintf (&buf[*string_len], "  0x%08x", (unsigned int)val);
+	  buf = check_buf_limit (buf, max_buf_len, string_len);
+	}
+
+      sprintf (&buf[*string_len], "\n");
       buf = check_buf_limit (buf, max_buf_len, string_len);
     }
-    
-    sprintf (&buf[*string_len], "\n");
-    buf = check_buf_limit (buf, max_buf_len, string_len);
-  }
-  
-  return (i);
-}
 
+  *i = addr;
+  return (buf);
+}

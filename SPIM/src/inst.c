@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 23    3/12/04 10:12p Larus $
+/* $Header: /Software/SPIM/src/inst.c 24    3/21/04 11:18a Larus $
 */
 
 #include <stdio.h>
@@ -45,13 +45,10 @@ static void i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 				   int value_known, int32 value);
 static void inst_cmp (instruction *inst1, instruction *inst2);
 static instruction *make_r_type_inst (int opcode, int rd, int rs, int rt);
-static instruction *mk_i_inst (uint32 value, int opcode, int rs,
-			       int rt, int offset);
-static instruction *mk_j_inst (uint32, int opcode, int target);
-static instruction *mk_r_inst (uint32, int opcode, int rs,
-			       int rt, int rd, int shamt);
-static char* print_imm_expr (char *buf, unsigned int length, imm_expr *expr,
-			     int base_reg);
+static instruction *mk_i_inst (int32 value, int opcode, int rs, int rt, int offset);
+static instruction *mk_j_inst (int32, int opcode, int target);
+static instruction *mk_r_inst (int32, int opcode, int rs, int rt, int rd, int shamt);
+static char* print_imm_expr (char *buf, int length, imm_expr *expr, int base_reg);
 static void produce_immediate (imm_expr *expr, int rt, int value_known, int32 value);
 static void sort_a_opcode_table ();
 static void sort_i_opcode_table ();
@@ -674,7 +671,7 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       buf += strlen (buf);
       return (buf - bp);
     }
-  sprintf (buf, "0x%08x  %s", ENCODING (inst), entry->name);
+  sprintf (buf, "0x%08x  %s", (uint32)ENCODING (inst), entry->name);
   buf += strlen (buf);
   switch (entry->value2)
     {
@@ -809,8 +806,7 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       sprintf (buf, " [");
       buf += strlen (buf);
       if (opcode_is_load_store (OPCODE (inst)))
-	buf = print_imm_expr (buf, length - (buf - bp) - 2,
-			      EXPR (inst), BASE (inst));
+	buf = print_imm_expr (buf, length - (buf - bp) - 2, EXPR (inst), BASE (inst));
       else
 	buf = print_imm_expr (buf, length - (buf - bp) - 2, EXPR (inst), -1);
       sprintf (buf, "]");
@@ -1157,14 +1153,14 @@ eval_imm_expr (imm_expr *expr)
 /* Print the EXPRESSION. */
 
 static char*
-print_imm_expr (char *buf, unsigned int length, imm_expr *expr, int base_reg)
+print_imm_expr (char *buf, int length, imm_expr *expr, int base_reg)
 {
   char lbuf[100];
   char* lbp = lbuf;
 
   if (expr->symbol != NULL)
     {
-      unsigned int n = strlen (expr->symbol->name);
+      int n = strlen (expr->symbol->name);
       if (n < length)
 	{
 	  strncpy (buf, expr->symbol->name, length);
@@ -1182,11 +1178,11 @@ print_imm_expr (char *buf, unsigned int length, imm_expr *expr, int base_reg)
 
   *lbp = '\0';
   if (expr->pc_relative)
-    sprintf (lbp, "-0x%08x", -expr->offset);
+    sprintf (lbp, "-0x%08x", (unsigned int)-expr->offset);
   else if (expr->offset < -10)
-    sprintf (lbp, "-%d (-0x%08x)", -expr->offset, -expr->offset);
+    sprintf (lbp, "-%d (-0x%08x)", -expr->offset, (unsigned int)-expr->offset);
   else if (expr->offset > 10)
-    sprintf (lbp, "+%d (0x%08x)", expr->offset, expr->offset);
+    sprintf (lbp, "+%d (0x%08x)", expr->offset, (unsigned int)expr->offset);
   lbp += strlen(lbp);
 
   if (base_reg != -1 && expr->symbol != NULL &&
@@ -1200,7 +1196,7 @@ print_imm_expr (char *buf, unsigned int length, imm_expr *expr, int base_reg)
   lbp += strlen (lbp);
 
   if (length <= 0)
-    ;
+    { }
   else if (strlen (lbuf) < length)
     {
       strncpy (buf, lbuf, length);
@@ -1471,7 +1467,7 @@ sort_a_opcode_table ()
 
 
 instruction *
-inst_decode (uint32 val)
+inst_decode (int32 val)
 {
   int32 a_opcode = val & 0xfc000000;
   name_val_val *entry;
@@ -1591,7 +1587,7 @@ inst_decode (uint32 val)
 
 
 static instruction *
-mk_r_inst (uint32 val, int opcode, int rs, int rt, int rd, int shamt)
+mk_r_inst (int32 val, int opcode, int rs, int rt, int rd, int shamt)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1607,7 +1603,7 @@ mk_r_inst (uint32 val, int opcode, int rs, int rt, int rd, int shamt)
 
 
 static instruction *
-mk_i_inst (uint32 val, int opcode, int rs, int rt, int offset)
+mk_i_inst (int32 val, int opcode, int rs, int rt, int offset)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1621,7 +1617,7 @@ mk_i_inst (uint32 val, int opcode, int rs, int rt, int offset)
 }
 
 static instruction *
-mk_j_inst (uint32 val, int opcode, int target)
+mk_j_inst (int32 val, int opcode, int target)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 

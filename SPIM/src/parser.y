@@ -2106,8 +2106,8 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 		  align_data (2);
 		  if (lookup_label ((char*)$2.p)->addr == 0)
 		  {
-		    record_label ((char*)$2.p, current_data_pc (), 1);
-			if ($1.p) free($1.p);
+		    (void)record_label ((char*)$2.p, current_data_pc (), 1);
+		    if ($1.p) free($1.p);
 		  }
 		  increment_data_pc ($3.i);
 		}
@@ -2202,7 +2202,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_GLOBAL_DIR	ID
 		{
-		  make_label_global ((char*)$2.p);
+		  (void)make_label_global ((char*)$2.p);
 		  if ($2.p) free($2.p);
 		}
 
@@ -2221,11 +2221,11 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_LABEL_DIR	ID
 		{
-		  record_label ((char*)$2.p,
-				text_dir
-				? current_text_pc ()
-				: current_data_pc (),
-				1);
+		  (void)record_label ((char*)$2.p,
+				      text_dir
+				      ? current_text_pc ()
+				      : current_data_pc (),
+				      1);
 		  if ($1.p) free($1.p);
 		}
 
@@ -2861,13 +2861,13 @@ check_uimm_range(imm_expr* expr, uint32 min, uint32 max)
     {
       /* If expression can be evaluated, compare its value against the limits
 	     and complain if the value is out of bounds. */
-      uint32 value = eval_imm_expr (expr);
+      uint32 value = (uint32)eval_imm_expr (expr);
 
       if (value < min || max < value)
 	{
 	  char str[200];
 	  sprintf (str, "immediate value (%d) out of range (%d .. %d)",
-		   value, min, max);
+		   (int32)value, (int32)min, (int32)max);
 	  yywarn (str);
 	}
     }

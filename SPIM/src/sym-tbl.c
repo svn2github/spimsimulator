@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 20    3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 21    3/21/04 11:18a Larus $
 */
 
 
@@ -369,7 +369,7 @@ resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
 	    SET_TARGET (inst, value); /* Don't mask so it is sign-extended */
 	  else
 	    SET_IMM (inst, value);	/* Ditto */
-	  ENCODING (inst) = inst_encode (inst);
+	  SET_ENCODING (inst, inst_encode (inst));
 	}
       else
 	error ("Resolving undefined symbol: %s\n",

@@ -20,11 +20,11 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 12    3/11/04 10:15p Larus $
+/* $Header: /Software/SPIM/src/reg.h 13    3/21/04 11:18a Larus $
 */
 
 
-typedef int32 reg_word;
+typedef int32 /*@alt unsigned int @*/ reg_word;
 typedef uint32 u_reg_word;
 
 
@@ -181,8 +181,7 @@ extern int *FWR;		/* is possible */
 #endif
 
 #define FPR_D(REGNO)	(((REGNO) & 0x1) \
-			 ? (run_error ("Odd FP double register number\n") \
-			    ? 0.0 : 0.0) \
+			 ? (run_error ("Odd FP double register number\n") , 0.0) \
 			 : FPR[(REGNO) / 2])
 
 #define FPR_W(REGNO)	(FWR[REGNO])

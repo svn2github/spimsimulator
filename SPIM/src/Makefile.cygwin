@@ -185,7 +185,7 @@ very-clean: clean
 	rm -f y.tab.h y.tab.c lex.yy.c spim.tar* Documentation/spim.ps
 
 splint:
-	splint -weak -preproc -warnposix data.c display-utils.c inst.c mem.c syscall.c run.c spim-utils.c spim.c sym-tbl.c y.tab.c lex.yy.c
+	splint -weak -preproc -warnposix +matchanyintegral data.c display-utils.c inst.c mem.c syscall.c run.c spim-utils.c spim.c sym-tbl.c y.tab.c lex.yy.c
 
 
 SRC = spim-utils.c run.c mem.c inst.c data.c sym-tbl.c y.tab.o lex.yy.o \

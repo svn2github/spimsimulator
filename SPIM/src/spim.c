@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 31    3/14/04 8:26p Larus $
+/* $Header: /Software/SPIM/src/spim.c 32    3/21/04 11:18a Larus $
 */
 
 
@@ -332,7 +332,7 @@ top_level ()
 {
   int redo = 0;			/* Non-zero means reexecute last command */
 
-  signal (SIGINT, control_c_seen);
+  (void)signal (SIGINT, control_c_seen);
   while (1)
     {
       if (!redo)
@@ -425,7 +425,7 @@ parse_spim_command (FILE *file, int redo)
 
 	initialize_run_stack (0, 0);
 	console_to_program ();
-	if (addr)
+	if (addr != 0)
 	{
 	  char *undefs = undefined_symbol_string ();
 	  if (undefs != NULL)
@@ -470,7 +470,7 @@ parse_spim_command (FILE *file, int redo)
 
 	if (steps == 0)
 	  steps = 1;
-	if (addr)
+	if (addr != 0)
 	  {
 	    console_to_program ();
 	    if (run_program (addr, steps, 1, 1))
@@ -680,14 +680,14 @@ parse_spim_command (FILE *file, int redo)
           {
             int32 code = inst_encode (text_seg[i]);
             if (cmd == DUMP_TEXT_CMD)
-	      code = htonl (code);    /* dump in network byte order */
-            fwrite (&code, 1, sizeof(code), fp);
+	      code = (int32)htonl ((unsigned long)code);    /* dump in network byte order */
+            (void)fwrite (&code, 1, sizeof(code), fp);
             words++;
           }
 
         fclose (fp);
         fprintf (stderr, "Dumped %d words starting at 0x%08x to file %s\n",
-                 words, (dump_start << 2) + TEXT_BOT, filename);
+                 words, (unsigned int)((dump_start << 2) + TEXT_BOT), filename);
       }
       prev_cmd = cmd;
       return (0);
@@ -866,7 +866,7 @@ print_all_regs (int hex_flag)
   int max_buf_len = MAX_BUF_LEN;
   char buf[MAX_BUF_LEN];
   int count;
-  registers_as_string (buf, &max_buf_len, &count, hex_flag, hex_flag);
+  (void)registers_as_string (buf, &max_buf_len, &count, hex_flag, hex_flag);
   write_output (message_out, "%s\n", buf);
 }
 
@@ -892,7 +892,7 @@ error (char *fmt, ...)
 
 /* Print an error message and return to top level. */
 
-int*
+void
 run_error (char *fmt, ...)
 {
   va_list args;
@@ -908,7 +908,6 @@ run_error (char *fmt, ...)
 #endif
   va_end (args);
   longjmp (spim_top_level_env, 1);
-  return (0);			/* So it can be used in expressions */
 }
 
 
@@ -923,7 +922,7 @@ write_output (port fp, char *fmt, ...)
   int restore_console_to_program = 0;
 
   va_start (args, fmt);
-  f = (FILE *) fp.f;
+  f = fp.f;
 
   if (console_state_saved)
     {
@@ -1077,8 +1076,8 @@ get_console_char ()
 void
 put_console_char (char c)
 {
-  putc (c, (FILE *) console_out.f);
-  fflush ((FILE *) console_out.f);
+  putc (c, console_out.f);
+  fflush (console_out.f);
 }
 
 static int

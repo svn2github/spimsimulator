@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/syscall.c 1     3/11/04 7:14a Larus $ */
+/* $Header: /Software/SPIM/src/syscall.c 2     3/21/04 11:18a Larus $ */
 
 #ifndef WIN32
 #include <unistd.h>
@@ -155,7 +155,7 @@ do_syscall ()
     case READ_SYSCALL:
       {
 	/* Test if address is valid */
-	mem_reference (R[REG_A1] + R[REG_A2] - 1);
+	(void)mem_reference (R[REG_A1] + R[REG_A2] - 1);
 #ifdef WIN32
 	R[REG_RES] = _read(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
 #else
@@ -168,7 +168,7 @@ do_syscall ()
     case WRITE_SYSCALL:
       {
 	/* Test if address is valid */
-	mem_reference (R[REG_A1] + R[REG_A2] - 1);
+	(void)mem_reference (R[REG_A1] + R[REG_A2] - 1);
 #ifdef WIN32
 	R[REG_RES] = _write(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
 #else

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 19    3/12/04 10:12p Larus $
+/* $Header: /Software/SPIM/src/inst.h 20    3/21/04 11:18a Larus $
 */
 
 
@@ -79,7 +79,7 @@ typedef struct inst_s
       mem_addr target;
     } r_t;
 
-  uint32 encoding;
+  int32 encoding;
   imm_expr *expr;
   char *source_line;
 } instruction;
@@ -136,7 +136,7 @@ typedef struct inst_s
 #define SET_TARGET(INST, VAL)	(INST)->r_t.target = (mem_addr)(VAL)
 
 #define ENCODING(INST)		(INST)->encoding
-#define SET_ENCODING(INST, VAL)	(INST)->encoding = (uint32)(VAL)
+#define SET_ENCODING(INST, VAL)	(INST)->encoding = (int32)(VAL)
 
 #define EXPR(INST)		(INST)->expr
 #define SET_EXPR(INST, VAL)	(INST)->expr = (imm_expr*)(VAL)
@@ -154,8 +154,8 @@ typedef struct inst_s
 #define IMM_MIN		0xffff8000
 #define IMM_MAX 	0x00007fff
 
-#define UIMM_MIN  	0
-#define UIMM_MAX  	((1<<16)-1)
+#define UIMM_MIN  	(unsigned)0
+#define UIMM_MAX  	((unsigned)((1<<16)-1))
 
 
 
@@ -231,7 +231,7 @@ void i_type_inst_free (int opcode, int rt, int rs, imm_expr *expr);
 void increment_text_pc (int delta);
 imm_expr *incr_expr_offset (imm_expr *expr, int32 value);
 void initialize_inst_tables ();
-instruction *inst_decode (uint32 value);
+instruction *inst_decode (int32 value);
 int32 inst_encode (instruction *inst);
 int inst_is_breakpoint (mem_addr addr);
 void j_type_inst (int opcode, imm_expr *target);

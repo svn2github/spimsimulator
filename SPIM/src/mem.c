@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 24    3/12/04 5:34p Larus $
+/* $Header: /Software/SPIM/src/mem.c 25    3/21/04 11:18a Larus $
 */
 
 
@@ -444,7 +444,7 @@ bad_mem_read (mem_addr addr, int mask)
 {
   mem_word tmp;
 
-  if (addr & mask)
+  if ((addr & mask) != 0)
     RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr)
   else if (addr >= TEXT_BOT && addr < text_top)
     switch (mask)
@@ -502,7 +502,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
 {
   mem_word tmp;
 
-  if (addr & mask)
+  if ((addr & mask) != 0)
     /* Unaligned address fault */
     RAISE_EXCEPTION (ExcCode_AdES, CP0_BadVAddr = addr)
     else if (addr >= TEXT_BOT && addr < text_top)
@@ -699,7 +699,7 @@ print_mem (mem_addr addr)
 {
   mem_word value;
 
-  if (addr & 0x3)
+  if ((addr & 0x3) != 0)
     addr &= ~0x3;		/* Address must be word-aligned */
 
   if (TEXT_BOT <= addr && addr < text_top)

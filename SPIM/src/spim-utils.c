@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 22    3/12/04 11:00p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 23    3/21/04 11:18a Larus $
 */
 
 
@@ -110,8 +110,8 @@ initialize_world (char* exception_file_name)
 
       if (!bare_machine)
       {
-	make_label_global ("main"); /* In case .globl main forgotten */
-	record_label ("main", 0, 0);
+	(void)make_label_global ("main"); /* In case .globl main forgotten */
+	(void)record_label ("main", 0, 0);
       }
     }
   initialize_scanner (stdin);
@@ -200,7 +200,7 @@ starting_address ()
 {
   if (PC == 0)
     {
-      if (program_starting_address)
+      if (program_starting_address != 0)
 	return (program_starting_address);
       else
 	return (program_starting_address
@@ -226,7 +226,7 @@ initialize_run_stack (int argc, char **argv)
   mem_addr addrs[10000];
 
   /* Put strings on stack: */
-  for (p = environ; *p != '\0'; p++)
+  for (p = environ; *p != NULL; p++)
     addrs[j++] = copy_str_to_stack (*p);
 
   env_j = j;
@@ -243,11 +243,11 @@ initialize_run_stack (int argc, char **argv)
     }
 
   /* Build vectors on stack: */
-  copy_int_to_stack (0);	/* Null-terminate vector */
+  (void)copy_int_to_stack (0);	/* Null-terminate vector */
   for (i = env_j - 1; i >= 0; i--)
     R[REG_A2] = copy_int_to_stack (addrs[i]);
 
-  copy_int_to_stack (0);	/* Null-terminate vector */
+  (void)copy_int_to_stack (0);	/* Null-terminate vector */
   for (i = j - 1; i >= env_j; i--)
     R[REG_A1] = copy_int_to_stack (addrs[i]);
 

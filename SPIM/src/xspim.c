@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 20    3/15/04 7:32p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 21    3/21/04 11:18a Larus $
  */
 
 #include <stdio.h>
@@ -923,7 +923,7 @@ error (char *fmt, ...)
 }
 
 
-int*
+void
 run_error (char *fmt, ...)
 {
   va_list args;
@@ -938,7 +938,6 @@ run_error (char *fmt, ...)
     fprintf (stderr, "%s", io_buffer);
   if (spim_is_running)
     longjmp (spim_top_level_env, 1);
-  return (0);			/* So it can be used in expressions */
 }
 
 

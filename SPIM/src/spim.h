@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 20    3/13/04 7:46a Larus $
+/* $Header: /Software/SPIM/src/spim.h 21    3/21/04 11:18a Larus $
 */
 
 
@@ -81,7 +81,7 @@ typedef union {int i; void* p;} intptr_union;
 
 /* Type of a memory address.  Must be a 32-bit quantity to match MIPS.  */
 
-typedef uint32 mem_addr;
+typedef uint32 /*@alt int @*/ mem_addr;
 
 
 #define BYTES_PER_WORD 4	/* On the MIPS processor */
@@ -218,7 +218,7 @@ void fatal_error (char *fmt, ...);
 char get_console_char ();
 void put_console_char (char c);
 void read_input (char *str, int n);
-int* run_error (char *fmt, ...);
+void run_error (char *fmt, ...);
 void write_output (port, char *fmt, ...);
 
 

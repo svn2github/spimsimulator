@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 8     3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/data.c 9     3/21/04 11:18a Larus $
 */
 
 
@@ -244,7 +244,7 @@ store_byte (int value)
 void
 store_half (int value)
 {
-  if (DATA_PC & 0x1)
+  if ((DATA_PC & 0x1) != 0)
     {
 #ifdef BIGENDIAN
       store_byte ((value >> 8) & 0xff);
@@ -267,7 +267,7 @@ store_half (int value)
 void
 store_word (int value)
 {
-  if (DATA_PC & 0x3)
+  if ((DATA_PC & 0x3) != 0)
     {
 #ifdef BIGENDIAN
       store_half ((value >> 16) & 0xffff);
@@ -290,7 +290,7 @@ store_word (int value)
 void
 store_double (double *value)
 {
-  if (DATA_PC & 0x7)
+  if ((DATA_PC & 0x7) != 0)
     {
       store_word (* ((mem_word *) value));
       store_word (* (((mem_word *) value) + 1));
@@ -313,7 +313,7 @@ store_float (double *value)
   float val = (float)*value;
   float *vp = &val;
 
-  if (DATA_PC & 0x3)
+  if ((DATA_PC & 0x3) != 0)
     {
       store_half (*(mem_word *) vp & 0xffff);
       store_half ((*(mem_word *) vp >> 16) & 0xffff);

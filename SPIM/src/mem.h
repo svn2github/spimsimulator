@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/*   $Header: /Software/SPIM/src/mem.h 11    3/12/04 5:34p Larus $
+/*   $Header: /Software/SPIM/src/mem.h 12    3/21/04 11:18a Larus $
 */
 
 
@@ -30,7 +30,7 @@
 
 /* Type of contents of a memory word. */
 
-typedef int32 mem_word;
+typedef int32 /*@alt unsigned int @*/ mem_word;
 
 
 /* The text segment and boundaries. */
