@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 14    3/07/04 4:10p Larus $
+/* $Header: /Software/SPIM/src/spim.h 15    3/07/04 10:02p Larus $
 */
 
 
@@ -199,6 +199,11 @@ typedef uint32 mem_addr;
    be multiple of IO_INTERVAL.)*/
 
 #define TRANS_LATENCY (IO_INTERVAL)
+
+
+/* Iterval (in milliseconds) for the hardware timer in CP0. */
+
+#define TIMER_TICK_MS 1
 
 
 

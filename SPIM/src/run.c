@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 42    3/07/04 4:10p Larus $
+/* $Header: /Software/SPIM/src/run.c 43    3/07/04 10:02p Larus $
 */
 
 
@@ -34,6 +34,16 @@
 
 #include <math.h>
 #include <stdio.h>
+
+#ifdef WIN32
+#define _WIN32_WINDOWS 0x0500
+#define VC_EXTRALEAN
+#include <Windows.h>
+#else
+#include <errno.h>
+#include <signal.h>
+#include <sys/time.h>
+#endif
 
 #include "spim.h"
 #include "spim-utils.h"
@@ -49,16 +59,24 @@ int force_break = 0;	/* For the execution env. to force an execution break */
 
 #ifndef _MSC_VER
 extern int errno;
+long atol (const char *);
 #endif
 
-long atol (const char *);
+
 
 
 /* Local functions: */
 
+static void set_fpu_cc (int cond, int cc, int less, int equal, int unordered);
 static void signed_multiply (reg_word v1, reg_word v2);
+static void start_CP0_timer ();
+#ifdef WIN32
+void CALLBACK timer_completion_routine(LPVOID lpArgToCompletionRoutine,
+				       DWORD dwTimerLowValue, DWORD dwTimerHighValue);
+#else
+static void timer_signal_handler (int signum);
+#endif
 static void unsigned_multiply (reg_word v1, reg_word v2);
-static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
 
 
 #define SIGN_BIT(X) ((X) & 0x80000000)
@@ -179,6 +197,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
   else
     next_step = steps_to_run;	/* Run to completion */
 
+  /* Start a timer running */
+  start_CP0_timer();
+
   for (step_size = MIN (next_step, steps_to_run);
        steps_to_run > 0;
        steps_to_run -= step_size, step_size = MIN (next_step, steps_to_run))
@@ -188,6 +209,10 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	   have changed. */
 	check_memory_mapped_IO ();
       /* else run inner loop for all steps */
+
+#ifdef WIN32
+      SleepEx(0, TRUE);	      /* Put thread in awaitable state for WaitableTimer */
+#endif
 
       for (step = 0; step < step_size; step += 1)
 	{
@@ -380,8 +405,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      if (RD (inst) == 1)
 		/* Debugger breakpoint */
 		RAISE_EXCEPTION (ExcCode_Bp, return (1))
-	      else
-		RAISE_EXCEPTION (ExcCode_Bp, break);
+		  else
+		    RAISE_EXCEPTION (ExcCode_Bp, break);
 
 	    case Y_CACHE_OP:
 	      break;		/* Memory details not implemented */
@@ -718,6 +743,10 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      CPR[0][FS (inst)] = R[RT (inst)];
 	      switch (FS (inst))
 		{
+		case CP0_Compare_Reg:
+		  CP0_Cause &= ~CP0_Cause_IP7;	/* Writing clears HW interrupt 5 */
+		  break;
+
 		case CP0_Status_Reg:
 		  CPR[0][FS (inst)] &= CP0_Status_Mask;
 		  CP0_Status |= ((CP0_Status_CU & 0x30000000)
@@ -777,8 +806,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_RFE_OP:
 #ifdef MIPS1
 	      /* This is MIPS-I, not compatible with MIPS32 or the
-	       definition of the bits in the CP0 Status register in that
-	       architecture. */
+		 definition of the bits in the CP0 Status register in that
+		 architecture. */
 	      CP0_Status = (CP0_Status & 0xfffffff0) | ((CP0_Status & 0x3c) >> 2);
 #else
 	      RAISE_EXCEPTION (ExcCode_RI, {}); /* Not instruction in MIPS32 */
@@ -1578,6 +1607,70 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 }
 
 
+#ifdef WIN32
+static void CALLBACK
+timer_completion_routine(LPVOID lpArgToCompletionRoutine, DWORD dwTimerLowValue, DWORD dwTimerHighValue)
+#else
+timer_signal_handler (int signum)
+#endif
+{
+  /* Increment CP0 Count register and test if it matches the Compare register.
+     If so, cause an interrupt. */
+  CP0_Count += 1;
+  if (CP0_Count == CP0_Compare)
+    {
+      RAISE_EXCEPTION (ExcCode_Int, CP0_Cause |= CP0_Cause_IP7);
+    }
+
+  /* Re-enable the timer */
+  start_CP0_timer ();
+}
+
+
+static void
+start_CP0_timer ()
+{
+#ifdef WIN32
+  HANDLE timer = CreateWaitableTimer(NULL, TRUE, "SPIMTimer");
+  if (NULL == timer)
+    {
+      error ("CreateWaitableTimer failed");
+    }
+  else
+    {
+      LARGE_INTEGER interval;
+      interval.QuadPart = -10000 * TIMER_TICK_MS;  /* Unit is 100 nsec */
+
+      if (!SetWaitableTimer (timer, &interval, 0, timer_completion_routine, 0, FALSE))
+	{
+	  error ("SetWaitableTimer failed");
+	}
+    }
+#else
+  /* Should use ITIMER_VIRTUAL delivering SIGVTALRM, but that does not seem
+     to work under Cygwin, so we'll adopt the lowest common denominator. */
+  if (-1 == (int)signal (SIGALRM, timer_signal_handler))
+    {
+      perror ("signal failed");
+    }
+  else
+    {
+      struct itimerval time;
+      /* Restart each time, so we get at most one signal after run_spim
+	 terminates. */
+      time.it_interval.tv_sec = 0;
+      time.it_interval.tv_usec = 0;
+      time.it_value.tv_sec = 0;
+      time.it_value.tv_usec = TIMER_TICK_MS * 1000;
+      if (-1 == setitimer (ITIMER_REAL, &time, NULL))
+	{
+	  perror ("setitmer failed");
+	}
+    }
+#endif
+}
+
+
 /* Multiply two 32-bit numbers, V1 and V2, to produce a 64 bit result in
    the HI/LO registers.	 The algorithm is high-school math:
 
@@ -1670,7 +1763,7 @@ set_fpu_cc (int cond, int cc, int less, int equal, int unordered)
 
 
 void
-raise_exception(int excode)
+raise_exception (int excode)
 {
   if (ExcCode_Int != excode
       || ((CP0_Status & CP0_Status_IE) /* Allow interrupt if IE and !ERL and !EXL */
