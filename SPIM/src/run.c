@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 29    3/03/04 7:01a Larus $
+/* $Header: /Software/SPIM/src/run.c 30    3/03/04 7:19a Larus $
 */
 
 
@@ -1242,7 +1242,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_MOVF_OP:
 	      {
 		int cc = CC (inst);
-		if ((FCCR & (1 << cc)) != 0)
+		if ((FCCR & (1 << cc)) == 0)
 		  R[RD (inst)] = R[RS (inst)];
 		break;
 	      }
@@ -1250,7 +1250,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_MOVF_D_OP:
 	      {
 		int cc = CC (inst);
-		if ((FCCR & (1 << cc)) != 0)
+		if ((FCCR & (1 << cc)) == 0)
 		  SET_FPR_D (FD (inst), FPR_D (FS (inst)));
 		break;
 	      }
@@ -1258,7 +1258,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_MOVF_S_OP:
 	      {
 		int cc = CC (inst);
-		if ((FCCR & (1 << cc)) != 0)
+		if ((FCCR & (1 << cc)) == 0)
 		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
 		break;
 
@@ -1274,6 +1274,31 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_MOVN_S_OP:
 	      {
 		if (R[RT (inst)] != 0)
+		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
+		break;
+
+	      }
+
+	    case Y_MOVT_OP:
+	      {
+		int cc = CC (inst);
+		if ((FCCR & (1 << cc)) != 0)
+		  R[RD (inst)] = R[RS (inst)];
+		break;
+	      }
+
+	    case Y_MOVT_D_OP:
+	      {
+		int cc = CC (inst);
+		if ((FCCR & (1 << cc)) != 0)
+		  SET_FPR_D (FD (inst), FPR_D (FS (inst)));
+		break;
+	      }
+
+	    case Y_MOVT_S_OP:
+	      {
+		int cc = CC (inst);
+		if ((FCCR & (1 << cc)) != 0)
 		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
 		break;
 

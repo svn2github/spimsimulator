@@ -214,7 +214,10 @@
 %token Y_MOVN_D_OP
 %token Y_MOVN_PS_OP
 %token Y_MOVN_S_OP
+%token Y_MOVT_OP
+%token Y_MOVT_D_OP
 %token Y_MOVT_PS_OP
+%token Y_MOVT_S_OP
 %token Y_MOVZ_PS_OP
 %token Y_MSUB_D_OP
 %token Y_MSUB_PS_OP
@@ -1409,7 +1412,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	Y_MOVF_OP		DEST	SRC1	CC_REG
+	|	FP_MOVER_OPS		DEST	SRC1	CC_REG
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
 		}
@@ -1835,6 +1838,11 @@ FP_MOVE_OPS_REV2:	Y_MOV_PS_OP
 	;
 
 
+FP_MOVER_OPS:	Y_MOVF_OP
+	|	Y_MOVT_OP
+	;
+
+
 FP_MOVEC_OPS:	Y_MOVN_D_OP
 	|	Y_MOVN_S_OP
 	;
@@ -1846,6 +1854,8 @@ FP_MOVEC_OPS_REV2:	Y_MOVN_PS_OP
 
 FP_MOVECC_OPS:	Y_MOVF_D_OP
 	|	Y_MOVF_S_OP
+	|	Y_MOVT_D_OP
+	|	Y_MOVT_S_OP
 	;
 
 FP_MOVECC_OPS_REV2:	Y_MOVF_PS_OP
