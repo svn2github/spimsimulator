@@ -97,7 +97,7 @@ int *string_len;
   if (print_fpr_hex)
     fpstr = "FP%-2d=%08x,%08x", fpfill = " ";
   else
-    fpstr = "FP%-2d = %-10.4g", fpfill = "  ";
+    fpstr = "FP%-2d = %#-13.6g", fpfill = " ";
   sprintf (bufp, "\t\t\t      Double Floating Point Registers\n");
   bufp += strlen (bufp);
   if (print_fpr_hex)
@@ -143,7 +143,7 @@ int *string_len;
     if (print_fpr_hex)
       fpstr = "FP%-2d=%08x", fpfill = " ";
     else
-      fpstr = "FP%-2d = %-10.4g", fpfill = "  ";
+      fpstr = "FP%-2d = %#-13.6g", fpfill = " ";
     sprintf (bufp, "\t\t\t      Single Floating Point Registers\n");
     bufp += strlen (bufp);
     if (print_fpr_hex)
