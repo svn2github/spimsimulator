@@ -133,6 +133,8 @@
 %token Y_CFC0_OP
 %token Y_CFC1_OP
 %token Y_CFC2_OP
+%token Y_CLO_OP
+%token Y_CLZ_OP
 %token Y_COP0_OP
 %token Y_COP1_OP
 %token Y_COP2_OP
@@ -826,6 +828,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 	|	NULLARY_OP_REV2
 		{
 		  mips32_r2_inst ();
+		}
+
+
+	|	OUNT_LEADING_OP	DEST	SRC1
+		{
+		  /* RT must be equal to RD */
+		  r_type_inst ($1.i, $2.i, $3.i, $2.i);
 		}
 
 
@@ -1576,6 +1585,10 @@ SYS_OP:		Y_RFE_OP
 	;
 
 NULLARY_OP_REV2:	Y_EHB_OP
+	;
+
+OUNT_LEADING_OP:	Y_CLO_OP
+	|	Y_CLZ_OP
 	;
 
 UNARY_OP_REV2:	Y_DI_OP

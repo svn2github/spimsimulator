@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 19    2/28/04 11:23a Larus $
+/* $Header: /Software/SPIM/src/run.c 20    2/28/04 3:25p Larus $
 */
 
 
@@ -392,6 +392,28 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_CFC2_OP:
 	      R[RT (inst)] = CCR[OPCODE (inst) - Y_CFC0_OP][RD (inst)];
 	      break;
+
+	    case Y_CLO_OP:
+	      {
+		reg_word val = R[RS (inst)];
+		int i;
+		for (i = 31; 0 <= i; i -= 1)
+		  if (((val >> i) & 0x1) == 0) break;
+
+		R[RD (inst) ] = 31 - i;
+		break;
+	      }
+
+	    case Y_CLZ_OP:
+	      {
+		reg_word val = R[RS (inst)];
+		int i;
+		for (i = 31; 0 <= i; i -= 1)
+		  if (((val >> i) & 0x1) == 1) break;
+
+		R[RD (inst) ] = 31 - i;
+		break;
+	      }
 
 	    case Y_COP0_OP:
 	    case Y_COP1_OP:

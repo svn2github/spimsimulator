@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 13    2/28/04 11:23a Larus $
+/* $Header: /Software/SPIM/src/op.h 14    2/28/04 3:25p Larus $
 */
 
 
@@ -209,6 +209,8 @@ OP("ceil.w.s",	Y_CEIL_W_S_OP,	FP_R2ds_TYPE_INST,	0x4620000e)	/* MIPS32 */
 OP("cfc0",	Y_CFC0_OP,	R2ts_TYPE_INST,		0x40400000)
 OP("cfc1",	Y_CFC1_OP,	R2ts_TYPE_INST,		0x44400000)
 OP("cfc2",	Y_CFC2_OP,	R2ts_TYPE_INST,		0x48400000)
+OP("clo",	Y_CLO_OP,	R3_TYPE_INST,		0x70000021)
+OP("clz",	Y_CLZ_OP,	R3_TYPE_INST,		0x70000020)
 OP("cop0",	Y_COP0_OP,	J_TYPE_INST,		0x40200000)
 OP("cop1",	Y_COP1_OP,	J_TYPE_INST,		0x44200000)
 OP("cop2",	Y_COP2_OP,	J_TYPE_INST,		0x48200000)
