@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 15    2/14/04 10:27a Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 16    2/15/04 8:46a Larus $
 */
 
 
@@ -590,7 +590,7 @@ undefined_symbol_string ()
 	string_length += name_length;
 	buffer[string_length] = '\n';
 	string_length += 1;
-	buffer[string_length + 1] = '\0'; /* After end of string */
+	buffer[string_length] = '\0'; /* After end of string */
       }
 
   if (string_length != 0)
