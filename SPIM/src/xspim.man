@@ -59,9 +59,9 @@ Enable the memory-mapped IO facility.  Programs that use SPIM syscalls
 to read from the terminal \fBcannot\fP also use memory-mapped IO.
 .IP \fB-nomapped_io\fP 10
 Disable the memory-mapped IO facility.
-.IP \fB-file file\fP 10
+.IP "\fB-file file\fP 10"
 Load and execute the assembly code in the file.
-.IP \fB-execute file\fP 10
+.IP "\fB-execute file\fP 10"
 Load and execute the MIPS \fIexecutable\fP (a.out) file.  Only works
 on systems using a MIPS processors.
 .IP "\fB-stext size\fP \fB-sdata size\fP \fB-sstack size\fP \fB-sktext size\fP \fB-skdata size\fP" 10

@@ -1,5 +1,9 @@
 2000-12-10    <larus@C745660-A>
 
+	* xspim.man:
+	Missing quotes screwed up formatting. [From: Robert Greenfield
+	(rhg@gpfn.sk.ca)]
+
 	* scanner.l (source_line):
 	Include comments from source in SPIM comments. [From: John Bruce
 	Zuckerman (johnz@cs.tamu.edu)]
