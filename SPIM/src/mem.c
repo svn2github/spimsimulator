@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 27    11/27/04 11:03a Larus $
+/* $Header: /Software/SPIM/src/mem.c 28    11/27/04 8:55p Larus $
 */
 
 
@@ -638,7 +638,7 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
     {
     case TRANS_CTRL_ADDR:
       /* Program can only set the interrupt enable, not ready, bit. */
-      if (value & TRANS_INT_ENABLE)
+      if ((value & TRANS_INT_ENABLE) != 0)
 	{
 	  /* Enable interrupts: */
 	  trans_control |= TRANS_INT_ENABLE;
@@ -658,7 +658,7 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
 
     case TRANS_BUFFER_ADDR:
       /* Ignore write if device is not ready. */
-      if (trans_control & TRANS_READY)
+      if ((trans_control & TRANS_READY) != 0)
 	{
 	  /* Write char: */
 	  trans_buffer = value & 0xff;
@@ -672,7 +672,7 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
 
     case RECV_CTRL_ADDR:
       /* Program can only set the interrupt enable, not ready, bit. */
-      if (value & RECV_INT_ENABLE)
+      if ((value & RECV_INT_ENABLE) != 0)
 	{
 	  /* Enable interrupts: */
 	  recv_control |= RECV_INT_ENABLE;

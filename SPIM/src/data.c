@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 11    7/07/04 7:47p Larus $
+/* $Header: /Software/SPIM/src/data.c 12    11/27/04 8:55p Larus $
 */
 
 
@@ -211,7 +211,7 @@ lcomm_directive (char *name, int size)
     }
   else
     {
-      record_label (name, next_data_pc, 1);
+      (void)record_label (name, next_data_pc, 1);
 
       for ( ; size > 0; size --)
 	{
