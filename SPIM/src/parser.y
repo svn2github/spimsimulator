@@ -874,8 +874,9 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		{
 		  /* The hardware divide operation (ignore 1st arg) */
 		  if ($1.i != Y_DIV_OP && $1.i != Y_DIVU_OP)
-		    yyerror ("Syntax error");
-		  r_type_inst ($1.i, 0, $2.i, $3.i);
+		    yyerror ("REM requires 3 arguments");
+		  else
+		    r_type_inst ($1.i, 0, $2.i, $3.i);
 		}
 
 	|	DIV_POP		DEST_REG	SRC1		SRC2
