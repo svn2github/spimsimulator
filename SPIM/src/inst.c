@@ -318,8 +318,8 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 
       if (expr->symbol != NULL
 	  && expr->symbol->gp_flag && rs == 0
-	  && (offset = expr->symbol->addr + expr->offset) >= -32*K
-	  && offset < 32*K)
+	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
+	  && offset <= IMM_MAX)
 	i_type_inst_free (opcode, rt, REG_GP, make_imm_expr (offset, NULL, 0));
       else if (value_known)
 	{
@@ -364,15 +364,16 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 
       if (expr->symbol != NULL
 	  && expr->symbol->gp_flag && rs == 0
-	  && (offset = expr->symbol->addr + expr->offset) >= -32*K
-	  && offset < 32*K)
+	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
+	  && offset <= IMM_MAX)
 	i_type_inst_free ((opcode == Y_LUI_OP ? Y_ADDIU_OP : opcode),
 		       rt, REG_GP, make_imm_expr (offset, NULL, 0));
       else
 	{
 	  /* Use $at */
 	  if ((opcode == Y_ORI_OP
-	       || opcode == Y_ADDI_OP || opcode == Y_ADDIU_OP
+	       || opcode == Y_ADDI_OP
+	       || opcode == Y_ADDIU_OP
 	       || opcode == Y_LUI_OP)
 	      && rs == 0)
 	    {
