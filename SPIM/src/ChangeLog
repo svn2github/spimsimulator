@@ -2,7 +2,11 @@
 
 	* Released SPIM 7.0
 
+	* string-stream.c:
+	Fix off-by-one errors null terminating strings.
+
 	* data.c (lcomm_directive) Philipp Lucas [phlucas@cs.uni-sb.de]:
+	Fix implementation of .lcomm
 
 2004-06-27    <larus@HomeMachine>
 

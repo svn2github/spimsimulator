@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/string-stream.c 2     3/21/04 3:30p Larus $
+  $Header: /Software/SPIM/src/string-stream.c 3     7/07/04 8:22p Larus $
 */
 
 #include <stdlib.h>
@@ -49,7 +49,7 @@ ss_init (str_stream* ss)
 void
 ss_clear (str_stream* ss)
 {
-  if (0 == ss->initialized) ss_init(ss);
+  if (0 == ss->initialized) ss_init (ss);
 
   ss->empty_pos = 0;
 }
@@ -58,7 +58,7 @@ ss_clear (str_stream* ss)
 void
 ss_erase (str_stream* ss, int n)
 {
-  if (0 == ss->initialized) ss_init(ss);
+  if (0 == ss->initialized) ss_init (ss);
 
   ss->empty_pos -= n;
   if (ss->empty_pos <0) ss->empty_pos = 0;
@@ -68,7 +68,7 @@ ss_erase (str_stream* ss, int n)
 int
 ss_length (str_stream* ss)
 {
-  if (0 == ss->initialized) ss_init(ss);
+  if (0 == ss->initialized) ss_init (ss);
 
   return ss->empty_pos;
 }
@@ -77,9 +77,18 @@ ss_length (str_stream* ss)
 char*
 ss_to_string (str_stream* ss)
 {
-  if (0 == ss->initialized) ss_init(ss);
+  if (0 == ss->initialized) ss_init (ss);
 
+  if (ss->empty_pos == ss->max_length)
+    {
+      /* Not enough room to store output: increase buffer size and try again */
+      ss->max_length = ss->max_length + 1;
+      ss->buf = (char *) realloc (ss->buf, (size_t)ss->max_length);
+      if (NULL == ss->buf)
+	fatal_error ("realloc failed\n");
+    }
   ss->buf[ss->empty_pos] = '\0'; /* Null terminate string */
+  ss->empty_pos += 1;
   return ss->buf;
 }
 
@@ -93,26 +102,29 @@ ss_printf (str_stream* ss, char* fmt, ...)
 
   va_start (args, fmt);
 
-  if (0 == ss->initialized) ss_init(ss);
+  if (0 == ss->initialized) ss_init (ss);
 
   free_space = ss->max_length - ss->empty_pos;
 #ifdef WIN32
   /* Returns -1 when buffer is too small */
   while ((n = _vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) < 0)
 #else
-  /* Returns necessary space when buffer is too small */
-  while ((n = vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) >= free_space)
+    /* Returns necessary space when buffer is too small */
+    while ((n = vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) >= free_space)
 #endif
-    {
-      /* Not enough room to store output: double buffer size and try again */
-      ss->max_length = 2 * ss->max_length;
-      ss->buf = (char *) realloc (ss->buf, (size_t)ss->max_length);
-      free_space = ss->max_length - ss->empty_pos;
-      if (NULL == ss->buf)
-	fatal_error ("realloc failed\n");
-    }
+      {
+	/* Not enough room to store output: double buffer size and try again */
+	ss->max_length = 2 * ss->max_length;
+	ss->buf = (char *) realloc (ss->buf, (size_t)ss->max_length);
+	free_space = ss->max_length - ss->empty_pos;
+	if (NULL == ss->buf)
+	  fatal_error ("realloc failed\n");
+      }
   ss->empty_pos += n;
 
-  ss->buf[ss->empty_pos] = '\0'; /* Null terminate string (for debugging)*/
+  /* Null terminate string (for debugging) if there is enough room*/
+  if (ss->empty_pos < ss->max_length)
+    ss->buf[ss->empty_pos] = '\0';
+
   va_end (args);
 }
