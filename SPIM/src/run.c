@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 53    3/27/04 4:50p Larus $
+/* $Header: /Software/SPIM/src/run.c 54    3/28/04 9:04a Larus $
 */
 
 
@@ -68,14 +68,13 @@ long atol (const char *);
 
 /* Local functions: */
 
+static void bump_CP0_timer ();
 static void set_fpu_cc (int cond, int cc, int less, int equal, int unordered);
 static void signed_multiply (reg_word v1, reg_word v2);
 static void start_CP0_timer ();
 #ifdef WIN32
 void CALLBACK timer_completion_routine(LPVOID lpArgToCompletionRoutine,
 				       DWORD dwTimerLowValue, DWORD dwTimerHighValue);
-#else
-static void timer_signal_handler (int signum);
 #endif
 static void unsigned_multiply (reg_word v1, reg_word v2);
 
@@ -222,10 +221,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	  handle_exception ();
 	}
 
-#ifdef WIN32
-      SleepEx(0, TRUE);	      /* Put thread in awaitable state for WaitableTimer */
-#endif
-
       for (step = 0; step < step_size; step += 1)
 	{
 	  if (force_break)
@@ -235,6 +230,34 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    }
 
 	  R[0] = 0;		/* Maintain invariant value */
+
+#ifdef WIN32
+	  SleepEx(0, TRUE);	      /* Put thread in awaitable state for WaitableTimer */
+#else
+	  {
+	    /* Poll for timer expiration */
+	    struct itimerval time;
+	    if (-1 == getitimer (ITIMER_REAL, &time))
+	      {
+		perror ("getitmer failed");
+	      }
+	    if (time.it_value.tv_usec == 0 && time.it_value.tv_sec == 0)
+	      {
+		/* Timer expired.*/
+		bump_CP0_timer ();
+
+		/* Restart timer for next interval. */
+		time.it_interval.tv_sec = 0;
+		time.it_interval.tv_usec = 0;
+		time.it_value.tv_sec = 0;
+		time.it_value.tv_usec = TIMER_TICK_MS * 1000;
+		if (-1 == setitimer (ITIMER_REAL, &time, NULL))
+		  {
+		    perror ("setitmer failed");
+		  }
+	      }
+	  }
+#endif
 
 	  exception_occurred = 0;
 	  inst = read_mem_inst (PC);
@@ -247,6 +270,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	  else if (inst == NULL)
 	    {
 	      run_error ("Attempt to execute non-instruction at 0x%08x\n", PC);
+	      return (0);
 	    }
 	  else if (EXPR (inst) != NULL
 		   && EXPR (inst)->symbol != NULL
@@ -255,6 +279,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      error ("Instruction references undefined symbol at 0x%08x\n", PC);
 	      print_inst (PC);
 	      run_error ("");
+	      return (0);
 	    }
 
 	  if (display)
@@ -1632,21 +1657,23 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 #ifdef WIN32
 static void CALLBACK
 timer_completion_routine(LPVOID lpArgToCompletionRoutine, DWORD dwTimerLowValue, DWORD dwTimerHighValue)
-#else
-static void
-timer_signal_handler (int signum)
-#endif
 {
-  /* Increment CP0 Count register and test if it matches the Compare register.
-     If so, cause an interrupt. */
+  bump_CP0_timer ();
+}
+#endif
+
+
+/* Increment CP0 Count register and test if it matches the Compare
+   register. If so, cause an interrupt. */
+
+static void
+bump_CP0_timer ()
+{
   CP0_Count += 1;
   if (CP0_Count == CP0_Compare)
     {
       RAISE_INTERRUPT (7);
     }
-
-  /* Re-enable the timer */
-  start_CP0_timer ();
 }
 
 
@@ -1664,23 +1691,27 @@ start_CP0_timer ()
       LARGE_INTEGER interval;
       interval.QuadPart = -10000 * TIMER_TICK_MS;  /* Unit is 100 nsec */
 
-      if (!SetWaitableTimer (timer, &interval, 0, timer_completion_routine, 0, FALSE))
+      if (!SetWaitableTimer (timer, &interval, 1, timer_completion_routine, 0, FALSE))
 	{
 	  error ("SetWaitableTimer failed");
 	}
     }
 #else
   /* Should use ITIMER_VIRTUAL delivering SIGVTALRM, but that does not seem
-     to work under Cygwin, so we'll adopt the lowest common denominator. */
-  if (-1 == (int)signal (SIGALRM, timer_signal_handler))
+     to work under Cygwin, so we'll adopt the lowest common denominator.
+
+     We ignore these signals, however, and read the timer with getitimer,
+     since signals interrupt I/O calls, such as read, and make user
+     interaction with SPIM work very poorly. Since speed isn't an important
+     aspect of SPIM, polling isn't a big deal. */
+  if (-1 == (int)signal (SIGALRM, SIG_IGN))
     {
       perror ("signal failed");
     }
   else
     {
+      /* Start a non-periodic timer for TIMER_TICK_MS microseconds. */
       struct itimerval time;
-      /* Restart each time, so we get at most one signal after run_spim
-	 terminates. */
       time.it_interval.tv_sec = 0;
       time.it_interval.tv_usec = 0;
       time.it_value.tv_sec = 0;
