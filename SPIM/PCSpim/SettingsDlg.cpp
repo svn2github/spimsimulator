@@ -119,10 +119,16 @@ void CSettingsDlg::OnOK()
   if (!CheckValid())
     return;
 
-  // Place them in their proper global locations, and write them to the reg.
+  // Place them in their proper global locations, and write them to the registry.
   bare_machine = m_fBare;
   pApp->WriteSetting(SPIM_REG_BARE, bare_machine);
 
+  if (m_fBare)
+    {
+      m_fDelayedBranches = 1;
+      m_fDelayedLoads = 1;
+    }
+ 
   accept_pseudo_insts = m_fAllowPseudo;
   pApp->WriteSetting(SPIM_REG_PSEUDO, accept_pseudo_insts);
 
@@ -134,6 +140,14 @@ void CSettingsDlg::OnOK()
 
   g_fLoadTrapHandler = m_fLoadTrap;
   pApp->WriteSetting(SPIM_REG_LOADTRAP, g_fLoadTrapHandler);
+
+  if (m_fLoadTrap)
+    {
+      delete [] trap_file;
+      trap_file = new TCHAR[m_strTrapFile.GetLength() + 1];
+      lstrcpy(trap_file, m_strTrapFile);
+      pApp->WriteSetting(SPIM_REG_TRAPFILE, trap_file);
+    }
 
   mapped_io = m_fMappedIO;
   pApp->WriteSetting(SPIM_REG_MAPPEDIO, mapped_io);
@@ -150,19 +164,6 @@ void CSettingsDlg::OnOK()
   g_fSaveWinPos = m_fSaveWinPos;
   pApp->WriteSetting(SPIM_REG_SAVEWINPOS, g_fSaveWinPos);
 
-  if (m_fLoadTrap)
-    {
-      delete [] trap_file;
-      trap_file = new TCHAR[m_strTrapFile.GetLength() + 1];
-      lstrcpy(trap_file, m_strTrapFile);
-      pApp->WriteSetting(SPIM_REG_TRAPFILE, trap_file);
-    }
-
-  if (m_fBare)
-    {
-      delayed_branches = 1;
-      delayed_loads = 1;
-    }
   g_pView->DisplayRegisters();
 
   CDialog::OnOK();
