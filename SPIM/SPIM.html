@@ -300,7 +300,7 @@ major release that contains a significant number of changes from version 6.5:</P
 details of FPU and memory).</P>
   </li>
   <li>
-<P align=left>Exceptions and interrupts reimplemented, to make them close to the 
+<P align=left>Exceptions and interrupts reimplemented, to make them closer to the 
 actual hardware.</P>
   </li>
   <li>
@@ -341,6 +341,23 @@ word-aligned addresses.</P>
 tt.core.s</P>
   </li>
 </ul>
+<P align=left>Outstanding bugs in 7.0:</P>
+  <ul>
+    <li>
+<P align=left>The trap handler (exceptions.s) fails when the trapping 
+instruction is in the delay slot of a branch or jump. The trap handler returns 
+by simplemindedly adding 4 to the EPC (which is the branch's address in this 
+case), so it does not return to the instruction executed after the trapping 
+instruction.</P>
+    </li>
+    <li>
+<P align=left>Handling of newlines and carriage returns is inconsistent between 
+platforms. When a program prints a newline, PCSpim also prints a carriage 
+return, spim and xspim don't. Or, is this consistent with the underlying 
+platform?</P>
+    </li>
+</ul>
+<P align=left>&nbsp;</P>
 <P align=left>The previous version of <B>spim</B> is 6.5 (January 2003), which contains the 
 following changes from version 6.4:</P>
 <ul>
