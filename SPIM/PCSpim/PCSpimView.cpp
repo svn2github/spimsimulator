@@ -1306,7 +1306,7 @@ void CPCSpimView::ProcessCommandLine()
 		"Note that if -file is specified, it must be the last option.",
 		i, argv[i], argv[0]);
 
-  MessageBox(strMsg, "PCSpim for Windows -- Error processing command line.",
+  MessageBox(strMsg, "PCSpim -- Error processing command line.",
 	     MB_OK | MB_ICONEXCLAMATION);
 
   exit(-1);

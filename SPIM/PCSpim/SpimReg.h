@@ -25,7 +25,7 @@
 #ifndef SPIMREG_H
 #define SPIMREG_H
 
-#define SPIM_REG_SPIMROOT		"Software\\UW-Madison\\PCSpim for Windows"
+#define SPIM_REG_SPIMROOT		"Software\\UW-Madison\\PCSpim"
 #define SPIM_REG_DEFAULTSETTINGS	SPIM_REG_SPIMROOT "\\Default Settings"
 #define SPIM_REG_SETTINGS		SPIM_REG_SPIMROOT "\\Settings"
 
