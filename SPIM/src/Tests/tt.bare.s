@@ -1,5 +1,8 @@
 # SPIM S20 MIPS simulator.
 # A simple torture test for the bare SPIM simulator.
+# Run with -notrap -delayed_branches -delayed_load flags (not -bare,
+# as file uses pseudo ops).
+#
 # Copyright (C) 1990-2004 James Larus, larus@cs.wisc.edu.
 # ALL RIGHTS RESERVED.
 #
@@ -32,16 +35,13 @@ __m2_:	.asciiz " occurred\n"
 	mfc0 $26 $13	# Cause
 	mfc0 $27 $14	# EPC
 	addiu $v0, $0, 4	# syscall 4 (print_str)
-#	la $a0 __m1_
-	lui $a0, 0x1000
+	la $a0 __m1_
 	syscall
 	addiu $v0, $0, 1	# syscall 1 (print_int)
 	addu $a0 $0 $26
 	syscall
 	addiu $v0, $0, 4	# syscall 4 (print_str)
-#	la $a0 __m2_
-	lui $a0, 0x1000
-	ori $a0, $a0, 0xd
+	la $a0 __m2_
 	syscall
 	mtc0 $0, $13		# Clear Cause register
 	rfe			# Return from exception handler
@@ -65,6 +65,13 @@ main:
 
 # Test delayed branches:
 
+	.data
+beq_:	.asciiz "Testing BEQ\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 beq_
+	syscall
+
 	addiu $2, $0, 0
 	beq $0 $0 l1
 	addiu $2, $0, 1		# Delayed instruction
@@ -72,20 +79,55 @@ l1:	addiu $3, $0, 1
 	bne $2 $3 fail
 	addu $0, $0, $0		# Nop
 
+
+	.data
+bc1fl_:	.asciiz "Testing BC1FL and BC1TL\n"
+fp_s1:	.float 1.0
+fp_s1p5:.float 1.5
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 bc1fl_
+	syscall
+
+	lwc1 $f0 fp_s1
+	lwc1 $f2 fp_s1
+	lwc1 $f4 fp_s1p5
+	c.eq.s $f0 $f2
+	bc1fl fail
+	addu $0, $0, $0		# Nop
+	c.eq.s $f0 $f2
+	bc1fl fail
+	j fail
+
+	c.eq.s $f0 $f4
+	bc1tl fail
+	addu $0, $0, $0		# Nop
+	c.eq.s $f0 $f4
+	bc1tl fail
+	j fail
+	bc1fl l10
+	j fail
+l10:
+
+
 # Test delayed loads:
 
 	.data
 	.globl d
 d:	.word 101
+ld_:	.asciiz "Testing LD\n"
 	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 ld_
+	syscall
+	
 	addiu $3, $0, 0
-	lui $4 0x1000
-	lw $3 0x18($4)		# address of d
-	addu $3, $0, 5
-	addiu $2, $3, 0		# Delayed instruction
-	addiu $2, $0, 101
-	bne $2 $3 fail
+	la $4 d
+	lw $3 d
+	addu $3, $0, 5		# Delayed instruction
+	bne $3, 101, fail
 	addu $0, $0, $0		# Nop
+
 
 # Done !!!
 	.data
@@ -93,9 +135,7 @@ d:	.word 101
 sm:	.asciiz "\nPassed all tests\n"
 	.text
 	addiu $v0, $0, 4	# syscall 4 (print_str)
-#	la $a0 sm
-	lui $a0, 0x1000
-	ori $a0, $a0, 0x01c
+	la $a0 sm
 	syscall
 	addu $31, $0 $20	# Return PC
 	jr $31			# Return from main
