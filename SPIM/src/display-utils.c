@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 14    2/28/04 11:27a Larus $
+  $Header: /Software/SPIM/src/display-utils.c 15    3/02/04 6:17a Larus $
 */
 
 
@@ -93,9 +93,9 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
 
   sprintf (bufp, "\n FIR    = %08x    ", FIR); bufp += strlen (bufp);
   sprintf (bufp, " FCSR   = %08x    ", FCSR); bufp += strlen (bufp);
-  sprintf (bufp, " FCCR   = %08x    ", FCSR); bufp += strlen (bufp);
-  sprintf (bufp, " FEXR   = %08x\n", FCSR); bufp += strlen (bufp);
-  sprintf (bufp, " FENR   = %08x\n", FCSR); bufp += strlen (bufp);
+  sprintf (bufp, " FCCR   = %08x    ", FCCR); bufp += strlen (bufp);
+  sprintf (bufp, " FEXR   = %08x\n", FEXR); bufp += strlen (bufp);
+  sprintf (bufp, " FENR   = %08x\n", FENR); bufp += strlen (bufp);
 
   sprintf (bufp, "\t\t\t      Double Floating Point Registers\n");
   bufp += strlen (bufp);
