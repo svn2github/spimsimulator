@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/pcspim/MainFrm.cpp 5     12/24/00 1:16p Larus $ */
 
 // MainFrm.cpp : implementation of the CMainFrame class
 //
