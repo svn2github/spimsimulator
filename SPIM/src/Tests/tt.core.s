@@ -632,7 +632,7 @@ ldc2d_:	.word 0, 0
 	bne $5 $3 fail
 	mfc2 $5, $f3
 	bne $5 $4 fail
-	
+
 
 	.data
 lwc02_:	.asciiz "Testing LWC0, LWC2\n"
@@ -672,7 +672,7 @@ lwc02d_:.word 0
 	lwc2 $1 0($2)
 	mfc2 $5, $1
 	bne $5 $3 fail
-	
+
 
 	.data
 lh_:	.asciiz "Testing LH\n"
@@ -741,7 +741,7 @@ ll1:	.word 10
 	sc $2 ll1
 	lw $3 ll1
 	bne $2 $3 fail
-	
+
 	.data
 lui_:	.asciiz "Testing LUI\n"
 	.text
@@ -817,7 +817,7 @@ madd_:	.asciiz "Testing MADD\n"
 
 	mthi $0
 	mtlo $0
-	
+
 	madd $0 $0
 	mfhi $3
 	bnez $3 fail
@@ -861,7 +861,7 @@ maddu_:	.asciiz "Testing MADDU\n"
 
 	mthi $0
 	mtlo $0
-	
+
 	maddu $0 $0
 	mfhi $3
 	bnez $3 fail
@@ -881,7 +881,7 @@ maddu_:	.asciiz "Testing MADDU\n"
 	bne $3 0xfffffffe fail
 	mflo $3
 	bne $3 2 fail
-	
+
 	.data
 mcp_:	.asciiz "Testing move to/from coprocessor z\n"
 	.text
@@ -1510,7 +1510,7 @@ swd_:	.byte 0, 0, 0, 0
 	sw $0 far_away
 	lw $t1 far_away
 	bne $t1 $0 fail
-	
+
 
 # SWL is endian-specific
 
@@ -2881,10 +2881,10 @@ lwc1d_:	.byte 0, 0, 0, 0
 	lwc1 $f1 0($2)
 	mfc1 $5, $f1
 	bne $5 $3 fail
-	
+
 
 # MFC1 tested previously
-	
+
 
 	.data
 movf_:	.asciiz "Testing MOVF\n"
@@ -2895,15 +2895,15 @@ movf_:	.asciiz "Testing MOVF\n"
 
 	li $2 0xf
 	ctc1 $2 $25
-	li $2 0
-	li $3 1
+	li $2 1
+	li $3 0
 	li $4 2
 	movf $3 $2 1
 	bne $3 1 fail
-	movf $3 $4 1
+	movf $3 $4 7
 	bne $3 1 fail
-	
-	
+
+
 	.data
 mov.s_:	.asciiz "Testing MOV.S\n"
 	.text
@@ -2935,6 +2935,31 @@ mov.d_:	.asciiz "Testing MOV.D\n"
 	mfc1 $7 $f7
 	bne $4 $6 fail
 	bne $5 $7 fail
+
+	.data
+movf.d_:.asciiz "Testing MOVF.D\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 movf.d_
+	syscall
+
+	li $2 0xf
+	ctc1 $2 $25
+
+	lw $4 fp_d1
+	lw $5 fp_d1+4
+	lwc1 $f2 fp_d1
+	lwc1 $f3 fp_d1+4
+	movf.d $f4 $f2 1
+	movf.d $f6 $f4 7
+	mfc1 $6 $f4
+	mfc1 $7 $f5
+	bne $4 $6 fail
+	bne $5 $7 fail
+	mfc1 $6 $f6
+	mfc1 $7 $f7
+	bne $6 0 fail
+	bne $7 0 fail
 
 
 # MTC1 tested previously

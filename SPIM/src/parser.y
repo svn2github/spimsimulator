@@ -207,7 +207,9 @@
 %token Y_MOV_PS_OP
 %token Y_MOV_S_OP
 %token Y_MOVF_OP
+%token Y_MOVF_D_OP
 %token Y_MOVF_PS_OP
+%token Y_MOVF_S_OP
 %token Y_MOVN_PS_OP
 %token Y_MOVT_PS_OP
 %token Y_MOVZ_PS_OP
@@ -434,7 +436,7 @@ int parse_error_occurred;  /* Non-zero => parse resulted in error */
 /* Local functions: */
 
 static imm_expr *branch_offset (int n_inst);
- static int cc_to_rt (int cc, int nd, int tf);
+static int cc_to_rt (int cc, int nd, int tf);
 static void check_imm_range (imm_expr*, int32, int32);
 static void check_uimm_range (imm_expr*, uint32, uint32);
 static void clear_labels ();
@@ -1392,19 +1394,25 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 
 
 
-	|	FP_MOVE_OP	F_DEST	F_SRC1
+	|	FP_MOVE_OP	       F_DEST	F_SRC1
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, 0);
 		}
 
 
-	|	FP_MOVE_OP_REV2	F_DEST	F_SRC1
+	|	FP_MOVE_OP_REV2		F_DEST	F_SRC1
 		{
 		  mips32_r2_inst ();
 		}
 
 
 	|	Y_MOVF_OP		DEST	SRC1	CC_REG
+		{
+		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
+		}
+
+
+	|	FP_MOVEC_OP		F_DEST	F_SRC1	CC_REG
 		{
 		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
 		}
@@ -1457,9 +1465,9 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	CTL_COP_OP	COP_REG		COP_REG
+	|	CTL_COP_OP	REG		COP_REG
 		{
-		  r_type_inst ($1.i, $3.i, 0, $2.i);
+		  r_type_inst ($1.i, 0, $3.i, $2.i);
 		}
 
 
@@ -1806,6 +1814,10 @@ FP_MOVE_OP:	Y_MOV_S_OP
 	;
 
 FP_MOVE_OP_REV2:	Y_MOV_PS_OP
+	;
+
+FP_MOVEC_OP:	Y_MOVF_D_OP
+	|	Y_MOVF_S_OP
 	;
 
 FP_MOVEC_OP_REV2:	Y_MOVF_PS_OP
