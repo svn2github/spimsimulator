@@ -357,10 +357,6 @@ ccp_:	.asciiz "Testing move to/from coprocessor control z\n"
 	ctc2 $2 $3
 	cfc2 $4 $3
 	bne $2 $4 fail
-	li $2 0x7f7f
-	ctc3 $2 $3
-	cfc3 $4 $3
-	bne $2 $4 fail
 
 
 	.data
@@ -714,10 +710,6 @@ mcp_:	.asciiz "Testing move to/from coprocessor z\n"
 	li $2 0x7f7f
 	mtc2 $2 $3
 	mfc2 $4 $3
-	bne $2 $4 fail
-	li $2 0x7f7f
-	mtc3 $2 $3
-	mfc3 $4 $3
 	bne $2 $4 fail
 
 
@@ -1362,16 +1354,6 @@ lswcd_:	.byte 0, 0, 0, 0
 	mfc2 $5, $1
 	bne $5 $3 fail
 
-	li $3, 0x7f7f7f7f
-	la $2 lswcd_
-	mtc3 $3, $0
-	swc3 $0 0($2)
-	lw $4 0($2)
-	bne $4 $3 fail
-	lwc3 $1 0($2)
-	mfc3 $5, $1
-	bne $5 $3 fail
-
 
 # SWL is endian-specific
 
@@ -1399,7 +1381,7 @@ syscall5_:.asciiz "\n"
 	la $a0 syscall1_
 	syscall
 
-	li $v0 1
+	li $v0 1	# syscall 1 (print_int)
 	li $a0 -1
 	syscall
 
@@ -1407,7 +1389,7 @@ syscall5_:.asciiz "\n"
 	la $a0 syscall2_
 	syscall
 
-	lwc1 $f12 fp_sm1
+	lwc1 $f12 fp_sm1# syscall 2 (print_float)
 	li $v0 2
 	syscall
 
@@ -1415,7 +1397,7 @@ syscall5_:.asciiz "\n"
 	la $a0 syscall2_
 	syscall
 
-	lwc1 $f12 fp_dm2
+	lwc1 $f12 fp_dm2# syscall 3 (print_double)
 	lwc1 $f13 fp_dm2+4
 	li $v0 3
 	syscall
@@ -1424,7 +1406,6 @@ syscall5_:.asciiz "\n"
 	la $a0 syscall5_
 	syscall
 
-
 	li $v0 5	# syscall 5 (read_int)
 	syscall
 	bne $v0 17 fail
@@ -1432,7 +1413,6 @@ syscall5_:.asciiz "\n"
 	li $v0 5	# syscall 5 (read_int)
 	syscall
 	bne $v0 1717 fail
-
 
 	li $v0 6	# syscall 6 (read_float)
 	syscall
@@ -1445,7 +1425,6 @@ syscall5_:.asciiz "\n"
 	lwc1 $f2 fp_c2
 	c.eq.s $f0, $f2
 	bc1f fail
-
 
 	li $v0 7	# syscall 7 (read_double)
 	syscall
@@ -1478,7 +1457,6 @@ xor_:	.asciiz "Testing XOR\n"
 	bne $4 0 fail
 	xor $4 $2 $3
 	bne $4 0xfffffffe fail
-
 
 	.data
 xori_:	.asciiz "Testing XORI\n"
@@ -1626,7 +1604,46 @@ fp_dm1:	.double -1.0
 	bne $5 $7 fail
 
 
-# BC1F and BC1T tested below.
+	.data
+bc1f_:	.asciiz "Testing BC1F\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 bc1f_
+	syscall
+
+	lwc1 $f0 fp_s1
+	lwc1 $f2 fp_s1
+	lwc1 $f4 fp_s1p5
+	c.eq.s $f0 $f2
+	bc1f fail
+	bc1t l205
+	j fail
+l205:	c.eq.s $f0 $f4
+	bc1t fail
+	bc1f l206
+	j fail
+l206:
+
+
+	.data
+bc1fl_:	.asciiz "Testing BC1FL\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 bc1fl_
+	syscall
+
+	lwc1 $f0 fp_s1
+	lwc1 $f2 fp_s1
+	lwc1 $f4 fp_s1p5
+	c.eq.s $f0 $f2
+	bc1fl fail
+	j fail
+l205a:	c.eq.s $f0 $f4
+	bc1tl fail
+	j fail
+	bc1fl l206a
+	j fail
+l206a:
 
 
 # ToDo: Check order/unordered exception in floating point comparison.
