@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Version: $ */
+/* $Header: /Software/SPIM/PCSpim/pcspim/SpimSupport.cpp 3     12/24/01 12:22p Larus $ */
 
 #include "stdafx.h"
 
@@ -135,6 +135,17 @@ void put_console_char(char c)
 void read_input(char *str, int str_size)
 {
   char ch;
+
+  if (NULL == str)
+  {
+	  run_error ("Buffer is null in read_string");
+	  return;
+  }
+  if (str_size < 0)
+  {
+	  run_error ("Buffer size is null in read_string");
+	  return;
+  }
 
   // We assume that get_console_char will "do the right thing" wrt the msg
   // pump, etc.
