@@ -2,7 +2,7 @@
    This file describes the MIPS instructions, the assembler pseudo
    instructions, the assembler pseudo-ops, and the spim commands.
 
-   Copyright (C) 1990-1995 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-1998 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:

@@ -2,7 +2,7 @@
    X interface to SPIM
    (Derived from an earlier work by Alan Siow.)
 
-   Copyright (C) 1990-1995 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-1998 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
@@ -1178,7 +1178,7 @@ help_action (w, ignore, ignored)
 #endif
 {
   static char * msg = "\nSPIM is a MIPS R2000 simulator.\n\
-Copyright (C) 1990-1994 by James R. Larus, larus@cs.wisc.edu\n\n\
+Copyright (C) 1990-1998 by James R. Larus, larus@cs.wisc.edu\n\n\
 quit  -- Exit from the simulator\n\
 load -- Read a file into memory\n\
 run -- Execute a program\n\

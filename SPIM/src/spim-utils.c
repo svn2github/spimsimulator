@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Misc. routines for SPIM.
 
-   Copyright (C) 1990-1997 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-1998 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
    Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 

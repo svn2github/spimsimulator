@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Interface to code to read a MIPS a.out file.
 
-   Copyright (C) 1990-1994 by James Larus (larus@cs.wisc.edu).
+   Copyright (C) 1990-1998 by James Larus (larus@cs.wisc.edu).
    ALL RIGHTS RESERVED.
 
    SPIM is distributed under the following conditions:
