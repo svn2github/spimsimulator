@@ -255,6 +255,8 @@ extern int quiet;		/* Non-zero => no warning messages */
 extern int source_file;		/* Non-zero => program is source, not binary */
 extern char *trap_file;		/* Path of file containing trap handler */
 extern int force_break;		/* Non-zero => stop interpreter loop  */
+extern int parser_error_occurred; /* Non-zero => parse resulted in error */
+
 
 /* Actual type of structure pointed to depends on X/terminal interface */
 extern port message_out, console_out, console_in;

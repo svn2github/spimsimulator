@@ -462,10 +462,11 @@ resolve_a_label_sub (sym, inst, pc)
 
 #ifdef __STDC__
 void
-flush_local_labels (void)
+flush_local_labels (int issue_undef_warnings)
 #else
 void
-flush_local_labels ()
+flush_local_labels (issue_undef_warnings)
+    int issue_undef_warnings;
 #endif
 {
   label *l;
@@ -486,7 +487,7 @@ flush_local_labels ()
 	      label_hash_table [hi] = lab->next;
 	    else
 	      p->next = lab->next;
-	    if (entry->addr == 0 && !entry->const_flag)
+	    if (issue_undef_warnings && entry->addr == 0 && !entry->const_flag)
 	      error ("Warning: local symbol %s was not defined\n",
 		     entry->name);
 	    /* Can't free label since IMM_EXPR's still reference it */

@@ -323,6 +323,8 @@ int data_dir;			/* Non-zero means item in data segment */
 
 int text_dir;			/* Non-zero means item in text segment */
 
+int parse_error_occurred;  /* Non-zero => parse resulted in error */
+
 
 /* Local functions: */
 
@@ -374,7 +376,7 @@ static char *input_file_name;	/* Name of file being parsed */
 
 %%
 
-LINE:		{scanner_start_line (); } LBL_CMD ;
+LINE:		{parse_error_occurred = 0; scanner_start_line (); } LBL_CMD ;
 
 LBL_CMD:	OPT_LBL CMD
         |	CMD
@@ -2371,6 +2373,7 @@ yyerror (s)
      char *s;
 #endif
 {
+  parse_error_occurred = 1;
   error ("spim: (parser) %s on line %d of file %s\n",
 	 s, line_no, input_file_name);
   print_erroneous_line ();

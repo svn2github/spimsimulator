@@ -48,3 +48,5 @@ int yyparse ();
 extern int data_dir;		/* Non-zero means item in data segment */
 
 extern int text_dir;		/* Non-zero means item in text segment */
+
+extern int parse_error_occurred;  /* Non-zero => parse resulted in error */

@@ -1501,6 +1501,13 @@ swd_:	.byte 0, 0, 0, 0
 	sw $3 1000($t5)
 	sw $3 1001($t5)
 
+	lw $t0 far_away
+	sw $0 far_away
+	lw $t1 far_away
+	bne $1 $0 fail
+	jmp far_away
+come_back2:
+	sw $0 far_away
 
 	.data
 lswc_:	.asciiz "Testing load/store word coprocessor z\n"
@@ -4145,3 +4152,5 @@ fail:	li $v0 4	# syscall 4 (print_str)
 	.text 0x408000
 far_away:
 	beq $0, $0, come_back
+	beq $0, $0, come_back2
+

@@ -207,9 +207,11 @@ read_assembly_file (name)
     {
       initialize_scanner (file);
       initialize_parser (name);
+
       while (!yyparse ()) ;
+
       fclose (file);
-      flush_local_labels ();
+      flush_local_labels (!parse_error_occurred);
       end_of_assembly_file ();
       return (0);
     }

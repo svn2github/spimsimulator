@@ -55,7 +55,7 @@ typedef struct lab
 
 #ifdef __STDC__
 mem_addr find_symbol_address (char *symbol);
-void flush_local_labels (void);
+void flush_local_labels (int issue_undef_warnings);
 void initialize_symbol_table (void);
 label *label_is_defined (char *name);
 label *lookup_label (char *name);
