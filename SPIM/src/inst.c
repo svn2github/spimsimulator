@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 20    3/04/04 8:57p Larus $
+/* $Header: /Software/SPIM/src/inst.c 21    3/06/04 10:04a Larus $
 */
 
 #include <stdio.h>
@@ -679,6 +679,11 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
       buf += strlen (buf);
       break;
 
+    case I1s_TYPE_INST:
+      sprintf (buf, " $%d, %d", RS (inst), IMM (inst));
+      buf += strlen (buf);
+      break;
+
     case I1t_TYPE_INST:
       sprintf (buf, " $%d, %d", RT (inst), IMM (inst));
       buf += strlen (buf);
@@ -706,11 +711,6 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
 
     case R1d_TYPE_INST:
       sprintf (buf, " $%d", RD (inst));
-      buf += strlen (buf);
-      break;
-
-    case R2ts_TYPE_INST:
-      sprintf (buf, " $%d, $f%d", RT (inst), FS (inst));
       buf += strlen (buf);
       break;
 
@@ -757,6 +757,11 @@ print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
 
     case FP_R2ds_TYPE_INST:
       sprintf (buf, " $f%d, $f%d", FD (inst), FS (inst));
+      buf += strlen (buf);
+      break;
+
+    case FP_R2ts_TYPE_INST:
+      sprintf (buf, " $%d, $f%d", RT (inst), FS (inst));
       buf += strlen (buf);
       break;
 
@@ -1318,6 +1323,11 @@ inst_encode (instruction *inst)
 	      | REGS (RS (inst), 21)
 	      | (IOFFSET (inst) & 0xffff));
 
+    case I1s_TYPE_INST:
+      return (a_opcode
+	      | REGS (RS (inst), 21)
+	      | (IMM (inst) & 0xffff));
+
     case I1t_TYPE_INST:
       return (a_opcode
 	      | REGS (RS (inst), 21)
@@ -1344,11 +1354,6 @@ inst_encode (instruction *inst)
     case R1d_TYPE_INST:
       return (a_opcode
 	      | REGS (RD (inst), 11));
-
-    case R2ts_TYPE_INST:
-      return (a_opcode
-	      | REGS (RT (inst), 16)
-	      | REGS (FS (inst), 11));
 
     case R2td_TYPE_INST:
       return (a_opcode
@@ -1393,6 +1398,11 @@ inst_encode (instruction *inst)
       return (a_opcode
 	      | REGS (FS (inst), 11)
 	      | REGS (FD (inst), 6));
+
+    case FP_R2ts_TYPE_INST:
+      return (a_opcode
+	      | REGS (RT (inst), 16)
+	      | REGS (FS (inst), 11));
 
     case FP_CMP_TYPE_INST:
       return (a_opcode
@@ -1498,6 +1508,9 @@ inst_decode (uint32 val)
     case B1_TYPE_INST:
       return (mk_i_inst (val, i_opcode, BIN_RS(val), 0, val & 0xffff));
 
+    case I1s_TYPE_INST:
+      return (mk_i_inst (val, i_opcode, BIN_RS(val), 0, val & 0xffff));
+
     case I1t_TYPE_INST:
       return (mk_i_inst (val, i_opcode, BIN_RS(val), BIN_RT(val),
 			 val & 0xffff));
@@ -1516,9 +1529,6 @@ inst_decode (uint32 val)
 
     case R1d_TYPE_INST:
       return (mk_r_inst (val, i_opcode, 0, 0, BIN_RD(val), 0));
-
-    case R2ts_TYPE_INST:
-      return (mk_r_inst (val, i_opcode, 0, BIN_RT(val), BIN_FS(val), 0));
 
     case R2td_TYPE_INST:
       return (mk_r_inst (val, i_opcode, 0, BIN_RT(val), BIN_RD(val), 0));
@@ -1543,6 +1553,9 @@ inst_decode (uint32 val)
 
     case FP_R2ds_TYPE_INST:
       return (mk_r_inst (val, i_opcode, BIN_FS(val), 0, BIN_FD(val), 0));
+
+    case FP_R2ts_TYPE_INST:
+      return (mk_r_inst (val, i_opcode, 0, BIN_RT(val), BIN_FS(val), 0));
 
     case FP_CMP_TYPE_INST:
       {

@@ -306,10 +306,22 @@
 %token Y_SYNC_OP
 %token Y_SYNCI_OP
 %token Y_SYSCALL_OP
+%token Y_TEQ_OP
+%token Y_TEQI_OP
+%token Y_TGE_OP
+%token Y_TGEI_OP
+%token Y_TGEIU_OP
+%token Y_TGEU_OP
 %token Y_TLBP_OP
 %token Y_TLBR_OP
 %token Y_TLBWI_OP
 %token Y_TLBWR_OP
+%token Y_TLT_OP
+%token Y_TLTI_OP
+%token Y_TLTIU_OP
+%token Y_TLTU_OP
+%token Y_TNE_OP
+%token Y_TNEI_OP
 %token Y_TRUNC_L_D_OP
 %token Y_TRUNC_L_S_OP
 %token Y_TRUNC_W_D_OP
@@ -1421,6 +1433,17 @@ ASM_CODE:	LOAD_OPS		DEST	ADDRESS
 		}
 
 
+	|	UNARY_TRAP_OPS		SRC1	IMM16
+		{
+		  i_type_inst_free ($1.i, 0, $2.i, (imm_expr *)$3.p);
+		}
+
+
+	|	BINARY_TRAP_OPS		SRC1	SRC2
+		{
+		  r_type_inst ($1.i, 0, $2.i, $3.i);
+		}
+
 
 	|	FP_MOVE_OPS	       F_DEST	F_SRC1
 		{
@@ -1797,6 +1820,24 @@ J_OPS:	Y_J_OP
 B_OP:	Y_B_POP
 	|	Y_BAL_POP
 	;
+
+
+UNARY_TRAP_OPS:	Y_TEQI_OP
+	|	Y_TGEI_OP
+	|	Y_TGEIU_OP
+	|	Y_TLTI_OP
+	|	Y_TLTIU_OP
+	|	Y_TNEI_OP
+	;
+
+BINARY_TRAP_OPS:	Y_TEQ_OP
+	|	Y_TGE_OP
+	|	Y_TGEU_OP
+	|	Y_TLT_OP
+	|	Y_TLTU_OP
+	|	Y_TNE_OP
+	;
+
 
 MOVE_FROM_HILO_OP:	Y_MFHI_OP
 	|	Y_MFLO_OP

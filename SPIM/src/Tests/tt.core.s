@@ -1287,6 +1287,48 @@ sdd_:	.word 0, 0, 0, 0
 	sd $3 1001($t5)
 
 
+	.data
+sdc1_:	.asciiz "Testing SDC1\n"
+	.align 2
+sdc1d_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sdc1_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	li $4, 0xf7f7f7f7
+	la $2 sdc1d_
+	mtc1 $3, $0
+	mtc1 $4, $1
+	sdc1 $f0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+	lw $5 4($2)
+	bne $5 $4 fail
+
+
+	.data
+sdc2_:	.asciiz "Testing SDC2\n"
+	.align 2
+sdc2d_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sdc2_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	li $4, 0xf7f7f7f7
+	la $2 sdc2d_
+	mtc2 $3, $0
+	mtc2 $4, $1
+	sdc2 $0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+	lw $5 4($2)
+	bne $5 $4 fail
+
+
 # SH is endian-specific
 
 
@@ -1619,48 +1661,6 @@ swd_:	.byte 0, 0, 0, 0
 	bne $t1 $0 fail
 
 
-	.data
-sdc1_:	.asciiz "Testing SDC1\n"
-	.align 2
-sdc1d_:	.word 0, 0
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 sdc1_
-	syscall
-
-	li $3, 0x7f7f7f7f
-	li $4, 0xf7f7f7f7
-	la $2 sdc1d_
-	mtc1 $3, $0
-	mtc1 $4, $1
-	sdc1 $f0 0($2)
-	lw $5 0($2)
-	bne $5 $3 fail
-	lw $5 4($2)
-	bne $5 $4 fail
-
-
-	.data
-sdc2_:	.asciiz "Testing SDC2\n"
-	.align 2
-sdc2d_:	.word 0, 0
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 sdc2_
-	syscall
-
-	li $3, 0x7f7f7f7f
-	li $4, 0xf7f7f7f7
-	la $2 sdc2d_
-	mtc2 $3, $0
-	mtc2 $4, $1
-	sdc2 $0 0($2)
-	lw $5 0($2)
-	bne $5 $3 fail
-	lw $5 4($2)
-	bne $5 $4 fail
-
-
 # SWL is endian-specific
 
 
@@ -1675,7 +1675,7 @@ sync_:	.asciiz "Testing SYNC\n"
 	syscall
 
 	sync
-	
+
 
 	.data
 syscall_:.asciiz "Testing SYSCALL\n"
@@ -1755,6 +1755,160 @@ syscall5_:.asciiz "\n"
 	lwc1 $f3 fp_c4+4
 	c.eq.d $f0, $f2
 	bc1f fail
+
+
+	.data
+teq_:	.asciiz "Testing TEQ\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 teq_
+	syscall
+
+	li $2 1
+	teq $0 $2
+	teq $0 $0
+
+
+	.data
+teqi_:	.asciiz "Testing TEQI\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 teqi_
+	syscall
+
+	teqi $0 4
+	teqi $0 0
+
+
+	.data
+tge_:	.asciiz "Testing TGE\nExpect two exception messages:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tge_
+	syscall
+
+	li $2 1
+	li $3 2
+	tge $2 $3
+	tge $0 $0
+	tge $3 $2
+
+
+	.data
+tgei_:	.asciiz "Testing TGEI\nExpect two exception messages:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tgei_
+	syscall
+
+	li $2 8
+	tgei $0 4
+	tgei $0 0
+	tgei $2 1
+
+	
+	.data
+tgeiu_:	.asciiz "Testing TGEIU\nExpect two exception messages:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tgeiu_
+	syscall
+
+	li $2 -4
+	tgeiu $0 4
+	tgeiu $0 0
+	tgeiu $2 1
+
+
+	.data
+tgeu_:	.asciiz "Testing TGEU\nExpect two exception messages:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tgeu_
+	syscall
+
+	li $2 1
+	li $3 -4
+	tgeu $2 $3
+	tgeu $0 $0
+	tgeu $3 $2
+
+
+	.data
+tlt_:	.asciiz "Testing TLT\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tlt_
+	syscall
+
+	li $2 1
+	li $3 2
+	tlt $2 $3
+	tlt $0 $0
+	tlt $3 $2
+
+
+	.data
+tlti_:	.asciiz "Testing TLTI\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tlti_
+	syscall
+
+	li $2 8
+	tlti $0 4
+	tlti $0 0
+	tlti $2 1
+
+	
+	.data
+tltiu_:	.asciiz "Testing TLTIU\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tltiu_
+	syscall
+
+	li $2 -4
+	tltiu $0 4
+	tltiu $0 0
+	tltiu $2 1
+
+
+	.data
+tltu_:	.asciiz "Testing TLTU\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tltu_
+	syscall
+
+	li $2 1
+	li $3 -4
+	tltu $2 $3
+	tltu $0 $0
+	tltu $3 $2
+
+	
+	.data
+tne_:	.asciiz "Testing TNE\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tne_
+	syscall
+
+	li $2 1
+	tne $0 $2
+	tne $0 $0
+
+
+	.data
+tnei_:	.asciiz "Testing TNEI\nExpect one exception message:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tnei_
+	syscall
+
+	tnei $0 4
+	tnei $0 0
 
 
 	.data

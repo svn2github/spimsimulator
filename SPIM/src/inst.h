@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 13    2/28/04 7:18a Larus $
+/* $Header: /Software/SPIM/src/inst.h 14    3/06/04 10:04a Larus $
 */
 
 
@@ -182,9 +182,7 @@ typedef struct inst_s
 #define RI_EXCPT	10
 #define CPU_EXCPT	11
 #define OVF_EXCPT	12
-
-#define CACHEABLE	13
-#define NOT_CACHEABLE	14
+#define TRAP_EXCPT	13
 
 
 /* Floating point exceptions (Ch. 8): */
