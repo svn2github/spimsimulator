@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 8     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/mem.c 9     12/24/01 11:01a Larus $
 */
 
 
@@ -221,7 +221,7 @@ expand_data (addl_bytes)
 {
   int old_size = data_top - DATA_BOT;
   int new_size = old_size + addl_bytes;
-  register mem_word *p;
+  register BYTE_TYPE *p;
 
   if (addl_bytes < 0 || (source_file && new_size > data_size_limit))
     {
@@ -232,12 +232,15 @@ expand_data (addl_bytes)
   data_seg = (mem_word *) realloc (data_seg, new_size);
   if (data_seg == NULL)
     fatal_error ("realloc failed in expand_data\n");
+
   data_seg_b = (BYTE_TYPE *) data_seg;
   data_seg_h = (short *) data_seg;
-  for (p = data_seg + old_size / BYTES_PER_WORD;
-       p < data_seg + new_size / BYTES_PER_WORD; )
-    *p ++ = 0;
   data_top += addl_bytes;
+
+  /* Zero new memory */
+  for (p = data_seg_b + old_size / BYTES_PER_WORD;
+       p < data_seg_b + new_size / BYTES_PER_WORD; )
+    *p ++ = 0;
 }
 
 
@@ -294,7 +297,7 @@ expand_k_data (addl_bytes)
 {
   int old_size = k_data_top - K_DATA_BOT;
   int new_size = old_size + addl_bytes;
-  register mem_word *p;
+  register BYTE_TYPE *p;
 
   if (addl_bytes < 0 || (source_file && new_size > k_data_size_limit))
     {
@@ -305,12 +308,15 @@ expand_k_data (addl_bytes)
   k_data_seg = (mem_word *) realloc (k_data_seg, new_size);
   if (k_data_seg == NULL)
     fatal_error ("realloc failed in expand_k_data\n");
+
   k_data_seg_b = (BYTE_TYPE *) k_data_seg;
   k_data_seg_h = (short *) k_data_seg;
-  for (p = k_data_seg + old_size / BYTES_PER_WORD;
-       p < k_data_seg + new_size / BYTES_PER_WORD; )
-    *p ++ = 0;
   k_data_top += addl_bytes;
+
+  /* Zero new memory */
+  for (p = k_data_seg_b + old_size / BYTES_PER_WORD;
+       p < k_data_seg_b + new_size / BYTES_PER_WORD; )
+    *p ++ = 0;
 }
 
 
