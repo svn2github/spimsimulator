@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 25    9/26/04 10:39a Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 26    10/18/04 6:25p Larus $
 */
 
 
@@ -144,7 +144,7 @@ initialize_registers ()
   FWR = (int *) FPR;
 
   memclr (R, R_LENGTH * sizeof (reg_word));
-  R[29] = STACK_TOP - BYTES_PER_WORD - 4096; /* Initialize $sp */
+  R[REG_SP] = STACK_TOP - BYTES_PER_WORD - 4096; /* Initialize $sp */
   HI = LO = 0;
   PC = 0;
 
@@ -234,13 +234,13 @@ initialize_run_stack (int argc, char **argv)
   for (i = 0; i < argc; i++)
     addrs[j++] = copy_str_to_stack (argv[i]);
 
-  R[29] = R[29] & ~3;		/* Round down to nearest word */
-  R[29] -= BYTES_PER_WORD;	/* First free word on stack */
+  R[REG_SP] = R[REG_SP] & ~3;		/* Round down to nearest word */
+  R[REG_SP] -= BYTES_PER_WORD;	/* First free word on stack */
 
-  R[29] = R[29] & ~7;		/* Double-word align stack-pointer*/
+  R[REG_SP] = R[REG_SP] & ~7;		/* Double-word align stack-pointer*/
   if ((j % 2) != 0)		/* Odd number of arguments */
     {
-      R[29] -= BYTES_PER_WORD;	/* Ensure stack ends up double-word aligned */
+      R[REG_SP] -= BYTES_PER_WORD;	/* Ensure stack ends up double-word aligned */
     }
 
   /* Build vectors on stack: */
@@ -254,7 +254,7 @@ initialize_run_stack (int argc, char **argv)
 
   R[REG_A0] = argc;
 
-  set_mem_word (R[29], argc);	/* Leave argc on stack */
+  set_mem_word (R[REG_SP], argc);	/* Leave argc on stack */
 }
 
 
@@ -264,20 +264,20 @@ copy_str_to_stack (char *s)
   int i = strlen (s);
   while (i >= 0)
     {
-      set_mem_byte (R[29], s[i]);
-      R[29] -= 1;
+      set_mem_byte (R[REG_SP], s[i]);
+      R[REG_SP] -= 1;
       i -= 1;
     }
-  return ((mem_addr) R[29] + 1); /* Leaves stack pointer byte-aligned!! */
+  return ((mem_addr) R[REG_SP] + 1); /* Leaves stack pointer byte-aligned!! */
 }
 
 
 static mem_addr
 copy_int_to_stack (int n)
 {
-  set_mem_word (R[29], n);
-  R[29] -= BYTES_PER_WORD;
-  return ((mem_addr) R[29] + BYTES_PER_WORD);
+  set_mem_word (R[REG_SP], n);
+  R[REG_SP] -= BYTES_PER_WORD;
+  return ((mem_addr) R[REG_SP] + BYTES_PER_WORD);
 }
 
 
