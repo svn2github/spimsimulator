@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 13    12/24/01 10:20a Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 14    1/01/03 5:20p Larus $
 */
 
 
@@ -420,7 +420,8 @@ resolve_a_label_sub (sym, inst, pc)
   		  /* LW/SW sign extends offset. Compensate by adding 1 to high 16 bits. */
 		  instruction* prev_inst;
 		  READ_MEM_INST (prev_inst, pc - BYTES_PER_WORD);
-		  if (OPCODE (prev_inst) == Y_LUI_OP
+		  if (prev_inst != NULL
+		      && OPCODE (prev_inst) == Y_LUI_OP
 		      && EXPR (inst)->symbol == EXPR (prev_inst)->symbol
 		      && IMM (prev_inst) == 0)
 		    {
