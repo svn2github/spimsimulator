@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 30    3/14/04 7:46p Larus $
+/* $Header: /Software/SPIM/src/spim.c 31    3/14/04 8:26p Larus $
 */
 
 
@@ -147,149 +147,136 @@ main (int argc, char **argv)
 
   write_startup_message ();
 
-  if (argc == 2
-      && argv[1][0] != '-'
-#ifdef WIN32
-      /* On Windows, support "/option" as well as "-option" */
-      && argv[1][0] != '/'
-#endif
-      )
+  for (i = 1; i < argc; i++)
     {
-      /* Only one argument without '-' is a file name. */
-      initialize_world (load_exception_handler ? exception_file_name : NULL);
-      assembly_file_read |= !read_assembly_file (argv[1]);
-    }
-  else
-    for (i = 1; i < argc; i++)
-      {
 #ifdef WIN32
-	if (argv [i][0] == '/') { argv [i][0] = '-'; }
+      if (argv [i][0] == '/') { argv [i][0] = '-'; }
 #endif
-	if (streq (argv [i], "-asm")
-	    || streq (argv [i], "-a"))
-	  {
-	    bare_machine = 0;
-	    delayed_branches = 0;
-	    delayed_loads = 0;
-	  }
-	else if (streq (argv [i], "-bare")
-		 || streq (argv [i], "-b"))
-	  {
-	    bare_machine = 1;
-	    delayed_branches = 1;
-	    delayed_loads = 1;
-	    quiet = 1;
-	  }
-	else if (streq (argv [i], "-delayed_branches")
-		 || streq (argv [i], "-db"))
-	  {
-	    delayed_branches = 1;
-	  }
-	else if (streq (argv [i], "-delayed_loads")
-		 || streq (argv [i], "-df"))
-	  {
-	    delayed_loads = 1;
-	  }
-	else if (streq (argv [i], "-exception")
-		 || streq (argv [i], "-e"))
-	  { load_exception_handler = 1; }
-	else if (streq (argv [i], "-noexception")
-		 || streq (argv [i], "-ne"))
-	  { load_exception_handler = 0; }
-	else if (streq (argv [i], "-exception_file")
-		 || streq (argv [i], "-ef"))
-	  {
-	    exception_file_name = argv[++i];
-	    load_exception_handler = 1;
-	  }
-	else if (streq (argv [i], "-mapped_io")
-		 || streq (argv [i], "-mio"))
-	  { mapped_io = 1; }
-	else if (streq (argv [i], "-nomapped_io")
-		 || streq (argv [i], "-nmio"))
-	  { mapped_io = 0; }
-	else if (streq (argv [i], "-pseudo")
-		 || streq (argv [i], "-p"))
-	  { accept_pseudo_insts = 1; }
-	else if (streq (argv [i], "-nopseudo")
-		 || streq (argv [i], "-np"))
-	  { accept_pseudo_insts = 0; }
-	else if (streq (argv [i], "-quiet")
-		 || streq (argv [i], "-q"))
-	  { quiet = 1; }
-	else if (streq (argv [i], "-noquiet")
-		 || streq (argv [i], "-nq"))
-	  { quiet = 0; }
-	else if (streq (argv [i], "-trap")
-		 || streq (argv [i], "-t"))
-	  { load_exception_handler = 1; }
-	else if (streq (argv [i], "-notrap")
-		 || streq (argv [i], "-nt"))
-	  { load_exception_handler = 0; }
-	else if (streq (argv [i], "-trap_file")
-		 || streq (argv [i], "-tf"))
-	  {
-	    exception_file_name = argv[++i];
-	    load_exception_handler = 1;
-	  }
-	else if (streq (argv [i], "-stext")
-		 || streq (argv [i], "-st"))
-	  { initial_text_size = atoi (argv[++i]); }
-	else if (streq (argv [i], "-sdata")
-		 || streq (argv [i], "-sd"))
-	  { initial_data_size = atoi (argv[++i]); }
-	else if (streq (argv [i], "-ldata")
-		 || streq (argv [i], "-ld"))
-	  { initial_data_limit = atoi (argv[++i]); }
-	else if (streq (argv [i], "-sstack")
-		 || streq (argv [i], "-ss"))
-	  { initial_stack_size = atoi (argv[++i]); }
-	else if (streq (argv [i], "-lstack")
-		 || streq (argv [i], "-ls"))
-	  { initial_stack_limit = atoi (argv[++i]); }
-	else if (streq (argv [i], "-sktext")
-		 || streq (argv [i], "-skt"))
-	  { initial_k_text_size = atoi (argv[++i]); }
-	else if (streq (argv [i], "-skdata")
-		 || streq (argv [i], "-skd"))
-	  { initial_k_data_size = atoi (argv[++i]); }
-	else if (streq (argv [i], "-lkdata")
-		 || streq (argv [i], "-lkd"))
-	  { initial_k_data_limit = atoi (argv[++i]); }
-	else if ((streq (argv [i], "-file")
-		  || streq (argv [i], "-f"))
-		 && (i + 1 < argc))
-	  {
-	    argv_ptr = i + 1;
-	    if (!assembly_file_read)
-	      {
-		initialize_world (load_exception_handler
-				  ? exception_file_name
-				  : NULL);
-	      }
-	    assembly_file_read |= !read_assembly_file (argv[++i]);
-	    break;			/* Everything following is argv */
-	  }
-	else if (argv [i][0] != '-')
-	  {
-	    /* Assume this is a file name and everything else are arguments
-	       to program */
-	    argv_ptr = i;
-	    if (!assembly_file_read)
-	      {
-		initialize_world (load_exception_handler
-				  ? exception_file_name
-				  : NULL);
-	      }
-	    assembly_file_read |= !read_assembly_file (argv[i]);
-	    break;			/* Everything following is argv */
-	  }
-	else
-	  {
-	    error ("\nUnknown argument: %s (ignored)\n", argv[i]);
-	    print_usage_msg = 1;
-	  }
-      }
+      if (streq (argv [i], "-asm")
+	  || streq (argv [i], "-a"))
+	{
+	  bare_machine = 0;
+	  delayed_branches = 0;
+	  delayed_loads = 0;
+	}
+      else if (streq (argv [i], "-bare")
+	       || streq (argv [i], "-b"))
+	{
+	  bare_machine = 1;
+	  delayed_branches = 1;
+	  delayed_loads = 1;
+	  quiet = 1;
+	}
+      else if (streq (argv [i], "-delayed_branches")
+	       || streq (argv [i], "-db"))
+	{
+	  delayed_branches = 1;
+	}
+      else if (streq (argv [i], "-delayed_loads")
+	       || streq (argv [i], "-dl"))
+	{
+	  delayed_loads = 1;
+	}
+      else if (streq (argv [i], "-exception")
+	       || streq (argv [i], "-e"))
+	{ load_exception_handler = 1; }
+      else if (streq (argv [i], "-noexception")
+	       || streq (argv [i], "-ne"))
+	{ load_exception_handler = 0; }
+      else if (streq (argv [i], "-exception_file")
+	       || streq (argv [i], "-ef"))
+	{
+	  exception_file_name = argv[++i];
+	  load_exception_handler = 1;
+	}
+      else if (streq (argv [i], "-mapped_io")
+	       || streq (argv [i], "-mio"))
+	{ mapped_io = 1; }
+      else if (streq (argv [i], "-nomapped_io")
+	       || streq (argv [i], "-nmio"))
+	{ mapped_io = 0; }
+      else if (streq (argv [i], "-pseudo")
+	       || streq (argv [i], "-p"))
+	{ accept_pseudo_insts = 1; }
+      else if (streq (argv [i], "-nopseudo")
+	       || streq (argv [i], "-np"))
+	{ accept_pseudo_insts = 0; }
+      else if (streq (argv [i], "-quiet")
+	       || streq (argv [i], "-q"))
+	{ quiet = 1; }
+      else if (streq (argv [i], "-noquiet")
+	       || streq (argv [i], "-nq"))
+	{ quiet = 0; }
+      else if (streq (argv [i], "-trap")
+	       || streq (argv [i], "-t"))
+	{ load_exception_handler = 1; }
+      else if (streq (argv [i], "-notrap")
+	       || streq (argv [i], "-nt"))
+	{ load_exception_handler = 0; }
+      else if (streq (argv [i], "-trap_file")
+	       || streq (argv [i], "-tf"))
+	{
+	  exception_file_name = argv[++i];
+	  load_exception_handler = 1;
+	}
+      else if (streq (argv [i], "-stext")
+	       || streq (argv [i], "-st"))
+	{ initial_text_size = atoi (argv[++i]); }
+      else if (streq (argv [i], "-sdata")
+	       || streq (argv [i], "-sd"))
+	{ initial_data_size = atoi (argv[++i]); }
+      else if (streq (argv [i], "-ldata")
+	       || streq (argv [i], "-ld"))
+	{ initial_data_limit = atoi (argv[++i]); }
+      else if (streq (argv [i], "-sstack")
+	       || streq (argv [i], "-ss"))
+	{ initial_stack_size = atoi (argv[++i]); }
+      else if (streq (argv [i], "-lstack")
+	       || streq (argv [i], "-ls"))
+	{ initial_stack_limit = atoi (argv[++i]); }
+      else if (streq (argv [i], "-sktext")
+	       || streq (argv [i], "-skt"))
+	{ initial_k_text_size = atoi (argv[++i]); }
+      else if (streq (argv [i], "-skdata")
+	       || streq (argv [i], "-skd"))
+	{ initial_k_data_size = atoi (argv[++i]); }
+      else if (streq (argv [i], "-lkdata")
+	       || streq (argv [i], "-lkd"))
+	{ initial_k_data_limit = atoi (argv[++i]); }
+      else if ((streq (argv [i], "-file")
+		|| streq (argv [i], "-f"))
+	       && (i + 1 < argc))
+	{
+	  argv_ptr = i + 1;
+	  if (!assembly_file_read)
+	    {
+	      initialize_world (load_exception_handler
+				? exception_file_name
+				: NULL);
+	    }
+	  assembly_file_read |= !read_assembly_file (argv[++i]);
+	  break;			/* Everything following is argv */
+	}
+      else if (argv [i][0] != '-')
+	{
+	  /* Assume this is a file name and everything else are arguments
+	     to program */
+	  argv_ptr = i;
+	  if (!assembly_file_read)
+	    {
+	      initialize_world (load_exception_handler
+				? exception_file_name
+				: NULL);
+	    }
+	  assembly_file_read |= !read_assembly_file (argv[i]);
+	  break;			/* Everything following is argv */
+	}
+      else
+	{
+	  error ("\nUnknown argument: %s (ignored)\n", argv[i]);
+	  print_usage_msg = 1;
+	}
+    }
 
   if (print_usage_msg)
     {
