@@ -1,4 +1,4 @@
-.\" $Header: /Software/SPIM/src/spim.man 6     3/14/04 9:24p Larus $
+.\" $Header: /Software/SPIM/src/spim.man 7     3/25/04 9:33p Larus $
 
 .TH spim 1
 .SH NAME
@@ -123,7 +123,6 @@ James R. Larus, ``SPIM S20: A MIPS R2000 Simulator,''
 included with SPIM distribution.
 
 .SH AUTHOR
-James R. Larus (larus@cs.wisc.edu), Computer Sciences Department,
-University of Wisconsin\-Madison.
+James R. Larus, Computer Sciences Department, University of Wisconsin\-Madison.
 Current address: James R Larus (larus@microsoft.com), Microsoft Research.
 
