@@ -1,0 +1,59 @@
+% Master File: blurb.tex
+% Document Type: LaTeX
+
+\documentstyle[11pt,regular-margins]{article}
+\begin{document}
+
+\begin{center}
+  \LARGE\bf SPIM: A MIPS R2000 Simulator
+\end{center}
+
+The SPIM S20 is a software simulator that executes programs for the
+MIPS R2000/R3000 RISC computers.  SPIM can read and immediately
+execute files containing assembly language statements or MIPS-produced
+binary a.out files.  SPIM is a self-contained system for running these
+programs and contains a debugger and interface to the operating
+system.
+
+I wrote SPIM as the target machine for an undergraduate compiler
+course. SPIM is very portable (it has been tested on DECStations, Sun
+3s, Sun 4s, PC/RTs, and Sequent Symmetries), so students are able to
+generate code for a simple, clean, orthogonal computer---no matter
+which god-awful machine they used.  It was a very successful in this
+role and has been used in several other compiler courses.  It has also
+been modified and used for computer architecture studies.
+
+SPIM is fairly slow.  It runs about 1000 dhrystones/second, which is
+roughly 1/25th the speed of a DECStation 3100, or about the speed of a
+68010-based system.
+
+SPIM implements almost the entire MIPS assembler-extended instruction
+set (I've omitted some the complex floating point comparisons and
+details of the memory system page tables).  SPIM comes with complete
+source code and documentation of all instructions (including several
+that aren't in Kane's book, but are produced by MIPS compilers).  It
+also include a large torture test to verify a port to a new machine.
+
+SPIM has a simple, terminal-style and a flashy, X-windows interface.
+
+SPIM is copyrighted by me and distributed under the terms of the GNU
+General Public License.  You can copy a compressed tar file from {\tt
+primost.cs.wisc.edu} in the file:\newline {\tt \~{
+}ftp/pub/spim.tar.Z}.
+If you cannot ftp this file, then either copy SPIM from another site
+or contact me.  I will make tapes for a nominal charge.
+
+If you obtain a copy of SPIM and wish to be informed of future updates
+and bug fixes, send your electronic mail address to: {\tt
+larus@cs.wisc.edu}.
+
+\begin{quote}
+James Larus\\
+Computer Sciences Department\\
+1210 West Dayton Street\\
+University of Wisconsin\\
+Madison, WI 53706 USA\\
+larus@cs.wisc.edu\\
+(608) 262-9519
+\end{quote}
+\end{document}
