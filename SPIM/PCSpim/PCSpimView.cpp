@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 16    3/14/04 7:51p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 17    3/14/04 8:25p Larus $ */
 
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
@@ -1209,131 +1209,155 @@ void CPCSpimView::ProcessCommandLine()
   LPTSTR argv[256];
   int argc;
   int i;
-
+  
   // Initialize argc & argv variables.
   LPTSTR szCmdLine = GetCommandLine();
   if (szCmdLine[0] == '"')
     argv[0] = strtok(szCmdLine, "\"");
   else
     argv[0] = strtok(GetCommandLine(), WHITESPACE);
-
+  
   for (argc = 1; ; argc += 1)
-    {
-      LPTSTR szParam = strtok(NULL, WHITESPACE);
-      if (szParam == NULL)
-	break;
-
-      argv[argc] = szParam;
-    }
-
-  if (argc == 2)
   {
-    // Only one argument better be a file name.
-    //
-    m_strCurFilename = argv[1];
+    LPTSTR szParam = strtok(NULL, WHITESPACE);
+    if (szParam == NULL)
+      break;
+    
+    argv[argc] = szParam;
   }
-  else
-    for (i = 1; i < argc; i++)
+  
+  for (i = 1; i < argc; i++)
+  {
+    if (argv[i][0] == '/')
+      argv[i][0] = '-';     /* Canonicalize commands */
+    
+    if (streq (argv [i], "-asm")
+      || streq (argv [i], "-a"))
     {
-      if ((argv[i][0] != '/') &&
-	(argv[i][0] != '-'))
-	goto l_ErrorMsg;
-      
-      ++argv[i];
-      
-      if (streq (argv [i], "-bare"))
-      {
-	bare_machine = 1;
-	delayed_branches = 1;
-	delayed_loads = 1;
-	quiet = 1;
-      }
-      else if (streq (argv [i], "-asm"))
-      {
-	bare_machine = 0;
-	delayed_branches = 0;
-	delayed_loads = 0;
-      }
-      else if (streq (argv [i], "-delayed_branches"))
-      {
-	delayed_branches = 1;
-      }
-      else if (streq (argv [i], "-delayed_loads"))
-      {
-	delayed_loads = 1;
-      }
-      else if (streq (argv[i], "pseudo"))
-	accept_pseudo_insts = 1;
-      else if (streq (argv[i], "nopseudo"))
-	accept_pseudo_insts = 0;
-      else if (streq (argv[i], "exception"))
-	g_fLoadExceptionHandler = 1;
-      else if (streq (argv[i], "noexception"))
-	g_fLoadExceptionHandler = 0;
-      else if (streq (argv[i], "quiet"))
-	quiet = 1;
-      else if (streq (argv[i], "noquiet"))
-	quiet = 0;
-      else if (streq (argv[i], "mapped_io"))
-	mapped_io = 1;
-      else if (streq (argv[i], "nomapped_io"))
-	mapped_io = 0;
-      else if (streq (argv[i], "stext"))
-	initial_text_size = atoi (argv[++i]);
-      else if (streq (argv[i], "sdata"))
-	initial_data_size = atoi (argv[++i]);
-      else if (streq (argv[i], "ldata"))
-	initial_data_limit = atoi (argv[++i]);
-      else if (streq (argv[i], "sstack"))
-	initial_stack_size = atoi (argv[++i]);
-      else if (streq (argv[i], "lstack"))
-	initial_stack_limit = atoi (argv[++i]);
-      else if (streq (argv[i], "sktext"))
-	initial_k_text_size = atoi (argv[++i]);
-      else if (streq (argv[i], "skdata"))
-	initial_k_data_size = atoi (argv[++i]);
-      else if (streq (argv[i], "lkdata"))
-	initial_k_data_limit = atoi (argv[++i]);
-      else if (streq (argv[i], "exception_file"))
-      {
-	exception_file_name = argv[++i];
-	g_fLoadExceptionHandler = 1;
-      }
-      else if (streq (argv[i], "file"))
-      {
-	m_strCurFilename = argv[++i];
-	
-	g_strCmdLine = "";
-	for (int j = i; j < argc; j++)
-	{
-	  g_strCmdLine += argv[j];
-	  g_strCmdLine += " ";
-	}
-	g_strCmdLine.TrimRight();
-	break;
-      }
-      else
-	goto l_ErrorMsg;
+      bare_machine = 0;
+      delayed_branches = 0;
+      delayed_loads = 0;
     }
-
-  return;
-
- l_ErrorMsg:
+    else if (streq (argv [i], "-bare")
+      || streq (argv [i], "-b"))
+    {
+      bare_machine = 1;
+      delayed_branches = 1;
+      delayed_loads = 1;
+      quiet = 1;
+    }
+    else if (streq (argv [i], "-delayed_branches")
+      || streq (argv [i], "-db"))
+    { delayed_branches = 1; }
+    else if (streq (argv [i], "-delayed_loads")
+      || streq (argv [i], "-dl"))
+    { delayed_loads = 1; }
+    else if (streq (argv [i], "-exception")
+      || streq (argv [i], "-e"))
+    { g_fLoadExceptionHandler = 1; }
+    else if (streq (argv [i], "-noexception")
+      || streq (argv [i], "-ne"))
+    { g_fLoadExceptionHandler = 0; }
+    else if (streq (argv [i], "-exception_file")
+      || streq (argv [i], "-ef"))
+    {
+      exception_file_name = argv[++i];
+      g_fLoadExceptionHandler = 1;
+    }
+    else if (streq (argv [i], "-mapped_io")
+      || streq (argv [i], "-mio"))
+    { mapped_io = 1; }
+    else if (streq (argv [i], "-nomapped_io")
+      || streq (argv [i], "-nmio"))
+    { mapped_io = 0; }
+    else if (streq (argv [i], "-pseudo")
+      || streq (argv [i], "-p"))
+    { accept_pseudo_insts = 1; }
+    else if (streq (argv [i], "-nopseudo")
+      || streq (argv [i], "-np"))
+    { accept_pseudo_insts = 0; }
+    else if (streq (argv [i], "-quiet")
+      || streq (argv [i], "-q"))
+    { quiet = 1; }
+    else if (streq (argv [i], "-noquiet")
+      || streq (argv [i], "-nq"))
+    { quiet = 0; }
+    else if (streq (argv [i], "-stext")
+      || streq (argv [i], "-st"))
+    { initial_text_size = atoi (argv[++i]); }
+    else if (streq (argv [i], "-sdata")
+      || streq (argv [i], "-sd"))
+    { initial_data_size = atoi (argv[++i]); }
+    else if (streq (argv [i], "-ldata")
+      || streq (argv [i], "-ld"))
+    { initial_data_limit = atoi (argv[++i]); }
+    else if (streq (argv [i], "-sstack")
+      || streq (argv [i], "-ss"))
+    { initial_stack_size = atoi (argv[++i]); }
+    else if (streq (argv [i], "-lstack")
+      || streq (argv [i], "-ls"))
+    { initial_stack_limit = atoi (argv[++i]); }
+    else if (streq (argv [i], "-sktext")
+      || streq (argv [i], "-skt"))
+    { initial_k_text_size = atoi (argv[++i]); }
+    else if (streq (argv [i], "-skdata")
+      || streq (argv [i], "-skd"))
+    { initial_k_data_size = atoi (argv[++i]); }
+    else if (streq (argv [i], "-lkdata")
+      || streq (argv [i], "-lkd"))
+    { initial_k_data_limit = atoi (argv[++i]); }
+    else if ((streq (argv [i], "-file")
+      || streq (argv [i], "-f"))
+      && (i + 1 < argc))
+    {
+      m_strCurFilename = argv[++i];
+      
+      g_strCmdLine = "";
+      for (int j = i; j < argc; j++)
+      {
+	g_strCmdLine += argv[j];
+	g_strCmdLine += " ";
+      }
+      g_strCmdLine.TrimRight();
+      break;
+    }
+    else if (argv [i][0] != '-')
+    {
+    /* Assume this is a file name and everything else are arguments
+	     to program */
+      m_strCurFilename = argv[++i];
+      
+      g_strCmdLine = "";
+      for (int j = i; j < argc; j++)
+      {
+	g_strCmdLine += argv[j];
+	g_strCmdLine += " ";
+      }
+      g_strCmdLine.TrimRight();
+      break;
+    }
+    else
+      goto l_ErrorMsg;
+    }
+    
+    return;
+    
+l_ErrorMsg:
   CString strMsg;
   strMsg.Format("Error processing command line option #%d: \"%s\"\n"
 		"Usage: spim \n\
-	-bare			Bare machine (no pseudo-ops, delayed branches and loads)\n\
-	-asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n\
-	-delayed_branches	Execute delayed branches\n\
-	-delayed_loads		Execute delayed loads\n\
-	-exception		Load exception handler (default)\n\
-	-noexception		Do not load exception handler\n\
-	-exception_file <file>	Specify exception handler in place of default\n\
-	-quiet			Do not print warnings\n\
-	-noquiet		Print warnings (default)\n\
-	-mapped_io		Enable memory-mapped IO\n\
-	-nomapped_io		Do not enable memory-mapped IO (default)\n\
-	-file <file> <args>	Assembly code file and arguments to program\n"
+	   -bare			Bare machine (no pseudo-ops, delayed branches and loads)\n\
+	   -asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n\
+	   -delayed_branches	Execute delayed branches\n\
+	   -delayed_loads		Execute delayed loads\n\
+	   -exception		Load exception handler (default)\n\
+	   -noexception		Do not load exception handler\n\
+	   -exception_file <file>	Specify exception handler in place of default\n\
+	   -quiet			Do not print warnings\n\
+	   -noquiet		Print warnings (default)\n\
+	   -mapped_io		Enable memory-mapped IO\n\
+	   -nomapped_io		Do not enable memory-mapped IO (default)\n\
+	   -file <file> <args>	Assembly code file and arguments to program\n"
 		"Note that if -file is specified, it must be the last option.",
 		i,
 		argv[i],
