@@ -391,7 +391,7 @@ bad_mem_read (addr, mask, dest)
   else if (addr > data_top
 	   && addr < stack_bot
 	   /* If more than 16 MB below stack, probably is bad data ref */
-	   && addr > stack_bot - 16*1000*K)
+	   && addr > stack_bot - 16*K*K)
     {
       /* Grow stack segment */
       expand_stack (stack_bot - addr + 4);
@@ -464,7 +464,7 @@ bad_mem_write (addr, value, mask)
   else if (addr > data_top
 	   && addr < stack_bot
 	   /* If more than 16 MB below stack, probably is bad data ref */
-	   && addr > stack_bot - 16*1000*K)
+	   && addr > stack_bot - 16*K*K)
   {
     /* Grow stack segment */
     expand_stack (stack_bot - addr + 4);
@@ -473,7 +473,7 @@ bad_mem_write (addr, value, mask)
       if (mask == 0)
 	stack_seg_b [addr - stack_bot] = (char)value;
       else if (mask == 1)
-	stack_seg_h [(addr - stack_bot) > 1] = (short)value;
+	stack_seg_h [(addr - stack_bot) >> 1] = (short)value;
       else
 	stack_seg [(addr - stack_bot) >> 2] = value;
     }
