@@ -6,13 +6,16 @@ xspim \- A MIPS R2000/R3000 Simulator
 .B xspim
 [\|\fI-asm/-bare\fP \fI-trap/-notrap\fP \fI-quiet/-noquiet\fP
 \fI-mapped_io/-nomapped_io\fP 
-\fI-file file\fP \fI-execute file\fP
+.br
+\fI-delayed_branches\fP \fI-delayed_loads\fP
 .br
 \fI-stext size\fP \fI-sdata size\fP  \fI-sstack size\fP \fI-sktext
 size\fP \fI-skdata size\fP
 \fI-ldata size\fP \fI-lstack size\fP \fI-lkdata size\fP
 .br
 \fI-hexgpr/-nohexgpr\fP \fI-hexfpr/-nohexfpr\fP\|]
+.br
+\fI-file file\fP \fI-execute file\fP
 
 .SH DESCRIPTION
 SPIM S20 is a simulator that runs programs for the MIPS R2000/R3000
@@ -59,11 +62,12 @@ Enable the memory-mapped IO facility.  Programs that use SPIM syscalls
 to read from the terminal \fBcannot\fP also use memory-mapped IO.
 .IP \fB-nomapped_io\fP 10
 Disable the memory-mapped IO facility.
-.IP "\fB-file file\fP 10"
-Load and execute the assembly code in the file.
-.IP "\fB-execute file\fP 10"
-Load and execute the MIPS \fIexecutable\fP (a.out) file.  Only works
-on systems using a MIPS processors.
+.IP \fB-delayed_branches\FP 10
+Simulate delayed branches by executing instruction in delay slot after
+control transfers (branches, jumps, calls).
+.IP \fB-delayed_laods\FP 10
+Simulate delayed loads by not making value availabe for a cycle after it is
+loaded.
 .IP "\fB-stext size\fP \fB-sdata size\fP \fB-sstack size\fP \fB-sktext size\fP \fB-skdata size\fP" 10
 Sets the initial size of memory segment \fPseg\fP to be \fIsize\fP
 bytes.  The memory segments are named: \fItext\fP, \fIdata\fP,
@@ -89,6 +93,11 @@ Disply the general purpose registers (GPRs) in decimal.
 Disply the floating-point registers (FPRs) in hexadecimal.
 .IP \fB-nohexfpr\fP 10
 Disply the floating-point registers (FPRs) as floating-point values
+.IP "\fB-file file\fP 10"
+Load and execute the assembly code in the file.
+.IP "\fB-execute file\fP 10"
+Load and execute the MIPS \fIexecutable\fP (a.out) file.  Only works
+on systems using a MIPS processors.
 .SH "BUGS"
 Instruction opcodes cannot be used as labels.
 .SH "SEE ALSO"

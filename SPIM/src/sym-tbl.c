@@ -391,7 +391,7 @@ resolve_a_label_sub (sym, inst, pc)
 	      val = SIGN_EX (eval_imm_expr (EXPR (inst)));   /* 16->32 bits */
 	      val = (val >> 2) & 0xffff;	    /* right shift, 32->16 bits */
 
-	      if (bare_machine)	/* Delayed branch */
+	      if (delayed_branches)
 		val -= 1;
 
 	      value = val;

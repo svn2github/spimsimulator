@@ -24,6 +24,7 @@
 /* $Header: /u/l/a/larus/Software/SPIM/RCS/spim.h,v 3.29 1997/07/09 22:08:29 larus Exp $
 */
 
+
 #ifndef NULL
 #define NULL 0
 #endif
@@ -251,6 +252,8 @@ void write_output ();
 
 extern int bare_machine;	/* Non-zero => simulate bare machine */
 extern int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
+extern int delayed_branches;	/* Non-zero => simulate delayed branches */
+extern int delayed_loads;	/* Non-zero => simulate delayed loads */
 extern int quiet;		/* Non-zero => no warning messages */
 extern int source_file;		/* Non-zero => program is source, not binary */
 extern char *trap_file;		/* Path of file containing trap handler */

@@ -85,7 +85,7 @@ static void long_multiply ();
 #define BRANCH_INST(TEST, TARGET) {if (TEST)				\
 				    {					\
 				      mem_addr target = (TARGET);	\
-				      if (bare_machine)			\
+				      if (delayed_branches)		\
 					/* +4 since jump in delay slot */\
 					target += BYTES_PER_WORD;	\
 				      JUMP_INST (target)		\
@@ -93,7 +93,7 @@ static void long_multiply ();
 				  }
 
 
-#define JUMP_INST(TARGET) {if (bare_machine)				\
+#define JUMP_INST(TARGET) {if (delayed_branches)			\
 			    run_spim (PC + BYTES_PER_WORD, 1, display);	\
 			  /* -4 since PC is bumped after this inst */	\
 			  PC = (TARGET) - BYTES_PER_WORD;		\
@@ -116,7 +116,7 @@ static void long_multiply ();
 			      }
 
 
-#define DO_DELAYED_UPDATE() if (bare_machine)				\
+#define DO_DELAYED_UPDATE() if (delayed_loads)				\
 			       {					\
 				 /* Check for delayed updates */	\
 				 if (delayed_addr2 != NULL)		\
@@ -274,7 +274,7 @@ run_spim (initial_PC, steps_to_run, display)
 	      break;
 
 	    case Y_BGEZAL_OP:
-	      if (bare_machine)
+	      if (delayed_branches)
 		R[31] = PC + 2 * BYTES_PER_WORD;
 	      else
 		R[31] = PC + BYTES_PER_WORD;
@@ -298,7 +298,7 @@ run_spim (initial_PC, steps_to_run, display)
 	      break;
 
 	    case Y_BLTZAL_OP:
-	      if (bare_machine)
+	      if (delayed_branches)
 		R[31] = PC + 2 * BYTES_PER_WORD;
 	      else
 		R[31] = PC + BYTES_PER_WORD;
@@ -358,7 +358,7 @@ run_spim (initial_PC, steps_to_run, display)
 	      break;
 
 	    case Y_JAL_OP:
-	      if (bare_machine)
+	      if (delayed_branches)
 		R[31] = PC + 2 * BYTES_PER_WORD;
 	      else
 		R[31] = PC + BYTES_PER_WORD;
@@ -369,7 +369,7 @@ run_spim (initial_PC, steps_to_run, display)
 	      {
 		mem_addr tmp = R[RS (inst)];
 
-		if (bare_machine)
+		if (delayed_branches)
 		  R[RD (inst)] = PC + 2 * BYTES_PER_WORD;
 		else
 		  R[RD (inst)] = PC + BYTES_PER_WORD;

@@ -116,6 +116,8 @@ static int read_token ();
 jmp_buf spim_top_level_env;	/* For ^C */
 
 int bare_machine;		/* Non-Zero => simulate bare machine */
+int delayed_branches;		/* Non-Zero => simulate delayed branches */
+int delayed_loads;		/* Non-Zero => simulate delayed loads */
 int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 int quiet;			/* Non-Zero => no warning messages */
 int source_file;		/* Non-Zero => program is source, not binary */
@@ -156,6 +158,8 @@ main (argc, argv)
   message_out.f = stdout;
 
   bare_machine = 0;
+  delayed_branches = 0;
+  delayed_loads = 0;
   accept_pseudo_insts = 1;
   quiet = 0;
   source_file = 0;
@@ -169,16 +173,33 @@ main (argc, argv)
 
   for (i = 1; i < argc; i++)
     {
-#ifdef DJGPP
-      /* On DOS, support "/option" as well as "-option" */
+#ifdef WIN32
+      /* On Windows, support "/option" as well as "-option" */
       if (argv [i][0] == '/')
 	argv [i][0] = '-';
 #endif
 
       if (streq (argv [i], "-bare"))
-	bare_machine = 1, quiet = 1;
+	{
+	  bare_machine = 1;
+	  delayed_branches = 1;
+	  delayed_loads = 1;
+	  quiet = 1;
+	}
       else if (streq (argv [i], "-asm"))
-	bare_machine = 0;
+	{
+	  bare_machine = 0;
+	  delayed_branches = 0;
+	  delayed_loads = 0;
+	}
+      else if (streq (argv [i], "-delayed_branches"))
+	{
+	  delayed_branches = 1;
+	}
+      else if (streq (argv [i], "-delayed_loads"))
+	{
+	  delayed_loads = 1;
+	}
       else if (streq (argv [i], "-pseudo"))
 	accept_pseudo_insts = 1;
       else if (streq (argv [i], "-nopseudo"))
@@ -241,18 +262,18 @@ main (argc, argv)
       console_to_program ();
       initialize_run_stack (argc - argv_ptr, &argv[argv_ptr]);
       if (!setjmp (spim_top_level_env))
-      {
-	char *undefs = undefined_symbol_string ();
-	if (undefs != NULL)
-	  {
-	    write_output (message_out, "The following symbols are undefined:\n");
-	    write_output (message_out, undefs);
-	    write_output (message_out, "\n");
-	    free (undefs);
-	  }
-	run_program (find_symbol_address (DEFAULT_RUN_LOCATION),
-		     DEFAULT_RUN_STEPS, 0, 0);
-      }
+	{
+	  char *undefs = undefined_symbol_string ();
+	  if (undefs != NULL)
+	    {
+	      write_output (message_out, "The following symbols are undefined:\n");
+	      write_output (message_out, undefs);
+	      write_output (message_out, "\n");
+	      free (undefs);
+	    }
+	  run_program (find_symbol_address (DEFAULT_RUN_LOCATION),
+		       DEFAULT_RUN_STEPS, 0, 0);
+	}
       console_to_spim ();
     }
 
@@ -1012,7 +1033,7 @@ console_to_program ()
 #endif
 
       params.c_iflag |= IGNBRK|IGNPAR;
-      params.c_oflag &= ~OPOST;
+      /*params.c_oflag &= ~OPOST;*/
       params.c_cflag &= ~PARENB;
       params.c_cflag |= CREAD|CS8;
       params.c_lflag = 0;
@@ -1030,8 +1051,8 @@ console_to_program ()
       saved_console_state.sg_flags = (flags | RAW) & ~(CRMOD|ECHO);
       ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);
       saved_console_state.sg_flags = flags;
-      console_state_saved = 1;
 #endif
+      console_state_saved = 1;
     }
 }
 
@@ -1049,9 +1070,9 @@ console_to_spim ()
   if (mapped_io && console_state_saved)
 #ifdef USE_TERMIO
 #ifdef DJGPP
-    tcgetattr((int)console_in.i, &saved_console_state);
+    tcsetattr((int)console_in.i, &saved_console_state);
 #else
-    ioctl ((int) console_in.i, TCGETA, (char *) &saved_console_state);
+    ioctl ((int) console_in.i, TCSETA, (char *) &saved_console_state);
 #endif
 #else
     ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);

@@ -59,6 +59,8 @@ typedef struct _AppResources
 {
   String textFont;
   Boolean bare;
+  Boolean delayed_branches;
+  Boolean delayed_loads;
   Boolean pseudo;
   Boolean asmm;
   Boolean trap;
@@ -98,6 +100,8 @@ int FP_spec_load;		/* Is register waiting for a speculative ld */
 reg_word CpCond[4], CCR[4][32], CPR[4][32];
 
 int bare_machine;		/* Non-Zero => simulate bare machine */
+int delayed_branches;		/* Non-Zero => simulate delayed branches */
+int delayed_loads;		/* Non-Zero => simulate delayed loads */
 int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 int quiet;			/* Non-Zero => no warning messages */
 int source_file;		/* Non-Zero => program is source, not binary */
@@ -178,6 +182,10 @@ static XtResource resources[] =
    XtOffset (AppResources *, textFont), XtRString, NULL},
   {"bare", "Bare", XtRBoolean, sizeof (Boolean),
    XtOffset (AppResources *, bare), XtRImmediate, False},
+  {"delayed_branches", "Delayed_Branches", XtRBoolean, sizeof (Boolean),
+   XtOffset (AppResources *, delayed_branches), XtRImmediate, False},
+  {"delayed_loads", "Delayed_Loads", XtRBoolean, sizeof (Boolean),
+   XtOffset (AppResources *, delayed_loads), XtRImmediate, False},
   {"pseudo", "Pseudo", XtRBoolean, sizeof (Boolean),
    XtOffset (AppResources *, pseudo), XtRImmediate, (XtPointer)True},
   {"asm",  "Asm",  XtRBoolean, sizeof (Boolean),
@@ -226,6 +234,8 @@ static XrmOptionDescRec options[] =
   {"-bare",   "bare", XrmoptionNoArg, "True"},
   {"-asm",    "asmm",  XrmoptionNoArg, "True"},
   {"-pseudo",   "pseudo", XrmoptionNoArg, "True"},
+  {"-delayed_branches", "delayed_branches", XrmoptionNoArg, "True"},
+  {"-delayed_loads", "delayed_loads", XrmoptionNoArg, "True"},
   {"-nopseudo", "pseudo", XrmoptionNoArg, "False"},
   {"-trap",   "trap", XrmoptionNoArg, "True"},
   {"-notrap", "trap", XrmoptionNoArg, "False"},
@@ -298,15 +308,32 @@ initialize (app_res)
 #endif
 {
   bare_machine = 0;
+  delayed_branches = 0;
+  delayed_loads = 0;
   accept_pseudo_insts = 1;
   quiet = 0;
   source_file = 0;
   cycle_level = 0;
 
   if (app_res.bare)
-    bare_machine = 1;
+    {
+      bare_machine = 1;
+      delayed_branches = 1;
+      delayed_loads = 1;
+    }
+
   if (app_res.asmm)
-    bare_machine = 0;
+    {
+      bare_machine = 0;
+      delayed_branches = 0;
+      delayed_loads = 0;
+    }
+
+  if (app_res.delayed_branches)
+    delayed_branches = 1;
+
+  if (app_res.delayed_loads)
+    delayed_loads = 1;
 
   if (app_res.pseudo)
     accept_pseudo_insts = 1;
@@ -484,6 +511,7 @@ syntax (program_name)
   XtDestroyApplicationContext (app_context);
   fprintf (stderr, "Usage:\n %s", program_name);
   fprintf (stderr, "\t[ -bare/-asm ] [ -trap/-notrap ] [ -quiet/noquiet ]\n");
+  fprintf (stderr, "\t[ -delayed_branches][ -delayed_loads]\n");
   fprintf (stderr, "\t[ -pseudo/-nopseudo][ -mapped_io/-nomapped_io ]\n");
   fprintf (stderr, "\t[ -d2 <display> ] [ -file/-execute <filename> ]\n");
   fprintf (stderr, "\t[ -s<seg> <size>] [ -l<seg> <size>]\n");

@@ -7,6 +7,8 @@ spim \- A MIPS R2000/R3000 Simulator
 [\|\fI-asm/-bare\fP \fI-trap/-notrap\fP \fI-quiet/-noquiet\fP
 \fI-mapped_io/-nomapped_io\fP
 .br
+\fI-delayed_branches\fP \fI-delayed_loads\fP
+.br
 \fI-stext size\fP \fI-sdata size\fP  \fI-sstack size\fP \fI-sktext
 size\fP \fI-skdata size\fP
 \fI-ldata size\fP \fI-lstack size\fP \fI-lkdata size\fP
@@ -57,6 +59,12 @@ Enable the memory-mapped IO facility.  Programs that use SPIM syscalls
 to read from the terminal \fBcannot\fP also use memory-mapped IO.
 .IP \fB-nomapped_io\fP 10
 Disable the memory-mapped IO facility.
+.IP \fB-delayed_branches\FP 10
+Simulate delayed branches by executing instruction in delay slot after
+control transfers (branches, jumps, calls).
+.IP \fB-delayed_laods\FP 10
+Simulate delayed loads by not making value availabe for a cycle after it is
+loaded.
 .IP "\fB-stext size\fP \fB-sdata size\fP \fB-sstack size\fP \fB-sktext size\fP \fB-skdata size\fP" 10
 Sets the initial size of memory segment \fPseg\fP to be \fIsize\fP
 bytes.  The memory segments are named: \fItext\fP, \fIdata\fP,
