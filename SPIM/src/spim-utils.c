@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 26    10/18/04 6:25p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 27    10/18/04 9:31p Larus $
 */
 
 
@@ -227,34 +227,41 @@ initialize_run_stack (int argc, char **argv)
   mem_addr addrs[10000];
 
   /* Put strings on stack: */
+
+  /* env: */
   for (p = environ; *p != NULL; p++)
     addrs[j++] = copy_str_to_stack (*p);
-
   env_j = j;
+
+  /* argv; */
   for (i = 0; i < argc; i++)
     addrs[j++] = copy_str_to_stack (argv[i]);
 
-  R[REG_SP] = R[REG_SP] & ~3;		/* Round down to nearest word */
+  R[REG_SP] = STACK_TOP - BYTES_PER_WORD - 4096; /* Initialize $sp */
+  R[REG_SP] = R[REG_SP] & ~3;	/* Round down to nearest word */
   R[REG_SP] -= BYTES_PER_WORD;	/* First free word on stack */
 
-  R[REG_SP] = R[REG_SP] & ~7;		/* Double-word align stack-pointer*/
+  R[REG_SP] = R[REG_SP] & ~7;	/* Double-word align stack-pointer*/
   if ((j % 2) != 0)		/* Odd number of arguments */
     {
-      R[REG_SP] -= BYTES_PER_WORD;	/* Ensure stack ends up double-word aligned */
+      R[REG_SP] -= BYTES_PER_WORD; /* Ensure stack ends up double-word aligned */
     }
 
   /* Build vectors on stack: */
+
+  /* env: */
   (void)copy_int_to_stack (0);	/* Null-terminate vector */
   for (i = env_j - 1; i >= 0; i--)
     R[REG_A2] = copy_int_to_stack (addrs[i]);
 
+  /* argv: */
   (void)copy_int_to_stack (0);	/* Null-terminate vector */
   for (i = j - 1; i >= env_j; i--)
     R[REG_A1] = copy_int_to_stack (addrs[i]);
 
+  /* argc: */
   R[REG_A0] = argc;
-
-  set_mem_word (R[REG_SP], argc);	/* Leave argc on stack */
+  set_mem_word (R[REG_SP], argc); /* Leave argc on stack */
 }
 
 

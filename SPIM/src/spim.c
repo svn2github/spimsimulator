@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 35    9/26/04 10:39a Larus $
+/* $Header: /Software/SPIM/src/spim.c 36    10/18/04 9:31p Larus $
 */
 
 
@@ -111,13 +111,15 @@ int spim_return_value;		/* Value returned when spim exits */
 
 /* Non-zero => load standard exception handler */
 static int load_exception_handler = 1;
-char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
+static char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 static int console_state_saved;
 #ifdef USE_TERMIOS
 static struct termios saved_console_state;
 #else
 static struct sgttyb saved_console_state;
 #endif
+static int program_argc;
+static char** program_argv;
 
 
 
@@ -125,9 +127,8 @@ int
 main (int argc, char **argv)
 {
   int i;
-  int assembly_file_read = 0;
+  int assembly_file_loaded = 0;
   int print_usage_msg = 0;
-  int argv_ptr = 0;
 
   console_out.f = stdout;
   message_out.f = stdout;
@@ -245,29 +246,29 @@ main (int argc, char **argv)
 		|| streq (argv [i], "-f"))
 	       && (i + 1 < argc))
 	{
-	  argv_ptr = i + 1;
-	  if (!assembly_file_read)
+	  program_argc = argc - (i + 1);
+	  program_argv = &argv[i + 1]; /* Everything following is argv */
+
+	  if (!assembly_file_loaded)
 	    {
-	      initialize_world (load_exception_handler
-				? exception_file_name
-				: NULL);
+	      initialize_world (load_exception_handler ? exception_file_name : NULL);
 	    }
-	  assembly_file_read |= !read_assembly_file (argv[++i]);
-	  break;			/* Everything following is argv */
+	  assembly_file_loaded |= !read_assembly_file (argv[++i]);
+	  break;
 	}
       else if (argv [i][0] != '-')
 	{
-	  /* Assume this is a file name and everything else are arguments
-	     to program */
-	  argv_ptr = i;
-	  if (!assembly_file_read)
+	  /* Assume this argument is a file name and everything following is
+	     arguments to program */
+	  program_argc = argc - i;
+	  program_argv = &argv[i]; /* Everything following is argv */
+
+	  if (!assembly_file_loaded)
 	    {
-	      initialize_world (load_exception_handler
-				? exception_file_name
-				: NULL);
+	      initialize_world (load_exception_handler ? exception_file_name : NULL);
 	    }
-	  assembly_file_read |= !read_assembly_file (argv[i]);
-	  break;			/* Everything following is argv */
+	  assembly_file_loaded |= !read_assembly_file (argv[i]);
+	  break;
 	}
       else
 	{
@@ -293,15 +294,15 @@ main (int argc, char **argv)
 	-file <file> <args>	Assembly code file and arguments to program\n");
     }
 
-  if (!assembly_file_read)
+  if (!assembly_file_loaded)
     {
       initialize_world (load_exception_handler ? exception_file_name : NULL);
       top_level ();
     }
-  else /* assembly_file_read */
+  else /* assembly_file_loaded */
     {
       console_to_program ();
-      initialize_run_stack (argc - argv_ptr, &argv[argv_ptr]);
+      initialize_run_stack (program_argc, program_argv);
       if (!setjmp (spim_top_level_env))
 	{
 	  char *undefs = undefined_symbol_string ();
@@ -421,7 +422,7 @@ parse_spim_command (FILE *file, int redo)
 	if (addr == 0)
 	  addr = starting_address ();
 
-	initialize_run_stack (0, 0);
+	initialize_run_stack (program_argc, program_argv);
 	console_to_program ();
 	if (addr != 0)
 	{
