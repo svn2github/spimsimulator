@@ -1,27 +1,3 @@
-// SPIM S20 MIPS simulator.
-// Definitions for the SPIM S20.
-//
-// Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
-// ALL RIGHTS RESERVED.
-// Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
-//
-// SPIM is distributed under the following conditions:
-//
-//   You may make copies of SPIM for your own use and modify those copies.
-//
-//   All copies of SPIM must retain my name and copyright notice.
-//
-//   You may not sell SPIM or distributed SPIM in conjunction with a
-//   commerical product or service without the expressed written consent of
-//   James Larus.
-//
-// THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
-// IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// PURPOSE.
-
-/* $Version: $ */
-
 //Microsoft Developer Studio generated resource script.
 //
 #include "resource.h"
@@ -135,7 +111,7 @@ BEGIN
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
         MENUITEM "Save &Log File...\tCtrl+S",   ID_FILE_SAVE_LOG
         MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_APP_EXIT
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
     END
     POPUP "&Simulator"
     BEGIN
@@ -158,11 +134,7 @@ BEGIN
     END
     POPUP "&Window"
     BEGIN
-//        MENUITEM "&Next\tCtrl+F6",              ID_WINDOW_NEXT
-//        MENUITEM "&Previous\tShift+Ctrl+F6",    ID_WINDOW_PREVIOUS
-//        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
         MENUITEM "&Tile",                       ID_WINDOW_TILE
-//        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGEICONS
         MENUITEM SEPARATOR
         MENUITEM "&1 Messages",                 ID_WINDOW_MESSAGES
         MENUITEM "&2 Text Segment",             ID_WINDOW_TEXTSEG
@@ -197,9 +169,7 @@ BEGIN
     "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE_LOG,       VIRTKEY, CONTROL, NOINVERT
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
-    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     VK_CANCEL,      ID_SIMULATOR_BREAK,     VIRTKEY, CONTROL, NOINVERT
-    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
     VK_F1,          ID_HELP,                VIRTKEY, NOINVERT
     VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT, NOINVERT
     VK_F10,         ID_SIMULATOR_STEP,      VIRTKEY, NOINVERT
@@ -351,7 +321,7 @@ BEGIN
             VALUE "FileDescription", "PCSPIM MFC Application\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "PCSPIM\0"
-            VALUE "LegalCopyright", "Copyright © 1990-2000 by James R. Larus\0"
+            VALUE "LegalCopyright", "Copyright © 1990-2003 by James R. Larus\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "PCSPIM.EXE\0"
             VALUE "PrivateBuild", "\0"
