@@ -274,9 +274,43 @@ Page</a>. I have not used this compiler.</P>
 </ul>
 <HR width="100%">
 
-<H2 align=center>Latest Version</H2>
+<H2 align=center>Changes in Latest Version</H2>
 <P align=left>The current version of <B>spim</B> is 6.5 (January 2003), which contains the 
 following changes from version 6.4:</P>
+<ul>
+  <li>
+<P align=left>If started program is started with only one argument, assume it is 
+a file name.</P>
+  </li>
+  <li>
+<P align=left>Added Alt-F4 shortcut to PCSpim.</P>
+  </li>
+  <li>
+<P align=left>Fixed trap.handler to return to instruction at EPC on interrupt. </P>
+  </li>
+  <li>
+<P align=left>Fixed (real!) hardware exception on integer overflow in division.</P>
+  </li>
+  <li>
+<P align=left>-trap_file did not properly parse argument in xspim.</P>
+  </li>
+  <li>
+<P align=left>Fixed printing of error on last line without a carriage return.</P>
+  </li>
+  <li>
+<P align=left>Print proper registers when printing hex FP numbers.</P>
+  </li>
+  <li>
+<P align=left>Properly zero newly allocated memory.</P>
+  </li>
+  <li>
+<P align=left>Added nops (addu $0, $0, 0) to trap handler, so that it works 
+properly in bare mode!</P>
+  </li>
+  <li>
+<P align=left>PCSPIM.HLP file was corrupted.</P>
+  </li>
+</ul>
 <P align=left>The previous version of <B>spim</B> is 6.4 (January 2002), which contains the 
 following changes from version 6.3:</P>
 <ul>
