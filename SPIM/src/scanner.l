@@ -65,6 +65,7 @@ static int eof_returned = 0;	/* Return EOF token yet? */
 
 static int check_keyword (YY_CHAR *id, int allow_pseudo_ops);
 static YY_CHAR *copy_str (YY_CHAR *str, int chop);
+static YY_CHAR scan_escape (YY_CHAR **str);
 
 
 #undef yywrap
@@ -259,7 +260,7 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 			}
 
 
-\"(([^"])|(\\\"))*\"	{
+\"(([^""])|(\\\"))*\"	{
 			  if (current_line == NULL)
 			    {
 			      current_line_no = line_no;
@@ -269,7 +270,7 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 			  return (Y_STR);
 			}
 
-\'(([^'])|(\\[^']))\'	{
+\'(([^''])|(\\[^'']))\'	{
 			  if (current_line == NULL)
 			    {
 			      current_line_no = line_no;
@@ -278,19 +279,8 @@ static YY_CHAR *copy_str (YY_CHAR *str, int chop);
 
 			    if (*(yytext + 1) == '\\')
 			      {
-				switch (*(yytext + 2))
-				  {
-				  case 'n':
-				    yylval.i = (int) '\n';
-				    return (Y_INT);
-
-				  case 't':
-				    yylval.i = (int) '\t';
-				    return (Y_INT);
-
-				  default:
-				    yyerror ("Bad character \\X");
-				  }
+				YY_CHAR *escape = yytext + 1;
+				yylval.i = (int) scan_escape (&escape);
 			      }
 			    else
 			      {
@@ -354,6 +344,56 @@ int yywrap()
 #endif
 		return (0);
 	}
+}
+
+
+/* A backslash has just been read, return the character designated by *STR.  */
+
+static YY_CHAR
+scan_escape (YY_CHAR **str)
+{
+  YY_CHAR first = **str;
+  *str += 1;
+  switch (first)
+    {
+    case 'a': return '\a';
+    case 'b': return '\b';
+    case 'f': return '\f';
+    case 'n': return '\n';
+    case 'r': return '\r';
+    case 't': return '\t';
+    case '\\': return '\\';
+    case '"': return '"';
+    case '\'': return '\'';
+
+    case 'x':
+    case 'X':
+      {
+	YY_CHAR c1 = **str, c2 = *(*str + 1);
+	int b = 0;
+
+	if ('0' <= c1 && c1 <= '9') b = c1 - '0';
+	else if ('A' <= c1 && c1 <= 'F') b = c1 - 'A' + 10;
+	else if ('a' <= c1 && c1 <= 'f') b = c1 - 'a' + 10;
+	else yyerror ("Bad character in \\X construct in string");
+
+	b <<= 4;
+	if ('0' <= c2 && c2 <= '9') b += c2 - '0';
+	else if ('A' <= c2 && c2 <= 'F') b += c2 - 'A' + 10;
+	else if ('a' <= c2 && c2 <= 'f') b += c2 - 'a' + 10;
+	else yyerror ("Bad character in \\X construct in string");
+
+	*str += 2;
+	return (YY_CHAR) b;
+      }
+
+    default:
+      {
+	char message[] = "Bad character \\X";
+	message[strlen (message) - 1] = first;
+	yyerror (message);
+      }
+    }
 }
 
 
