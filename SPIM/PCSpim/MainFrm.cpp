@@ -196,7 +196,7 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
   else if (nType == SIZE_RESTORED)
     {
       g_pView->m_fConsoleMinimized = FALSE;
-      g_pView->GetConsole()->ShowWindow(SW_SHOWMAXIMIZED);
+      g_pView->GetConsole()->ShowWindow(SW_RESTORE);
     }
 
   RECT r;
