@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 17    3/12/04 11:00p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 18    3/13/04 7:46a Larus $
  */
 
 #include <stdio.h>
@@ -493,9 +493,6 @@ syntax (char *program_name)
   fprintf (stderr, "-exception		Load exception handler (default)\n");
   fprintf (stderr, "-noexception		Do not load exception handler\n");
   fprintf (stderr, "-exception_file <file>	Specify exception handler in place of default\n");
-  fprintf (stderr, "-trap			Load exception handler (default)\n");
-  fprintf (stderr, "-notrap			Do not load exception handler\n");
-  fprintf (stderr, "-trap_file <file>	Specify exception handler in place of default\n");
   fprintf (stderr, "-quiet			Do not print warnings\n");
   fprintf (stderr, "-noquiet		Print warnings (default)\n");
   fprintf (stderr, "-mapped_io		Enable memory-mapped IO\n");

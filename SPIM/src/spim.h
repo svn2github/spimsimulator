@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 19    3/12/04 11:00p Larus $
+/* $Header: /Software/SPIM/src/spim.h 20    3/13/04 7:46a Larus $
 */
 
 
@@ -42,28 +42,21 @@ typedef union {int i; void* p;} intptr_union;
 
 
 /* Round V to next greatest B boundary */
-
 #define ROUND_UP(V, B) (((int) V + (B-1)) & ~(B-1))
 #define ROUND_DOWN(V, B) (((int) V) & ~(B-1))
 
 /* Sign-extend an int16 to an int32 */
-
 #define SIGN_EX(X) (((X) & 0x8000) ? ((X) | 0xffff0000) : (X))
 
 
-#ifdef MIN			/* Some systems define these in system includes */
+#ifdef MIN		  /* Some systems define these in system includes */
 #undef MIN
 #endif
 #ifdef MAX
 #undef MAX
 #endif
-
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
-
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
-
-
-#define K 1024
 
 
 /* Useful and pervasive declarations: */
@@ -82,6 +75,9 @@ typedef union {int i; void* p;} intptr_union;
 #define QSORT_FUNC int(*)(const void *, const void *)
 
 
+
+#define K 1024
+
 
 /* Type of a memory address.  Must be a 32-bit quantity to match MIPS.  */
 
@@ -144,7 +140,7 @@ typedef uint32 mem_addr;
 /* Maximum size of stack segment. */
 
 #ifndef STACK_LIMIT
-#define STACK_LIMIT	(256*K)	/* 1 MB */
+#define STACK_LIMIT	(256*K)	/* 1/4 MB */
 #endif
 
 
@@ -172,8 +168,7 @@ typedef uint32 mem_addr;
 #define EXCEPTION_ADDR 0x80000180
 #endif
 
-/* Maximum size of object stored in the small data segment pointed to by
-   $gp */
+/* Maximum size of object stored in the small data segment pointed to by $gp */
 
 #define SMALL_DATA_SEG_MAX_SIZE 8
 
@@ -184,23 +179,24 @@ typedef uint32 mem_addr;
 
 
 /* Interval (in instructions) at which memory-mapped IO registers are
-   checked and updated.*/
+   checked and updated. (This is to reduce overhead from making system calls
+   to check for IO. It can be set as low as 1.) */
 
 #define IO_INTERVAL 100
 
 
-/* Number of instructions that a character remains in receiver buffer,
+/* Number of IO_INTERVALs that a character remains in receiver buffer,
    even if another character is available. */
 
 #define RECV_INTERVAL 100
 
 
-/* Number of instructions that it takes to write a character. */
+/* Number of IO_INTERVALs that it takes to write a character. */
 
 #define TRANS_LATENCY 100
 
 
-/* Iterval (in milliseconds) for the hardware timer in CP0. */
+/* Iterval (milliseconds) for the hardware timer in CP0. */
 
 #define TIMER_TICK_MS 10	/* 100 times per second */
 
@@ -211,6 +207,7 @@ typedef uint32 mem_addr;
 #include <stdio.h>
 
 typedef union {int i; FILE* f;} port;
+
 
 /* Exported functions (from spim.c or xspim.c): */
 
@@ -232,30 +229,19 @@ extern int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 extern int delayed_branches;	/* Non-zero => simulate delayed branches */
 extern int delayed_loads;	/* Non-zero => simulate delayed loads */
 extern int quiet;		/* Non-zero => no warning messages */
-extern char *exception_file_name;/* Path of file containing exception handler */
+extern char *exception_file_name;/* File containing exception handler */
 extern int force_break;		/* Non-zero => stop interpreter loop  */
 extern int parser_error_occurred; /* Non-zero => parse resulted in error */
 extern int spim_return_value;	/* Value returned when spim exits */
-
 /* Actual type of structure pointed to depends on X/terminal interface */
 extern port message_out, console_out, console_in;
-
 extern int mapped_io;		/* Non-zero => activate memory-mapped IO */
-
 extern mem_addr program_starting_address;
-
 extern int initial_text_size;
-
 extern int initial_data_size;
-
 extern mem_addr initial_data_limit;
-
 extern int initial_stack_size;
-
 extern mem_addr initial_stack_limit;
-
 extern int initial_k_text_size;
-
 extern int initial_k_data_size;
-
 extern mem_addr initial_k_data_limit;
