@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 9     1/12/02 4:15p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 10    1/01/03 9:34p Larus $
  */
 
 #include <stdio.h>
@@ -241,7 +241,7 @@ static XrmOptionDescRec options[] =
   {"-nopseudo", "pseudo", XrmoptionNoArg, "False"},
   {"-trap",   "trap", XrmoptionNoArg, "True"},
   {"-notrap", "trap", XrmoptionNoArg, "False"},
-  {"-trap_file", "trap_file", XrmoptionNoArg, NULL},
+  {"-trap_file", "trap_file", XrmoptionSepArg, NULL},
   {"-quiet",  "quiet", XrmoptionNoArg, "True"},
   {"-noquiet","quiet", XrmoptionNoArg, "False"},
   {"-mapped_io",  "mapped_io", XrmoptionNoArg, "True"},
