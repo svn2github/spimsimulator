@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 34    3/04/04 7:00a Larus $
+/* $Header: /Software/SPIM/src/run.c 35    3/04/04 8:57p Larus $
 */
 
 
@@ -530,10 +530,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		break;
 	      }
 
-	    case Y_LWC0_OP:
 	    case Y_LWC2_OP:
 	      LOAD_INST (READ_MEM_WORD, R[BASE (inst)] + IOFFSET (inst),
-			 &CPR[OPCODE (inst) - Y_LWC0_OP][RT (inst)],
+			 &CPR[2][RT (inst)],
 			 0xffffffff);
 	      break;
 
@@ -769,6 +768,17 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
+	    case Y_SDC2_OP:
+	      {
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		if (addr & 0x3)
+		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
+
+		SET_MEM_WORD (addr, CPR[2][RT (inst)]);
+		SET_MEM_WORD (addr + sizeof(mem_word), CPR[2][RT (inst) + 1]);
+		break;
+	      }
+
 	    case Y_SH_OP:
 	      SET_MEM_HALF (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
@@ -895,10 +905,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), R[RT (inst)]);
 	      break;
 
-	    case Y_SWC0_OP:
 	    case Y_SWC2_OP:
-	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst),
-			    CPR[OPCODE (inst) - Y_SWC0_OP][RT (inst)]);
+	      SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), CPR[2][RT (inst)]);
 	      break;
 
 	    case Y_SWL_OP:
@@ -1392,6 +1400,19 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		double val = (double)FPR_S (FS (inst));
 
 		SET_FPR_W (FD (inst), (int32)(val + 0.5)); /* Casting truncates */
+		break;
+	      }
+
+	    case Y_SDC1_OP:
+	      {
+		double val = FPR_D (RT (inst));
+		reg_word *vp = (reg_word *) &val;
+		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
+		if (addr & 0x3)
+		  RAISE_EXCEPTION (ADDRL_EXCPT, BadVAddr = addr);
+
+		SET_MEM_WORD (addr, *vp);
+		SET_MEM_WORD (addr + sizeof(mem_word), *(vp + 1));
 		break;
 	      }
 

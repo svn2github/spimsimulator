@@ -185,7 +185,6 @@
 %token Y_LL_OP
 %token Y_LUXC1_OP
 %token Y_LW_OP
-%token Y_LWC0_OP
 %token Y_LWC1_OP
 %token Y_LWC2_OP
 %token Y_LWL_OP
@@ -296,7 +295,6 @@
 %token Y_SUBU_OP
 %token Y_SUXC1_OP
 %token Y_SW_OP
-%token Y_SWC0_OP
 %token Y_SWC1_OP
 %token Y_SWC2_OP
 %token Y_SWL_OP
@@ -1566,8 +1564,7 @@ ULOADH_POPS:	Y_ULH_POP
 	|	Y_ULHU_POP
 	;
 
-LOADC_OPS:	Y_LWC0_OP
-	|	Y_LDC2_OP
+LOADC_OPS:	Y_LDC2_OP
 	|	Y_LWC2_OP
 	;
 
@@ -1589,8 +1586,7 @@ STORE_OPS:	Y_SB_OP
 	|	Y_SD_POP
 	;
 
-STOREC_OPS:	Y_SWC0_OP
-	|	Y_SWC2_OP
+STOREC_OPS:	Y_SWC2_OP
 	|	Y_SDC2_OP
 	;
 

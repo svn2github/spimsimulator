@@ -610,69 +610,36 @@ ldd_:	.word 1, -1, 0, 0x8000000
 	.data
 ldc2_:	.asciiz "Testing LDC2\n"
 	.align 2
-ldc2d_:	.word 0, 0
+ldc2d_:	.word 0x7f7f7f7f, 0xf7f7f7f7
 	.text
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 ldc2_
 	syscall
 
-	li $3, 0x7f7f7f7f
-	li $4, 0xf7f7f7f7
 	la $2 ldc2d_
-	mtc2 $3, $0
-	mtc2 $4, $1
-	swc2 $0 0($2)
-	swc2 $1 4($2)
+	ldc2 $0 0($2)
+	mfc2 $3, $f0
+	mfc2 $4, $f1
 	lw $5 0($2)
 	bne $5 $3 fail
 	lw $5 4($2)
 	bne $5 $4 fail
-	ldc2 $2 0($2)
-	mfc2 $5, $f2
-	bne $5 $3 fail
-	mfc2 $5, $f3
-	bne $5 $4 fail
 
 
 	.data
-lwc02_:	.asciiz "Testing LWC0, LWC2\n"
+lwc2_:	.asciiz "Testing LWC2\n"
 	.align 2
-lwc02d_:.word 0
+lwc2d_:.word 0x7f7f7f7f
 	.text
 	li $v0 4	# syscall 4 (print_str)
-	la $a0 lwc02_
+	la $a0 lwc2_
 	syscall
 
-	li $3, 0x7f7f7f7f
-	la $2 lwc02d_
-	mtc0 $3, $0
-	swc0 $0 0($2)
+	la $2 lwc2d_
+	lwc2 $0 0($2)
+	mfc2 $3 $0
 	lw $4 0($2)
 	bne $4 $3 fail
-	lwc0 $1 0($2)
-	mfc0 $5, $1
-	bne $5 $3 fail
-
-	li $3, 0x7f7f7f7f
-	la $2 lwc02d_
-	mtc1 $3, $0
-	swc1 $f0 0($2)
-	lw $4 0($2)
-	bne $4 $3 fail
-	lwc1 $f1 0($2)
-	mfc1 $5, $f1
-	bne $5 $3 fail
-
-	li $3, 0x7f7f7f7f
-	la $2 lwc02d_
-	mtc2 $3, $0
-	swc2 $0 0($2)
-	lw $4 0($2)
-	bne $4 $3 fail
-	lwc2 $1 0($2)
-	mfc2 $5, $1
-	bne $5 $3 fail
-
 
 	.data
 lh_:	.asciiz "Testing LH\n"
@@ -3012,47 +2979,35 @@ floor.w.s_:	.asciiz "Testing FLOOR.W.S\n"
 	.data
 ldc1_:	.asciiz "Testing LDC1\n"
 	.align 2
-ldc1d_:	.word 0, 0
+ldc1d_:	.word 0x7f7f7f7f, 0xf7f7f7f7
 	.text
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 ldc1_
 	syscall
 
-	li $3, 0x7f7f7f7f
-	li $4, 0xf7f7f7f7
 	la $2 ldc1d_
-	mtc1 $3, $0
-	mtc1 $4, $1
-	swc1 $f0 0($2)
-	swc1 $f1 4($2)
+	ldc2 $0 0($2)
+	mfc2 $3, $f0
+	mfc2 $4, $f1
 	lw $5 0($2)
 	bne $5 $3 fail
 	lw $5 4($2)
-	bne $5 $4 fail
-	ldc1 $f2 0($2)
-	mfc1 $5, $f2
-	bne $5 $3 fail
-	mfc1 $5, $f3
 	bne $5 $4 fail
 
 	.data
 lwc1_:	.asciiz "Testing LWC1\n"
 	.align 2
-lwc1d_:	.byte 0, 0, 0, 0
+lwc1d_:	.word 0x7f7f7f7f
 	.text
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 lwc1_
 	syscall
 
-	li $3, 0x7f7f7f7f
 	la $2 lwc1d_
-	mtc1 $3, $0
-	swc1 $f0 0($2)
+	lwc1 $f0 0($2)
+	mfc1 $3 $f0
 	lw $4 0($2)
 	bne $4 $3 fail
-	lwc1 $f1 0($2)
-	mfc1 $5, $f1
-	bne $5 $3 fail
 
 
 # MFC1 tested previously

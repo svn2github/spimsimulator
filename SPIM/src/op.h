@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 30    3/04/04 8:47p Larus $
+/* $Header: /Software/SPIM/src/op.h 31    3/04/04 8:57p Larus $
 */
 
 
@@ -266,7 +266,6 @@ OP("ll",	Y_LL_OP,	I2a_TYPE_INST,		0xb0000000)	/* MIPS32 */
 OP("lui",	Y_LUI_OP,	I1t_TYPE_INST,		0x3c000000)
 OP("luxc1",	Y_LUXC1_OP,	FP_R3_TYPE_INST,	0x4c000005)	/* MIPS32 Rev 2 */
 OP("lw",	Y_LW_OP,	I2a_TYPE_INST,		0x8c000000)
-OP("lwc0",	Y_LWC0_OP,	I2a_TYPE_INST,		0xc0000000)
 OP("lwc1",	Y_LWC1_OP,	FP_I2a_TYPE_INST,	0xc4000000)
 OP("lwc2",	Y_LWC2_OP,	I2a_TYPE_INST,		0xc8000000)
 OP("lwl",	Y_LWL_OP,	I2a_TYPE_INST,		0x88000000)
@@ -399,7 +398,6 @@ OP("sub.s",	Y_SUB_S_OP,	FP_R3_TYPE_INST,	0x46000001)
 OP("subu",	Y_SUBU_OP,	R3_TYPE_INST,		0x00000023)
 OP("suxc1",	Y_SUXC1_OP,	FP_R3_TYPE_INST,	0x4600000d)	/* MIPS32 Rev 2 */
 OP("sw",	Y_SW_OP,	I2a_TYPE_INST,		0xac000000)
-OP("swc0",	Y_SWC0_OP,	I2a_TYPE_INST,		0xe0000000)
 OP("swc1",	Y_SWC1_OP,	FP_I2a_TYPE_INST,	0xe4000000)
 OP("swc2",	Y_SWC2_OP,	I2a_TYPE_INST,		0xe8000000)
 OP("swl",	Y_SWL_OP,	I2a_TYPE_INST,		0xa8000000)
