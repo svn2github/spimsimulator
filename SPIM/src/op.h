@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 39    4/24/04 9:55a Larus $
+/* $Header: /Software/SPIM/src/op.h 40    6/05/04 7:21a Larus $
 */
 
 
@@ -414,8 +414,8 @@ OP("rotrv",	Y_ROTRV_OP,	R2sh_TYPE_INST,		0x00200003)	/* MIPS32 Rev 2 */
 
 OP("round.l.d",	Y_ROUND_L_D_OP,	FP_R2ds_TYPE_INST,	0x46200008)	/* MIPS32 Rev 2 */
 OP("round.l.s",	Y_ROUND_L_S_OP,	FP_R2ds_TYPE_INST,	0x46000008)	/* MIPS32 Rev 2 */
-OP("round.w.d",	Y_ROUND_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000b)	/* MIPS32 */
-OP("round.w.s",	Y_ROUND_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000b)	/* MIPS32 */
+OP("round.w.d",	Y_ROUND_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000c)	/* MIPS32 */
+OP("round.w.s",	Y_ROUND_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000c)	/* MIPS32 */
 
 OP("rsqrt.d",	Y_RSQRT_D_OP,	FP_R2ds_TYPE_INST,	0x46200016)	/* MIPS32 Rev 2 */
 OP("rsqrt.s",	Y_RSQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000016)	/* MIPS32 Rev 2 */
@@ -501,8 +501,8 @@ OP("tnei",	Y_TNEI_OP,	I1s_TYPE_INST,		0x040e0000)	/* MIPS32 */
 
 OP("trunc.l.d",	Y_TRUNC_L_D_OP,	FP_R2ds_TYPE_INST,	0x46200009)	/* MIPS32 Rev 2 */
 OP("trunc.l.s",	Y_TRUNC_L_S_OP,	FP_R2ds_TYPE_INST,	0x46000009)	/* MIPS32 Rev 2 */
-OP("trunc.w.d",	Y_TRUNC_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000c)	/* MIPS32 */
-OP("trunc.w.s",	Y_TRUNC_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000c)	/* MIPS32 */
+OP("trunc.w.d",	Y_TRUNC_W_D_OP,	FP_R2ds_TYPE_INST,	0x4620000d)	/* MIPS32 */
+OP("trunc.w.s",	Y_TRUNC_W_S_OP,	FP_R2ds_TYPE_INST,	0x4600000d)	/* MIPS32 */
 
 OP("ulh",	Y_ULH_POP,	PSEUDO_OP,		-1)
 OP("ulhu",	Y_ULHU_POP,	PSEUDO_OP,		-1)
