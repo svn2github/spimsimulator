@@ -2481,6 +2481,7 @@ yyerror (s)
 #endif
 {
   parse_error_occurred = 1;
+  clear_labels();
   yywarn (s);
 }
 

@@ -1,5 +1,8 @@
 2004-02-14    <larus@C745660-A>
 
+	* parser.y:
+	Record labels on line with syntax error.
+
 	* scanner.l [P. Augustyniak silvathraec@rpg.pl]:
 	Added \ooo constants to strings.
 
