@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 47    3/11/04 7:17a Larus $
+/* $Header: /Software/SPIM/src/run.c 48    3/11/04 9:22p Larus $
 */
 
 
@@ -475,9 +475,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_ERET_OP:
 	      {
-		mem_addr tmp = CP0_EPC;
-
-		JUMP_INST (tmp); /* Jump to EPC */
+		CP0_Status &= ~CP0_Status_EXL;	/* Clear EXL bit */
+		JUMP_INST (CP0_EPC); 		/* Jump to EPC */
 	      }
 	      break;
 
