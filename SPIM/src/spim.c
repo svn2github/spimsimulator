@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 9     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/spim.c 10    1/14/01 12:41p Larus $
 */
 
 
@@ -810,6 +810,8 @@ print_reg (reg_no, type_code)
   return (1);
 }
 
+#define MAX_BUF_LEN 32000
+
 #ifdef __STDC__
 static void
 print_all_regs (int hex_flag)
@@ -819,8 +821,8 @@ print_all_regs (hex_flag)
      int hex_flag;
 #endif
 {
-  int max_buf_len = 32000;
-  char buf[max_buf_len];
+  int max_buf_len = MAX_BUF_LEN;
+  char buf[MAX_BUF_LEN];
   int count;
   registers_as_string (buf, &max_buf_len, &count, hex_flag, hex_flag);
   write_output (message_out, "%s\n", buf);
