@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 40    6/05/04 7:21a Larus $
+/* $Header: /Software/SPIM/src/op.h 41    9/28/04 8:05p Larus $
 */
 
 
@@ -136,7 +136,7 @@ OP("bc2t",	Y_BC2T_OP,	BC_TYPE_INST,		0x49010000)
 OP("bc2tl",	Y_BC2TL_OP,	BC_TYPE_INST,		0x49030000)	/* MIPS32 */
 
 OP("beq",	Y_BEQ_OP,	B2_TYPE_INST,		0x10000000)
-OP("beql",	Y_BEQ_OP,	B2_TYPE_INST,		0x50000000)	/* MIPS32 */
+OP("beql",	Y_BEQL_OP,	B2_TYPE_INST,		0x50000000)	/* MIPS32 */
 OP("beqz",	Y_BEQZ_POP,	PSEUDO_OP,		-1)
 OP("bge",	Y_BGE_POP,	PSEUDO_OP,		-1)
 OP("bgeu",	Y_BGEU_POP,	PSEUDO_OP,		-1)
@@ -183,7 +183,7 @@ OP("c.ngl.d",	Y_C_NGL_D_OP,	FP_CMP_TYPE_INST,	0x4620003b)
 OP("c.ngl.ps",	Y_C_NGL_PS_OP,	FP_CMP_TYPE_INST,	0x4660003b)	/* MIPS32 Rev 2 */
 OP("c.ngl.s",	Y_C_NGL_S_OP,	FP_CMP_TYPE_INST,	0x4600003b)
 OP("c.ngle.d",	Y_C_NGLE_D_OP,	FP_CMP_TYPE_INST,	0x46200039)
-OP("c.ngle.ps",Y_C_NGLE_PS_OP,	FP_CMP_TYPE_INST,	0x46600039)	/* MIPS32 Rev 2 */
+OP("c.ngle.ps",	Y_C_NGLE_PS_OP,	FP_CMP_TYPE_INST,	0x46600039)	/* MIPS32 Rev 2 */
 OP("c.ngle.s",	Y_C_NGLE_S_OP,	FP_CMP_TYPE_INST,	0x46000039)
 OP("c.ngt.d",	Y_C_NGT_D_OP,	FP_CMP_TYPE_INST,	0x4620003f)
 OP("c.ngt.ps",	Y_C_NGT_PS_OP,	FP_CMP_TYPE_INST,	0x4660003f)	/* MIPS32 Rev 2 */
