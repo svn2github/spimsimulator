@@ -218,7 +218,10 @@
 %token Y_MOVT_D_OP
 %token Y_MOVT_PS_OP
 %token Y_MOVT_S_OP
+%token Y_MOVZ_OP
+%token Y_MOVZ_D_OP
 %token Y_MOVZ_PS_OP
+%token Y_MOVZ_S_OP
 %token Y_MSUB_D_OP
 %token Y_MSUB_PS_OP
 %token Y_MSUB_S_OP
@@ -1802,6 +1805,7 @@ MOVE_TO_HILO_OP:	Y_MTHI_OP
 	;
 
 MOVEC_OP:	Y_MOVN_OP
+	|	Y_MOVZ_OP
 	;
 
 MOVE_COP_OP:	Y_MFC0_OP
@@ -1845,6 +1849,8 @@ FP_MOVER_OPS:	Y_MOVF_OP
 
 FP_MOVEC_OPS:	Y_MOVN_D_OP
 	|	Y_MOVN_S_OP
+	|	Y_MOVZ_D_OP
+	|	Y_MOVZ_S_OP
 	;
 
 FP_MOVEC_OPS_REV2:	Y_MOVN_PS_OP

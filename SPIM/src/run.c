@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 30    3/03/04 7:19a Larus $
+/* $Header: /Software/SPIM/src/run.c 31    3/03/04 9:15p Larus $
 */
 
 
@@ -687,6 +687,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		R[RD (inst)] = R[RS (inst)];
 	      break;
 
+	    case Y_MOVZ_OP:
+	      if (R[RT (inst)] == 0)
+		R[RD (inst)] = R[RS (inst)];
+	      break;
+
 	    case Y_MTC0_OP:
 	    case Y_MTC2_OP:
 	      CPR[OPCODE (inst) - Y_MTC0_OP][FS (inst)] = R[RT (inst)];
@@ -1276,7 +1281,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		if (R[RT (inst)] != 0)
 		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
 		break;
-
 	      }
 
 	    case Y_MOVT_OP:
@@ -1299,6 +1303,21 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      {
 		int cc = CC (inst);
 		if ((FCCR & (1 << cc)) != 0)
+		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
+		break;
+
+	      }
+
+	    case Y_MOVZ_D_OP:
+	      {
+		if (R[RT (inst)] == 0)
+		  SET_FPR_D (FD (inst), FPR_D (FS (inst)));
+		break;
+	      }
+
+	    case Y_MOVZ_S_OP:
+	      {
+		if (R[RT (inst)] == 0)
 		  SET_FPR_S (FD (inst), FPR_S (FS (inst)));
 		break;
 

@@ -990,6 +990,23 @@ movt_:	.asciiz "Testing MOVT\n"
 	bne $3 1 fail
 	movt $3 $4 7
 	bne $3 1 fail
+	
+
+	.data
+movz_:	.asciiz "Testing MOVZ\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 movz_
+	syscall
+
+	li $2 2
+	li $3 3
+	li $4 4
+	movz $4 $3 $2
+	bne $4 4 fail
+	movz $4 $3 $0
+	bne $4 3 fail
+	
 
 	.data
 mul_:	.asciiz "Testing MUL\n"
@@ -3115,6 +3132,53 @@ movt.s_:.asciiz "Testing MOVT.S\n"
 	mfc1 $6 $f6
 	bne $6 0 fail
 
+
+	.data
+movz.d_:.asciiz "Testing MOVZ.D\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 movz.d_
+	syscall
+
+	li $2 2
+	lw $4 fp_d1
+	lw $5 fp_d1+4
+	lwc1 $f0 fp_d1
+	lwc1 $f1 fp_d1+4
+	movz.d $f2 $f0 $0
+	mfc1 $6 $f2
+	mfc1 $7 $f3
+	bne $6 $4 fail
+	bne $7 $5 fail
+
+	lwc1 $f0 fp_d1p5
+	lwc1 $f1 fp_d1p5+4
+	movz.d $f2 $f0 $2
+	mfc1 $6 $f2
+	mfc1 $7 $f3
+	bne $6 $4 fail
+	bne $7 $5 fail
+
+
+	.data
+movz.s_:.asciiz "Testing MOVZ.s\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 movz.s_
+	syscall
+
+	li $2 2
+	lw $4 fp_s1
+	lwc1 $f0 fp_s1
+	movz.s $f2 $f0 $0
+	mfc1 $6 $f2
+	bne $6 $4 fail
+
+	lwc1 $f0 fp_s1p5
+	movz.s $f2 $f0 $2
+	mfc1 $6 $f2
+	bne $6 $4 fail
+	
 
 # MTC1 tested previously
 
