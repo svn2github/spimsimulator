@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 6     2/01/01 8:44p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 7     2/01/01 8:57p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -865,7 +865,17 @@ set_value_action (location_str, value_str)
   unsigned long value;
   int reg_no;
 
-  value = strtol (value_str, NULL, 0);
+  if (strlen (value_str) == 3
+      && value_str[0] == '\''
+      && value_str[2] == '\'')
+    {
+      /* Literal of the form: 'c' */
+      value = value_str[1];
+    }
+  else
+    {
+      value = strtol (value_str, NULL, 0);
+    }
   reg_no = register_name_to_number (location_str);
 
   if (reg_no < 0)
