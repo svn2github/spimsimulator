@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 25    5/08/04 9:06a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 26    11/26/04 8:47p Larus $
  */
 
 #include <stdio.h>
@@ -835,18 +835,16 @@ read_input (char *str, int str_size)
 }
 
 
+/* Checking for console input is messy with X windows. A key stroke appears
+   as an X event, which must be read to check its type. In addition, the
+   functions that read events all block.  So, when we check if console input
+   is available, we may see an event for a keystroke. If so, save the
+   keystroke for the next time the program reads a character. */
+
+static int previous_char = -1;
+
 int
 console_input_available ()
-{
-  if (mapped_io)
-    return (XtAppPending (app_context));
-  else
-    return (0);
-}
-
-
-char
-get_console_char ()
 {
   XEvent event;
 
@@ -856,24 +854,37 @@ get_console_char ()
       console_is_visible = 1;
     }
 
-  while (1)
+  if (XtAppPending (app_context) != 0)
     {
+      /* There is an event to process: */
       XtAppNextEvent (app_context, &event);
       if (event.type == KeyPress)
 	{
+	  /* Event is a key stroke: */
 	  char buffer[11];
 	  KeySym key;
 	  XComposeStatus compose;
 	  XLookupString (&event.xkey, buffer, 10, &key, &compose);
 
-	  if (*buffer == 3)		       /* ^C */
+	  if (buffer[0] == 3)	/* ^C */
 	    XtDispatchEvent (&event);
-	  else if (*buffer != 0)
-	    return (buffer[0]);
+	  else if (buffer[0] != 0)
+	    previous_char = (int)buffer[0];
+	  return (1);		/* There is a character */
 	}
       else
-	XtDispatchEvent (&event);
+	{
+	  XtDispatchEvent (&event);
+	}
     }
+  return (0);    		/* There is no character */
+}
+
+char
+get_console_char ()
+{
+  /* assert (previous_char != -1); */
+  return (char)previous_char;
 }
 
 
