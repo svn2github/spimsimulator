@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 17    3/14/04 8:25p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 18    3/14/04 8:43p Larus $ */
 
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
@@ -1325,10 +1325,10 @@ void CPCSpimView::ProcessCommandLine()
     {
     /* Assume this is a file name and everything else are arguments
 	     to program */
-      m_strCurFilename = argv[++i];
+      m_strCurFilename = argv[i];
       
       g_strCmdLine = "";
-      for (int j = i; j < argc; j++)
+      for (int j = i + 1; j < argc; j++)
       {
 	g_strCmdLine += argv[j];
 	g_strCmdLine += " ";
