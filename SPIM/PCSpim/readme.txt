@@ -1,11 +1,13 @@
 Building PCSpim
 ===========================
 In order to build PCSpim, you need Microsoft VC++ 4.1, or later.
-You may use a later compiler if you do not wish for Win3.x compatibility.
+Use a later compiler if you do not wish for Win3.x compatibility.
+I typically build PCSpim with Visual Studio version 6, though I have build it
+with VS.NET (Visual Studio version 7) [the solution files are PCSpim.VC7].
 
 This source must be arranged as follows:
 
-<SPIMSRC DIRECTORY>\	(ie: spim)
+spim\
 	src\		(the core spim source)
 	PCSpim\		(the Windows source)
 
