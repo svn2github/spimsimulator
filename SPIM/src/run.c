@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 10    2/14/04 10:27a Larus $
+/* $Header: /Software/SPIM/src/run.c 11    2/14/04 12:09p Larus $
 */
 
 
@@ -341,7 +341,7 @@ run_spim (initial_PC, steps_to_run, display)
 	      /* The behavior of this instruction is undefined on divide by
 		 zero or overflow. */
 	      if (R[RT (inst)] != 0
-		  && (R[RS (inst)] != 0x80000000 && R[RT (inst)] != 0xffffffff))
+		  && !(R[RS (inst)] == 0x80000000 && R[RT (inst)] == 0xffffffff))
 		{
 		  LO = (reg_word) R[RS (inst)] / (reg_word) R[RT (inst)];
 		  HI = (reg_word) R[RS (inst)] % (reg_word) R[RT (inst)];
@@ -352,10 +352,10 @@ run_spim (initial_PC, steps_to_run, display)
 	      /* The behavior of this instruction is undefined on divide by
 		 zero or overflow. */
 	      if (R[RT (inst)] != 0
-		  && (R[RS (inst)] != 0x80000000 && R[RT (inst)] != 0xffffffff))
+		  && !(R[RS (inst)] == 0x80000000 && R[RT (inst)] == 0xffffffff))
 		{
-		  LO = ((u_reg_word) R[RS (inst)] / (u_reg_word) R[RT (inst)]);
-		  HI = ((u_reg_word) R[RS (inst)] % (u_reg_word) R[RT (inst)]);
+		  LO = (u_reg_word) R[RS (inst)] / (u_reg_word) R[RT (inst)];
+		  HI = (u_reg_word) R[RS (inst)] % (u_reg_word) R[RT (inst)];
 		}
 	      break;
 

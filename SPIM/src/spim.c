@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 12    1/04/03 3:31p Larus $
+/* $Header: /Software/SPIM/src/spim.c 13    2/14/04 12:09p Larus $
 */
 
 
@@ -179,7 +179,7 @@ main (argc, argv)
     {
       /* Only one argument better be a file name. */
       initialize_world (load_trap_handler ? trap_file : NULL);
-      assembly_file_read |= !read_assembly_file (argv[++i]);
+      assembly_file_read |= !read_assembly_file (argv[1]);
     }
   else
     for (i = 1; i < argc; i++)

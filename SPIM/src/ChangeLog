@@ -1,8 +1,20 @@
 2004-02-14    <larus@C745660-A>
 
+	* spim.c [Marvin Solomon (solomon@cs.wisc.edu)]:
+	Core dumped when passed one argument.
+
+	* run.c tt.core.s [Marvin Solomon (solomon@cs.wisc.edu)]:
+	Change to test for overflow in integer divide was backwards and
+	nullified all divides by -1.
+
+	* Configure [Russell D. Meier (meier@msoe.edu)]:
+	Removed the -traditional-cpp flag from MacOSX. (It appears that
+	the semantics of this flag have changed and now break spim.)
+
 	* Configure Imakefile Makefile.cygwin Makefile.std Tests/tt.le.s
 	Tests/tt.be.s Tests/tt.core.s Tests/tt.core.OK Tests/tt.endian.OK:
-	Factored torture tests into endian-indpendent and endian-dependent pieces.
+	Factored torture tests into endian-indpendent and endian-dependent
+	pieces.
 
 2003-01-04    <larus@HomeMachine>
 
@@ -10,18 +22,18 @@
 
 	* spim.c PCSpimView.cpp:
 	If started with only one argument, assume it is a file
-	name. [From: Armin Mueller [arm.in@web.de]]
+	name. [Armin Mueller [arm.in@web.de]]
 
 	* :
 	Added Alt-F4 shortcut to PCSpim.
 
 	* trap.handler:
 	Return to instruction at EPC on interrupt. Comment code
-	better. [From: Nuno Lau [mailto:lau@det.ua.pt]]
+	better. [Nuno Lau [lau@det.ua.pt]]
 
 	* spim.c:
 	Partioned print_reg into 3 cases, to avoid casting int to char* on
-	64 bit machine. [From: Ken Swarner [mailto:kswarner@siena.edu]]
+	64 bit machine. [Ken Swarner [kswarner@siena.edu]]
 
 	* spim.html:
 	Cleaned up file and added installation instructions.
@@ -29,14 +41,13 @@
 2003-01-03    <larus@HomeMachine>
 
 	* README:
-	Typo in README. [From: Ian Langworth [bass@ccs.neu.edu]]
+	Typo in README. [Ian Langworth [bass@ccs.neu.edu]]
 
 2003-01-01    <larus@HomeMachine>
 
 	* run.c:
 	Got (real!) hardware exception on integer overflow in
-	division. [From: Deborah Ariel Pickett
-	[debbiep@mail.csse.monash.edu.au]]
+	division. [Deborah Ariel Pickett [debbiep@mail.csse.monash.edu.au]]
 
 	* xspim.c:
 	-trap_file did not properly parse argument in xspim. [From:
@@ -44,33 +55,33 @@
 
 	* scanner.l:
 	Fixed printing of error on last line without a carriage
-	return. [From: Max Hailperin [max@gac.edu]]
+	return. [Max Hailperin [max@gac.edu]]
 
 	* display-utils.c:
-	Print proper registers when printing hex FP numbers. [From: Armin
+	Print proper registers when printing hex FP numbers. [Armin
 	Mueller [arm.in@web.de]]
 
 	* mem.c:
-	Properly zero newly allocated memory. [From: Guillaume Melquiond
+	Properly zero newly allocated memory. [Guillaume Melquiond
 	[gmelquio@ens-lyon.fr], Bill Siever [bsiever@umr.edu, Diego Billi
 	[dbilli@CS.UniBO.IT], Alberto Montresor [montreso@cs.unibo.it],
 	Max Gilbert [max@ebs330.eb.uah.edu]] Konrad Rymuza [zeljko@wp.pl]
 
 	* SettingsDlg.cpp:
 	Set delayed branch & load check box when bare check box is
-	checked. [From: Marco Cova [mcova@umail.ucsb.edu]]
+	checked. [Marco Cova [mcova@umail.ucsb.edu]]
 
 	* trap.handler:
 	Added nops (addu $0, $0, 0) to trap handler, so that it works
-	properly in bare mode! [From: Marco Cova [mcova@umail.ucsb.edu]]
+	properly in bare mode! [Marco Cova [mcova@umail.ucsb.edu]]
 
 	* sym-tbl.c:
 	Avoid null ref when there is no instruction in memory before a
-	load instruction. [From: Steven Borkman [borkman@cse.Buffalo.EDU]]
+	load instruction. [Steven Borkman [borkman@cse.Buffalo.EDU]]
 
 	* spim.html:
 	Removed reference to spimwin.ps since file disappeared (.pdf
-	remains) [From: hemmendd@athena.union.edu]
+	remains) [hemmendd@athena.union.edu]
 
 	* PCSPIM.HLP:
 	File was corrupted.
@@ -95,7 +106,7 @@
 
 	* PCSpimView.cpp:
 	Ensure that register and data segment windows do not shift focus
-	when underlying values change.  [From: Vollmar, Kenneth R
+	when underlying values change.  [Vollmar, Kenneth R
 	krv133f@smsu.edu]
 
 	* parser.y tt.le.s:
@@ -105,11 +116,11 @@
 	Eliminated compiler warnings at high warning level.
 
 	* mips-syscall.c spim-syscall.h:
-	Added open/close read/write system calls. [From: Doug Johnson
+	Added open/close read/write system calls. [Doug Johnson
 	djohnson@cs.washington.edu]
 
 	* Configure:
-	Added entries for Mac OSX. [From: Jeffrey Naset jeff@naset.net]
+	Added entries for Mac OSX. [Jeffrey Naset jeff@naset.net]
 
 2001-12-24    <larus@HomeMachine>
 
@@ -122,23 +133,23 @@
 	Report parser warnings distinct from errors.
 
 	* parser.y:
-	REM pseudo-op requires 3 arguments. [From: Rigel rigelf@angelfire.com]
+	REM pseudo-op requires 3 arguments. [Rigel rigelf@angelfire.com]
 
 	* ConsoleWnd.h:
 	Return window's content as a string so it can be dumped to a
-	file. [From: Bill Siever bsiever@umr.edu]
+	file. [Bill Siever bsiever@umr.edu]
 
 	* parser.y inst.h tt.le.s tt.be.s:
 	Make LUI's immediate unsigned (since it is not sign
-	extended). [From: Georgia Grant grantg@pacbell.net]
+	extended). [Georgia Grant grantg@pacbell.net]
 
 	* SpimSupport.cpp:
 	Check that buffer in read_input is not null and that size is
-	reasonable. [From:  webmaster.it@libero.it]
+	reasonable. [ webmaster.it@libero.it]
 
 	* scanner.l:
 	Buffer overrun when handling bad input terminated by EOF rather
-	than \nl. [From: Max Hailperin max@gac.edu]
+	than \nl. [Max Hailperin max@gac.edu]
 
 	* spim-utils.c:
 	Symbol "main" was not marked as global in the symbol table. [From:
@@ -146,7 +157,7 @@
 
 	* mem.c:
 	Zero newly allocated data byte-by-byte, to avoid zapping data in
-	last word of non-word aligned data area. [From: Peter Gammie
+	last word of non-word aligned data area. [Peter Gammie
 	peteg@cse.unsw.edu.au]
 
 	* scanner.l:
@@ -170,24 +181,24 @@
 
 	* parser.y:
 	Did not handle rem pseudo op properly, which caused a fatal error
-	or core dump. [From: Rigel Freden]
+	or core dump. [Rigel Freden]
 
 2001-02-01    <larus@HomeMachine>
 
 	* spim.c spim.h trap.handler:
-	Added commands to dump text segment (in binary). [From: Brian
+	Added commands to dump text segment (in binary). [Brian
 	R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
 
 	* buttons.c:
-	Allow character literal in set-value dialog box. [From: Brian
+	Allow character literal in set-value dialog box. [Brian
 	R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
 
 	* mips-syscall.c spim-syscall.h Documentation\spim.tex:
 	Added system call to print a character and read a character.
-	[From: Brian R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
+	[Brian R. Gaeke brg@pasteur.EECS.Berkeley.EDU]
 
 	* xspim.c xspim.h buttons.c:
-	Add button to clear xspim console. [From: Brian R. Gaeke
+	Add button to clear xspim console. [Brian R. Gaeke
 	brg@pasteur.EECS.Berkeley.EDU].
 
 2001-01-14    <larus@HomeMachine>
@@ -195,7 +206,7 @@
 	* spim.c:
 	Fix print_all_regs to define the stack allocated buffer's length
 	as a constant, not a variable.  This wasn't ANSI C and upset Sun's
-	compiler. [From: Matt.Simmons@eng.sun.com]
+	compiler. [Matt.Simmons@eng.sun.com]
 
 2000-12-25    <larus@HomeMachine>
 
@@ -232,16 +243,16 @@
 2000-12-10    <larus@HomeMachine>
 
 	* xspim.man:
-	Missing quotes screwed up formatting. [From: Robert Greenfield
+	Missing quotes screwed up formatting. [Robert Greenfield
 	(rhg@gpfn.sk.ca)]
 
 	* scanner.l (source_line):
-	Include comments from source in SPIM comments. [From: John Bruce
+	Include comments from source in SPIM comments. [John Bruce
 	Zuckerman (johnz@cs.tamu.edu)]
 
 	* mem.c (bad_mem_read):
 	Printing of instruction bits failed when no instruction at
-	address. [From: John Bruce Zuckerman (johnz@cs.tamu.edu)]
+	address. [John Bruce Zuckerman (johnz@cs.tamu.edu)]
 
 	* spim.h display-utils.c mips-syscall.c run.c:
 	Handle display of stack better when $sp points to non-word
@@ -253,29 +264,29 @@
 
 	* inst.c (i_type_inst_full_word and resolve_a_label_sub):
 	Sign-extension fixup code for high 16 bits of lw/sw added fixup
-	twice into instruction immediate field. [From: Robert Greenfield
+	twice into instruction immediate field. [Robert Greenfield
 	(rhg@gpfn.sk.ca) and Christian R Ward]
 
 	(produce_immediate):
 	Missed optimization of loading immediate with zero high 16
-	bits. [From: Robert Greenfield (rhg@gpfn.sk.ca) and Christian R
+	bits. [Robert Greenfield (rhg@gpfn.sk.ca) and Christian R
 	Ward]
 
 2000-12-07    <larus@HomeMachine>
 
 	* sys-table.c (resolve_a_label_sub):
 	Correct binary encoding of negative offsets in branch instructions
-	(high 2 bits were 0). [From: Jim Frenzel (jfrenzel@uidaho.edu) and
+	(high 2 bits were 0). [Jim Frenzel (jfrenzel@uidaho.edu) and
 	others]
 
 	* mips-syscall.c (do_syscall)
 	Print single and double precision registers to up to 18 digits,
-	not default 6 digits of precision. [From: PIERCE@hood.edu]
+	not default 6 digits of precision. [PIERCE@hood.edu]
 
 2000-12-06    <larus@HomeMachine>
 
 	* spim.c (print_all_regs):
-	Added spim command to print all registers. [From: Linus Akerlund]
+	Added spim command to print all registers. [Linus Akerlund]
 
 2000-12-05    <larus@HomeMachine>
 
@@ -299,7 +310,7 @@
 
 	* parser.y scanner.l inst.h tt.be.s tt.le.s
 	Validate range of immediate values in non-pseudo instruction and
-	warn if too large. [From: David Kessner davidk@peakaudio.com]
+	warn if too large. [David Kessner davidk@peakaudio.com]
 
 Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
 
@@ -409,7 +420,7 @@ Wed Jan 14 14:46:10 1998  James Larus  <larus@breeze.cs.wisc.edu>
 Tue Dec 30 12:17:11 1997  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* README:
-	Clarify installation instructions. [From: Deborah Bennett
+	Clarify installation instructions. [Deborah Bennett
 	<deborah@cisco.com>]
 
 	* Imakefile:
@@ -418,19 +429,19 @@ Tue Dec 30 12:17:11 1997  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* Configure:
 	Added CC environment variable to allow selection of
-	compiler. [From: Deborah Bennett <deborah@cisco.com>]
+	compiler. [Deborah Bennett <deborah@cisco.com>]
 
 	* scanner.l:
-	Reverse includes for Debian Linux. [From: Bennet Yee
+	Reverse includes for Debian Linux. [Bennet Yee
 	<bsy@play.ucsd.edu>]
 
 	* parser.y:
 	Fix parser so that label: <syntax error> did not cause parser to
-	skip the rest of input. [From: Bennet Yee <bsy@play.ucsd.edu>]
+	skip the rest of input. [Bennet Yee <bsy@play.ucsd.edu>]
 
 	* spim.c (print_reg):
 	Change format for printing FP registers to %g (from %f) so all
-	bits are displayed. [From: "Jason Baumbach"
+	bits are displayed. ["Jason Baumbach"
 	<baumbajg@flyernet.udayton.edu>]
 
 	* inst.c (i_type_inst):
@@ -447,12 +458,12 @@ Sat Nov 29 17:16:35 1997  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* mem.h:
 	Fix declarations in MEM_ADDRESS (changed for Alpha) that broke old
-	(pre-ANSI) Sun compiler. [From: Laura Spoldi <laura@txc.com>]
+	(pre-ANSI) Sun compiler. [Laura Spoldi <laura@txc.com>]
 
 Mon Nov 10 10:34:53 1997  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* Documentation/spim.tex:
-	Document that registers are 32-bits with. [From: William Waite  <waite@scotty.cs.colorado.edu>]
+	Document that registers are 32-bits with. [William Waite  <waite@scotty.cs.colorado.edu>]
 
 Mon Oct 20 15:09:34 1997  James Larus  <larus@breeze.cs.wisc.edu>
 
@@ -476,7 +487,7 @@ Wed Jul  9 09:00:41 1997  James Larus  <larus@breeze.cs.wisc.edu>
 	* buttons.c data.c inst.c mem.c mips-syscall.c spim-utils.c spim.c
 	sym-tbl.c windows.c xspim.c inst.h mem.h reg.h scanner.h spim.h
 	parser.y scanner.l:
-	Changes for DEC Alpha systems. [From: Robert Moniot
+	Changes for DEC Alpha systems. [Robert Moniot
 	<moniot@dsm.fordham.edu>]
 
 	* spim.c xspim.c:
@@ -500,7 +511,7 @@ Wed Jul  9 09:00:41 1997  James Larus  <larus@breeze.cs.wisc.edu>
 Tue Jul  8 17:32:55 1997  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* mips_syscall.c run.c spim-utils.c spim.c spim.h:
-	Changes to port code to PCs. [From: "David A. Carley"
+	Changes to port code to PCs. ["David A. Carley"
 	<dac@cs.wisc.edu>]
 
 	* inst.h:
@@ -542,7 +553,7 @@ Thu Dec  5 15:39:01 1996  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 	* Documentation/spim.tex:
 	Improved documentation of div/divu to emphasis that divu is
 	unsigned and that overflow testing only occurs with 3 argument
-	pseudo-op. [From: Susan]
+	pseudo-op. [Susan]
 
 Mon Nov 11 08:47:16 1996  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
@@ -560,13 +571,13 @@ Fri Sep 20 15:40:33 1996  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
 	* spim.c xspim.c:
 	read_input did not consistently or correctly handle input when
-	buffer was of length 1. [From: Ron Van Cleave
+	buffer was of length 1. [Ron Van Cleave
 	<ronvc@hppmorvc.sc.hp.com>]
 
 Thu Apr 11 09:04:51 1996  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
 	* Imakefile:
-	Fix usage of -lm flag. [From: David Thompson <thomas@cs.wisc.edu>]
+	Fix usage of -lm flag. [David Thompson <thomas@cs.wisc.edu>]
 
 Fri Jan  5 12:57:09 1996  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
@@ -575,7 +586,7 @@ Fri Jan  5 12:57:09 1996  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 	* parser.y:
 	Do not clear the labels at start of a line, only after a line with
 	content, so that parser allows blank line between label and
-	directive. [From: Fischer & student.]
+	directive. [Fischer & student.]
 
 Fri Oct 13 08:27:53 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
@@ -587,13 +598,13 @@ Fri Oct 13 08:27:53 1995  James Larus  <larus@breeze.cs.wisc.edu>
 Tue Oct 10 13:06:09 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* parser.y:
-	la $4,3 produced incorrect code. [From: jepler@herbie.unl.edu]
+	la $4,3 produced incorrect code. [jepler@herbie.unl.edu]
 
 Fri Aug 25 09:19:38 1995  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
 	* buttons.c cl-cycle.c cl-except.{c,h} inst.c mem.{c,h} reg.h
 	spim-utils.c spim.c xspim.c:
-	Many cleanups for SGI. [From: "Peter Jacobson" <jacob@cs.umu.se>]
+	Many cleanups for SGI. ["Peter Jacobson" <jacob@cs.umu.se>]
 
 Thu Aug 17 08:33:19 1995  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
@@ -639,26 +650,26 @@ Fri Aug 11 15:29:43 1995  James Larus  <larus@breeze.cs.wisc.edu (James Larus)>
 
 	* mem.c trap.handler:
 	Better error message on jump out of text segment to bogus
-	address. [From: From: hk@odo.bercos.de]
+	address. [From: hk@odo.bercos.de]
 
 Tue Feb 21 17:24:49 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* spim.tex:
 	Change the documentation to pop a stack frame by adding to the
-	$sp. [From: jepler@herbie.unl.edu]
+	$sp. [jepler@herbie.unl.edu]
 
 Wed Feb  1 16:58:10 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* Configure mips-syscall.c read-aout.c spim-utils.c:
 	Change ifdef's so SPIM compiles on SGI boxes.  The binary file
 	execution does not work because of system call and executable
-	format differences. [From: Charles Daniel <manager@cse.unl.edu>]
+	format differences. [Charles Daniel <manager@cse.unl.edu>]
 
 Fri Jan 27 17:14:43 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* Imakefile:
 	Added second colon to keep GNU make happy on output of
-	xmkmf. [From: Robert  Wieda <rw42@columbia.edu>]
+	xmkmf. [Robert  Wieda <rw42@columbia.edu>]
 
 Wed Jan 18 09:38:29 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
@@ -682,24 +693,24 @@ Fri Jan 13 12:37:19 1995  James Larus  <larus@breeze.cs.wisc.edu>
 Tue Jan  3 14:14:59 1995  James Larus  <larus@breeze.cs.wisc.edu>
 
 	*
-	Put SPIM manual on the WWW. [From: David Binger
+	Put SPIM manual on the WWW. [David Binger
 	<binger@bingo.centre.edu>]
 
 Wed Dec 14 08:37:59 1994  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* README:
 	Improved description of configuration process and eliminated
-	mention of LINUX patches. [From: carter@cs.ucsd.edu (Larry Carter)]
+	mention of LINUX patches. [carter@cs.ucsd.edu (Larry Carter)]
 
 Tue Dec 13 16:21:01 1994  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* run.c reg.h:
 	Use reg_word and u_reg_word instead of underlying data
-	types. [From: Stephen Bloch <sbloch@adl15.adelphi.edu>]
+	types. [Stephen Bloch <sbloch@adl15.adelphi.edu>]
 
 	* parser.y, tt.le.s, tt.be.s:
 	Optimization of mult $rx, $ry, 0 into li $rx, 0 was incorrect.
-	[From: Massimiliano Poletto <maxp@amsterdam.LCS.MIT.EDU>
+	[Massimiliano Poletto <maxp@amsterdam.LCS.MIT.EDU>
 	and andre@ai.mit.edu (Andre' DeHon)]
 
 	* scanner.l:
@@ -712,26 +723,26 @@ Tue Dec 13 16:21:01 1994  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* trap.handler:
 	Arguments to instructions to save & restore $at were
-	backwards. [From: baudon@labri.u-bordeaux.fr (Olivier BAUDON)]
+	backwards. [baudon@labri.u-bordeaux.fr (Olivier BAUDON)]
 
 Mon Dec 12 17:12:58 1994  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* parser.y sym-tbl.c sym-tbl.h read-aout.c:
 	Bug in resolving forward references to labels in aligned data
 	statements.  The references were resolved with the unaligned
-	value. [From: fischer@kaese.cs.wisc.edu (Charles Fischer)]
+	value. [fischer@kaese.cs.wisc.edu (Charles Fischer)]
 
 Sat Nov 26 16:08:26 1994  James Larus  <larus@titanic.cs.wisc.edu>
 
 	* spim-utils.c:
 	Ensure stack is double-word aligned after all arguments to main
-	are pushed.  [From: Anne]
+	are pushed.  [Anne]
 
 Mon Nov 21 10:09:22 1994  Jim Larus  <larus@primost.cs.wisc.edu>
 
 	* spim-utils.c spim.c spim.man:
 	Did not set up argv and envp properly when program was
-	-executed. [From: Anne]
+	-executed. [Anne]
 	Changed -execute/-file to take arguments to program after
 	program's name, so they must be last now.
 
@@ -742,22 +753,22 @@ Mon Nov 21 10:09:22 1994  Jim Larus  <larus@primost.cs.wisc.edu>
 Fri Nov 11 16:56:12 1994  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* op.h run.c inst.c cl-cycle.c cl-cycle.h parser.y:
-	Did not implement c.olt.s, c.olt.d, c.ult.s, c.ult.d. [From: Anne]
+	Did not implement c.olt.s, c.olt.d, c.ult.s, c.ult.d. [Anne]
 
 Fri Nov  4 16:20:40 1994  Jim Larus  <larus@primost.cs.wisc.edu>
 
 	* inst.c op.h:
 	Did not set SPIM instruction COND field from binary FP compare
-	instructions. [From: Anne]
+	instructions. [Anne]
 
 Tue Nov  1 14:48:57 1994  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* mem.c:
-	Need to realloc data segment when a new one is created. [From: Anne]
+	Need to realloc data segment when a new one is created. [Anne]
 
 	* read-aout.c:
 	Forgot to add bss size to data segment when creating data segment
-	for -execute. [From: Anne]
+	for -execute. [Anne]
 
 Tue Aug 30 09:09:08 1994  James Larus  (larus@breeze.cs.wisc.edu)
 
@@ -778,7 +789,7 @@ Fri Aug 12 11:18:40 1994  James Larus  (larus@breeze.cs.wisc.edu)
 Thu Aug 11 09:44:00 1994  James Larus  (larus@breeze.cs.wisc.edu)
 
 	* spim.c spim-utils.c Configure:
-	Ifdef if machine has vfprintf and use _doprnt if not [From: Parag
+	Ifdef if machine has vfprintf and use _doprnt if not [Parag
 	Patel <parag@netcom.com>, for BSDI 1.1].
 
 	* cl-cycle.c cl-tlb.c:
@@ -793,7 +804,7 @@ Fri Jul 15 12:50:27 1994  James Larus  (larus@breeze.cs.wisc.edu)
 Thu Jul 14 14:48:36 1994  James Larus  (larus@breeze.cs.wisc.edu)
 
 	* mips-syscall.c spim.c:
-	Changes to port to System V.  [From: Robert Lipe <robertl@arnet.com>]
+	Changes to port to System V.  [Robert Lipe <robertl@arnet.com>]
 
 	* spim.c:
 	Fixed AIX ifdef.
@@ -851,7 +862,7 @@ Tue Feb  8 15:11:31 1994  James Larus  (larus@primost.cs.wisc.edu)
 	* scanner.l
 	Did not properly associate line numbers with lines because parser
 	lookahead at the end of a command read the newline, thereby
-	bumping the line_no counter. [From: jps@moravian.edu (John P.
+	bumping the line_no counter. [jps@moravian.edu (John P.
 	Stoneback)]
 
 Tue Feb  1 14:41:31 1994  James Larus  (larus@primost.cs.wisc.edu)
@@ -874,7 +885,7 @@ Tue Nov  9 16:07:08 1993  James Larus  (larus@primost.cs.wisc.edu)
 	Did not set up argc and argv properly for -execute.  $sp now points
 	to argc, even after double-word aligning stack.  Set up argv[0] for
 	-execute in spim.  Added gethostname.
-	[From: citron@plague.cs.huji.ac.il (Daniel Citron)]
+	[citron@plague.cs.huji.ac.il (Daniel Citron)]
 
 Fri Nov  5 21:52:05 1993  James Larus  (larus@primost)
 
@@ -890,7 +901,7 @@ Tue Oct 19 17:27:44 1993  James Larus  (larus@primost.cs.wisc.edu)
 
 	* spim.tex:
 	Figure showing stack frame format was incorrect: saved arguments
-	listed in wrong order and arguments 1-4 missing [From: Frans Kaashoek
+	listed in wrong order and arguments 1-4 missing [Frans Kaashoek
 	<kaashoek@amsterdam.LCS.MIT.EDU>]
 
 Mon Oct  4 14:27:55 1993  James Larus  (larus@primost.cs.wisc.edu)
@@ -923,7 +934,7 @@ Mon Aug 16 10:00:44 1993  James Larus  (larus@primost.cs.wisc.edu)
 
 	* spim-utils.c:
 	Find correct address to check for breakpoint before first instruction
-	is executed [From: jcasey@flora.ccs.neu.edu].
+	is executed [jcasey@flora.ccs.neu.edu].
 
 Fri Jul  2 10:32:18 1993  James Larus  (larus@primost.cs.wisc.edu)
 
@@ -984,12 +995,12 @@ Fri Mar 26 14:58:53 1993  James Larus  (larus at primost)
 
     	* sym-tbl.c
 	Did not fix branch offset field in encoded instruction after label
-	resolved. [From: Fischer].
+	resolved. [Fischer].
 
 Wed Mar 24 11:25:02 1993  James Larus  (larus at primost)
 
 	* xspim.c
-	Fix printing of stack arguments. [From: Charles Fischer].
+	Fix printing of stack arguments. [Charles Fischer].
 
 	* button.c
 	Put arg's to main back on stack after reinitialization.
@@ -1001,7 +1012,7 @@ Tue Mar 23 16:26:50 1993  James Larus  (larus at primost)
 
 	* parser.y
 	Fix code generation for SUB/NOR w/ immediate, which generated
-	extra register traffic [From: Charles Fischer].
+	extra register traffic [Charles Fischer].
 
 Thu Mar  4 08:37:30 1993  James Larus  (larus at primost)
 
@@ -1024,7 +1035,7 @@ Tue Jan 26 08:40:45 1993  James Larus  (larus at primost)
 	* run.c sym_tbl.c
 	Delayed instructions in bare mode were incorrect: executed 1 too
 	many instructions and didn't calculate backward offset correctly
-	[From: A.P.Sexton@computer-science.birmingham.ac.uk].
+	[A.P.Sexton@computer-science.birmingham.ac.uk].
 
 	* Imakefile
 	Change EXTRA_LIBRARIES to LOCAL_LDFLAGS to be compatable with
@@ -1187,7 +1198,7 @@ Fri Sep 25 08:17:54 1992  James Larus  (larus at primost)
 
 	* run.c tt.le.s tt.be.s
 	Did not handle carry-out in long multiplication routine correctly.
-	Got wrong answer for -1*-1!  [From: jjackson@tiger.carl.ua.edu]
+	Got wrong answer for -1*-1!  [jjackson@tiger.carl.ua.edu]
 
 Wed Sep 23 09:43:29 1992  James Larus  (larus at primost)
 
@@ -1342,13 +1353,13 @@ Fri Mar 27 11:11:22 1992  James Larus  (larus at primost)
 
 	* spim-utils.c data.c
 	Did not turn off in_kernel flag after loading trap handler so
-	executable code's data segment went into kernel data. [From: Emin
+	executable code's data segment went into kernel data. [Emin
 	Gun Sirer <egs@cs.Princeton.EDU>]
 
 Wed Mar 25 17:13:49 1992  James Larus  (larus at primost)
 
 	* op.h
-	Bug in encoding of RFE & TLB instructions [From: vijay@zycad.com
+	Bug in encoding of RFE & TLB instructions [vijay@zycad.com
 	(Vijay Vaidyanathan)].
 
 Mon Feb 24 15:49:06 1992  James Larus  (larus at primost)
@@ -1889,13 +1900,13 @@ Wed May 23 09:52:57 1990  James Larus  (larus at primost)
 
 	* scanner.l, spim.tex
 	For an unknown reason, v0 and v1 were called v2, v3.  Fixed this
-	bug. [From: beihl%cadillac.cad.mcc.com@mcc.com (Gary Beihl)]
+	bug. [beihl%cadillac.cad.mcc.com@mcc.com (Gary Beihl)]
 
 Mon May 21 15:34:12 1990  James Larus  (larus at primost)
 
 	* run.c, spim.c, spim.h, scanner.l
 	Recompiled on DECstation under T4.0.  That system has bug in atoi,
-	but other changes seem worthwhile. [From: whaley@dungeon.pa.dec.com]
+	but other changes seem worthwhile. [whaley@dungeon.pa.dec.com]
 
 	* Version 2.2 released.
 
@@ -1904,7 +1915,7 @@ Thu May 17 16:41:18 1990  James Larus  (larus at primost)
 	* run.c, inst.c, parser.y, tt.?e.s
 	Constants were not sign-extended in arithmetic immediate
 	instructions.  Now produce literal values with ORI, not ADDI.
-	[From: carl@aurora.com (Carl Stehle)]
+	[carl@aurora.com (Carl Stehle)]
 
 Mon May 14 13:35:27 1990  James Larus  (larus at primost)
 
