@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 4     12/19/00 9:17p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 5     12/24/00 1:37p Larus $
  */
 
 #include <X11/Intrinsic.h>

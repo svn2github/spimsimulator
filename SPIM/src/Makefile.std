@@ -19,7 +19,7 @@
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 # PURPOSE.
 #
-# $Header: /u/l/a/larus/Software/SPIM/RCS/Makefile.std,v 3.45 1997/10/20 20:09:24 larus Exp $
+# $Header: $
 
 
 #
@@ -46,11 +46,11 @@
 
 
 # Full path for directory containing X11 include files:
-X_INCLUDE_DIR=/usr/misc/X11/include
+X_INCLUDE_DIR=/usr/X11/include
 
 
 # Location of X11 root directory.
-TOPDIR = /usr/misc/X11
+TOPDIR = /usr/X11
 
 
 # Full path for directory that will hold the trap handler file:

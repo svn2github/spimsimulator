@@ -1,4 +1,4 @@
-.\" $Header: /var/home/larus/Software/larus/SPIM/RCS/xspim.man,v 1.1 1992/12/14 16:55:49 larus Exp $
+.\" $Header: /Software/SPIM/src/xspim.man 5     12/24/00 1:37p Larus $
 .TH spim 1
 .SH NAME
 xspim \- A MIPS R2000/R3000 Simulator

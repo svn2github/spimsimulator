@@ -1,4 +1,4 @@
-.\" $Header: /afs/cs.wisc.edu/p/larus/Software/larus/SPIM/RCS/spim.man,v 1.2 1994/11/21 16:08:06 larus Exp $
+.\" $Header: /Software/SPIM/src/spim.man 4     12/24/00 1:37p Larus $
 
 .TH spim 1
 .SH NAME

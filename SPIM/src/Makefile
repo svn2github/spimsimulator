@@ -633,7 +633,7 @@ CXXPROJECT_DEFINES =
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 # PURPOSE.
 #
-# $Header: /u/l/a/larus/Software/SPIM/RCS/Imakefile,v 1.31 1997/12/30 21:49:27 larus Exp $
+# $Header: $
 
 #
 # To make spim, type:

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /u/l/a/larus/Software/SPIM/RCS/parser.y,v 1.75 1997/12/30 19:39:07 larus Exp $
+/* $Header: $
 */
 
 

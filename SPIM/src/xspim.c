@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /u/l/a/larus/Software/SPIM/RCS/xspim.c,v 3.90 1997/07/09 22:08:29 larus Exp $
+/* $Header: /Software/SPIM/src/xspim.c 7     12/24/00 1:37p Larus $
  */
 
 #include <stdio.h>

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /u/l/a/larus/Software/SPIM/RCS/sym-tbl.c,v 3.20 1997/07/21 18:11:21 larus Exp $
+/* $Header: /Software/SPIM/src/sym-tbl.c 12    12/24/00 1:37p Larus $
 */
 
 

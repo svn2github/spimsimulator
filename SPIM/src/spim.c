@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /u/l/a/larus/Software/SPIM/src/RCS/spim.c,v 3.63 1998/01/14 20:45:06 larus Exp $
+/* $Header: /Software/SPIM/src/spim.c 9     12/24/00 1:37p Larus $
 */
 
 

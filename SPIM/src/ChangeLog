@@ -1,4 +1,29 @@
-2000-12-10    <larus@C745660-A>
+2000-12-24    <larus@C745660-A>
+
+	* Makefile.std:
+	Set defaults to work under Linux.
+
+2000-12-23    <larus@C745660-A>
+
+	* MainFrm.cpp MainFrm.cpp PCSpim.cpp:
+	When frame resized, resize panes.
+
+2000-12-22    <larus@C745660-A>
+
+	* PCView.cpp:
+	Refresh all windows before initialization finished when user had
+	to respecify trap handler location through dialog box.
+
+	* Makefile.cygwin:
+	Remove .exe files.
+
+	* scanner.l:
+	Ignore carrage returns in input files.
+
+	* Imakefile:
+	Explicitly set SH=csh, since stderr redirection does not work in sh.
+
+2000-12-10    <larus@HomeMachine>
 
 	* xspim.man:
 	Missing quotes screwed up formatting. [From: Robert Greenfield
@@ -30,7 +55,7 @@
 	bits. [From: Robert Greenfield (rhg@gpfn.sk.ca) and Christian R
 	Ward]
 
-2000-12-07    <larus@C745660-A>
+2000-12-07    <larus@HomeMachine>
 
 	* sys-table.c (resolve_a_label_sub):
 	Correct binary encoding of negative offsets in branch instructions
@@ -41,12 +66,12 @@
 	Print single and double precision registers to up to 18 digits,
 	not default 6 digits of precision. [From: PIERCE@hood.edu]
 
-2000-12-06    <larus@C745660-A>
+2000-12-06    <larus@HomeMachine>
 
 	* spim.c (print_all_regs):
 	Added spim command to print all registers. [From: Linus Akerlund]
 
-2000-12-05    <larus@C745660-A>
+2000-12-05    <larus@HomeMachine>
 
 	* Tests/tt.le.s Tests/tt.be.s:
 	Fix regression tests to work with stricter parser and changes to spim.
@@ -64,7 +89,7 @@
 	LWL failed with gcc (cygwin) because missing parens screwed
 	associativity.
 
-2000-12-04    <larus@C745660-A>
+2000-12-04    <larus@HomeMachine>
 
 	* parser.y scanner.l inst.h tt.be.s tt.le.s
 	Validate range of immediate values in non-pseudo instruction and
@@ -84,12 +109,12 @@ Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
 	* spim.c xspim.c:
 	Report undefined symbols before running program.
 
-1998-12-16    <larus@JIM>
+1998-12-16    <larus@HomeMachine>
 
 	* Pervasive:
 	Update copyright.
 
-1998-12-14    <larus@JIM>
+1998-12-14    <larus@HomeMachine>
 
 	* parser.y:
 	Allow pseudo ops with -pseudo flg.
@@ -104,7 +129,7 @@ Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
 	* spim.h:
 	Redefine 1000K as K * K.
 
-1998-12-14    <larus@JIM>
+1998-12-14    <larus@HomeMachine>
 
 	* mem.c:
 	Force redraw of screen after updating text/data in bad address
@@ -117,19 +142,19 @@ Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
 	* mips-syscal.c:
 	Force redisplay of data segment after readining string or sbrk.
 
-1998-12-14    <larus@JIM>
+1998-12-14    <larus@HomeMachine>
 
 	* display-utils.c:
 	Change floating point format to increase precision and always
 	print decimal point.
 
-1998-12-13    <larus@JIM>
+1998-12-13    <larus@HomeMachine>
 
 	* inst.{c,h} spim.h run.c:
 	Negative branch displacements handled inconsistently (shift
 	before/after sign extend).
 
-1998-12-07    <larus@JIM>
+1998-12-07    <larus@HomeMachine>
 
 	* spim-utils.c sym-tbl.c parser.y:
 	Predefine main as global.  Fix symbol table initialization.
@@ -138,23 +163,23 @@ Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
 	resourc.h RunDlg.cpp RunDlg.h SettingsDlg.cpp SpimReg.h:
 	Print undefined symbols before running program.
 
-1998-12-05    <larus@JIM>
+1998-12-05    <larus@HomeMachine>
 
 	* parser.y:
 	Last line was not parsed if it did not end with newline.
 
-1998-12-02    <larus@JIM>
+1998-12-02    <larus@HomeMachine>
 
 	* pcspim.ncb pcspim.dsp pcspim.plg pcspim.opt lex.yy.c parser.y:
 	Invoke yacc and lex from within VS.
 
-1998-12-01    <larus@JIM>
+1998-12-01    <larus@HomeMachine>
 
 	* pcspim.dsp pcspim.opt PCSpimView.cpp pcspim.plg xspim.c
 	spim-utils.h display-utils.h:
 	Share common code for formating machine contents.
 
-1998-11-22    <larus@JIM>
+1998-11-22    <larus@HomeMachine>
 
 	* pcspim.dsp PCSpim.clw PCSpim.aps MakeHelp.bat PCSpim.hpj
 	pcspim.plg pcspim.opt pcspim.ncb:

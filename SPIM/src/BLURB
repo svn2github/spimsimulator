@@ -1,6 +1,6 @@
-		    Overview of the SPIM MIPS Simulator
+			    SPIM MIPS Simulator
 
-		     http://www.cs.wisc.edu/~larus/spim
+		  http://www.cs.wisc.edu/~larus/spim.html
 
 				James Larus
 			Computer Sciences Department
@@ -69,4 +69,4 @@ Princeton that performs a cycle-by-cycle MIPS simulation that exposes the
 hardware pipeline.
 
 
-$Header: /u/l/a/larus/Software/SPIM/RCS/BLURB,v 1.7 1997/07/21 18:06:38 larus Exp $
+$Header: $
