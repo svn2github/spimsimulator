@@ -20,21 +20,17 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/windows.h 5     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/windows.h 6     2/15/04 1:27p Larus $
  */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 void create_sub_windows (Widget parent, Dimension app_width,
 			 Dimension reg_min_height, Dimension reg_max_height,
 			 Dimension command_height, Dimension command_hspace,
 			 Dimension command_vspace, Dimension button_height,
 			 Dimension segment_height, Dimension display_height);
-#else
-void create_sub_windows ();
-#endif
 
 
 /* Exported variables: */

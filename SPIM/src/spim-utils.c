@@ -21,18 +21,14 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 12    2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 13    2/15/04 1:27p Larus $
 */
 
 
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#ifdef __STDC__
 #include <stdarg.h>
-#else
-#include <varargs.h>
-#endif
 
 #include "spim.h"
 #include "spim-utils.h"
@@ -49,15 +45,9 @@
 
 /* Internal functions: */
 
-#ifdef __STDC__
 static mem_addr copy_int_to_stack (int n);
 static mem_addr copy_str_to_stack (char *s);
 static void delete_all_breakpoints (void);
-#else
-static mem_addr copy_int_to_stack ();
-static mem_addr copy_str_to_stack ();
-static void delete_all_breakpoints ();
-#endif
 
 
 int exception_occurred;
@@ -84,14 +74,8 @@ mem_addr initial_k_data_limit = K_DATA_LIMIT;
 
 /* Initialize or reinitialize the state of the machine. */
 
-#ifdef __STDC__
 void
 initialize_world (char* trap_file)
-#else
-void
-initialize_world (trap_file)
-     char* trap_file;
-#endif
 {
   /* Allocate the floating point registers */
   if (FGR == NULL)
@@ -138,13 +122,8 @@ initialize_world (trap_file)
 }
 
 
-#ifdef __STDC__
 void
 write_startup_message (void)
-#else
-void
-write_startup_message ()
-#endif
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out,
@@ -159,13 +138,8 @@ write_startup_message ()
 
 
 
-#ifdef __STDC__
 void
 initialize_registers (void)
-#else
-void
-initialize_registers ()
-#endif
 {
   memclr (FPR, 16 * sizeof (double));
   FGR = (float *) FPR;
@@ -186,14 +160,8 @@ initialize_registers ()
 /* Read file NAME, which should contain assembly code. Return zero if
    successful and non-zero otherwise. */
 
-#ifdef __STDC__
 int
 read_assembly_file (char *name)
-#else
-int
-read_assembly_file (name)
-     char *name;
-#endif
 {
   FILE *file = fopen (name, "rt");
 
@@ -218,13 +186,8 @@ read_assembly_file (name)
 }
 
 
-#ifdef __STDC__
 mem_addr
 starting_address (void)
-#else
-mem_addr
-starting_address ()
-#endif
 {
   if (PC == 0)
     {
@@ -245,15 +208,8 @@ starting_address ()
 #define environ	_environ
 #endif
 
-#ifdef __STDC__
 void
 initialize_run_stack (int argc, char **argv)
-#else
-void
-initialize_run_stack (argc, argv)
-     int argc;
-     char **argv;
-#endif
 {
   char **p;
   extern char **environ;
@@ -292,14 +248,8 @@ initialize_run_stack (argc, argv)
 }
 
 
-#ifdef __STDC__
 static mem_addr
 copy_str_to_stack (char *s)
-#else
-static mem_addr
-copy_str_to_stack (s)
-     char *s;
-#endif
 {
   int i = strlen (s);
   while (i >= 0)
@@ -312,14 +262,8 @@ copy_str_to_stack (s)
 }
 
 
-#ifdef __STDC__
 static mem_addr
 copy_int_to_stack (int n)
-#else
-static mem_addr
-copy_int_to_stack (n)
-     int n;
-#endif
 {
   SET_MEM_WORD (R[29], n);
   R[29] -= BYTES_PER_WORD;
@@ -332,15 +276,8 @@ copy_int_to_stack (n)
    non-zero, then step through a breakpoint.  Return non-zero if
    breakpoint is encountered. */
 
-#ifdef __STDC__
 int
 run_program (mem_addr pc, int steps, int display, int cont_bkpt)
-#else
-int
-run_program (pc, steps, display, cont_bkpt)
-     mem_addr pc;
-     int steps, display, cont_bkpt;
-#endif
 {
   if (cont_bkpt && inst_is_breakpoint (pc))
     {
@@ -381,14 +318,8 @@ static bkpt *bkpts = NULL;
 
 /* Set a breakpoint at memory location ADDR. */
 
-#ifdef __STDC__
 void
 add_breakpoint (mem_addr addr)
-#else
-void
-add_breakpoint (addr)
-     mem_addr addr;
-#endif
 {
   bkpt *rec = (bkpt *) xmalloc (sizeof (bkpt));
 
@@ -410,14 +341,8 @@ add_breakpoint (addr)
 
 /* Delete all breakpoints at memory location ADDR. */
 
-#ifdef __STDC__
 void
 delete_breakpoint (mem_addr addr)
-#else
-void
-delete_breakpoint (addr)
-     mem_addr addr;
-#endif
 {
   bkpt *p, *b;
   int deleted_one = 0;
@@ -444,13 +369,8 @@ delete_breakpoint (addr)
 }
 
 
-#ifdef __STDC__
 static void
 delete_all_breakpoints (void)
-#else
-static void
-delete_all_breakpoints ()
-#endif
 {
   bkpt *b, *n;
 
@@ -465,13 +385,8 @@ delete_all_breakpoints ()
 
 /* List all breakpoints. */
 
-#ifdef __STDC__
 void
 list_breakpoints (void)
-#else
-void
-list_breakpoints ()
-#endif
 {
   bkpt *b;
 
@@ -490,23 +405,11 @@ list_breakpoints ()
 
 #ifndef WIN32
 /*VARARGS0*/
-#ifdef __STDC__
 void
 fatal_error (char *fmt, ...)
-#else
-void
-fatal_error (va_alist)
-va_dcl
-#endif
 {
   va_list args;
-#ifdef __STDC__
   va_start (args, fmt);
-#else
-  char *fmt;
-
-  va_start (args);
-#endif
   fmt = va_arg (args, char *);
 
 #ifdef NO_VFPRINTF
@@ -522,16 +425,8 @@ va_dcl
 /* Return the entry in the hash TABLE of length LENGTH with key STRING.
    Return NULL if no such entry exists. */
 
-#ifdef __STDC__
 inst_info *
 map_string_to_inst_info (inst_info tbl[], int tbl_len, char *id)
-#else
-inst_info *
-map_string_to_inst_info (tbl, tbl_len, id)
-     register inst_info tbl [];
-     int tbl_len;
-     register char *id;
-#endif
 {
   register int low = 0;
   register int hi = tbl_len - 1;
@@ -558,16 +453,8 @@ map_string_to_inst_info (tbl, tbl_len, id)
 /* Return the entry in the hash TABLE of length LENGTH with VALUE1 field NUM.
    Return NULL if no such entry exists. */
 
-#ifdef __STDC__
 inst_info *
 map_int_to_inst_info (inst_info tbl[], int tbl_len, int num)
-#else
-inst_info *
-map_int_to_inst_info (tbl, tbl_len, num)
-     register inst_info tbl [];
-     int tbl_len;
-     register int num;
-#endif
 {
   register int low = 0;
   register int hi = tbl_len - 1;
@@ -607,15 +494,8 @@ vsprintf (str, fmt, args)
 
 
 #ifdef NEED_STRTOL
-#ifdef __STDC__
 unsigned long
 strtol (const char* str, const char** eptr, int base)
-#else
-long
-strtol (str, eptr, base)
-     char *str, **eptr;
-     int base;
-#endif
 {
   long result;
 
@@ -639,15 +519,8 @@ strtol (str, eptr, base)
 #endif
 
 #ifdef NEED_STRTOUL
-#ifdef __STDC__
 unsigned long
 strtoul (const char* str, char** eptr, int base)
-#else
-unsigned long
-strtoul (str, eptr, base)
-     char *str, **eptr;
-     int base;
-#endif
 {
   unsigned long result;
 
@@ -671,33 +544,17 @@ strtoul (str, eptr, base)
 #endif
 
 
-#ifdef __STDC__
 char *
 str_copy (char *str)
-#else
-char *
-str_copy (str)
-     char *str;
-#endif
 {
   return (strcpy (xmalloc (strlen (str) + 1), str));
 }
 
 
-#ifdef __STDC__
 void *
 xmalloc (int size)
-#else
-char *
-xmalloc (size)
-int size;
-#endif
 {
-#ifdef __STDC__
   void *x = (void *) malloc (size);
-#else
-  char *x = (char *) malloc (size);
-#endif
 
   if (x == 0)
     fatal_error ("Out of memory at request for %d bytes.\n");
@@ -707,20 +564,10 @@ int size;
 
 /* Allocate a zero'ed block of storage. */
 
-#ifdef __STDC__
 void *
 zmalloc (int size)
-#else
-char *
-zmalloc (size)
-int size;
-#endif
 {
-#ifdef __STDC__
   void *z = (void *) malloc (size);
-#else
-  char *z = (char *) malloc (size);
-#endif
 
   if (z == 0)
     fatal_error ("Out of memory at request for %d bytes.\n");

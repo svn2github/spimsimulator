@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 8     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/buttons.c 9     2/15/04 1:25p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -55,7 +55,6 @@
 
 /* Local functions: */
 
-#ifdef __STDC__
 static void add_breakpoint_action (Widget w, XtPointer client_data,
 				   XtPointer call_data);
 static void add_clear_button (Widget parent);
@@ -138,52 +137,6 @@ static void step_prompt_destroyed (Widget w, XtPointer client_data,
 static void warp_to_second_dialog (Widget widget, XEvent *event,
 				   String *params, Cardinal *num_params);
 
-#else
-
-static void add_breakpoint_action ();
-static void add_clear_button ();
-static void add_mode_button ();
-static void add_print_button ();
-static void add_reload_button ();
-static void add_terminal_button ();
-static void breakpoint_prompt ();
-static void breakpoint_prompt_destroyed ();
-static void clear_program_state_action ();
-static void continue_action ();
-static void continue_prompt_destroyed ();
-static void delete_breakpoint_action ();
-static void destroy_popup_prompt ();
-static void help_action ();
-static void init_stack ();
-static void load_prompt ();
-static void load_prompt_destroyed ();
-static void list_breakpoint_action ();
-static void noop ();
-static void parse_print_value ();
-static void parse_set_value ();
-static Widget popup_two_field_dialog ();
-static void print_mem_prompt ();
-static void print_prompt_destroyed ();
-static void print_symbol_action ();
-static void quit_action ();
-static void quit_prompt ();
-static void quit_prompt_destroyed ();
-static void read_assm_file_action ();
-static void reload_action ();
-static void run_program_action ();
-static void run_prompt ();
-static void run_prompt_destroyed ();
-static void select_mode_action ();
-static void set_value_action ();
-static void set_value_prompt ();
-static void set_value_destroyed ();
-static void step_continue_action ();
-static void step_program_action ();
-static void step_prompt ();
-static void step_prompt_destroyed ();
-static void warp_to_second_dialog ();
-
-#endif
 
 /* Local variables: */
 
@@ -194,27 +147,15 @@ char *xspim_file_name = NULL;	/* Retain last file's name. */
 
 
 
-#ifdef __STDC__
 void
 record_file_name_for_prompt (char *name)
-#else
-void
-record_file_name_for_prompt (name)
-     char *name;
-#endif
 {
   xspim_file_name = str_copy (name);
 }
 
 
-#ifdef __STDC__
 void
 create_buttons (Widget parent)
-#else
-void
-create_buttons (parent)
-     Widget parent;
-#endif
 {
   Widget button;
   Widget command;
@@ -292,15 +233,8 @@ create_buttons (parent)
 
 static Widget quit_popup = NULL;
 
-#ifdef __STDC__
 static void
 quit_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-quit_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget parent, dialog;
   Arg args[10];
@@ -332,15 +266,8 @@ quit_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 quit_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-quit_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget dialog = (Widget) client_data;
 
@@ -350,15 +277,8 @@ quit_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 quit_prompt_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-quit_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   quit_popup = NULL;
 }
@@ -368,15 +288,8 @@ quit_prompt_destroyed (w, client_data, call_data)
 
 static Widget load_popup = NULL;
 
-#ifdef __STDC__
 static void
 load_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-load_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget parent, dialog;
   Arg args[10];
@@ -412,15 +325,8 @@ load_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 read_assm_file_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-read_assm_file_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget dialog = (Widget) client_data;
   String value = XawDialogGetValueString (dialog);
@@ -433,15 +339,8 @@ read_assm_file_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 load_prompt_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-load_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   load_popup = NULL;
 }
@@ -452,15 +351,8 @@ load_prompt_destroyed (w, client_data, call_data)
 static Widget run_popup = NULL;
 static Widget run_field1_text, run_field2_text;
 
-#ifdef __STDC__
 static void
 run_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-run_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   char sa[20];
 
@@ -481,15 +373,8 @@ run_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 run_program_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-run_program_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Arg args[10];
   String value1, value2;
@@ -511,14 +396,8 @@ run_program_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 init_stack (char *args)
-#else
-static void
-init_stack (args)
-     char *args;
-#endif
 {
   int argc = 0;
   char *argv[10000];
@@ -547,15 +426,8 @@ init_stack (args)
 }
 
 
-#ifdef __STDC__
 static void
 run_prompt_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-run_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   run_popup = NULL;
 }
@@ -568,15 +440,8 @@ static char *step_size = NULL;	/* Retain step size */
 static Widget step_popup = NULL;
 static Widget step_field1_text, step_field2_text;
 
-#ifdef __STDC__
 static void
 step_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-step_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   if (step_popup == NULL)
     {
@@ -597,15 +462,8 @@ step_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 step_program_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-step_program_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Arg args[10];
   String value1, value2;
@@ -630,15 +488,8 @@ step_program_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 step_continue_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-step_continue_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget dialog = (Widget) client_data;
 
@@ -649,15 +500,8 @@ step_continue_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 step_prompt_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-step_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   step_popup = NULL;
 }
@@ -665,14 +509,8 @@ step_prompt_destroyed (w, client_data, call_data)
 
 /* *** Reload *** */
 
-#ifdef __STDC__
 static void
 add_reload_button (Widget parent)
-#else
-static void
-add_reload_button (parent)
-     Widget parent;
-#endif
 {
   Widget command, menu, entry;
   Arg args[2];
@@ -690,15 +528,8 @@ add_reload_button (parent)
 }
 
 
-#ifdef __STDC__
 static void
 reload_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-reload_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   int assem_or_exec = (int) client_data;
 
@@ -720,14 +551,8 @@ reload_action (w, client_data, call_data)
 #define CLEAR_MEM_REGS 2
 #define CLEAR_CONSOLE 3
 
-#ifdef __STDC__
 static void
 add_clear_button (Widget parent)
-#else
-static void
-add_clear_button (parent)
-     Widget parent;
-#endif
 {
   Widget command, menu, entry;
   Arg args[2];
@@ -755,16 +580,9 @@ add_clear_button (parent)
 }
 
 
-#ifdef __STDC__
 static void
 clear_program_state_action (Widget w, XtPointer client_data,
 			    XtPointer call_data)
-#else
-static void
-clear_program_state_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   int clear_op = (int) client_data;
 
@@ -801,15 +619,8 @@ clear_program_state_action (w, client_data, call_data)
 static Widget set_value_popup = NULL;
 static Widget set_field1_text, set_field2_text;
 
-#ifdef __STDC__
 static void
 set_value_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-set_value_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   if (set_value_popup == NULL)
     {
@@ -827,15 +638,8 @@ set_value_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 parse_set_value (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-parse_set_value (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Arg args[10];
   String value1, value2;
@@ -853,14 +657,8 @@ parse_set_value (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 set_value_action (char *location_str, char *value_str)
-#else
-static void
-set_value_action (location_str, value_str)
-     char *location_str, *value_str;
-#endif
 {
   unsigned long value;
   int reg_no;
@@ -908,15 +706,8 @@ set_value_action (location_str, value_str)
 }
 
 
-#ifdef __STDC__
 static void
 set_value_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-set_value_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   set_value_popup = NULL;
 }
@@ -924,14 +715,8 @@ set_value_destroyed (w, client_data, call_data)
 
 /* *** Print *** */
 
-#ifdef __STDC__
 static void
 add_print_button (Widget parent)
-#else
-static void
-add_print_button (parent)
-     Widget parent;
-#endif
 {
   Widget command, menu, entry;
   Arg args[2];
@@ -955,15 +740,8 @@ add_print_button (parent)
 static Widget print_popup = NULL;
 static Widget print_field1_text, print_field2_text;
 
-#ifdef __STDC__
 static void
 print_mem_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-print_mem_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   if (print_popup == NULL)
     {
@@ -982,15 +760,8 @@ print_mem_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 parse_print_value (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-parse_print_value (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Arg args[10];
   String value1, value2;
@@ -1020,29 +791,15 @@ parse_print_value (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 print_symbol_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-print_symbol_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   print_symbols ();
 }
 
 
-#ifdef __STDC__
 static void
 print_prompt_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-print_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   print_popup = NULL;
 }
@@ -1054,15 +811,8 @@ static char *breakpoint_addr = NULL; /* Retain last breakpoint address */
 
 static Widget bkpt_popup = NULL;
 
-#ifdef __STDC__
 static void
 breakpoint_prompt (Widget button, XtPointer client_data, XtPointer call_data)
-#else
-static void
-breakpoint_prompt (button, client_data, call_data)
-     Widget button;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget parent, dialog;
   Arg args[10];
@@ -1103,15 +853,8 @@ breakpoint_prompt (button, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 add_breakpoint_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-add_breakpoint_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget dialog = (Widget) client_data;
   String value = XawDialogGetValueString (dialog);
@@ -1132,15 +875,8 @@ add_breakpoint_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 delete_breakpoint_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-delete_breakpoint_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget dialog = (Widget) client_data;
   String value = XawDialogGetValueString (dialog);
@@ -1156,30 +892,16 @@ delete_breakpoint_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 list_breakpoint_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-list_breakpoint_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   list_breakpoints ();
 }
 
 
-#ifdef __STDC__
 static void
 breakpoint_prompt_destroyed (Widget w, XtPointer client_data,
 			     XtPointer call_data)
-#else
-static void
-breakpoint_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   bkpt_popup = NULL;
 }
@@ -1187,16 +909,8 @@ breakpoint_prompt_destroyed (w, client_data, call_data)
 
 /* *** Help *** */
 
-#ifdef __STDC__
 static void
 help_action (Widget w, XtPointer ignore, XtPointer ignored)
-#else
-static void
-help_action (w, ignore, ignored)
-     Widget w;
-     XtPointer ignore;
-     XtPointer ignored;
-#endif
 {
   static char * msg = "\nSPIM is a MIPS R2000 simulator.\n\
 Copyright (C) 1990-2004 by James R. Larus, larus@cs.wisc.edu\n\n\
@@ -1218,14 +932,8 @@ mode -- Set SPIM operating modes\n";
 
 /* *** Terminal *** */
 
-#ifdef __STDC__
 static void
 add_terminal_button (Widget parent)
-#else
-static void
-add_terminal_button (parent)
-     Widget parent;
-#endif
 {
   Widget command, menu, entry;
   Arg args[2];
@@ -1246,14 +954,8 @@ add_terminal_button (parent)
 
 static Widget modeCommand;
 
-#ifdef __STDC__
 static void
 add_mode_button (Widget parent)
-#else
-static void
-add_mode_button (parent)
-     Widget parent;
-#endif
 {
   Widget menu, entry;
   Arg args[2];
@@ -1284,15 +986,8 @@ add_mode_button (parent)
 }
 
 
-#ifdef __STDC__
 static void
 select_mode_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-select_mode_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Arg args[10];
   String name = XtName (w);
@@ -1322,14 +1017,8 @@ select_mode_action (w, client_data, call_data)
 
 static Widget continue_popup = NULL;
 
-#ifdef __STDC__
 void
 continue_prompt (int interrupt_seen)
-#else
-void
-continue_prompt (interrupt_seen)
-     int interrupt_seen;
-#endif
 {
   Widget dialog;
   Arg args[10];
@@ -1364,15 +1053,8 @@ continue_prompt (interrupt_seen)
 }
 
 
-#ifdef __STDC__
 static void
 continue_action (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-continue_action (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget dialog = (Widget) client_data;
 
@@ -1384,16 +1066,9 @@ continue_action (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 continue_prompt_destroyed (Widget w, XtPointer client_data,
 			   XtPointer call_data)
-#else
-static void
-continue_prompt_destroyed (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   continue_popup = NULL;
 }
@@ -1401,32 +1076,16 @@ continue_prompt_destroyed (w, client_data, call_data)
 
 
 
-#ifdef __STDC__
 void
 confirm (Widget widget, XEvent *event, String *params, Cardinal *num_params)
-#else
-void
-confirm (widget, event, params, num_params)
-     Widget widget;
-     XEvent *event;
-     String *params;
-     Cardinal *num_params;
-#endif
 {
   Widget dialog = XtParent (widget);
   (*confirmAction) (widget, (XtPointer) dialog, (XtPointer) NULL);
 }
 
 
-#ifdef __STDC__
 static void
 destroy_popup_prompt (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-static void
-destroy_popup_prompt (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   Widget popup = XtParent ((Widget) client_data);
 
@@ -1435,18 +1094,12 @@ destroy_popup_prompt (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 static void
 noop (void)
-#else
-static void
-noop ()
-#endif
 {
 }
 
 
-#ifdef __STDC__
 static Widget
 popup_two_field_dialog (Widget button, String name, String field1_label,
 			String field1_value, String field2_label,
@@ -1454,17 +1107,6 @@ popup_two_field_dialog (Widget button, String name, String field1_label,
 			void (*action) (/* ??? */), String action2_name,
 			void (*action2) (/* ??? */), Widget *field1_text,
 			Widget *field2_text)
-#else
-static Widget
-popup_two_field_dialog (button, name, field1_label, field1_value,
-		     field2_label, field2_value, action_name, action,
-		     action2_name, action2, field1_text, field2_text)
-     Widget button;
-     String name, field1_label, field1_value, field2_label, field2_value,
-       action_name, action2_name;
-     void (*action) (), (*action2) ();
-     Widget *field1_text, *field2_text;
-#endif
 {
   Widget popup, form;
   Widget labelx, field1, field2;
@@ -1548,18 +1190,9 @@ popup_two_field_dialog (button, name, field1_label, field1_value,
 }
 
 
-#ifdef __STDC__
 static void
 warp_to_second_dialog (Widget widget, XEvent *event, String *params,
 		       Cardinal *num_params)
-#else
-static void
-warp_to_second_dialog (widget, event, params, num_params)
-     Widget widget;
-     XEvent *event;
-     String *params;
-     Cardinal *num_params;
-#endif
 {
   Widget form = XtParent (widget);
   Widget second_dialog;

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 13    2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/mem.c 14    2/15/04 1:25p Larus $
 */
 
 
@@ -67,15 +67,9 @@ mem_addr k_data_top;
 
 /* Local functions: */
 
-#ifdef __STDC__
 static void free_instructions (register instruction **inst, int n);
 static mem_word read_memory_mapped_IO (mem_addr addr);
 static void write_memory_mapped_IO (mem_addr addr, mem_word value);
-#else
-static void free_instructions ();
-static mem_word read_memory_mapped_IO ();
-static void write_memory_mapped_IO ();
-#endif
 
 
 /* Local variables: */
@@ -114,21 +108,10 @@ static int32 data_size_limit, stack_size_limit, k_data_size_limit;
 #define BYTES_TO_INST(N) (((N) + BYTES_PER_WORD - 1) / BYTES_PER_WORD * sizeof(instruction*))
 
 
-#ifdef __STDC__
 void
 make_memory (int text_size, int data_size, int data_limit,
 	     int stack_size, int stack_limit, int k_text_size,
 	     int k_data_size, int k_data_limit)
-#else
-void
-make_memory (text_size,
-	     data_size, data_limit,
-	     stack_size, stack_limit,
-	     k_text_size,
-	     k_data_size, k_data_limit)
-     int text_size, data_size, data_limit, stack_size, stack_limit,
-       k_text_size, k_data_size, k_data_limit;
-#endif
 {
   if (data_size <= 65536)
     data_size = 65536;
@@ -196,15 +179,8 @@ make_memory (text_size,
 
 /* Free the storage used by the old instructions in memory. */
 
-#ifdef __STDC__
 static void
 free_instructions (register instruction **inst, int n)
-#else
-static void
-free_instructions (inst, n)
-     register instruction **inst;
-     int n;
-#endif
 {
   for ( ; n > 0; n --, inst ++)
     if (*inst)
@@ -214,14 +190,8 @@ free_instructions (inst, n)
 
 /* Expand the data segment by adding N bytes. */
 
-#ifdef __STDC__
 void
 expand_data (int addl_bytes)
-#else
-void
-expand_data (addl_bytes)
-     int addl_bytes;
-#endif
 {
   int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = data_top - DATA_BOT;
@@ -252,14 +222,8 @@ expand_data (addl_bytes)
    since it copies from bottom of memory blocks and stack grows down from
    top of its block. */
 
-#ifdef __STDC__
 void
 expand_stack (int addl_bytes)
-#else
-void
-expand_stack (addl_bytes)
-     int addl_bytes;
-#endif
 {
   int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = STACK_TOP - stack_bot;
@@ -291,14 +255,8 @@ expand_stack (addl_bytes)
 
 /* Expand the kernel data segment by adding N bytes. */
 
-#ifdef __STDC__
 void
 expand_k_data (int addl_bytes)
-#else
-void
-expand_k_data (addl_bytes)
-     int addl_bytes;
-#endif
 {
   int delta = ROUND_UP(addl_bytes, BYTES_PER_WORD); /* Keep word aligned */
   int old_size = k_data_top - K_DATA_BOT;
@@ -329,45 +287,24 @@ expand_k_data (addl_bytes)
 
 /* Handle the infrequent and erroneous cases in the memory access macros. */
 
-#ifdef __STDC__
 instruction *
 bad_text_read (mem_addr addr)
-#else
-instruction *
-bad_text_read (addr)
-     mem_addr addr;
-#endif
 {
   RAISE_EXCEPTION (IBUS_EXCPT, BadVAddr = addr);
   return (inst_decode (0));
 }
 
 
-#ifdef __STDC__
 void
 bad_text_write (mem_addr addr, instruction *inst)
-#else
-void
-bad_text_write (addr, inst)
-     mem_addr addr;
-     instruction *inst;
-#endif
 {
   RAISE_EXCEPTION (IBUS_EXCPT, BadVAddr = addr);
   SET_MEM_WORD (addr, ENCODING (inst));
 }
 
 
-#ifdef __STDC__
 mem_word
 bad_mem_read (mem_addr addr, int mask, mem_word *dest)
-#else
-mem_word
-bad_mem_read (addr, mask, dest)
-     mem_addr addr;
-     int mask;
-     mem_word *dest;
-#endif
 {
   mem_word tmp;
 
@@ -425,16 +362,8 @@ bad_mem_read (addr, mask, dest)
 }
 
 
-#ifdef __STDC__
 void
 bad_mem_write (mem_addr addr, mem_word value, int mask)
-#else
-void
-bad_mem_write (addr, value, mask)
-     mem_addr addr;
-     mem_word value;
-     int mask;
-#endif
 {
   mem_word tmp;
   
@@ -518,13 +447,8 @@ static long trans_control, trans_buffer, trans_buffer_filled;
 /* Every IO_INTERVAL time steps, check if input is available and output
    is possible.  If so, update the control registers and buffers. */
 
-#ifdef __STDC__
 void
 check_memory_mapped_IO (void)
-#else
-void
-check_memory_mapped_IO ()
-#endif
 {
   static long mm_io_initialized = 0;
 
@@ -571,15 +495,8 @@ check_memory_mapped_IO ()
 
 /* Invoked on a write in the memory-mapped IO area. */
 
-#ifdef __STDC__
 static void
 write_memory_mapped_IO (mem_addr addr, mem_word value)
-#else
-static void
-write_memory_mapped_IO (addr, value)
-     mem_addr addr;
-     mem_word value;
-#endif
 {
   switch (addr)
     {
@@ -621,14 +538,8 @@ write_memory_mapped_IO (addr, value)
 
 /* Invoked on a read in the memory-mapped IO area. */
 
-#ifdef __STDC__
 static mem_word
 read_memory_mapped_IO (mem_addr addr)
-#else
-static mem_word
-read_memory_mapped_IO (addr)
-     mem_addr addr;
-#endif
 {
   switch (addr)
     {
@@ -657,14 +568,8 @@ read_memory_mapped_IO (addr)
 
 /* Misc. routines */
 
-#ifdef __STDC__
 void
 print_mem (mem_addr addr)
-#else
-void
-print_mem (addr)
-     mem_addr addr;
-#endif
 {
   mem_word value;
 

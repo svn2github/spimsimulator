@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/windows.c 5     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/windows.c 6     2/15/04 1:27p Larus $
  */
 
 
@@ -48,7 +48,6 @@ Widget register_window, text_window, data_window;
 
 /* Internal functions: */
 
-#ifdef __STDC__
 static void create_command_panel (Widget parent, Dimension app_width,
 				  Dimension button_height,
 				  Dimension command_hspace,
@@ -59,26 +58,12 @@ static void create_display_window (Widget parent, Dimension display_height);
 static void create_reg_window (Widget parent, Dimension reg_min_height,
 			       Dimension reg_max_height);
 static void create_text_window (Widget parent, Dimension segment_height);
-#else
-static void create_command_panel ();
-static void create_data_window ();
-static void create_display_window ();
-static void create_reg_window ();
-static void create_text_window ();
-#endif
 
 
 
-#ifdef __STDC__
 static void
 create_reg_window (Widget parent, Dimension reg_min_height,
 		   Dimension reg_max_height)
-#else
-static void
-create_reg_window (parent, reg_min_height, reg_max_height)
-     Widget parent;
-     Dimension reg_min_height, reg_max_height;
-#endif
 {
   Arg args[15];
   Cardinal n = 0;
@@ -99,19 +84,10 @@ create_reg_window (parent, reg_min_height, reg_max_height)
 }
 
 
-#ifdef __STDC__
 static void
 create_command_panel (Widget parent, Dimension app_width,
 		      Dimension button_height, Dimension command_hspace,
 		      Dimension command_vspace, Dimension command_height)
-#else
-static void
-create_command_panel (parent, app_width, button_height, command_hspace,
-		    command_vspace, command_height)
-     Widget parent;
-     Dimension app_width, button_height, command_hspace, command_vspace;
-     Dimension command_height;
-#endif
 {
   Widget panel;
   Arg args[10];
@@ -131,15 +107,8 @@ create_command_panel (parent, app_width, button_height, command_hspace,
 }
 
 
-#ifdef __STDC__
 static void
 create_text_window (Widget parent, Dimension segment_height)
-#else
-static void
-create_text_window (parent, segment_height)
-     Widget parent;
-     Dimension segment_height;
-#endif
 {
   Arg args[15];
   Cardinal n = 0;
@@ -168,15 +137,8 @@ create_text_window (parent, segment_height)
 }
 
 
-#ifdef __STDC__
 static void
 create_data_window (Widget parent, Dimension segment_height)
-#else
-static void
-create_data_window (parent, segment_height)
-     Widget parent;
-     Dimension segment_height;
-#endif
 {
   Arg args[15];
   Cardinal n = 0;
@@ -205,15 +167,8 @@ create_data_window (parent, segment_height)
 }
 
 
-#ifdef __STDC__
 static void
 create_display_window (Widget parent, Dimension display_height)
-#else
-static void
-create_display_window (parent, display_height)
-     Widget parent;
-     Dimension display_height;
-#endif
 {
   Arg args[15];
   Cardinal n = 0;
@@ -231,23 +186,12 @@ create_display_window (parent, display_height)
 }
 
 
-#ifdef __STDC__
 void
 create_sub_windows (Widget parent, Dimension app_width,
 		    Dimension reg_min_height, Dimension reg_max_height,
 		    Dimension command_height, Dimension command_hspace,
 		    Dimension command_vspace, Dimension button_height,
 		    Dimension segment_height, Dimension display_height)
-#else
-void
-create_sub_windows (parent, app_width, reg_min_height, reg_max_height,
-		    command_height, command_hspace, command_vspace,
-		    button_height, segment_height, display_height)
-     Widget parent;
-     Dimension app_width, reg_min_height, reg_max_height;
-     Dimension command_height, command_hspace, command_vspace;
-     Dimension button_height, segment_height, display_height;
-#endif
 {
   Widget pane;
   Arg args[10];

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.c 17    2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.c 18    2/15/04 1:27p Larus $
 */
 
 
@@ -37,13 +37,8 @@
 
 /* Local functions: */
 
-#ifdef __STDC__
 static void get_hash (char *name, int *slot_no, label **entry);
 static void resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc);
-#else
-static void get_hash ();
-static void resolve_a_label_sub ();
-#endif
 
 
 
@@ -71,13 +66,8 @@ static label *label_hash_table [LABEL_HASH_TABLE_SIZE];
 
 /* Initialize the symbol table by removing and freeing old entries. */
 
-#ifdef __STDC__
 void
 initialize_symbol_table (void)
-#else
-void
-initialize_symbol_table ()
-#endif
 {
   int i;
   
@@ -104,16 +94,8 @@ initialize_symbol_table ()
    record is already in the table, set ENTRY to point to it.  Otherwise,
    set ENTRY to be NULL. */
 
-#ifdef __STDC__
 static void
 get_hash (char *name, int *slot_no, label **entry)
-#else
-static void
-get_hash (name, slot_no, entry)
-     char *name;
-     int *slot_no;
-     label **entry;
-#endif
 {
   int hi;
   int i;
@@ -146,14 +128,8 @@ get_hash (name, slot_no, entry)
 /* Lookup label with NAME.  Either return its symbol table entry or NULL
    if it is not in the table. */
 
-#ifdef __STDC__
 label *
 label_is_defined (char *name)
-#else
-label *
-label_is_defined (name)
-     char *name;
-#endif
 {
   int hi;
   label *entry;
@@ -167,14 +143,8 @@ label_is_defined (name)
 /* Return a label with a given NAME.  If an label with that name has
    previously been looked-up, the same node is returned this time.  */
 
-#ifdef __STDC__
 label *
 lookup_label (char *name)
-#else
-label *
-lookup_label (name)
-     char *name;
-#endif
 {
   int hi;
   label *entry, *lab;
@@ -202,16 +172,8 @@ lookup_label (name)
 /* Record that the label named NAME refers to ADDRESS.	If RESOLVE_USES is
    true, resolve all references to it.  Return the label structure. */
 
-#ifdef __STDC__
 label *
 record_label (char *name, mem_addr address, int resolve_uses)
-#else
-label *
-record_label (name, address, resolve_uses)
-     char *name;
-     mem_addr address;
-     int resolve_uses;
-#endif
 {
   label *l = lookup_label (name);
 
@@ -241,14 +203,8 @@ record_label (name, address, resolve_uses)
 
 /* Make the label named NAME global.  Return its symbol. */
 
-#ifdef __STDC__
 label *
 make_label_global (char *name)
-#else
-label *
-make_label_global (name)
-     char *name;
-#endif
 {
   label *l = lookup_label (name);
 
@@ -259,15 +215,8 @@ make_label_global (name)
 
 /* Record that an INSTRUCTION uses the as-yet undefined SYMBOL. */
 
-#ifdef __STDC__
 void
 record_inst_uses_symbol (instruction *inst, label *sym)
-#else
-void
-record_inst_uses_symbol (inst, sym)
-     instruction *inst;
-     label *sym;
-#endif
 {
   label_use *u = (label_use *) xmalloc (sizeof (label_use));
 
@@ -288,15 +237,8 @@ record_inst_uses_symbol (inst, sym)
 
 /* Record that a memory LOCATION uses the as-yet undefined SYMBOL. */
 
-#ifdef __STDC__
 void
 record_data_uses_symbol (mem_addr location, label *sym)
-#else
-void
-record_data_uses_symbol (location, sym)
-     mem_addr location;
-     label *sym;
-#endif
 {
   label_use *u = (label_use *) xmalloc (sizeof (label_use));
 
@@ -310,14 +252,8 @@ record_data_uses_symbol (location, sym)
 /* Given a newly-defined LABEL, resolve the previously encountered
    instructions and data locations that refer to the label. */
 
-#ifdef __STDC__
 void
 resolve_label_uses (label *sym)
-#else
-void
-resolve_label_uses (sym)
-     label *sym;
-#endif
 {
   label_use *use;
   label_use *next_use;
@@ -339,15 +275,8 @@ resolve_label_uses (sym)
 
 /* Resolve the newly-defined label in INSTRUCTION. */
 
-#ifdef __STDC__
 void
 resolve_a_label (label *sym, instruction *inst)
-#else
-void
-resolve_a_label (sym, inst)
-     label *sym;
-     instruction *inst;
-#endif
 {
   resolve_a_label_sub (sym,
 		       inst,
@@ -355,16 +284,8 @@ resolve_a_label (sym, inst)
 }
 
 
-#ifdef __STDC__
 static void
 resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
-#else
-static void
-resolve_a_label_sub (sym, inst, pc)
-  label *sym;
-   instruction *inst;
-   mem_addr pc;
-#endif
 {
   if (inst == NULL)
     {
@@ -458,14 +379,8 @@ resolve_a_label_sub (sym, inst, pc)
 
 /* Remove all local (non-global) label from the table. */
 
-#ifdef __STDC__
 void
 flush_local_labels (int issue_undef_warnings)
-#else
-void
-flush_local_labels (issue_undef_warnings)
-    int issue_undef_warnings;
-#endif
 {
   label *l;
 
@@ -498,14 +413,8 @@ flush_local_labels (issue_undef_warnings)
 
 /* Return the address of SYMBOL or 0 if it is undefined. */
 
-#ifdef __STDC__
 mem_addr
 find_symbol_address (char *symbol)
-#else
-mem_addr
-find_symbol_address (symbol)
-     char *symbol;
-#endif
 {
   label *l = lookup_label (symbol);
 
@@ -518,13 +427,8 @@ find_symbol_address (symbol)
 
 /* Print all symbols in the table. */
 
-#ifdef __STDC__
 void
 print_symbols (void)
-#else
-void
-print_symbols ()
-#endif
 {
   int i;
   label *l;
@@ -538,13 +442,8 @@ print_symbols ()
 
 /* Print all undefined symbols in the table. */
 
-#ifdef __STDC__
 void
 print_undefined_symbols (void)
-#else
-void
-print_undefined_symbols ()
-#endif
 {
   int i;
   label *l;
@@ -560,13 +459,8 @@ print_undefined_symbols ()
    table, seperated by a newline character.  Return NULL if no symbols
    are undefined. */
 
-#ifdef __STDC__
 char *
 undefined_symbol_string (void)
-#else
-char *
-undefined_symbol_string ()
-#endif
 {
   int buffer_length = 128;
   int string_length = 0;

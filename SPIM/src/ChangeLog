@@ -1,5 +1,9 @@
 2004-02-15    <larus@C745660-A>
 
+	* pervasive:
+	Eliminated #ifdef __STDC__. Everyone must have a non-K&R compiler
+	by now.
+
 	* mem.c [Akim Demaille (akim@epita.fr)]:
 	Word align all segments, in particular, ensure that sbrk returns
 	word-aligned addresses.

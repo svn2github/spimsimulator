@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 11    2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/inst.c 12    2/15/04 1:25p Larus $
 */
 
 #include <stdio.h>
@@ -40,7 +40,6 @@
 
 /* Local functions: */
 
-#ifdef __STDC__
 static int compare_pair_value (inst_info *p1, inst_info *p2);
 static void i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 				   int value_known, int32 value);
@@ -55,19 +54,6 @@ static char* print_imm_expr (char *buf, unsigned int length, imm_expr *expr,
 			     int base_reg);
 static void produce_immediate (imm_expr *expr, int rt, int value_known, int32 value);
 static void sort_name_table (void);
-#else
-static int compare_pair_value ();
-static void i_type_inst_f ();
-static void i_type_inst_full_word ();
-static void inst_cmp ();
-static instruction * make_r_type_inst ();
-static instruction *mk_i_inst ();
-static instruction *mk_j_inst ();
-static instruction *mk_r_inst ();
-static char* print_imm_expr ();
-static void produce_immediate ();
-static void sort_name_table ();
-#endif
 
 
 /* Local variables: */
@@ -97,27 +83,15 @@ static mem_addr next_k_text_pc;
 
 /* Set ADDRESS at which the next instruction is stored. */
 
-#ifdef __STDC__
 void
 text_begins_at_point (mem_addr addr)
-#else
-void
-text_begins_at_point (addr)
-     mem_addr addr;
-#endif
 {
   next_text_pc = addr;
 }
 
 
-#ifdef __STDC__
 void
 k_text_begins_at_point (mem_addr addr)
-#else
-void
-k_text_begins_at_point (addr)
-     mem_addr addr;
-#endif
 {
   next_k_text_pc = addr;
 }
@@ -125,14 +99,8 @@ k_text_begins_at_point (addr)
 
 /* Set the location (in user or kernel text space) for the next instruction. */
 
-#ifdef __STDC__
 void
 set_text_pc (mem_addr addr)
-#else
-void
-set_text_pc (addr)
-     mem_addr addr;
-#endif
 {
   if (in_kernel)
     next_k_text_pc = addr;
@@ -143,13 +111,8 @@ set_text_pc (addr)
 
 /* Return address for next instruction, in appropriate text segment. */
 
-#ifdef __STDC__
 mem_addr
 current_text_pc (void)
-#else
-mem_addr
-current_text_pc ()
-#endif
 {
   return (INST_PC);
 }
@@ -157,14 +120,8 @@ current_text_pc ()
 
 /* Increment the current text segement PC. */
 
-#ifdef __STDC__
 void
 increment_text_pc (int delta)
-#else
-void
-increment_text_pc (delta)
-     int delta;
-#endif
 {
   BUMP_INST_PC (delta);
 }
@@ -173,14 +130,8 @@ increment_text_pc (delta)
 /* If FLAG is non-zero, next instruction goes to kernel text segment,
    otherwise it goes to user segment. */
 
-#ifdef __STDC__
 void
 user_kernel_text_segment (int to_kernel)
-#else
-void
-user_kernel_text_segment (to_kernel)
-     int to_kernel;
-#endif
 {
   in_kernel = to_kernel;
 }
@@ -188,14 +139,8 @@ user_kernel_text_segment (to_kernel)
 
 /* Store an INSTRUCTION in memory at the next location. */
 
-#ifdef __STDC__
 void
 store_instruction (instruction *inst)
-#else
-void
-store_instruction (inst)
-     instruction *inst;
-#endif
 {
   if (data_dir)
     {
@@ -221,15 +166,8 @@ store_instruction (inst)
 
 
 
-#ifdef __STDC__
 void
 i_type_inst_free (int opcode, int rt, int rs, imm_expr *expr)
-#else
-void
-i_type_inst_free (opcode, rt, rs, expr)
-     int opcode, rt, rs;
-     imm_expr *expr;
-#endif
 {
   i_type_inst (opcode, rt, rs, expr);
   free (expr);
@@ -242,15 +180,8 @@ i_type_inst_free (opcode, rt, rs, expr)
    machine, we resolve symbolic address, but they better produce values
    that fit into instruction's immediate field. */
 
-#ifdef __STDC__
 void
 i_type_inst (int opcode, int rt, int rs, imm_expr *expr)
-#else
-void
-i_type_inst (opcode, rt, rs, expr)
-     int opcode, rt, rs;
-     imm_expr *expr;
-#endif
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -301,18 +232,9 @@ i_type_inst (opcode, rt, rs, expr)
 /* The immediate value for an instruction will (or may) not fit in 16 bits.
    Build the value from its piece with separate instructions. */
 
-#ifdef __STDC__
 static void
 i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 		       int value_known, int32 value)
-#else
-static void
-i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
-     int opcode, rt, rs;
-     imm_expr *expr;
-     int value_known;
-     int32 value;
-#endif
 {
   if (opcode_is_load_store (opcode))
     {
@@ -407,17 +329,8 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 }
 
 
-#ifdef __STDC__
 static void
 produce_immediate (imm_expr *expr, int rt, int value_known, int32 value)
-#else
-static void
-produce_immediate (expr, rt, value_known, value)
-     imm_expr *expr;
-     int rt;
-     int value_known;
-     int32 value;
-#endif
 {
   if (value_known && (value & 0xffff) == 0)
     {
@@ -439,15 +352,8 @@ produce_immediate (expr, rt, value_known, value)
    fields. NB, even the immediate value may not fit in the field, this
    routine will not produce more than one instruction. */
 
-#ifdef __STDC__
 void
 j_type_inst (int opcode, imm_expr *target)
-#else
-void
-j_type_inst (opcode, target)
-     int opcode;
-     imm_expr *target;
-#endif
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -466,14 +372,8 @@ j_type_inst (opcode, target)
 /* Return a register-type instruction with the given OPCODE, RD, RS, and RT
    fields. */
 
-#ifdef __STDC__
 static instruction *
 make_r_type_inst (int opcode, int rd, int rs, int rt)
-#else
-static instruction *
-make_r_type_inst (opcode, rd, rs, rt)
-     int opcode, rd, rs, rt;
-#endif
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -489,14 +389,8 @@ make_r_type_inst (opcode, rd, rs, rt)
 /* Return a register-type instruction with the given OPCODE, RD, RS, and RT
    fields. */
 
-#ifdef __STDC__
 void
 r_type_inst (int opcode, int rd, int rs, int rt)
-#else
-void
-r_type_inst (opcode, rd, rs, rt)
-     int opcode, rd, rs, rt;
-#endif
 {
   store_instruction (make_r_type_inst (opcode, rd, rs, rt));
 }
@@ -505,14 +399,8 @@ r_type_inst (opcode, rd, rs, rt)
 /* Return a register-shift instruction with the given OPCODE, RD, RT, and
    SHAMT fields.*/
 
-#ifdef __STDC__
 void
 r_sh_type_inst (int opcode, int rd, int rt, int shamt)
-#else
-void
-r_sh_type_inst (opcode, rd, rt, shamt)
-     int opcode, rd, rt, shamt;
-#endif
 {
   instruction *inst = make_r_type_inst (opcode, rd, 0, rt);
 
@@ -524,14 +412,8 @@ r_sh_type_inst (opcode, rd, rt, shamt)
 /* Return a floating-point compare instruction with the given OPCODE,
    FS, and FT fields.*/
 
-#ifdef __STDC__
 void
 r_cond_type_inst (int opcode, int rs, int rt)
-#else
-void
-r_cond_type_inst (opcode, rs, rt)
-     int opcode, rs, rt;
-#endif
 {
   instruction *inst = make_r_type_inst (opcode, 0, rs, rt);
 
@@ -655,14 +537,8 @@ r_cond_type_inst (opcode, rs, rt)
 
 /* Make and return a deep copy of INST. */
 
-#ifdef __STDC__
 instruction *
 copy_inst (instruction *inst)
-#else
-instruction *
-copy_inst (inst)
-instruction *inst;
-#endif
 {
   instruction *new_inst = (instruction *) xmalloc (sizeof (instruction));
 
@@ -673,14 +549,8 @@ instruction *inst;
 }
 
 
-#ifdef __STDC__
 void
 free_inst (instruction *inst)
-#else
-void
-free_inst (inst)
-instruction *inst;
-#endif
 {
   if (inst != break_inst)
     /* Don't free the breakpoint insructions since we only have one. */
@@ -714,14 +584,8 @@ static inst_info name_tbl [] = {
 /* Compare the VALUE1 field of two INST_INFO entries in the format
    required by qsort. */
 
-#ifdef __STDC__
 static int
 compare_pair_value (inst_info *p1, inst_info *p2)
-#else
-static int
-compare_pair_value (p1, p2)
-     inst_info *p1, *p2;
-#endif
 {
   if (p1->value1 < p2->value1)
     return (-1);
@@ -734,13 +598,8 @@ compare_pair_value (p1, p2)
 
 /* Sort the opcode table on their key (the opcode value). */
 
-#ifdef __STDC__
 static void
 sort_name_table (void)
-#else
-static void
-sort_name_table ()
-#endif
 {
   qsort (name_tbl,
 	 sizeof (name_tbl) / sizeof (inst_info),
@@ -752,14 +611,8 @@ sort_name_table ()
 
 /* Print the instruction stored at the memory ADDRESS. */
 
-#ifdef __STDC__
 void
 print_inst (mem_addr addr)
-#else
-void
-print_inst (addr)
-     mem_addr addr;
-#endif
 {
   instruction *inst;
   char buf [1024];
@@ -777,17 +630,8 @@ print_inst (addr)
 }
 
 
-#ifdef __STDC__
 int
 print_inst_internal (char *buf, int length, instruction *inst, mem_addr addr)
-#else
-int
-print_inst_internal (buf, length, inst, addr)
-     char *buf;
-     int length;
-     instruction *inst;
-     mem_addr addr;
-#endif
 {
   char *bp = buf;
   inst_info *entry;
@@ -988,14 +832,8 @@ print_inst_internal (buf, length, inst, addr)
 
 /* Return non-zero if an INSTRUCTION is a conditional branch. */
 
-#ifdef __STDC__
 int
 opcode_is_branch (int opcode)
-#else
-int
-opcode_is_branch (opcode)
-     int opcode;
-#endif
 {
   switch (opcode)
     {
@@ -1029,14 +867,8 @@ opcode_is_branch (opcode)
 
 /* Return non-zero if an INSTRUCTION is an conditional branch (jump). */
 
-#ifdef __STDC__
 int
 opcode_is_jump (int opcode)
-#else
-int
-opcode_is_jump (opcode)
-     int opcode;
-#endif
 {
   switch (opcode)
     {
@@ -1051,14 +883,8 @@ opcode_is_jump (opcode)
 
 /* Return non-zero if an INSTRUCTION is a load or store. */
 
-#ifdef __STDC__
 int
 opcode_is_load_store (int opcode)
-#else
-int
-opcode_is_load_store (opcode)
-     int opcode;
-#endif
 {
   switch (opcode)
     {
@@ -1093,14 +919,8 @@ opcode_is_load_store (opcode)
 
 /* Return non-zero if a breakpoint is set at ADDR. */
 
-#ifdef __STDC__
 int
 inst_is_breakpoint (mem_addr addr)
-#else
-int
-inst_is_breakpoint (addr)
-     mem_addr addr;
-#endif
 {
   instruction *old_inst;
 
@@ -1115,14 +935,8 @@ inst_is_breakpoint (addr)
 /* Set a breakpoint at ADDR and return the old instruction.  If the
    breakpoint cannot be set, return NULL. */
 
-#ifdef __STDC__
 instruction *
 set_breakpoint (mem_addr addr)
-#else
-instruction *
-set_breakpoint (addr)
-     mem_addr addr;
-#endif
 {
   instruction *old_inst;
 
@@ -1147,16 +961,8 @@ set_breakpoint (addr)
 
 /* Make and return a new immediate expression */
 
-#ifdef __STDC__
 imm_expr *
 make_imm_expr (int offs, char *sym, int pc_rel)
-#else
-imm_expr *
-make_imm_expr (offs, sym, pc_rel)
-     int offs;
-     char *sym;
-     int pc_rel;
-#endif
 {
   imm_expr *expr = (imm_expr *) xmalloc (sizeof (imm_expr));
 
@@ -1173,14 +979,8 @@ make_imm_expr (offs, sym, pc_rel)
 
 /* Return a shallow copy of the EXPRESSION. */
 
-#ifdef __STDC__
 imm_expr *
 copy_imm_expr (imm_expr *old_expr)
-#else
-imm_expr *
-copy_imm_expr (old_expr)
-     imm_expr *old_expr;
-#endif
 {
   imm_expr *expr = (imm_expr *) xmalloc (sizeof (imm_expr));
 
@@ -1193,14 +993,8 @@ copy_imm_expr (old_expr)
 /* Return a shallow copy of an EXPRESSION that only uses the upper
    sixteen bits of the expression's value. */
 
-#ifdef __STDC__
 imm_expr *
 upper_bits_of_expr (imm_expr *old_expr)
-#else
-imm_expr *
-upper_bits_of_expr (old_expr)
-     imm_expr *old_expr;
-#endif
 {
   imm_expr *expr = copy_imm_expr (old_expr);
 
@@ -1212,14 +1006,8 @@ upper_bits_of_expr (old_expr)
 /* Return a shallow copy of the EXPRESSION that only uses the lower
    sixteen bits of the expression's value. */
 
-#ifdef __STDC__
 imm_expr *
 lower_bits_of_expr (imm_expr *old_expr)
-#else
-imm_expr *
-lower_bits_of_expr (old_expr)
-     imm_expr *old_expr;
-#endif
 {
   imm_expr *expr = copy_imm_expr (old_expr);
 
@@ -1230,14 +1018,8 @@ lower_bits_of_expr (old_expr)
 
 /* Return an instruction expression for a constant VALUE. */
 
-#ifdef __STDC__
 imm_expr *
 const_imm_expr (int32 value)
-#else
-imm_expr *
-const_imm_expr (value)
-     int32 value;
-#endif
 {
   return (make_imm_expr (value, NULL, 0));
 }
@@ -1246,15 +1028,8 @@ const_imm_expr (value)
 /* Return a shallow copy of the EXPRESSION with the offset field
    incremented by the given amount. */
 
-#ifdef __STDC__
 imm_expr *
 incr_expr_offset (imm_expr *expr, int32 value)
-#else
-imm_expr *
-incr_expr_offset (expr, value)
-     imm_expr *expr;
-     int32 value;
-#endif
 {
   imm_expr *new_expr = copy_imm_expr (expr);
 
@@ -1265,14 +1040,8 @@ incr_expr_offset (expr, value)
 
 /* Return the value of the EXPRESSION. */
 
-#ifdef __STDC__
 int32
 eval_imm_expr (imm_expr *expr)
-#else
-int32
-eval_imm_expr (expr)
-     imm_expr *expr;
-#endif
 {
   int32 value;
 
@@ -1300,17 +1069,8 @@ eval_imm_expr (expr)
 
 /* Print the EXPRESSION. */
 
-#ifdef __STDC__
 static char*
 print_imm_expr (char *buf, unsigned int length, imm_expr *expr, int base_reg)
-#else
-static char*
-print_imm_expr (buf, length, expr, base_reg)
-     char *buf;
-     int length;
-     imm_expr *expr;
-     int base_reg;
-#endif
 {
   char lbuf[100];
   char* lbp = lbuf;
@@ -1372,14 +1132,8 @@ print_imm_expr (buf, length, expr, base_reg)
 
 /* Return non-zero if the EXPRESSION is a constant 0. */
 
-#ifdef __STDC__
 int
 zero_imm (imm_expr *expr)
-#else
-int
-zero_imm (expr)
-     imm_expr *expr;
-#endif
 {
   return (expr->offset == 0 && expr->symbol == NULL);
 }
@@ -1389,16 +1143,8 @@ zero_imm (expr)
 /* Return an address expression of the form SYMBOL +/- IOFFSET (REGISTER).
    Any of the three parts may be omitted. */
 
-#ifdef __STDC__
 addr_expr *
 make_addr_expr (int offs, char *sym, int reg_no)
-#else
-addr_expr *
-make_addr_expr (offs, sym, reg_no)
-     int offs;
-     char *sym;
-     int reg_no;
-#endif
 {
   addr_expr *expr = (addr_expr *) xmalloc (sizeof (addr_expr));
   label *lab;
@@ -1417,27 +1163,15 @@ make_addr_expr (offs, sym, reg_no)
 }
 
 
-#ifdef __STDC__
 imm_expr *
 addr_expr_imm (addr_expr *expr)
-#else
-imm_expr *
-addr_expr_imm (expr)
-addr_expr *expr;
-#endif
 {
   return (expr->imm);
 }
 
 
-#ifdef __STDC__
 int
 addr_expr_reg (addr_expr *expr)
-#else
-int
-addr_expr_reg (expr)
-addr_expr *expr;
-#endif
 {
   return (expr->reg_no);
 }
@@ -1466,13 +1200,8 @@ static inst_info i_opcode_tbl [] = {
 
 /* Sort the opcode table on their key (the interal opcode value). */
 
-#ifdef __STDC__
 static void
 sort_i_opcode_table (void)
-#else
-static void
-sort_i_opcode_table ()
-#endif
 {
   qsort (i_opcode_tbl,
 	 sizeof (i_opcode_tbl) / sizeof (inst_info),
@@ -1485,14 +1214,8 @@ sort_i_opcode_table ()
 #define REGS(R,O) (((R) & 0x1f) << O)
 
 
-#ifdef __STDC__
 int32
 inst_encode (instruction *inst)
-#else
-int32
-inst_encode (inst)
-     instruction *inst;
-#endif
 {
   int32 a_opcode = 0;
   inst_info *entry;
@@ -1653,13 +1376,8 @@ static inst_info a_opcode_tbl [] = {
 
 /* Sort the opcode table on their key (the interal opcode value). */
 
-#ifdef __STDC__
 static void
 sort_a_opcode_table (void)
-#else
-static void
-sort_a_opcode_table ()
-#endif
 {
   qsort (a_opcode_tbl,
 	 sizeof (a_opcode_tbl) / sizeof (inst_info),
@@ -1672,14 +1390,8 @@ sort_a_opcode_table ()
 #define REG(V,O) ((V) >> O) & 0x1f
 
 
-#ifdef __STDC__
 instruction *
   inst_decode (uint32 value)
-#else
-instruction *
-  inst_decode (value)
-uint32 value;
-#endif
 {
   int32 a_opcode = value & 0xfc000000;
   inst_info *entry;
@@ -1812,15 +1524,8 @@ uint32 value;
 }
 
 
-#ifdef __STDC__
 static instruction *
 mk_r_inst (uint32 value, int opcode, int rs, int rt, int rd, int shamt)
-#else
-static instruction *
-mk_r_inst (value, opcode, rs, rt, rd, shamt)
-     uint32 value;
-     int opcode, rs, rt, rd, shamt;
-#endif
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1835,15 +1540,8 @@ mk_r_inst (value, opcode, rs, rt, rd, shamt)
 }
 
 
-#ifdef __STDC__
 static instruction *
 mk_i_inst (uint32 value, int opcode, int rs, int rt, int offset)
-#else
-static instruction *
-mk_i_inst (value, opcode, rs, rt, offset)
-     uint32 value;
-     int opcode, rs, rt, offset;
-#endif
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1856,15 +1554,8 @@ mk_i_inst (value, opcode, rs, rt, offset)
   return (inst);
 }
 
-#ifdef __STDC__
 static instruction *
 mk_j_inst (uint32 value, int opcode, int target)
-#else
-static instruction *
-mk_j_inst (value, opcode, target)
-     uint32 value;
-     int opcode, target;
-#endif
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
@@ -1878,14 +1569,8 @@ mk_j_inst (value, opcode, target)
 
 /* Code to test encode/decode of instructions. */
 
-#ifdef __STDC__
 void
 test_assembly (instruction *inst)
-#else
-void
-test_assembly (inst)
-     instruction *inst;
-#endif
 {
   instruction *new_inst = inst_decode (inst_encode (inst));
 
@@ -1894,14 +1579,8 @@ test_assembly (inst)
 }
 
 
-#ifdef __STDC__
 static void
 inst_cmp (instruction *inst1, instruction *inst2)
-#else
-static void
-inst_cmp (inst1, inst2)
-     instruction *inst1, *inst2;
-#endif
 {
   char buf[1024];
 

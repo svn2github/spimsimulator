@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 11    2/15/04 9:10a Larus $
+/* $Header: /Software/SPIM/src/spim.h 12    2/15/04 1:27p Larus $
 */
 
 
@@ -77,20 +77,9 @@ typedef union {int i; void* p;} intptr_union;
 #define memclr(B, S) memset((void*)B, 0, S)
 #endif
 
-#ifdef __STDC__
 #include <stdlib.h>
 #include <string.h>
 #define QSORT_FUNC int(*)(const void *, const void *)
-#else
-double atof ();
-int atoi ();
-int free ();
-char *malloc ();
-int strcmp ();
-char *strcpy ();
-char *strncpy ();
-#define QSORT_FUNC int(*)()
-#endif
 
 
 
@@ -229,7 +218,6 @@ typedef struct strint
 typedef union {int i; FILE* f;} port;
 
 /* Exported functions (from spim.c or xspim.c): */
-#ifdef __STDC__
 
 int console_input_available (void);
 void control_c_seen (int);
@@ -240,17 +228,6 @@ void put_console_char (char c);
 void read_input (char *str, int n);
 int* run_error (char *fmt, ...);
 void write_output (port, char *fmt, ...);
-#else
-int console_input_available ();
-void control_c_seen ();
-void error ();
-void fatal_error ();
-char get_console_char ();
-void put_console_char ();
-void read_input ();
-int* run_error ();
-void write_output ();
-#endif
 
 
 /* Exported variables: */

@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 10    2/15/04 1:07p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 11    2/15/04 1:25p Larus $
 */
 
 
@@ -41,16 +41,8 @@ static mem_addr print_partial_line (mem_addr i, char *buf, int *max_buf_len, int
    formats, into string BUF, whose length is BUF_LEN.  Return length of
    string in buffer. */
 
-#ifdef __STDC__
 char *
 registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr_hex, int print_fpr_hex)
-#else
-char *
-registers_as_string (buf, max_buf_len, string_len, print_gpr_hex, print_fpr_hex)
-char *buf;
-int *max_buf_len;
-int *string_len;
-#endif
 {
   int i;
   char *bufp;
@@ -196,16 +188,8 @@ int *string_len;
    address FROM...TO to buffer BUF, which is of size LIMIT and whose next
    free location is N.  Return the, possible realloc'ed, buffer. */
 
-#ifdef __STDC__
 char *
 insts_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *string_len)
-#else
-char *
-insts_as_string (from, to, buf, max_buf_len, string_len)
-mem_addr from, to;
-char *buf;
-int *max_buf_len, *string_len;
-#endif
 {
   instruction *inst;
   mem_addr i;
@@ -233,15 +217,8 @@ int *max_buf_len, *string_len;
 /* Return a newly allocated string contain the contents of the data and
    stack segments. */
 
-#ifdef __STDC__
 char *
 data_seg_as_string (char *buf, int *max_buf_len, int *string_len)
-#else
-char *
-data_seg_as_string (buf, max_buf_len, string_len)
-char *buf;
-int *max_buf_len, *string_len;
-#endif
 {
   sprintf (&buf[*string_len], "\n\tDATA\n");
   *string_len += strlen (&buf[*string_len]);
@@ -270,16 +247,8 @@ int *max_buf_len, *string_len;
    FROM...TO to buffer BUF, which is of size LIMIT and whose next free
    location is N.  Return the, possible realloc'ed, buffer. */
 
-#ifdef __STDC__
 char *
 mem_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *string_len)
-#else
-static char *
-mem_as_string (from, to, buf, max_buf_len, string_len)
-mem_addr from, to;
-char *buf;
-int *max_buf_len, *string_len;
-#endif
 {
   mem_word val;
   mem_addr i = ROUND_UP (from, BYTES_PER_WORD);
@@ -333,15 +302,8 @@ int *max_buf_len, *string_len;
 /* Check to see if the buffer is getting too full and, if so,
    reallocate it. */
 
-#ifdef __STDC__
 static char *
 check_buf_limit (char *buf, int *max_buf_len, int *string_len)
-#else
-static char *
-check_buf_limit (buf, max_buf_len, string_len)
-char *buf;
-int *max_buf_len, *string_len;
-#endif
 {
   *string_len += strlen (&buf[*string_len]);
   if ((*max_buf_len - *string_len) < 1*K)
@@ -357,16 +319,8 @@ int *max_buf_len, *string_len;
 
 /* Print out a line containing a fraction of a quadword.  */
 
-#ifdef __STDC__
 static mem_addr
 print_partial_line (mem_addr i, char *buf, int *max_buf_len, int *string_len)
-#else
-static mem_addr
-print_partial_line (i, buf, max_buf_len, string_len)
-mem_addr i;
-char *buf;
-int *max_buf_len, *string_len;
-#endif
 {
   mem_word val;
   

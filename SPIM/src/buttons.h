@@ -20,21 +20,14 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.h 5     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/buttons.h 6     2/15/04 1:25p Larus $
  */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 void create_buttons (Widget parent);
 void confirm (Widget widget, XEvent *event, String *params,
-	Cardinal *num_params);
+	      Cardinal *num_params);
 void continue_prompt (int interrupt_seen);
 void record_file_name_for_prompt (char *name);
-#else
-void create_buttons ();
-void confirm ();
-void continue_prompt ();
-void record_file_name_for_prompt ();
-#endif

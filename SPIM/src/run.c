@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 13    2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/run.c 14    2/15/04 1:27p Larus $
 */
 
 
@@ -51,20 +51,12 @@ int force_break = 0;	/* For the execution env. to force an execution break */
 extern int errno;
 #endif
 
-#ifdef __STDC__
 long atol (const char *);
-#else
-long atol ();
-#endif
 
 
 /* Local functions: */
 
-#ifdef __STDC__
 static void long_multiply (reg_word v1, reg_word v2);
-#else
-static void long_multiply ();
-#endif
 
 
 #define SIGN_BIT(X) ((X) & 0x80000000)
@@ -155,16 +147,8 @@ static void long_multiply ();
    execution can continue. */
 
 
-#ifdef __STDC__
 int
 run_spim (mem_addr initial_PC, int steps_to_run, int display)
-#else
-int
-run_spim (initial_PC, steps_to_run, display)
-     mem_addr initial_PC;
-     int steps_to_run;
-     int display;
-#endif
 {
   register instruction *inst;
   static reg_word *delayed_load_addr1 = NULL, delayed_load_value1;
@@ -1174,14 +1158,8 @@ run_spim (initial_PC, steps_to_run, display)
  Since the algorithm is programmed in C, we need to be careful not to
  overflow. */
 
-#ifdef __STDC__
 static void
 long_multiply (reg_word v1, reg_word v2)
-#else
-static void
-long_multiply (v1, v2)
-     reg_word v1, v2;
-#endif
 {
   register u_reg_word a, b, c, d;
   register u_reg_word bd, ad, cb, ac;

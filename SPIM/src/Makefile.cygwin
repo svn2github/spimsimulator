@@ -87,7 +87,7 @@ DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERS
 CC = gcc
 CFLAGS = $(DEFINES) -g
 IFLAGS = -I$(X_INCLUDE_DIR)
-YFLAGS = -d
+YFLAGS = -d --file-prefix=y
 YCFLAGS =
 LDFLAGS = -lm
 XLDFLAGS = -L$(TOPDIR)/lib -lXaw -lXmu -lXt -lXext -lX11

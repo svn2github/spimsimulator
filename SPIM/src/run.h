@@ -20,14 +20,10 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.h 4     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/run.h 5     2/15/04 1:27p Larus $
 */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 int run_spim (mem_addr initial_PC, register int steps, int display);
-#else
-int run_spim ();
-#endif

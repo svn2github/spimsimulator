@@ -20,13 +20,12 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.h 5     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/data.h 6     2/15/04 1:25p Larus $
 */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 void align_data (int alignment);
 mem_addr current_data_pc (void);
 void data_begins_at_point (mem_addr addr);
@@ -46,24 +45,3 @@ void store_half (int value);
 void store_string (char *string, int length, int null_terminate);
 void store_word (int value);
 void user_kernel_data_segment (int to_kernel);
-#else
-void align_data ();
-mem_addr current_data_pc ();
-void data_begins_at_point ();
-void enable_data_alignment ();
-void end_of_assembly_file ();
-void extern_directive ();
-void increment_data_pc ();
-void k_data_begins_at_point ();
-void lcomm_directive ();
-void set_data_alignment ();
-void set_data_pc ();
-void set_text_pc ();
-void store_byte ();
-void store_double ();
-void store_float ();
-void store_half ();
-void store_string ();
-void store_word ();
-void user_kernel_data_segment ();
-#endif

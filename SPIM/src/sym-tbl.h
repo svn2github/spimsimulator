@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/sym-tbl.h 7     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/sym-tbl.h 8     2/15/04 1:27p Larus $
 */
 
 
@@ -53,7 +53,6 @@ typedef struct lab
 
 /* Exported functions: */
 
-#ifdef __STDC__
 mem_addr find_symbol_address (char *symbol);
 void flush_local_labels (int issue_undef_warnings);
 void initialize_symbol_table (void);
@@ -68,19 +67,3 @@ void record_inst_uses_symbol (instruction *inst, label *sym);
 char *undefined_symbol_string (void);
 void resolve_a_label (label *sym, instruction *inst);
 void resolve_label_uses (label *sym);
-#else
-mem_addr find_symbol_address ();
-void flush_local_labels ();
-void initialize_symbol_table ();
-label *label_is_defined ();
-label *lookup_label ();
-label *make_label_global ();
-void print_undefined_symbols ();
-void print_symbols ();
-label *record_label ();
-void record_data_uses_symbol ();
-void record_inst_uses_symbol ();
-char *undefined_symbol_string (void);
-void resolve_a_label ();
-void resolve_label_uses ();
-#endif

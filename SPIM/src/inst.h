@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 9     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/inst.h 10    2/15/04 1:25p Larus $
 */
 
 
@@ -192,7 +192,6 @@ typedef struct inst_s
 
 /* Exported functions: */
 
-#ifdef __STDC__
 imm_expr *addr_expr_imm (addr_expr *expr);
 int addr_expr_reg (addr_expr *expr);
 imm_expr *const_imm_expr (int32 value);
@@ -227,39 +226,3 @@ void text_begins_at_point (mem_addr addr);
 imm_expr *upper_bits_of_expr (imm_expr *old_expr);
 void user_kernel_text_segment (int to_kernel);
 int zero_imm (imm_expr *expr);
-#else
-imm_expr *addr_expr_imm ();
-int addr_expr_reg ();
-imm_expr *const_imm_expr ();
-imm_expr *copy_imm_expr ();
-instruction *copy_inst ();
-mem_addr current_text_pc ();
-int32 eval_imm_expr ();
-void free_inst ();
-void i_type_inst ();
-void i_type_inst_free ();
-void increment_text_pc ();
-imm_expr *incr_expr_offset ();
-instruction *inst_decode ();
-int32 inst_encode ();
-int inst_is_breakpoint ();
-void j_type_inst ();
-void k_text_begins_at_point ();
-imm_expr *lower_bits_of_expr ();
-addr_expr *make_addr_expr ();
-imm_expr *make_imm_expr ();
-int opcode_is_branch ();
-int opcode_is_jump ();
-int opcode_is_load_store ();
-void print_inst ();
-int print_inst_internal ();
-void r_cond_type_inst ();
-void r_sh_type_inst ();
-void r_type_inst ();
-instruction *set_breakpoint ();
-void store_instruction ();
-void text_begins_at_point ();
-imm_expr *upper_bits_of_expr ();
-void user_kernel_text_segment ();
-int zero_imm ();
-#endif

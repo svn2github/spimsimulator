@@ -20,17 +20,13 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/read-aout.h 5     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/read-aout.h 6     2/15/04 1:27p Larus $
 */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 int read_aout_file (char *file_name);
-#else
-int read_aout_file ();
-#endif
 
 
 /* Exported Variables: */

@@ -20,27 +20,18 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/parser.h 7     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/parser.h 8     2/15/04 1:27p Larus $
 */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 void fix_current_label_address (mem_addr new_addr);
 int imm_op_to_op (int opcode);
 void initialize_parser (char *file_name);
 int op_to_imm_op (int opcode);
 void yyerror (char *s);
 int yyparse ();
-#else
-void fix_current_label_address ();
-int imm_op_to_op ();
-void initialize_parser ();
-int op_to_imm_op ();
-void yyerror ();
-int yyparse ();
-#endif
 
 
 /* Exported Variables: */

@@ -328,7 +328,6 @@ int parse_error_occurred;  /* Non-zero => parse resulted in error */
 
 /* Local functions: */
 
-#ifdef __STDC__
 static imm_expr *branch_offset (int n_inst);
 static void check_imm_range (imm_expr*, int32, int32);
 static void check_uimm_range (imm_expr*, uint32, uint32);
@@ -344,23 +343,6 @@ static void set_le_inst (int op, int rd, int rs, int rt);
 static void store_word_data (int value);
 static void trap_inst (void);
 static void yywarn (char*);
-#else
-static imm_expr *branch_offset ();
-static void check_imm_range();
-static void check_uimm_range();
-static void clear_labels ();
-static label_list *cons_label ();
-static void div_inst ();
-static void mult_inst ();
-static void nop_inst ();
-static void set_eq_inst ();
-static void set_ge_inst ();
-static void set_gt_inst ();
-static void set_le_inst ();
-static void store_word_data ();
-static void trap_inst ();
-static void yywarn ();
-#endif
 
 
 /* Local variables: */
@@ -2098,14 +2080,8 @@ ID:		{only_id = 1;} Y_ID {only_id = 0; $$ = $2;}
 
 /* Maintain and update the address of labels for the current line. */
 
-#ifdef __STDC__
 void
 fix_current_label_address (mem_addr new_addr)
-#else
-void
-fix_current_label_address (new_addr)
-     mem_addr new_addr;
-#endif
 {
   label_list *l;
 
@@ -2117,15 +2093,8 @@ fix_current_label_address (new_addr)
 }
 
 
-#ifdef __STDC__
 static label_list *
 cons_label (label *head, label_list *tail)
-#else
-static label_list *
-cons_label (head, tail)
-     label *head;
-     label_list *tail;
-#endif
 {
   label_list *c = (label_list *) malloc (sizeof (label_list));
 
@@ -2135,13 +2104,8 @@ cons_label (head, tail)
 }
 
 
-#ifdef __STDC__
 static void
 clear_labels (void)
-#else
-static void
-clear_labels ()
-#endif
 {
   label_list *n;
 
@@ -2156,14 +2120,8 @@ clear_labels ()
 
 /* Operations on op codes. */
 
-#ifdef __STDC__
 int
 op_to_imm_op (int opcode)
-#else
-int
-op_to_imm_op (opcode)
-     int opcode;
-#endif
 {
   switch (opcode)
     {
@@ -2182,14 +2140,8 @@ op_to_imm_op (opcode)
 }
 
 
-#ifdef __STDC__
 int
 imm_op_to_op (int opcode)
-#else
-int
-imm_op_to_op (opcode)
-     int opcode;
-#endif
 {
   switch (opcode)
     {
@@ -2210,51 +2162,29 @@ imm_op_to_op (opcode)
 }
 
 
-#ifdef __STDC__
 static void
 nop_inst (void)
-#else
-static void
-nop_inst ()
-#endif
 {
   r_type_inst (Y_SLL_OP, 0, 0, 0); /* = 0 */
 }
 
 
-#ifdef __STDC__
 static void
 trap_inst (void)
-#else
-static void
-trap_inst ()
-#endif
 {
   r_type_inst (Y_BREAK_OP, 0, 0, 0);
 }
 
 
-#ifdef __STDC__
 static imm_expr *
 branch_offset (int n_inst)
-#else
-static imm_expr *
-branch_offset (n_inst)
-     int n_inst;
-#endif
 {
   return (const_imm_expr (n_inst << 2)); /* Later shifted right 2 places */
 }
 
 
-#ifdef __STDC__
 static void
 div_inst (int op, int rd, int rs, int rt, int const_divisor)
-#else
-static void
-div_inst (op, rd, rs, rt, const_divisor)
-     int op, rd, rs, rt, const_divisor;
-#endif
 {
   if (rd != 0 && !const_divisor)
     {
@@ -2279,14 +2209,8 @@ div_inst (op, rd, rs, rt, const_divisor)
 }
 
 
-#ifdef __STDC__
 static void
 mult_inst (int op, int rd, int rs, int rt)
-#else
-static void
-mult_inst (op, rd, rs, rt)
-     int op, rd, rs, rt;
-#endif
 {
   if (op == Y_MULOU_POP)
     r_type_inst (Y_MULTU_OP, 0, rs, rt);
@@ -2311,14 +2235,8 @@ mult_inst (op, rd, rs, rt)
 }
 
 
-#ifdef __STDC__
 static void
 set_le_inst (int op, int rd, int rs, int rt)
-#else
-static void
-set_le_inst (op, rd, rs, rt)
-     int op, rd, rs, rt;
-#endif
 {
   i_type_inst_free (Y_BNE_OP, rs, rt, branch_offset (3));
   i_type_inst_free (Y_ORI_OP, rd, 0, const_imm_expr (1));
@@ -2327,27 +2245,15 @@ set_le_inst (op, rd, rs, rt)
 }
 
 
-#ifdef __STDC__
 static void
 set_gt_inst (int op, int rd, int rs, int rt)
-#else
-static void
-set_gt_inst (op, rd, rs, rt)
-     int op, rd, rs, rt;
-#endif
 {
   r_type_inst (op == Y_SGT_POP ? Y_SLT_OP : Y_SLTU_OP, rd, rt, rs);
 }
 
 
-#ifdef __STDC__
 static void
 set_ge_inst (int op, int rd, int rs, int rt)
-#else
-static void
-set_ge_inst (op, rd, rs, rt)
-     int op, rd, rs, rt;
-#endif
 {
   i_type_inst_free (Y_BNE_OP, rs, rt, branch_offset (3));
   i_type_inst_free (Y_ORI_OP, rd, 0, const_imm_expr (1));
@@ -2356,14 +2262,8 @@ set_ge_inst (op, rd, rs, rt)
 }
 
 
-#ifdef __STDC__
 static void
 set_eq_inst (int op, int rd, int rs, int rt)
-#else
-static void
-set_eq_inst (op, rd, rs, rt)
-     int op, rd, rs, rt;
-#endif
 {
   imm_expr *if_eq, *if_neq;
 
@@ -2383,14 +2283,8 @@ set_eq_inst (op, rd, rs, rt)
 
 /* Store the value either as a datum or instruction. */
 
-#ifdef __STDC__
 static void
 store_word_data (int value)
-#else
-static void
-store_word_data (value)
-     int value;
-#endif
 {
   if (data_dir)
     store_word (value);
@@ -2400,14 +2294,8 @@ store_word_data (value)
 
 
 
-#ifdef __STDC__
 void
 initialize_parser (char *file_name)
-#else
-void
-initialize_parser (file_name)
-     char *file_name;
-#endif
 {
   input_file_name = file_name;
   only_id = 0;
@@ -2416,16 +2304,8 @@ initialize_parser (file_name)
 }
 
 
-#ifdef __STDC__
 static void
 check_imm_range(imm_expr* expr, int32 min, int32 max)
-#else
-static void
-check_imm_range()
-     imm_expr* expr;
-     int32 min;
-     int32 max;
-#endif
 {
   if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
     {
@@ -2444,16 +2324,8 @@ check_imm_range()
 }
 
 
-#ifdef __STDC__
 static void
 check_uimm_range(imm_expr* expr, uint32 min, uint32 max)
-#else
-static void
-check_uimm_range()^
-     imm_expr* expr;
-     int32 umin;
-     int32 umax;
-#endif
 {
   if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
     {
@@ -2471,14 +2343,8 @@ check_uimm_range()^
     }
 }
 
-#ifdef __STDC__
 void
 yyerror (char *s)
-#else
-void
-yyerror (s)
-     char *s;
-#endif
 {
   parse_error_occurred = 1;
   clear_labels();
@@ -2486,14 +2352,8 @@ yyerror (s)
 }
 
 
-#ifdef __STDC__
 void
 yywarn (char *s)
-#else
-void
-yywarn (s)
-     char *s;
-#endif
 {
   error ("spim: (parser) %s on line %d of file %s\n", s, line_no, input_file_name);
   print_erroneous_line ();

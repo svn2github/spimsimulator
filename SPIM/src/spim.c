@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 16    2/15/04 9:10a Larus $
+/* $Header: /Software/SPIM/src/spim.c 17    2/15/04 1:27p Larus $
 */
 
 
@@ -64,11 +64,7 @@
 #endif
 #endif
 
-#ifdef __STDC__
 #include <stdarg.h>
-#else
-#include <varargs.h>
-#endif
 
 #include "spim.h"
 #include "spim-utils.h"
@@ -83,7 +79,6 @@
 
 /* Internal functions: */
 
-#ifdef __STDC__
 static void console_to_program (void);
 static void console_to_spim (void);
 static void flush_to_newline (void);
@@ -97,21 +92,6 @@ static int read_assembly_command (void);
 static int str_prefix (char *s1, char *s2, int min_match);
 static void top_level (void);
 static int read_token (void);
-#else
-static void console_to_program ();
-static void console_to_spim ();
-static void flush_to_newline ();
-static int get_opt_int ();
-static int parse_spim_command ();
-static int print_reg ();
-static int print_fp_reg ();
-static int print_reg_from_string ();
-static void print_all_regs ();
-static int read_assembly_command ();
-static int str_prefix ();
-static void top_level ();
-static int read_token ();
-#endif
 
 
 /* Exported Variables: */
@@ -144,15 +124,8 @@ static struct sgttyb saved_console_state;
 
 
 
-#ifdef __STDC__
 int
 main (int argc, char **argv)
-#else
-int
-main (argc, argv)
-     int argc;
-     char **argv;
-#endif
 {
   int i;
   int assembly_file_read = 0;
@@ -296,13 +269,8 @@ main (argc, argv)
 
 /* Top-level read-eval-print loop for SPIM. */
 
-#ifdef __STDC__
 static void
 top_level (void)
-#else
-static void
-top_level ()
-#endif
 {
   int redo = 0;			/* Non-zero means reexecute last command */
 
@@ -321,14 +289,8 @@ top_level ()
 }
 
 
-#ifdef __STDC__
 void
 control_c_seen (int arg)
-#else
-void
-control_c_seen (arg)
-int arg;
-#endif
 {
   console_to_spim ();
   write_output (message_out, "\nExecution interrupted\n");
@@ -364,15 +326,8 @@ enum {
    don't read a new command; just rexecute the previous one.
    Return non-zero if the command was to redo the previous command. */
 
-#ifdef __STDC__
 static int
 parse_spim_command (FILE *file, int redo)
-#else
-static int
-parse_spim_command (file, redo)
-     FILE *file;
-     int redo;
-#endif
 {
   static int prev_cmd = NOP_CMD; /* Default redo */
   static int prev_token;
@@ -690,13 +645,8 @@ parse_spim_command (file, redo)
 /* Read a SPIM command with the scanner and return its ennuemerated
    value. */
 
-#ifdef __STDC__
 static int
 read_assembly_command (void)
-#else
-static int
-read_assembly_command ()
-#endif
 {
   int token = read_token ();
 
@@ -749,15 +699,8 @@ read_assembly_command ()
 
 /* Return non-nil if STRING1 is a (proper) prefix of STRING2. */
 
-#ifdef __STDC__
 static int
 str_prefix (char *s1, char *s2, int min_match)
-#else
-static int
-str_prefix (s1, s2, min_match)
-     char *s1, *s2;
-     int min_match;
-#endif
 {
   for ( ; *s1 == *s2 && *s1 != '\0'; s1 ++, s2 ++) min_match --;
   return (*s1 == '\0' && min_match <= 0);
@@ -768,13 +711,8 @@ str_prefix (s1, s2, min_match)
    line doesn't contain an integer, return 0.  In either case, flush the
    rest of the line, including the newline. */
 
-#ifdef __STDC__
 static int
 get_opt_int (void)
-#else
-static int
-get_opt_int ()
-#endif
 {
   int token;
 
@@ -795,13 +733,8 @@ get_opt_int ()
 
 /* Flush the rest of the input line up to and including the next newline. */
 
-#ifdef __STDC__
 static void
 flush_to_newline (void)
-#else
-static void
-flush_to_newline ()
-#endif
 {
   while (read_token () != Y_NL) ;
 }
@@ -810,28 +743,16 @@ flush_to_newline ()
 /* Print register number N.
    Return non-zero if register N was valid register string. */
 
-#ifdef __STDC__
 static int
 print_reg (int reg_no)
-#else
-static int
-print_reg (reg_no)
-     int reg_no;
-#endif
 {
   write_output (message_out, "Reg %d = 0x%08x (%d)\n", reg_no, R[reg_no], R[reg_no]);
   return (1);
 }
 
 
-#ifdef __STDC__
 static int
 print_fp_reg (int reg_no)
-#else
-static int
-print_fp_reg (reg_no)
-     int reg_no;
-#endif
 {
   if ((reg_no & 1) == 0)
     write_output (message_out, "FP reg %d = %g (double)\n", reg_no, FPR_D (reg_no));
@@ -840,14 +761,8 @@ print_fp_reg (reg_no)
 }
 
 
-#ifdef __STDC__
 static int
 print_reg_from_string (char* reg_num)
-#else
-static int
-print_reg_from_string (reg_num)
-     char* reg_num;
-#endif
 {
   char s[100];
   char *s1 = s;
@@ -894,14 +809,8 @@ print_reg_from_string (reg_num)
 
 #define MAX_BUF_LEN 32000
 
-#ifdef __STDC__
 static void
 print_all_regs (int hex_flag)
-#else
-static void
-print_all_regs (hex_flag)
-     int hex_flag;
-#endif
 {
   int max_buf_len = MAX_BUF_LEN;
   char buf[MAX_BUF_LEN];
@@ -914,27 +823,12 @@ print_all_regs (hex_flag)
 
 /* Print an error message. */
 
-#ifdef __STDC__
 void
 error (char *fmt, ...)
-#else
-/*VARARGS0*/
-void
-error (va_alist)
-va_dcl
-#endif
 {
   va_list args;
-#ifndef __STDC__
-  char *fmt;
-#endif
 
-#ifdef __STDC__
   va_start (args, fmt);
-#else
-  va_start (args);
-  fmt = va_arg (args, char *);
-#endif
 
 #ifdef NO_VFPRINTF
   _doprnt (fmt, args, stderr);
@@ -947,27 +841,12 @@ va_dcl
 
 /* Print an error message and return to top level. */
 
-#ifdef __STDC__
 int*
 run_error (char *fmt, ...)
-#else
-/*VARARGS0*/
-int*
-run_error (va_alist)
-va_dcl
-#endif
 {
   va_list args;
-#ifndef __STDC__
-  char *fmt;
-#endif
 
-#ifdef __STDC__
   va_start (args, fmt);
-#else
-  va_start (args);
-  fmt = va_arg (args, char *);
-#endif
 
   console_to_spim ();
 
@@ -985,33 +864,15 @@ va_dcl
 
 /* IO facilities: */
 
-#ifdef __STDC__
 void
 write_output (port fp, char *fmt, ...)
-#else
-/*VARARGS0*/
-void
-write_output (va_alist)
-va_dcl
-#endif
 {
   va_list args;
   FILE *f;
-#ifndef __STDC__
-  char *fmt;
-  port fp;
-#endif
   int restore_console_to_program = 0;
 
-#ifdef __STDC__
   va_start (args, fmt);
   f = (FILE *) fp.f;
-#else
-  va_start (args);
-  fp = va_arg (args, port);
-  f = (FILE *) fp.f;
-  fmt = va_arg (args, char *);
-#endif
 
   if (console_state_saved)
     {
@@ -1046,15 +907,8 @@ va_dcl
 
 /* Simulate the semantics of fgets (not gets) on Unix file. */
 
-#ifdef __STDC__
 void
 read_input (char *str, int str_size)
-#else
-void
-read_input (str, str_size)
-     char *str;
-     int str_size;
-#endif
 {
   char *ptr;
   int restore_console_to_program = 0;
@@ -1089,13 +943,8 @@ read_input (str, str_size)
 
 /* Give the console to the program for IO. */
 
-#ifdef __STDC__
 static void
 console_to_program (void)
-#else
-static void
-console_to_program ()
-#endif
 {
   if (mapped_io && !console_state_saved)
     {
@@ -1143,13 +992,8 @@ console_to_program ()
 
 /* Return the console to SPIM. */
 
-#ifdef __STDC__
 static void
 console_to_spim (void)
-#else
-static void
-console_to_spim ()
-#endif
 {
   if (mapped_io && console_state_saved)
 #ifdef USE_TERMIO
@@ -1165,13 +1009,8 @@ console_to_spim ()
 }
 
 
-#ifdef __STDC__
 int
 console_input_available (void)
-#else
-int
-console_input_available ()
-#endif
 {
 #ifndef __CYGWIN32__
   fd_set fdset;
@@ -1191,13 +1030,8 @@ console_input_available ()
 }
 
 
-#ifdef __STDC__
 char
 get_console_char (void)
-#else
-char
-get_console_char ()
-#endif
 {
   char buf;
 
@@ -1209,26 +1043,15 @@ get_console_char ()
 }
 
 
-#ifdef __STDC__
 void
 put_console_char (char c)
-#else
-void
-put_console_char (c)
-     char c;
-#endif
 {
   putc (c, (FILE *) console_out.f);
   fflush ((FILE *) console_out.f);
 }
 
-#ifdef __STDC__
 static int
 read_token ()
-#else
-static int
-read_token ()
-#endif
 {
   int token = yylex ();
 

@@ -62,13 +62,8 @@ static int eof_returned = 0;	/* Return EOF token yet? */
 
 /* Local functions: */
 
-#ifdef __STDC__
 static int check_keyword (YY_CHAR *id, int allow_pseudo_ops);
 static YY_CHAR *copy_str (YY_CHAR *str, int chop);
-#else
-static int check_keyword ();
-static YY_CHAR *copy_str ();
-#endif
 
 
 #undef yywrap
@@ -305,14 +300,8 @@ static YY_CHAR *copy_str ();
 
 
 
-#ifdef __STDC__
 void
 initialize_scanner (FILE *in_file)
-#else
-void
-initialize_scanner (in_file)
-     FILE *in_file;
-#endif
 {
   yyin = in_file;
 #ifdef FLEX_SCANNER
@@ -326,13 +315,8 @@ initialize_scanner (in_file)
 }
 
 
-#ifdef __STDC__
 void
 scanner_start_line (void)
-#else
-void
-scanner_start_line ()
-#endif
 {
   current_line = NULL;
   line_returned = 0;
@@ -363,15 +347,8 @@ int yywrap()
 /* Return a freshly-allocated copy of STRING with the last CHOP
    characters removed. */
 
-#ifdef __STDC__
 static YY_CHAR *
 copy_str (YY_CHAR *str, int chop)
-#else
-static YY_CHAR *
-copy_str (str, chop)
-     YY_CHAR *str;
-     int chop;
-#endif
 {
   register int new_len = strlen (str) - chop;
   register YY_CHAR *new_str = (YY_CHAR *) xmalloc (new_len + 1), *n;
@@ -468,13 +445,8 @@ copy_str (str, chop)
    below the point at which the error occured.	Also, reset the input
    stream to the begining of the next line. */
 
-#ifdef __STDC__
 void
 print_erroneous_line (void)
-#else
-void
-print_erroneous_line ()
-#endif
 {
   int prefix_length = yytext - current_line;
   int i, c;
@@ -528,15 +500,8 @@ static inst_info keyword_tbl [] = {
 };
 
 
-#ifdef __STDC__
 static int
 check_keyword (YY_CHAR *id, int allow_pseudo_ops)
-#else
-static int
-check_keyword (id, allow_pseudo_ops)
-     YY_CHAR *id;
-     int allow_pseudo_ops;
-#endif
 {
   inst_info *entry =
     map_string_to_inst_info (keyword_tbl,
@@ -590,14 +555,8 @@ static inst_info register_tbl [] = {
 };
 
 
-#ifdef __STDC__
 int
 register_name_to_number (char *name)
-#else
-int
-register_name_to_number (name)
-     char *name;
-#endif
 {
   register int c1 = *name, c2 = *(name + 1);
 
@@ -624,13 +583,8 @@ register_name_to_number (name)
    with a line number.  Subsequent calls receive NULL instead of the
    line. */
 
-#ifdef __STDC__
 char *
 source_line ()
-#else
-char *
-source_line ()
-#endif
 {
   if (line_returned)
     return (NULL);

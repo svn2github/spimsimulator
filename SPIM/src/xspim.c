@@ -21,16 +21,12 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 11    2/15/04 9:10a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 12    2/15/04 1:27p Larus $
  */
 
 #include <stdio.h>
 #include <setjmp.h>
-#ifdef __STDC__
 #include <stdarg.h>
-#else
-#include <varargs.h>
-#endif
 
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
@@ -123,7 +119,6 @@ Pixmap mark;
 
 /* Local functions: */
 
-#ifdef __STDC__
 static void center_text_at_PC (void);
 static char *check_buf_limit (char *, int *, int *);
 static void create_console_display (void);
@@ -139,20 +134,6 @@ static void show_running (void);
 static void syntax (char *program_name);
 static void write_text_to_window (Widget w, char *s);
 
-#else
-static void center_text_at_PC ();
-static char *check_buf_limit ();
-static void create_console_display ();
-static void display_data_seg ();
-static char *display_values ();
-static char *display_insts ();
-static void display_registers ();
-static void initialize ();
-static mem_addr print_partial_line ();
-static void show_running ();
-static void syntax ();
-static void write_text_to_window ();
-#endif
 
 static String fallback_resources[] =
 {
@@ -302,14 +283,8 @@ static Widget pane1;
 
 
 
-#ifdef __STDC__
 static void
 initialize (AppResources app_res)
-#else
-static void
-initialize (app_res)
-     AppResources app_res;
-#endif
 {
   bare_machine = 0;
   delayed_branches = 0;
@@ -399,13 +374,8 @@ initialize (app_res)
 }
 
 
-#ifdef __STDC__
 static void
 create_console_display (void)
-#else
-static void
-create_console_display ()
-#endif
 {
   Arg args[10];
   Cardinal n;
@@ -421,13 +391,8 @@ create_console_display ()
   console_out.f = (FILE*) console;
 }
 
-#ifdef __STDC__
 void
 clear_console_display (void)
-#else
-void
-clear_console_display ()
-#endif
 {
   Arg args[10];
   Cardinal n;
@@ -437,15 +402,8 @@ clear_console_display ()
 }
 
 
-#ifdef __STDC__
 int
 main (int argc, char **argv)
-#else
-int
-main (argc, argv)
-     int argc;
-     char **argv;
-#endif
 {
   Widget toplevel2;
   AppResources app_res;
@@ -533,14 +491,8 @@ main (argc, argv)
 }
 
 
-#ifdef __STDC__
 static void
 syntax (char *program_name)
-#else
-static void
-syntax (program_name)
-     char *program_name;
-#endif
 {
   XtDestroyApplicationContext (app_context);
   fprintf (stderr, "Usage:\n %s", program_name);
@@ -553,14 +505,8 @@ syntax (program_name)
 }
 
 
-#ifdef __STDC__
 void
 control_c_seen (int arg)
-#else
-void
-control_c_seen (arg)
-int arg;
-#endif
 {
   write_output (message_out, "\nExecution interrupted\n");
   redisplay_data ();
@@ -570,15 +516,8 @@ int arg;
 }
 
 
-#ifdef __STDC__
 void
 popup_console (Widget w, XtPointer client_data, XtPointer call_data)
-#else
-void
-popup_console (w, client_data, call_data)
-     Widget w;
-     XtPointer client_data, call_data;
-#endif
 {
   if (console_is_visible)
     {
@@ -593,15 +532,8 @@ popup_console (w, client_data, call_data)
 }
 
 
-#ifdef __STDC__
 void
 read_file (char *name, int assembly_file)
-#else
-void
-read_file (name, assembly_file)
-     char *name;
-     int assembly_file;
-#endif
 {
   int error_flag;
 
@@ -619,14 +551,8 @@ read_file (name, assembly_file)
 }
 
 
-#ifdef __STDC__
 void
 start_program (mem_addr addr)
-#else
-void
-start_program (addr)
-     mem_addr addr;
-#endif
 {
   if (addr == 0)
     addr = starting_address ();
@@ -636,15 +562,8 @@ start_program (addr)
 }
 
 
-#ifdef __STDC__
 void
 execute_program (mem_addr pc, int steps, int display, int cont_bkpt)
-#else
-void
-execute_program (pc, steps, display, cont_bkpt)
-     mem_addr pc;
-     int steps, display, cont_bkpt;
-#endif
 {
   if (!setjmp (spim_top_level_env))
     {
@@ -670,13 +589,8 @@ execute_program (pc, steps, display, cont_bkpt)
 }
 
 
-#ifdef __STDC__
 static void
 show_running (void)
-#else
-static void
-show_running ()
-#endif
 {
   Arg args[1];
 
@@ -688,13 +602,8 @@ show_running ()
 /* Redisplay the contents of the registers and, if modified, the data
    and stack segments. */
 
-#ifdef __STDC__
 void
 redisplay_data (void)
-#else
-void
-redisplay_data ()
-#endif
 {
   display_registers ();
   display_data_seg ();
@@ -704,13 +613,8 @@ redisplay_data ()
 /* Redisplay the contents of the registers in a wide variety of
    formats. */
 
-#ifdef __STDC__
 static void
 display_registers (void)
-#else
-static void
-display_registers ()
-#endif
 {
   static char buf[8 * K];
   int max_buf_len = 8 * K;
@@ -727,13 +631,8 @@ display_registers ()
 
 /* Redisplay the text segment and ktext segments if they have changed. */
 
-#ifdef __STDC__
 void
 redisplay_text (void)
-#else
-void
-redisplay_text ()
-#endif
 {
   static String buf = NULL;
   static int max_buf_len = 16 * K;
@@ -763,13 +662,8 @@ redisplay_text ()
 /* Center the text window at the instruction at the current PC and
    highlight the instruction. */
 
-#ifdef __STDC__
 static void
 center_text_at_PC (void)
-#else
-static void
-center_text_at_PC ()
-#endif
 {
   char buf[100];
   XawTextBlock text;
@@ -822,13 +716,8 @@ center_text_at_PC ()
 /* Display the contents of the data and stack segments, if they have
    been modified. */
 
-#ifdef __STDC__
 static void
 display_data_seg (void)
-#else
-static void
-display_data_seg ()
-#endif
 {
   static String buf = NULL;
   static int max_buf_len = 16 * K;
@@ -856,31 +745,14 @@ display_data_seg ()
 /* IO facilities: */
 
 
-#ifdef __STDC__
 void
 write_output (port fp, char *fmt, ...)
-#else
-/*VARARGS0*/
-void
-write_output (va_alist)
-va_dcl
-#endif
 {
   va_list args;
   Widget w;
-#ifndef __STDC__
-  char *fmt;
-  port fp;
-#endif
   char io_buffer [IO_BUFFSIZE];
 
-#ifdef __STDC__
   va_start (args, fmt);
-#else
-  va_start (args);
-  fp = va_arg (args, port);
-  fmt = va_arg (args, char *);
-#endif
   w = (Widget) fp.f;
 
   if (w == console && !console_is_visible)
@@ -907,15 +779,8 @@ va_dcl
 
 /* Simulate the semantics of fgets, not gets, on an x-window. */
 
-#ifdef __STDC__
 void
 read_input (char *str, int str_size)
-#else
-void
-read_input (str, str_size)
-     char *str;
-     int str_size;
-#endif
 {
   char buffer[11];
   KeySym key;
@@ -967,13 +832,8 @@ read_input (str, str_size)
 }
 
 
-#ifdef __STDC__
 int
 console_input_available (void)
-#else
-int
-console_input_available ()
-#endif
 {
   if (mapped_io)
     return (XtAppPending (app_context));
@@ -982,13 +842,8 @@ console_input_available ()
 }
 
 
-#ifdef __STDC__
 char
 get_console_char (void)
-#else
-char
-get_console_char ()
-#endif
 {
   XEvent event;
 
@@ -1019,14 +874,8 @@ get_console_char ()
 }
 
 
-#ifdef __STDC__
 void
 put_console_char (char c)
-#else
-void
-put_console_char (c)
-     char c;
-#endif
 {
   char buf[4];
 
@@ -1044,28 +893,13 @@ put_console_char (c)
 
 /* Print an error message. */
 
-#ifdef __STDC__
 void
 error (char *fmt, ...)
-#else
-/*VARARGS0*/
-void
-error (va_alist)
-va_dcl
-#endif
 {
   va_list args;
-#ifndef __STDC__
-  char *fmt;
-#endif
   char io_buffer [IO_BUFFSIZE];
 
-#ifdef __STDC__
   va_start (args, fmt);
-#else
-  va_start (args);
-  fmt = va_arg (args, char *);
-#endif
   vsprintf (io_buffer, fmt, args);
   va_end (args);
   if (message != 0)
@@ -1075,28 +909,13 @@ va_dcl
 }
 
 
-#ifdef __STDC__
 int*
 run_error (char *fmt, ...)
-#else
-/*VARARGS0*/
-int*
-run_error (va_alist)
-va_dcl
-#endif
 {
   va_list args;
-#ifndef __STDC__
-  char *fmt;
-#endif
   char io_buffer [IO_BUFFSIZE];
 
-#ifdef __STDC__
   va_start (args, fmt);
-#else
-  va_start (args);
-  fmt = va_arg (args, char *);
-#endif
   vsprintf (io_buffer, fmt, args);
   va_end (args);
   if (message != 0)
@@ -1109,15 +928,8 @@ va_dcl
 }
 
 
-#ifdef __STDC__
 static void
 write_text_to_window (Widget w, char *s)
-#else
-static void
-write_text_to_window (w, s)
-     Widget w;
-     char *s;
-#endif
 {
   XawTextBlock textblock;
   XawTextPosition ip = XawTextGetInsertionPoint (w);

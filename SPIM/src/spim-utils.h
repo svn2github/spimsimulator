@@ -20,13 +20,12 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.h 6     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.h 7     2/15/04 1:27p Larus $
 */
 
 
 /* Exported functions: */
 
-#ifdef __STDC__
 void add_breakpoint (mem_addr addr);
 char *data_seg_as_string (char *buf, int *max_buf_len, int *string_len);
 void delete_breakpoint (mem_addr addr);
@@ -40,32 +39,11 @@ inst_info *map_int_to_inst_info (inst_info tbl[], int tbl_len, int num);
 inst_info *map_string_to_inst_info (inst_info tbl[], int tbl_len, char *id);
 char *mem_as_string (mem_addr from, mem_addr to, char *buf, int *max_buf_len, int *string_len);
 int read_assembly_file (char *name);
-char *registers_as_string (char *buf, int *max_buf_len, int *string_len, int print_gpr_hex, int print_fpr_hex);
+char *registers_as_string (char *buf, int *max_buf_len, int *string_len, int print_gpr_hex,
+			   int print_fpr_hex);
 int run_program (mem_addr pc, int steps, int display, int cont_bkpt);
 mem_addr starting_address (void);
 char *str_copy (char *str);
 void write_startup_message (void);
 void *xmalloc (int);
 void *zmalloc (int);
-#else
-void add_breakpoint ();
-char *data_seg_as_string ();
-void delete_breakpoint ();
-void fatal_error ();
-void initialize_registers ();
-void initialize_run_stack ();
-void initialize_world ();
-char *insts_as_string ();
-void list_breakpoints ();
-inst_info *map_int_to_inst_info ();
-inst_info *map_string_to_inst_info ();
-char* mem_as_string ();
-int read_assembly_file ();
-char *registers_as_string ();
-int run_program ();
-mem_addr starting_address ();
-char *str_copy ();
-void write_startup_message ();
-char *xmalloc ();
-char *zmalloc ();
-#endif

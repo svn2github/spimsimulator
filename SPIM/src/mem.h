@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/*   $Header: /Software/SPIM/src/mem.h 5     2/15/04 1:07p Larus $
+/*   $Header: /Software/SPIM/src/mem.h 6     2/15/04 1:25p Larus $
 */
 
 
@@ -59,14 +59,6 @@ extern short *data_seg_h;	/* Points to same vector as DATA_SEG */
 
 #define BYTE_TYPE signed char
 
-/* Non-ANSI C compilers do not like signed chars.  You can change it to
-   'char' if the compiler will treat chars as signed values... */
-
-#if ((defined (sun) || defined (hpux)) && !defined(__STDC__))
-/* Sun and HP cc compilers: */
-#undef BYTE_TYPE
-#define BYTE_TYPE char
-#endif
 
 extern BYTE_TYPE *data_seg_b;	/* Ditto */
 
@@ -144,7 +136,6 @@ extern mem_addr k_data_top;
 
 /* Translate from SPIM memory address to physical address */
 
-#ifdef __STDC__
 #define MEM_ADDRESS(ADDR)						   \
 ((((mem_addr) (ADDR) >= TEXT_BOT) && ((mem_addr) (ADDR) < text_top))	   \
  ? (mem_addr) (ADDR) - TEXT_BOT + (char*) text_seg			   \
@@ -157,20 +148,6 @@ extern mem_addr k_data_top;
 	  : ((((mem_addr) (ADDR) >= K_DATA_BOT) && ((mem_addr) (ADDR) < k_data_top)) \
 	     ? (mem_addr) (ADDR) - K_DATA_BOT + (char*) k_data_seg	   \
 	     : (void*)run_error ("Memory address out of bounds\n"))))))
-#else
-#define MEM_ADDRESS(ADDR)						   \
-((((mem_addr) (ADDR) >= TEXT_BOT) && ((mem_addr) (ADDR) < text_top))	   \
- ? (mem_addr) (ADDR) - TEXT_BOT + (char*) text_seg			   \
- : ((((mem_addr) (ADDR) >= DATA_BOT) && ((mem_addr) (ADDR) < data_top))	   \
-    ? (mem_addr) (ADDR) - DATA_BOT + (char*) data_seg		   \
-    : ((((mem_addr) (ADDR) >= stack_bot) && ((mem_addr) (ADDR) < STACK_TOP)) \
-       ? (mem_addr) (ADDR) - stack_bot + (char*) stack_seg		   \
-       : ((((mem_addr) (ADDR) >= K_TEXT_BOT) && ((mem_addr) (ADDR) < k_text_top)) \
-	  ? (mem_addr) (ADDR) - K_TEXT_BOT + (char*) k_text_seg		   \
-	  : ((((mem_addr) (ADDR) >= K_DATA_BOT) && ((mem_addr) (ADDR) < k_data_top)) \
-	     ? (mem_addr) (ADDR) - K_DATA_BOT + (char*) k_data_seg	   \
-	     : (char*)run_error ("Memory address out of bounds\n"))))))
-#endif
 
 #define READ_MEM_INST(LOC, ADDR)					   \
 {register mem_addr _addr_ = (mem_addr) (ADDR);				   \
@@ -267,7 +244,6 @@ extern mem_addr k_data_top;
 
 /* Exported functions: */
 
-#ifdef __STDC__
 mem_word bad_mem_read (mem_addr addr, int mask, mem_word *dest);
 void bad_mem_write (mem_addr addr, mem_word value, int mask);
 instruction *bad_text_read (mem_addr addr);
@@ -280,15 +256,3 @@ void make_memory (int text_size, int data_size, int data_limit,
 		  int stack_size, int stack_limit, int k_text_size,
 		  int k_data_size, int k_data_limit);
 void print_mem (mem_addr addr);
-#else
-mem_word bad_mem_read ();
-void bad_mem_write ();
-instruction *bad_text_read ();
-void bad_text_write ();
-void check_memory_mapped_IO ();
-void expand_data ();
-void expand_k_data ();
-void expand_stack ();
-void make_memory ();
-void print_mem ();
-#endif

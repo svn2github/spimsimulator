@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/data.c 5     2/15/04 1:07p Larus $
+/* $Header: /Software/SPIM/src/data.c 6     2/15/04 1:25p Larus $
 */
 
 
@@ -62,26 +62,15 @@ static int auto_alignment = 1;	/* Non-zero => align literal to natural bound*/
    kernel data segment.  If it is zero, data will go to the user's data
    segment.*/
 
-#ifdef __STDC__
 void
 user_kernel_data_segment (int to_kernel)
-#else
-void
-user_kernel_data_segment (to_kernel)
-int to_kernel;
-#endif
 {
     in_kernel = to_kernel;
 }
 
 
-#ifdef __STDC__
 void
 end_of_assembly_file (void)
-#else
-void
-end_of_assembly_file ()
-#endif
 {
   in_kernel = 0;
   auto_alignment = 1;
@@ -92,14 +81,8 @@ end_of_assembly_file ()
    64K.	 The 64K increment allocates an area pointed to by register
    $gp, which is initialized. */
 
-#ifdef __STDC__
 void
 data_begins_at_point (mem_addr addr)
-#else
-void
-data_begins_at_point (addr)
-     mem_addr addr;
-#endif
 {
   if (bare_machine)
     next_data_pc = addr;
@@ -116,14 +99,8 @@ data_begins_at_point (addr)
 /* Set the point at which the first datum is stored in the kernel's
    data segment. */
 
-#ifdef __STDC__
 void
 k_data_begins_at_point (mem_addr addr)
-#else
-void
-k_data_begins_at_point (addr)
-     mem_addr addr;
-#endif
 {
     next_k_data_pc = addr;
 }
@@ -133,14 +110,8 @@ k_data_begins_at_point (addr)
    low ALIGNMENT bits equal to 0.  If argument is 0, disable automatic
    alignment.*/
 
-#ifdef __STDC__
 void
 align_data (int alignment)
-#else
-void
-align_data (alignment)
-     int alignment;
-#endif
 {
   if (alignment == 0)
     auto_alignment = 0;
@@ -158,27 +129,16 @@ align_data (alignment)
 }
 
 
-#ifdef __STDC__
 void
 set_data_alignment (int alignment)
-#else
-void
-set_data_alignment (alignment)
-     int alignment;
-#endif
 {
   if (auto_alignment)
     align_data (alignment);
 }
 
 
-#ifdef __STDC__
 void
 enable_data_alignment (void)
-#else
-void
-enable_data_alignment ()
-#endif
 {
   auto_alignment = 1;
 }
@@ -186,14 +146,8 @@ enable_data_alignment ()
 
 /* Set the location (in user or kernel data space) for the next datum. */
 
-#ifdef __STDC__
 void
 set_data_pc (mem_addr addr)
-#else
-void
-set_data_pc (addr)
-     mem_addr addr;
-#endif
 {
   if (in_kernel)
     next_k_data_pc = addr;
@@ -204,13 +158,8 @@ set_data_pc (addr)
 
 /* Return the address at which the next datum will be stored.  */
 
-#ifdef __STDC__
 mem_addr
 current_data_pc (void)
-#else
-mem_addr
-current_data_pc ()
-#endif
 {
   return (DATA_PC);
 }
@@ -219,14 +168,8 @@ current_data_pc ()
 /* Bump the address at which the next data will be stored by VALUE
    bytes. */
 
-#ifdef __STDC__
 void
 increment_data_pc (int value)
-#else
-void
-increment_data_pc (value)
-     int value;
-#endif
 {
   BUMP_DATA_PC (value);
 }
@@ -234,15 +177,8 @@ increment_data_pc (value)
 
 /* Process a .extern NAME SIZE directive. */
 
-#ifdef __STDC__
 void
 extern_directive (char *name, int size)
-#else
-void
-extern_directive (name, size)
-     char *name;
-     int size;
-#endif
 {
   label *sym = make_label_global (name);
 
@@ -259,15 +195,8 @@ extern_directive (name, size)
 
 /* Process a .lcomm NAME SIZE directive. */
 
-#ifdef __STDC__
 void
 lcomm_directive (char *name, int size)
-#else
-void
-lcomm_directive (name, size)
-     char *name;
-     int size;
-#endif
 {
   label *sym = lookup_label (name);
 
@@ -285,16 +214,8 @@ lcomm_directive (name, size)
 
 /* Process a .ascii STRING or .asciiz STRING directive. */
 
-#ifdef __STDC__
 void
 store_string (char *string, int length, int null_terminate)
-#else
-void
-store_string (string, length, null_terminate)
-     char *string;
-     int length;
-     int null_terminate;
-#endif
 {
   for ( ; length > 0; string ++, length --) {
     SET_MEM_BYTE (DATA_PC, *string);
@@ -310,14 +231,8 @@ store_string (string, length, null_terminate)
 
 /* Process a .byte EXPR directive. */
 
-#ifdef __STDC__
 void
 store_byte (int value)
-#else
-void
-store_byte (value)
-     int value;
-#endif
 {
   SET_MEM_BYTE (DATA_PC, value);
   BUMP_DATA_PC (1);
@@ -326,14 +241,8 @@ store_byte (value)
 
 /* Process a .half EXPR directive. */
 
-#ifdef __STDC__
 void
 store_half (int value)
-#else
-void
-store_half (value)
-     int value;
-#endif
 {
   if (DATA_PC & 0x1)
     {
@@ -355,14 +264,8 @@ store_half (value)
 
 /* Process a .word EXPR directive. */
 
-#ifdef __STDC__
 void
 store_word (int value)
-#else
-void
-store_word (value)
-     int value;
-#endif
 {
   if (DATA_PC & 0x3)
     {
@@ -384,14 +287,8 @@ store_word (value)
 
 /* Process a .double EXPR directive. */
 
-#ifdef __STDC__
 void
 store_double (double *value)
-#else
-void
-store_double (value)
-     double *value;
-#endif
 {
   if (DATA_PC & 0x7)
     {
@@ -410,14 +307,8 @@ store_double (value)
 
 /* Process a .float EXPR directive. */
 
-#ifdef __STDC__
 void
 store_float (double *value)
-#else
-void
-store_float (value)
-     double *value;
-#endif
 {
   float val = (float)*value;
   float *vp = &val;
