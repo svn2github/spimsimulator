@@ -1,14 +1,26 @@
+2004-03-06    <larus@LARUS1>
+
+	* prevasive:
+	Implemented MIPS32 instruction set.
+	Eliminated coprocessor 3.
+	Made coprocessor 2 operations raise coprocessor unimplemented trap
+	(CpU).
+	Eliminated l.s, l.d, s.s, s.d pseudo ops in favor of LWC1, LDC1,
+	SWC1, SDC1.
+	Modified exceptions and interrupts to conform to MIPS32 (ex when
+	compiled -DMIPS1).
+
 2004-02-19    <larus@LARUS1>
 
 	* inst.c inst.h spim-utils.c:
 	Sorted instruction tables in advance, rather than on first use.
 
-2004-02-16    <larus@C745660-A>
+2004-02-16    <larus@LARUS1>
 
 	* PCSpimView.cpp [Domenico G. Sorrenti (sorrenti@disco.unimib.it)]:
 	Add prompt to ask user whether to reinitialize on reloading a file.
 
-2004-02-15    <larus@C745660-A>
+2004-02-15    <larus@LARUS1>
 
 	* MainFrm.cpp MainFrm.h PCSpim.cpp PCSpimView.cpp PCSpimView.h
 	[Matthew Low (mlow@imail.EECS.Berkeley.edu)]:
@@ -41,7 +53,7 @@
 	* spim.c [Matt Harren (math@cs.berkeley.edu)]:
 	Handle boundary case for -file without name.
 
-2004-02-14    <larus@C745660-A>
+2004-02-14    <larus@LARUS1>
 
 	* run.c [Bob Britton (BBritton@csuchico.edu)]:
 	Correctly implement delayed load instructions. (Nobody ever use

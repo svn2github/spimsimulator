@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 36    3/06/04 2:13p Larus $
+/* $Header: /Software/SPIM/src/op.h 37    3/07/04 4:10p Larus $
 */
 
 
@@ -247,6 +247,7 @@ OP("cvt.s.w",	Y_CVT_S_W_OP,	FP_R2ds_TYPE_INST,	0x46800020)
 OP("cvt.w.d",	Y_CVT_W_D_OP,	FP_R2ds_TYPE_INST,	0x46200024)
 OP("cvt.w.s",	Y_CVT_W_S_OP,	FP_R2ds_TYPE_INST,	0x46000024)
 
+OP("deret",	Y_DERET_OP,	NOARG_TYPE_INST,	0x4200001f)	/* MIPS32 Rev 2 */
 OP("di",	Y_DI_OP,	I1t_TYPE_INST,		0x41606000)	/* MIPS32 Rev 2 */
 
 OP("div",	Y_DIV_OP,	R2st_TYPE_INST,		0x0000001a)
@@ -256,6 +257,7 @@ OP("divu",	Y_DIVU_OP,	R2st_TYPE_INST,		0x0000001b)
 
 OP("ehb",	Y_EHB_OP,	NOARG_TYPE_INST,	0x000000c0)	/* MIPS32 Rev 2 */
 OP("ei",	Y_EI_OP,	I1t_TYPE_INST,		0x41606020)	/* MIPS32 Rev 2 */
+OP("eret",	Y_ERET_OP,	NOARG_TYPE_INST,	0x42000018)	/* MIPS32 */
 OP("ext",	Y_EXT_OP,	FP_R2ds_TYPE_INST,	0x7c000000)	/* MIPS32 Rev 2 */
 
 OP("floor.l.d",	Y_FLOOR_L_D_OP,	FP_R2ds_TYPE_INST,	0x4620000b)	/* MIPS32 Rev 2 */
@@ -418,6 +420,7 @@ OP("rsqrt.s",	Y_RSQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000016)	/* MIPS32 Rev 2 */
 OP("sb",	Y_SB_OP,	I2a_TYPE_INST,		0xa0000000)
 OP("sc",	Y_SC_OP,	I2a_TYPE_INST,		0xe0000000)	/* MIPS32 */
 OP("sd",	Y_SD_POP,	PSEUDO_OP,		-1)
+OP("sdbbp",	Y_SDBBP_OP,	NOARG_TYPE_INST,	0x7000003f)	/* MIPS32 Rev 2*/
 OP("sdc1",	Y_SDC1_OP,	FP_I2a_TYPE_INST,	0xf4000000)	/* MIPS32 */
 OP("sdc2",	Y_SDC2_OP,	I2a_TYPE_INST,		0xf8000000)	/* MIPS32 */
 OP("sdxc1",	Y_SDXC1_OP,	FP_R3_TYPE_INST,	0x46000009)	/* MIPS32 Rev 2 */

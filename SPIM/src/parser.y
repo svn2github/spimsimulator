@@ -152,6 +152,7 @@
 %token Y_CVT_S_W_OP
 %token Y_CVT_W_D_OP
 %token Y_CVT_W_S_OP
+%token Y_DERET_OP
 %token Y_DI_OP
 %token Y_DIV_D_OP
 %token Y_DIV_OP
@@ -159,6 +160,7 @@
 %token Y_DIVU_OP
 %token Y_EHB_OP
 %token Y_EI_OP
+%token Y_ERET_OP
 %token Y_EXT_OP
 %token Y_FLOOR_L_D_OP
 %token Y_FLOOR_L_S_OP
@@ -269,6 +271,7 @@
 %token Y_RSQRT_S_OP
 %token Y_SB_OP
 %token Y_SC_OP
+%token Y_SDBBP_OP
 %token Y_SDC1_OP
 %token Y_SDC2_OP
 %token Y_SDXC1_OP
@@ -876,6 +879,12 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 	|	Y_MOVE_POP	DEST	SRC1
 		{
 		  r_type_inst (Y_ADDU_OP, $2.i, 0, $3.i);
+		}
+
+
+	|	NULLARY_OPS
+		{
+		  r_type_inst ($1.i, 0, 0, 0);
 		}
 
 
@@ -1648,7 +1657,12 @@ TLB_OPS:	Y_TLBP_OP
 	|	Y_TLBWR_OP
 	;
 
-NULLARY_OPS_REV2:	Y_EHB_OP
+NULLARY_OPS:	Y_ERET_OP
+	;
+
+NULLARY_OPS_REV2:	Y_DERET_OP
+	|	Y_EHB_OP
+	|	Y_SDBBP_OP
 	;
 
 COUNT_LEADING_OPS:	Y_CLO_OP

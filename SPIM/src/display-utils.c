@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 15    3/02/04 6:17a Larus $
+  $Header: /Software/SPIM/src/display-utils.c 16    3/07/04 4:10p Larus $
 */
 
 
@@ -60,10 +60,10 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
   bufp = buf;
   
   sprintf (bufp, " PC     = %08x    ", PC); bufp += strlen (bufp);
-  sprintf (bufp, " EPC    = %08x    ", EPC); bufp += strlen (bufp);
-  sprintf (bufp, " Cause  = %08x    ", Cause); bufp += strlen (bufp);
-  sprintf (bufp, " BadVAddr= %08x\n", BadVAddr); bufp += strlen (bufp);
-  sprintf (bufp, " Status = %08x    ", Status_Reg); bufp += strlen (bufp);
+  sprintf (bufp, " EPC    = %08x    ", CP0_EPC); bufp += strlen (bufp);
+  sprintf (bufp, " Cause  = %08x    ", CP0_Cause); bufp += strlen (bufp);
+  sprintf (bufp, " BadVAddr= %08x\n", CP0_BadVAddr); bufp += strlen (bufp);
+  sprintf (bufp, " Status = %08x    ", CP0_Status); bufp += strlen (bufp);
   sprintf (bufp, " HI     = %08x    ", HI); bufp += strlen (bufp);
   sprintf (bufp, " LO     = %08x\n", LO); bufp += strlen (bufp);
   

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 41    3/06/04 4:32p Larus $
+/* $Header: /Software/SPIM/src/run.c 42    3/07/04 4:10p Larus $
 */
 
 
@@ -65,6 +65,12 @@ static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
 
 #define ARITH_OVFL(RESULT, OP1, OP2) (SIGN_BIT (OP1) == SIGN_BIT (OP2) \
 				      && SIGN_BIT (OP1) != SIGN_BIT (RESULT))
+
+
+
+static running_in_delay_slot = 0; /* True when delayed_branches is true and
+				     instruction is executing in delay slot
+				     of another instruction. */
 
 
 /* Executed delayed branch and jump instructions by running the
@@ -159,7 +165,6 @@ static void set_fpu_cc(int cond, int cc, int less, int equal, int unordered);
    each instruction before it executes. Return non-zero if program's
    execution can continue. */
 
-
 int
 run_spim (mem_addr initial_PC, int steps_to_run, int display)
 {
@@ -196,24 +201,21 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	  READ_MEM_INST (inst, PC);
 
-	  if (inst == NULL)
-	    return 0;
-
-	  if (exception_occurred)
+	  if (exception_occurred) /* In reading instruction */
 	    {
 	      exception_occurred = 0;
-	      CP0_EPC = ROUND_DOWN (PC, BYTES_PER_WORD);
 	      handle_exception ();
 	      continue;
 	    }
 	  else if (inst == NULL)
-	    run_error ("Attempt to execute non-instruction at 0x%08x\n", PC);
+	    {
+	      run_error ("Attempt to execute non-instruction at 0x%08x\n", PC);
+	    }
 	  else if (EXPR (inst) != NULL
 		   && EXPR (inst)->symbol != NULL
 		   && EXPR (inst)->symbol->addr == 0)
 	    {
-	      error ("Instruction references undefined symbol at 0x%08x\n",
-		     PC);
+	      error ("Instruction references undefined symbol at 0x%08x\n", PC);
 	      print_inst (PC);
 	      run_error ("");
 	    }
@@ -235,7 +237,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		register reg_word sum = vs + vt;
 
 		if (ARITH_OVFL (sum, vs, vt))
-		  RAISE_EXCEPTION (OVF_EXCPT, break);
+		  RAISE_EXCEPTION (ExcCode_Ov, break);
 		R[RD (inst)] = sum;
 		break;
 	      }
@@ -246,7 +248,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		register reg_word sum = vs + imm;
 
 		if (ARITH_OVFL (sum, vs, imm))
-		  RAISE_EXCEPTION (OVF_EXCPT, break);
+		  RAISE_EXCEPTION (ExcCode_Ov, break);
 		R[RT (inst)] = sum;
 		break;
 	      }
@@ -271,7 +273,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_BC2FL_OP:
 	    case Y_BC2T_OP:
 	    case Y_BC2TL_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_BEQ_OP:
@@ -377,9 +379,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_BREAK_OP:
 	      if (RD (inst) == 1)
 		/* Debugger breakpoint */
-		RAISE_EXCEPTION (BKPT_EXCPT, return (1))
+		RAISE_EXCEPTION (ExcCode_Bp, return (1))
 	      else
-		RAISE_EXCEPTION (BKPT_EXCPT, break);
+		RAISE_EXCEPTION (ExcCode_Bp, break);
 
 	    case Y_CACHE_OP:
 	      break;		/* Memory details not implemented */
@@ -389,7 +391,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_CFC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_CLO_OP:
@@ -415,7 +417,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      }
 
 	    case Y_COP2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_CTC0_OP:
@@ -423,7 +425,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_CTC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_DIV_OP:
@@ -446,6 +448,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		  LO = (u_reg_word) R[RS (inst)] / (u_reg_word) R[RT (inst)];
 		  HI = (u_reg_word) R[RS (inst)] % (u_reg_word) R[RT (inst)];
 		}
+	      break;
+
+	    case Y_ERET_OP:
 	      break;
 
 	    case Y_J_OP:
@@ -516,11 +521,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_LDC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_LWC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_LWL_OP:
@@ -531,7 +536,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word reg_val = R[RT (inst)];
 
 		READ_MEM_WORD (word, addr & 0xfffffffc);
-		if ((!exception_occurred) || (CP0_ExCode > LAST_REAL_EXCEPT))
+		if (!exception_occurred)
 #ifdef BIGENDIAN
 		  switch (byte)
 		    {
@@ -583,7 +588,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word reg_val = R[RT (inst)];
 
 		READ_MEM_WORD (word, addr & 0xfffffffc);
-		if ((!exception_occurred) || (CP0_ExCode > LAST_REAL_EXCEPT))
+		if (!exception_occurred)
 #ifdef BIGENDIAN
 		  switch (byte)
 		    {
@@ -660,7 +665,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_MFC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_MFHI_OP:
@@ -711,10 +716,31 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_MTC0_OP:
 	      CPR[0][FS (inst)] = R[RT (inst)];
+	      switch (FS (inst))
+		{
+		case CP0_Status_Reg:
+		  CPR[0][FS (inst)] &= CP0_Status_Mask;
+		  CP0_Status |= ((CP0_Status_CU & 0x30000000)
+				 | CP0_Status_IM
+				 | CP0_Status_UM
+				 | CP0_Status_IE);
+		  break;
+
+		case CP0_Cause_Reg:
+		  CPR[0][FS (inst)] &= CP0_Cause_Mask;
+		  break;
+
+		case CP0_Config_Reg:
+		  CPR[0][FS (inst)] &= CP0_Config_Mask;
+		  break;
+
+		default:
+		  break;
+		}
 	      break;
 
 	    case Y_MTC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_MTHI_OP:
@@ -749,10 +775,14 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;		/* Memory details not implemented */
 
 	    case Y_RFE_OP:
+#ifdef MIPS1
 	      /* This is MIPS-I, not compatible with MIPS32 or the
 	       definition of the bits in the CP0 Status register in that
 	       architecture. */
 	      CP0_Status = (CP0_Status & 0xfffffff0) | ((CP0_Status & 0x3c) >> 2);
+#else
+	      RAISE_EXCEPTION (ExcCode_RI, {}); /* Not instruction in MIPS32 */
+#endif
 	      break;
 
 	    case Y_SB_OP:
@@ -765,7 +795,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SDC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_SH_OP:
@@ -881,7 +911,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 		if (SIGN_BIT (vs) != SIGN_BIT (vt)
 		    && SIGN_BIT (vs) != SIGN_BIT (diff))
-		  RAISE_EXCEPTION (OVF_EXCPT, break);
+		  RAISE_EXCEPTION (ExcCode_Ov, break);
 		R[RD (inst)] = diff;
 		break;
 	      }
@@ -895,7 +925,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_SWC2_OP:
-	      RAISE_EXCEPTION (CpU_EXCPT, {}); /* No Coprocessor 2 */
+	      RAISE_EXCEPTION (ExcCode_CpU, {}); /* No Coprocessor 2 */
 	      break;
 
 	    case Y_SWL_OP:
@@ -1010,78 +1040,78 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_TEQ_OP:
 	      if (R[RS (inst)] == R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TEQI_OP:
 	      if (R[RS (inst)] == IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TGE_OP:
 	      if (R[RS (inst)] >= R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TGEI_OP:
 	      if (R[RS (inst)] >= IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TGEIU_OP:
 	      if ((u_reg_word)R[RS (inst)] >= (u_reg_word)IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TGEU_OP:
 	      if ((u_reg_word)R[RS (inst)] >= (u_reg_word)R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TLBP_OP:
-	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      RAISE_EXCEPTION(ExcCode_RI, {}); /* TLB not implemented */
 	      break;
 
 	    case Y_TLBR_OP:
-	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      RAISE_EXCEPTION(ExcCode_RI, {}); /* TLB not implemented */
 	      break;
 
 	    case Y_TLBWI_OP:
-	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      RAISE_EXCEPTION(ExcCode_RI, {}); /* TLB not implemented */
 	      break;
 
 	    case Y_TLBWR_OP:
-	      RAISE_EXCEPTION(RI_EXCPT, {}); /* TLB not implemented */
+	      RAISE_EXCEPTION(ExcCode_RI, {}); /* TLB not implemented */
 	      break;
 
 	    case Y_TLT_OP:
 	      if (R[RS (inst)] < R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TLTI_OP:
 	      if (R[RS (inst)] < IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TLTIU_OP:
 	      if ((u_reg_word)R[RS (inst)] < (u_reg_word)IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TLTU_OP:
 	      if ((u_reg_word)R[RS (inst)] < (u_reg_word)R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TNE_OP:
 	      if (R[RS (inst)] != R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_TNEI_OP:
 	      if (R[RS (inst)] != IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
+		RAISE_EXCEPTION(ExcCode_Tr, {});
 	      break;
 
 	    case Y_XOR_OP:
@@ -1153,7 +1183,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		  {
 		    if (cond & COND_IN)
 		      {
-			RAISE_EXCEPTION (INVALID_EXCEPT, break);
+			RAISE_EXCEPTION (ExcCode_FPE, break);
 		      }
 		    set_fpu_cc (cond, cc, 0, 0, 1);
 		  }
@@ -1189,7 +1219,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		  {
 		    if (cond & COND_IN)
 		      {
-			RAISE_EXCEPTION (INVALID_EXCEPT, break);
+			RAISE_EXCEPTION (ExcCode_FPE, break);
 		      }
 		    set_fpu_cc (cond, cc, 0, 0, 1);
 		  }
@@ -1227,7 +1257,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		  FCSR &= FCSR_MASK;
 		  if ((R[RT (inst)] & ~FCSR_MASK) != 0)
 		    /* Trying to set unsupported mode */
-		    RAISE_EXCEPTION (INVALID_EXCEPT, {});
+		    RAISE_EXCEPTION (ExcCode_FPE, {});
 		}
 	      break;
 
@@ -1323,7 +1353,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      {
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		if (addr & 0x3)
-		  RAISE_EXCEPTION (ADDRL_EXCPT, CP0_BadVAddr = addr);
+		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
 		LOAD_INST (READ_MEM_WORD, addr,
 			   (reg_word *) &FGR[FT (inst)], 0xffffffff);
@@ -1480,7 +1510,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word *vp = (reg_word *) &val;
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		if (addr & 0x3)
-		  RAISE_EXCEPTION (ADDRL_EXCPT, CP0_BadVAddr = addr);
+		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);
 
 		SET_MEM_WORD (addr, *vp);
 		SET_MEM_WORD (addr + sizeof(mem_word), *(vp + 1));
@@ -1538,9 +1568,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	  if (exception_occurred)
 	    {
-	      if (CP0_ExCode > LAST_REAL_EXCEPT)
-		CP0_EPC = PC - BYTES_PER_WORD;
-
 	      handle_exception ();
 	    }
 	}			/* End: for (step = 0; ... */
@@ -1639,4 +1666,47 @@ set_fpu_cc (int cond, int cc, int less, int equal, int unordered)
       fcsr_bit = 24 + cc;
     }
   FCSR = (FCSR & ~(1 << fcsr_bit)) | (result << fcsr_bit);
+}
+
+
+void
+raise_exception(int excode)
+{
+  if (ExcCode_Int != excode
+      || ((CP0_Status & CP0_Status_IE) /* Allow interrupt if IE and !ERL and !EXL */
+	  && !(CP0_Status & CP0_Status_ERL)
+	  && !(CP0_Status & CP0_Status_EXL)))
+    {
+      /* Ignore interrupt exception when interrupts disabled.  */
+      exception_occurred = 1;
+      if (running_in_delay_slot)
+	{
+	  /* In delay slot */
+	  if ((CP0_Status & CP0_Status_EXL) == 0)
+	    {
+	      CP0_EPC = ROUND_DOWN (PC - BYTES_PER_WORD, BYTES_PER_WORD); /* Branch addr */
+	      CP0_Cause |= CP0_Cause_BD;
+	    }
+	}
+      else
+	{
+	  /* Not in delay slot */
+	  if ((CP0_Status & CP0_Status_EXL) == 0)
+	    {
+	      CP0_EPC = ROUND_DOWN (PC, BYTES_PER_WORD);	/* Instruction address */
+	      CP0_Cause |= CP0_Cause_BD;
+	    }
+	}
+      /* ToDo: set CE field of Cause register to coprocessor causing exception */
+
+      /* Record cause of exception */
+      CP0_Cause = (CP0_Cause & ~CP0_Cause_ExcCode) | (excode << 2);
+
+      /* Turn on EXL bit to prevent subsequent interrupts from affecting EPC */
+      CP0_Status |= CP0_Status_EXL;
+
+#ifdef MIPS1
+      CP0_Status = (CP0_Status & 0xffffffc0) | ((CP0_Status & 0xf) << 2);
+#endif
+    }
 }

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/*   $Header: /Software/SPIM/src/mem.h 7     2/23/04 4:42a Larus $
+/*   $Header: /Software/SPIM/src/mem.h 8     3/07/04 4:10p Larus $
 */
 
 
@@ -106,31 +106,30 @@ extern BYTE_TYPE *k_data_seg_b;
 extern mem_addr k_data_top;
 
 
-/* Memory-mapped IO area. */
-
-#define MM_IO_BOT ((mem_addr) 0xffff0000)
-
-#define MM_IO_TOP ((mem_addr) 0xffffffff)
+/* Memory-mapped IO area: */
+#define MM_IO_BOT		((mem_addr) 0xffff0000)
+#define MM_IO_TOP		((mem_addr) 0xffffffff)
 
 
-#define RECV_CTRL_ADDR ((mem_addr) 0xffff0000)
+/* Read from console: */
+#define RECV_CTRL_ADDR		((mem_addr) 0xffff0000)
+#define RECV_BUFFER_ADDR	((mem_addr) 0xffff0004)
 
-#define RECV_READY 0x1
-#define RECV_INT_ENABLE 0x2
+#define RECV_READY		0x1
+#define RECV_INT_ENABLE		0x2
 
-#define RECV_INT_MASK 0x100
-
-#define RECV_BUFFER_ADDR ((mem_addr) 0xffff0004)
+#define RECV_INT_MASK		CP0_Cause_IP3 /* HW Interrupt 1 */
 
 
-#define TRANS_CTRL_ADDR ((mem_addr) 0xffff0008)
+/* Write to console: */
+#define TRANS_CTRL_ADDR		((mem_addr) 0xffff0008)
+#define TRANS_BUFFER_ADDR	((mem_addr) 0xffff000c)
 
-#define TRANS_READY 0x1
-#define TRANS_INT_ENABLE 0x2
+#define TRANS_READY		0x1
+#define TRANS_INT_ENABLE	0x2
 
-#define TRANS_INT_MASK 0x200
+#define TRANS_INT_MASK		CP0_Cause_IP2 /* HW Interrupt 0 */
 
-#define TRANS_BUFFER_ADDR ((mem_addr) 0xffff000c)
 
 
 

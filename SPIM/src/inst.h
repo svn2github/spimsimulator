@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 15    3/06/04 4:32p Larus $
+/* $Header: /Software/SPIM/src/inst.h 16    3/07/04 4:10p Larus $
 */
 
 
@@ -156,54 +156,35 @@ typedef struct inst_s
 
 extern int exception_occurred;
 
-extern int running_in_delay_slot;
-
-
 #define RAISE_EXCEPTION(EXCODE, MISC)					\
 	{								\
-	  if (((EXCODE)<= LAST_REAL_EXCEPT) || CP0_INTERRUPTS_ON)	\
-	    {								\
-	      SET_CP0_ExCode(EXCODE);					\
-	      exception_occurred = 1;					\
-	      if (running_in_delay_slot && (CP0_Cause & CP0_Cause_BD))	\
-		/* Address of branch */					\
-		CP0_EPC = PC - BYTES_PER_WORD;				\
-	      else							\
-		CP0_EPC = PC;						\
-	      /* MIPS-I only */						\
-	      CP0_Status = (CP0_Status & 0xffffffc0) | ((CP0_Status & 0xf) << 2); \
-	      MISC;							\
-	    }								\
+	raise_exception(EXCODE);					\
+	MISC;								\
 	}								\
 
 
 /* Recognized exceptions: */
 
-#define INT_EXCPT	0
-#define MOD_EXCPT	1
-#define TLBL_EXCPT	2
-#define TLBS_EXCPT	3
-#define ADDRL_EXCPT	4
-#define ADDRS_EXCPT	5
-#define IBUS_EXCPT	6
-#define DBUS_EXCPT	7
-#define SYSCALL_EXCPT	8
-#define BKPT_EXCPT	9
-#define RI_EXCPT	10
-#define CpU_EXCPT	11
-#define OVF_EXCPT	12
-#define TRAP_EXCPT	13
-
-
-/* Floating point exceptions: */
-
-#define INEXACT_EXCEPT	13
-#define INVALID_EXCEPT	14
-#define DIV0_EXCEPT	15
-#define FOVF_EXCEPT	16
-#define FUNF_EXCEPT	17
-
-#define LAST_REAL_EXCEPT FUNF_EXCEPT
+#define ExcCode_Int	0	/* Interrupt */
+#define ExcCode_Mod	1	/* TLB modification (not implemented) */
+#define ExcCode_TLBL	2	/* TLB exception (not implemented) */
+#define ExcCode_TLBS	3	/* TLB exception (not implemented) */
+#define ExcCode_AdEL	4	/* Address error (load/fetch) */
+#define ExcCode_AdES	5	/* Address error (store) */
+#define ExcCode_IBE	6	/* Bus error, instruction fetch */
+#define ExcCode_DBE	7	/* Bus error, data reference */
+#define ExcCode_Sys	8	/* Syscall exception */
+#define ExcCode_Bp	9	/* Breakpoint exception */
+#define ExcCode_RI	10	/* Reserve instruction */
+#define ExcCode_CpU	11	/* Coprocessor unusable */
+#define ExcCode_Ov	12	/* Arithmetic overflow */
+#define ExcCode_Tr	13	/* Trap */
+#define ExcCode_FPE	15	/* Floating point */
+#define ExcCode_C2E	18	/* Coprocessor 2 (not impelemented) */
+#define ExcCode_MDMX	22	/* MDMX unusable (not implemented) */
+#define ExcCode_WATCH	23	/* Reference to Watch (not impelemented) */
+#define ExcCode_MCheck	24	/* Machine check (not implemented) */
+#define ExcCode_CacheErr 30	/* Cache error (not impelemented) */
 
 
 
@@ -255,6 +236,7 @@ int print_inst_internal (char *buf, int len, instruction *inst, mem_addr addr);
 void r_cond_type_inst (int opcode, int fs, int ft, int cc);
 void r_sh_type_inst (int opcode, int rd, int rt, int shamt);
 void r_type_inst (int opcode, int rd, int rs, int rt);
+void raise_exception(int excode);
 instruction *set_breakpoint (mem_addr addr);
 void store_instruction (instruction *inst);
 void text_begins_at_point (mem_addr addr);

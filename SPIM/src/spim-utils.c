@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 16    3/06/04 4:32p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 17    3/07/04 4:10p Larus $
 */
 
 
@@ -51,8 +51,6 @@ static void delete_all_breakpoints ();
 
 
 int exception_occurred;
-
-int running_in_delay_slot = 0;
 
 mem_addr program_starting_address = 0;
 
@@ -301,7 +299,6 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt)
 
       delete_breakpoint (addr);
       exception_occurred = 0;
-      running_in_delay_slot = 0;
       run_spim (addr, 1, display);
       add_breakpoint (addr);
       steps -= 1;
@@ -309,11 +306,10 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt)
     }
 
   exception_occurred = 0;
-  running_in_delay_slot = 0;
   if (!run_spim (pc, steps, display))
     /* Can't restart program */
     PC = 0;
-  if (exception_occurred && CP0_ExCode == BKPT_EXCPT)
+  if (exception_occurred && CP0_ExCode == ExcCode_Bp)
     return (1);
   else
     return (0);

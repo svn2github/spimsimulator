@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 18    3/06/04 4:32p Larus $
+/* $Header: /Software/SPIM/src/mem.c 19    3/07/04 4:10p Larus $
 */
 
 
@@ -287,7 +287,7 @@ expand_k_data (int addl_bytes)
 instruction *
 bad_text_read (mem_addr addr)
 {
-  RAISE_EXCEPTION (IBUS_EXCPT, CP0_BadVAddr = addr);
+  RAISE_EXCEPTION (ExcCode_IBE, CP0_BadVAddr = addr);
   return (inst_decode (0));
 }
 
@@ -295,7 +295,7 @@ bad_text_read (mem_addr addr)
 void
 bad_text_write (mem_addr addr, instruction *inst)
 {
-  RAISE_EXCEPTION (IBUS_EXCPT, CP0_BadVAddr = addr);
+  RAISE_EXCEPTION (ExcCode_IBE, CP0_BadVAddr = addr);
   SET_MEM_WORD (addr, ENCODING (inst));
 }
 
@@ -306,7 +306,7 @@ bad_mem_read (mem_addr addr, int mask, mem_word *dest)
   mem_word tmp;
 
   if (addr & mask)
-    RAISE_EXCEPTION (ADDRL_EXCPT, CP0_BadVAddr = addr)
+    RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr)
   else if (addr >= TEXT_BOT && addr < text_top)
     switch (mask)
       {
@@ -354,7 +354,7 @@ bad_mem_read (mem_addr addr, int mask, mem_word *dest)
     return (read_memory_mapped_IO (addr));
   else
     /* Address out of range */
-    RAISE_EXCEPTION (DBUS_EXCPT, CP0_BadVAddr = addr)
+    RAISE_EXCEPTION (ExcCode_DBE, CP0_BadVAddr = addr)
   return (0);
 }
 
@@ -363,10 +363,10 @@ void
 bad_mem_write (mem_addr addr, mem_word value, int mask)
 {
   mem_word tmp;
-  
+
   if (addr & mask)
     /* Unaligned address fault */
-    RAISE_EXCEPTION (ADDRS_EXCPT, CP0_BadVAddr = addr)
+    RAISE_EXCEPTION (ExcCode_AdES, CP0_BadVAddr = addr)
     else if (addr >= TEXT_BOT && addr < text_top)
   {
     switch (mask)
@@ -382,7 +382,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
 #endif
       text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
       break;
-      
+
     case 0x1:
       tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
 #ifdef BIGENDIAN
@@ -394,15 +394,15 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
 #endif
       text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
       break;
-      
+
     case 0x3:
       text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (value);
       break;
-      
+
     default:
       run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);
     }
-    
+
     text_modified = 1;
   }
   else if (addr > data_top
@@ -422,15 +422,15 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
 	stack_seg [(addr - stack_bot) >> 2] = value;
     }
     else
-      RAISE_EXCEPTION (DBUS_EXCPT, CP0_BadVAddr = addr)
-      
+      RAISE_EXCEPTION (ExcCode_DBE, CP0_BadVAddr = addr)
+
     data_modified = 1;
   }
   else if (MM_IO_BOT <= addr && addr <= MM_IO_TOP)
     write_memory_mapped_IO (addr, value);
   else
     /* Address out of range */
-    RAISE_EXCEPTION (DBUS_EXCPT, CP0_BadVAddr = addr)
+    RAISE_EXCEPTION (ExcCode_DBE, CP0_BadVAddr = addr)
 }
 
 
@@ -465,9 +465,8 @@ check_memory_mapped_IO ()
 	  recv_control |= RECV_READY;
 	  recv_buffer_filled = RECV_LATENCY;
 	  if ((recv_control & RECV_INT_ENABLE)
-	      && CP0_INTERRUPTS_ON
 	      && (CP0_Status & RECV_INT_MASK))
-	    RAISE_EXCEPTION (INT_EXCPT, CP0_Cause |= RECV_INT_MASK);
+	    RAISE_EXCEPTION (ExcCode_Int, CP0_Cause |= RECV_INT_MASK);
 	}
     }
   else if (recv_buffer_filled <= 0)
@@ -482,9 +481,8 @@ check_memory_mapped_IO ()
 	  trans_control |= TRANS_READY;
 	  trans_buffer_filled = 0;
 	  if ((trans_control & TRANS_INT_ENABLE)
-	      && CP0_INTERRUPTS_ON
-	      && (CP0_Status & TRANS_INT_MASK))
-	    RAISE_EXCEPTION (INT_EXCPT, CP0_Cause |= TRANS_INT_MASK)
+	      && (CP0_Cause & TRANS_INT_MASK))
+	    RAISE_EXCEPTION (ExcCode_Int, CP0_Cause |= TRANS_INT_MASK)
 	}
     }
 }
@@ -503,10 +501,9 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
 
       if ((trans_control & TRANS_READY)
 	  && (trans_control & TRANS_INT_ENABLE)
-	  && CP0_INTERRUPTS_ON
-	  && (CP0_Status & TRANS_INT_MASK))
+	  && (CP0_Cause & TRANS_INT_MASK))
 	/* Raise an interrupt immediately on enabling a ready xmitter */
-	RAISE_EXCEPTION (INT_EXCPT, CP0_Cause |= TRANS_INT_MASK)
+	RAISE_EXCEPTION (ExcCode_Int, CP0_Cause |= TRANS_INT_MASK)
       break;
 
     case TRANS_BUFFER_ADDR:

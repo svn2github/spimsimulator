@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 13    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/spim.h 14    3/07/04 4:10p Larus $
 */
 
 
@@ -164,9 +164,13 @@ typedef uint32 mem_addr;
 
 
 /* Address to branch to when exception occurs */
-
+#ifdef MIPS1
+/* MIPS R2000 */
 #define EXCEPTION_ADDR 0x80000080
-
+#else
+/* MIPS32 */
+#define EXCEPTION_ADDR 0x80000180
+#endif
 
 /* Maximum size of object stored in the small data segment pointed to by
    $gp */

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/reg.h 9     3/06/04 4:32p Larus $
+/* $Header: /Software/SPIM/src/reg.h 10    3/07/04 4:10p Larus $
 */
 
 
@@ -62,7 +62,7 @@ extern mem_addr PC, nPC;
 
 
 
-/* The Coprocessor registers: */
+/* Coprocessor registers: */
 
 extern reg_word CCR[4][32], CPR[4][32];
 
@@ -70,13 +70,21 @@ extern reg_word CCR[4][32], CPR[4][32];
 
 /* Exeception handling registers (Coprocessor 0): */
 
-#define CP0_BadVAddr	(CPR[0][8])
+/* BadVAddr register: */
+#define CP0_BadVAddr_Reg 8
+#define CP0_BadVAddr	(CPR[0][CP0_BadVAddr_Reg])
 
-#define CP0_Count	(CPR[0][9]) /* ToDo */
+/* Count register: */
+#define CP0_Count_Reg	9
+#define CP0_Count	(CPR[0][CP0_Count_Reg]) /* ToDo */
 
-#define CP0_Compare	(CPR[0][11]) /* ToDo */
+/* Compare register: */
+#define CP0_Compare_Reg	11
+#define CP0_Compare	(CPR[0][CP0_Compare_Reg]) /* ToDo */
 
-#define CP0_Status	(CPR[0][12])
+/* Status register: */
+#define CP0_Status_Reg	12
+#define CP0_Status	(CPR[0][CP0_Status_Reg])
 /* Implemented fields: */
 #define CP0_Status_CU	0xf0000000
 #define CP0_Status_IM	0x00000300
@@ -90,25 +98,47 @@ extern reg_word CCR[4][32], CPR[4][32];
 			 | CP0_Status_ERL	\
 			 | CP0_Status_EXL	\
 			 | CP0_Status_IE)
-#define CP0_USER_MODE	(CP0_Status & CP0_Status_UM)
-#define CP0_INTERRUPTS_ON (CP0_Status & CP0_Status_IE)
 
-#define CP0_Cause	(CPR[0][13])
+/* Cause register: */
+#define CP0_Cause_Reg	13
+#define CP0_Cause	(CPR[0][CP0_Cause_Reg])
 /* Implemented fields: */
 #define CP0_Cause_BD	0x80000000
 #define CP0_Cause_IP	0x00000300
+#define CP0_Cause_IP7   0x00008000 /* HW Int 5 */
+#define CP0_Cause_IP6   0x00004000 /* HW Int 4 */
+#define CP0_Cause_IP5   0x00002000 /* HW Int 3 */
+#define CP0_Cause_IP4   0x00001000 /* HW Int 2 */
+#define CP0_Cause_IP3   0x00000800 /* HW Int 1 */
+#define CP0_Cause_IP2   0x00000400 /* HW Int 0 */
 #define CP0_Cause_ExcCode 0x0000003c
+#define CP0_Cause_Mask	(CP0_Cause_BD		\
+			 | CP0_Cause_IP		\
+			 | CP0_Cause_IP7	\
+			 | CP0_Cause_IP6	\
+			 | CP0_Cause_IP5	\
+			 | CP0_Cause_IP4	\
+			 | CP0_Cause_IP3	\
+			 | CP0_Cause_IP2	\
+			 | CP0_Cause_ExcCode)
 #define CP0_ExCode	((CP0_Cause & CP0_Cause_ExcCode) >> 2)
-#define SET_CP0_ExCode(V) CP0_Cause = (CP0_Cause & ~CP0_Cause_ExcCode) | ((V) << 2)
 
-#define CP0_EPC		(CPR[0][14])
+/* EPC register: */
+#define CP0_EPC_Reg	14
+#define CP0_EPC		(CPR[0][CP0_EPC_Reg])
 
-#define CP0_Config	(CPR[0][16])
+/* Config register: */
+#define CP0_Config_Reg	16
+#define CP0_Config	(CPR[0][CP0_Config_Reg])
 /* Implemented fields: */
 #define CP0_Config_BE	0x000080000
 #define CP0_Config_AT	0x000060000
 #define CP0_Config_AR	0x00001c000
 #define CP0_Config_MT	0x000000380
+#define CP0_Config_Mask (CP0_Config_BE		\
+			 | CP0_Config_AT	\
+			 | CP0_Config_AR	\
+			 | CP0_Config_MT)
 
 
 
@@ -195,3 +225,22 @@ extern int *FWR;		/* is possible */
 /* Implemented fields: */
 #define FCSR_FCC	0xfe800000
 #define FCSR_MASK	(FCSR_FCC)
+/* Floating point Cause (not implemented): */
+#define FCSR_Cause_E	0x00020000
+#define FCSR_Cause_V	0x00010000
+#define FCSR_Cause_Z	0x00008000
+#define FCSR_Cause_O	0x00004000
+#define FCSR_Cause_U	0x00002000
+#define FCSR_Cause_I	0x00001000
+/* Floating point Enables (not implemented): */
+#define FCSR_Enable_V	0x00000800
+#define FCSR_Enable_Z	0x00000400
+#define FCSR_Enable_O	0x00000200
+#define FCSR_Enable_U	0x00000100
+#define FCSR_Enable_I	0x00000080
+/* Floating point Flags (not implemented): */
+#define FCSR_Flag_V	0x00000040
+#define FCSR_Flag_Z	0x00000020
+#define FCSR_Flag_O	0x00000010
+#define FCSR_Flag_U	0x00000008
+#define FCSR_Flag_I	0x00000004
