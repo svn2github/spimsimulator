@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 8     3/06/04 4:34p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 9     5/02/04 12:59p Larus $ */
 
 // MainFrm.cpp : implementation of the CMainFrame class
 //
@@ -49,6 +49,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_SIZE()
 	ON_COMMAND(ID_SIMULATOR_SETFONT, OnSimulatorSetfont)
 	//}}AFX_MSG_MAP
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_REGS, UpdateStatusRegs)
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_BARE, UpdateStatusBare)
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DELAY_BR, UpdateStatusDelayBr)
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DELAY_LD, UpdateStatusDelayLd)
 	// Global help commands
 	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder)
 	ON_COMMAND(ID_HELP, CFrameWnd::OnHelp)
@@ -171,19 +175,36 @@ LPCTSTR CMainFrame::GetTitleBase()
   return m_strTitle;
 }
 
-void CMainFrame::UpdateSettingsStatus()
+void CMainFrame::UpdateStatusRegs(CCmdUI *pCmdUI)
 {
+  pCmdUI->Enable(); 
   CString strTxt;
 
   strTxt.Format("PC=0x%08x  EPC=0x%08x  Cause=0x%08x", PC, CP0_EPC, CP0_Cause);
-  m_wndStatusBar.SetPaneText(1, strTxt);
-  strTxt.Format("%s", bare_machine ? "BARE" : "");
-  m_wndStatusBar.SetPaneText(2, strTxt);
-  strTxt.Format("%s", delayed_branches ? "DELAY BR" : "");
-  m_wndStatusBar.SetPaneText(3, strTxt);
-  strTxt.Format("%s", delayed_loads ? "DELAY LD" : "");
-  m_wndStatusBar.SetPaneText(4, strTxt);
+  pCmdUI->SetText(strTxt);
 }
+
+
+void CMainFrame::UpdateStatusBare(CCmdUI *pCmdUI)
+{
+  pCmdUI->Enable(); 
+  if (bare_machine) pCmdUI->SetText("BARE"); else pCmdUI->SetText("");
+}
+
+
+void CMainFrame::UpdateStatusDelayBr(CCmdUI *pCmdUI)
+{
+  pCmdUI->Enable(); 
+  if (delayed_branches) pCmdUI->SetText("DELAY BR"); else pCmdUI->SetText("");
+}
+
+
+void CMainFrame::UpdateStatusDelayLd(CCmdUI *pCmdUI)
+{
+  pCmdUI->Enable(); 
+  if (delayed_loads) pCmdUI->SetText("DELAY LD"); else pCmdUI->SetText("");
+}
+
 
 void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {

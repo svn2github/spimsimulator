@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/MainFrm.h 6     3/14/04 7:51p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/MainFrm.h 7     5/02/04 12:59p Larus $ */
 
 // MainFrm.h : interface of the CMainFrame class
 //
@@ -34,9 +34,11 @@ protected: // create from serialization only
 
 // Attributes
 public:
-	void UpdateSettingsStatus();
+	void UpdateStatusRegs(CCmdUI *pCmdUI);
+	void UpdateStatusBare(CCmdUI *pCmdUI);
+	void UpdateStatusDelayBr(CCmdUI *pCmdUI);
+	void UpdateStatusDelayLd(CCmdUI *pCmdUI);
 	LPCTSTR GetTitleBase();
-
 // Operations
 public:
 

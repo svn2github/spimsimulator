@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 19    3/21/04 2:06p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 20    5/02/04 12:59p Larus $ */
 
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
@@ -67,11 +67,8 @@ ON_COMMAND(ID_SIMULATOR_SETTINGS, OnSimulatorSettings)
 ON_UPDATE_COMMAND_UI(ID_SIMULATOR_RELOAD, OnUpdateSimulatorReload)
 ON_COMMAND(ID_SIMULATOR_RELOAD, OnSimulatorReload)
 ON_UPDATE_COMMAND_UI(ID_SIMULATOR_BREAK, OnUpdateSimulatorBreak)
-ON_UPDATE_COMMAND_UI(ID_SIMULATOR_GO, OnUpdateSimulatorRun)
 ON_COMMAND(ID_SIMULATOR_STEP, OnSimulatorStep)
-ON_UPDATE_COMMAND_UI(ID_SIMULATOR_STEP, OnUpdateSimulatorStep)
 ON_COMMAND(ID_SIMULATOR_MULTISTEP, OnSimulatorMultistep)
-ON_UPDATE_COMMAND_UI(ID_SIMULATOR_MULTISTEP, OnUpdateSimulatorMultistep)
 ON_COMMAND(ID_SIMULATOR_DISPLAYSYMBOLS, OnSimulatorDisplaysymbols)
 ON_COMMAND(ID_WINDOW_CASCADE, OnWindowCascade)
 ON_COMMAND(ID_WINDOW_NEXT, OnWindowNext)
@@ -91,9 +88,6 @@ ON_COMMAND(ID_WINDOW_CONSOLE, OnWindowConsole)
 ON_WM_DESTROY()
 ON_COMMAND(ID_WINDOW_ARRANGEICONS, OnWindowArrangeicons)
 ON_COMMAND(ID_FILE_SAVE_LOG, OnFileSaveLog)
-ON_COMMAND(ID_INDICATOR_BARE, CMainFrame::UpdateSettingsStatus)
-ON_COMMAND(ID_INDICATOR_DELAY_BR, CMainFrame::UpdateSettingsStatus)
-ON_COMMAND(ID_INDICATOR_DELAY_LD, CMainFrame::UpdateSettingsStatus)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -106,7 +100,6 @@ CPCSpimView::CPCSpimView()
 
   m_fStackInitialized = FALSE;
   m_fCapture = FALSE;
-  m_nForceStop = 0;
   m_fConsoleMinimized = TRUE;
   m_fSimulatorInitialized = FALSE;
 
@@ -864,28 +857,11 @@ void CPCSpimView::ShowRunning()
 }
 
 
-void CPCSpimView::OnUpdateSimulatorRun(CCmdUI* pCmdUI)
-{
-  CMainFrame *pWnd = (CMainFrame *)AfxGetMainWnd();
-  pWnd->UpdateSettingsStatus();
-
-  pCmdUI->Enable(!g_fRunning && m_fSimulatorInitialized);
-}
-
-
 void CPCSpimView::OnSimulatorStep()
 {
   ExecuteProgram(PC, 1, 1, 1);
 }
 
-
-void CPCSpimView::OnUpdateSimulatorStep(CCmdUI* pCmdUI)
-{
-  CMainFrame *pWnd = (CMainFrame *)AfxGetMainWnd();
-  pWnd->UpdateSettingsStatus();
-
-  pCmdUI->Enable(!g_fRunning && m_fSimulatorInitialized);
-}
 
 #include "MultiStepDlg.h"
 void CPCSpimView::OnSimulatorMultistep()
@@ -896,15 +872,6 @@ void CPCSpimView::OnSimulatorMultistep()
     return;
 
   ExecuteProgram(PC, dlg.m_cSteps, 1, 1);
-}
-
-
-void CPCSpimView::OnUpdateSimulatorMultistep(CCmdUI* pCmdUI)
-{
-  CMainFrame *pWnd = (CMainFrame *)AfxGetMainWnd();
-  pWnd->UpdateSettingsStatus();
-
-  pCmdUI->Enable(!g_fRunning && m_fSimulatorInitialized);
 }
 
 
@@ -1110,16 +1077,11 @@ void CPCSpimView::OnWindowClearConsole()
 }
 
 
-void CPCSpimView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
-{
-  ((CMainFrame*)AfxGetMainWnd())->UpdateSettingsStatus();
-}
-
-
 void CPCSpimView::OnWindowConsole()
 {
   MakeConsoleVisible();
 }
+
 
 void CPCSpimView::OnUpdateSimulatorSetvalue(CCmdUI* pCmdUI)
 {

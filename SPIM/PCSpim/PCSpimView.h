@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 7     3/21/04 2:06p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 8     5/02/04 12:59p Larus $ */
 
 // PCSpimView.h : interface of the CPCSpimView class
 //
@@ -64,8 +64,6 @@ public:
 	//{{AFX_VIRTUAL(CPCSpimView)
 	public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	protected:
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -94,11 +92,8 @@ protected:
 	afx_msg void OnUpdateSimulatorReload(CCmdUI* pCmdUI);
 	afx_msg void OnSimulatorReload();
 	afx_msg void OnUpdateSimulatorBreak(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateSimulatorRun(CCmdUI* pCmdUI);
 	afx_msg void OnSimulatorStep();
-	afx_msg void OnUpdateSimulatorStep(CCmdUI* pCmdUI);
 	afx_msg void OnSimulatorMultistep();
-	afx_msg void OnUpdateSimulatorMultistep(CCmdUI* pCmdUI);
 	afx_msg void OnSimulatorDisplaysymbols();
 	afx_msg void OnWindowCascade();
 	afx_msg void OnWindowNext();
@@ -121,16 +116,14 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	void OutputLog(CString &strBuf);
-	void ProcessCommandLine();
+
 	BOOL m_fSimulatorInitialized;
-	long m_nSavedStatusReg;
-	long m_nForceStop;
+	BOOL m_fStackInitialized;
 	CString m_strCurFilename;
 	CString m_strMsgCaptureBuf;
 	BOOL m_fCapture;
+
 	CBreakpointDlg m_dlgBP;
-	BOOL m_fStackInitialized;
 
 	CConsoleWnd	m_wndConsole;
 	CEdit		m_wndMessages;
@@ -138,6 +131,8 @@ private:
 	CEdit		m_wndTextSeg;
 	CEdit		m_wndRegisters;
 
+	void OutputLog(CString &strBuf);
+	void ProcessCommandLine();
 	void ShowRunning();
 	void InitStack(LPCTSTR args);
 	void LoadFile(LPCTSTR strFilename);
