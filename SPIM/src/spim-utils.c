@@ -195,7 +195,7 @@ read_assembly_file (name)
      char *name;
 #endif
 {
-  FILE *file = fopen (name, "r");;
+  FILE *file = fopen (name, "rt");
 
   source_file = 1;
   if (file == NULL)

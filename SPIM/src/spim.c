@@ -1030,6 +1030,7 @@ int
 console_input_available ()
 #endif
 {
+#ifndef __CYGWIN32__
   fd_set fdset;
   struct timeval timeout;
 
@@ -1042,6 +1043,7 @@ console_input_available ()
       return (select (sizeof (fdset) * 8, &fdset, NULL, NULL, &timeout));
     }
   else
+#endif
     return (0);
 }
 
