@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 17    3/11/04 7:17a Larus $
+/* $Header: /Software/SPIM/src/spim.h 18    3/12/04 5:34p Larus $
 */
 
 
@@ -189,16 +189,15 @@ typedef uint32 mem_addr;
 #define IO_INTERVAL 100
 
 
-/* Number of instructions that a character remains in receiver buffer
-   if another character is available. (Should be multiple of IO_INTERVAL.) */
+/* Number of instructions that a character remains in receiver buffer,
+   even if another character is available. */
 
-#define RECV_LATENCY (10*IO_INTERVAL)
+#define RECV_INTERVAL 100
 
 
-/* Number of instructions that it takes to write a character. (Should
-   be multiple of IO_INTERVAL.)*/
+/* Number of instructions that it takes to write a character. */
 
-#define TRANS_LATENCY (IO_INTERVAL)
+#define TRANS_LATENCY 100
 
 
 /* Iterval (in milliseconds) for the hardware timer in CP0. */

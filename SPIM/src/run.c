@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 49    3/11/04 10:15p Larus $
+/* $Header: /Software/SPIM/src/run.c 50    3/12/04 5:34p Larus $
 */
 
 
@@ -235,8 +235,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	  R[0] = 0;		/* Maintain invariant value */
 
+	  exception_occurred = 0;
 	  inst = read_mem_inst (PC);
-
 	  if (exception_occurred) /* In reading instruction */
 	    {
 	      exception_occurred = 0;

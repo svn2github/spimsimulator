@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 20    3/11/04 9:25p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 21    3/12/04 5:34p Larus $
 */
 
 
@@ -150,7 +150,7 @@ initialize_registers ()
   CP0_BadVAddr = 0;
   CP0_Count = 0;
   CP0_Compare = 0;
-  CP0_Status = (CP0_Status_CU & 0x30000000) | CP0_Status_IM | CP0_Status_UM | CP0_Status_IE;
+  CP0_Status = (CP0_Status_CU & 0x30000000) | CP0_Status_IM | CP0_Status_UM;
   CP0_Cause = 0;
   CP0_EPC = 0;
 #ifdef BIGENDIAN

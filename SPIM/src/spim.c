@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 25    3/11/04 9:25p Larus $
+/* $Header: /Software/SPIM/src/spim.c 26    3/12/04 5:34p Larus $
 */
 
 
@@ -53,7 +53,6 @@
 
 #ifndef WIN32
 #include <sys/time.h>
-
 #ifdef USE_TERMIO
 #include <termio.h>
 #include <termios.h>
@@ -146,9 +145,15 @@ main (int argc, char **argv)
 
   write_startup_message ();
 
-  if (argc == 2)
+  if (argc == 2
+      && argv[1][0] != '-'
+#ifdef WIN32
+      /* On Windows, support "/option" as well as "-option" */
+      && argv[1][0] != '/'
+#endif
+      )
     {
-      /* Only one argument better be a file name. */
+      /* Only one argument without '-' is a file name. */
       initialize_world (load_trap_handler ? trap_file : NULL);
       assembly_file_read |= !read_assembly_file (argv[1]);
     }
@@ -156,7 +161,6 @@ main (int argc, char **argv)
     for (i = 1; i < argc; i++)
       {
 #ifdef WIN32
-	/* On Windows, support "/option" as well as "-option" */
 	if (argv [i][0] == '/')
 	  argv [i][0] = '-';
 #endif
@@ -984,7 +988,6 @@ console_to_spim ()
 int
 console_input_available ()
 {
-#ifndef __CYGWIN32__
   fd_set fdset;
   struct timeval timeout;
 
@@ -997,7 +1000,6 @@ console_input_available ()
       return (select (sizeof (fdset) * 8, &fdset, NULL, NULL, &timeout));
     }
   else
-#endif
     return (0);
 }
 

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 23    3/11/04 10:15p Larus $
+/* $Header: /Software/SPIM/src/mem.c 24    3/12/04 5:34p Larus $
 */
 
 
@@ -312,9 +312,9 @@ mem_reference(mem_addr addr)
 instruction*
 read_mem_inst(mem_addr addr)
 {
-  if (addr >= TEXT_BOT && addr < text_top && !(addr & 0x3))
+  if ((addr >= TEXT_BOT) && (addr < text_top) && !(addr & 0x3))
     return text_seg [(addr - TEXT_BOT) >> 2];
-  else if (addr >= K_TEXT_BOT && addr < k_text_top && !(addr & 0x3))
+  else if ((addr >= K_TEXT_BOT) && (addr < k_text_top) && !(addr & 0x3))
     return k_text_seg [(addr - K_TEXT_BOT) >> 2];
   else
     return bad_text_read (addr);
@@ -324,11 +324,11 @@ read_mem_inst(mem_addr addr)
 reg_word
 read_mem_byte(mem_addr addr)
 {
-  if (addr >= DATA_BOT && addr < data_top)
+  if ((addr >= DATA_BOT) && (addr < data_top))
     return data_seg_b [addr - DATA_BOT];
-  else if (addr >= stack_bot && addr < STACK_TOP)
+  else if ((addr >= stack_bot) && (addr < STACK_TOP))
     return stack_seg_b [addr - stack_bot];
-  else if (addr >= K_DATA_BOT && addr < k_data_top)
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top))
     return k_data_seg_b [addr - K_DATA_BOT];
   else
     return bad_mem_read (addr, 0);
@@ -338,11 +338,11 @@ read_mem_byte(mem_addr addr)
 reg_word
 read_mem_half(mem_addr addr)
 {
-  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x1))
+  if ((addr >= DATA_BOT) && (addr < data_top) && !(addr & 0x1))
     return data_seg_h [(addr - DATA_BOT) >> 1];
-  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x1))
+  else if ((addr >= stack_bot) && (addr < STACK_TOP) && !(addr & 0x1))
     return stack_seg_h [(addr - stack_bot) >> 1];
-  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x1))
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top) && !(addr & 0x1))
     return k_data_seg_h [(addr - K_DATA_BOT) >> 1];
   else
     return bad_mem_read (addr, 0x1);
@@ -352,11 +352,11 @@ read_mem_half(mem_addr addr)
 reg_word
 read_mem_word(mem_addr addr)
 {
-  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x3))
+  if ((addr >= DATA_BOT) && (addr < data_top) && !(addr & 0x3))
     return data_seg [(addr - DATA_BOT) >> 2];
-  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x3))
+  else if ((addr >= stack_bot) && (addr < STACK_TOP) && !(addr & 0x3))
     return stack_seg [(addr - stack_bot) >> 2];
-  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x3))
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top) && !(addr & 0x3))
     return k_data_seg [(addr - K_DATA_BOT) >> 2];
   else
     return bad_mem_read (addr, 0x3);
@@ -367,9 +367,9 @@ void
 set_mem_inst(mem_addr addr, instruction* inst)
 {
   text_modified = 1;
-  if (addr >= TEXT_BOT && addr < text_top && !(addr & 0x3))
+  if ((addr >= TEXT_BOT) && (addr < text_top) && !(addr & 0x3))
     text_seg [(addr - TEXT_BOT) >> 2] = inst;
-  else if (addr >= K_TEXT_BOT && addr < k_text_top && !(addr & 0x3))
+  else if ((addr >= K_TEXT_BOT) && (addr < k_text_top) && !(addr & 0x3))
     k_text_seg [(addr - K_TEXT_BOT) >> 2] = inst;
   else
     bad_text_write (addr, inst);
@@ -380,11 +380,11 @@ void
 set_mem_byte(mem_addr addr, reg_word value)
 {
   data_modified = 1;
-  if (addr >= DATA_BOT && addr < data_top)
+  if ((addr >= DATA_BOT) && (addr < data_top))
     data_seg_b [addr - DATA_BOT] = (BYTE_TYPE) value;
-  else if (addr >= stack_bot && addr < STACK_TOP)
+  else if ((addr >= stack_bot) && (addr < STACK_TOP))
     stack_seg_b [addr - stack_bot] = (BYTE_TYPE) value;
-  else if (addr >= K_DATA_BOT && addr < k_data_top)
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top))
     k_data_seg_b [addr - K_DATA_BOT] = (BYTE_TYPE) value;
   else
     bad_mem_write (addr, value, 0);
@@ -395,11 +395,11 @@ void
 set_mem_half(mem_addr addr, reg_word value)
 {
   data_modified = 1;
-  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x1))
+  if ((addr >= DATA_BOT) && (addr < data_top) && !(addr & 0x1))
     data_seg_h [(addr - DATA_BOT) >> 1] = (short) value;
-  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x1))
+  else if ((addr >= stack_bot) && (addr < STACK_TOP) && !(addr & 0x1))
     stack_seg_h [(addr - stack_bot) >> 1] = (short) value;
-  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x1))
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top) && !(addr & 0x1))
     k_data_seg_h [(addr - K_DATA_BOT) >> 1] = (short) value;
   else
     bad_mem_write (addr, value, 0x1);
@@ -410,11 +410,11 @@ void
 set_mem_word(mem_addr addr, reg_word value)
 {
   data_modified = 1;
-  if (addr >= DATA_BOT && addr < data_top && !(addr & 0x3))
+  if ((addr >= DATA_BOT) && (addr < data_top) && !(addr & 0x3))
     data_seg [(addr - DATA_BOT) >> 2] = (mem_word) value;
-  else if (addr >= stack_bot && addr < STACK_TOP && !(addr & 0x3))
+  else if ((addr >= stack_bot) && (addr < STACK_TOP) && !(addr & 0x3))
     stack_seg [(addr - stack_bot) >> 2] = (mem_word) value;
-  else if (addr >= K_DATA_BOT && addr < k_data_top && !(addr & 0x3))
+  else if ((addr >= K_DATA_BOT) && (addr < k_data_top) && !(addr & 0x3))
     k_data_seg [(addr - K_DATA_BOT) >> 2] = (mem_word) value;
   else
     bad_mem_write (addr, value, 0x3);
@@ -573,55 +573,49 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
 
 
 
-/* Memory-mapped IO routines: */
+/* Memory-mapped IO routines. */
 
-static long recv_control, recv_buffer, recv_buffer_filled;
-static long trans_control, trans_buffer, trans_buffer_filled;
+static int recv_control = 0;	/* No input */
+static int recv_buffer;
+static int recv_buffer_full_timer = 0;
+
+static int trans_control = TRANS_READY;	/* Ready to write */
+static int trans_buffer;
+static int trans_buffer_full_timer = 0;
 
 
-/* Every IO_INTERVAL time steps, check if input is available and output
-   is possible.  If so, update the control registers and buffers. */
+/* Check if input is available and output is possible.  If so, update the
+   control registers and buffers. */
 
 void
 check_memory_mapped_IO ()
 {
-  static long mm_io_initialized = 0;
-
-  if (!mm_io_initialized)
+  if (recv_buffer_full_timer > 0)
     {
-      recv_control = RECV_READY;
-      trans_control = TRANS_READY;
-      mm_io_initialized = 1;
+      /* Do not check for more input until this interval expires. */
+      recv_buffer_full_timer -= 1;
+    }
+  else if (console_input_available ())
+    {
+      /* Read new char into the buffer and raise an interrupt. */
+      /* assert(recv_buffer_full_timer == 0); */
+      recv_buffer = get_console_char ();
+      recv_control |= RECV_READY;
+      recv_buffer_full_timer = RECV_INTERVAL;
+      RAISE_INTERRUPT (RECV_INT_LEVEL);
     }
 
-  if (console_input_available ())
+  if (trans_buffer_full_timer > 0)
     {
-      recv_buffer_filled -= IO_INTERVAL;
-      if (recv_buffer_filled <= 0)
-	{
-	  recv_buffer = get_console_char ();
-	  recv_control |= RECV_READY;
-	  recv_buffer_filled = RECV_LATENCY;
-	  if ((recv_control & RECV_INT_ENABLE)
-	      && (CP0_Status & RECV_INT_MASK))
-	    RAISE_INTERRUPT (RECV_INT_LEVEL);
-	}
+      /* Do not allow output until this interval expires. */
+      trans_buffer_full_timer -= 1;
     }
-  else if (recv_buffer_filled <= 0)
-    recv_control &= ~RECV_READY;
-
-  if (trans_buffer_filled > 0)
+  else if (!(trans_control & TRANS_READY))
     {
-      trans_buffer_filled -= IO_INTERVAL;
-      if (trans_buffer_filled <= 0)
-	{
-	  put_console_char ((char)trans_buffer);
-	  trans_control |= TRANS_READY;
-	  trans_buffer_filled = 0;
-	  if ((trans_control & TRANS_INT_ENABLE)
-	      && (CP0_Cause & TRANS_INT_MASK))
-	    RAISE_INTERRUPT (TRANS_INT_LEVEL);
-	}
+      /* Done writing: empty the buffer and raise an interrupt. */
+      /* assert(trans_buffer_full_timer == 0); */
+      trans_control |= TRANS_READY;
+      RAISE_INTERRUPT (TRANS_INT_LEVEL);
     }
 }
 
@@ -637,19 +631,21 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
       trans_control = ((trans_control & ~TRANS_INT_ENABLE)
 		       | (value & TRANS_INT_ENABLE));
 
-      if ((trans_control & TRANS_READY)
-	  && (trans_control & TRANS_INT_ENABLE)
-	  && (CP0_Cause & TRANS_INT_MASK))
-	/* Raise an interrupt immediately on enabling a ready xmitter */
-	RAISE_INTERRUPT (TRANS_INT_LEVEL);
+      if ((trans_control & TRANS_READY) && (trans_control & TRANS_INT_ENABLE))
+	{
+	  /* Raise interrupt on enabling a ready transmitter */
+	  RAISE_INTERRUPT (TRANS_INT_LEVEL);
+	}
       break;
 
     case TRANS_BUFFER_ADDR:
-      if (trans_control & TRANS_READY) /* Ignore if not ready */
+      if (trans_control & TRANS_READY) /* Ignore write of char if not ready */
 	{
+	  /* Write char */
 	  trans_buffer = value & 0xff;
+	  put_console_char ((char)trans_buffer);
 	  trans_control &= ~TRANS_READY;
-	  trans_buffer_filled = TRANS_LATENCY;
+	  trans_buffer_full_timer = TRANS_LATENCY;
 	}
       break;
 
@@ -662,8 +658,7 @@ write_memory_mapped_IO (mem_addr addr, mem_word value)
       break;
 
     default:
-      run_error ("Write to unused memory-mapped IO address (0x%x)\n",
-		 addr);
+      run_error ("Write to unused memory-mapped IO address (0x%x)\n", addr);
     }
 }
 
@@ -685,13 +680,12 @@ read_memory_mapped_IO (mem_addr addr)
       return (recv_control);
 
     case RECV_BUFFER_ADDR:
-      recv_control &= ~RECV_READY;
-      recv_buffer_filled = 0;
+      recv_control &= ~RECV_READY; /* Buffer now empty */
+      recv_buffer_full_timer = 0;
       return (recv_buffer & 0xff);
 
     default:
-      run_error ("Read from unused memory-mapped IO address (0x%x)\n",
-		 addr);
+      run_error ("Read from unused memory-mapped IO address (0x%x)\n", addr);
       return (0);
     }
 }
