@@ -1,3 +1,15 @@
+2004-03-28    <larus@HomeMachine>
+
+	* run.c:
+	Changed CP0 timer to poll on Unix, since signals interrupt system
+	calls and affect SPIM's I/O.
+
+2004-03-25    <larus@HomeMachine>
+
+	* display-utils.c, xspim.c windows.c:
+	Made X interfaces a bit more compact and regular. Works on a
+	1024x768 screen.
+
 2004-03-22    <larus@HomeMachine>
 
 	* parser.y [Margaret M Reek [mmr@cs.rit.edu]]:
