@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 15    2/28/04 7:04a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 16    3/11/04 7:17a Larus $
  */
 
 #include <stdio.h>
@@ -89,7 +89,6 @@ int delayed_branches;		/* Non-Zero => simulate delayed branches */
 int delayed_loads;		/* Non-Zero => simulate delayed loads */
 int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 int quiet;			/* Non-Zero => no warning messages */
-int source_file;		/* Non-Zero => program is source, not binary */
 port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
@@ -280,7 +279,6 @@ initialize (AppResources app_res)
   delayed_loads = 0;
   accept_pseudo_insts = 1;
   quiet = 0;
-  source_file = 0;
   cycle_level = 0;
 
   if (app_res.bare)

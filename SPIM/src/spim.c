@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 23    3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/spim.c 24    3/11/04 7:17a Larus $
 */
 
 
@@ -110,7 +110,6 @@ int delayed_branches;		/* Non-Zero => simulate delayed branches */
 int delayed_loads;		/* Non-Zero => simulate delayed loads */
 int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 int quiet;			/* Non-Zero => no warning messages */
-int source_file;		/* Non-Zero => program is source, not binary */
 port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
@@ -145,7 +144,6 @@ main (int argc, char **argv)
   delayed_loads = 0;
   accept_pseudo_insts = 1;
   quiet = 0;
-  source_file = 0;
   cycle_level = 0;
   spim_return_value = 0;
 

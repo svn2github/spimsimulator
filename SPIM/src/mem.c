@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/mem.c 21    3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/mem.c 22    3/11/04 7:17a Larus $
 */
 
 
@@ -199,7 +199,7 @@ expand_data (int addl_bytes)
   int new_size = old_size + delta;
   BYTE_TYPE *p;
 
-  if (addl_bytes < 0 || (source_file && new_size > data_size_limit))
+  if ((addl_bytes < 0) || (new_size > data_size_limit))
     {
       error ("Can't expand data segment by %d bytes to %d bytes\n",
 	     addl_bytes, new_size);
@@ -232,7 +232,7 @@ expand_stack (int addl_bytes)
   mem_word *new_seg;
   mem_word *po, *pn;
 
-  if (addl_bytes < 0 || (source_file && new_size > stack_size_limit))
+  if ((addl_bytes < 0) || (new_size > stack_size_limit))
     {
       error ("Can't expand stack segment by %d bytes to %d bytes\n",
 	     addl_bytes, new_size);
@@ -264,7 +264,7 @@ expand_k_data (int addl_bytes)
   int new_size = old_size + delta;
   BYTE_TYPE *p;
 
-  if (addl_bytes < 0 || (source_file && new_size > k_data_size_limit))
+  if ((addl_bytes < 0) || (new_size > k_data_size_limit))
     {
       error ("Can't expand kernel data segment by %d bytes to %d bytes\n",
 	     addl_bytes, new_size);

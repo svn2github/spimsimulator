@@ -1,3 +1,14 @@
+2004-03-11    <larus@C745660-A>
+
+	* mips-syscall.{c,h} spim-sycall.h syscall.{c,h}
+	Moved all syscall-related stuff to syscall.{c,h} and eliminated
+	old #ifdef'ed stuff related to syscalls from binary code running
+	on DECstations.
+
+2004-03-10    <larus@C745660-A>
+
+	* Changed memory access macros to functions.
+
 2004-03-06    <larus@LARUS1>
 
 	* prevasive:
@@ -10,6 +21,7 @@
 	Modified exceptions and interrupts to conform to MIPS32 (ex when
 	compiled -DMIPS1).
 	Added CP0 timer.
+	Fixed trap.handler to work with MIPS32 exceptions.
 	
 2004-02-19    <larus@LARUS1>
 

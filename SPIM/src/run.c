@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 46    3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/run.c 47    3/11/04 7:17a Larus $
 */
 
 
@@ -52,7 +52,7 @@
 #include "mem.h"
 #include "sym-tbl.h"
 #include "y.tab.h"
-#include "mips-syscall.h"
+#include "syscall.h"
 #include "run.h"
 
 int force_break = 0;	/* For the execution env. to force an execution break */

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 16    3/09/04 9:53p Larus $
+/* $Header: /Software/SPIM/src/spim.h 17    3/11/04 7:17a Larus $
 */
 
 
@@ -233,7 +233,6 @@ extern int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 extern int delayed_branches;	/* Non-zero => simulate delayed branches */
 extern int delayed_loads;	/* Non-zero => simulate delayed loads */
 extern int quiet;		/* Non-zero => no warning messages */
-extern int source_file;		/* Non-zero => program is source, not binary */
 extern char *trap_file;		/* Path of file containing trap handler */
 extern int force_break;		/* Non-zero => stop interpreter loop  */
 extern int parser_error_occurred; /* Non-zero => parse resulted in error */

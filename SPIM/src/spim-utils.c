@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 18    3/10/04 8:14p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 19    3/11/04 7:17a Larus $
 */
 
 
@@ -179,7 +179,6 @@ read_assembly_file (char *name)
 {
   FILE *file = fopen (name, "rt");
 
-  source_file = 1;
   if (file == NULL)
     {
       error ("Cannot open file: `%s'\n", name);
