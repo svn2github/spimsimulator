@@ -1,3 +1,27 @@
+// SPIM S20 MIPS simulator.
+// Definitions for the SPIM S20.
+//
+// Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+// ALL RIGHTS RESERVED.
+// Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
+//
+// SPIM is distributed under the following conditions:
+//
+//   You may make copies of SPIM for your own use and modify those copies.
+//
+//   All copies of SPIM must retain my name and copyright notice.
+//
+//   You may not sell SPIM or distributed SPIM in conjunction with a
+//   commerical product or service without the expressed written consent of
+//   James Larus.
+//
+// THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+// IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+// PURPOSE.
+
+/* $Version: $ */
+
 //Microsoft Developer Studio generated resource script.
 //
 #include "resource.h"
@@ -206,7 +230,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "PCSpim Version 1.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
-    LTEXT           "Copyright © 1990-1998 by James R. Larus (larus@cs.wisc.edu). Portions © Morgan Kaufmann Publishers.",
+    LTEXT           "Copyright © 1990-2000 by James R. Larus (larus@cs.wisc.edu). Portions © Morgan Kaufmann Publishers.",
                     IDC_COPYRIGHT,40,27,204,55
     DEFPUSHBUTTON   "OK",IDOK,212,7,32,14,WS_GROUP
 END
@@ -327,7 +351,7 @@ BEGIN
             VALUE "FileDescription", "PCSPIM MFC Application\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "PCSPIM\0"
-            VALUE "LegalCopyright", "Copyright © 1990-2001 by James R. Larus\0"
+            VALUE "LegalCopyright", "Copyright © 1990-2000 by James R. Larus\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "PCSPIM.EXE\0"
             VALUE "PrivateBuild", "\0"

@@ -1,3 +1,27 @@
+// SPIM S20 MIPS simulator.
+// Definitions for the SPIM S20.
+//
+// Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+// ALL RIGHTS RESERVED.
+// Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
+//
+// SPIM is distributed under the following conditions:
+//
+//   You may make copies of SPIM for your own use and modify those copies.
+//
+//   All copies of SPIM must retain my name and copyright notice.
+//
+//   You may not sell SPIM or distributed SPIM in conjunction with a
+//   commerical product or service without the expressed written consent of
+//   James Larus.
+//
+// THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+// IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+// PURPOSE.
+
+/* $Version: $ */
+
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
 
@@ -153,15 +177,15 @@ static void
 InitSpimWins(CEdit& Win, RECT& r, int nMinMax, BOOL ScrollVert, BOOL ScrollHorz)
 {
   Win.ShowWindow(nMinMax);
-  
+
   CFont* font = new CFont;
   LOGFONT lf;
   memset(&lf, 0, sizeof(LOGFONT));
   lf.lfHeight = 16;			  // request a 16-pixel-height font
   strcpy(lf.lfFaceName, "Courier");	  // request a face name "Courier"
   VERIFY(font->CreateFontIndirect(&lf));  // create the font
-  
-  
+
+
   Win.SetFont(font, TRUE);
   if (ScrollVert)
     Win.ShowScrollBar(SB_VERT, TRUE);
@@ -258,16 +282,16 @@ void CPCSpimView::WriteToMessage(LPCTSTR szText)
     }
   else
     {
-    CString buf ('\0', m_wndMessages.GetWindowTextLength());
-    m_wndMessages.GetWindowText(buf);
-    char* text2 = MakeCRLFValid(szText);
-    buf += text2;
-    delete text2;
-    m_wndMessages.SetWindowText(buf);
+      CString buf ('\0', m_wndMessages.GetWindowTextLength());
+      m_wndMessages.GetWindowText(buf);
+      char* text2 = MakeCRLFValid(szText);
+      buf += text2;
+      delete text2;
+      m_wndMessages.SetWindowText(buf);
 
-    // Position last few lines in window.
-    m_wndMessages.LineScroll(m_wndMessages.GetLineCount() - 4, 0) ;
-    m_wndMessages.UpdateWindow();
+      // Position last few lines in window.
+      m_wndMessages.LineScroll(m_wndMessages.GetLineCount() - 4, 0) ;
+      m_wndMessages.UpdateWindow();
     }
 }
 
@@ -571,7 +595,7 @@ void CPCSpimView::DisplayDataSegment()
 
 char * CPCSpimView::DumpMemValues(mem_addr from,
 				  mem_addr to,
-				  char* buf, 
+				  char* buf,
 				  int *limit,
 				  int *n)
 {
@@ -826,7 +850,7 @@ void CPCSpimView::OnUpdateSimulatorStep(CCmdUI* pCmdUI)
 {
   CMainFrame *pWnd = (CMainFrame *)AfxGetMainWnd();
   pWnd->UpdateSettingsStatus();
-  
+
   pCmdUI->Enable(!g_fRunning && m_fSimulatorInitialized);
 }
 
@@ -846,7 +870,7 @@ void CPCSpimView::OnUpdateSimulatorMultistep(CCmdUI* pCmdUI)
 {
   CMainFrame *pWnd = (CMainFrame *)AfxGetMainWnd();
   pWnd->UpdateSettingsStatus();
-  
+
   pCmdUI->Enable(!g_fRunning && m_fSimulatorInitialized);
 }
 
