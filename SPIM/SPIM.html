@@ -7,37 +7,35 @@ SPIM MIPS Simulator</TITLE>
 <H1 align=center>SPIM</H1>
 <H2 align=center>A MIPS R2000/R3000 Simulator</H2>
 <CENTER>
-<P><A href="http://www.cs.wisc.edu/~larus/larus.html">James Larus</A></P>
-<DIV align=center>
-<TABLE width=386 border=0>
-  <TBODY>
-  <TR>
-    <TD align=middle width=198><B>Old Address</B></TD>
-    <TD align=middle width=172><B>Current Address</B></TD></TR>
-  <TR>
-    <TD width=198>Computer Sciences Department<BR>1210 West Dayton 
-      Street<BR>University of Wisconsin<BR>Madison, WI 
-    53706<BR>larus@cs.wisc.edu</TD>
-    <TD width=172>Microsoft Research<BR>One Microsoft Way<BR>Redmond, WA 
-      98052<BR>larus@microsoft.com</TD></TR></TBODY></TABLE></DIV>
-<P>&nbsp;</P></CENTER>
-<P><B>spim</B> is a self-contained simulator for running MIPS R2000/R3000 
+<P style="margin-top: 0; margin-bottom: 0">
+<a href="http://www.cs.wisc.edu/~larus/larus.html">James Larus</a></P>
+<P style="margin-top: 0; margin-bottom: 0"><a href="mailto:larus@microsoft.com">
+larus@microsoft.com</a></P>
+<P style="margin-top: 0; margin-bottom: 0">&nbsp;</P>
+<P style="margin-top: 0; margin-bottom: 0"><i>Formerly:</i> Professor, Computer 
+Sciences Department, University of Wisconsin-Madison</P>
+<P style="margin-top: 0; margin-bottom: 0"><i>Currently:</i> Senior Researcher, Microsoft Research<BR>&nbsp;</P>
+</CENTER>
+<P><B>spim</B> is a self-contained simulator that will run MIPS R2000/R3000 
 assembly language programs. It reads and immediately executes assembly language 
-code for this processor. <B>spim</B> provides a simple debugger and simple set 
-of operating system services.</P>
+code for this processor. <B>spim</B> provides a simple debugger and minimal set 
+of operating system services.<b> spim</b> does <u>not</u> execute binary 
+(compiled) programs.</P>
 <P><B>spim</B> implements almost the entire MIPS assembler-extended instruction 
-set for the R2000/R3000 (It omits some of the complex floating point comparisons 
+set for the R2000/R3000 (It omits some complex floating point comparisons and 
+rounding modes 
 and details of the memory system page tables.) The MIPS architecture has evolved 
 considerably since then (in particular, from 32 to 64 bits), which means that 
 <B>spim</B> will not run programs compiled for recent MIPS or SGI 
-processors.</P>
+processors. MIPS compilers also generate a number of assembler directives that
+<b>spim</b> cannot process. These directives can be safely deleted.</P>
 <P><B>spim</B> comes with complete source code and documentation. It also 
 include a torture test to verify a port to a new machine.</P>
 <P><B>spim</B> implements both a simple, terminal-style interface and a visual 
-windowing interface. On Unix, the spim program provides a terminal interface and 
-the xspim program provides an X window interface. On PCs, the spim program 
-provides a DOS interface or console interface and PCSpim provides a Windows 
-interface..</P>
+windowing interface. On Unix, the <i>spim</i> program provides the terminal interface and 
+the <i>xspim</i> program provides the X window interface. On PCs, the <i>spim</i> program 
+provides the DOS interface or console interface and <i>PCSpim</i> provides the 
+Windows interface.</P>
 <HR width="100%">
 
 <H2 align=center><B><FONT size=+2>Downloading SPIM</FONT></B></H2>
@@ -47,20 +45,20 @@ interface..</P>
   <TBODY>
   <TR>
     <TD align=middle width=279><B>Platform</B></TD>
-    <TD align=middle width=128>&nbsp;</TD>
+    <TD align=middle width=128><b>Program</b></TD>
     <TD align=middle width=128><B>Form</B></TD>
     <TD align=middle width=382><B>File</B></TD></TR>
   <TR>
     <TD width=279>Unix or Linux system</TD>
-    <TD width=128>spim<BR>xspim</TD>
+    <TD width=128 align="center"><i>spim<BR>xspim</i></TD>
     <TD width=128>Source code</TD>
     <TD width=382><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A> 
       or<A href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z"><BR></A><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</A></TD></TR>
   <TR>
-    <TD width=279 rowSpan=2>Microsoft Windows<BR>(Windows 95, 98, NT, 2000)</TD>
-    <TD width=128 rowSpan=2>spim<BR>PCSpim</TD>
+    <TD width=279 rowSpan=2>Microsoft Windows<BR>(Windows 95, 98, NT, 2000, XP)</TD>
+    <TD width=128 rowSpan=2 align="center"><i>spim<BR>PCSpim</i></TD>
     <TD width=128>Executable</TD>
     <TD width=382><a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">
     http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a> 
@@ -71,65 +69,215 @@ interface..</P>
       href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</A></TD></TR>
   <TR>
     <TD width=279>Microsoft DOS</TD>
-    <TD width=128>spim</TD>
+    <TD width=128 align="center"><i>spim</i></TD>
     <TD width=128>Executable</TD>
     <TD width=382><A 
       href="http://www.cs.wisc.edu/~larus/SPIM/spimdos.exe">http://www.cs.wisc.edu/~larus/SPIM/spimdos.exe</A> 
     </TD></TR></TBODY></TABLE></CENTER></DIV>
-<P>To run spim or xspim on a Unix or Linux system, copy either the compressed 
+<P>To run <i>spim</i> or <i>xspim</i> on a Unix or Linux system, copy either the compressed 
 tar file (<A 
 href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A>) 
 or the gzip'ed tar file (<A 
 href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</A>).&nbsp; 
-Both files contains source and must be compiled for a particular platform.</P>
-<P>To run PCspim on a PC under Microsoft Windows, download the file
+Both files contains source code and must be compiled on a particular system.</P>
+<P>To run <i>PCspim</i> on a PC under Microsoft Windows, download the file
 <a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">
-http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>, unzip it, and run setup.exe 
-(<A href="http://www.cs.wisc.edu/~larus/SPIM/spimwin.pdf">instructions</A>).</P>
-<P>Source for the PC version (both PCspim and spim) is available separately in 
+http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>, unzip it, and run <i>setup.exe</i>.</P>
+<P>Source for the PC version (both <i>PCspim</i> and <i>spim</i>) is available separately in 
 the file <A 
-href="ftp://ftp.cs.wisc.edu/pub/spim/pcspim_src.zip">ftp://ftp.cs.wisc.edu/pub/spim/pcspim_src.zip</A> 
-</P>To run spim on a PC under MS/DOS, copy the file <A 
-href="http://www.cs.wisc.edu/~larus/SPIM/spimdos.exe">http://www.cs.wisc.edu/~larus/SPIM/spimdos.exe</A> 
-
-<P>There is no Macintosh version of <B>spim</B> (Yes, there should be).</P>
+      href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</A>. 
+</P>To run spim on a PC under MS/DOS, get the file <A 
+href="http://www.cs.wisc.edu/~larus/SPIM/spimdos.exe">http://www.cs.wisc.edu/~larus/SPIM/spimdos.exe</A>. 
+This program is probably obsolete.<P>There is no Macintosh version of <B>spim</B>.
+<b>(new)</b> However, the Unix version of xspim can be compiled and run on Mac 
+OS X. </P>
 <HR width="100%">
 
-<H2 align=center><B><FONT size=+2>Documentation</FONT></B></H2>
-<P>Morgan Kaufmann has generously provided an on-line version of Appendix A from 
+<H2 align=center><font size="+2">Installation</font></H2>
+
+<p align=left><b><font size="4">Windows</font></b></p>
+<ol>
+  <li>
+
+<p align=left>Download the file
+<a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">
+http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a> and save it on your machine.</li>
+<li>
+
+<p align=left>Unzip the file.</li>
+<li>
+
+<p align=left>Run the <i>setup.exe</i> program.</li>
+</ol>
+
+<p align=left><b><font size="4">Unix or Linux</font></b></p>
+
+<p align=left>Installation is a bit more complex for a Unix or Linux system, as 
+you need to compile the program for your particular computer and operating 
+system.</p>
+<ol style="margin-top: 2">
+  <li>
+
+<p align=left>Download either the file <A 
+      href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A> 
+      or<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z"> </a><A 
+      href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</A>.</li>
+<li>
+
+<p align=left>Decompress the file, using either the program <i>uncompress</i> 
+for the first file or <i>gzip</i> for the second file:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <i>% uncompress spim.tar.Z<br>
+<br>
+</i>or<br>
+<br>
+&nbsp;&nbsp;&nbsp; <i>% gzip -d spim.tar.gz<br>
+&nbsp;</i></li>
+<li>
+
+<p align=left>Move the file <i>spim.tar</i> to the directory in which you want 
+to build <b>spim</b> and untar it:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <i>% tar xf spim.tar<br>
+&nbsp;</i></li>
+<li>
+
+<p align=left>To compile <b>spim</b>, you must first configure it for your 
+system by running the Configure script:<br>
+<br>
+<i>&nbsp;&nbsp;&nbsp; % Configure<br>
+<br>
+</i>Note: Configure compiles a program with the C compiler named cc. If you want 
+it to use another compiler, set the environment variable CC to its name before 
+running the script, e.g.:<br>
+<br>
+<i>&nbsp;&nbsp;&nbsp; % setenv CC gcc<br>
+&nbsp;&nbsp;&nbsp; % Configure<br>
+&nbsp;</i></li>
+<li>
+
+<p align=left>Next, you must set the directories in which <b>spim </b>will be 
+installed by editing a makefile (the file that tells how to build <b>spim</b>). 
+In general, if you are installing <b>spim</b> and want the windowing version (<i>xspim</i>), 
+you will edit the file <u><i>Imakefile</i></u>. If you don't want <i>xspim</i> 
+or are running on a system without X-windows installed, you can use the file <i>
+Makefile.std</i>. Finally, if you are running under Microsoft Windows using
+<a href="http://www.cygwin.com/">Cygwin</a>, edit the file <i>Makefile.cygwin</i>.<br>
+<br>
+Set these pathnames to the appropriate locations for your system:</p>
+
+<p align=left>&nbsp;&nbsp;&nbsp; TRAP_DIR -- The full pathname of the directory 
+in which to install the <b>spim </b>trap handler.</p>
+
+<p align=left>&nbsp;&nbsp;&nbsp; BIN_DIR -- The full pathname of the directory 
+in which <i>spim</i> and <i>xspim</i> should be installed.</p>
+
+<p align=left>&nbsp;&nbsp;&nbsp; MAN_DIR -- The full pathname of the directory 
+in which the manual pages for <i>spim</i> and <i>xspim</i> should be installed.<br>
+<br>
+In general, the remaining parameters in the makefile need not be changed.<br>
+&nbsp;</li>
+<li>
+
+<p align=left>Then, if you are using <u><i>Imakefile </i></u>type:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <i>% xmkmf<br>
+&nbsp;&nbsp;&nbsp; % make</i><br>
+&nbsp;</li>
+<li>
+
+<p align=left>If you want an X-window version of <b>spim</b>, also type:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <i>% make xspim</i><br>
+&nbsp;</li>
+<li>
+
+<p align=left>If you do not have X-windows or the program <i>xmkmf</i>, edit 
+either <i>Makefile.std</i> or <i>Makefile.cygwin</i> and type:<br>
+<br>
+<i>&nbsp;&nbsp;&nbsp; % make -f Makefile.std test<br>
+&nbsp;&nbsp;&nbsp; </i></li>
+<li>
+
+<p align=left>To run <i>spim</i> or <i>xspim</i>, the trap handler must be 
+installed in the directory specified by the variable TRAP_DIR in the makefile. 
+If the file <i>trap.handler</i> is not installed, <i>spim</i> and <i>xspim</i> 
+fail with a message before they start running. You can either install this file 
+by hand or by typing<br>
+<br>
+<i>&nbsp;&nbsp;&nbsp; % make install</i><br>
+<br>
+which also installs spim, xspim, and the manual pages in the directories that 
+you set (above).<br>
+&nbsp;</li>
+<li>
+
+<p align=left>To test that <b>spim </b>is correctly built, type<br>
+<br>
+<i>&nbsp;&nbsp;&nbsp; % make test</i><br>
+<br>
+and examine the output of the test. (Note: the trap handler must be installed 
+before running the test.)</li>
+</ol>
+<hr>
+
+<H2 align=center><font size="+2">Resources</font></H2>
+<ul style="margin-top: 1">
+  <li>
+<P style="margin-top: 0; margin-bottom: 2">Morgan Kaufmann has generously provided an on-line version of Appendix A from 
 Hennessy &amp; Patterson, <A 
 href="http://www.mkp.com/books_catalog/1-55860-428-6.asp"><I>Computer 
 Organization and Design: The Hardware/Software Interface</I></A> (as a <A 
 href="http://www.cs.wisc.edu/~larus/SPIM/cod-appa.pdf">Adobe PDF file</A>). This 
-is a more complete and up-to-date version of <B>spim</B> documentation included 
+is a  complete and more up-to-date version of documentation included 
 with <B>spim</B>. 
-<P>The documentation included with <B>spim</B> is also online (as a <A 
+  </li>
+  <li> 
+<P style="margin-top: 0; margin-bottom: 2">This documentation included with <B>spim</B> is also online (as a <A 
 href="http://www.cs.wisc.edu/~larus/SPIM/spim_documentation.ps">postscript</A> 
 or <A href="http://www.cs.wisc.edu/~larus/SPIM/spim_documentation.pdf">Adobe PDF 
 file</A>). However Appendix A of Hennessy &amp; Patterson, <A 
 href="http://www.mkp.com/books_catalog/1-55860-428-6.asp"><I>Computer 
-Organization and Design: The Hardware/Software Interface</I></A> (above), is a more 
-complete and accurate description of the MIPS architecture and <B>spim</B> 
-software.</P>
-<P>There is some documentation for the Windows interface to <B>spim</B>:
+Organization and Design: The Hardware/Software Interface</I></A> (above), is 
+more recent and through..</P>
+  </li>
+  <li>
+<P style="margin-top: 0; margin-bottom: 2">There is some documentation for the Windows interface to <B>spim</B>:
 <A href="http://www.cs.wisc.edu/~larus/SPIM/spimwin.pdf">Adobe PDF file</A>. 
-<P>The reference manual for the MIPS architecture (including processors later 
-than the R2000/R3000) is: Gerry Kane and Joe Heinrich, <I>MIPS&nbsp;RISC 
+  </li>
+  <li> 
+<P style="margin-top: 0; margin-bottom: 2">The reference manual for the MIPS architecture (including processors 
+subsequent to the R2000/R3000) is: Gerry Kane and Joe Heinrich, <I>MIPS&nbsp;RISC 
 Architecture</I>, Prentice Hall, Englewood Cliffs, N.J. 07632 ISBN 0-13-1059254. 
 
-<P>Another good book for MIPS R2000 and R3000 programmers is: Erin Farquhar and 
+  </li>
+  <li> 
+
+<P style="margin-top: 0; margin-bottom: 2">Another good book for MIPS R2000 and R3000 programmers is: Erin Farquhar and 
 Philip Bunce, <A 
 href="http://www.mkp.com/books_catalog/areas/computer_architecture.asp#MIPS programming"><I>The 
 MIPS Programmer's Handbook,</I></A> Morgan Kaufmann, San Francisco, CA, 1994, 
 ISBN 1-55860-297-6.</P>
-<P>However, the best book for MIPS programmers is: Dominic Sweetman, <A 
+  </li>
+  <li>
+<P style="margin-top: 0; margin-bottom: 2">However, the best book for MIPS programmers is: Dominic Sweetman, <A 
 href="http://www.mkp.com/books_catalog/areas/computer_architecture.asp#MIPS programming"><I>See 
 MIPS Run,</I></A> Morgan Kaufmann, San Francisco, CA, 1999, ISBN 
 1-55860-410-3.</P>
+  </li>
+  <li>
+<P style="margin-top: 0; margin-bottom: 2">The GNU C compiler can generate code 
+for the MIPS R3000 and can easily be used as a cross compiler. A retargeted port 
+of gcc is available on the <a href="http://www.cs.unibo.it/mps/">MPS Resource 
+Page</a>. I have not used this compiler.</P>
+  </li>
+</ul>
 <HR width="100%">
 
 <H2 align=center>Latest Version</H2>
-<P align=left>The current version of <B>spim</B> is 6.4, which contains the 
+<P align=left>The current version of <B>spim</B> is 6.5 (January 2003), which contains the 
+following changes from version 6.4:</P>
+<P align=left>The previous version of <B>spim</B> is 6.4 (January 2002), which contains the 
 following changes from version 6.3:</P>
 <ul>
   <li>
@@ -169,7 +317,7 @@ extended.</P>
 in target PC.</P>
   </li>
 </ul>
-<P align=left>The previous version of <B>spim</B> is 6.3, which contains the 
+<P align=left>The previous version of <B>spim</B> is 6.3 (January 2001), which contains the 
 following changes from version 6.2:</P>
 <UL>
   <LI>
@@ -211,10 +359,21 @@ following changes from version 6.2:</P>
 <HR width="100%">
 
 <H2 align=center><B><FONT size=+2>Copyright</FONT></B></H2>
-<P><B>spim</B> is copyrighted by James Larus. The DOS and Windows ports were 
-done by David A. Carley and are copyrighted by Morgan Kaufmann Publishers. 
-<B>spim</B> can be freely used and distributed for non-commercial purposes (see 
-the README file for details).</P>
+<P><b>spim</b> is copyrighted by James R. Larus and distributed under the 
+following conditions:</P>
+<ul>
+  <li>You may make copies of <b>spim</b> for your own use and modify those 
+  copies.</li>
+  <li>All copies of <b>spim</b> must retain my name and copyright notice.</li>
+  <li>You may not sell <b>spim</b> or distribute <b>spim</b> in conjunction with 
+  a commercial product or service without the expressed written consent of James 
+  Larus.</li>
+</ul>
+<P>THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED 
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF 
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</P>
+<P>&nbsp;The DOS and Windows ports were 
+done by David A. Carley and are copyrighted by Morgan Kaufmann Publishers.</P>
 <HR width="100%">
 
 <H2 align=center><B><FONT size=+2>SPIMSAL Note</FONT></B></H2>
@@ -223,6 +382,5 @@ href="ftp://ftp.cs.wisc.edu/pub/spimsal/spimsal.zip">PCs running Windows 3.1</A>
 and <A 
 href="ftp://ftp.cs.wisc.edu/pub/spimsal/SPIMSAL.macintosh.bin">Macintoshes</A>. 
 <B>spimsal</B> implements an extended version of the MIPS instruction set and is 
-based on an old version of <B>spim</B>. It also does NOT run under Windows '95 
-or Windows NT. If you used this program on PCs and do not need the SAL 
-instructions, you should get the new version.</P></BODY></HTML>
+based on an old version of <B>spim</B>. It also does NOT run under Windows 95 or 
+Windows NT.</P></BODY></HTML>
