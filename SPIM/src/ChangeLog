@@ -1,3 +1,20 @@
+2004-03-12    <larus@C745660-A>
+
+	* scanner.l [Akim Demaille <akim@epita.fr>]
+	Improve handling of escape sequence in strings to bring it close
+	to ISO C strings.
+
+	* spim.c:
+	Introduced short command line arguments.
+	Assumed first argument not starting with '-' is file name.
+
+	* inst.h mem.c mem.h reg.h run.c spim-utils.c spim.c spim.h
+	tt.io.s:
+	Fixed implementation of console IO.
+	Ensure that interrupts occur before instruction execution (and
+	other exceptions afterwards), so that EPC points to instruciton to
+	restart.
+
 2004-03-11    <larus@C745660-A>
 
 	* mips-syscall.{c,h} spim-sycall.h syscall.{c,h}
@@ -22,7 +39,7 @@
 	compiled -DMIPS1).
 	Added CP0 timer.
 	Fixed trap.handler to work with MIPS32 exceptions.
-	
+
 2004-02-19    <larus@LARUS1>
 
 	* inst.c inst.h spim-utils.c:
@@ -42,7 +59,7 @@
 	* Documentation/spim.tex [Deborah Ariel Pickett
 	(debbiep@mail.csse.monash.edu.au)]:
 	Updated documentation to reflect changes to command line options
-	and new syscalls.	
+	and new syscalls.
 
 	* pervasive:
 	Eliminated #ifdef __STDC__. Everyone must have a non-K&R compiler
@@ -56,7 +73,7 @@
 	SpimSupport.cpp [Akim Demaille (akim@epita.fr)]:
 	Added new syscall (EXIT2_SYSCALL) that takes argument that is
 	passed to spim's exit() call.
-	
+
 	* sym-tbl.c [Matt Harren (math@cs.berkeley.edu)]:
 	Copied garbage byte after name of undefined symbols.
 
@@ -87,7 +104,7 @@
 
 	* spim.c [Jos Hulzink (josh@stack.nl)]:
 	Incorrect ifdef around vprintf.
-	
+
 	* spim.c [Marvin Solomon (solomon@cs.wisc.edu)]:
 	Core dumped when passed one argument.
 
