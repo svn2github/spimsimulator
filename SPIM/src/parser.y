@@ -777,7 +777,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 	|	BINARY_OP_NOI	DEST_REG	SRC1		IMM
 		{
-		  if (bare_machine)
+		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    {
@@ -795,7 +795,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 	|	BINARY_OP_NOI	DEST_REG	IMM
 		{
-		  if (bare_machine)
+		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    {
@@ -821,7 +821,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		{
 		  int val = eval_imm_expr ((imm_expr*)$4.p);
 
-		  if (bare_machine)
+		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    i_type_inst ($1.i == Y_SUB_OP ? Y_ADDI_OP
@@ -838,7 +838,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		{
 		  int val = eval_imm_expr ((imm_expr*)$3.p);
 
-		  if (bare_machine)
+		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    i_type_inst ($1.i == Y_SUB_OP ? Y_ADDI_OP
@@ -1034,7 +1034,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 
 	|	BINARY_BR_OP	SRC1		IMMEDIATE	LABEL
 		{
-		  if (bare_machine)
+		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    {
