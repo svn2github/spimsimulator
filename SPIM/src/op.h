@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 29    3/04/04 7:16a Larus $
+/* $Header: /Software/SPIM/src/op.h 30    3/04/04 8:47p Larus $
 */
 
 
@@ -368,6 +368,8 @@ OP("rsqrt.s",	Y_RSQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000016)	/* MIPS32 Rev 2 */
 OP("sb",	Y_SB_OP,	I2a_TYPE_INST,		0xa0000000)
 OP("sc",	Y_SC_OP,	I2a_TYPE_INST,		0xe0000000)	/* MIPS32 */
 OP("sd",	Y_SD_POP,	PSEUDO_OP,		-1)
+OP("sdc1",	Y_SDC1_OP,	FP_I2a_TYPE_INST,	0xf4000000)	/* MIPS32 */
+OP("sdc2",	Y_SDC2_OP,	I2a_TYPE_INST,		0xf8000000)	/* MIPS32 */
 OP("sdxc1",	Y_SDXC1_OP,	FP_R3_TYPE_INST,	0x46000009)	/* MIPS32 Rev 2 */
 OP("seb",	Y_SEB_OP,	R2td_TYPE_INST,		0x7c000420)	/* MIPS32 Rev 2 */
 OP("seh",	Y_SEH_OP,	R2td_TYPE_INST,		0x7c000620)	/* MIPS32 Rev 2 */

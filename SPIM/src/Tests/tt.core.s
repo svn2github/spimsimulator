@@ -1642,6 +1642,48 @@ swd_:	.byte 0, 0, 0, 0
 	bne $t1 $0 fail
 
 
+	.data
+sdc1_:	.asciiz "Testing SDC1\n"
+	.align 2
+sdc1d_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sdc1_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	li $4, 0xf7f7f7f7
+	la $2 sdc1d_
+	mtc1 $3, $0
+	mtc1 $4, $1
+	sdc1 $f0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+	lw $5 4($2)
+	bne $5 $4 fail
+
+
+	.data
+sdc2_:	.asciiz "Testing SDC2\n"
+	.align 2
+sdc2d_:	.word 0, 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sdc2_
+	syscall
+
+	li $3, 0x7f7f7f7f
+	li $4, 0xf7f7f7f7
+	la $2 sdc2d_
+	mtc2 $3, $0
+	mtc2 $4, $1
+	sdc2 $0 0($2)
+	lw $5 0($2)
+	bne $5 $3 fail
+	lw $5 4($2)
+	bne $5 $4 fail
+
+
 # SWL is endian-specific
 
 
