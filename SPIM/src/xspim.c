@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 8     2/01/01 8:44p Larus $
+/* $Header: /Software/SPIM/src/xspim.c 9     1/12/02 4:15p Larus $
  */
 
 #include <stdio.h>
@@ -125,7 +125,7 @@ Pixmap mark;
 #ifdef __STDC__
 static void center_text_at_PC (void);
 static char *check_buf_limit (char *, int *, int *);
-static create_console_display (void);
+static void create_console_display (void);
 static void display_data_seg (void);
 static char *display_values (mem_addr from, mem_addr to, char *buf, int *limit,
 			     int *n);
@@ -141,7 +141,7 @@ static void write_text_to_window (Widget w, char *s);
 #else
 static void center_text_at_PC ();
 static char *check_buf_limit ();
-static create_console_display ();
+static void create_console_display ();
 static void display_data_seg ();
 static char *display_values ();
 static char *display_insts ();
