@@ -941,6 +941,22 @@ hilo_:	.asciiz "Testing move to/from HI/LO\n"
 
 
 	.data
+movn_:	.asciiz "Testing MOVN\n"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 movn_
+	syscall
+
+	li $2 2
+	li $3 3
+	li $4 4
+	movn $4 $3 $0
+	bne $4 4 fail
+	movn $4 $3 $2
+	bne $4 3 fail
+
+
+	.data
 mul_:	.asciiz "Testing MUL\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)
@@ -2950,6 +2966,8 @@ movf.d_:.asciiz "Testing MOVF.D\n"
 	lw $5 fp_d1+4
 	lwc1 $f2 fp_d1
 	lwc1 $f3 fp_d1+4
+	mtc1 $0 $6
+	mtc1 $0 $7
 	movf.d $f4 $f2 1
 	movf.d $f6 $f4 7
 	mfc1 $6 $f4

@@ -210,6 +210,7 @@
 %token Y_MOVF_D_OP
 %token Y_MOVF_PS_OP
 %token Y_MOVF_S_OP
+%token Y_MOVN_OP
 %token Y_MOVN_PS_OP
 %token Y_MOVT_PS_OP
 %token Y_MOVZ_PS_OP
@@ -1442,6 +1443,12 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
+	|	MOVEC_OP	DEST	SRC1	SRC2
+		{
+		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
+		}
+
+
 	|	MOVE_COP_OP	REG		COP_REG
 		{
 		  if ($1.i == Y_MFC1_D_POP)
@@ -1781,6 +1788,9 @@ MOVE_FROM_HILO_OP:	Y_MFHI_OP
 
 MOVE_TO_HILO_OP:	Y_MTHI_OP
 	|	Y_MTLO_OP
+	;
+
+MOVEC_OP:	Y_MOVN_OP
 	;
 
 MOVE_COP_OP:	Y_MFC0_OP
