@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 34    5/08/04 9:06a Larus $
+/* $Header: /Software/SPIM/src/spim.c 35    9/26/04 10:39a Larus $
 */
 
 
@@ -53,8 +53,7 @@
 
 #ifndef WIN32
 #include <sys/time.h>
-#ifdef USE_TERMIO
-#include <termio.h>
+#ifdef USE_TERMIOS
 #include <termios.h>
 #else
 #include <sys/ioctl.h>
@@ -114,8 +113,8 @@ int spim_return_value;		/* Value returned when spim exits */
 static int load_exception_handler = 1;
 char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 static int console_state_saved;
-#ifdef USE_TERMIO
-static struct termio saved_console_state;
+#ifdef USE_TERMIOS
+static struct termios saved_console_state;
 #else
 static struct sgttyb saved_console_state;
 #endif
@@ -1013,8 +1012,8 @@ console_to_program ()
 {
   if (mapped_io && !console_state_saved)
     {
-#ifdef USE_TERMIO
-      struct termio params;
+#ifdef USE_TERMIOS
+      struct termios params;
 
       ioctl (console_in.i, TCGETA, (char *) &saved_console_state);
       params = saved_console_state;
@@ -1047,7 +1046,7 @@ static void
 console_to_spim ()
 {
   if (mapped_io && console_state_saved)
-#ifdef USE_TERMIO
+#ifdef USE_TERMIOS
     ioctl ((int) console_in.i, TCSETA, (char *) &saved_console_state);
 #else
     ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim-utils.c 24    3/21/04 2:05p Larus $
+/* $Header: /Software/SPIM/src/spim-utils.c 25    9/26/04 10:39a Larus $
 */
 
 
@@ -303,10 +303,15 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt)
 
   exception_occurred = 0;
   if (!run_spim (pc, steps, display))
-    /* Can't restart program */
-    PC = 0;
+      /* Can't restart program */
+      PC = 0;
   if (exception_occurred && CP0_ExCode == ExcCode_Bp)
-    return (1);
+  {
+      /* Turn off EXL bit, so subsequent interrupts set EPC since the break is
+      handled by SPIM code, not MIPS code. */
+      CP0_Status &= ~CP0_Status_EXL;
+      return (1);
+  }
   else
     return (0);
 }

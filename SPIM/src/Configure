@@ -150,12 +150,12 @@ fi;
 
 
 echo
-echo Checking for /usr/include/termio.h
-if [ -f /usr/include/termio.h ]; then
-  echo "-DUSE_TERMIO" >> configuration
+echo Checking for /usr/include/termios.h
+if [ -f /usr/include/termios.h ]; then
+  echo "-DUSE_TERMIOS" >> configuration
   echo "Yes, it is there"
 else
-  # No memcpy
+  # No termios
   echo "No, it is not there"
 fi;
 

@@ -1,3 +1,20 @@
+2004-09-26    <Jim@LS1>
+
+	* spim.c, Configure:
+	Eliminated dependence on obsolete termio.h in favor of posix
+	termios.h since Mac OS X doesn't have termio.h any more.
+
+2004-09-21    <Jim@LS1>
+
+	* PCSpimView.cpp:
+	Fix null pointer problem if no entries in registry.
+
+	* spim-utils.c [J.P. Mellor [jpmellor@rose-hulman.edu]]:
+	Turn off EXL bit after break instruction, since break is handled by
+	SPIM, not MIPS, code and the bit was never getting cleared.
+	
+	* Move to VC7.0 (Visual Studio.NET).
+
 2004-09-12    <larus@HomeMachine>
 
 	* Released SPIM 7.0b (on Windows) to propagate changes.
