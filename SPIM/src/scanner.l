@@ -603,10 +603,10 @@ source_line ()
       for (eol1 = current_line; *eol1 != '\0' && *eol1 != '\n'; ) eol1 += 1;
 
       /* Ran into null byte, probably from yylex.  Look further for newline */
-      if (*eol1 == '\0')
+      if (*eol1 == '\0' && yy_hold_char != '\n')
 	{
 	  null1 = eol1;
-	  *eol1 = ' ';
+	  *eol1 = yy_hold_char;
 	  for ( ; *eol1 != '\0' && *eol1 != '\n'; )
 	    eol1 += 1;
 	}
