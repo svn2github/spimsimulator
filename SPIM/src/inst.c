@@ -317,22 +317,29 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
       int offset;
 
       if (expr->symbol != NULL
-	  && expr->symbol->gp_flag && rs == 0
+	  && expr->symbol->gp_flag
+	  && rs == 0
 	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
 	  && offset <= IMM_MAX)
-	i_type_inst_free (opcode, rt, REG_GP, make_imm_expr (offset, NULL, 0));
+	{
+	  i_type_inst_free (opcode, rt, REG_GP, make_imm_expr (offset, NULL, 0));
+	}
       else if (value_known)
 	{
 	  int low, high;
 
 	  high = (value >> 16) & 0xffff;
-	  low = 0xffff & value;
+	  low = value & 0xffff;
 
-	  if (high &&
-	      !(high == 0xffff && (low & 0x8000))) /* load sign-extends */
+	  if (high != 0 &&
+	      !(high == 0xffff && (low & 0x8000)))
 	    {
+	      /* Some of high 16 bits are non-zero */
 	      if (low & 0x8000)
-		high += 1;		/* Adjust since load sign-extends */
+		{
+		  /* Adjust high 16, since load sign-extends low 16*/
+		  high += 1;
+		}
 
 	      i_type_inst_free (Y_LUI_OP, 1, 0, const_imm_expr (high));
 	      if (rs != 0)	/* Base register */
@@ -340,7 +347,10 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 	      i_type_inst_free (opcode, rt, 1, const_imm_expr (low));
 	    }
 	  else
-	    i_type_inst_free (opcode, rt, rs, const_imm_expr (low));
+	    {
+	      /* Special case, sign-extension of low 16 bits sets high to 0xffff */
+	      i_type_inst_free (opcode, rt, rs, const_imm_expr (low));
+	    }
 	}
       else
 	{
@@ -367,7 +377,7 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
 	  && offset <= IMM_MAX)
 	i_type_inst_free ((opcode == Y_LUI_OP ? Y_ADDIU_OP : opcode),
-		       rt, REG_GP, make_imm_expr (offset, NULL, 0));
+			  rt, REG_GP, make_imm_expr (offset, NULL, 0));
       else
 	{
 	  /* Use $at */

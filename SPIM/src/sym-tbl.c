@@ -409,27 +409,20 @@ resolve_a_label_sub (sym, inst, pc)
 	      value = eval_imm_expr (EXPR (inst));
 	      mask = 0xffff;
 
-	      /* LW/SW sign extends offset.  Add 1 to high 16 bits
-	         to compensate. */
 	      if (value & 0x8000)
-	      {
-		instruction* prev_inst;
-		READ_MEM_INST (prev_inst, pc - BYTES_PER_WORD);
-		if (OPCODE (prev_inst) == Y_LUI_OP
-		    && EXPR (inst)->symbol == EXPR (prev_inst)->symbol)
 		{
-		  if (IMM (prev_inst) == 0)
-		  {
-		    /* Have not yet resolved label */
-		    EXPR (prev_inst)->offset += 0x10000;
-		  }
-		  else
-		  {
-		    /* Already resolved label */
-		    IMM (prev_inst) += 1;
-		  }
+  		  /* LW/SW sign extends offset. Compensate by adding 1 to high 16 bits. */
+		  instruction* prev_inst;
+		  READ_MEM_INST (prev_inst, pc - BYTES_PER_WORD);
+		  if (OPCODE (prev_inst) == Y_LUI_OP
+		      && EXPR (inst)->symbol == EXPR (prev_inst)->symbol
+		      && IMM (prev_inst) == 0)
+		    {
+		      /* Check that previous instruction was LUI and it has no immediate,
+			 otherwise it will have compensated for sign-extension */
+		      EXPR (prev_inst)->offset += 0x10000;
+		    }
 		}
-	      }
 	    }
 	  else
 	    {

@@ -1,3 +1,26 @@
+2000-12-10    <larus@C745660-A>
+
+	* inst.c (i_type_inst_full_word and resolve_a_label_sub):
+	Sign-extension fixup code for high 16 bits of lw/sw added fixup
+	twice into instruction immediate field. [From: Robert Greenfield
+	(rhg@gpfn.sk.ca) and Christian R Ward]
+
+2000-12-07    <larus@C745660-A>
+
+	* sys-table.c (resolve_a_label_sub):
+	Correct binary encoding of negative offsets in branch instructions
+	(high 2 bits were 0). [From: Jim Frenzel (jfrenzel@uidaho.edu) and
+	others]
+
+	* mips-syscall.c (do_syscall)
+	Print single and double precision registers to up to 18 digits,
+	not default 6 digits of precision. [From: PIERCE@hood.edu]
+
+2000-12-06    <larus@C745660-A>
+
+	* spim.c (print_all_regs):
+	Added spim command to print all registers. [From: Linus Akerlund]
+
 2000-12-05    <larus@C745660-A>
 
 	* Tests/tt.le.s Tests/tt.be.s:
