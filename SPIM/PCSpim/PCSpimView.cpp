@@ -37,7 +37,7 @@
 
 
 #ifndef TRAP_FILE_PATH
-#define TRAP_FILE_PATH "D:\\Software\\SPIM\\src\\trap.handler"
+#define TRAP_FILE_PATH "E:\\Larus\\Software\\SPIM\\src\\trap.handler"
 #endif
 
 
@@ -728,7 +728,10 @@ void CPCSpimView::OnSimulatorSettings()
   CSettingsDlg dlg;
   dlg.DoModal();	// It takes care of everything.
 
-  ((CMainFrame*)AfxGetMainWnd())->GetActiveDocument()->UpdateAllViews(NULL);
+  if (m_fSimulatorInitialized)
+    {
+    ((CMainFrame*)AfxGetMainWnd())->GetActiveDocument()->UpdateAllViews(NULL);
+    }
 }
 
 
