@@ -593,17 +593,32 @@ source_line ()
     return (NULL);
   else
     {
-      YY_CHAR *nl, c;
+      YY_CHAR *eol1, c1;
+      YY_CHAR *null1 = NULL;
       char *r;
 
       /* Find end of line: */
-      for (nl = current_line; *nl != '\0' && *nl != '\n'; ) nl += 1;
-      c = *nl;
-      *nl = '\0';
+      for (eol1 = current_line; *eol1 != '\0' && *eol1 != '\n'; ) eol1 += 1;
 
-      r = (char *) xmalloc (nl - current_line + 10);
+      /* Ran into null byte, probably from yylex.  Look further for newline */
+      if (*eol1 == '\0')
+	{
+	  null1 = eol1;
+	  *eol1 = ' ';
+	  for ( ; *eol1 != '\0' && *eol1 != '\n'; )
+	    eol1 += 1;
+	}
+
+      c1 = *eol1;
+      *eol1 = '\0';
+
+      r = (char *) xmalloc (eol1 - current_line + 10);
       sprintf (r, "%d: %s", current_line_no, current_line);
-      *nl = c;
+      *eol1 = c1;
+      if (null1 != NULL)
+	{
+	  *null1 = '\0';
+	}
       line_returned = 1;
       return ((char *) r);
     }

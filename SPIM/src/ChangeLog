@@ -1,5 +1,9 @@
 2000-12-10    <larus@C745660-A>
 
+	* scanner.l (source_line):
+	Include comments from source in SPIM comments. [From: John Bruce
+	Zuckerman (johnz@cs.tamu.edu)]
+
 	* mem.c (bad_mem_read):
 	Printing of instruction bits failed when no instruction at
 	address. [From: John Bruce Zuckerman (johnz@cs.tamu.edu)]
