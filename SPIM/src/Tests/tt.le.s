@@ -1,6 +1,7 @@
 # SPIM S20 MIPS simulator.
 # A torture test for the SPIM simulator.
-# Copyright (C) 1990-1994 James Larus, larus@cs.wisc.edu.
+# Version for little-endian systems.
+# Copyright (C) 1990-2000 James Larus, larus@cs.wisc.edu.
 # ALL RIGHTS RESERVED.
 #
 # SPIM is distributed under the following conditions:
@@ -1198,7 +1199,7 @@ sll_:	.asciiz "Testing SLL\n"
 	sll $3 $2 16
 	bne $3 0x10000 fail
 	sll $3 $2 31
-	bne $3 0x8000000 fail
+	bne $3 0x80000000 fail
 
 
 	.data

@@ -1,6 +1,6 @@
 # SPIM S20 MIPS simulator.
 # A simple torture test for the bare SPIM simulator.
-# Copyright (C) 1990-1994 James Larus, larus@cs.wisc.edu.
+# Copyright (C) 1990-2000 James Larus, larus@cs.wisc.edu.
 # ALL RIGHTS RESERVED.
 #
 # SPIM is distributed under the following conditions:

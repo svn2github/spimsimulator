@@ -1,6 +1,6 @@
 # SPIM S20 MIPS simulator.
 # Test memory mapped IO
-# Copyright (C) 1992-1994 James Larus, larus@cs.wisc.edu.
+# Copyright (C) 1992-2000 James Larus, larus@cs.wisc.edu.
 # ALL RIGHTS RESERVED.
 #
 # SPIM is distributed under the following conditions:

@@ -1,7 +1,7 @@
 # SPIM S20 MIPS simulator.
 # A torture test for the SPIM simulator.
 # Version for big-endian systems.
-# Copyright (C) 1990-1994 James Larus, larus@cs.wisc.edu.
+# Copyright (C) 1990-2000 James Larus, larus@cs.wisc.edu.
 # ALL RIGHTS RESERVED.
 #
 # SPIM is distributed under the following conditions:
@@ -4142,5 +4142,4 @@ fail:	li $v0 4	# syscall 4 (print_str)
 	.text 0x408000
 far_away:
 	beq $0, $0, come_back
-	beq $0, $0, come_back2
 
