@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.c 26    10/18/04 10:04p Larus $
+/* $Header: /Software/SPIM/src/inst.c 27    10/19/04 9:22p Larus $
 */
 
 #include <stdio.h>
@@ -809,7 +809,7 @@ format_an_inst (str_stream *ss, instruction *inst, mem_addr addr)
 	}
 
       ss_printf (ss, "; ");
-      ss_printf (ss, SOURCE (inst));
+      ss_printf (ss, "%s", SOURCE (inst));
     }
 
   ss_printf (ss, "\n");
@@ -1124,7 +1124,7 @@ format_imm_expr (str_stream *ss, imm_expr *expr, int base_reg)
 {
   if (expr->symbol != NULL)
     {
-      ss_printf (ss, expr->symbol->name);
+      ss_printf (ss, "%s", expr->symbol->name);
     }
 
   if (expr->pc_relative)
