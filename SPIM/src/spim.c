@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 19    2/27/04 11:16p Larus $
+/* $Header: /Software/SPIM/src/spim.c 20    2/28/04 8:51a Larus $
 */
 
 
@@ -234,7 +234,7 @@ main (int argc, char **argv)
 	else if (streq (argv [i], "-lkdata"))
 	  initial_k_data_limit = atoi (argv[++i]);
 	else
-	  error ("usage: spim -bare/-asm -trap/-notrap -trap_file <file> -quiet/-noquiet -mapped_io/-nomapped_io -file <file> <args>\n");
+	  error ("usage: spim -bare/-asm {-delayed_branches} {-delayed_loads} -trap/-notrap -trap_file <file> -quiet/-noquiet -mapped_io/-nomapped_io -file <file> <args>\n");
       }
 
   if (!assembly_file_read)
