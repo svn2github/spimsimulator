@@ -44,8 +44,8 @@
 #
 
 
-# Full path for directory that will hold the trap handler file:
-TRAP_DIR = .
+# Full path for directory that will hold the exception handler file:
+EXCEPTION_DIR = .
 
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/unsup/bin
@@ -54,8 +54,8 @@ BIN_DIR = /usr/unsup/bin
 MAN_DIR = /usr/unsup/man
 
 
-# Full path for the trap handler file:
-TRAP_PATH = \"$(TRAP_DIR)/trap.handler\"
+# Full path for the exception handler file:
+EXCEPTION_PATH = \"$(EXCEPTION_DIR)/exceptions.s\"
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -82,7 +82,7 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 #
 
 
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
 
 CC = gcc
 CFLAGS = $(DEFINES) -g -Wall
@@ -128,12 +128,12 @@ configuration:
 test:	spim.exe
 	@echo
 	@echo "Testing tt.bare.s:"
-	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& test.out"
+	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -noexception -file Tests/tt.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
-	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "Trap Handler not installed; do make install"; exit 1; else true; fi
-	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
+	@if [ ! -f $(EXCEPTION_DIR)/exceptions.s ]; then echo "Exception Handler not installed; do make install"; exit 1; else true; fi
+	@if diff exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
 
 	@echo
 	@echo "Testing tt.core.s:"
@@ -154,13 +154,13 @@ test:	spim.exe
 test_bare: spim.exe
 	@echo
 	@echo "Testing tt.alu.bare.s:"
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.alu.bare.s >& test.out"
+	$(CSH) -c "./spim.exe -bare -noexception -file Tests/tt.alu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.fpt.bare.s:"
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.fpu.bare.s >& test.out"
+	$(CSH) -c "./spim.exe -bare -noexception -file Tests/tt.fpu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -178,7 +178,7 @@ clean:
 
 install: spim
 	install -c -s  spim $(BIN_DIR)
-	install -c -m 0444 trap.handler $(TRAP_DIR)
+	install -c -m 0444 exceptions.s $(EXCEPTION_DIR)
 	install -c -m 0444 spim.man $(MAN_DIR)
 
 very-clean: clean

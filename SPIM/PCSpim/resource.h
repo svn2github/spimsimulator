@@ -25,8 +25,8 @@
 #define IDC_PSEUDO                      1009
 #define IDC_QUIET                       1010
 #define IDC_MAPPED                      1011
-#define IDC_LOADTRAP                    1012
-#define IDC_TRAPFILE                    1013
+#define IDC_LOADEXCEPTION               1012
+#define IDC_EXCEPTIONFILE               1013
 #define IDC_BROWSE                      1014
 #define IDC_DELAYEDBRANCHES             1015
 #define IDC_VALUE                       1016

@@ -128,10 +128,6 @@ SOURCE=..\src\mem.c
 # End Source File
 # Begin Source File
 
-SOURCE="..\src\mips-syscall.c"
-# End Source File
-# Begin Source File
-
 SOURCE=.\MultiStepDlg.cpp
 # End Source File
 # Begin Source File
@@ -222,6 +218,10 @@ SOURCE="..\src\sym-tbl.c"
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\syscall.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\util.cpp
 # End Source File
 # Begin Source File
@@ -255,10 +255,6 @@ SOURCE=.\MainFrm.h
 # Begin Source File
 
 SOURCE=..\src\mem.h
-# End Source File
-# Begin Source File
-
-SOURCE="..\src\mips-syscall.h"
 # End Source File
 # Begin Source File
 
@@ -311,6 +307,10 @@ SOURCE=.\StdAfx.h
 # Begin Source File
 
 SOURCE="..\src\sym-tbl.h"
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\syscall.h
 # End Source File
 # Begin Source File
 

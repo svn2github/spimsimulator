@@ -44,8 +44,8 @@ Next, edit the first few non-comment lines of Imakefile (or Makefile.std or
 Makefile.cygwin, if you use one of those instead) to set the pathnames for
 your system:
 
-	TRAP_DIR  -- The full pathname of the directory in which to install
-		     the SPIM trap handler.
+	EXCEPTION_DIR  -- The full pathname of the directory in which to
+		     install the SPIM exception handler.
 
 	BIN_DIR   -- The full pathname of the directory in which spim and
 		     xspim should be installed.
@@ -72,9 +72,9 @@ Makefile.std or Makefile.cygwin and type:
 	% make -f Makefile.std xspim
 
 
-To run spim or xspim, the trap handler code must be installed in the
-directory specified by the variable TRAP_DIR in the Makefile.  If the file
-trap.handler is not installed, spim and xspim fail with a message before
+To run spim or xspim, the exception handler code must be installed in the
+directory specified by the variable EXCEPTION_DIR in the Makefile.  If the file
+exceptions.s is not installed, spim and xspim fail with a message before
 they start running.  You can either install this file by hand or by typing
 
 	% make install
@@ -86,7 +86,7 @@ To test that spim is correctly built, type
 
 	% make test
 
-and examine the output of the test.  (Note: the trap handler must be
+and examine the output of the test.  (Note: the exception handler must be
 installed before running the test.)
 
 
@@ -186,8 +186,8 @@ windows.c, windows.h
 xspim.c, xspim.h
 	Top-level X-interface.
 
-trap.handler
-	Standard trap handler.
+exceptions.s
+	Standard exception handler.
 
 Tests
 	Subdirectory contain torture tests to verify that SPIM works.
@@ -210,12 +210,7 @@ that I don't have.  However, I would like to hear about the changes
 necessary to run SPIM on your favorite system.
 
 James Larus
-larus@cs.wisc.edu
-Computer Sciences Department
-1210 West Dayton Street
-University of Wisconsin
-Madison, WI 53706 USA
-
-Current Address: Microsoft Research (larus@microsoft.com)
+Microsoft Research
+(larus@microsoft.com)
 
 $Header: $

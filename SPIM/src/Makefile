@@ -656,8 +656,8 @@ CXXPROJECT_DEFINES =
 # or XSPIM is compiled:
 #
 
-# Full path for directory that will hold the trap handler file:
-TRAP_DIR = .
+# Full path for directory that will hold the exception handler file:
+EXCEPTION_DIR = .
 
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/unsup/bin
@@ -694,7 +694,7 @@ BASE_XOBJS = xspim.o windows.o buttons.o
 
 XOBJS = $(BASE_OBJS) $(BASE_XOBJS)
 
-TRAP_PATH = \"$(TRAP_DIR)/trap.handler\"
+EXCEPTION_PATH = \"$(EXCEPTION_DIR)/exceptions.s\"
 
 ENDIAN=`cat configuration`
 
@@ -706,7 +706,7 @@ YFLAGS = -d
 DEPLIBS = $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
 LOCALLIBS = $(XAWLIB) $(XMULIBONLY) $(XTOOLLIB) $(XLIB)
 CDEBUGFLAGS = -g
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
 
 SYS_LIBRARIES = -lm
 
@@ -767,8 +767,8 @@ install.man:: xspim.man
 	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MAN_DIR)); fi
 	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) xspim.man $(DESTDIR)$(MAN_DIR)/xspim.$(MANSUFFIX)
 
-install:: trap.handler
-	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) trap.handler $(DESTDIR)$(TRAP_DIR)
+install:: exceptions.s
+	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) exceptions.s $(DESTDIR)$(EXCEPTION_DIR)
 
 y.tab.h: y.tab.c
 
@@ -795,7 +795,7 @@ lex.yy.o: lex.yy.c
 test:	spim
 	/bin/rm -f Tests/tt.out std_out new_out
 	@echo
-	bash -c "./spim -bare -notrap -file Tests/tt.bare.s >& Tests/tt.out"
+	bash -c "./spim -bare -noexception -file Tests/tt.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -804,8 +804,8 @@ test:	spim
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
 
-	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "trap_handler not installed. Type: make install"; exit 1; else true; fi
-	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
+	@if [ ! -f $(EXCEPTION_DIR)/exceptions.s ]; then echo "exception_handler not installed. Type: make install"; exit 1; else true; fi
+	@if diff exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
 	bash -c "./spim -file Tests/tt.s < Tests/tt.in >& Tests/tt.out"
 	tail +6 Tests/tt.OK > std_out
 	tail +6 Tests/tt.out > new_out
@@ -819,7 +819,7 @@ test:	spim
 # tt.alu.bare.s needs to be converted in places for big-endian machines.
 
 test_bare:
-	bash -c "./spim -bare -notrap -file Tests/tt.alu.bare.s >& Tests/tt.out"
+	bash -c "./spim -bare -noexception -file Tests/tt.alu.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.alu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -828,7 +828,7 @@ test_bare:
 	@echo
 	/bin/rm -f Tests/tt.out std_out new_out
 
-	bash -c "./spim -bare -notrap -file Tests/tt.fpu.bare.s >& Tests/tt.out"
+	bash -c "./spim -bare -noexception -file Tests/tt.fpu.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.fpu.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
@@ -849,7 +849,7 @@ very-clean: clean
 
 # 
 
-TAR_FILES = Configure BLURB README Imakefile Makefile.std *.c *.h *.y *.l 	    trap.handler Tests/tt.* VERSION Documentation spim.man xspim.man
+TAR_FILES = Configure BLURB README Imakefile Makefile.std *.c *.h *.y *.l 	    exceptions.s Tests/tt.* VERSION Documentation spim.man xspim.man
 
 Documentation/spim.ps: Documentation/spim.tex
 	cd Documentation; latex spim.tex; latex spim.tex; dvips -D 300 spim.dvi; 	rm -f spim.aux spim.log spim.dvi

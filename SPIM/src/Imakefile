@@ -43,8 +43,8 @@
 # or XSPIM is compiled:
 #
 
-# Full path for directory that will hold the trap handler file:
-TRAP_DIR = .
+# Full path for directory that will hold the exception handler file:
+EXCEPTION_DIR = .
 
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/unsup/bin
@@ -85,7 +85,7 @@ BASE_XOBJS = xspim.o windows.o buttons.o
 
 XOBJS = $(BASE_OBJS) $(BASE_XOBJS)
 
-TRAP_PATH = \"$(TRAP_DIR)/trap.handler\"
+EXCEPTION_PATH = \"$(EXCEPTION_DIR)/exceptions.s\"
 
 ENDIAN=`cat configuration`
 
@@ -98,7 +98,7 @@ YFLAGS = -d
 DEPLIBS = XawClientDepLibs
 LOCALLIBS = XawClientLibs
 CDEBUGFLAGS = -g
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
 
 SYS_LIBRARIES = -lm
 
@@ -135,7 +135,7 @@ InstallProgram(spim,$(BIN_DIR))
 InstallProgram(xspim,$(BIN_DIR))
 InstallManPage(spim,$(MAN_DIR))
 InstallManPage(xspim,$(MAN_DIR))
-InstallNonExec(trap.handler,$(TRAP_DIR))
+InstallNonExec(exceptions.s,$(EXCEPTION_DIR))
 
 
 y.tab.h: y.tab.c
@@ -164,12 +164,12 @@ lex.yy.o: lex.yy.c
 test:	spim
 	@echo
 	@echo "Testing tt.bare.s:"
-	$(CSH) -c "./spim -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& test.out"
+	$(CSH) -c "./spim -delayed_branches -delayed_loads -noexception -file Tests/tt.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
-	@if [ ! -f $(TRAP_DIR)/trap.handler ]; then echo "Trap Handler not installed; do make install"; exit 1; else true; fi
-	@if diff trap.handler $(TRAP_DIR)/trap.handler > /dev/null ; then true ; else echo "Old trap_handler installed.  Type: make install" ; exit 1; fi
+	@if [ ! -f $(EXCEPTION_DIR)/exceptions.s ]; then echo "Exception Handler not installed; do make install"; exit 1; else true; fi
+	@if diff exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
 
 	@echo
 	@echo "Testing tt.core.s:"
@@ -190,13 +190,13 @@ test:	spim
 test_bare: spim
 	@echo
 	@echo "Testing tt.alu.bare.s:"
-	$(CSH) -c "./spim -bare -notrap -file Tests/tt.alu.bare.s >& test.out"
+	$(CSH) -c "./spim -bare -noexception -file Tests/tt.alu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.fpt.bare.s:"
-	$(CSH) -c "./spim -bare -notrap -file Tests/tt.fpu.bare.s >& test.out"
+	$(CSH) -c "./spim -bare -noexception -file Tests/tt.fpu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -220,7 +220,7 @@ very-clean: clean
 #
 
 TAR_FILES = Configure BLURB README Imakefile Makefile.std *.c *.h *.y *.l \
-	    trap.handler Tests/tt.* VERSION Documentation spim.man xspim.man
+	    exceptions.s Tests/tt.* VERSION Documentation spim.man xspim.man
 
 
 Documentation/spim.ps: Documentation/spim.tex

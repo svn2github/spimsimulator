@@ -1,4 +1,12 @@
-2004-03-12    <larus@C745660-A>
+2004-03-12    <larus@LARUS1>
+
+	* pervasive:
+	Renamed "trap" to "exception" to reflect MIPS terminology.
+	Renamed trap.handler to exceptions.s.
+
+	* inst.c inst.h parser.y run.c:
+	Fix internal representation of instructions by separating FS from
+	RS field and moving it RD and RD to SHAMT.
 
 	* scanner.l [Akim Demaille <akim@epita.fr>]
 	Improve handling of escape sequence in strings to bring it close
@@ -15,14 +23,14 @@
 	other exceptions afterwards), so that EPC points to instruciton to
 	restart.
 
-2004-03-11    <larus@C745660-A>
+2004-03-11    <larus@LARUS1>
 
 	* mips-syscall.{c,h} spim-sycall.h syscall.{c,h}
 	Moved all syscall-related stuff to syscall.{c,h} and eliminated
 	old #ifdef'ed stuff related to syscalls from binary code running
 	on DECstations.
 
-2004-03-10    <larus@C745660-A>
+2004-03-10    <larus@LARUS1>
 
 	* Changed memory access macros to functions.
 

@@ -244,9 +244,9 @@ BEGIN
                     WS_TABSTOP,18,87,59,10
     CONTROL         "Allow &pseudo instructions",IDC_PSEUDO,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,18,101,85,10
-    CONTROL         "&Load trap file",IDC_LOADTRAP,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "&Load exception file",IDC_LOADTRAP,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,18,117,102,10
-    LTEXT           "&Trap file:",IDC_STATIC,30,131,28,8
+    LTEXT           "&Exception file:",IDC_STATIC,30,131,28,8
     EDITTEXT        IDC_TRAPFILE,30,142,146,14,ES_AUTOHSCROLL
     CONTROL         "&Mapped I/O",IDC_MAPPED,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,187,87,55,10

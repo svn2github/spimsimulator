@@ -37,8 +37,8 @@
 
 
 
-#ifndef TRAP_FILE_PATH
-#define TRAP_FILE_PATH "D:\\Larus\\Software\\SPIM\\src\\trap.handler"
+#ifndef EXCEPTION_FILE_PATH
+#define EXCEPTION_FILE_PATH "D:\\Larus\\Software\\SPIM\\src\\exceptions.s"
 #endif
 
 
@@ -322,19 +322,19 @@ void CPCSpimView::Initialize()
   accept_pseudo_insts = pApp->GetSetting(SPIM_REG_PSEUDO, TRUE);
   quiet = pApp->GetSetting(SPIM_REG_QUIET, FALSE);
   mapped_io = pApp->GetSetting(SPIM_REG_MAPPEDIO, TRUE);
-  g_fLoadTrapHandler = pApp->GetSetting(SPIM_REG_LOADTRAP, TRUE);
+  g_fLoadExceptionHandler = pApp->GetSetting(SPIM_REG_LOADEXCEPTION, TRUE);
   g_fGenRegHex = pApp->GetSetting(SPIM_REG_GENREG_HEX, TRUE);
   g_fFPRegHex = pApp->GetSetting(SPIM_REG_FPREG_HEX, FALSE);
   g_checkUndefinedSymbols = pApp->GetSetting(SPIM_REG_CHECK_UNDEF, TRUE);
 
-  LPCTSTR szBuf = pApp->GetSetting(SPIM_REG_TRAPFILE, TRAP_FILE_PATH);
-  delete [] trap_file;
-  trap_file = new TCHAR[lstrlen(szBuf) + 1];
-  lstrcpy(trap_file, szBuf);
+  LPCTSTR szBuf = pApp->GetSetting(SPIM_REG_EXCEPTIONFILE, EXCEPTION_FILE_PATH);
+  delete [] exception_file_name;
+  exception_file_name = new TCHAR[lstrlen(szBuf) + 1];
+  lstrcpy(exception_file_name, szBuf);
 
-  if (lstrlen(trap_file) == 0)
+  if (lstrlen(exception_file_name) == 0)
     {
-      g_fLoadTrapHandler = FALSE;
+      g_fLoadExceptionHandler = FALSE;
     }
 
   if (bare_machine)
@@ -342,9 +342,6 @@ void CPCSpimView::Initialize()
       delayed_branches = 1;
       delayed_loads = 1;
     }
-
-  // We only use source files...
-  source_file = TRUE;
 
   // We're using these just as unique identifiers in the output code.
   message_out.i = 0, console_out.i = 1;
@@ -368,14 +365,14 @@ void CPCSpimView::InitializeSimulator()
   m_wndConsole.Clear();
   m_wndMessages.Clear();
 
- l_TestTrapExists:
-  if (g_fLoadTrapHandler &&
-      (HFILE_ERROR == OpenFile(trap_file, &ofs, OF_EXIST)))
+ l_TestExceptionExists:
+  if (g_fLoadExceptionHandler &&
+      (HFILE_ERROR == OpenFile(exception_file_name, &ofs, OF_EXIST)))
     {
       int nRet
 	= MessageBox(
-		     "The trap file specified in the Settings dialog does not exist.\n"
-		     "Please specify an existing file, or turn off trap file loading.\n"
+		     "The exception file specified in the Settings dialog does not exist.\n"
+		     "Please specify an existing file, or turn off exception file loading.\n"
 		     "\n"
 		     "Would you like to open the Settings dialog?",
 		     NULL, MB_YESNO | MB_ICONEXCLAMATION);
@@ -383,7 +380,7 @@ void CPCSpimView::InitializeSimulator()
       if (nRet == IDYES)
 	{
 	  SendMessage(WM_COMMAND, MAKEWPARAM(ID_SIMULATOR_SETTINGS, 0), NULL);
-	  goto l_TestTrapExists;
+	  goto l_TestExceptionExists;
 	}
 
       return;
@@ -392,7 +389,7 @@ void CPCSpimView::InitializeSimulator()
     {
       write_startup_message();
 
-      initialize_world(g_fLoadTrapHandler ? trap_file : NULL);
+      initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL);
 
       // We need to set up the stack for the next time we run.
       m_fStackInitialized = FALSE;
@@ -1269,10 +1266,10 @@ void CPCSpimView::ProcessCommandLine()
 	accept_pseudo_insts = 1;
       else if (streq (argv[i], "nopseudo"))
 	accept_pseudo_insts = 0;
-      else if (streq (argv[i], "trap"))
-	g_fLoadTrapHandler = 1;
-      else if (streq (argv[i], "notrap"))
-	g_fLoadTrapHandler = 0;
+      else if (streq (argv[i], "exception"))
+	g_fLoadExceptionHandler = 1;
+      else if (streq (argv[i], "noexception"))
+	g_fLoadExceptionHandler = 0;
       else if (streq (argv[i], "quiet"))
 	quiet = 1;
       else if (streq (argv[i], "noquiet"))
@@ -1297,10 +1294,10 @@ void CPCSpimView::ProcessCommandLine()
 	initial_k_data_size = atoi (argv[++i]);
       else if (streq (argv[i], "lkdata"))
 	initial_k_data_limit = atoi (argv[++i]);
-      else if (streq (argv[i], "trap_file"))
+      else if (streq (argv[i], "exception_file"))
       {
-	trap_file = argv[++i];
-	g_fLoadTrapHandler = 1;
+	exception_file_name = argv[++i];
+	g_fLoadExceptionHandler = 1;
       }
       else if (streq (argv[i], "file"))
       {
@@ -1324,7 +1321,22 @@ void CPCSpimView::ProcessCommandLine()
  l_ErrorMsg:
   CString strMsg;
   strMsg.Format("Error processing command line option #%d: \"%s\"\n"
-		"Usage: %s -bare/-asm -delayed_branches -delayed_loads -trap/-notrap -trap_file <file> -quiet/-noquiet -mapped_io/nomapped_io -file <file> <args>\n"
+		"Usage: spim \n\
+	-bare			Bare machine (no pseudo-ops, delayed branches and loads)\n\
+	-asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n\
+	-delayed_branches	Execute delayed branches\n\
+	-delayed_loads		Execute delayed loads\n\
+	-exception		Load exception handler (default)\n\
+	-noexception		Do not load exception handler\n\
+	-exception_file <file>	Specify exception handler in place of default\n\
+	-trap			Load exception handler (default)\n\
+	-notrap			Do not load exception handler\n\
+	-trap_file <file>	Specify exception handler in place of default\n\
+	-quiet			Do not print warnings\n\
+	-noquiet		Print warnings (default)\n\
+	-mapped_io		Enable memory-mapped IO\n\
+	-nomapped_io		Do not enable memory-mapped IO (default)\n\
+	-file <file> <args>	Assembly code file and arguments to program\n"
 		"Note that if -file is specified, it must be the last option.",
 		i, argv[i], argv[0]);
 
