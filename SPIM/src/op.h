@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 25    3/03/04 9:15p Larus $
+/* $Header: /Software/SPIM/src/op.h 26    3/03/04 9:48p Larus $
 */
 
 
@@ -307,9 +307,11 @@ OP("movz",	Y_MOVZ_OP,	R3_TYPE_INST,		0x0000000a)	/* MIPS32 */
 OP("movz.d",	Y_MOVZ_D_OP,	FP_MOVC_TYPE_INST,	0x46200012)	/* MIPS32 */
 OP("movz.ps",	Y_MOVZ_PS_OP,	FP_MOVC_TYPE_INST,	0x46c00012)	/* MIPS32 Rev 2 */
 OP("movz.s",	Y_MOVZ_S_OP,	FP_MOVC_TYPE_INST,	0x46000012)	/* MIPS32 */
+OP("msub",	Y_MSUB_OP,	R2st_TYPE_INST,		0x70000004)	/* MIPS32 */
 OP("msub.d",	Y_MSUB_D_OP,	FP_R4_TYPE_INST,	0x4c000021)	/* MIPS32 Rev 2 */
 OP("msub.ps",	Y_MSUB_PS_OP,	FP_R4_TYPE_INST,	0x4c000026)	/* MIPS32 Rev 2 */
 OP("msub.s",	Y_MSUB_S_OP,	FP_R4_TYPE_INST,	0x4c000020)	/* MIPS32 Rev 2 */
+OP("msubu",	Y_MSUBU_OP,	R2st_TYPE_INST,		0x70000005)	/* MIPS32 */
 OP("mtc0",	Y_MTC0_OP,	R2td_TYPE_INST,		0x40800000)
 OP("mtc1",	Y_MTC1_OP,	R2ts_TYPE_INST,		0x44800000)
 OP("mtc1.d",	Y_MTC1_D_POP,	PSEUDO_OP,		-1)

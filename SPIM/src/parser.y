@@ -222,9 +222,11 @@
 %token Y_MOVZ_D_OP
 %token Y_MOVZ_PS_OP
 %token Y_MOVZ_S_OP
+%token Y_MSUB_OP
 %token Y_MSUB_D_OP
 %token Y_MSUB_PS_OP
 %token Y_MSUB_S_OP
+%token Y_MSUBU_OP
 %token Y_MTC0_OP
 %token Y_MTC1_OP
 %token Y_MTC2_OP
@@ -1731,6 +1733,8 @@ MULT_OP:	Y_MULT_OP
 	|	Y_MULTU_OP
 	|	Y_MADD_OP
 	|	Y_MADDU_OP
+	|	Y_MSUB_OP
+	|	Y_MSUBU_OP
 	;
 
 BF_OP_REV2:	Y_EXT_OP

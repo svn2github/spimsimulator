@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 31    3/03/04 9:15p Larus $
+/* $Header: /Software/SPIM/src/run.c 32    3/03/04 9:48p Larus $
 */
 
 
@@ -646,12 +646,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word lo = LO, hi = HI;
 		reg_word tmp;
 		signed_multiply(R[RS (inst)], R[RT (inst)]);
-		tmp = LO + lo;
+		tmp = lo + LO;
 		if (tmp < LO || tmp < lo)
 		  /* Overflow */
 		  hi += 1;
 		LO = tmp;
-		HI += hi;
+		HI = hi + HI;
 		break;
 	      }
 
@@ -660,12 +660,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word lo = LO, hi = HI;
 		reg_word tmp;
 		unsigned_multiply(R[RS (inst)], R[RT (inst)]);
-		tmp = LO + lo;
+		tmp = lo + LO;
 		if (tmp < LO || tmp < lo)
 		  /* Overflow */
 		  hi += 1;
 		LO = tmp;
-		HI += hi;
+		HI = hi + HI;
 		break;
 	      }
 
@@ -691,6 +691,34 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      if (R[RT (inst)] == 0)
 		R[RD (inst)] = R[RS (inst)];
 	      break;
+
+	    case Y_MSUB_OP:
+	      {
+		reg_word lo = LO, hi = HI;
+		reg_word tmp;
+		signed_multiply(R[RS (inst)], R[RT (inst)]);
+		tmp = lo - LO;
+		if (tmp < LO || tmp < lo)
+		  /* Underflow */
+		  hi -= 1;
+		LO = tmp;
+		HI = hi - HI;
+		break;
+	      }
+
+	    case Y_MSUBU_OP:
+	      {
+		reg_word lo = LO, hi = HI;
+		reg_word tmp;
+		unsigned_multiply(R[RS (inst)], R[RT (inst)]);
+		tmp = lo - LO;
+		if (tmp < LO || tmp < lo)
+		  /* Underflow */
+		  hi -= 1;
+		LO = tmp;
+		HI = hi - HI;
+		break;
+	      }
 
 	    case Y_MTC0_OP:
 	    case Y_MTC2_OP:
