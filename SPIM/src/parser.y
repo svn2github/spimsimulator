@@ -284,6 +284,8 @@
 %token Y_SLTI_OP
 %token Y_SLTIU_OP
 %token Y_SLTU_OP
+%token Y_SQRT_D_OP
+%token Y_SQRT_S_OP
 %token Y_SRA_OP
 %token Y_SRAV_OP
 %token Y_SRL_OP
@@ -1867,6 +1869,8 @@ FP_UNARY_OPS:	Y_CEIL_W_D_OP
 	|	Y_NEG_D_OP
 	|	Y_ROUND_W_D_OP
 	|	Y_ROUND_W_S_OP
+	|	Y_SQRT_D_OP
+	|	Y_SQRT_S_OP
 	|	Y_TRUNC_W_D_OP
 	|	Y_TRUNC_W_S_OP
 	;

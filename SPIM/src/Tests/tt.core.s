@@ -3394,6 +3394,36 @@ fp_s1p6:.float 1.6
 
 
 	.data
+sqrt.d_:.asciiz "Testing SQRT.D\n"
+fp_d9:	.double 9.0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sqrt.d_
+	syscall
+
+	ldc1 $f2 fp_d9
+	sqrt.d $f0 $f2
+	mul.d $f4 $f0 $f0
+	c.eq.d $f2 $f4
+	bc1f 0 fail
+
+
+	.data
+sqrt.s_:.asciiz "Testing SQRT.S\n"
+fp_s9:	.float 9.0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sqrt.s_
+	syscall
+
+	ldc1 $f2 fp_d9
+	sqrt.s $f0 $f2
+	mul.s $f4 $f0 $f0
+	c.eq.s $f2 $f4
+	bc1f 0 fail
+
+
+	.data
 sub.s_:	.asciiz "Testing SUB.S\n"
 	.text
 	li $v0 4	# syscall 4 (print_str)

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 31    3/04/04 8:57p Larus $
+/* $Header: /Software/SPIM/src/op.h 32    3/04/04 9:20p Larus $
 */
 
 
@@ -387,6 +387,8 @@ OP("slti",	Y_SLTI_OP,	I2_TYPE_INST,		0x28000000)
 OP("sltiu",	Y_SLTIU_OP,	I2_TYPE_INST,		0x2c000000)
 OP("sltu",	Y_SLTU_OP,	R3_TYPE_INST,		0x0000002b)
 OP("sne",	Y_SNE_POP,	PSEUDO_OP,		-1)
+OP("sqrt.d",	Y_SQRT_D_OP,	FP_R2ds_TYPE_INST,	0x46200004)	/* MIPS32 */
+OP("sqrt.s",	Y_SQRT_S_OP,	FP_R2ds_TYPE_INST,	0x46000004)	/* MIPS32 */
 OP("sra",	Y_SRA_OP,	R2sh_TYPE_INST,		0x00000003)
 OP("srav",	Y_SRAV_OP,	R3sh_TYPE_INST,		0x00000007)
 OP("srl",	Y_SRL_OP,	R2sh_TYPE_INST,		0x00000002)

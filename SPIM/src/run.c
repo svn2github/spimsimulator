@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 35    3/04/04 8:57p Larus $
+/* $Header: /Software/SPIM/src/run.c 36    3/04/04 9:20p Larus $
 */
 
 
@@ -1415,6 +1415,14 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		SET_MEM_WORD (addr + sizeof(mem_word), *(vp + 1));
 		break;
 	      }
+
+	    case Y_SQRT_D_OP:
+	      SET_FPR_D (FD (inst), sqrt (FPR_D (FS (inst))));
+	      break;
+
+	    case Y_SQRT_S_OP:
+	      SET_FPR_S (FD (inst), sqrt (FPR_S (FS (inst))));
+	      break;
 
 	    case Y_SUB_S_OP:
 	      SET_FPR_S (FD (inst), FPR_S (FS (inst)) - FPR_S (FT (inst)));
