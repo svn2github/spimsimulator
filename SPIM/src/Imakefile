@@ -77,7 +77,7 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 #
 
 
-BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o mips-syscall.o display-utils.o
+BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o syscall.o display-utils.o
 
 OBJS = spim.o $(BASE_OBJS)
 
@@ -297,13 +297,13 @@ mem.o: spim-utils.h
 mem.o: inst.h
 mem.o: mem.h
 mem.o: reg.h
-mips-syscall.o: spim.h
-mips-syscall.o: inst.h
-mips-syscall.o: mem.h
-mips-syscall.o: reg.h
-mips-syscall.o: sym-tbl.h
-mips-syscall.o: spim-syscall.h
-mips-syscall.o: mips-syscall.h
+syscall.o: spim.h
+syscall.o: inst.h
+syscall.o: mem.h
+syscall.o: reg.h
+syscall.o: sym-tbl.h
+syscall.o: spim-syscall.h
+syscall.o: syscall.h
 run.o: spim.h
 run.o: spim-utils.h
 run.o: inst.h
@@ -311,7 +311,7 @@ run.o: mem.h
 run.o: reg.h
 run.o: sym-tbl.h
 run.o: y.tab.h
-run.o: mips-syscall.h
+run.o: syscall.h
 run.o: run.h
 spim-utils.o: spim.h
 spim-utils.o: spim-utils.h
