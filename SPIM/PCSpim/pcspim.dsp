@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 7.0 (Beta 1) of March 14, 2004\"" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 7.0 of March 21, 2004\"" /c
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -71,7 +71,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version 6.4 of January 1, 2002\"" /c
-# ADD CPP /nologo /MD /W3 /GX /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version Version 7.0 (Beta 1) of March 14, 2004\"" /c
+# ADD CPP /nologo /MD /W3 /GX /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "__STDC__" /FR /YX /FD /D SPIM_VERSION="\"Version Version 7.0 of March 21, 2004\"" /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -214,6 +214,10 @@ SOURCE=.\StdAfx.cpp
 # End Source File
 # Begin Source File
 
+SOURCE="..\src\string-stream.c"
+# End Source File
+# Begin Source File
+
 SOURCE="..\src\sym-tbl.c"
 # End Source File
 # Begin Source File
@@ -303,6 +307,10 @@ SOURCE=.\SpimReg.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE="..\src\string-stream.h"
 # End Source File
 # Begin Source File
 

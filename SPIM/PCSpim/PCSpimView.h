@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 6     3/14/04 7:51p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.h 7     3/21/04 2:06p Larus $ */
 
 // PCSpimView.h : interface of the CPCSpimView class
 //
@@ -142,7 +142,6 @@ private:
 	void InitStack(LPCTSTR args);
 	void LoadFile(LPCTSTR strFilename);
 	void DisplayTextSegment();
-	char * DumpMemValues(mem_addr from, mem_addr to, char* buf, int *limit, int *n);
 	void DisplayDataSegment();
 	void ExecuteProgram(mem_addr pc, int steps, int display, int cont_bkpt);
 	void InitializeSimulator();

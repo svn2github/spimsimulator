@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.c 21    3/21/04 11:18a Larus $
+/* $Header: /Software/SPIM/src/xspim.c 22    3/21/04 2:05p Larus $
  */
 
 #include <stdio.h>
@@ -40,6 +40,7 @@
 #include <X11/keysym.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
 #include "reg.h"
@@ -630,15 +631,14 @@ redisplay_data ()
 static void
 display_registers ()
 {
-  static char buf[8 * K];
-  int max_buf_len = 8 * K;
-  int string_len = 0;
   Arg args [2];
+  static str_stream* ss;
 
-  registers_as_string (buf, &max_buf_len, &string_len, print_gpr_hex, print_fpr_hex);
+  ss_clear (&ss);
+  format_registers (&ss, print_gpr_hex, print_fpr_hex);
 
-  XtSetArg (args[0], XtNstring, (String)buf);
-  XtSetArg (args[1], XtNlength, string_len);
+  XtSetArg (args[0], XtNstring, (String)ss_to_string (&ss));
+  XtSetArg (args[1], XtNlength, ss_length (&ss));
   XtSetValues (register_window, args, TWO);
 }
 
@@ -648,25 +648,20 @@ display_registers ()
 void
 redisplay_text ()
 {
-  static String buf = NULL;
-  static int max_buf_len = 16 * K;
-  int string_len = 0;
   Arg args [2];
+  static str_stream ss;
 
   if (!text_modified)
     return;
 
-  if (buf == NULL)
-    buf = (String) malloc (max_buf_len);
-  *buf = '\0';
+  ss_clear (&ss);
 
-  buf = insts_as_string (TEXT_BOT, text_top, buf, &max_buf_len, &string_len);
-  sprintf (&buf[string_len], "\n\tKERNEL\n");
-  string_len += strlen (&buf[string_len]);
-  buf = insts_as_string (K_TEXT_BOT, k_text_top, buf, &max_buf_len, &string_len);
+  format_inst (&ss, TEXT_BOT, text_top);
+  ss_printf (&ss, "\n\tKERNEL\n");
+  format_insts (&ss, K_TEXT_BOT, k_text_top);
 
-  XtSetArg (args[0], XtNstring, buf);
-  XtSetArg (args[1], XtNlength, string_len);
+  XtSetArg (args[0], XtNstring, ss_to_string(&ss));
+  XtSetArg (args[1], XtNlength, ss_length (&ss));
   XtSetValues (text_window, args, TWO);
 
   text_modified = 0;
@@ -733,21 +728,17 @@ center_text_at_PC ()
 static void
 display_data_seg ()
 {
-  static String buf = NULL;
-  static int max_buf_len = 16 * K;
-  int string_len = 0;
   Arg args [2];
+  static str_stream ss;
 
   if (!data_modified)
     return;
 
-  if (buf == NULL)
-    buf = (char *) malloc (max_buf_len);
+  ss_clear (&ss);
+  format_data_segs(&ss);
 
-  buf = data_seg_as_string(buf, &max_buf_len, &string_len);
-
-  XtSetArg (args[0], XtNstring, buf);
-  XtSetArg (args[1], XtNlength, string_len);
+  XtSetArg (args[0], XtNstring, ss_to_string (&ss));
+  XtSetArg (args[1], XtNlength, ss_length (&ss));
   XtSetValues (data_window, args, TWO);
 
   data_modified = 0;
@@ -920,6 +911,24 @@ error (char *fmt, ...)
     write_text_to_window (message, io_buffer);
   else
     fprintf (stderr, "%s", io_buffer);
+}
+
+
+/* Print the error message then exit. */
+
+void
+fatal_error (char *fmt, ...)
+{
+  va_list args;
+  va_start (args, fmt);
+  fmt = va_arg (args, char *);
+
+#ifdef NO_VFPRINTF
+  _doprnt (fmt, args, stderr);
+#else
+  vfprintf (stderr, fmt, args);
+#endif
+  exit (-1);
 }
 
 

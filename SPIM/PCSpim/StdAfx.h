@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/StdAfx.h 5     3/14/04 7:51p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/StdAfx.h 6     3/21/04 2:06p Larus $ */
 
 // stdafx.h : include file for standard system include files,
 //  or project specific include files that are used frequently, but
@@ -40,6 +40,7 @@
 extern "C"
 {
 #include "..\src\spim.h"
+#include "..\src\string-stream.h"
 #include "..\src\spim-utils.h"
 #include "..\src\inst.h"
 #include "..\src\sym-tbl.h"

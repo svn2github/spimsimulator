@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/xspim.h 11    3/14/04 8:35p Larus $
+/* $Header: /Software/SPIM/src/xspim.h 12    3/21/04 2:05p Larus $
  */
 
 
@@ -34,7 +34,7 @@
 
 
 
-/* Exported functions: */
+/* Exported functions (also see spim.h): */
 
 void clear_console_display ();
 void execute_program (mem_addr pc, int steps, int display, int cont_bkpt);

@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/windows.c 6     2/15/04 1:27p Larus $
+/* $Header: /Software/SPIM/src/windows.c 7     3/21/04 2:05p Larus $
  */
 
 
@@ -35,6 +35,7 @@
 #include <stdio.h>
 
 #include "spim.h"
+#include "string-stream.h"
 #include "spim-utils.h"
 #include "buttons.h"
 #include "xspim.h"

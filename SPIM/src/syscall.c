@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/syscall.c 2     3/21/04 11:18a Larus $ */
+/* $Header: /Software/SPIM/src/syscall.c 3     3/21/04 2:05p Larus $ */
 
 #ifndef WIN32
 #include <unistd.h>
@@ -37,6 +37,7 @@
 #endif
 
 #include "spim.h"
+#include "string-stream.h"
 #include "inst.h"
 #include "reg.h"
 #include "mem.h"

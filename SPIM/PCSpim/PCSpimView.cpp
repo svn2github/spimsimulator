@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 18    3/14/04 8:43p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/PCSpimView.cpp 19    3/21/04 2:06p Larus $ */
 
 // PCSpimView.cpp : implementation of the CPCSpimView class
 //
@@ -560,21 +560,16 @@ void CPCSpimView::UpdateStatusDisplay()
 
 void CPCSpimView::DisplayRegisters()
 {
-  static char buf[8 * K];
-  int max_buf_len = 8 * K;
-  int string_len = 0;
+  static str_stream ss;
 
   if (!m_fSimulatorInitialized)
     {
       return;
     }
 
-  registers_as_string (buf,
-		       &max_buf_len,
-		       &string_len,
-		       g_fGenRegHex,
-		       g_fFPRegHex);
-  char* buf2 = MakeCRLFValid(buf);
+  ss_clear (&ss);
+  format_registers (&ss, g_fGenRegHex, g_fFPRegHex);
+  char* buf2 = MakeCRLFValid(ss_to_string (&ss));
   int top_line = m_wndRegisters.GetFirstVisibleLine();	// Remember window's top line
   m_wndRegisters.SetWindowText(buf2);
   m_wndRegisters.LineScroll(top_line, 0);		// Put that line at top again
@@ -584,9 +579,7 @@ void CPCSpimView::DisplayRegisters()
 
 void CPCSpimView::DisplayDataSegment()
 {
-  static char *buf = NULL;
-  static int max_buf_len = 16 * K;
-  int string_len = 0;
+  static str_stream ss;
 
   if (!m_fSimulatorInitialized)
     return;
@@ -594,14 +587,11 @@ void CPCSpimView::DisplayDataSegment()
   if (!data_modified)
     return;
 
-  if (buf == NULL)
-    buf = (char *) malloc (max_buf_len);
-  *buf = '\0';
-
-  buf = data_seg_as_string(buf, &max_buf_len, &string_len);
+  ss_clear (&ss);
+  format_data_segs (&ss);
 
   data_modified = 0;
-  char* buf2 = MakeCRLFValid(buf);
+  char* buf2 = MakeCRLFValid(ss_to_string (&ss));
   int top_line = m_wndDataSeg.GetFirstVisibleLine();	// Remember window's top line
   m_wndDataSeg.SetWindowText(buf2);
   m_wndDataSeg.LineScroll(top_line, 0);		// Put that line at top again
@@ -609,21 +599,10 @@ void CPCSpimView::DisplayDataSegment()
 }
 
 
-char * CPCSpimView::DumpMemValues(mem_addr from,
-				  mem_addr to,
-				  char* buf,
-				  int *limit,
-				  int *n)
-{
-  return mem_as_string (from, to, buf, limit, n);
-}
-
 
 void CPCSpimView::DisplayTextSegment()
 {
-  static char *buf =  NULL;
-  static int max_buf_len = 16 * K;
-  int string_len = 0;
+  static str_stream ss;
 
   if (!m_fSimulatorInitialized)
     return;
@@ -631,17 +610,14 @@ void CPCSpimView::DisplayTextSegment()
   if (!text_modified)
     return;
 
-  if (buf == NULL)
-    buf = (char *) malloc (max_buf_len);
-  *buf = '\0';
-
-  buf = insts_as_string (TEXT_BOT, text_top, buf, &max_buf_len, &string_len);
-  sprintf (&buf[string_len], "\n\tKERNEL\n");
-  string_len += strlen (&buf[string_len]);
-  buf = insts_as_string (K_TEXT_BOT, k_text_top, buf, &max_buf_len, &string_len);
+  ss_clear (&ss);
+  format_insts (&ss, TEXT_BOT, text_top);
+  ss_printf (&ss, "\n\tKERNEL\n");
+  format_insts (&ss, K_TEXT_BOT, k_text_top);
 
   text_modified = 0;
-  char* buf2 = MakeCRLFValid(buf);
+
+  char* buf2 = MakeCRLFValid(ss_to_string (&ss));
   int top_line = m_wndTextSeg.GetFirstVisibleLine();	// Remember window's top line
   m_wndTextSeg.SetWindowText(buf2);
   m_wndTextSeg.LineScroll(top_line, 0);		// Put that line at top again
