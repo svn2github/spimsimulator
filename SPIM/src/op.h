@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 41    9/28/04 8:05p Larus $
+/* $Header: /Software/SPIM/src/op.h 42    11/13/04 11:19a Larus $
 */
 
 
@@ -360,7 +360,7 @@ OP("mthc2",	Y_MTHC2_OP,	R2td_TYPE_INST,		0x48e00000)	/* MIPS32 Rev 2 */
 OP("mthi",	Y_MTHI_OP,	R1s_TYPE_INST,		0x00000011)
 OP("mtlo",	Y_MTLO_OP,	R1s_TYPE_INST,		0x00000013)
 
-OP("mul",	Y_MUL_OP,	R2st_TYPE_INST,		0x70000002)	/* MIPS32 */
+OP("mul",	Y_MUL_OP,	R3_TYPE_INST,		0x70000002)	/* MIPS32 */
 OP("mul.d",	Y_MUL_D_OP,	FP_R3_TYPE_INST,	0x46200002)
 OP("mul.ps",	Y_MUL_PS_OP,	FP_R3_TYPE_INST,	0x46c00002)	/* MIPS32 Rev 2 */
 OP("mul.s",	Y_MUL_S_OP,	FP_R3_TYPE_INST,	0x46000002)
