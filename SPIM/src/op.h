@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/op.h 26    3/03/04 9:48p Larus $
+/* $Header: /Software/SPIM/src/op.h 27    3/03/04 9:54p Larus $
 */
 
 
@@ -346,6 +346,7 @@ OP("or",	Y_OR_OP,	R3_TYPE_INST,		0x00000025)
 OP("ori",	Y_ORI_OP,	I2_TYPE_INST,		0x34000000)
 OP("pll.ps",	Y_PLL_PS_OP,	FP_R3_TYPE_INST,	0x46c0002c)	/* MIPS32 Rev 2 */
 OP("plu.ps",	Y_PLU_PS_OP,	FP_R3_TYPE_INST,	0x46c0002d)	/* MIPS32 Rev 2 */
+OP("pref",	Y_PREF_OP,	I2_TYPE_INST,		0xbb000000)	/* MIPS32 */
 OP("prefx",	Y_PREFX_OP,	R2st_TYPE_INST,		0x4600000f)	/* MIPS32 Rev 2 */
 OP("pul.ps",	Y_PUL_PS_OP,	FP_R3_TYPE_INST,	0x46c0002e)	/* MIPS32 Rev 2 */
 OP("puu.ps",	Y_PUU_PS_OP,	FP_R3_TYPE_INST,	0x46c0002f)	/* MIPS32 Rev 2 */

@@ -254,6 +254,7 @@
 %token Y_PFW_OP
 %token Y_PLL_PS_OP
 %token Y_PLU_PS_OP
+%token Y_PREF_OP
 %token Y_PREFX_OP
 %token Y_PUL_PS_OP
 %token Y_PUU_PS_OP
@@ -788,13 +789,13 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	SYS_OP
+	|	SYS_OPS
 		{
 		  r_type_inst ($1.i, 0, 0, 0);
 		}
 
 
-	|	Y_CACHE_OP		Y_INT	ADDRESS
+	|	CACHE_OPS		Y_INT	ADDRESS
 		{
 		  i_type_inst_free($1.i, $2.i, 0, (imm_expr *)$3.p);
 		}
@@ -1631,8 +1632,12 @@ STOREF_INDEX_OP:	Y_SDXC1_OP
 	|	Y_SWXC1_OP
 	;
 
-SYS_OP:		Y_RFE_OP
+SYS_OPS:	Y_RFE_OP
 	|	Y_SYSCALL_OP
+	;
+
+CACHE_OPS:	Y_CACHE_OP
+	|	Y_PREF_OP
 	;
 
 NULLARY_OP_REV2:	Y_EHB_OP

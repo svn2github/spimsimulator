@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 32    3/03/04 9:48p Larus $
+/* $Header: /Software/SPIM/src/run.c 33    3/03/04 9:54p Larus $
 */
 
 
@@ -752,6 +752,9 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_ORI_OP:
 	      R[RT (inst)] = R[RS (inst)] | (0xffff & IMM (inst));
 	      break;
+
+	    case Y_PREF_OP:
+	      break;		/* not implemented */
 
 	    case Y_RFE_OP:
 	      Status_Reg = (Status_Reg & 0xfffffff0) | ((Status_Reg & 0x3c) >> 2);
