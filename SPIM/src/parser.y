@@ -1640,6 +1640,11 @@ STOREFP_INDEX_OPS:	Y_SDXC1_OP
 	;
 
 SYS_OPS:	Y_RFE_OP
+		{
+#ifdef MIPS1
+			yywarn("RFE should only be used when SPIM is compiled as a MIPS-I processor");
+#endif
+		}
 	|	Y_SYSCALL_OP
 	;
 
@@ -1658,6 +1663,11 @@ TLB_OPS:	Y_TLBP_OP
 	;
 
 NULLARY_OPS:	Y_ERET_OP
+		{
+#ifdef MIPS1
+			yywarn("ERET should only be used when SPIM is compiled as a MIPS32 processor");
+#endif
+		}
 	;
 
 NULLARY_OPS_REV2:	Y_DERET_OP

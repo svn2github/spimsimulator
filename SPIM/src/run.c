@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 43    3/07/04 10:02p Larus $
+/* $Header: /Software/SPIM/src/run.c 44    3/09/04 8:06p Larus $
 */
 
 
@@ -86,9 +86,9 @@ static void unsigned_multiply (reg_word v1, reg_word v2);
 
 
 
-static running_in_delay_slot = 0; /* True when delayed_branches is true and
-				     instruction is executing in delay slot
-				     of another instruction. */
+/* True when delayed_branches is true and instruction is executing in delay
+slot of another instruction. */
+static int running_in_delay_slot = 0; 
 
 
 /* Executed delayed branch and jump instructions by running the
@@ -1611,6 +1611,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 static void CALLBACK
 timer_completion_routine(LPVOID lpArgToCompletionRoutine, DWORD dwTimerLowValue, DWORD dwTimerHighValue)
 #else
+static void
 timer_signal_handler (int signum)
 #endif
 {

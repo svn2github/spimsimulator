@@ -21,14 +21,20 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 21    3/06/04 4:32p Larus $
+/* $Header: /Software/SPIM/src/spim.c 22    3/09/04 8:06p Larus $
 */
 
 
+#ifndef WIN32
+#include <unistd.h>
+#endif
 #include <stdio.h>
 #include <ctype.h>
 #include <setjmp.h>
 #include <signal.h>
+#include <arpa/inet.h>
+#include <sys/ioctl.h>
+
 
 #ifdef RS
 /* This is problem on HP Snakes, which define RS in syscall.h */
@@ -628,7 +634,7 @@ parse_spim_command (FILE *file, int redo)
           }
 
         fclose (fp);
-        fprintf (stderr, "Dumped %ld words starting at 0x%08lx to file %s\n",
+        fprintf (stderr, "Dumped %d words starting at 0x%08x to file %s\n",
                  words, (dump_start << 2) + TEXT_BOT, filename);
       }
       prev_cmd = cmd;

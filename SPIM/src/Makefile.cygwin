@@ -85,7 +85,7 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
 
 CC = gcc
-CFLAGS = $(DEFINES) -g
+CFLAGS = $(DEFINES) -g -Wall
 IFLAGS = -I$(X_INCLUDE_DIR)
 YFLAGS = -d --file-prefix=y
 YCFLAGS =
@@ -183,6 +183,9 @@ install: spim
 
 very-clean: clean
 	rm -f y.tab.h y.tab.c lex.yy.c spim.tar* Documentation/spim.ps
+
+splint:
+	splint -weak -preproc -warnposix data.c display-utils.c inst.c mem.c mips-syscall.c run.c spim-utils.c spim.c sym-tbl.c y.tab.c lex.yy.c
 
 
 SRC = spim-utils.c run.c mem.c inst.c data.c sym-tbl.c y.tab.o lex.yy.o \

@@ -140,10 +140,10 @@ configuration:
 
 #
 
-test:	spim.exe
+test:	spim
 	@echo
 	@echo "Testing tt.bare.s:"
-	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& test.out"
+	$(CSH) -c "./spim -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
@@ -152,13 +152,13 @@ test:	spim.exe
 
 	@echo
 	@echo "Testing tt.core.s:"
-	$(CSH) -c "./spim.exe -file Tests/tt.core.s < Tests/tt.in >& test.out"
+	$(CSH) -c "./spim -file Tests/tt.core.s < Tests/tt.in >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.endian.s:"
-	$(CSH) -c "./spim.exe -file Tests/tt.endian.s >& test.out"
+	$(CSH) -c "./spim -file Tests/tt.endian.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -166,16 +166,16 @@ test:	spim.exe
 # This test currently only works for little-endian machines.  The file
 # tt.alu.bare.s needs to be converted in places for big-endian machines.
 
-test_bare: spim.exe
+test_bare: spim
 	@echo
 	@echo "Testing tt.alu.bare.s:"
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.alu.bare.s >& test.out"
+	$(CSH) -c "./spim -bare -notrap -file Tests/tt.alu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.fpt.bare.s:"
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.fpu.bare.s >& test.out"
+	$(CSH) -c "./spim -bare -notrap -file Tests/tt.fpu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo

@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/buttons.c 10    2/23/04 4:42a Larus $
+/* $Header: /Software/SPIM/src/buttons.c 11    3/09/04 8:06p Larus $
  */
 
 #include <X11/Intrinsic.h>
@@ -685,11 +685,11 @@ set_value_action (char *location_str, char *value_str)
   else if (reg_no > 0)
     R[reg_no] = (reg_word)value;
   else if (streq (location_str, "Status") || streq (location_str, "status"))
-    Status_Reg = (reg_word)value;
+    CP0_Status = (reg_word)value;
   else if (streq (location_str, "PC") || streq (location_str, "pc"))
     PC = (reg_word)value;
   else if (streq (location_str, "EPC") | streq (location_str, "epc"))
-    EPC = (reg_word)value;
+    CP0_EPC = (reg_word)value;
   else
     {
       char *eptr;
