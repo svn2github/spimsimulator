@@ -128,7 +128,7 @@ configuration:
 test:	spim.exe
 	/bin/rm -f Tests/tt.out std_out new_out
 	@echo
-	$(CSH) -c "./spim.exe -bare -notrap -file Tests/tt.bare.s >& Tests/tt.out"
+	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -notrap -file Tests/tt.bare.s >& Tests/tt.out"
 	tail +6 Tests/tt.bare.OK > std_out
 	tail +6 Tests/tt.out > new_out
 	@echo The next command should not produce any output:
