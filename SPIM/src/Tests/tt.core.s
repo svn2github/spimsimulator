@@ -3859,34 +3859,6 @@ l180:
 # DIV and DIVU checked previously
 
 
-	.data
-l_s_:	.asciiz "Testing L_S\n"
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 l_s_
-	syscall
-
-	lw $2 fp_s1p5
-	l.s $f0 fp_s1p5
-	mfc1 $4 $f0
-	bne $2 $4 fail
-
-	.data
-l_d_:	.asciiz "Testing L_D\n"
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 l_d_
-	syscall
-
-	lw $2 fp_d1p5
-	lw $3 fp_d1p5+4
-	l.d $f0 fp_d1p5
-	mfc1 $4 $f0
-	mfc1 $5 $f1
-	bne $2 $4 fail
-	bne $3 $5 fail
-
-
 # LA better work or nothing above will work
 
 
@@ -4103,40 +4075,6 @@ ror_:	.asciiz "Testing ROR\n"
 	li $2 5
 	ror $4 $2 5
 	bne $4 0x28000000 fail
-
-
-	.data
-s_s_:	.asciiz "Testing S_S\n"
-foo:	.word 0
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 s_s_
-	syscall
-
-	lw $2 fp_s1p5
-	mtc1 $2 $0
-	s.s $f0 foo
-	lw $4 foo
-	bne $2 $4 fail
-
-	.data
-s_d_:	.asciiz "Testing S_D\n"
-bar:	.word 0 0
-	.text
-	li $v0 4	# syscall 4 (print_str)
-	la $a0 s_d_
-	syscall
-
-	lw $2 fp_d1p5
-	lw $3 fp_d1p5+4
-	mtc1 $2 $0
-	mtc1 $3 $1
-	s.d $f0 bar
-	lw $4 bar
-	lw $5 bar+4
-
-	bne $2 $4 fail
-	bne $3 $5 fail
 
 
 	.data

@@ -331,8 +331,6 @@
 %token Y_BLT_POP
 %token Y_BLTU_POP
 %token Y_BNEZ_POP
-%token Y_L_D_POP
-%token Y_L_S_POP
 %token Y_LA_POP
 %token Y_LD_POP
 %token Y_LI_D_POP
@@ -352,8 +350,6 @@
 %token Y_REMU_POP
 %token Y_ROL_POP
 %token Y_ROR_POP
-%token Y_S_D_POP
-%token Y_S_S_POP
 %token Y_SD_POP
 %token Y_SEQ_POP
 %token Y_SGE_POP
@@ -670,22 +666,7 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	LOADF_POP	F_DEST		ADDRESS
-		{
-		  i_type_inst (Y_LWC1_OP, $2.i,
-			       addr_expr_reg ((addr_expr *)$3.p),
-			       addr_expr_imm ((addr_expr *)$3.p));
-		  if ($1.i == Y_L_D_POP)
-		    i_type_inst_free (Y_LWC1_OP, $2.i + 1,
-				      addr_expr_reg ((addr_expr *)$3.p),
-				      incr_expr_offset (addr_expr_imm ((addr_expr *)$3.p),
-							4));
-		  free (((addr_expr *)$3.p)->imm);
-		  free ((addr_expr *)$3.p);
-		}
-
-
-	|	LOADF_INDEX_OP	F_DEST		ADDRESS
+	|	LOADC_INDEX_OPS	F_DEST		ADDRESS
 		{
 		  mips32_r2_inst ();
 		}
@@ -772,22 +753,18 @@ ASM_CODE:	LOAD_OP		DEST	ADDRESS
 		}
 
 
-	|	STOREF_OP	F_SRC1		ADDRESS
+	|	STOREC_OPS	F_SRC1		ADDRESS
 		{
-		  i_type_inst (Y_SWC1_OP, $2.i,
+		  i_type_inst ($1.i,
+			       $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
 			       addr_expr_imm ((addr_expr *)$3.p));
-		  if ($1.i == Y_S_D_POP)
-		    i_type_inst_free (Y_SWC1_OP, $2.i + 1,
-				      addr_expr_reg ((addr_expr *)$3.p),
-				      incr_expr_offset (addr_expr_imm ((addr_expr *)$3.p),
-							4));
 		  free (((addr_expr *)$3.p)->imm);
 		  free ((addr_expr *)$3.p);
 		}
 
 
-	|	STOREF_INDEX_OP	F_DEST		ADDRESS
+	|	STOREC_INDEX_OPS	F_DEST		ADDRESS
 		{
 		  mips32_r2_inst ();
 		}
@@ -1582,11 +1559,7 @@ ULOADH_POP:	Y_ULH_POP
 	|	Y_ULHU_POP
 	;
 
-LOADF_POP:	Y_L_S_POP
-	|	Y_L_D_POP
-	;
-
-LOADF_INDEX_OP:	Y_LDXC1_OP
+LOADC_INDEX_OPS:	Y_LDXC1_OP
 	|	Y_LUXC1_OP
 	|	Y_LWXC1_OP
 	;
@@ -1608,12 +1581,10 @@ STORE_COP:	Y_SWC0_OP
 	|	Y_SWC2_OP
 	;
 
-STOREF_OP:	Y_SWC1_OP
-	|	Y_S_S_POP
-	|	Y_S_D_POP
+STOREC_OPS:	Y_SWC1_OP
 	;
 
-STOREF_INDEX_OP:	Y_SDXC1_OP
+STOREC_INDEX_OPS:	Y_SDXC1_OP
 	|	Y_SUXC1_OP
 	|	Y_SWXC1_OP
 	;
