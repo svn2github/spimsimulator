@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.c 10    1/14/01 12:41p Larus $
+/* $Header: /Software/SPIM/src/spim.c 11    2/01/01 9:34p Larus $
 */
 
 
@@ -342,7 +342,9 @@ enum {
   CONTINUE_CMD,
   SET_BKPT_CMD,
   DELETE_BKPT_CMD,
-  LIST_BKPT_CMD
+  LIST_BKPT_CMD,
+  DUMPNATIVE_TEXT_CMD,
+  DUMP_TEXT_CMD
 };
 
 /* Parse a SPIM command from the FILE and execute it.  If REDO is non-zero,
@@ -570,6 +572,8 @@ parse_spim_command (file, redo)
       write_output (message_out,
 		    "delete <ADDR> -- Delete all breakpoints at address\n");
       write_output (message_out, "list -- List all breakpoints\n");
+      write_output (message_out, "dump [ \"FILE\" ] -- Dump binary code to spim.dump or FILE in network byte order\n");
+      write_output (message_out, "dumpnative [ \"FILE\" ] -- Dump binary code to spim.dump or FILE in host byte order\n");
       write_output (message_out,
 		    ". -- Rest of line is assembly instruction to put in memory\n");
       write_output (message_out, "<cr> -- Newline reexecutes previous command\n");
@@ -607,6 +611,59 @@ parse_spim_command (file, redo)
       if (!redo) flush_to_newline ();
       list_breakpoints ();
       prev_cmd = LIST_BKPT_CMD;
+      return (0);
+
+    case DUMPNATIVE_TEXT_CMD:
+    case DUMP_TEXT_CMD:
+      {
+        FILE *fp = NULL;
+        char *filename = NULL;
+	int token = (redo ? prev_token : read_token ());
+        int i;
+        int words = 0;
+	int dump_start;
+	int dump_limit;
+
+        if (token == Y_STR)
+	  filename = (char *) yylval.p;
+        else if (token == Y_NL)
+	  filename = "spim.dump";
+        else
+          {
+            fprintf (stderr, "usage: %s [ \"filename\" ]\n",
+                     (cmd == DUMP_TEXT_CMD ? "dump" : "dumpnative"));
+            return (0);
+          }
+
+        fp = fopen (filename, "wb");
+        if (fp == NULL)
+          {
+            perror (filename);
+            return (0);
+          }
+
+	dump_start = find_symbol_address (END_OF_TRAP_HANDLER_SYMBOL);
+	if (dump_start != 0)
+	  dump_start -= TEXT_BOT;
+	dump_start = dump_start >> 2;
+
+	user_kernel_text_segment (0);
+	dump_limit = (current_text_pc() - TEXT_BOT) >> 2;
+
+        for (i = dump_start; i < dump_limit; i++)
+          {
+            int32 code = inst_encode (text_seg[i]);
+            if (cmd == DUMP_TEXT_CMD)
+	      code = htonl (code);    /* dump in network byte order */
+            fwrite (&code, 1, sizeof(code), fp);
+            words++;
+          }
+
+        fclose (fp);
+        fprintf (stderr, "Dumped %ld words starting at 0x%08lx to file %s\n",
+                 words, (dump_start << 2) + TEXT_BOT, filename);
+      }
+      prev_cmd = cmd;
       return (0);
 
     default:
@@ -664,6 +721,10 @@ read_assembly_command ()
     return (DELETE_BKPT_CMD);
   else if (str_prefix ((char *) yylval.p, "list", 2))
     return (LIST_BKPT_CMD);
+  else if (str_prefix ((char *) yylval.p, "dumpnative", 5))
+    return (DUMPNATIVE_TEXT_CMD);
+  else if (str_prefix ((char *) yylval.p, "dump", 4))
+    return (DUMP_TEXT_CMD);
   else if (*(char *) yylval.p == '?')
     return (HELP_CMD);
   else if (*(char *) yylval.p == '.')

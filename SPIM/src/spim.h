@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/spim.h 9     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/spim.h 10    2/01/01 9:34p Larus $
 */
 
 
@@ -162,6 +162,11 @@ typedef uint32 mem_addr;
 /* Name of the function to invoke at start up */
 
 #define DEFAULT_RUN_LOCATION "__start"
+
+
+/* Name of the symbol marking the end of the trap handler */
+
+#define END_OF_TRAP_HANDLER_SYMBOL "__eoth"
 
 
 /* Default number of instructions to execute. */
