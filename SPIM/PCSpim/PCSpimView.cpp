@@ -408,7 +408,8 @@ void CPCSpimView::InitializeSimulator()
 void CPCSpimView::OnSimulatorReinitialize()
 {
   InitializeSimulator();
-  write_output(message_out, "Memory and registers have been cleared, and the simulator reinitialized.\n\n");
+  m_strCurFilename.Empty();
+  write_output(message_out, "Memory and registers cleared and the simulator reinitialized.\n\n");
 }
 
 
@@ -417,7 +418,7 @@ void CPCSpimView::OnSimulatorClearRegisters()
   initialize_registers();
   UpdateStatusDisplay();
 
-  write_output(message_out, "Registers have been cleared.\n\n");
+  write_output(message_out, "Registers cleared.\n\n");
 }
 
 
@@ -858,7 +859,7 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
       UpdateStatusDisplay();
       HighlightCurrentInstruction();
 
-      write_output(message_out, "%s has been successfully loaded\n", strFilename);
+      write_output(message_out, "%s successfully loaded\n", strFilename);
     }
 }
 
