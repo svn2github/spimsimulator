@@ -1,5 +1,8 @@
 2004-02-14    <larus@C745660-A>
 
+	* mips-syscall.c [Shaunak Pawagi (shaunak@cs.sunysb.edu)]:
+	Only print 8 digits for single precision floats.
+
 	* spim.html [Shaunak Pawagi (shaunak@cs.sunysb.edu)]:
 	Correct -delayed-branches and -delayed-loads to -delayed_branches
 	and -delayed_loads.
