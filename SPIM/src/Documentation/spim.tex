@@ -3,7 +3,9 @@
 %
 % Documentation for SPIM.  This is a latex file.
 %
-% Copyright (C) 1990--1997 by James R. Larus (larus@cs.wisc.edu).
+% Copyright (C) 1990-2004 by James R. Larus (larus@cs.wisc.edu).
+%
+% Modified 2003 Deborah Pickett (debbiep@csse.monash.edu.au).
 %
 %   SPIM is distributed under the following conditions:
 %
@@ -29,7 +31,7 @@
 %
 
 
-\documentstyle[11pt]{article}
+\documentclass[11pt]{article}
 
 % This is necessary for LaTeX2e.  Comment it out for older versions.
 \usepackage{psfig}
@@ -70,7 +72,7 @@ cost''}}
 	{\normalsize Madison, WI 53706, USA} \\
 	{\normalsize 608-262-9519}}
 
-\date{Copyright \copyright 1990--1997 by James R. Larus \\
+\date{Copyright \copyright 1990--2004 by James R. Larus \\
       (This document may be copied without royalties, \\
 	so long as this copyright notice remains on it.)}
 
@@ -115,7 +117,7 @@ simple, clean RISC machine.
 In addition, simulators can provide a better environment for low-level
 programming than an actual machine because they can detect more errors
 and provide more features than an actual computer.  For example, SPIM
-has a X-window interface that is better than most debuggers for the
+has an X-window interface that is better than most debuggers for the
 actual machines.
 
 Finally, simulators are an useful tool for studying computers and the
@@ -165,16 +167,24 @@ the following command-line options:
 \begin{description}
   \item [] {\tt -bare}\newline Simulate a bare MIPS machine without
 pseudoinstructions or the additional addressing modes provided by the
-assembler.  Implies {\tt -quiet}.
+assembler.  Implies {\tt -quiet -delayed\_branches -delayed\_loads}.
 
   \item [] {\tt -asm}\newline Simulate the virtual MIPS machine
 provided by the assembler.  This is the default.
 
+  \item [] {\tt -delayed\_branches}\newline Simulate the branch delay
+feature of bare MIPS machines; the instruction following a branch is
+always executed, even if the branch succeeded.
+
+  \item [] {\tt -delayed\_loads}\newline Simulate the load delay
+feature of bare MIPS machines; a value loaded from memory is not
+available in the register until two instruction cycles after the load.
+
   \item [] {\tt -pseudo} \newline Accept pseudoinstructions in assembly
-code. 
+code.
 
   \item [] {\tt -nopseudo} \newline Do not accept pseudoinstructions in
-assembly code. 
+assembly code.
 
   \item [] {\tt -notrap} \newline Do not load the standard trap
 handler.  This trap handler has two functions that must be assumed by
@@ -206,13 +216,13 @@ memory-mapped IO.
   \item [] {\tt -file}\newline Load and execute the assembly code in
 the file.
 
-  \item [] {\tt -s seg size} Sets the initial size of memory segment
+  \item [] {\tt -s{seg} size} Sets the initial size of memory segment
 {\em seg\/} to be {\em size\/} bytes.  The memory segments are named:
 {\tt text}, {\tt data}, {\tt stack}, {\tt ktext}, and {\tt kdata}.
 For example, the pair of arguments {\tt -sdata 2000000} starts the
 user data segment at 2,000,000 bytes.
 
-  \item [] {\tt -lseg size} Sets the limit on how large memory segment
+  \item [] {\tt -l{seg} size} Sets the limit on how large memory segment
 {\em seg\/} can grow to be {\em size\/} bytes.  The memory segments
 that can grow are: {\tt data}, {\tt stack}, and {\tt kdata}.
 \end{description}
@@ -222,6 +232,8 @@ that can grow are: {\tt data}, {\tt stack}, and {\tt kdata}.
 The terminal interface ({\tt spim}) provides the following commands:
 \begin{description}
   \item [] {\tt exit}\newline Exit the simulator.
+
+  \item [] {\tt quit}\newline Synonym for {\tt exit}.
 
   \item [] {\tt read "file"}\newline Read {\em file\/} of assembly
 language commands into SPIM's memory.  If the file has already been
@@ -251,8 +263,11 @@ N\/}.
   \item [] {\tt print addr}\newline Print the contents of memory at
 address {\em addr\/}.
 
-  \item [] {\tt print\_sym}\newline Print the contents of the symbol
+  \item [] {\tt print\_symbols}\newline Print the contents of the symbol
 table, i.e., the addresses of the global (but not local) symbols.
+
+  \item [] {\tt print\_all\_regs <hex>}\newline Print the contents of all
+registers.  If {\tt hex} is specified, print them in hexadecimal.
 
   \item [] {\tt reinitialize}\newline Clear the memory and registers.
 
@@ -264,6 +279,14 @@ label.
 {\em addr\/}.
 
   \item [] {\tt list}\newline List all breakpoints.
+
+  \item [] {\tt dump "FILE"}\newline Write the contents of the text
+segment to {\em FILE} in network (big-endian) byte order.  If {\em FILE}
+is not specified, save to {\tt spim.dump}.
+
+  \item [] {\tt dumpnative "FILE"}\newline Write the contents of the text
+segment to {\em FILE} in the host's native byte order.  If {\em FILE}
+is not specified, save to {\tt spim.dump}.
 
   \item [] {\tt .}\newline Rest of line is an assembly instruction
 that is stored in memory.
@@ -296,6 +319,9 @@ The next pane contains the buttons that control the simulator:
 
   \item [] {\bf load}\newline Read a source file into memory.
 
+  \item [] {\bf reload}\newline Reinitialize memory and then reload the
+last file read with {\bf load}.
+
   \item [] {\bf run}\newline Start the program running.
 
   \item [] {\bf step}\newline Single-step through a program.
@@ -308,7 +334,7 @@ memory location.
   \item [] {\bf print}\newline Print the value in a register or memory
 location.
 
-  \item [] {\bf breakpoint}\newline Set or delete a breakpoint or list
+  \item [] {\bf breakpoints}\newline Set or delete a breakpoint or list
 all breakpoints.
 
   \item [] {\bf help}\newline Print a help message.
@@ -397,6 +423,9 @@ null-terminate it.
   \item [] {\tt .byte b1, ..., bn}\newline Store the $n$ values in
 successive bytes of memory.
 
+  \item [] {\tt .comm sym size}\newline Allocate {\em size} bytes of
+data segment for symbol {\em sym}.
+
   \item [] {\tt .data <addr>}\newline The following data items should
 be stored in the data segment.  If the optional argument {\em addr\/}
 is present, the items are stored beginning at address {\em addr\/}.
@@ -430,8 +459,23 @@ words (see the {\tt .word} directive below). If the optional argument
 {\em addr\/} is present, the items are stored beginning at address
 {\em addr\/}.
 
+  \item [] {\tt .label sym}\newline Declare that symbol {\tt sym} is a
+label.
+
+  \item [] {\tt .lcomm sym size}\newline Allocate {\em size} bytes
+for symbol {\em sym} in the portion of the data segment that can be
+accessed via register {\tt \$gp}.
+
   \item [] {\tt .space n}\newline Allocate $n$ bytes of space in the
 current segment (which must be the data segment in SPIM).
+
+  \item [] {\tt .set noat}\newline Permit the program to refer to the
+{\tt \$at} register explicitly, and forbid SPIM from generating pseudoinstructions
+that modify {\tt \$at}.
+
+  \item [] {\tt .set at}\newline Forbid the program from referring to the
+{\tt \$at} register explicitly, and permit SPIM to generate pseudoinstructions
+that modify {\tt \$at} (the default).
 
   \item [] {\tt .text <addr>}\newline The next items are put in the
 user text segment.  In SPIM, these items may only be instructions or
@@ -469,8 +513,16 @@ SPIM does not distinguish various parts of the data segment ({\tt
       read\_string & 8 & {\tt \$a0} = buffer, {\tt \$a1} = length & \\
       sbrk & 9 & {\tt \$a0} = amount & address (in {\tt \$v0}) \\
       exit & 10 & & \\
-      print\_character & 11 & {\tt \$a0} = integer & \\
-      read\_character & 12 & char (in {\tt \$v0}) \\
+      print\_character & 11 & {\tt \$a0} = character & \\
+      read\_character & 12 & & character (in {\tt \$v0}) \\
+      open & 13 &  {\tt \$a0} = filename, & file descriptor (in {\tt \$v0}) \\
+           &    &  \ \ \ \ {\tt \$a1} = flags, {\tt \$a2} = mode & \\
+      read & 14 & {\tt \$a0} = file descriptor, & bytes read (in {\tt \$v0}) \\
+           &    &  \ \ \ \ {\tt \$a1} = buffer, {\tt \$a2} = count & \\
+      write & 15 & {\tt \$a0} = file descriptor,& bytes written (in {\tt \$v0}) \\
+            &    & \ \ \ \ {\tt \$a1} = buffer, {\tt \$a2} = count &                               \\
+      close & 16 & {\tt \$a0} = file descriptor & 0 (in {\tt \$v0}) \\
+      exit2 & 17 & {\tt \$a0} =  value &  \\
      \hline
   \end{tabular}
   \end{center}
@@ -502,7 +554,7 @@ print ``{\tt the answer = 5}'', use the commands:
 {\tt print\_float} prints a single floating point number. {\tt
 print\_double} prints a double precision number.  {\tt print\_string}
 is passed a pointer to a null-terminated string, which it writes to
-the console.
+the console. {\tt print\_character} prints a single ASCII character.
 
 {\tt read\_int}, {\tt read\_float}, and {\tt read\_double} read an
 entire line of input up to and including the newline.  Characters
@@ -510,13 +562,20 @@ following the number are ignored.  {\tt read\_string} has the same
 semantics as the Unix library routine {\tt fgets}.  It reads up to
 $n-1$ characters into a buffer and terminates the string with a null
 byte.  If there are fewer characters on the current line, it reads
-through the newline and again null-terminates the string.  {\bf
+through the newline and again null-terminates the string.  {\tt
+read\_character} reads a single ASCII character.  {\bf
 Warning:} programs that use these syscalls to read from the terminal
 should not use memory-mapped IO (see Section~\ref{sec:IO}).
 
-{\tt sbrk} returns a pointer to a block of memory containing $n$
-additional bytes.  {\tt exit} stops a program from running.
+{\tt sbrk} returns a pointer to a block of memory containing $n$ additional
+bytes.  This pointer is word aligned. {\tt exit} stops a program from
+running. {\tt exit2} stops the program from running and takes an argument,
+which is the value that {\tt spim} or {\tt xspim} uses in its call on {\tt
+exit}.
 
+{\tt open}, {\tt read}, {\tt write} and {\tt close} behave the same as
+the Unix system calls of the same name.  They all return $-1$ on
+failure.
 \section{Description of the MIPS R2000}
 \label{sec:mips}
 
@@ -574,7 +633,7 @@ simulates most aspects of this unit.
       k1 & 27 & Reserved for OS kernel \\
       gp & 28 & Pointer to global area \\
       sp & 29 & Stack pointer \\
-      fp & 30 & Frame pointer \\
+      fp or s8 & 30 & Frame pointer \\
       ra & 31 & Return address (used by function call) \\
      \hline
   \end{tabular}
@@ -655,7 +714,7 @@ instructions.
 \end{figure}
 Figure~\ref{fig:status_reg} describes the bits in the {\tt Status}
 register that are implemented by SPIM.  The {\tt interrupt mask}
-contains a bit for each of the five interrupt levels.  If a bit is
+contains a bit for each of the eight interrupt levels.  If a bit is
 one, interrupts at that level are allowed.  If the bit is zero,
 interrupts at that level are disabled.  The low six bits of the {\tt
 Status} register implement a three-level stack for the {\tt
@@ -669,10 +728,10 @@ bits.  The current bits are both set to 0 (i.e., kernel mode with
 interrupts disabled).
 
 Figure~\ref{fig:cause_reg} describes the bits in the {\tt Cause}
-registers.  The five {\tt pending interrupt} bits correspond to the
-five interrupt levels.  A bit becomes 1 when an interrupt at its level
+register.  The eight {\tt pending interrupt} bits correspond to the
+eight interrupt levels.  A bit becomes 1 when an interrupt at its level
 has occurred but has not been serviced.  The {\tt exception code}
-register contains a code from the following table describing the cause
+bits contain a code from the following table describing the cause
 of an exception.
 \begin{center}
   \small
@@ -744,8 +803,8 @@ modes for load and store instructions:
     imm (register) & immediate + contents of register \\
     symbol & address of symbol \\
     symbol $\pm$ imm & address of symbol $+$ or $-$ immediate \\
-    symbol $\pm$ imm (register) & address of symbol $+$ or $-$
-	(immediate + contents of register) \\
+    symbol (register) & address of symbol + contents of register \\
+    symbol $\pm$ imm (register) & (address of symbol $+$ or $-$ immediate) + contents of register \\
     \hline
   \end{tabular}
 \end{center}
@@ -1021,7 +1080,7 @@ and {\tt Rdest + 1}.
 \instX{lhu Rdest, address}{Load Unsigned Halfword}
 Load the 16-bit quantity (halfword) at {\em address\/} into register
 {\tt Rdest}.  The halfword is sign-extended by the {\tt lh}, but not
-the {\bf lhu}, instruction
+the {\tt lhu}, instruction
 
 \inst{lw Rdest, address}{Load Word}
 Load the 32-bit quantity (word) at {\em address\/} into register {\tt
@@ -1040,7 +1099,7 @@ Load the left (right) bytes from the word at the possibly-unaligned
 \pinstX{ulhu Rdest, address}{Unaligned Load Halfword Unsigned}
 Load the 16-bit quantity (halfword) at the possibly-unaligned {\em
 address\/} into register {\tt Rdest}.  The halfword is sign-extended
-by the {\tt ulh}, but not the {\bf ulhu}, instruction
+by the {\tt ulh}, but not the {\tt ulhu}, instruction
 
 \pinst{ulw Rdest, address}{Unaligned Load Word}
 Load the 32-bit quantity (word) at the possibly-unaligned {\em
@@ -1227,7 +1286,7 @@ registers {\tt FRsrc1} and {\tt FRsrc2} and put it in register
 
 \subsection {Exception and Trap Instructions}
 
-\inst{rfe}{Return From Exception}
+\inst{rfe}{Restore From Exception}
 Restore the Status register.
 
 \inst{syscall}{System Call}
@@ -1262,8 +1321,10 @@ Immediately above these objects is dynamic data.  As a program
 allocates space dynamically (i.e., by {\tt malloc}), the {\tt sbrk}
 system call moves the top of the data segment up.
 
+% {f} stuff to stop TeX from trying to put ligatures on address hex
+% constants.
 The program stack resides at the top of the address space
-(0x7fffffff).  It grows down, towards the data segment.
+(0x7f{f}f{f}f{f}f).  It grows down, towards the data segment.
 
 \section{Calling Convention}
 
@@ -1363,7 +1424,7 @@ others always read as zeroes and are ignored on writes.}
 The processor accesses the terminal using four memory-mapped device
 registers, as shown in Figure~\ref{fig:io_reg}.  ``Memory-mapped''
 means that each register appears as a special memory location.  The
-Receiver Control Register is at location 0xffff0000; only two of its
+Receiver Control Register is at location 0xf{f}f{f}0000; only two of its
 bits are actually used.  Bit 0 is called ``ready'': if it is one it
 means that a character has arrived from the keyboard but has not yet
 been read from the receiver data register.  The ready bit is
@@ -1375,7 +1436,8 @@ character is read from the receiver data register.
 Bit one of the Receiver Control Register is ``interrupt enable''.
 This bit may be both read and written by the processor.  The interrupt
 enable is initially zero.  If it is set to one by the processor, an
-interrupt is requested by the terminal on level zero whenever the
+interrupt is requested by the terminal on level zero (bit 8 of Status
+and Cause registers) whenever the
 ready bit is one.  For the interrupt actually to be received by the
 processor, interrupts must be enabled in the status register of the
 system coprocessor (see Section \ref{sec:mips}).
@@ -1384,7 +1446,7 @@ Other bits of the Receiver Control Register are unused: they always
 read as zeroes and are ignored in writes.
 
 The second terminal device register is the Receiver Data Register (at
-address 0xffff0004).  The low-order eight bits of this register
+address 0xf{f}f{f}0004).  The low-order eight bits of this register
 contain the last character typed on the keyboard, and all the other
 bits contain zeroes.  This register is read-only and only changes
 value when a new character is typed on the keyboard.  Reading the
@@ -1392,18 +1454,19 @@ Receiver Data Register causes the ready bit in the Receiver Control
 Register to be reset to zero.
 
 The third terminal device register is the Transmitter Control Register
-(at address 0xffff0008).  Only the low-order two bits of this register
+(at address 0xf{f}f{f}0008).  Only the low-order two bits of this register
 are used, and they behave much like the corresponding bits of the
 Receiver Control Register.  Bit 0 is called ``ready'' and is
 read-only.  If it is one it means the transmitter is ready to accept a
 new character for output.  If it is zero it means the transmitter is
 still busy outputting the previous character given to it.  Bit one is
 ``interrupt enable''; it is readable and writable.  If it is set to
-one, then an interrupt will be requested on level one whenever the
+one, then an interrupt will be requested on level one (bit 9 of Status
+and Cause registers) whenever the
 ready bit is one.
 
 The final device register is the Transmitter Data Register (at address
-0xffff000c).  When it is written, the low-order eight bits are taken
+0xf{f}f{f}000c).  When it is written, the low-order eight bits are taken
 as an ASCII character to output to the display.  When the Transmitter
 Data Register is written, the ready bit in the Transmitter Control
 Register will be reset to zero.  The bit will stay zero until enough

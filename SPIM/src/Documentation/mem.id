@@ -1,8 +1,84 @@
 %!PS-Adobe-2.0 EPSF-1.2
+%%Creator: idraw
 %%DocumentFonts: Helvetica-Bold
 %%Pages: 1
-%%BoundingBox: 107 251 393 643
+%%BoundingBox: 97 252 392 642
 %%EndComments
+
+%%BeginIdrawPrologue
+/arrowhead {
+0 begin
+transform originalCTM itransform
+/taily exch def
+/tailx exch def
+transform originalCTM itransform
+/tipy exch def
+/tipx exch def
+/dy tipy taily sub def
+/dx tipx tailx sub def
+/angle dx 0 ne dy 0 ne or { dy dx atan } { 90 } ifelse def
+gsave
+originalCTM setmatrix
+tipx tipy translate
+angle rotate
+newpath
+arrowHeight neg arrowWidth 2 div moveto
+0 0 lineto
+arrowHeight neg arrowWidth 2 div neg lineto
+patternNone not {
+originalCTM setmatrix
+/padtip arrowHeight 2 exp 0.25 arrowWidth 2 exp mul add sqrt brushWidth mul
+arrowWidth div def
+/padtail brushWidth 2 div def
+tipx tipy translate
+angle rotate
+padtip 0 translate
+arrowHeight padtip add padtail add arrowHeight div dup scale
+arrowheadpath
+ifill
+} if
+brushNone not {
+originalCTM setmatrix
+tipx tipy translate
+angle rotate
+arrowheadpath
+istroke
+} if
+grestore
+end
+} dup 0 9 dict put def
+
+/arrowheadpath {
+newpath
+arrowHeight neg arrowWidth 2 div moveto
+0 0 lineto
+arrowHeight neg arrowWidth 2 div neg lineto
+} def
+
+/leftarrow {
+0 begin
+y exch get /taily exch def
+x exch get /tailx exch def
+y exch get /tipy exch def
+x exch get /tipx exch def
+brushLeftArrow { tipx tipy tailx taily arrowhead } if
+end
+} dup 0 4 dict put def
+
+/rightarrow {
+0 begin
+y exch get /tipy exch def
+x exch get /tipx exch def
+y exch get /taily exch def
+x exch get /tailx exch def
+brushRightArrow { tipx tipy tailx taily arrowhead } if
+end
+} dup 0 4 dict put def
+
+%%EndIdrawPrologue
+
+/arrowHeight 11 def
+/arrowWidth 6 def
 
 /IdrawDict 51 dict def
 IdrawDict begin
@@ -47,8 +123,6 @@ currentdict end definefont
 ] def
 /Helvetica-Bold reencodeISO def
 
-/arrowHeight 8 def
-/arrowWidth 4 def
 /none null def
 /numGraphicParameters 17 def
 /stringLimit 65535 def
@@ -136,6 +210,7 @@ end
 /Circ {
 newpath
 0 360 arc
+closepath
 patternNone not { ifill } if
 brushNone not { istroke } if
 } def
@@ -167,6 +242,7 @@ newpath
 translate
 scale
 0 0 1 0 360 arc
+closepath
 patternNone not { ifill } if
 brushNone not { istroke } if
 end
@@ -258,7 +334,7 @@ bgred bggreen bgblue setrgbcolor
 eofill
 fgred fggreen fgblue setrgbcolor
 w 0 gt h 0 gt and {
-l b translate w h scale
+l w add b translate w neg h scale
 w h true [w 0 0 h neg 0 h] { patternproc } imagemask
 } if
 } ifelse
@@ -285,17 +361,16 @@ grestore
 0 begin
 gsave
 fgred fggreen fgblue setrgbcolor
-printFont printSize scalefont setfont
-/descender 0 printFont /FontBBox get 1 get printFont /FontMatrix
-get transform exch pop def
+/fontDict printFont printSize scalefont dup setfont def
+/descender fontDict begin 0 /FontBBox load 1 get FontMatrix end
+transform exch pop def
 /vertoffset 1 printSize sub descender sub def {
 0 vertoffset moveto show
 /vertoffset vertoffset printSize sub def
 } forall
 grestore
 end
-} dup 0 2 dict put def
-
+} dup 0 3 dict put def
 /patternproc {
 0 begin
 /patternByteLength patternString length def
@@ -329,77 +404,6 @@ dup 3 2 roll dup 4 3 roll lt { exch } if pop
 /max {
 dup 3 2 roll dup 4 3 roll gt { exch } if pop
 } def
-
-/arrowhead {
-0 begin
-transform originalCTM itransform
-/taily exch def
-/tailx exch def
-transform originalCTM itransform
-/tipy exch def
-/tipx exch def
-/dy tipy taily sub def
-/dx tipx tailx sub def
-/angle dx 0 ne dy 0 ne or { dy dx atan } { 90 } ifelse def
-gsave
-originalCTM setmatrix
-tipx tipy translate
-angle rotate
-newpath
-0 0 moveto
-arrowHeight neg arrowWidth 2 div lineto
-arrowHeight neg arrowWidth 2 div neg lineto
-closepath
-patternNone not {
-originalCTM setmatrix
-/padtip arrowHeight 2 exp 0.25 arrowWidth 2 exp mul add sqrt brushWidth mul
-arrowWidth div def
-/padtail brushWidth 2 div def
-tipx tipy translate
-angle rotate
-padtip 0 translate
-arrowHeight padtip add padtail add arrowHeight div dup scale
-arrowheadpath
-ifill
-} if
-brushNone not {
-originalCTM setmatrix
-tipx tipy translate
-angle rotate
-arrowheadpath
-istroke
-} if
-grestore
-end
-} dup 0 9 dict put def
-
-/arrowheadpath {
-newpath
-0 0 moveto
-arrowHeight neg arrowWidth 2 div lineto
-arrowHeight neg arrowWidth 2 div neg lineto
-closepath
-} def
-
-/leftarrow {
-0 begin
-y exch get /taily exch def
-x exch get /tailx exch def
-y exch get /tipy exch def
-x exch get /tipx exch def
-brushLeftArrow { tipx tipy tailx taily arrowhead } if
-end
-} dup 0 4 dict put def
-
-/rightarrow {
-0 begin
-y exch get /tipy exch def
-x exch get /tipx exch def
-y exch get /taily exch def
-x exch get /tailx exch def
-brushRightArrow { tipx tipy tailx taily arrowhead } if
-end
-} dup 0 4 dict put def
 
 /midpoint {
 0 begin
@@ -464,9 +468,31 @@ x i 3 2 roll put
 } for
 } def
 
+/SSten {
+fgred fggreen fgblue setrgbcolor
+dup true exch 1 0 0 -1 0 6 -1 roll matrix astore
+} def
+
+/FSten {
+dup 3 -1 roll dup 4 1 roll exch
+newpath
+0 0 moveto
+dup 0 exch lineto
+exch dup 3 1 roll exch lineto
+0 lineto
+closepath
+bgred bggreen bgblue setrgbcolor
+eofill
+SSten
+} def
+
+/Rast {
+exch dup 3 1 roll 1 0 0 -1 0 6 -1 roll matrix astore
+} def
+
 %%EndProlog
 
-%I Idraw 9 Grid 8 
+%I Idraw 13 Grid 8 8 
 
 %%Page: 1 1
 
@@ -506,6 +532,7 @@ none SetP %I p n
 [ 1 0 0 1 97 131 ] concat
 %I
 93 491 326 491 Line
+%I 1
 End
 
 Begin %I Line
@@ -520,6 +547,7 @@ none SetP %I p n
 [ 1 0 0 1 97 131 ] concat
 %I
 93 180 326 180 Line
+%I 1
 End
 
 Begin %I Line
@@ -534,6 +562,7 @@ none SetP %I p n
 [ 1 0 0 1 97 131 ] concat
 %I
 93 249 326 249 Line
+%I 1
 End
 
 Begin %I Line
@@ -548,6 +577,7 @@ none SetP %I p n
 [ 1 0 0 1 97 131 ] concat
 %I
 93 318 326 318 Line
+%I 1
 End
 
 Begin %I Rect
@@ -630,6 +660,7 @@ Begin %I Line
 [ 1 0 0 1 109.5 131 ] concat
 %I
 197 491 197 439 Line
+%I 1
 End
 
 Begin %I Line
@@ -645,6 +676,7 @@ Begin %I Line
 [ 1 0 0 1 101.5 131 ] concat
 %I
 205 318 205 361 Line
+%I 1
 End
 
 Begin %I Text
@@ -670,6 +702,19 @@ Helvetica-Bold 12 SetF
 %I
 [
 (0x7fffffff)
+] Text
+End
+
+Begin %I Text
+%I cfg Black
+0 0 0 SetCFg
+%I f *-helvetica-bold-r-normal--12-*-75-*
+Helvetica-Bold 12 SetF
+%I t
+[ 1 0 0 1 107.571 384.706 ] concat
+%I
+[
+(0x10000000)
 ] Text
 End
 

@@ -5,8 +5,80 @@
 %%BoundingBox: 42 527 526 617
 %%EndComments
 
-/arrowHeight 10 def
-/arrowWidth 5 def
+%%BeginIdrawPrologue
+/arrowhead {
+0 begin
+transform originalCTM itransform
+/taily exch def
+/tailx exch def
+transform originalCTM itransform
+/tipy exch def
+/tipx exch def
+/dy tipy taily sub def
+/dx tipx tailx sub def
+/angle dx 0 ne dy 0 ne or { dy dx atan } { 90 } ifelse def
+gsave
+originalCTM setmatrix
+tipx tipy translate
+angle rotate
+newpath
+arrowHeight neg arrowWidth 2 div moveto
+0 0 lineto
+arrowHeight neg arrowWidth 2 div neg lineto
+patternNone not {
+originalCTM setmatrix
+/padtip arrowHeight 2 exp 0.25 arrowWidth 2 exp mul add sqrt brushWidth mul
+arrowWidth div def
+/padtail brushWidth 2 div def
+tipx tipy translate
+angle rotate
+padtip 0 translate
+arrowHeight padtip add padtail add arrowHeight div dup scale
+arrowheadpath
+ifill
+} if
+brushNone not {
+originalCTM setmatrix
+tipx tipy translate
+angle rotate
+arrowheadpath
+istroke
+} if
+grestore
+end
+} dup 0 9 dict put def
+
+/arrowheadpath {
+newpath
+arrowHeight neg arrowWidth 2 div moveto
+0 0 lineto
+arrowHeight neg arrowWidth 2 div neg lineto
+} def
+
+/leftarrow {
+0 begin
+y exch get /taily exch def
+x exch get /tailx exch def
+y exch get /tipy exch def
+x exch get /tipx exch def
+brushLeftArrow { tipx tipy tailx taily arrowhead } if
+end
+} dup 0 4 dict put def
+
+/rightarrow {
+0 begin
+y exch get /tipy exch def
+x exch get /tipx exch def
+y exch get /taily exch def
+x exch get /tailx exch def
+brushRightArrow { tipx tipy tailx taily arrowhead } if
+end
+} dup 0 4 dict put def
+
+%%EndIdrawPrologue
+
+/arrowHeight 11 def
+/arrowWidth 6 def
 
 /IdrawDict 51 dict def
 IdrawDict begin
@@ -138,6 +210,7 @@ end
 /Circ {
 newpath
 0 360 arc
+closepath
 patternNone not { ifill } if
 brushNone not { istroke } if
 } def
@@ -169,6 +242,7 @@ newpath
 translate
 scale
 0 0 1 0 360 arc
+closepath
 patternNone not { ifill } if
 brushNone not { istroke } if
 end
@@ -260,7 +334,7 @@ bgred bggreen bgblue setrgbcolor
 eofill
 fgred fggreen fgblue setrgbcolor
 w 0 gt h 0 gt and {
-l b translate w h scale
+l w add b translate w neg h scale
 w h true [w 0 0 h neg 0 h] { patternproc } imagemask
 } if
 } ifelse
@@ -288,7 +362,7 @@ grestore
 gsave
 fgred fggreen fgblue setrgbcolor
 /fontDict printFont printSize scalefont dup setfont def
-/descender fontDict begin 0 [FontBBox] 1 get FontMatrix end
+/descender fontDict begin 0 /FontBBox load 1 get FontMatrix end
 transform exch pop def
 /vertoffset 1 printSize sub descender sub def {
 0 vertoffset moveto show
@@ -418,79 +492,7 @@ exch dup 3 1 roll 1 0 0 -1 0 6 -1 roll matrix astore
 
 %%EndProlog
 
-%%BeginIdrawPrologue
-/arrowhead {
-0 begin
-transform originalCTM itransform
-/taily exch def
-/tailx exch def
-transform originalCTM itransform
-/tipy exch def
-/tipx exch def
-/dy tipy taily sub def
-/dx tipx tailx sub def
-/angle dx 0 ne dy 0 ne or { dy dx atan } { 90 } ifelse def
-gsave
-originalCTM setmatrix
-tipx tipy translate
-angle rotate
-newpath
-arrowHeight neg arrowWidth 2 div moveto
-0 0 lineto
-arrowHeight neg arrowWidth 2 div neg lineto
-patternNone not {
-originalCTM setmatrix
-/padtip arrowHeight 2 exp 0.25 arrowWidth 2 exp mul add sqrt brushWidth mul
-arrowWidth div def
-/padtail brushWidth 2 div def
-tipx tipy translate
-angle rotate
-padtip 0 translate
-arrowHeight padtip add padtail add arrowHeight div dup scale
-arrowheadpath
-ifill
-} if
-brushNone not {
-originalCTM setmatrix
-tipx tipy translate
-angle rotate
-arrowheadpath
-istroke
-} if
-grestore
-end
-} dup 0 9 dict put def
-
-/arrowheadpath {
-newpath
-arrowHeight neg arrowWidth 2 div moveto
-0 0 lineto
-arrowHeight neg arrowWidth 2 div neg lineto
-} def
-
-/leftarrow {
-0 begin
-y exch get /taily exch def
-x exch get /tailx exch def
-y exch get /tipy exch def
-x exch get /tipx exch def
-brushLeftArrow { tipx tipy tailx taily arrowhead } if
-end
-} dup 0 4 dict put def
-
-/rightarrow {
-0 begin
-y exch get /tipy exch def
-x exch get /tipx exch def
-y exch get /taily exch def
-x exch get /tailx exch def
-brushRightArrow { tipx tipy tailx taily arrowhead } if
-end
-} dup 0 4 dict put def
-
-%%EndIdrawPrologue
-
-%I Idraw 10 Grid 8 8 
+%I Idraw 13 Grid 8 8 
 
 %%Page: 1 1
 
@@ -595,19 +597,6 @@ Begin %I Text
 %I f *-helvetica-bold-r-normal--12-*-75-*
 Helvetica-Bold 12 SetF
 %I t
-[ 1 0 0 1 456 795 ] concat
-%I
-[
-(10)
-] Text
-End
-
-Begin %I Text
-%I cfg Black
-0 0 0 SetCFg
-%I f *-helvetica-bold-r-normal--12-*-75-*
-Helvetica-Bold 12 SetF
-%I t
 [ 1 0 0 1 376 795 ] concat
 %I
 [
@@ -640,6 +629,19 @@ Helvetica-Bold 12 SetF
 [
 (Exception)
 (Code)
+] Text
+End
+
+Begin %I Text
+%I cfg Black
+0 0 0 SetCFg
+%I f *-helvetica-bold-r-normal--12-*-75-*
+Helvetica-Bold 12 SetF
+%I t
+[ 1 0 0 1 456 795 ] concat
+%I
+[
+(8)
 ] Text
 End
 
