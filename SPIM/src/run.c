@@ -21,7 +21,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/run.c 38    3/06/04 10:04a Larus $
+/* $Header: /Software/SPIM/src/run.c 39    3/06/04 10:54a Larus $
 */
 
 
@@ -1011,16 +1011,84 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		break;
 	      }
 
+	    case Y_SYNC_OP:
+	      break;		/* Memory details not implemented */
+
 	    case Y_SYSCALL_OP:
 	      if (!do_syscall ())
 		return (0);
 	      break;
 
+	    case Y_TEQ_OP:
+	      if (R[RS (inst)] == R[RT (inst)])
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TEQI_OP:
+	      if (R[RS (inst)] == IMM (inst))
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TGE_OP:
+	      if (R[RS (inst)] >= R[RT (inst)])
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TGEI_OP:
+	      if (R[RS (inst)] >= IMM (inst))
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TGEIU_OP:
+	      if ((u_reg_word)R[RS (inst)] >= (u_reg_word)IMM (inst))
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TGEU_OP:
+	      if ((u_reg_word)R[RS (inst)] >= (u_reg_word)R[RT (inst)])
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
 	    case Y_TLBP_OP:
+	      break;		/* Memory details not implemented */
+
 	    case Y_TLBR_OP:
+	      break;		/* Memory details not implemented */
+
 	    case Y_TLBWI_OP:
+	      break;		/* Memory details not implemented */
+
 	    case Y_TLBWR_OP:
-	      fatal_error ("Unimplemented operation\n");
+	      break;		/* Memory details not implemented */
+
+	    case Y_TLT_OP:
+	      if (R[RS (inst)] < R[RT (inst)])
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TLTI_OP:
+	      if (R[RS (inst)] < IMM (inst))
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TLTIU_OP:
+	      if ((u_reg_word)R[RS (inst)] < (u_reg_word)IMM (inst))
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TLTU_OP:
+	      if ((u_reg_word)R[RS (inst)] < (u_reg_word)R[RT (inst)])
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TNE_OP:
+	      if (R[RS (inst)] != R[RT (inst)])
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
+	      break;
+
+	    case Y_TNEI_OP:
+	      if (R[RS (inst)] != IMM (inst))
+		RAISE_EXCEPTION(TRAP_EXCPT, {});
 	      break;
 
 	    case Y_XOR_OP:
@@ -1440,69 +1508,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		SET_MEM_WORD (R[BASE (inst)] + IOFFSET (inst), *vp);
 		break;
 	      }
-
-	    case Y_SYNC_OP:
-	      break;		/* Memory details not implemented */
-
-	    case Y_TEQ_OP:
-	      if (R[RS (inst)] == R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TEQI_OP:
-	      if (R[RS (inst)] == IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TGE_OP:
-	      if (R[RS (inst)] >= R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TGEI_OP:
-	      if (R[RS (inst)] >= IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TGEIU_OP:
-	      if ((u_reg_word)R[RS (inst)] >= (u_reg_word)IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TGEU_OP:
-	      if ((u_reg_word)R[RS (inst)] >= (u_reg_word)R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TLT_OP:
-	      if (R[RS (inst)] < R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TLTI_OP:
-	      if (R[RS (inst)] < IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TLTIU_OP:
-	      if ((u_reg_word)R[RS (inst)] < (u_reg_word)IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TLTU_OP:
-	      if ((u_reg_word)R[RS (inst)] < (u_reg_word)R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TNE_OP:
-	      if (R[RS (inst)] != R[RT (inst)])
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
-
-	    case Y_TNEI_OP:
-	      if (R[RS (inst)] != IMM (inst))
-		RAISE_EXCEPTION(TRAP_EXCPT, {});
-	      break;
 
 	    case Y_TRUNC_W_D_OP:
 	      {

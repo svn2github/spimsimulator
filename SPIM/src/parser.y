@@ -181,8 +181,8 @@
 %token Y_LDXC1_OP
 %token Y_LH_OP
 %token Y_LHU_OP
-%token Y_LUI_OP
 %token Y_LL_OP
+%token Y_LUI_OP
 %token Y_LUXC1_OP
 %token Y_LW_OP
 %token Y_LWC1_OP
@@ -190,8 +190,8 @@
 %token Y_LWL_OP
 %token Y_LWR_OP
 %token Y_LWXC1_OP
-%token Y_MADD_OP
 %token Y_MADD_D_OP
+%token Y_MADD_OP
 %token Y_MADD_PS_OP
 %token Y_MADD_S_OP
 %token Y_MADDU_OP
@@ -205,24 +205,24 @@
 %token Y_MOV_D_OP
 %token Y_MOV_PS_OP
 %token Y_MOV_S_OP
-%token Y_MOVF_OP
 %token Y_MOVF_D_OP
+%token Y_MOVF_OP
 %token Y_MOVF_PS_OP
 %token Y_MOVF_S_OP
-%token Y_MOVN_OP
 %token Y_MOVN_D_OP
+%token Y_MOVN_OP
 %token Y_MOVN_PS_OP
 %token Y_MOVN_S_OP
-%token Y_MOVT_OP
 %token Y_MOVT_D_OP
+%token Y_MOVT_OP
 %token Y_MOVT_PS_OP
 %token Y_MOVT_S_OP
-%token Y_MOVZ_OP
 %token Y_MOVZ_D_OP
+%token Y_MOVZ_OP
 %token Y_MOVZ_PS_OP
 %token Y_MOVZ_S_OP
-%token Y_MSUB_OP
 %token Y_MSUB_D_OP
+%token Y_MSUB_OP
 %token Y_MSUB_PS_OP
 %token Y_MSUB_S_OP
 %token Y_MSUBU_OP
@@ -808,6 +808,12 @@ ASM_CODE:	LOAD_OPS		DEST	ADDRESS
 	|	CACHE_OPS		Y_INT	ADDRESS
 		{
 		  i_type_inst_free($1.i, $2.i, 0, (imm_expr *)$3.p);
+		}
+
+
+	|	TLB_OPS
+		{
+		  r_type_inst($1.i, 0, 0, 0);
 		}
 
 
@@ -1654,6 +1660,12 @@ PREFETCH_OP:	Y_PREFX_OP
 
 CACHE_OPS:	Y_CACHE_OP
 	|	Y_PREF_OP
+	;
+
+TLB_OPS:	Y_TLBP_OP
+	|	Y_TLBR_OP
+	|	Y_TLBWI_OP
+	|	Y_TLBWR_OP
 	;
 
 NULLARY_OPS_REV2:	Y_EHB_OP

@@ -1806,7 +1806,7 @@ tgei_:	.asciiz "Testing TGEI\nExpect two exception messages:\n  "
 	tgei $0 0
 	tgei $2 1
 
-	
+
 	.data
 tgeiu_:	.asciiz "Testing TGEIU\nExpect two exception messages:\n  "
 	.text
@@ -1835,6 +1835,18 @@ tgeu_:	.asciiz "Testing TGEU\nExpect two exception messages:\n  "
 
 
 	.data
+tlb_:	.asciiz "Testing TLB operations:\n  "
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 tlb_
+	syscall
+	tlbp
+	tlbr
+	tlbwi
+	tlbr
+
+
+	.data
 tlt_:	.asciiz "Testing TLT\nExpect one exception message:\n  "
 	.text
 	li $v0 4	# syscall 4 (print_str)
@@ -1860,7 +1872,7 @@ tlti_:	.asciiz "Testing TLTI\nExpect one exception message:\n  "
 	tlti $0 0
 	tlti $2 1
 
-	
+
 	.data
 tltiu_:	.asciiz "Testing TLTIU\nExpect one exception message:\n  "
 	.text
@@ -1887,7 +1899,7 @@ tltu_:	.asciiz "Testing TLTU\nExpect one exception message:\n  "
 	tltu $0 $0
 	tltu $3 $2
 
-	
+
 	.data
 tne_:	.asciiz "Testing TNE\nExpect one exception message:\n  "
 	.text
