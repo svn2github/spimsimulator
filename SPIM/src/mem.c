@@ -419,63 +419,69 @@ bad_mem_write (addr, value, mask)
 #endif
 {
   mem_word tmp;
-
+  
   if (addr & mask)
     /* Unaligned address fault */
     RAISE_EXCEPTION (ADDRS_EXCPT, BadVAddr = addr)
-  else if (addr >= TEXT_BOT && addr < text_top)
+    else if (addr >= TEXT_BOT && addr < text_top)
+  {
     switch (mask)
-      {
-      case 0x0:
-	tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
+    {
+    case 0x0:
+      tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
 #ifdef BIGENDIAN
-	tmp = ((tmp & ~(0xff << (8 * (3 - (addr & 0x3)))))
+      tmp = ((tmp & ~(0xff << (8 * (3 - (addr & 0x3)))))
 	       | (value & 0xff) << (8 * (3 - (addr & 0x3))));
 #else
-	tmp = ((tmp & ~(0xff << (8 * (addr & 0x3))))
+      tmp = ((tmp & ~(0xff << (8 * (addr & 0x3))))
 	       | (value & 0xff) << (8 * (addr & 0x3)));
 #endif
-	text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
-	break;
-
-      case 0x1:
-	tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
+      text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
+      break;
+      
+    case 0x1:
+      tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
 #ifdef BIGENDIAN
-	tmp = ((tmp & ~(0xffff << (8 * (2 - (addr & 0x2)))))
+      tmp = ((tmp & ~(0xffff << (8 * (2 - (addr & 0x2)))))
 	       | (value & 0xffff) << (8 * (2 - (addr & 0x2))));
 #else
-	tmp = ((tmp & ~(0xffff << (8 * (addr & 0x2))))
+      tmp = ((tmp & ~(0xffff << (8 * (addr & 0x2))))
 	       | (value & 0xffff) << (8 * (addr & 0x2)));
 #endif
-	text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
-	break;
-
-      case 0x3:
-	text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (value);
-	break;
-
-      default:
-	run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);
-      }
+      text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
+      break;
+      
+    case 0x3:
+      text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (value);
+      break;
+      
+    default:
+      run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);
+    }
+    
+    text_modified = 1;
+  }
   else if (addr > data_top
 	   && addr < stack_bot
 	   /* If more than 16 MB below stack, probably is bad data ref */
 	   && addr > stack_bot - 16*1000*K)
+  {
+    /* Grow stack segment */
+    expand_stack (stack_bot - addr + 4);
+    if (addr >= stack_bot)
     {
-      /* Grow stack segment */
-      expand_stack (stack_bot - addr + 4);
-      if (addr >= stack_bot)
-	{
-	  if (mask == 0)
-	    stack_seg_b [addr - stack_bot] = (char)value;
-	  else if (mask == 1)
-	    stack_seg_h [(addr - stack_bot) > 1] = (short)value;
-	  else
-	    stack_seg [(addr - stack_bot) >> 2] = value;
-	}
+      if (mask == 0)
+	stack_seg_b [addr - stack_bot] = (char)value;
+      else if (mask == 1)
+	stack_seg_h [(addr - stack_bot) > 1] = (short)value;
       else
-	RAISE_EXCEPTION (DBUS_EXCPT, BadVAddr = addr)
+	stack_seg [(addr - stack_bot) >> 2] = value;
     }
+    else
+      RAISE_EXCEPTION (DBUS_EXCPT, BadVAddr = addr)
+      
+    data_modified = 1;
+  }
   else if (MM_IO_BOT <= addr && addr <= MM_IO_TOP)
     write_memory_mapped_IO (addr, value);
   else
