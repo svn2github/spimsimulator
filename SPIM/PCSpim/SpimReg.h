@@ -54,4 +54,9 @@
 #define SPIM_REG_DATASEGMINMAX		"Data Segment Window State"
 #define SPIM_REG_CONSOLEPOS		"Console Window Position"
 
+#define SPIM_REG_FONTFACE		"Window Font Face"
+#define SPIM_REG_FONTHEIGHT		"Window Font Height"
+#define SPIM_REG_FONTWEIGHT		"Window Font Weight"
+#define SPIM_REG_FONTITALIC		"Window Font Italic"
+
 #endif // SPIMREG_H

@@ -20,7 +20,7 @@
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 6     2/15/04 1:07p Larus $ */
+/* $Header: /Software/SPIM/PCSpim/MainFrm.cpp 7     2/15/04 5:54p Larus $ */
 
 // MainFrm.cpp : implementation of the CMainFrame class
 //
@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_COMMAND(ID_SIMULATOR_SETFONT, OnSimulatorSetfont)
 	//}}AFX_MSG_MAP
 	// Global help commands
 	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder)
@@ -182,7 +183,7 @@ void CMainFrame::UpdateSettingsStatus()
   m_wndStatusBar.SetPaneText(3, strTxt);
   strTxt.Format("%s", delayed_loads ? "DELAY LD" : "");
   m_wndStatusBar.SetPaneText(4, strTxt);
-  }
+}
 
 void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
@@ -202,4 +203,25 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
   RECT r;
   g_pView->GetClientRect(&r);
   g_pView->TileWindows(r.right - r.left, r.bottom - r.top, r.bottom);
+}
+
+void CMainFrame::OnSimulatorSetfont() 
+{
+  CHOOSEFONT choiceFont;
+
+  // Initialize the font structure:
+  //
+  memset(&choiceFont, 0, sizeof(choiceFont));
+  choiceFont.lStructSize = sizeof(choiceFont);
+  choiceFont.hwndOwner = g_pView->m_hWnd ;
+  LOGFONT lFont;
+  CFont* cFont = g_pView->GetSpimFont();
+  cFont->GetLogFont(&lFont);
+  choiceFont.lpLogFont = &lFont;
+  choiceFont.Flags = CF_INITTOLOGFONTSTRUCT | CF_FIXEDPITCHONLY | CF_SCREENFONTS;
+
+  if (ChooseFont(&choiceFont))
+  {
+    g_pView->SetSpimFont(choiceFont.lpLogFont);
+  }
 }

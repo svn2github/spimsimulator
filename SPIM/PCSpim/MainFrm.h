@@ -66,6 +66,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
+	afx_msg void OnSimulatorSetfont();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

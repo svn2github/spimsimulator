@@ -181,15 +181,6 @@ InitSpimWins(CEdit& Win, RECT& r, int nMinMax, BOOL ScrollVert, BOOL ScrollHorz)
 {
   Win.ShowWindow(nMinMax);
 
-  CFont* font = new CFont;
-  LOGFONT lf;
-  memset(&lf, 0, sizeof(LOGFONT));
-  lf.lfHeight = 16;			  // request a 16-pixel-height font
-  strcpy(lf.lfFaceName, "Courier");	  // request a face name "Courier"
-  VERIFY(font->CreateFontIndirect(&lf));  // create the font
-
-
-  Win.SetFont(font, TRUE);
   if (ScrollVert)
     Win.ShowScrollBar(SB_VERT, TRUE);
   if (ScrollHorz)
@@ -210,9 +201,10 @@ int CPCSpimView::OnCreate(LPCREATESTRUCT pcs)
   dwStyle |= WS_CLIPCHILDREN;
   SetWindowLong(m_hWnd, GWL_STYLE, dwStyle);
 
-  RECT r, *pr;
-  int nMinMax;  CPCSpimApp *pApp = (CPCSpimApp *)AfxGetApp();
+  CPCSpimApp *pApp = (CPCSpimApp *)AfxGetApp();
 
+  RECT r, *pr;
+  int nMinMax;
 
   // Console is a special case.  We save position, but not minmax.
   if (g_fSaveWinPos && pApp->GetSetting(SPIM_REG_CONSOLEPOS, &r))
@@ -264,6 +256,20 @@ int CPCSpimView::OnCreate(LPCREATESTRUCT pcs)
 			this,
 			1);
   InitSpimWins(m_wndRegisters, r, nMinMax, TRUE, TRUE);
+
+
+  // Get font info from registry and use to set windows' font.
+  //
+  LOGFONT lf;
+  memset(&lf, 0, sizeof(LOGFONT));
+
+  strcpy(lf.lfFaceName, (char*)pApp->GetSetting(SPIM_REG_FONTFACE, "Courier"));	/* Default: Courier 16pt, normal weight */
+  lf.lfHeight = pApp->GetSetting(SPIM_REG_FONTHEIGHT, 16);
+  lf.lfWeight = pApp->GetSetting(SPIM_REG_FONTWEIGHT, 400);
+  lf.lfItalic = pApp->GetSetting(SPIM_REG_FONTITALIC, 0);
+
+  SetSpimFont(&lf);
+
 
   // Load settings
   Initialize();
@@ -1411,3 +1417,27 @@ void CPCSpimView::OnFileSaveLog()
   fclose(f);
 }
 
+
+CFont* CPCSpimView::GetSpimFont()
+{
+  return m_wndTextSeg.GetFont();
+}
+
+
+void CPCSpimView::SetSpimFont(LOGFONT* lf)
+{
+  CFont* font = new CFont;
+  VERIFY(font->CreateFontIndirect(lf));  // create the font
+
+  m_wndMessages.SetFont(font, TRUE);
+  m_wndRegisters.SetFont(font, TRUE);
+  m_wndConsole.SetFont(font, TRUE);
+  m_wndTextSeg.SetFont(font, TRUE);
+  m_wndDataSeg.SetFont(font, TRUE);
+
+  CPCSpimApp *pApp = (CPCSpimApp *)AfxGetApp();
+  pApp->WriteSetting(SPIM_REG_FONTFACE, lf->lfFaceName );
+  pApp->WriteSetting(SPIM_REG_FONTHEIGHT, lf->lfHeight);
+  pApp->WriteSetting(SPIM_REG_FONTWEIGHT, lf->lfWeight);
+  pApp->WriteSetting(SPIM_REG_FONTITALIC, lf->lfItalic);
+}

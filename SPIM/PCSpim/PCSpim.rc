@@ -131,6 +131,7 @@ BEGIN
         MENUITEM "&Display symbol table",       ID_SIMULATOR_DISPLAYSYMBOLS
         MENUITEM SEPARATOR
         MENUITEM "&Settings...",                ID_SIMULATOR_SETTINGS
+        MENUITEM "Set Font",                    ID_SIMULATOR_SETFONT
     END
     POPUP "&Window"
     BEGIN

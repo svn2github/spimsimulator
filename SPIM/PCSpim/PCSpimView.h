@@ -53,7 +53,9 @@ public:
 	void WriteToConsole(LPCTSTR strText);
 	CPCSpimDoc* GetDocument();
 	void CPCSpimView::TileWindows(long cx, long cy, long bottom);
-
+	CFont* GetSpimFont();
+	void SetSpimFont(LOGFONT* font);
+   
 // Operations
 public:
 
