@@ -317,7 +317,7 @@ initialize_scanner (in_file)
   yyrestart(in_file);
   yy_init = 1;
 #endif
-  line_no = 1;
+  line_no = 0;
   current_line = NULL;
   line_returned = 0;
   eof_returned = 0;

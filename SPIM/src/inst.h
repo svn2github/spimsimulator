@@ -134,6 +134,13 @@ typedef struct inst_s
 #define COND_LT		0x4
 #define COND_IN		0x8
 
+/* Minimum and maximum values that fit in instruction's imm field */
+#define IMM_MIN -(1<<15)
+#define IMM_MAX ((1<<15)-1)
+
+#define UIMM_MIN  0
+#define UIMM_MAX  ((1<<16)-1)
+
 
 
 /* Raise an exception! */

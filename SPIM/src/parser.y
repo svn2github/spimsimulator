@@ -330,6 +330,8 @@ int parse_error_occurred;  /* Non-zero => parse resulted in error */
 
 #ifdef __STDC__
 static imm_expr *branch_offset (int n_inst);
+static void check_imm_range (imm_expr*, int32, int32);
+static void check_uimm_range (imm_expr*, uint32, uint32);
 static void clear_labels (void);
 static label_list *cons_label (label *head, label_list *tail);
 static void div_inst (int op, int rd, int rs, int rt, int const_divisor);
@@ -341,8 +343,11 @@ static void set_gt_inst (int op, int rd, int rs, int rt);
 static void set_le_inst (int op, int rd, int rs, int rt);
 static void store_word_data (int value);
 static void trap_inst (void);
+static void yywarn (char*);
 #else
 static imm_expr *branch_offset ();
+static void check_imm_range();
+static void check_uimm_range();
 static void clear_labels ();
 static label_list *cons_label ();
 static void div_inst ();
@@ -354,6 +359,7 @@ static void set_gt_inst ();
 static void set_le_inst ();
 static void store_word_data ();
 static void trap_inst ();
+static void yywarn ();
 #endif
 
 
@@ -369,7 +375,6 @@ static int noat_flag = 0;	/* Non-zero means program can use $1 */
 
 static char *input_file_name;	/* Name of file being parsed */
 
-
 %}
 
 
@@ -379,8 +384,8 @@ static char *input_file_name;	/* Name of file being parsed */
 LINE:		{parse_error_occurred = 0; scanner_start_line (); } LBL_CMD ;
 
 LBL_CMD:	OPT_LBL CMD
-        |	CMD
-        ;
+	|	CMD
+	;
 
 
 OPT_LBL: ID ':' {
@@ -459,7 +464,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  free ((addr_expr *)$3.p);
 		}
 
-	|	LOAD_IMM_OP	DEST_REG	IMM
+	|	LOAD_IMM_OP	DEST_REG	IMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, 0, (imm_expr *)$3.p);
 		}
@@ -479,7 +484,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_LI_POP	DEST_REG	IMM
+	|	Y_LI_POP	DEST_REG	IMM32
 		{
 		  i_type_inst_free (Y_ORI_OP, $2.i, 0, (imm_expr *)$3.p);
 		}
@@ -713,14 +718,14 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	BINARY_OP_I	DEST_REG	SRC1		IMM
+	|	BINARY_OP_I	DEST_REG	SRC1		IMM32
 		{
 		  i_type_inst_free (op_to_imm_op ($1.i), $2.i, $3.i,
 				    (imm_expr *)$4.p);
 		}
 
 
-	|	BINARY_OP_I	DEST_REG	IMM
+	|	BINARY_OP_I	DEST_REG	IMM32
 		{
 		  i_type_inst_free (op_to_imm_op ($1.i), $2.i, $2.i,
 				    (imm_expr *)$3.p);
@@ -745,13 +750,24 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	BINARY_IMM_OP	DEST_REG	SRC1		IMM
+	|	BINARY_IMM_ARITH_OP	DEST_REG	SRC1		IMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, $3.i, (imm_expr *)$4.p);
 		}
 
 
-	|	BINARY_IMM_OP	DEST_REG	IMM
+	|	BINARY_IMM_ARITH_OP	DEST_REG	IMM16
+		{
+		  i_type_inst_free ($1.i, $2.i, $2.i, (imm_expr *)$3.p);
+		}
+
+	|	BINARY_IMM_LOGICAL_OP	DEST_REG	SRC1		UIMM16
+		{
+		  i_type_inst_free ($1.i, $2.i, $3.i, (imm_expr *)$4.p);
+		}
+
+
+	|	BINARY_IMM_LOGICAL_OP	DEST_REG	UIMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, $2.i, (imm_expr *)$3.p);
 		}
@@ -775,7 +791,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	BINARY_OP_NOI	DEST_REG	SRC1		IMM
+	|	BINARY_OP_NOI	DEST_REG	SRC1		IMM32
 		{
 		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
@@ -793,8 +809,9 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	BINARY_OP_NOI	DEST_REG	IMM
+	|	BINARY_OP_NOI	DEST_REG	IMM32
 		{
+		  check_uimm_range ((imm_expr *)$3.p, UIMM_MIN, UIMM_MAX);
 		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
@@ -817,9 +834,9 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	SUB_OP	DEST_REG	SRC1		IMM
+	|	SUB_OP	DEST_REG	SRC1		IMM32
 		{
-		  int val = eval_imm_expr ((imm_expr*)$4.p);
+		  int val = eval_imm_expr ((imm_expr *)$4.p);
 
 		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
@@ -829,14 +846,14 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 				 : (fatal_error ("Bad SUB_OP\n"), 0),
 				 $2.i,
 				 $3.i,
-				 make_imm_expr ( -val, NULL, 0));
+				 make_imm_expr (-val, NULL, 0));
 		  free ((imm_expr *)$4.p);
 		}
 
 
-	|	SUB_OP	DEST_REG	IMM
+	|	SUB_OP	DEST_REG	IMM32
 		{
-		  int val = eval_imm_expr ((imm_expr*)$3.p);
+		  int val = eval_imm_expr ((imm_expr *)$3.p);
 
 		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
@@ -865,7 +882,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  div_inst ($1.i, $2.i, $3.i, $4.i, 0);
 		}
 
-	|	DIV_POP		DEST_REG	SRC1		IMM
+	|	DIV_POP		DEST_REG	SRC1		IMM32
 		{
 		  if (zero_imm ((imm_expr *)$4.p))
 		    yyerror ("Divide by zero");
@@ -883,7 +900,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  mult_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	MUL_POP		DEST_REG	SRC1		IMM
+	|	MUL_POP		DEST_REG	SRC1		IMM32
 		{
 		  if (zero_imm ((imm_expr *)$4.p))
 		    /* Optimize: n * 0 == 0 */
@@ -921,10 +938,11 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ROR_POP	DEST_REG	SRC1		IMM
+	|	Y_ROR_POP	DEST_REG	SRC1		IMM32
 		{
 		  long dist = eval_imm_expr ((imm_expr *)$4.p);
 
+		  check_imm_range ((imm_expr *)$4.p, -31, 31);
 		  r_sh_type_inst (Y_SLL_OP, 1, $3.i, -dist);
 		  r_sh_type_inst (Y_SRL_OP, $2.i, $3.i, dist);
 		  r_type_inst (Y_OR_OP, $2.i, $2.i, 1);
@@ -932,10 +950,11 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		}
 
 
-	|	Y_ROL_POP	DEST_REG	SRC1		IMM
+	|	Y_ROL_POP	DEST_REG	SRC1		IMM32
 		{
 		  long dist = eval_imm_expr ((imm_expr *)$4.p);
 
+		  check_imm_range ((imm_expr *)$4.p, -31, 31);
 		  r_sh_type_inst (Y_SRL_OP, 1, $3.i, -dist);
 		  r_sh_type_inst (Y_SLL_OP, $2.i, $3.i, dist);
 		  r_type_inst (Y_OR_OP, $2.i, $2.i, 1);
@@ -949,7 +968,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  set_le_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_LE_POP	DEST_REG	SRC1		IMM
+	|	SET_LE_POP	DEST_REG	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -965,7 +984,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  set_gt_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_GT_POP	DEST_REG	SRC1		IMM
+	|	SET_GT_POP	DEST_REG	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -982,12 +1001,13 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  set_ge_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_GE_POP	DEST_REG	SRC1		IMM
+	|	SET_GE_POP	DEST_REG	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
 		    i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$4.p);
-		  set_ge_inst ($1.i, $2.i, $3.i, (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
+		  set_ge_inst ($1.i, $2.i, $3.i,
+			       (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
 		  free ((imm_expr *)$4.p);
 		}
 
@@ -997,7 +1017,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  set_eq_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
-	|	SET_EQ_POP	DEST_REG	SRC1		IMM
+	|	SET_EQ_POP	DEST_REG	SRC1		IMM32
 		{
 		  if (!zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
@@ -1032,7 +1052,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  i_type_inst_free ($1.i, $3.i, $2.i, (imm_expr *)$4.p);
 		}
 
-	|	BINARY_BR_OP	SRC1		IMMEDIATE	LABEL
+	|	BINARY_BR_OP	SRC1		BR_IMM32	LABEL
 		{
 		  if (bare_machine && !accept_pseudo_insts)
 		    yyerror ("Immediate form not allowed in bare machine");
@@ -1063,7 +1083,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  i_type_inst_free (Y_BNE_OP, 0, 1, (imm_expr *)$4.p);
 		}
 
-	|	BR_GT_POP	SRC1		IMMEDIATE	LABEL
+	|	BR_GT_POP	SRC1		BR_IMM32	LABEL
 		{
 		  if ($1.i == Y_BGT_POP)
 		    {
@@ -1093,7 +1113,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  i_type_inst_free (Y_BEQ_OP, 0, 1, (imm_expr *)$4.p);
 		}
 
-	|	BR_GE_POP	SRC1		IMMEDIATE	LABEL
+	|	BR_GE_POP	SRC1		BR_IMM32	LABEL
 		{
 		  i_type_inst ($1.i == Y_BGE_POP ? Y_SLTI_OP : Y_SLTIU_OP,
 			       1, $2.i, (imm_expr *)$3.p); /* Use $at */
@@ -1109,7 +1129,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  i_type_inst_free (Y_BNE_OP, 0, 1, (imm_expr *)$4.p);
 		}
 
-	|	BR_LT_POP	SRC1		IMMEDIATE	LABEL
+	|	BR_LT_POP	SRC1		BR_IMM32	LABEL
 		{
 		  i_type_inst ($1.i == Y_BLT_POP ? Y_SLTI_OP : Y_SLTIU_OP,
 			       1, $2.i, (imm_expr *)$3.p); /* Use $at */
@@ -1125,7 +1145,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  i_type_inst_free (Y_BEQ_OP, 0, 1, (imm_expr *)$4.p);
 		}
 
-	|	BR_LE_POP	SRC1		IMMEDIATE	LABEL
+	|	BR_LE_POP	SRC1		BR_IMM32	LABEL
 		{
 		  if ($1.i == Y_BLE_POP)
 		    {
@@ -1265,7 +1285,7 @@ LOAD_OP:	Y_LB_OP
 	|	Y_LWL_OP
 	|	Y_LWR_OP
 	|	Y_LD_POP
-        |       Y_PFW_OP
+	|	Y_PFW_OP
 	;
 
 LOAD_COP:	Y_LWC0_OP
@@ -1326,13 +1346,15 @@ BINARY_OPR_I:	Y_SLLV_OP
 	|	Y_SRLV_OP
 	;
 
-BINARY_IMM_OP:	Y_ADDI_OP
+BINARY_IMM_ARITH_OP: Y_ADDI_OP
 	|	Y_ADDIU_OP
-	|	Y_ANDI_OP
-	|	Y_ORI_OP
-	|	Y_XORI_OP
 	|	Y_SLTI_OP
 	|	Y_SLTIU_OP
+	;
+
+BINARY_IMM_LOGICAL_OP: Y_ANDI_OP
+	|	Y_ORI_OP
+	|	Y_XORI_OP
 	;
 
 SHIFT_OP:	Y_SLL_OP
@@ -1875,9 +1897,22 @@ ADDR:		'(' REGISTER ')'
 	;
 
 
-IMMEDIATE:	{only_id = 1;} IMM {only_id = 0; $$ = $2;}
+BR_IMM32:	{only_id = 1;} IMM32 {only_id = 0; $$ = $2;}
 
-IMM:		ABS_ADDR
+IMM16:	IMM32
+		{
+		  check_imm_range($1.p, IMM_MIN, IMM_MAX);
+		  $$ = $1;
+		}
+
+UIMM16:	IMM32
+		{
+		  check_uimm_range($1.p, UIMM_MIN, UIMM_MAX);
+		  $$ = $1;
+		}
+
+
+IMM32:		ABS_ADDR
 		{
 		  $$.p = make_imm_expr ($1.i, NULL, 0);
 		}
@@ -1964,7 +1999,7 @@ COP_REG:	Y_REG
 
 LABEL:		ID
 		{
-		  $$.p = make_imm_expr (- current_text_pc (), (char*)$1.p, 1);
+		  $$.p = make_imm_expr (-(int)current_text_pc (), (char*)$1.p, 1);
 		}
 
 
@@ -2365,6 +2400,61 @@ initialize_parser (file_name)
 
 
 #ifdef __STDC__
+static void
+check_imm_range(imm_expr* expr, int32 min, int32 max)
+#else
+static void
+check_imm_range()
+     imm_expr* expr;
+     int32 min;
+     int32 max;
+#endif
+{
+  if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
+    {
+      /* If expression can be evaluated, compare its value against the limits
+	 and complain if the value is out of bounds. */
+      int32 value = eval_imm_expr (expr);
+
+      if (value < min || max < value)
+	{
+	  char str[200];
+	  sprintf (str, "immediate value (%d) out of range (%d .. %d)",
+		   value, min, max);
+	  yywarn (str);
+	}
+    }
+}
+
+
+#ifdef __STDC__
+static void
+check_uimm_range(imm_expr* expr, uint32 min, uint32 max)
+#else
+static void
+check_uimm_range()
+     imm_expr* expr;
+     int32 umin;
+     int32 umax;
+#endif
+{
+  if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
+    {
+      /* If expression can be evaluated, compare its value against the limits
+	     and complain if the value is out of bounds. */
+      uint32 value = eval_imm_expr (expr);
+
+      if (value < min || max < value)
+	{
+	  char str[200];
+	  sprintf (str, "immediate value (%d) out of range (%d .. %d)",
+		   value, min, max);
+	  yywarn (str);
+	}
+    }
+}
+
+#ifdef __STDC__
 void
 yyerror (char *s)
 #else
@@ -2374,7 +2464,19 @@ yyerror (s)
 #endif
 {
   parse_error_occurred = 1;
-  error ("spim: (parser) %s on line %d of file %s\n",
-	 s, line_no, input_file_name);
+  yywarn (s);
+}
+
+
+#ifdef __STDC__
+void
+yywarn (char *s)
+#else
+void
+yywarn (s)
+     char *s;
+#endif
+{
+  error ("spim: (parser) %s on line %d of file %s\n", s, line_no, input_file_name);
   print_erroneous_line ();
 }

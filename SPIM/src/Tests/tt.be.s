@@ -51,7 +51,7 @@ main:
 	break 0
 # Exception 10 (RI) -- Not implemented (can't enter bad instructions)
 # Exception 12 (overflow)
-	lui $t0 0x7fffffff
+	li $t0 0x7fffffff
 	add $t0 $t0 $t0
 	li $v0 4	# syscall 4 (print_str)
 	la $a0 m4
@@ -114,9 +114,9 @@ addiu_:	.asciiz "Testing ADDIU\n"
 	addiu $4, $4, -1
 	bnez $4 fail
 
-	lui $2 0x7fffffff
-	addiu $2 $2 0x7fffffff	# should not trap
-	bne $2 -2 fail
+	li $2 0x7fffffff
+	addiu $2 $2 2	# should not trap
+	bne $2 0x80000001 fail
 
 
 	.data
@@ -136,7 +136,7 @@ addu_:	.asciiz "Testing ADDU\n"
 	addu $4, $4, $3
 	bnez $4 fail
 
-	lui $2 0x7fffffff
+	li $2 0x7fffffff
 	addu $2 $2 $2		# should not trap
 	bne $2 -2 fail
 
@@ -1087,8 +1087,8 @@ ori_:	.asciiz "Testing ORI\n"
 	bne $4 0 fail
 	ori $4 $2 1
 	bne $4 1 fail
-	ori $4 $2 -1
-	bne $4 0xffffffff fail
+	ori $4 $2 0xffff
+	bne $4 0x0000ffff fail
 
 
 # RFE tested previously
@@ -1735,9 +1735,9 @@ xori_:	.asciiz "Testing XORI\n"
 
 	xori $4 $0 0
 	bne $4 0 fail
-	xori $4 $3 -1
-	bne $4 0 fail
-	xori $4 $2 -1
+	xori $4 $3 0xffff
+	bne $4 0xffff0000 fail
+	xori $4 $2 0xffff
 	bne $4 0xfffffffe fail
 
 

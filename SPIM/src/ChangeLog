@@ -1,3 +1,9 @@
+2000-12-04    <larus@C745660-A>
+
+	* parser.y scanner.l inst.h tt.be.s tt.le.s
+	Validate range of immediate values in non-pseudo instruction and
+	warn if too large. [From: David Kessner davidk@peakaudio.com]
+
 Mon Jan 11 23:53:33 1999  James Larus  <larus@breeze.cs.wisc.edu>
 
 	* tt.be.s tt.le.s:
