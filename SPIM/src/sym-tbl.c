@@ -386,7 +386,7 @@ resolve_a_label_sub (sym, inst, pc)
 
 	  if (opcode_is_branch (OPCODE (inst)))
 	    {
-	      short val;
+	      int val;
 
 	      /* Drop low two bits since instructions are on word
 		 boundaries. */
@@ -425,9 +425,9 @@ resolve_a_label_sub (sym, inst, pc)
 	      print_inst (pc);
 	    }
 	  if (opcode_is_jump (OPCODE (inst)))
-	    TARGET (inst) = value; /* Don't mask so it is sign-extended */
+	    SET_TARGET (inst, value); /* Don't mask so it is sign-extended */
 	  else
-	    IMM (inst) = value;	/* Ditto */
+	    SET_IMM (inst, value);	/* Ditto */
 	  ENCODING (inst) = inst_encode (inst);
 	}
       else

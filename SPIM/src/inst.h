@@ -85,30 +85,46 @@ typedef struct inst_s
 
 
 #define OPCODE(INST)	(INST)->opcode
+#define SET_OPCODE(INST, VAL)	(INST)->opcode = (short)(VAL)
 
-#define RS(INST)	(INST)->r_t.r_i.rs
-#define FS(INST)	(INST)->r_t.r_i.rs
-#define BASE(INST)	(INST)->r_t.r_i.rs
+#define RS(INST)			(INST)->r_t.r_i.rs
+#define SET_RS(INST, VAL)	(INST)->r_t.r_i.rs = (unsigned char)(VAL)
+#define FS(INST)			RS(INST)
+#define SET_FS(INST, VAL)	SET_RS(INST, VAL)
+#define BASE(INST)			RS(INST)
+#define SET_BASE(INST, VAL)	SET_RS(INST, VAL)
 
-#define RT(INST)	(INST)->r_t.r_i.rt
-#define FT(INST)	(INST)->r_t.r_i.rt
+#define RT(INST)			(INST)->r_t.r_i.rt
+#define SET_RT(INST, VAL)	(INST)->r_t.r_i.rt = (unsigned char)(VAL)
+#define FT(INST)			RT(INST)
+#define SET_FT(INST, VAL)	SET_RT(INST, VAL)
 
-#define RD(INST)	(INST)->r_t.r_i.r_i.r.rd
-#define FD(INST)	(INST)->r_t.r_i.r_i.r.rd
+#define RD(INST)			(INST)->r_t.r_i.r_i.r.rd
+#define SET_RD(INST, VAL)	(INST)->r_t.r_i.r_i.r.rd = (unsigned char)(VAL)
+#define FD(INST)			RD(INST)
+#define SET_FD(INST, VAL)	SET_RD(INST, VAL)
 
-#define SHAMT(INST)	(INST)->r_t.r_i.r_i.r.shamt
+#define SHAMT(INST)			(INST)->r_t.r_i.r_i.r.shamt
+#define SET_SHAMT(INST, VAL)(INST)->r_t.r_i.r_i.r.shamt = (unsigned char)(VAL)
 
-#define IMM(INST)	(INST)->r_t.r_i.r_i.imm
-#define IOFFSET(INST)	(INST)->r_t.r_i.r_i.imm
-#define COND(INST)	(INST)->r_t.r_i.r_i.imm
+#define IMM(INST)			(INST)->r_t.r_i.r_i.imm
+#define SET_IMM(INST, VAL)	(INST)->r_t.r_i.r_i.imm = (short)(VAL)
+#define IOFFSET(INST)		IMM(INST)
+#define SET_IOFFSET(INST, VAL)	SET_IMM(INST, VAL)
+#define COND(INST)			IMM(INST)
+#define SET_COND(INST, VAL)	SET_IMM(INST, VAL)
 
-#define TARGET(INST)	(INST)->r_t.target
+#define TARGET(INST)		(INST)->r_t.target
+#define SET_TARGET(INST, VAL)	(INST)->r_t.target = (mem_addr)(VAL)
 
-#define ENCODING(INST)	(INST)->encoding
+#define ENCODING(INST)		(INST)->encoding
+#define SET_ENCODING(INST, VAL)	(INST)->encoding = (uint32)(VAL)
 
-#define EXPR(INST)	(INST)->expr
+#define EXPR(INST)			(INST)->expr
+#define SET_EXPR(INST, VAL)	(INST)->expr = (imm_expr*)(VAL)
 
-#define SOURCE(INST)	(INST)->source_line
+#define SOURCE(INST)		(INST)->source_line
+#define SET_SOURCE(INST, VAL)	(INST)->source_line = (char *)(VAL)
 
 
 #define COND_UN		0x1

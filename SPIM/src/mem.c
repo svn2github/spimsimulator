@@ -467,9 +467,9 @@ bad_mem_write (addr, value, mask)
       if (addr >= stack_bot)
 	{
 	  if (mask == 0)
-	    stack_seg_b [addr - stack_bot] = value;
+	    stack_seg_b [addr - stack_bot] = (char)value;
 	  else if (mask == 1)
-	    stack_seg_h [(addr - stack_bot) > 1] = value;
+	    stack_seg_h [(addr - stack_bot) > 1] = (short)value;
 	  else
 	    stack_seg [(addr - stack_bot) >> 2] = value;
 	}

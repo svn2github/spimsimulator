@@ -210,9 +210,9 @@ store_instruction (inst)
 	BUMP_INST_PC (BYTES_PER_WORD);
       if (inst != NULL)
 	{
-	  SOURCE (inst) = source_line ();
+	  SET_SOURCE (inst, source_line ());
 	  if (ENCODING (inst) == 0)
-	    ENCODING (inst) = inst_encode (inst);
+	    SET_ENCODING (inst, inst_encode (inst));
 	}
     }
 }
@@ -252,10 +252,10 @@ i_type_inst (opcode, rt, rs, expr)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
-  OPCODE (inst) = opcode;
-  RS (inst) = rs;
-  RT (inst) = rt;
-  EXPR (inst) = copy_imm_expr (expr);
+  SET_OPCODE (inst, opcode);
+  SET_RS (inst, rs);
+  SET_RT (inst, rt);
+  SET_EXPR (inst, copy_imm_expr (expr));
   if (expr->symbol == NULL || SYMBOL_IS_DEFINED (expr->symbol))
     {
       /* Evaluate the instruction's expression. */
@@ -411,10 +411,10 @@ j_type_inst (opcode, target)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
-  OPCODE(inst) = opcode;
+  SET_OPCODE(inst, opcode);
   target->offset = 0;		/* Not PC relative */
   target->pc_relative = 0;
-  EXPR (inst) = copy_imm_expr (target);
+  SET_EXPR (inst, copy_imm_expr (target));
   if (target->symbol == NULL || SYMBOL_IS_DEFINED (target->symbol))
     resolve_a_label (target->symbol, inst);
   else
@@ -437,10 +437,10 @@ make_r_type_inst (opcode, rd, rs, rt)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
-  OPCODE(inst) = opcode;
-  RS(inst) = rs;
-  RT(inst) = rt;
-  RD(inst) = rd;
+  SET_OPCODE(inst, opcode);
+  SET_RS(inst, rs);
+  SET_RT(inst, rt);
+  SET_RD(inst, rd);
   SHAMT(inst) = 0;
   return (inst);
 }
@@ -476,7 +476,7 @@ r_sh_type_inst (opcode, rd, rt, shamt)
 {
   instruction *inst = make_r_type_inst (opcode, rd, 0, rt);
 
-  SHAMT(inst) = shamt & 0x1f;
+  SET_SHAMT(inst, shamt & 0x1f);
   store_instruction (inst);
 }
 
@@ -628,7 +628,7 @@ instruction *inst;
 
   *new_inst = *inst;
   /*memcpy ((void*)new_inst, (void*)inst , sizeof (instruction));*/
-  EXPR (new_inst) = copy_imm_expr (EXPR (inst));
+  SET_EXPR (new_inst, copy_imm_expr (EXPR (inst)));
   return (new_inst);
 }
 
@@ -1123,7 +1123,7 @@ make_imm_expr (offs, sym, pc_rel)
 
   expr->offset = offs;
   expr->bits = 0;
-  expr->pc_relative = pc_rel;
+  expr->pc_relative = (short)pc_rel;
   if (sym != NULL)
     expr->symbol = lookup_label (sym);
   else
@@ -1371,7 +1371,7 @@ make_addr_expr (offs, sym, reg_no)
     }
   else
     {
-      expr->reg_no = reg_no;
+      expr->reg_no = (unsigned char)reg_no;
       expr->imm = make_imm_expr (offs, (sym ? str_copy (sym) : sym), 0);
     }
   return (expr);
@@ -1743,7 +1743,7 @@ uint32 value;
       {
 	instruction *inst = mk_r_inst (value, i_opcode, REG (value, 11),
 				       REG (value, 16), 0, 0);
-	COND (inst) = value & 0xf;
+	SET_COND (inst, value & 0xf);
 	return (inst);
       }
 
@@ -1785,13 +1785,13 @@ mk_r_inst (value, opcode, rs, rt, rd, shamt)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
-  OPCODE (inst) = opcode;
-  RS (inst) = rs;
-  RT (inst) = rt;
-  RD (inst) = rd;
-  SHAMT (inst) = shamt;
-  ENCODING (inst) = value;
-  EXPR (inst) = NULL;
+  SET_OPCODE (inst, opcode);
+  SET_RS (inst, rs);
+  SET_RT (inst, rt);
+  SET_RD (inst, rd);
+  SET_SHAMT (inst, shamt);
+  SET_ENCODING (inst, value);
+  SET_EXPR (inst, NULL);
   return (inst);
 }
 
@@ -1808,12 +1808,12 @@ mk_i_inst (value, opcode, rs, rt, offset)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
-  OPCODE (inst) = opcode;
-  RS (inst) = rs;
-  RT (inst) = rt;
-  IOFFSET (inst) = offset;
-  ENCODING (inst) = value;
-  EXPR (inst) = NULL;
+  SET_OPCODE (inst, opcode);
+  SET_RS (inst, rs);
+  SET_RT (inst, rt);
+  SET_IOFFSET (inst, offset);
+  SET_ENCODING (inst, value);
+  SET_EXPR (inst, NULL);
   return (inst);
 }
 
@@ -1829,10 +1829,10 @@ mk_j_inst (value, opcode, target)
 {
   instruction *inst = (instruction *) zmalloc (sizeof (instruction));
 
-  OPCODE (inst) = opcode;
-  TARGET (inst) = target;
-  ENCODING (inst) = value;
-  EXPR (inst) = NULL;
+  SET_OPCODE (inst, opcode);
+  SET_TARGET (inst, target);
+  SET_ENCODING (inst, value);
+  SET_EXPR (inst, NULL);
   return (inst);
 }
 

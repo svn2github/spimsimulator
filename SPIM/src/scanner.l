@@ -428,14 +428,14 @@ print_erroneous_line ()
   c = *(current_line + prefix_length);
   *(current_line + prefix_length) = '\0';
   error ("%s", current_line);
-  *(current_line + prefix_length) = c;
+  *(current_line + prefix_length) = (char)c;
   error ("%s", yytext);
 
   /* Flush the rest of the line. */
   if (*yytext != '\n')
     {
       while ((c = input ()) != '\n' && c != EOF)
-	*bp ++ = c;
+	*bp ++ = (char)c;
       *bp = '\0';
       error ("%s\n", buffer);
       if (c == '\n') unput ('\n');
