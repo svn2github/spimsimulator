@@ -1,5 +1,8 @@
 2004-02-15    <larus@C745660-A>
 
+	* scanner.l [Vishal jain (vishalsj@yahoo.com)]:
+	Old lex does not use yy_hold_char variable, so ifdef out reference.
+
 	* spim.c [Matt Harren (math@cs.berkeley.edu)]:
 	Handle boundary case for -file without name.
 

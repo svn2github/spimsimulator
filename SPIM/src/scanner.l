@@ -645,8 +645,11 @@ source_line ()
       /* Find end of line: */
       for (eol1 = current_line; *eol1 != '\0' && *eol1 != '\n'; ) eol1 += 1;
 
+#ifdef FLEX_SCANNER
       /* Ran into null byte, inserted by yylex. In necessary, look further
-	 for newline */
+	 for newline. (This only works for scanners produced by flex. Other
+         versions of lex need similar code, or source code lines will end
+         early. */
       if (*eol1 == '\0' && yy_hold_char != '\n')
 	{
 	  null1 = eol1;
@@ -654,6 +657,7 @@ source_line ()
 	  for ( ; *eol1 != '\0' && *eol1 != '\n'; )
 	    eol1 += 1;
 	}
+#endif
 
       /* Save end-of-line character and null terminate string so it can
 	 be printed. */
