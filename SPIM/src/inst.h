@@ -20,7 +20,7 @@
    PURPOSE. */
 
 
-/* $Header: /Software/SPIM/src/inst.h 7     12/24/00 1:37p Larus $
+/* $Header: /Software/SPIM/src/inst.h 8     1/04/03 8:58a Larus $
 */
 
 
@@ -135,8 +135,8 @@ typedef struct inst_s
 #define COND_IN		0x8
 
 /* Minimum and maximum values that fit in instruction's imm field */
-#define IMM_MIN -(1<<15)
-#define IMM_MAX ((1<<15)-1)
+#define IMM_MIN 0xffff8000
+#define IMM_MAX 0x00007fff
 
 #define UIMM_MIN  0
 #define UIMM_MAX  ((1<<16)-1)

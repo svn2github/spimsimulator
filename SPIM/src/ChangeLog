@@ -1,3 +1,148 @@
+2003-01-04    <larus@C745660-A>
+
+	* spim.html:
+	Cleaned up file and added installation instructions.
+
+2003-01-03    <larus@C745660-A>
+
+	* README:
+	Typo in README. [From: Ian Langworth [bass@ccs.neu.edu]]
+
+2003-01-01    <larus@HomeMachine>
+
+	* run.c:
+	Got (real!) hardware exception on integer overflow in
+	division. [From: Deborah Ariel Pickett
+	[debbiep@mail.csse.monash.edu.au]]
+
+	* xspim.c:
+	-trap_file did not properly parse argument in xspim. [From:
+	William Waite [William.Waite@Colorado.EDU]]
+
+	* scanner.l:
+	Fixed printing of error on last line without a carriage
+	return. [From: Max Hailperin [max@gac.edu]]
+
+	* display-utils.c:
+	Print proper registers when printing hex FP numbers. [From: Armin
+	Mueller [arm.in@web.de]]
+
+	* mem.c:
+	Properly zero newly allocated memory. [From: Guillaume Melquiond
+	[gmelquio@ens-lyon.fr], Bill Siever [bsiever@umr.edu, Diego Billi
+	[dbilli@CS.UniBO.IT], Alberto Montresor [montreso@cs.unibo.it],
+	Max Gilbert [max@ebs330.eb.uah.edu]] Konrad Rymuza [zeljko@wp.pl]
+
+	* SettingsDlg.cpp:
+	Set delayed branch & load check box when bare check box is
+	checked. [From: Marco Cova [mcova@umail.ucsb.edu]]
+
+	* trap.handler:
+	Added nops (addu $0, $0, 0) to trap handler, so that it works
+	properly in bare mode! [From: Marco Cova [mcova@umail.ucsb.edu]]
+
+	* sym-tbl.c:
+	Avoid null ref when there is no instruction in memory before a
+	load instruction. [From: Steven Borkman [borkman@cse.Buffalo.EDU]]
+
+	* spim.html:
+	Removed reference to spimwin.ps since file disappeared (.pdf
+	remains) [From: hemmendd@athena.union.edu]
+
+	* PCSPIM.HLP:
+	File was corrupted.
+
+2002-01-12    <larus@HomeMachine>
+
+	* Release SPIM 6.4a
+
+	* spim.html:
+	Update with latest info.
+
+	* mips-syscall.c:
+	Use unix read/write/open/close not just windows
+	_read/_write/_open/_close.
+
+	* xspim.h xspim.c:
+	Bad function prototypes.
+
+2002-01-01    <larus@HomeMachine>
+
+	* Release SPIM 6.4
+	
+	* PCSpimView.cpp:
+	Ensure that register and data segment windows do not shift focus
+	when underlying values change.  [From: Vollmar, Kenneth R
+	krv133f@smsu.edu]
+
+	* parser.y tt.le.s:
+	Fixed translation of USH to eliminate side-effect and warning.
+
+	* mips-syscall.c:
+	Eliminated compiler warnings at high warning level.
+
+	* mips-syscall.c spim-syscall.h:
+	Added open/close read/write system calls. [From: Doug Johnson
+	djohnson@cs.washington.edu]
+
+	* Configure:
+	Added entries for Mac OSX. [From: Jeffrey Naset jeff@naset.net]
+
+2001-12-24    <larus@HomeMachine>
+
+	* parser.y:
+	Translation of USH pseudo-op used register $1 twice, which didn't
+	work. Changed it so it modifies its first argument instead (and
+	issued warning of side effect).
+
+	* PCSpimView.cpp:
+	Report parser warnings distinct from errors.
+
+	* parser.y:
+	REM pseudo-op requires 3 arguments. [From: Rigel rigelf@angelfire.com]
+
+	* ConsoleWnd.h:
+	Return window's content as a string so it can be dumped to a
+	file. [From: Bill Siever bsiever@umr.edu]
+
+	* parser.y inst.h tt.le.s tt.be.s:
+	Make LUI's immediate unsigned (since it is not sign
+	extended). [From: Georgia Grant grantg@pacbell.net]
+
+	* SpimSupport.cpp:
+	Check that buffer in read_input is not null and that size is
+	reasonable. [From:  webmaster.it@libero.it]
+
+	* scanner.l:
+	Buffer overrun when handling bad input terminated by EOF rather
+	than \nl. [From: Max Hailperin max@gac.edu]
+
+	* spim-utils.c:
+	Symbol "main" was not marked as global in the symbol table. [From:
+	J. P. Mellor jpmellor@rose-hulman.edu]
+
+	* mem.c:
+	Zero newly allocated data byte-by-byte, to avoid zapping data in
+	last word of non-word aligned data area. [From: Peter Gammie
+	peteg@cse.unsw.edu.au]
+
+	* scanner.l:
+	Properly handle characters overwritten by null in scanner when
+	looking for the end of the current line.  [From:
+	Cary.G.Gray@wheaton.edu]
+
+	* sym-tbl.c tt.le.s tt.be.s:
+	Did not properly check that high-order 4 bits in jump
+	instruction's PC match corresponding bits in target instruction's
+	PC.
+
+	* parser.y:
+	Eliminated reduce/reduce conflict in div instruction.
+
+	* Makefile.cygwin:
+	Added -g flag. Changed from yacc to bison. Changed "diff" to "diff
+	-w" to ignore cr/lf differences.
+
 2001-02-08    <larus@HomeMachine>
 
 	* parser.y:
