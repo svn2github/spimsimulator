@@ -2470,10 +2470,11 @@ ABS_ADDR:	Y_INT
 
 	|	Y_INT Y_INT
 		{
-		  /* Y_INT '-' Y_INT */
-		  if ($2.i >= 0)
-		    yyerror ("Syntax error");
-		  $$.i = $1.i - $2.i;
+		  /* This is actually: Y_INT '-' Y_INT, since the binary
+		     subtract operator gets scanned as a unary negation
+		     operator. */
+		  if ($2.i >= 0) yyerror ("Syntax error");
+		  $$.i = $1.i - -$2.i;
 		}
 	;
 

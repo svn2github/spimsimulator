@@ -1,10 +1,15 @@
-2004-03-21    <larus@LARUS1>
+2004-03-22    <larus@HomeMachine>
+
+	* parser.y [Margaret M Reek [mmr@cs.rit.edu]]:
+	Add, rather than subtract, in expression: imm - imm.
+
+2004-03-21    <larus@HomeMachine>
 
 	* pervasive:
 	Cleaned up splint warnings.
 	Replaced sprintf calls with str-stream abstraction.
 
-2004-03-12    <larus@LARUS1>
+2004-03-12    <larus@HomeMachine>
 
 	* pervasive:
 	Renamed "trap" to "exception" to reflect MIPS terminology.
@@ -14,7 +19,7 @@
 	Fix internal representation of instructions by separating FS from
 	RS field and moving it RD and RD to SHAMT.
 
-	* scanner.l [Akim Demaille <akim@epita.fr>]
+	* scanner.l [Akim Demaille <akim@epita.fr>]:
 	Improve handling of escape sequence in strings to bring it close
 	to ISO C strings.
 
@@ -29,18 +34,18 @@
 	other exceptions afterwards), so that EPC points to instruciton to
 	restart.
 
-2004-03-11    <larus@LARUS1>
+2004-03-11    <larus@HomeMachine>
 
 	* mips-syscall.{c,h} spim-sycall.h syscall.{c,h}
 	Moved all syscall-related stuff to syscall.{c,h} and eliminated
 	old #ifdef'ed stuff related to syscalls from binary code running
 	on DECstations.
 
-2004-03-10    <larus@LARUS1>
+2004-03-10    <larus@HomeMachine>
 
 	* Changed memory access macros to functions.
 
-2004-03-06    <larus@LARUS1>
+2004-03-06    <larus@HomeMachine>
 
 	* prevasive:
 	Implemented MIPS32 instruction set.
@@ -52,17 +57,17 @@
 	Added CP0 timer.
 	Fixed trap.handler to work with MIPS32 exceptions.
 
-2004-02-19    <larus@LARUS1>
+2004-02-19    <larus@HomeMachine>
 
 	* inst.c inst.h spim-utils.c:
 	Sorted instruction tables in advance, rather than on first use.
 
-2004-02-16    <larus@LARUS1>
+2004-02-16    <larus@HomeMachine>
 
 	* PCSpimView.cpp [Domenico G. Sorrenti (sorrenti@disco.unimib.it)]:
 	Add prompt to ask user whether to reinitialize on reloading a file.
 
-2004-02-15    <larus@LARUS1>
+2004-02-15    <larus@HomeMachine>
 
 	* MainFrm.cpp MainFrm.h PCSpim.cpp PCSpimView.cpp PCSpimView.h
 	[Matthew Low (mlow@imail.EECS.Berkeley.edu)]:
@@ -95,7 +100,7 @@
 	* spim.c [Matt Harren (math@cs.berkeley.edu)]:
 	Handle boundary case for -file without name.
 
-2004-02-14    <larus@LARUS1>
+2004-02-14    <larus@HomeMachine>
 
 	* run.c [Bob Britton (BBritton@csuchico.edu)]:
 	Correctly implement delayed load instructions. (Nobody ever use
