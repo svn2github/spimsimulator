@@ -5,6 +5,11 @@
 	twice into instruction immediate field. [From: Robert Greenfield
 	(rhg@gpfn.sk.ca) and Christian R Ward]
 
+	(produce_immediate):
+	Missed optimization of loading immediate with zero high 16
+	bits. [From: Robert Greenfield (rhg@gpfn.sk.ca) and Christian R
+	Ward]
+
 2000-12-07    <larus@C745660-A>
 
 	* sys-table.c (resolve_a_label_sub):

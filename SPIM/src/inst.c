@@ -53,6 +53,7 @@ static instruction *mk_r_inst (uint32, int opcode, int rs,
 			       int rt, int rd, int shamt);
 static char* print_imm_expr (char *buf, unsigned int length, imm_expr *expr,
 			     int base_reg);
+static void produce_immediate (imm_expr *expr, int rt, int value_known, int32 value);
 static void sort_name_table (void);
 #else
 static int compare_pair_value ();
@@ -64,6 +65,7 @@ static instruction *mk_i_inst ();
 static instruction *mk_j_inst ();
 static instruction *mk_r_inst ();
 static char* print_imm_expr ();
+static void produce_immediate ();
 static void sort_name_table ();
 #endif
 
@@ -343,7 +345,9 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 
 	      i_type_inst_free (Y_LUI_OP, 1, 0, const_imm_expr (high));
 	      if (rs != 0)	/* Base register */
+		{
 		r_type_inst (Y_ADDU_OP, 1, 1, rs);
+		}
 	      i_type_inst_free (opcode, rt, 1, const_imm_expr (low));
 	    }
 	  else
@@ -358,7 +362,9 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 	  /* Need to adjust if lower bits are negative */
 	  i_type_inst_free (Y_LUI_OP, 1, 0, upper_bits_of_expr (expr));
 	  if (rs != 0)		/* Base register */
+	    {
 	    r_type_inst (Y_ADDU_OP, 1, 1, rs);
+	    }
 	  i_type_inst_free (opcode, rt, 1, lower_bits_of_expr (expr));
 	}
     }
@@ -376,8 +382,10 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 	  && expr->symbol->gp_flag && rs == 0
 	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
 	  && offset <= IMM_MAX)
+	{
 	i_type_inst_free ((opcode == Y_LUI_OP ? Y_ADDIU_OP : opcode),
 			  rt, REG_GP, make_imm_expr (offset, NULL, 0));
+	}
       else
 	{
 	  /* Use $at */
@@ -387,21 +395,42 @@ i_type_inst_full_word (opcode, rt, rs, expr, value_known, value)
 	       || opcode == Y_LUI_OP)
 	      && rs == 0)
 	    {
-	      if (value_known && (value & 0xffff) == 0)
-		i_type_inst_free (Y_LUI_OP, rt, 0, upper_bits_of_expr (expr));
-	      else
-		{
-		  i_type_inst_free (Y_LUI_OP, 1, 0, upper_bits_of_expr (expr));
-		  i_type_inst_free (Y_ORI_OP, rt, 1, lower_bits_of_expr(expr));
-		}
+	      produce_immediate(expr, rt, value_known, value);
 	    }
 	  else
 	    {
-	      i_type_inst_free (Y_LUI_OP, 1, 0, upper_bits_of_expr (expr));
-	      i_type_inst_free (Y_ORI_OP, 1, 1, lower_bits_of_expr (expr));
+	      produce_immediate(expr, 1, value_known, value);
 	      r_type_inst (imm_op_to_op (opcode), rt, rs, 1);
 	    }
 	}
+    }
+}
+
+
+#ifdef __STDC__
+static void
+produce_immediate (imm_expr *expr, int rt, int value_known, int32 value)
+#else
+static void
+produce_immediate (expr, rt, value_known, value)
+     imm_expr *expr;
+     int rt;
+     int value_known;
+     int32 value;
+#endif
+{
+  if (value_known && (value & 0xffff) == 0)
+    {
+      i_type_inst_free (Y_LUI_OP, rt, 0, upper_bits_of_expr (expr));
+    }
+  else if (value_known && (value & 0xffff0000) == 0)
+    {
+      i_type_inst_free (Y_ORI_OP, rt, 0, lower_bits_of_expr (expr));
+    }
+  else
+    {
+      i_type_inst_free (Y_LUI_OP, 1, 0, upper_bits_of_expr (expr));
+      i_type_inst_free (Y_ORI_OP, rt, 1, lower_bits_of_expr(expr));
     }
 }
 
@@ -1261,9 +1290,9 @@ eval_imm_expr (expr)
       value = 0;
     }
   if (expr->bits > 0)
-    return ((value >> 16) & 0xffff); /* Use upper bits of result */
+    return ((value >> 16) & 0xffff);  /* Use upper bits of result */
   else if (expr->bits < 0)
-    return (value & 0xffff);	/* Use lower bits */
+    return (value & 0xffff);	      /* Use lower bits */
   else
     return (value);
 }
