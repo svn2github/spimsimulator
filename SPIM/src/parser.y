@@ -464,7 +464,7 @@ ASM_CODE:	LOAD_OP		DEST_REG	ADDRESS
 		  free ((addr_expr *)$3.p);
 		}
 
-	|	LOAD_IMM_OP	DEST_REG	IMM16
+	|	LOAD_IMM_OP	DEST_REG	UIMM16
 		{
 		  i_type_inst_free ($1.i, $2.i, 0, (imm_expr *)$3.p);
 		}
@@ -2438,7 +2438,7 @@ static void
 check_uimm_range(imm_expr* expr, uint32 min, uint32 max)
 #else
 static void
-check_uimm_range()
+check_uimm_range()^
      imm_expr* expr;
      int32 umin;
      int32 umax;

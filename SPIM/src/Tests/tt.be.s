@@ -698,7 +698,7 @@ lui_:	.asciiz "Testing LUI\n"
 	lui $2 1
 	andi $2 $2 0xffff
 	bne $2 $0 fail
-	lui $2 -1
+	lui $2 0xffff
 	srl $2 $2 16
 	addiu $2 $2 1
 	andi $2 $2 0xffff
