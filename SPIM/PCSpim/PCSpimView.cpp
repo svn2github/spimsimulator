@@ -36,8 +36,9 @@
 #include "SpimReg.h"
 
 
+
 #ifndef TRAP_FILE_PATH
-#define TRAP_FILE_PATH "E:\\Larus\\Software\\SPIM\\src\\trap.handler"
+#define TRAP_FILE_PATH "D:\\Larus\\Software\\SPIM\\src\\trap.handler"
 #endif
 
 
@@ -747,6 +748,7 @@ void CPCSpimView::OnSimulatorReload()
   LoadFile(m_strCurFilename);
 }
 
+extern "C" int parse_error_occurred;	// Import from parser
 void CPCSpimView::LoadFile(LPCTSTR strFilename)
 {
   int nLoaded;
@@ -774,24 +776,44 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
     {
       CString strMsg;
 
-      strMsg.Format(
-		    "There was an error loading the file.\n"
-		    "The error message was:\n"
+	  if (parse_error_occurred)
+	  {
+		strMsg.Format(
+		    "An error occurred while loading the file.\n"
+		    "The message are:\n"
 		    "\n"
 		    "%s\n"
 		    "\n"
 		    "Would you like to open the Settings dialog box to verify simulator settings?",
 		    strLoadMsg);
-      if (IDYES == MessageBox(strMsg, NULL, MB_YESNO | MB_ICONEXCLAMATION))
-	{
-	  SendMessage(WM_COMMAND, MAKEWPARAM(ID_SIMULATOR_SETTINGS, 0), NULL);
+		if (IDYES == MessageBox(strMsg, NULL, MB_YESNO | MB_ICONEXCLAMATION))
+		{
+		  SendMessage(WM_COMMAND, MAKEWPARAM(ID_SIMULATOR_SETTINGS, 0), NULL);
 
-	  if (IDYES == MessageBox("Would you like to try to load the file again?", NULL, MB_YESNO | MB_ICONQUESTION))
-	    goto l_TryLoad;
-	}
+		  if (IDYES == MessageBox("Would you like to try to load the file again?",
+								  NULL, MB_YESNO | MB_ICONQUESTION))
+			goto l_TryLoad;
+		}
 
-      // They didn't want to try to reload.
-      write_output(message_out, "Load failed.  Check code and simulator settings and try again.\n");
+		// They didn't want to try to reload.
+		write_output(message_out, 
+					 "Load failed. Check code and simulator settings and try again.\n");
+	  }
+	  else
+	  {
+		strMsg.Format(
+		    "Loading the file produced warnings.\n"
+		    "The messages are:\n"
+		    "\n"
+		    "%s\n"
+		    "\n"
+		    "Would you like to open the Settings dialog box to verify simulator settings?",
+		    strLoadMsg);
+		if (IDYES == MessageBox(strMsg, NULL, MB_YESNO | MB_ICONEXCLAMATION))
+		{
+		  SendMessage(WM_COMMAND, MAKEWPARAM(ID_SIMULATOR_SETTINGS, 0), NULL);
+		}
+	  }
     }
   else
     {
