@@ -19,7 +19,7 @@
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
   PURPOSE.
 
-  $Header: /Software/SPIM/src/display-utils.c 11    2/15/04 1:25p Larus $
+  $Header: /Software/SPIM/src/display-utils.c 12    2/27/04 11:15p Larus $
 */
 
 
@@ -71,6 +71,7 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
     grstr = "R%-2d (%2s) = %08x", grfill = "  ";
   else
     grstr = "R%-2d (%2s) = %-10d", grfill = " ";
+
   sprintf (bufp, "\t\t\t\t General Registers\n"); bufp += strlen (bufp);
   for (i = 0; i < 8; i++)
   {
@@ -89,12 +90,21 @@ registers_as_string (char *buf, int* max_buf_len, int* string_len, int print_gpr
     bufp += 1;
   }
   
+
+  sprintf (bufp, "\t\t\t      Double Floating Point Registers\n");
+  bufp += strlen (bufp);
+
+  sprintf (bufp, " FIR    = %08x    ", FIR); bufp += strlen (bufp);
+  sprintf (bufp, " FCSR   = %08x    ", FCSR); bufp += strlen (bufp);
+  sprintf (bufp, " FCCR   = %08x    ", FCSR); bufp += strlen (bufp);
+  sprintf (bufp, " FEXR   = %08x    ", FCSR); bufp += strlen (bufp);
+  sprintf (bufp, " FENR   = %08x    ", FCSR); bufp += strlen (bufp);
+
   if (print_fpr_hex)
     fpstr = "FP%-2d=%08x,%08x", fpfill = " ";
   else
     fpstr = "FP%-2d = %#-13.6g", fpfill = " ";
-  sprintf (bufp, "\t\t\t      Double Floating Point Registers\n");
-  bufp += strlen (bufp);
+
   if (print_fpr_hex)
     for (i = 0; i < 4; i += 1)
     {
