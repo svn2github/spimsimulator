@@ -564,7 +564,9 @@ void CPCSpimView::DisplayRegisters()
 		       g_fGenRegHex,
 		       g_fFPRegHex);
   char* buf2 = MakeCRLFValid(buf);
+  int top_line = m_wndRegisters.GetFirstVisibleLine();	// Remember window's top line
   m_wndRegisters.SetWindowText(buf2);
+  m_wndRegisters.LineScroll(top_line, 0);		// Put that line at top again
   delete buf2;
 }
 
@@ -589,7 +591,9 @@ void CPCSpimView::DisplayDataSegment()
 
   data_modified = 0;
   char* buf2 = MakeCRLFValid(buf);
+  int top_line = m_wndDataSeg.GetFirstVisibleLine();	// Remember window's top line
   m_wndDataSeg.SetWindowText(buf2);
+  m_wndDataSeg.LineScroll(top_line, 0);		// Put that line at top again
   delete buf2;
 }
 
@@ -627,7 +631,9 @@ void CPCSpimView::DisplayTextSegment()
 
   text_modified = 0;
   char* buf2 = MakeCRLFValid(buf);
+  int top_line = m_wndTextSeg.GetFirstVisibleLine();	// Remember window's top line
   m_wndTextSeg.SetWindowText(buf2);
+  m_wndTextSeg.LineScroll(top_line, 0);		// Put that line at top again
   delete buf2;
 }
 
