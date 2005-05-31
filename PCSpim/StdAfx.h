@@ -39,14 +39,14 @@
 
 extern "C"
 {
-#include "..\src\spim.h"
-#include "..\src\string-stream.h"
-#include "..\src\spim-utils.h"
-#include "..\src\inst.h"
-#include "..\src\sym-tbl.h"
-#include "..\src\reg.h"
-#include "..\src\mem.h"
-#include "..\src\scanner.h"
+#include "..\CPU\spim.h"
+#include "..\CPU\string-stream.h"
+#include "..\CPU\spim-utils.h"
+#include "..\CPU\inst.h"
+#include "..\CPU\sym-tbl.h"
+#include "..\CPU\reg.h"
+#include "..\CPU\mem.h"
+#include "..\CPU\scanner.h"
 }
 
 

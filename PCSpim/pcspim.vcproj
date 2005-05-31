@@ -28,6 +28,7 @@
 				AdditionalOptions="/D SPIM_VERSION=&quot;\&quot;Version 7.1 of January 2, 2005\&quot;&quot;"
 				Optimization="4"
 				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="../CPU;../PCSpim"
 				PreprocessorDefinitions="_DEBUG;LITTLEENDIAN;WIN32;_WINDOWS;"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -92,6 +93,7 @@
 				AdditionalOptions="/D SPIM_VERSION=&quot;\&quot;Version Version 7.1 of January 2, 2005\&quot;&quot;"
 				Optimization="4"
 				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="../CPU;../PCSpim"
 				PreprocessorDefinitions="LITTLEENDIAN;WIN32;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -184,58 +186,55 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\data.c">
+				RelativePath="..\Cpu\data.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\display-utils.c">
+				RelativePath="..\Cpu\display-utils.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\inst.c">
+				RelativePath="..\Cpu\endian.c">
+			</File>
+			<File
+				RelativePath="..\Cpu\inst.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\lex.yy.c">
+				RelativePath="lex.yy.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -269,20 +268,18 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\mem.c">
+				RelativePath="..\Cpu\mem.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -396,20 +393,18 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\run.c">
+				RelativePath="..\Cpu\run.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -464,20 +459,18 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\spim-utils.c">
+				RelativePath="..\Cpu\spim-utils.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -519,54 +512,48 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\string-stream.c">
+				RelativePath="..\Cpu\string-stream.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\sym-tbl.c">
+				RelativePath="..\Cpu\sym-tbl.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\syscall.c">
+				RelativePath="..\Cpu\syscall.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -587,7 +574,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\y.tab.c">
+				RelativePath="y.tab.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -614,19 +601,25 @@
 				RelativePath="ConsoleWnd.h">
 			</File>
 			<File
-				RelativePath="..\src\data.h">
+				RelativePath="..\Cpu\data.h">
 			</File>
 			<File
-				RelativePath="..\src\inst.h">
+				RelativePath="..\Cpu\inst.h">
 			</File>
 			<File
 				RelativePath="MainFrm.h">
 			</File>
 			<File
-				RelativePath="..\src\mem.h">
+				RelativePath="..\Cpu\mem.h">
 			</File>
 			<File
 				RelativePath="MultiStepDlg.h">
+			</File>
+			<File
+				RelativePath="..\Cpu\op.h">
+			</File>
+			<File
+				RelativePath="..\Cpu\parser.h">
 			</File>
 			<File
 				RelativePath="PCSpim.h">
@@ -638,16 +631,25 @@
 				RelativePath="PCSpimView.h">
 			</File>
 			<File
+				RelativePath="..\Cpu\read-aout.h">
+			</File>
+			<File
+				RelativePath="..\Cpu\reg.h">
+			</File>
+			<File
 				RelativePath="Regman.h">
 			</File>
 			<File
 				RelativePath=".\resource.h">
 			</File>
 			<File
-				RelativePath="..\src\run.h">
+				RelativePath="..\Cpu\run.h">
 			</File>
 			<File
 				RelativePath="RunDlg.h">
+			</File>
+			<File
+				RelativePath="..\Cpu\scanner.h">
 			</File>
 			<File
 				RelativePath="SettingsDlg.h">
@@ -656,7 +658,13 @@
 				RelativePath="SetValueDlg.h">
 			</File>
 			<File
-				RelativePath="..\src\spim-utils.h">
+				RelativePath="..\Cpu\spim-syscall.h">
+			</File>
+			<File
+				RelativePath="..\Cpu\spim-utils.h">
+			</File>
+			<File
+				RelativePath="..\Cpu\spim.h">
 			</File>
 			<File
 				RelativePath="SpimReg.h">
@@ -665,19 +673,16 @@
 				RelativePath="StdAfx.h">
 			</File>
 			<File
-				RelativePath="..\src\string-stream.h">
+				RelativePath="..\Cpu\string-stream.h">
 			</File>
 			<File
-				RelativePath="..\src\sym-tbl.h">
+				RelativePath="..\Cpu\sym-tbl.h">
 			</File>
 			<File
-				RelativePath="..\src\syscall.h">
+				RelativePath="..\Cpu\syscall.h">
 			</File>
 			<File
 				RelativePath="util.h">
-			</File>
-			<File
-				RelativePath="..\src\y.tab.h">
 			</File>
 		</Filter>
 		<Filter
@@ -700,45 +705,25 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\src\parser.y">
+			RelativePath="..\CPU\parser.y">
 			<FileConfiguration
 				Name="Debug|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="cd &quot;$(InputDir)&quot;
-&quot;C:\Program Files\cygwin\bin\bison&quot;  -d -y &quot;$(InputName)&quot;.y
+					CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d -y &quot;$(InputPath)&quot;
 "
-					Outputs="$(InputDir)y.tab.c;$(InputDir)y.tab.h"/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32">
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="cd &quot;$(InputDir)&quot;
-&quot;C:\Program Files\cygwin\bin\bison&quot;  -d -y &quot;$(InputName)&quot;.y
-"
-					Outputs="$(InputDir)y.tab.c;$(InputDir)y.tab.h"/>
+					Outputs="y.tab.c;y.tab.h"/>
 			</FileConfiguration>
 		</File>
 		<File
-			RelativePath="..\src\scanner.l">
+			RelativePath="..\CPU\scanner.l">
 			<FileConfiguration
 				Name="Debug|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="cd &quot;$(InputDir)&quot;
-&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputName)&quot;.l
+					CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;
 "
-					Outputs="$(InputDir)lex.yy.c"/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32">
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="cd &quot;$(InputDir)&quot;
-&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputName)&quot;.l
-"
-					Outputs="$(InputDir)lex.yy.c"/>
+					Outputs="lex.yy.c"/>
 			</FileConfiguration>
 		</File>
 	</Files>
