@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Addressing Modes</TITLE>
+<META NAME="description" CONTENT="Addressing Modes">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html177" HREF="node13.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html175" HREF="node9.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html169" HREF="node11.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html178" HREF="node13.htm">Arithmetic and Logical Instructions</A>
+<B>Up:</B> <A NAME="tex2html176" HREF="node9.htm">Description of the MIPS </A>
+<B> Previous:</B> <A NAME="tex2html170" HREF="node11.htm">Byte Order</A>
+<BR> <P>
+<H2><A NAME="SECTION00023000000000000000">Addressing Modes</A></H2>
+<P>
+MIPS is a load/store architecture, which means that only load and
+store instructions access memory.  Computation instructions operate
+only on values in registers.  The bare machine provides only one
+memory addressing mode: <TT>c(rx)</TT>, which uses the sum of the
+immediate (integer) <TT>c</TT> and the contents of register <TT>rx</TT> as
+the address.  The virtual machine provides the following addressing
+modes for load and store instructions:
+<P>
+  <P> <IMG WIDTH=693 HEIGHT=157 ALIGN=BOTTOM ALT="tabular378" SRC="img15.gif"  > <P>
+<P>
+Most load and store instructions operate only on aligned data.  A
+quantity is <EM>aligned</EM> if its memory address is a multiple of its
+size in bytes.  Therefore, a halfword object must be stored at even
+addresses and a full word object must be stored at addresses that are
+a multiple of 4.  However, MIPS provides some instructions for
+manipulating unaligned data.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

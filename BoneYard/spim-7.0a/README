@@ -1,0 +1,216 @@
+		     README FILE FOR SPIM & XSPIM
+		     ============================
+
+This directory contains SPIM--an assembly language MIPS R2000/R3000
+simulator.
+
+
+SPIM is copyrighted by James R. Larus and distributed under the
+following conditions:
+
+    You may make copies of SPIM for your own use and modify those copies.
+
+    All copies of SPIM must retain my name and copyright notice.
+
+    You may not sell SPIM or distribute SPIM in conjunction with a
+    commercial product or service without the expressed written consent of
+    James Larus.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+		       BUILDING SPIM FOR UNIX SYSTEMS
+		       ==============================
+
+These instructions explain how to compile and install spim and xspim on a
+Unix system.  It is not necessary to compile spim for PCs, as the web site
+has precompiled versions.
+
+To make SPIM, you must first run the Configure script:
+
+	% Configure
+
+Note: Configure compiles a program with the C compiler (cc).  If you want it
+to use another compiler, set the environment variable CC to its name, e.g.:
+
+	% setenv CC gcc
+
+
+Next, edit the first few non-comment lines of Imakefile (or Makefile.std or
+Makefile.cygwin, if you use one of those instead) to set the pathnames for
+your system:
+
+	EXCEPTION_DIR  -- The full pathname of the directory in which to
+		     install the SPIM exception handler.
+
+	BIN_DIR   -- The full pathname of the directory in which spim and
+		     xspim should be installed.
+
+	MAN_DIR   -- The full pathname of the directory in which the manual
+		     pages for spim and xspim should be installed.
+
+In general, the remaining parameters need not be changed.
+
+Then, if using Imakefile type:
+
+	% xmkmf
+	% make
+
+If you want an X-window version of SPIM, also type:
+
+	% make xspim
+
+
+If you do not have X-windows or the program xmkmf, edit the makefile in
+Makefile.std or Makefile.cygwin and type:
+
+	% make -f Makefile.std test
+	% make -f Makefile.std xspim
+
+
+To run spim or xspim, the exception handler code must be installed in the
+directory specified by the variable EXCEPTION_DIR in the Makefile.  If the file
+exceptions.s is not installed, spim and xspim fail with a message before
+they start running.  You can either install this file by hand or by typing
+
+	% make install
+
+which also installs spim, xspim, and the manual pages in the directories that you set (above).
+
+
+To test that spim is correctly built, type
+
+	% make test
+
+and examine the output of the test.  (Note: the exception handler must be
+installed before running the test.)
+
+
+			      SPIM ON WINDOWS
+			      ===============
+
+SPIM works well on Windows.  You can easily build spim (the non-windowing
+version) using the Cygwin port of the GNU tools (see www.cygwin.com).  The
+Windows version of spim is called PCSpim and is distributed through:
+
+	www.cs.wisc.edu/~larus/spim.html
+
+
+
+			 NEW VERSIONS OF SPIM
+			 ===================
+
+I generally release new version of SPIM once a year, before a semester
+boundary (late August or early January).  The new version are available
+through:
+
+		www.cs.wisc.edu/~larus/spim.html
+
+
+
+The files in this directory are:
+
+BLURB
+	A short description of SPIM.
+
+Configure
+	A shell script to configure SPIM.
+
+Imakefile
+	Input file for the xmkmf program, which produces Makefile for your
+	system.
+
+Makefile.cygwin
+	This makefile builds spim (but not xspim--use PCSpim instead) under
+	the Cygnus Cygwin tools running on Windows.  Very cool and very
+	convenient.
+
+Makefile.std
+	A default makefile.  Only use this file if you do not have xmkmf
+	(see Imakefile).
+
+README	This file.
+
+VERSION
+	Version number of system.
+
+buttons.c, buttons.h
+	X-interface code for command buttons.
+
+data.c, data.h
+	Code to handle data directives.
+
+inst.c, inst.h
+	Code to build instructions and manipulate symbol table.
+
+mem.c, mem.h
+	Code to maintain memory.
+
+syscall.c, syscall.h
+	Code to handle system calls and exceptions.
+
+op.h
+	Definition of operations.
+
+parser.y, parser.h
+	Assembly command parser (YACC).
+
+reg.h
+	Register access macros.
+
+run.c, run.h
+	Instruction simulator.
+
+scanner.l, scanner.h
+	Lexical analyzer (LEX).
+
+spim-syscall.h
+	System call numbers.
+
+spim-utils.c, spim-utils.h
+	Misc. routines.
+
+spim.c, spim.h
+	Top-level interface.
+
+sym-tbl.c, sym-tbl.h
+	Symbol table.
+
+windows.c, windows.h
+	X-interface code to build windows.
+
+xspim.c, xspim.h
+	Top-level X-interface.
+
+exceptions.s
+	Standard exception handler.
+
+Tests
+	Subdirectory contain torture tests to verify that SPIM works.
+
+Documentation/spim.tex
+	TeX document that describes SPIM.
+
+Documentation/spim.ps
+	Postscript version of TeX document.
+
+
+
+
+		  WHAT ABOUT SPIM ON SYSTEM XYZ?
+		  ==============================
+
+SPIM should run without many changes on many Unix systems.  Obviously,
+I have not tested SPIM on many system, nor can I port SPIM to systems
+that I don't have.  However, I would like to hear about the changes
+necessary to run SPIM on your favorite system.
+
+James Larus
+Microsoft Research
+(larus@microsoft.com)
+
+$Header: $

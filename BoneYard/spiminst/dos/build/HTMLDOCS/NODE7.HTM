@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Assembler Syntax</TITLE>
+<META NAME="description" CONTENT="Assembler Syntax">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html117" HREF="node8.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html115" HREF="node1.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html109" HREF="node6.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html118" HREF="node8.htm">System Calls</A>
+<B>Up:</B> <A NAME="tex2html116" HREF="node1.htm">SPIM</A>
+<B> Previous:</B> <A NAME="tex2html110" HREF="node6.htm">Surprising Features</A>
+<BR> <P>
+<H2><A NAME="SECTION00014000000000000000">Assembler Syntax</A></H2>
+<P>
+<A NAME="secsyntax">&#160;</A>
+<P>
+Comments in assembler files begin with a sharp-sign (<TT>#</TT>).
+Everything from the sharp-sign to the end of the line is ignored.
+<P>
+Identifiers are a sequence of alphanumeric characters, underbars (<TT>
+_</TT>), and dots (<TT>.</TT>) that do not begin with a number.  Opcodes for
+instructions are reserved words that are <B>not</B> valid identifiers.
+Labels are declared by putting them at the beginning of a line
+followed by a colon, for example:
+<PRE>
+        .data
+  item: .word 1
+        .text
+        .globl main             # Must be global
+  main: lw $t0, item</PRE>
+<P>
+Strings are enclosed in double-quotes (<TT>&quot;</TT>).  Special characters
+in strings follow the C convention:
+<PRE>
+    newline        \n
+    tab            \t
+    quote          \"</PRE>
+<P>
+SPIM supports a subset of the assembler directives provided by the
+MIPS assembler:
+<DL ><DT><STRONG></STRONG>
+<DD> <TT>.align n</TT><BR>Align the next datum on a  <IMG WIDTH=16 HEIGHT=12 ALIGN=BOTTOM ALT="tex2html_wrap_inline1507" SRC="img4.gif"  >  byte
+boundary.  For example, <TT>.align 2</TT> aligns the next value on a word
+boundary.  <TT>.align 0</TT> turns off automatic alignment of <TT>
+.half</TT>, <TT>.word</TT>, <TT>.float</TT>, and <TT>.double</TT> directives until
+the next <TT>.data</TT> or <TT>.kdata</TT> directive.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.ascii str</TT><BR>Store the string in memory, but do
+not null-terminate it.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.asciiz str</TT><BR>Store the string in memory and
+null-terminate it.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.byte b1, ..., bn</TT><BR>Store the <I>n</I> values in
+successive bytes of memory.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.data &lt;addr&gt;</TT><BR>The following data items should
+be stored in the data segment.  If the optional argument <EM>addr</EM>
+is present, the items are stored beginning at address <EM>addr</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.double d1, ..., dn</TT><BR>Store the <I>n</I> floating
+point double precision numbers in successive memory locations.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.extern sym size</TT><BR>Declare that the datum
+stored at <TT>sym</TT> is <TT>size</TT> bytes large and is a global symbol.
+This directive enables the assembler to store the datum in a portion
+of the data segment that is efficiently accessed via register <TT>
+$gp</TT>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.float f1, ..., fn</TT><BR>Store the <I>n</I> floating
+point single precision numbers in successive memory locations.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.globl sym</TT><BR>Declare that symbol <TT>sym</TT> is
+global and can be referenced from other files.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.half h1, ..., hn</TT><BR>Store the <I>n</I> 16-bit
+quantities in successive memory halfwords.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.kdata &lt;addr&gt;</TT><BR>The following data items should
+be stored in the kernel data segment. If the optional argument <EM>
+addr</EM> is present, the items are stored beginning at address <EM>
+addr</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.ktext &lt;addr&gt;</TT><BR>The next items are put in the
+kernel text segment.  In SPIM, these items may only be instructions or
+words (see the <TT>.word</TT> directive below). If the optional argument
+<EM>addr</EM> is present, the items are stored beginning at address
+<EM>addr</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.space n</TT><BR>Allocate <I>n</I> bytes of space in the
+current segment (which must be the data segment in SPIM).
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.text &lt;addr&gt;</TT><BR>The next items are put in the
+user text segment.  In SPIM, these items may only be instructions or
+words (see the <TT>.word</TT> directive below).  If the optional argument
+<EM>addr</EM> is present, the items are stored beginning at address
+<EM>addr</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.word w1, ..., wn</TT><BR>Store the <I>n</I> 32-bit
+quantities in successive memory words.
+<P>
+ </DL>
+SPIM does not distinguish various parts of the data segment (<TT>
+.data</TT>, <TT>.rdata</TT>, and <TT>.sdata</TT>).
+<P>
+<HR><A NAME="tex2html117" HREF="node8.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html115" HREF="node1.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html109" HREF="node6.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html118" HREF="node8.htm">System Calls</A>
+<B>Up:</B> <A NAME="tex2html116" HREF="node1.htm">SPIM</A>
+<B> Previous:</B> <A NAME="tex2html110" HREF="node6.htm">Surprising Features</A>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

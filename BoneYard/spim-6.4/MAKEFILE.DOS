@@ -1,0 +1,490 @@
+#
+
+# SPIM S20 MIPS Simulator.
+
+# Makefile for SPIM.
+
+# Copyright (C) 1990-2000 by James Larus (larus@cs.wisc.edu).
+
+# ALL RIGHTS RESERVED.
+
+#
+
+# DOS Makefile derived from Makefile.std by David A. Carley
+
+#
+
+# SPIM is distributed under the following conditions:
+
+#
+
+#   You may make copies of SPIM for your own use and modify those copies.
+
+#
+
+#   All copies of SPIM must retain my name and copyright notice.
+
+#
+
+#   You may not sell SPIM or distributed SPIM in conjunction with a commerical
+
+#   product or service without the expressed written consent of James Larus.
+
+#
+
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+
+# IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+
+# PURPOSE.
+
+#
+
+# $Header: $
+
+
+
+
+
+#
+
+# To make spim, type:
+
+#
+
+#   make spim
+
+#
+
+
+
+#
+
+# To build a version of spim that doesn't need an external
+
+# DPMI host (Windows, QEMM, Desqview, etc) type:
+
+#
+
+#   make pmode
+
+#
+
+# See the directions below regarding $(PMODESTUB)
+
+
+
+#
+
+# The following parameters must be set for the target machine:
+
+#
+
+
+
+# Full path for the trap handler file:
+
+TRAP_PATH = \"trap.han\"
+
+
+
+# If you have flex, use it instead of lex.  If you use flex, define this
+
+# variable and set LEXFLAGS.
+
+MYLEX = flex
+
+
+
+# SPIM needs flex's -I flag since the scanner is used interactively.
+
+# You can set the -8 flag so that funny characters do not hang the scanner.
+
+LEXFLAGS = -I -8
+
+
+
+# SPIM needs a DPMI server when compiled with DJGPP.
+
+# PMODE/DJ can be found at:
+
+#   ftp://ftp.simtel.net/pub/simtelnet/gnu/djgpp/v2misc/pmode11b.zip
+
+PMODESTUB = e:\djgpp\bin\pmodstub.exe
+
+
+
+# If you use lex, set the variables this way:
+
+#MYLEX = lex
+
+#LEXFLAGS =
+
+
+
+
+
+# Size of the segments when spim starts up (data segment must be >= 64K).
+
+# (These sizes are fine for most users since SPIM dynamically expands
+
+# the memory as necessary.)
+
+MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
+
+
+
+# DOS and Windows platforms are little endian exclusively
+
+ENDIAN=-DLITTLEENDIAN
+
+
+
+#
+
+# End of parameters
+
+#
+
+
+
+
+
+CC = gcc
+
+IFLAGS =
+
+CL_FLAG =
+
+CFLAGS = -g $(IFLAGS) $(ENDIAN) $(MEM_SIZES) $(EXTRA_C_FLAGS) $(CL_FLAG)
+
+YFLAGS = -d
+
+YCFLAGS =
+
+LDFLAGS = -lm
+
+
+
+
+
+# lex.yy.c is usually compiled with -O to speed it up.
+
+
+
+LEXCFLAGS = -O
+
+
+
+
+
+OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
+
+       mips-syscall.o
+
+
+
+spim:	$(OBJS) spim.o
+
+	$(CC) -g $(OBJS) spim.o $(LDFLAGS) -o spim -lm
+
+	strip spim
+
+	djp spim
+
+
+
+pmode:	spim
+
+	strip spim
+
+	copy /b $(PMODESTUB) + spim spim.exe
+
+
+
+clean:
+
+	rm -f spim.exe spim *.o y.output
+
+
+
+very-clean: clean
+
+	rm -f y.tab.h y.tab.c lex.yy.c
+
+
+
+SRC = spim-utils.c run.c mem.c inst.c data.c sym-tbl.c y.tab.o lex.yy.o \
+
+       mips-syscall.c
+
+
+
+
+
+#
+
+# Dependences not handled well by makedepend:
+
+#
+
+
+
+spim-utils.o: spim-utils.c spim.h inst.h mem.h reg.h y.tab.h VERSION
+
+	$(CC) $(CFLAGS) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) \
+
+	-DSPIM_VERSION="\"$(shell cat VERSION)\"" -c spim-utils.c
+
+
+
+spim.o:
+
+	$(CC) $(CFLAGS) -DDEFAULT_TRAP_HANDLER=$(TRAP_PATH) -c spim.c
+
+
+
+y.tab.h: y.tab.c
+
+
+
+y.tab.c: parser.y
+
+	bison --yacc $(YFLAGS) parser.y --output=y.tab.c
+
+
+
+y.tab.o: y.tab.c
+
+	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c y.tab.c
+
+
+
+
+
+lex.yy.c: scanner.l
+
+	$(MYLEX) -olex.yy.c $(LEXFLAGS) scanner.l
+
+
+
+lex.yy.o: lex.yy.c
+
+	$(CC) $(IFLAGS) $(LEXCFLAGS) -c lex.yy.c
+
+
+
+
+
+#
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+
+
+data.o: spim.h
+
+data.o: spim-utils.h
+
+data.o: inst.h
+
+data.o: mem.h
+
+data.o: reg.h
+
+data.o: sym-tbl.h
+
+data.o: parser.h
+
+data.o: run.h
+
+data.o: data.h
+
+inst.o: spim.h
+
+inst.o: spim-utils.h
+
+inst.o: inst.h
+
+inst.o: mem.h
+
+inst.o: reg.h
+
+inst.o: sym-tbl.h
+
+inst.o: y.tab.h
+
+inst.o: parser.h
+
+inst.o: scanner.h
+
+inst.o: data.h
+
+inst.o: op.h
+
+lex.yy.o: spim.h
+
+lex.yy.o: spim-utils.h
+
+lex.yy.o: inst.h
+
+lex.yy.o: sym-tbl.h
+
+lex.yy.o: y.tab.h
+
+lex.yy.o: parser.h
+
+lex.yy.o: scanner.h
+
+lex.yy.o: op.h
+
+mem.o: spim.h
+
+mem.o: spim-utils.h
+
+mem.o: inst.h
+
+mem.o: mem.h
+
+mem.o: reg.h
+
+mips-syscall.o: spim.h
+
+mips-syscall.o: inst.h
+
+mips-syscall.o: mem.h
+
+mips-syscall.o: reg.h
+
+mips-syscall.o: sym-tbl.h
+
+mips-syscall.o: spim-syscall.h
+
+mips-syscall.o: mips-syscall.h
+
+run.o: spim.h
+
+run.o: spim-utils.h
+
+run.o: inst.h
+
+run.o: mem.h
+
+run.o: reg.h
+
+run.o: sym-tbl.h
+
+run.o: y.tab.h
+
+run.o: mips-syscall.h
+
+run.o: run.h
+
+spim-utils.o: spim.h
+
+spim-utils.o: spim-utils.h
+
+spim-utils.o: inst.h
+
+spim-utils.o: data.h
+
+spim-utils.o: mem.h
+
+spim-utils.o: reg.h
+
+spim-utils.o: scanner.h
+
+spim-utils.o: parser.h
+
+spim-utils.o: y.tab.h
+
+spim-utils.o: run.h
+
+spim-utils.o: sym-tbl.h
+
+spim.o: spim.h
+
+spim.o: spim-utils.h
+
+spim.o: inst.h
+
+spim.o: mem.h
+
+spim.o: reg.h
+
+spim.o: parser.h
+
+spim.o: sym-tbl.h
+
+spim.o: scanner.h
+
+spim.o: y.tab.h
+
+sym-tbl.o: spim.h
+
+sym-tbl.o: spim-utils.h
+
+sym-tbl.o: inst.h
+
+sym-tbl.o: mem.h
+
+sym-tbl.o: data.h
+
+sym-tbl.o: parser.h
+
+sym-tbl.o: sym-tbl.h
+
+y.tab.o: spim.h
+
+y.tab.o: spim-utils.h
+
+y.tab.o: inst.h
+
+y.tab.o: mem.h
+
+y.tab.o: reg.h
+
+y.tab.o: sym-tbl.h
+
+y.tab.o: data.h
+
+y.tab.o: scanner.h
+
+y.tab.o: parser.h
+
+parser.o: spim.h
+
+parser.o: spim-utils.h
+
+parser.o: inst.h
+
+parser.o: mem.h
+
+parser.o: reg.h
+
+parser.o: sym-tbl.h
+
+parser.o: data.h
+
+parser.o: scanner.h
+
+parser.o: parser.h
+
+scanner.o: spim.h
+
+scanner.o: spim-utils.h
+
+scanner.o: inst.h
+
+scanner.o: sym-tbl.h
+
+scanner.o: y.tab.h
+
+scanner.o: parser.h
+
+scanner.o: scanner.h
+
+scanner.o: op.h
+

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Terminal Interface</TITLE>
+<META NAME="description" CONTENT="Terminal Interface">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html89" HREF="node5.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html87" HREF="node3.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html81" HREF="node3.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html90" HREF="node5.htm">X-Window Interface</A>
+<B>Up:</B> <A NAME="tex2html88" HREF="node3.htm">SPIM Interface</A>
+<B> Previous:</B> <A NAME="tex2html82" HREF="node3.htm">SPIM Interface</A>
+<BR> <P>
+<H3><A NAME="SECTION00012100000000000000">Terminal Interface</A></H3>
+<P>
+The terminal interface (<TT>spim</TT>) provides the following commands:
+<DL ><DT><STRONG></STRONG>
+<DD> <TT>exit</TT><BR>Exit the simulator.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>read &quot;file&quot;</TT><BR>Read <EM>file</EM> of assembly
+language commands into SPIM's memory.  If the file has already been
+read into SPIM, the system should be cleared (see <TT>reinitialize</TT>,
+below) or global symbols will be multiply defined.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>load &quot;file&quot;</TT><BR>Synonym for <TT>read</TT>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>run &lt;addr&gt;</TT><BR>Start running a program.  If the
+optional address <EM>addr</EM> is provided, the program starts at that
+address.  Otherwise, the program starts at the global symbol <TT>
+__start</TT>, which is defined by the default trap handler to call the
+routine at the global symbol <TT>main</TT> with the usual MIPS calling
+convention.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>step &lt;N&gt;</TT><BR>Step the program for <EM>N</EM>
+(default: 1) instructions.  Print instructions as they execute.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>continue</TT><BR>Continue program execution without
+stepping.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>print $N</TT><BR>Print register <EM>N</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>print $fN</TT><BR>Print floating point register <EM>
+N</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>print addr</TT><BR>Print the contents of memory at
+address <EM>addr</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>print_sym</TT><BR>Print the contents of the symbol
+table, i.e., the addresses of the global (but not local) symbols.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>reinitialize</TT><BR>Clear the memory and registers.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>breakpoint addr</TT><BR>Set a breakpoint at address
+<EM>addr</EM>.  <EM>addr</EM> can be either a memory address or symbolic
+label.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>delete addr</TT><BR>Delete all breakpoints at address
+<EM>addr</EM>.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>list</TT><BR>List all breakpoints.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>.</TT><BR>Rest of line is an assembly instruction
+that is stored in memory.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>&lt;nl&gt;</TT><BR>A newline reexecutes previous command.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <TT>?</TT><BR>Print a help message.
+<P>
+ </DL>
+<P>
+Most commands can be abbreviated to their unique prefix e.g., <TT>
+ex</TT>, <TT>re</TT>, <TT>l</TT>, <TT>ru</TT>, <TT>s</TT>, <TT>p</TT>.  More dangerous
+commands, such as <TT>reinitialize</TT>, require a longer prefix.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>
