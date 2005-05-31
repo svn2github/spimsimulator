@@ -1,0 +1,317 @@
+#
+# SPIM S20 MIPS Simulator.
+# Makefile for SPIM.
+# Compiles under the Cygwin tools running on Windows.
+#
+# Copyright (C) 1990-2005 by James Larus (larus@cs.wisc.edu).
+# ALL RIGHTS RESERVED.
+#
+# SPIM is distributed under the following conditions:
+#
+#   You may make copies of SPIM for your own use and modify those copies.
+#
+#   All copies of SPIM must retain my name and copyright notice.
+#
+#   You may not sell SPIM or distributed SPIM in conjunction with a commerical
+#   product or service without the expressed written consent of James Larus.
+#
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE.
+#
+# $Header: $
+
+#
+# To make spim, type:
+#
+#   make spim
+#
+# Cannot make xpsim under windows.  Use PCSpim instead.
+#
+#
+
+#
+# To verify spim works, type:
+#
+#   make test
+#
+
+
+#
+# The following parameters must be set for the target machine:
+#
+#
+
+
+# Path for directory that contains the source of the CPU code:
+CPU_DIR = ../CPU
+
+# Full path for directory that will hold the exception handler file:
+EXCEPTION_DIR = ../CPU
+
+# Full path for the directory that will hold the executable files:
+BIN_DIR = /usr/unsup/bin
+
+# Full path for the directory that will hold the man files:
+MAN_DIR = /usr/unsup/man
+
+
+# Full path for the exception handler file:
+EXCEPTION_PATH = \"$(EXCEPTION_DIR)/exceptions.s\"
+
+# If you have flex, use it instead of lex.  If you use flex, define this
+# variable and set LEXFLAGS.
+MYLEX = flex
+
+# SPIM needs flex's -I flag since the scanner is used interactively.
+# You can set the -8 flag so that funny characters do not hang the scanner.
+LEXFLAGS = -I -8
+
+
+# If you use lex, set the variables this way:
+#MYLEX = lex
+#LEXFLAGS =
+
+
+# Size of the segments when spim starts up (data segment must be >= 64K).
+# (These sizes are fine for most users since SPIM dynamically expands
+# the memory as necessary.)
+MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
+
+
+#
+# End of parameters
+#
+
+
+ENDIAN=`cat configuration`
+
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
+
+CC = gcc
+CFLAGS = -B $(CPU_DIR) $(DEFINES) -g -Wall
+IFLAGS = -I$(CPU_DIR)
+YFLAGS = -d --file-prefix=y
+YCFLAGS =
+LDFLAGS = -lm
+CSH = bash
+
+# lex.yy.c is usually compiled with -O to speed it up.
+
+LEXCFLAGS = -O
+
+
+
+OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
+       syscall.o display-utils.o string-stream.o
+
+
+spim.exe:   force
+	@touch .spim-made
+	make -f Makefile.cygwin spim2.exe
+
+spim2.exe:	$(OBJS) spim.o
+	$(CC) -g $(OBJS) spim.o $(LDFLAGS) -o spim -lm
+
+
+force:	configuration
+
+configuration:
+	Configure
+
+#
+
+#
+# Test spim with a torture test:
+#
+
+test:	spim.exe
+	@echo
+	@echo "Testing tt.bare.s:"
+	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -noexception -file Tests/tt.bare.s >& test.out"
+	@tail -2 test.out
+	@echo
+
+	@if [ ! -f $(EXCEPTION_DIR)/exceptions.s ]; then echo "Exception Handler not installed; do make install"; exit 1; else true; fi
+	@if diff exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
+
+	@echo
+	@echo "Testing tt.core.s:"
+	$(CSH) -c "./spim.exe -file Tests/tt.core.s < Tests/tt.in >& test.out"
+	@tail -2 test.out
+	@echo
+
+	@echo
+	@echo "Testing tt.endian.s:"
+	$(CSH) -c "./spim.exe -file Tests/tt.endian.s >& test.out"
+	@tail -2 test.out
+	@echo
+	@echo
+
+# This test currently only works for little-endian machines.  The file
+# tt.alu.bare.s needs to be converted in places for big-endian machines.
+
+test_bare: spim.exe
+	@echo
+	@echo "Testing tt.alu.bare.s:"
+	$(CSH) -c "./spim.exe -bare -noexception -file Tests/tt.alu.bare.s >& test.out"
+	@tail -2 test.out
+	@echo
+
+	@echo
+	@echo "Testing tt.fpt.bare.s:"
+	$(CSH) -c "./spim.exe -bare -noexception -file Tests/tt.fpu.bare.s >& test.out"
+	@tail -2 test.out
+	@echo
+	@echo
+
+#
+
+TAGS:	*.c *.h *.l *.y
+	etags *.l *.y *.c *.h
+
+
+clean:
+	rm -f *.exe  *.o y.output a.out TAGS \
+	  .spim-made  \
+	  spim.tar.* spim.aux spim.log spim.dvi spim.shar*
+
+install: spim
+	install -c -s  spim $(BIN_DIR)
+	install -c -m 0444 exceptions.s $(EXCEPTION_DIR)
+	install -c -m 0444 spim.man $(MAN_DIR)
+
+very-clean: clean
+	rm -f y.tab.h y.tab.c lex.yy.c spim.tar* Documentation/spim.ps
+
+splint:
+	splint -weak -preproc -warnposix +matchanyintegral data.c display-utils.c inst.c mem.c syscall.c run.c spim-utils.c spim.c sym-tbl.c y.tab.c lex.yy.c
+
+
+
+#
+# Dependences not handled well by makedepend:
+#
+
+
+$(CPU_DIR)/y.tab.h: $(CPU_DIR)/y.tab.c
+
+$(CPU_DIR)/y.tab.c: $(CPU_DIR)/parser.y
+	bison $(YFLAGS) $(CPU_DIR)/parser.y
+
+$(CPU_DIR)/y.tab.o: $(CPU_DIR)/y.tab.c
+	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c $(CPU_DIR)/y.tab.c
+
+
+$(CPU_DIR)/lex.yy.c: $(CPU_DIR)/scanner.l
+	$(MYLEX) $(LEXFLAGS) $(CPU_DIR)/scanner.l
+
+$(CPU_DIR)/lex.yy.o: $(CPU_DIR)/lex.yy.c
+	$(CC) $(IFLAGS) $(LEXCFLAGS) -c $(CPU_DIR)/lex.yy.c
+
+
+#
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+data.o: $(CPU_DIR)/spim.h
+data.o: $(CPU_DIR)/spim-utils.h
+data.o: $(CPU_DIR)/inst.h
+data.o: $(CPU_DIR)/mem.h
+data.o: $(CPU_DIR)/reg.h
+data.o: $(CPU_DIR)/sym-tbl.h
+data.o: $(CPU_DIR)/parser.h
+data.o: $(CPU_DIR)/run.h
+data.o: $(CPU_DIR)/data.h
+inst.o: $(CPU_DIR)/spim.h
+inst.o: $(CPU_DIR)/spim-utils.h
+inst.o: $(CPU_DIR)/inst.h
+inst.o: $(CPU_DIR)/mem.h
+inst.o: $(CPU_DIR)/reg.h
+inst.o: $(CPU_DIR)/sym-tbl.h
+inst.o: $(CPU_DIR)/y.tab.h
+inst.o: $(CPU_DIR)/parser.h
+inst.o: $(CPU_DIR)/scanner.h
+inst.o: $(CPU_DIR)/data.h
+inst.o: $(CPU_DIR)/op.h
+lex.yy.o: $(CPU_DIR)/spim.h
+lex.yy.o: $(CPU_DIR)/spim-utils.h
+lex.yy.o: $(CPU_DIR)/inst.h
+lex.yy.o: $(CPU_DIR)/sym-tbl.h
+lex.yy.o: $(CPU_DIR)/y.tab.h
+lex.yy.o: $(CPU_DIR)/parser.h
+lex.yy.o: $(CPU_DIR)/scanner.h
+lex.yy.o: $(CPU_DIR)/op.h
+mem.o: $(CPU_DIR)/spim.h
+mem.o: $(CPU_DIR)/spim-utils.h
+mem.o: $(CPU_DIR)/inst.h
+mem.o: $(CPU_DIR)/mem.h
+mem.o: $(CPU_DIR)/reg.h
+syscall.o: $(CPU_DIR)/spim.h
+syscall.o: $(CPU_DIR)/inst.h
+syscall.o: $(CPU_DIR)/reg.h
+syscall.o: $(CPU_DIR)/mem.h
+syscall.o: $(CPU_DIR)/sym-tbl.h
+syscall.o: $(CPU_DIR)/syscall.h
+run.o: $(CPU_DIR)/spim.h
+run.o: $(CPU_DIR)/spim-utils.h
+run.o: $(CPU_DIR)/inst.h
+run.o: $(CPU_DIR)/mem.h
+run.o: $(CPU_DIR)/reg.h
+run.o: $(CPU_DIR)/sym-tbl.h
+run.o: $(CPU_DIR)/y.tab.h
+run.o: $(CPU_DIR)/syscall.h
+run.o: $(CPU_DIR)/run.h
+spim-utils.o: $(CPU_DIR)/spim.h
+spim-utils.o: $(CPU_DIR)/spim-utils.h
+spim-utils.o: $(CPU_DIR)/inst.h
+spim-utils.o: $(CPU_DIR)/data.h
+spim-utils.o: $(CPU_DIR)/mem.h
+spim-utils.o: $(CPU_DIR)/reg.h
+spim-utils.o: $(CPU_DIR)/scanner.h
+spim-utils.o: $(CPU_DIR)/parser.h
+spim-utils.o: $(CPU_DIR)/y.tab.h
+spim-utils.o: $(CPU_DIR)/run.h
+spim-utils.o: $(CPU_DIR)/sym-tbl.h
+spim.o: $(CPU_DIR)/spim.h
+spim.o: $(CPU_DIR)/spim-utils.h
+spim.o: $(CPU_DIR)/inst.h
+spim.o: $(CPU_DIR)/mem.h
+spim.o: $(CPU_DIR)/reg.h
+spim.o: $(CPU_DIR)/parser.h
+spim.o: $(CPU_DIR)/sym-tbl.h
+spim.o: $(CPU_DIR)/scanner.h
+spim.o: $(CPU_DIR)/y.tab.h
+sym-tbl.o: $(CPU_DIR)/spim.h
+sym-tbl.o: $(CPU_DIR)/spim-utils.h
+sym-tbl.o: $(CPU_DIR)/inst.h
+sym-tbl.o: $(CPU_DIR)/mem.h
+sym-tbl.o: $(CPU_DIR)/data.h
+sym-tbl.o: $(CPU_DIR)/parser.h
+sym-tbl.o: $(CPU_DIR)/sym-tbl.h
+y.tab.o: $(CPU_DIR)/spim.h
+y.tab.o: $(CPU_DIR)/spim-utils.h
+y.tab.o: $(CPU_DIR)/inst.h
+y.tab.o: $(CPU_DIR)/mem.h
+y.tab.o: $(CPU_DIR)/reg.h
+y.tab.o: $(CPU_DIR)/sym-tbl.h
+y.tab.o: $(CPU_DIR)/data.h
+y.tab.o: $(CPU_DIR)/scanner.h
+y.tab.o: $(CPU_DIR)/parser.h
+parser.o: $(CPU_DIR)/spim.h
+parser.o: $(CPU_DIR)/spim-utils.h
+parser.o: $(CPU_DIR)/inst.h
+parser.o: $(CPU_DIR)/mem.h
+parser.o: $(CPU_DIR)/reg.h
+parser.o: $(CPU_DIR)/sym-tbl.h
+parser.o: $(CPU_DIR)/data.h
+parser.o: $(CPU_DIR)/scanner.h
+parser.o: $(CPU_DIR)/parser.h
+scanner.o: $(CPU_DIR)/spim.h
+scanner.o: $(CPU_DIR)/spim-utils.h
+scanner.o: $(CPU_DIR)/inst.h
+scanner.o: $(CPU_DIR)/sym-tbl.h
+scanner.o: $(CPU_DIR)/y.tab.h
+scanner.o: $(CPU_DIR)/parser.h
+scanner.o: $(CPU_DIR)/scanner.h
+scanner.o: $(CPU_DIR)/op.h
