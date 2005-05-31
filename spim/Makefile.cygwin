@@ -29,26 +29,28 @@
 #
 # Cannot make xpsim under windows.  Use PCSpim instead.
 #
-#
-
-#
 # To verify spim works, type:
 #
 #   make test
 #
 
+.SUFFIXES:
+.SUFFIXES: .c .o
 
 #
 # The following parameters must be set for the target machine:
 #
 #
 
-
 # Path for directory that contains the source of the CPU code:
 CPU_DIR = ../CPU
+VPATH = src:$(CPU_DIR)
 
 # Full path for directory that will hold the exception handler file:
 EXCEPTION_DIR = ../CPU
+
+# Path of directory that contains SPIM tests:
+TEST_DIR = ../Tests
 
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/unsup/bin
@@ -87,11 +89,10 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 
 ENDIAN=`cat configuration`
 
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat $(CPU_DIR)/VERSION`\""
 
 CC = gcc
-CFLAGS = -B $(CPU_DIR) $(DEFINES) -g -Wall
-IFLAGS = -I$(CPU_DIR)
+CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall
 YFLAGS = -d --file-prefix=y
 YCFLAGS =
 LDFLAGS = -lm
@@ -99,7 +100,7 @@ CSH = bash
 
 # lex.yy.c is usually compiled with -O to speed it up.
 
-LEXCFLAGS = -O
+LEXCFLAGS = -O $(CFLAGS)
 
 
 
@@ -129,22 +130,22 @@ configuration:
 test:	spim.exe
 	@echo
 	@echo "Testing tt.bare.s:"
-	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -noexception -file Tests/tt.bare.s >& test.out"
+	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -noexception -file $(TEST_DIR)/tt.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@if [ ! -f $(EXCEPTION_DIR)/exceptions.s ]; then echo "Exception Handler not installed; do make install"; exit 1; else true; fi
-	@if diff exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
+	@if diff $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
 
 	@echo
 	@echo "Testing tt.core.s:"
-	$(CSH) -c "./spim.exe -file Tests/tt.core.s < Tests/tt.in >& test.out"
+	$(CSH) -c "./spim.exe -file $(TEST_DIR)/tt.core.s < $(TEST_DIR)/tt.in >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.endian.s:"
-	$(CSH) -c "./spim.exe -file Tests/tt.endian.s >& test.out"
+	$(CSH) -c "./spim.exe -file $(TEST_DIR)/tt.endian.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -155,13 +156,13 @@ test:	spim.exe
 test_bare: spim.exe
 	@echo
 	@echo "Testing tt.alu.bare.s:"
-	$(CSH) -c "./spim.exe -bare -noexception -file Tests/tt.alu.bare.s >& test.out"
+	$(CSH) -c "./spim.exe -bare -noexception -file $(TEST_DIR)/tt.alu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.fpt.bare.s:"
-	$(CSH) -c "./spim.exe -bare -noexception -file Tests/tt.fpu.bare.s >& test.out"
+	$(CSH) -c "./spim.exe -bare -noexception -file $(TEST_DIR)/tt.fpu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -173,9 +174,7 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean:
-	rm -f *.exe  *.o y.output a.out TAGS \
-	  .spim-made  \
-	  spim.tar.* spim.aux spim.log spim.dvi spim.shar*
+	rm -f *.exe  *.o TAGS .spim-made test.out lex.yy.c y.tab.c y.tab.h y.output
 
 install: spim
 	install -c -s  spim $(BIN_DIR)
@@ -195,20 +194,20 @@ splint:
 #
 
 
-$(CPU_DIR)/y.tab.h: $(CPU_DIR)/y.tab.c
+y.tab.h: y.tab.c
 
-$(CPU_DIR)/y.tab.c: $(CPU_DIR)/parser.y
+y.tab.c: $(CPU_DIR)/parser.y
 	bison $(YFLAGS) $(CPU_DIR)/parser.y
 
-$(CPU_DIR)/y.tab.o: $(CPU_DIR)/y.tab.c
-	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c $(CPU_DIR)/y.tab.c
+y.tab.o: y.tab.c
+	$(CC) $(CFLAGS) $(YCFLAGS) -c y.tab.c
 
 
-$(CPU_DIR)/lex.yy.c: $(CPU_DIR)/scanner.l
+lex.yy.c: $(CPU_DIR)/scanner.l
 	$(MYLEX) $(LEXFLAGS) $(CPU_DIR)/scanner.l
 
-$(CPU_DIR)/lex.yy.o: $(CPU_DIR)/lex.yy.c
-	$(CC) $(IFLAGS) $(LEXCFLAGS) -c $(CPU_DIR)/lex.yy.c
+lex.yy.o: lex.yy.c
+	$(CC) $(LEXCFLAGS) -c lex.yy.c
 
 
 #
@@ -223,45 +222,60 @@ data.o: $(CPU_DIR)/sym-tbl.h
 data.o: $(CPU_DIR)/parser.h
 data.o: $(CPU_DIR)/run.h
 data.o: $(CPU_DIR)/data.h
+
+display-utils.o: $(CPU_DIR)/spim.h
+display-utils.o: $(CPU_DIR)/string-stream.h
+display-utils.o: $(CPU_DIR)/spim-utils.h
+display-utils.o: $(CPU_DIR)/inst.h
+display-utils.o: $(CPU_DIR)/data.h
+display-utils.o: $(CPU_DIR)/reg.h
+display-utils.o: $(CPU_DIR)/mem.h
+display-utils.o: $(CPU_DIR)/run.h
+
 inst.o: $(CPU_DIR)/spim.h
 inst.o: $(CPU_DIR)/spim-utils.h
 inst.o: $(CPU_DIR)/inst.h
 inst.o: $(CPU_DIR)/mem.h
 inst.o: $(CPU_DIR)/reg.h
 inst.o: $(CPU_DIR)/sym-tbl.h
-inst.o: $(CPU_DIR)/y.tab.h
+inst.o: y.tab.h
 inst.o: $(CPU_DIR)/parser.h
 inst.o: $(CPU_DIR)/scanner.h
 inst.o: $(CPU_DIR)/data.h
 inst.o: $(CPU_DIR)/op.h
+
 lex.yy.o: $(CPU_DIR)/spim.h
 lex.yy.o: $(CPU_DIR)/spim-utils.h
 lex.yy.o: $(CPU_DIR)/inst.h
 lex.yy.o: $(CPU_DIR)/sym-tbl.h
-lex.yy.o: $(CPU_DIR)/y.tab.h
+lex.yy.o: y.tab.h
 lex.yy.o: $(CPU_DIR)/parser.h
 lex.yy.o: $(CPU_DIR)/scanner.h
 lex.yy.o: $(CPU_DIR)/op.h
+
 mem.o: $(CPU_DIR)/spim.h
 mem.o: $(CPU_DIR)/spim-utils.h
 mem.o: $(CPU_DIR)/inst.h
 mem.o: $(CPU_DIR)/mem.h
 mem.o: $(CPU_DIR)/reg.h
+
 syscall.o: $(CPU_DIR)/spim.h
 syscall.o: $(CPU_DIR)/inst.h
 syscall.o: $(CPU_DIR)/reg.h
 syscall.o: $(CPU_DIR)/mem.h
 syscall.o: $(CPU_DIR)/sym-tbl.h
 syscall.o: $(CPU_DIR)/syscall.h
+
 run.o: $(CPU_DIR)/spim.h
 run.o: $(CPU_DIR)/spim-utils.h
 run.o: $(CPU_DIR)/inst.h
 run.o: $(CPU_DIR)/mem.h
 run.o: $(CPU_DIR)/reg.h
 run.o: $(CPU_DIR)/sym-tbl.h
-run.o: $(CPU_DIR)/y.tab.h
+run.o: y.tab.h
 run.o: $(CPU_DIR)/syscall.h
 run.o: $(CPU_DIR)/run.h
+
 spim-utils.o: $(CPU_DIR)/spim.h
 spim-utils.o: $(CPU_DIR)/spim-utils.h
 spim-utils.o: $(CPU_DIR)/inst.h
@@ -270,9 +284,10 @@ spim-utils.o: $(CPU_DIR)/mem.h
 spim-utils.o: $(CPU_DIR)/reg.h
 spim-utils.o: $(CPU_DIR)/scanner.h
 spim-utils.o: $(CPU_DIR)/parser.h
-spim-utils.o: $(CPU_DIR)/y.tab.h
+spim-utils.o: y.tab.h
 spim-utils.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/sym-tbl.h
+
 spim.o: $(CPU_DIR)/spim.h
 spim.o: $(CPU_DIR)/spim-utils.h
 spim.o: $(CPU_DIR)/inst.h
@@ -281,7 +296,11 @@ spim.o: $(CPU_DIR)/reg.h
 spim.o: $(CPU_DIR)/parser.h
 spim.o: $(CPU_DIR)/sym-tbl.h
 spim.o: $(CPU_DIR)/scanner.h
-spim.o: $(CPU_DIR)/y.tab.h
+spim.o: y.tab.h
+
+string-stream.o: $(CPU_DIR)/spim.h
+string-stream.o: $(CPU_DIR)/string-stream.h
+
 sym-tbl.o: $(CPU_DIR)/spim.h
 sym-tbl.o: $(CPU_DIR)/spim-utils.h
 sym-tbl.o: $(CPU_DIR)/inst.h
@@ -289,6 +308,7 @@ sym-tbl.o: $(CPU_DIR)/mem.h
 sym-tbl.o: $(CPU_DIR)/data.h
 sym-tbl.o: $(CPU_DIR)/parser.h
 sym-tbl.o: $(CPU_DIR)/sym-tbl.h
+
 y.tab.o: $(CPU_DIR)/spim.h
 y.tab.o: $(CPU_DIR)/spim-utils.h
 y.tab.o: $(CPU_DIR)/inst.h
@@ -298,6 +318,7 @@ y.tab.o: $(CPU_DIR)/sym-tbl.h
 y.tab.o: $(CPU_DIR)/data.h
 y.tab.o: $(CPU_DIR)/scanner.h
 y.tab.o: $(CPU_DIR)/parser.h
+
 parser.o: $(CPU_DIR)/spim.h
 parser.o: $(CPU_DIR)/spim-utils.h
 parser.o: $(CPU_DIR)/inst.h
@@ -307,11 +328,12 @@ parser.o: $(CPU_DIR)/sym-tbl.h
 parser.o: $(CPU_DIR)/data.h
 parser.o: $(CPU_DIR)/scanner.h
 parser.o: $(CPU_DIR)/parser.h
+
 scanner.o: $(CPU_DIR)/spim.h
 scanner.o: $(CPU_DIR)/spim-utils.h
 scanner.o: $(CPU_DIR)/inst.h
 scanner.o: $(CPU_DIR)/sym-tbl.h
-scanner.o: $(CPU_DIR)/y.tab.h
+scanner.o: y.tab.h
 scanner.o: $(CPU_DIR)/parser.h
 scanner.o: $(CPU_DIR)/scanner.h
 scanner.o: $(CPU_DIR)/op.h
