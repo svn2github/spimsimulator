@@ -27,13 +27,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_49B5805378404C51834FE22DBF22CA51"
+        "MsmKey" = "8:_DCE19AC608494AD4B03270C467B44DF5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_DCE19AC608494AD4B03270C467B44DF5"
+        "MsmKey" = "8:_E0E31BD18A1D4DBF832879C4FB93C398"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F3FF290215BC437AA962EAA96DAB15C4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F52C6445B9434894974DBBC90AA0E7DE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -135,9 +147,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_49B5805378404C51834FE22DBF22CA51"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_DCE19AC608494AD4B03270C467B44DF5"
             {
-            "SourcePath" = "8:..\\PCSpim\\PCSPIM.HLP"
+            "SourcePath" = "8:..\\PCSpim\\Release\\pcspim.exe"
+            "TargetName" = "8:pcspim.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_016207CBD7574958B921AE7C46EB2F10"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E0E31BD18A1D4DBF832879C4FB93C398"
+            {
+            "SourcePath" = "8:C:\\WINDOWS\\system32\\msvcr71.dll"
+            "TargetName" = "8:msvcr71.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_9309BC0C38594FAC9085181655E6336E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:TRUE"
+            "Permanent" = "11:TRUE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F3FF290215BC437AA962EAA96DAB15C4"
+            {
+            "SourcePath" = "8:..\\PCSpim\\hlp\\PCSPIM.HLP"
             "TargetName" = "8:PCSPIM.HLP"
             "Tag" = "8:"
             "Folder" = "8:_016207CBD7574958B921AE7C46EB2F10"
@@ -155,19 +207,19 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_DCE19AC608494AD4B03270C467B44DF5"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F52C6445B9434894974DBBC90AA0E7DE"
             {
-            "SourcePath" = "8:..\\PCSpim\\Release\\pcspim.exe"
-            "TargetName" = "8:pcspim.exe"
+            "SourcePath" = "8:C:\\WINDOWS\\system32\\MFC71.dll"
+            "TargetName" = "8:MFC71.dll"
             "Tag" = "8:"
-            "Folder" = "8:_016207CBD7574958B921AE7C46EB2F10"
+            "Folder" = "8:_9309BC0C38594FAC9085181655E6336E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "System" = "11:TRUE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -238,6 +290,17 @@
                 {
                 }
             }
+            "{78BAF5CE-F2E5-45BE-83BC-DB6AF387E941}:_9309BC0C38594FAC9085181655E6336E"
+            {
+            "Name" = "8:#1914"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SystemFolder"
+                "Folders"
+                {
+                }
+            }
         }
         "LaunchCondition"
         {
@@ -254,7 +317,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PCSpim"
         "ProductCode" = "8:{75DE1CEC-63C5-48F7-8742-C7FC41E08F6B}"
-        "PackageCode" = "8:{845B10DC-0D52-4FF3-839B-8580BF039CAE}"
+        "PackageCode" = "8:{EAD8433C-3948-44E6-AA31-70912655BBB5}"
         "UpgradeCode" = "8:{9FE309B8-E6B5-4D41-AC96-B0152F656EE9}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
