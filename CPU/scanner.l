@@ -125,12 +125,12 @@ static YY_CHAR scan_escape (YY_CHAR **str);
 			    }
 			  if (*yytext == '-')
 			    {
-			      sscanf(yytext+3, "%lx", &(yylval.i));
+			      sscanf(yytext+3, "%x", &(yylval.i));
 			      yylval.i = -yylval.i;
 			    }
 			  else
 			    {
-			      sscanf(yytext+2, "%lx", &(yylval.i));
+			      sscanf(yytext+2, "%x", &(yylval.i));
 			    }
 			  return (Y_INT);
 			}
