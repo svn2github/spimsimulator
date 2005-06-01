@@ -1,3 +1,9 @@
+2005-05-31    <Jim@LS1>
+
+	* Pervasive restructuring of files to put 3 UIs (spim, xspim,
+	PCSpim) in separate directories and cleanup organization and
+	makefiles.
+
 2005-02-12    <Jim@LS1>
 
 	* PCSpim:
