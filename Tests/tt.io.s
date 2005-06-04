@@ -103,8 +103,8 @@ l3:	b l3			# Loop waiting for interrupts
 
 	.ktext 0x80000180
 	mfc0 $t4 $13		# Get ExcCode field from Cause reg
-	sll $t5 $t4 2
-	and $t5 $t5 0xf		# ExcCode field
+	srl $t5 $t4 2
+	and $t5 $t5 0x1f	# ExcCode field
 	bne $t5 0 exception
 
 # An interrupt:
@@ -132,7 +132,7 @@ next:
 
 check_trans:
 	beq $t7 0 ret_handler	# No char to write yet
-	
+
 	and $t5 $t4 0x400	# Check for IP2 (HW 0)
 	beq $t5 0 check_loop
 
