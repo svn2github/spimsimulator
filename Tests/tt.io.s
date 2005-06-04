@@ -23,7 +23,7 @@
 
 
 	.data
-prompt: .asciiz "SPIM IO Test.	Please type 6 input lines:\n"
+prompt: .asciiz "SPIM IO Test.\nOnly runs with -mapped_io flag.\nPlease type 6 input lines:\n"
 nl:	.asciiz "\n"
 
 	.text
