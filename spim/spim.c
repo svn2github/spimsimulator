@@ -102,16 +102,17 @@ int delayed_branches;		/* Non-Zero => simulate delayed branches */
 int delayed_loads;		/* Non-Zero => simulate delayed loads */
 int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
 int quiet;			/* Non-Zero => no warning messages */
+char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 port message_out, console_out, console_in;
 int mapped_io;			/* Non-zero => activate memory-mapped IO */
 int pipe_out;
 int spim_return_value;		/* Value returned when spim exits */
 
+
 /* Local variables: */
 
 /* Non-zero => load standard exception handler */
 static int load_exception_handler = 1;
-static char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 static int console_state_saved;
 #ifdef USE_TERMIOS
 static struct termios saved_console_state;
