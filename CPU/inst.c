@@ -915,8 +915,8 @@ opcode_is_true_branch (int opcode)
 }
 
 
-/* Return non-zero if SPIM OPCODE (e.g. Y_...) is an conditional branch
-   (jump). */
+/* Return non-zero if SPIM OPCODE (e.g. Y_...) is a direct unconditional
+   branch (jump). */
 
 int
 opcode_is_jump (int opcode)

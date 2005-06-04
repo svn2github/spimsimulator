@@ -548,7 +548,15 @@ l23:	j l22
 l21:	la $4 l23
 	bne $3 $4 fail
 	jr $3
-l22:	li $v0 4	# syscall 4 (print_str)
+
+l22:	la $2 l21a
+	jalr $2
+l23a:	j l22a
+l21a:	la $4 l23a
+	bne $31 $4 fail
+	jr $31
+
+l22a:	li $v0 4	# syscall 4 (print_str)
 	la $a0 jalr2_
 	syscall
 	la $2 l24

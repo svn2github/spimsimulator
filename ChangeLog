@@ -1,3 +1,12 @@
+2005-06-04    <Jim@LS1>
+
+	* Tests/tt.core.s (jalr_):
+	Test default case for jalr, without default $rd (=31).
+
+	* Tests/tt.io.s blair bethwaite [blair.bethwaite@gmail.com]:
+	Trap handle in test extracted wrong bits from ExcCode field of
+	Cause register.
+
 2005-05-31    <Jim@LS1>
 
 	* Pervasive restructuring of files to put 3 UIs (spim, xspim,
