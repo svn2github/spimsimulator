@@ -1,5 +1,11 @@
 2005-06-04    <Jim@LS1>
 
+	* spim/spim.c (console_to_program):
+	Use termios(3) library calls instead of IOCTLs to fix bug
+	introduced in port from termio to termios struct (did not change
+	TCGETA -> TCGETS and TCSETA -> TCSETS, since the latter does not
+	exist in Cygwin).
+
 	* Tests/tt.core.s (jalr_):
 	Test default case for jalr, without default $rd (=31).
 
@@ -27,7 +33,7 @@
 	Restore epilogue code restored $at then used pseduo instructions
 	that smashed it.
 
-	* PCSpimView.{cpp,h} 
+	* PCSpimView.{cpp,h}
 	Cleared filename when reinitializing simulator, which broke next
 	reload command.
 
