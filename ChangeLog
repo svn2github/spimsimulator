@@ -1,6 +1,11 @@
 2005-06-04    <Jim@LS1>
 
-	* spim/spim.c (console_to_program):
+	* spim/spim.c (console_to_program) [Peter Fröhlich phf@cs.ucr.edu]:
+	Eliminated non-POSIX flags IUCLC and IXANY to facilitate port to
+	Mac OS X.
+
+	* spim/spim.c (console_to_program) [Deborah Pickett
+	debbiep@csse.monash.edu.au]:
 	Use termios(3) library calls instead of IOCTLs to fix bug
 	introduced in port from termio to termios struct (did not change
 	TCGETA -> TCGETS and TCSETA -> TCSETS, since the latter does not

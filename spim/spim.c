@@ -1018,7 +1018,7 @@ console_to_program ()
 
       tcgetattr (console_in.i, &saved_console_state);
       params = saved_console_state;
-      params.c_iflag &= ~(ISTRIP|IUCLC|INLCR|ICRNL|IGNCR|IXON|IXOFF|IXANY|INPCK|BRKINT|PARMRK);
+      params.c_iflag &= ~(ISTRIP|INLCR|ICRNL|IGNCR|IXON|IXOFF|INPCK|BRKINT|PARMRK);
 
       params.c_iflag |= IGNBRK|IGNPAR;
       /*params.c_oflag &= ~OPOST;*/
