@@ -1017,7 +1017,8 @@ console_to_program ()
 #ifdef USE_TERMIOS
       struct termios params;
 
-      ioctl (console_in.i, TCGETA, (char *) &saved_console_state);
+      /*      ioctl (console_in.i, TCGETS, (char *) &saved_console_state);*/
+      tcgetattr (console_in.i, &saved_console_state);
       params = saved_console_state;
       params.c_iflag &= ~(ISTRIP|IUCLC|INLCR|ICRNL|IGNCR|IXON|IXOFF|IXANY|INPCK|BRKINT|PARMRK);
 
@@ -1028,7 +1029,8 @@ console_to_program ()
       params.c_lflag = 0;
       params.c_cc[VMIN] = 1;
       params.c_cc[VTIME] = 1;
-      ioctl ((int)console_in.i, TCSETA, (char *) &params);
+      /*      ioctl ((int)console_in.i, TCSETS, (char *) &params);*/
+      tcsetattr (console_in.i, TCSANOW, &saved_console_state);
 #else
       int flags;
       ioctl ((int) console_in.i, TIOCGETP, (char *) &saved_console_state);
@@ -1049,7 +1051,8 @@ console_to_spim ()
 {
   if (mapped_io && console_state_saved)
 #ifdef USE_TERMIOS
-    ioctl ((int) console_in.i, TCSETA, (char *) &saved_console_state);
+    /*    ioctl ((int) console_in.i, TCSETS, (char *) &saved_console_state);*/
+    tcsetattr (console_in.i, TCSANOW, &saved_console_state);
 #else
     ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);
 #endif
