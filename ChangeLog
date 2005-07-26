@@ -1,3 +1,10 @@
+2005-07-25    <Jim@LS1>
+
+	* CPU/sym-tbl.c (resolve_a_label_sub) [Vegdahl, Steven vegdahl@up.edu]:
+	Did not add 1 to upper 16 bits of LW/SW pair (to compensate for
+	signed add in instruction) when there was an ADDU instruction
+	between the LUI and LW/SW, due to an indexed address compuation.
+
 2005-06-04    <Jim@LS1>
 
 	* spim/spim.c (console_to_program) [Peter Fröhlich phf@cs.ucr.edu]:
