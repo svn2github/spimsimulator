@@ -72,11 +72,11 @@ void
 initialize_symbol_table ()
 {
   int i;
-  
+
   for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
   {
     label *x, *n;
-    
+
     for (x = label_hash_table [i]; x != NULL; x = n)
     {
       free (x->name);
@@ -85,7 +85,7 @@ initialize_symbol_table ()
     }
     label_hash_table [i] = NULL;
   }
-  
+
   local_labels = NULL;
 }
 
@@ -342,7 +342,10 @@ resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
 		{
   		  /* LW/SW sign extends offset. Compensate by adding 1 to high 16 bits. */
 		  instruction* prev_inst;
+		  instruction* prev_prev_inst;
 		  prev_inst = read_mem_inst (pc - BYTES_PER_WORD);
+		  prev_prev_inst = read_mem_inst (pc - 2 * BYTES_PER_WORD);
+
 		  if (prev_inst != NULL
 		      && OPCODE (prev_inst) == Y_LUI_OP
 		      && EXPR (inst)->symbol == EXPR (prev_inst)->symbol
@@ -351,6 +354,15 @@ resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
 		      /* Check that previous instruction was LUI and it has no immediate,
 			 otherwise it will have compensated for sign-extension */
 		      EXPR (prev_inst)->offset += 0x10000;
+		    }
+		  /* There is an ADDU instruction before the LUI if the
+		     LW/SW instruction uses an index register: skip over the ADDU. */
+		  else if (prev_prev_inst != NULL
+		      && OPCODE (prev_prev_inst) == Y_LUI_OP
+		      && EXPR (inst)->symbol == EXPR (prev_prev_inst)->symbol
+		      && IMM (prev_prev_inst) == 0)
+		    {
+		      EXPR (prev_prev_inst)->offset += 0x10000;
 		    }
 		}
 	    }
@@ -470,7 +482,7 @@ undefined_symbol_string ()
 
   int i;
   label *l;
-  
+
   for (i = 0; i < LABEL_HASH_TABLE_SIZE; i ++)
     for (l = label_hash_table[i]; l != NULL; l = l->next)
       if (l->addr == 0)
