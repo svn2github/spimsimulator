@@ -741,6 +741,20 @@ lwd_:	.word 1, -1, 0, 0x8000000
 	lw $3 12($2)
 	bne $3 0x8000000 fail
 
+	li $2, 0
+	lw $3 lwd_($2)
+	bne $3 1 fail
+	addi $2, $2, 4
+	lw $3 lwd_($2)
+	bne $3 -1 fail
+	addi $2, $2, 4
+	lw $3 lwd_($2)
+	bne $3 0 fail
+	addi $2, $2, 4
+	lw $3 lwd_($2)
+	bne $3 0x8000000 fail
+
+	la $2 lwd_
 	add $2 $2 12
 	lw $3 -12($2)
 	bne $3 1 fail
@@ -1665,6 +1679,11 @@ swd_:	.byte 0, 0, 0, 0
 	la $2 swd_
 	sw $3 0($2)
 	lw $4 0($2)
+	bne $4 0x7f7f7f7f fail
+
+	li $2, 4
+	sw $3 swd_($2)
+	lw $4 swd_($2)
 	bne $4 0x7f7f7f7f fail
 
 	li $v0 4	# syscall 4 (print_str)
