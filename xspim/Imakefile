@@ -114,7 +114,7 @@ xspim:	force
 force:  configuration
 
 configuration:
-	Configure
+	./Configure
 
 NormalProgramTarget(xspim_sub,$(XOBJS),$(DEPLIBS),$(LOCALLIBS),$(SYSLIBS))
 
@@ -149,6 +149,8 @@ TAGS:	*.c *.h *.l *.y
 clean::
 	rm -f xspim *.o core a.out TAGS y.output y.tab.h y.tab.c lex.yy.c
 
+very-clean: clean
+	rm -f configuration
 
 makedepend: y.tab.c
 	makedepend -w10 -I. -I$(CPU_DIR) $(CPU_DIR)\*.c *.c

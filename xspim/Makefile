@@ -2,7 +2,7 @@
 # $Xorg: imake.c,v 1.6 2001/02/09 02:03:15 xorgcvs Exp $
 
 # ----------------------------------------------------------------------
-# Makefile generated from "Imake.tmpl" and </tmp/IIf.8DvZCf>
+# Makefile generated from "Imake.tmpl" and </tmp/IIf.z8M5ce>
 # $Xorg: Imake.tmpl,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
 # $XdotOrg: xc/config/cf/Imake.tmpl,v 1.6 2004/07/28 03:24:29 gisburn Exp $
 #
@@ -41,7 +41,7 @@ all::
 
 # platform:  $XFree86: xc/config/cf/linux.cf,v 3.220 2003/12/30 22:38:33 tsi Exp $
 
-# operating system:  Linux 2.6.11-1.1366_FC4 i686 [ELF] (2.6.11)
+# operating system:  Linux 2.6.12-1.1411_FC5 i686 [ELF] (2.6.12)
 # libc:	(6.3.5)
 # binutils:	(215)
 
@@ -1133,7 +1133,7 @@ xspim:	force
 force:  configuration
 
 configuration:
-	Configure
+	./Configure
 
 xspim_sub: $(XOBJS) $(DEPLIBS)
 	$(RM) $@
@@ -1205,6 +1205,9 @@ TAGS:	*.c *.h *.l *.y
 
 cleandir::
 	rm -f xspim *.o core a.out TAGS y.output y.tab.h y.tab.c lex.yy.c
+
+very-cleandir: cleandir
+	rm -f configuration
 
 makedepend: y.tab.c
 	makedepend -w10 -I. -I$(CPU_DIR) $(CPU_DIR)\*.c *.c

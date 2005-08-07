@@ -1,7 +1,6 @@
 #
 # SPIM S20 MIPS Simulator.
 # Makefile for SPIM.
-# Compiles under the Cygwin tools running on Windows.
 #
 # Copyright (C) 1990-2005 by James Larus (larus@cs.wisc.edu).
 # ALL RIGHTS RESERVED.
@@ -108,10 +107,10 @@ OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
        syscall.o display-utils.o string-stream.o
 
 
-spim.exe:   force
-	make -f Makefile.cygwin spim2.exe
+spim:   force
+	make -f Makefile spim2
 
-spim2.exe:	$(OBJS) spim.o
+spim2:	$(OBJS) spim.o
 	$(CC) -g $(OBJS) spim.o $(LDFLAGS) -o spim -lm
 
 
@@ -126,10 +125,10 @@ configuration:
 # Test spim with a torture test:
 #
 
-test:	spim.exe
+test:	spim
 	@echo
 	@echo "Testing tt.bare.s:"
-	$(CSH) -c "./spim.exe -delayed_branches -delayed_loads -noexception -file $(TEST_DIR)/tt.bare.s >& test.out"
+	$(CSH) -c "./spim -delayed_branches -delayed_loads -noexception -file $(TEST_DIR)/tt.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
@@ -138,13 +137,13 @@ test:	spim.exe
 
 	@echo
 	@echo "Testing tt.core.s:"
-	$(CSH) -c "./spim.exe -file $(TEST_DIR)/tt.core.s < $(TEST_DIR)/tt.in >& test.out"
+	$(CSH) -c "./spim -file $(TEST_DIR)/tt.core.s < $(TEST_DIR)/tt.in >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.endian.s:"
-	$(CSH) -c "./spim.exe -file $(TEST_DIR)/tt.endian.s >& test.out"
+	$(CSH) -c "./spim -file $(TEST_DIR)/tt.endian.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -152,16 +151,16 @@ test:	spim.exe
 # This test currently only works for little-endian machines.  The file
 # tt.alu.bare.s needs to be converted in places for big-endian machines.
 
-test_bare: spim.exe
+test_bare: spim
 	@echo
 	@echo "Testing tt.alu.bare.s:"
-	$(CSH) -c "./spim.exe -bare -noexception -file $(TEST_DIR)/tt.alu.bare.s >& test.out"
+	$(CSH) -c "./spim -bare -noexception -file $(TEST_DIR)/tt.alu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.fpt.bare.s:"
-	$(CSH) -c "./spim.exe -bare -noexception -file $(TEST_DIR)/tt.fpu.bare.s >& test.out"
+	$(CSH) -c "./spim -bare -noexception -file $(TEST_DIR)/tt.fpu.bare.s >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -173,7 +172,7 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean:
-	rm -f *.exe *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
+	rm -f spim *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
 
 install: spim
 	install -c -s  spim $(BIN_DIR)
@@ -183,7 +182,7 @@ install: spim
 very-clean: clean
 	rm -f configuration
 
-splint: spim.exe
+splint: spim
 	splint -weak -preproc -warnposix +matchanyintegral spim.c y.tab.c lex.yy.c
 
 
