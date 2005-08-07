@@ -323,8 +323,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Making help file..."
-						CommandLine="&quot;$(ProjectDir)&quot;makehelp.bat &quot;$(OutDir)&quot;
-"
+						CommandLine="&quot;$(ProjectDir)&quot;makehelp.bat &quot;$(OutDir)&quot;"
 						Outputs="$(OutDir)\$(TargetName).hlp"/>
 				</FileConfiguration>
 				<FileConfiguration
