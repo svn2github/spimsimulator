@@ -109,7 +109,6 @@ OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
 
 
 spim.exe:   force
-	@touch .spim-made
 	make -f Makefile.cygwin spim2.exe
 
 spim2.exe:	$(OBJS) spim.o
@@ -174,7 +173,7 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean:
-	rm -f *.exe  *.o TAGS .spim-made test.out lex.yy.c y.tab.c y.tab.h y.output
+	rm -f *.exe  *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
 
 install: spim
 	install -c -s  spim $(BIN_DIR)
