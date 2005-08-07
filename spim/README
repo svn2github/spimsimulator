@@ -1,5 +1,5 @@
-		  README FILE FOR SPIM, XSPIM, and PCSPIM
-		  =======================================
+			    README FILE FOR SPIM
+			    ====================
 
 This directory contains part of SPIM--an assembly language MIPS R2000/R3000
 simulator. It contains the terminal interface to SPIM.

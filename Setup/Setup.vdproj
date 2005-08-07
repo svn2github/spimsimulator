@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0B98F0B11576494E8ED1F2E02B82B9AF"
+        "MsmKey" = "8:_118DA41E663C434988D82F51DAA5FEDD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -107,9 +107,9 @@
         }
         "File"
         {
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_0B98F0B11576494E8ED1F2E02B82B9AF"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_118DA41E663C434988D82F51DAA5FEDD"
             {
-            "SourcePath" = "8:..\\src\\exceptions.s"
+            "SourcePath" = "8:..\\CPU\\exceptions.s"
             "TargetName" = "8:exceptions.s"
             "Tag" = "8:"
             "Folder" = "8:_016207CBD7574958B921AE7C46EB2F10"

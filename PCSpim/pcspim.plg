@@ -21,7 +21,7 @@ Building Win32 Help files
 
 Creating temporary file "C:\DOCUME~1\LARUS~1.C74\LOCALS~1\Temp\RSP10.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR".\Debug/" /Fp".\Debug/pcspim.pch" /YX /Fo".\Debug/" /Fd".\Debug/" /FD /D SPIM_VERSION="\"Version 7.1 of January 2, 2005\"" /c 
+/nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR".\Debug/" /Fp".\Debug/pcspim.pch" /YX /Fo".\Debug/" /Fd".\Debug/" /FD /D SPIM_VERSION="\"Version 7.2 of August 7, 2005\"" /c 
 "D:\Larus\Software\SPIM\PCSpim\BreakpointDlg.cpp"
 "D:\Larus\Software\SPIM\PCSpim\ConsoleWnd.cpp"
 "D:\Larus\Software\SPIM\src\data.c"
@@ -50,7 +50,7 @@ Creating temporary file "C:\DOCUME~1\LARUS~1.C74\LOCALS~1\Temp\RSP10.tmp" with c
 Creating command line "cl.exe @C:\DOCUME~1\LARUS~1.C74\LOCALS~1\Temp\RSP10.tmp" 
 Creating temporary file "C:\DOCUME~1\LARUS~1.C74\LOCALS~1\Temp\RSP11.tmp" with contents
 [
-/nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR".\Debug/" /Fp".\Debug/pcspim.pch" /Yc"stdafx.h" /Fo".\Debug/" /Fd".\Debug/" /FD /D SPIM_VERSION="\"Version 7.1 of January 2, 2005\"" /c 
+/nologo /MDd /W3 /Gm /GX /Zi /Os /D "_DEBUG" /D "LITTLEENDIAN" /D "WIN32" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR".\Debug/" /Fp".\Debug/pcspim.pch" /Yc"stdafx.h" /Fo".\Debug/" /Fd".\Debug/" /FD /D SPIM_VERSION="\"Version 7.2 of August 7, 2005\"" /c 
 "D:\Larus\Software\SPIM\PCSpim\StdAfx.cpp"
 ]
 Creating command line "cl.exe @C:\DOCUME~1\LARUS~1.C74\LOCALS~1\Temp\RSP11.tmp" 

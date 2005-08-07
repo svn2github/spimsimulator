@@ -1,3 +1,10 @@
+2005-08-07    <Jim@LS1>
+
+	* README spim/Makfile
+	General cleanup of documentation in README files.
+	Eliminated Makefile.Cygwin in spim directory in favor of single
+	file that worked on Unix and Cygwin.
+
 2005-07-25    <Jim@LS1>
 
 	* CPU/sym-tbl.c (resolve_a_label_sub) [Vegdahl, Steven vegdahl@up.edu]:

@@ -23,9 +23,8 @@ of operating system services.<b> spim</b> does <u>not</u> execute binary
 <P><B>spim</B> implements almost the entire MIPS32 assembler-extended instruction
 set. (It omits most floating point comparisons and
 rounding modes
-and details of the memory system page tables.) The MIPS architecture has several
-variants that differ in various ways (e.g., the MIPS64 architecture is extended
-to support 64-bit integers and addresses), which means that
+and the memory system page tables.) The MIPS architecture has several
+variants that differ in various ways (e.g., the MIPS64 architecture supports 64-bit integers and addresses), which means that
 <B>spim</B> will not run programs compiled for all types of MIPS processors. MIPS compilers also generate a number of assembler directives that
 <b>spim</b> cannot process. These directives usually can be safely deleted.</P>
 <P>Earlier versions of <B>spim</B> (before 7.0) implemented the MIPS-I
@@ -39,10 +38,10 @@ new code are in exceptions.s and
 Tests/tt.io.s.</P>
 <P><B>spim</B> comes with complete source code and documentation. It also
 include a torture test to verify a port to a new machine.</P>
-<P><B>spim</B> implements both a simple, terminal-style interface and a window interface. On Unix
-and Linux, the <i>spim</i> program provides the terminal interface and
-the <i>xspim</i> program provides the X window interface. On Windows, the <i>spim</i> program
-provides the  console interface and <i>PCSpim</i> provides a
+<P><B>spim</B> implements both a simple, terminal-style interface and a window interface. On Unix, Linux, 
+and Mac OS X the <i>spim</i> program provides a simple terminal interface and
+the <i>xspim</i> program provides the windowing interface. On Microsoft Windows, the <i>spim</i> program
+provides a  console interface and <i>PCSpim</i> provides a
 Windows interface.</P>
 <HR width="100%">
 
@@ -71,12 +70,12 @@ Windows interface.</P>
     xspim</i></TD>
     <TD width=128 align="center"><font SIZE="3">Binary RPM for Fedora</font></TD>
     <TD width=382>
-    <a href="http://www.cs.berkeley.edu/~liblit/sampler/downloads/">
-    http://www.cs.berkeley.edu/~liblit/sampler/downloads/</a>
+    <a href="http://www.cs.wisc.edu/cbi/downloads/">
+	http://www.cs.wisc.edu/cbi/downloads/</a>&nbsp;
     </TD></TR>
   <TR>
-    <TD width=451 rowSpan=2>Microsoft Windows<BR>(Windows  98, NT, 2000, XP)<p>
-    (spim 7.0 and later versions no longer run on Windows 95. Use version 6.5 or
+    <TD width=451 rowSpan=2>Microsoft Windows<BR>(Windows  NT, 2000, XP)<p>
+    (spim 7.0 and later versions no longer run on Windows 95/98. Use version 6.5 or
     earlier.)</TD>
     <TD width=96 rowSpan=2 align="center"><i>spim<BR>PCSpim</i></TD>
     <TD width=128 align="center">Executable</TD>
@@ -90,7 +89,8 @@ Windows interface.</P>
   </TBODY></TABLE></CENTER></DIV>
 <ul>
   <li>
-<P style="margin-top: 6">To run <i>spim</i> or <i>xspim</i> on a Unix or Linux system, copy either the compressed
+<P style="margin-top: 6">To run <i>spim</i> or <i>xspim</i> on a Unix, Linux, or 
+Mac OS X system, copy either the compressed
 tar file (<A
 href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</A>)
 or the gzip'ed tar file (<A
@@ -99,11 +99,11 @@ Both files contains source code and must be compiled for your system.</P>
   </li>
   <li>
 <P style="margin-top: 6">Ben Liblit of the <i>Cooperative Bug Isolation Project</i>
-(<a href="http://www.cs.berkeley.edu/~liblit/sampler/">http://www.cs.berkeley.edu/~liblit/sampler</a>)
+(<a href="http://www.cs.wisc.edu/cbi/">http://www.cs.wisc.edu/cbi/</a>)
 produced a compiled version of <b>spim </b>for Fedora. It contains the
 project's low-overhead monitoring code, which can help find bugs in <b>spim</b>.
 If you are running Linux, this package can: save you the time and trouble of compiling
-and installing <b>spim</b>, help find bugs, and also aid an interesting
+and installing <b>spim</b>, help find bugs, and aid an interesting
 research project.</P>
   </li>
   <li>
@@ -112,12 +112,12 @@ research project.</P>
 http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>, unzip it, and click on <i>setup.exe</i>.</P>
   </li>
   <li>
-<P style="margin-top: 6">Source for the PC version (both <i>PCspim</i> and <i>spim</i>) is available separately in
+<P style="margin-top: 6">Source for the Microsoft Windows version (both <i>PCspim</i> and <i>spim</i>) is available separately in
 the file <A
       href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</A>.
 </P></li>
-  <li><P style="margin-top: 6">There is no  Macintosh version of <B>spim</B>. However, the Unix version of
-  <i>xspim</i> will compile and run on Mac
+  <li><P style="margin-top: 6">There is no  Macintosh version of <B>spim</B>. 
+	However, the <i>xspim</i> will compiles and runs on Mac
 OS X. </P>
   </li>
 </ul>
@@ -125,7 +125,7 @@ OS X. </P>
 
 <H2 align=center><font size="+2">Installation</font></H2>
 
-<p align=left><b><font size="4">Windows</font></b></p>
+<p align=left><b><font size="4">Microsoft Windows</font></b></p>
 <ol>
   <li>
 
@@ -142,6 +142,8 @@ http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a> and save it on your machine.</
 
 <p align=left><b><font size="4">Unix, Linux, or Mac OS X</font></b></p>
 
+<p align=left><font color="#FF0000">(Note: the directions changed slightly for 
+version 7.2, to reflect a new directory structure. Please read carefully.)</font></p>
 <p align=left>Installation is a bit more complex for a Unix or Linux system, as
 you need to compile the program for your particular computer and operating
 system.</p>
@@ -169,84 +171,52 @@ for the first file or <i>gzip</i> for the second file:<br>
 to build <b>spim</b> and untar it:<br>
 <br>
 &nbsp;&nbsp;&nbsp; <i>% tar xf spim.tar<br>
-&nbsp;</i></li>
-<li>
-
-<p align=left>To compile <b>spim</b>, you must first configure it for your
-system by running the Configure script:<br>
 <br>
-<i>&nbsp;&nbsp;&nbsp; % Configure<br>
-<br>
-</i>Note: Configure compiles a program with the C compiler named cc. If you want
-it to use another compiler, set the environment variable CC to its name before
-running the script, e.g.:<br>
-<br>
-<i>&nbsp;&nbsp;&nbsp; % setenv CC gcc<br>
-&nbsp;&nbsp;&nbsp; % Configure<br>
-&nbsp;</i></li>
-<li>
-
-<p align=left>Next, you must set the directories in which <b>spim </b>will be
-installed by editing a makefile (the file that tells how to build <b>spim</b>).
+</i>It will create a directory named <i>spim-7.2</i> (or the most recent version 
+number).<br>
+&nbsp;</li>
+	<li>
+	<p align=left>The simple terminal interface is contained in the <i>
+	spim-7.2/spim</i> directory and the X-windows interfaces is in the <i>
+	spim-7.2/xspim</i> directory.<i> </i>The other directories are described in 
+	the README file.<i><br>&nbsp;</i></li>
+	<li>
+	<p align=left>Next, you must set the directories in which <b>spim </b>will be
+installed by editing the Makefile (the file that contains instructions on building
+	<b>spim</b>).
 In general, if you are installing <b>spim</b> and want the windowing version (<i>xspim</i>),
-edit the file <u><i>Imakefile</i></u>. If you don't want <i>xspim</i>
-or are running on a system without X-windows installed, you can use the file <i>
-Makefile.std</i>. Finally, if you are running under Microsoft Windows using
-<a href="http://www.cygwin.com/">Cygwin</a>, edit the file <i>Makefile.cygwin</i>.<br>
-<br>
-Set these pathnames to the appropriate locations for your system:</p>
-
-<p align=left>&nbsp;&nbsp;&nbsp; EXCEPTION_DIR -- The full pathname of the directory
+edit the file <u><i>xspim/Imakefile</i></u>. If you don't want <i>xspim</i>
+or are running on a system without X-windows installed, you use the file <i>
+	spim/Makefile</i>.<br><br>Set these pathnames to the appropriate locations for your system:</p>
+	<p align=left>&nbsp;&nbsp;&nbsp; EXCEPTION_DIR -- The full pathname of the directory
 in which to install the <b>spim </b>exception handler <i>(exceptions.s</i>)<i>.</i></p>
-
-<p align=left>&nbsp;&nbsp;&nbsp; BIN_DIR -- The full pathname of the directory
+	<p align=left>&nbsp;&nbsp;&nbsp; BIN_DIR -- The full pathname of the directory
 in which <i>spim</i> and <i>xspim</i> should be installed.</p>
-
-<p align=left>&nbsp;&nbsp;&nbsp; MAN_DIR -- The full pathname of the directory
+	<p align=left>&nbsp;&nbsp;&nbsp; MAN_DIR -- The full pathname of the directory
 in which the manual pages for <i>spim</i> and <i>xspim</i> should be installed.<br>
-<br>
-In general, the remaining parameters in a makefile need not be changed.<br>
-&nbsp;</li>
-<li>
-
-<p align=left>Then, if you are using <u><i>Imakefile</i></u> file, type:<br>
-<br>
-&nbsp;&nbsp;&nbsp; <i>% xmkmf<br>
-&nbsp;&nbsp;&nbsp; % make</i><br>
-&nbsp;</li>
-<li>
-
-<p align=left>If you want an X-window version of <b>spim</b>, also type:<br>
-<br>
-&nbsp;&nbsp;&nbsp; <i>% make xspim</i><br>
-&nbsp;</li>
-<li>
-
-<p align=left>If you do not have X-windows or the program <i>xmkmf</i>, edit
-either <i>Makefile.std</i> or <i>Makefile.cygwin</i> and type:<br>
-<br>
-<i>&nbsp;&nbsp;&nbsp; % make -f Makefile.std test<br>
-&nbsp;&nbsp;&nbsp; </i></li>
-<li>
-
-<p align=left>To run <i>spim</i> or <i>xspim</i>, the exception handler must be
-installed in the directory specified by the variable EXCEPTION_DIR in the makefile.
+	<br>In general, the remaining parameters in a Makefile need not be changed.<br>&nbsp;</li>
+	<li>
+	<p align=left>Then, if you are using <u><i>Imakefile</i></u> file, change to 
+	the <i>spim-7.2/xspim </i>directory and type:<br><br>&nbsp;&nbsp;&nbsp; <i>% xmkmf<br>&nbsp;&nbsp;&nbsp; % make<br>
+	</i>If you do not have a copy of <i>xmkmf</i>, you can use the Makefile in 
+	the <i>xspim</i> directory, but beware that it may not work on your system 
+	because the paths to the X windows libraries could be different.<br>&nbsp;</li>
+	<li>
+	<p align=left>If you do not have X-windows, change to the<i> spim-7.2/spim</i> 
+	directory, edit <i>Makefile,</i> and type:<br><br><i>&nbsp;&nbsp;&nbsp; % 
+	make<br>&nbsp;&nbsp;&nbsp; </i></li>
+	<li>
+	<p align=left>To run <i>spim</i> or <i>xspim</i>, the exception handler must be
+installed in the directory specified by the variable EXCEPTION_DIR in the Makefile.
 If the file <i>exception.s</i> is not installed, <i>spim</i> and <i>xspim</i>
 fail  before they start running. You can either install this file
-by hand or by typing<br>
-<br>
-<i>&nbsp;&nbsp;&nbsp; % make install</i><br>
-<br>
-which also installs spim, xspim, and the manual pages in the directories that
-you set (above).<br>
-&nbsp;</li>
-<li>
-
-<p align=left>To test that <b>spim </b>is correctly built, type<br>
-<br>
-<i>&nbsp;&nbsp;&nbsp; % make test</i><br>
-<br>
-and examine the output of the test. (Note: the exception handler must be installed
+by hand or by typing<br><br><i>&nbsp;&nbsp;&nbsp; % make install</i><br><br>which also installs 
+	<i>spim</i> or <i>xspim</i>, and the manual pages in the directories that
+you set (above).<br>&nbsp;</li>
+	<li>
+	<p align=left>To test that <b>spim </b>is correctly built, change to the <i>
+	spim-7.2/spim </i>directory and type:<br><br><i>&nbsp;&nbsp;&nbsp; % make test</i><br>
+	<br>and examine the output of the test. (Note: the exception handler must be installed
 before running the test.)</li>
 </ol>
 <hr>
@@ -348,7 +318,41 @@ commercial product, and it offers a limited time trial version.</P>
 <HR width="100%">
 
 <H2 align=center>Changes in Latest Version</H2>
-<P align=left>The current version of <B>spim</B> is 7.1 (January 2005), which is
+<P align=left>The current version of <B>spim</B> is 7.2 (August 2005), which is
+a minor release that cleans up a number of bugs in 7.1:</P>
+<ul>
+	<li>
+	<P align=left>Fixed bug in indexed address computation in LW and SW 
+	instructions.</P></li>
+	<li>
+	<P align=left>Eliminated non-POSIX flags IUCLC and IXANY to facilitate port 
+	to Mac OS X.</P></li>
+	<li>
+	<P align=left>Use termios(3) library calls instead of IOCTLs to fix bug 
+	introduced in port from termio to termios struct.</P></li>
+	<li>
+	<P align=left>Test default case for jalr, without default $rd (=31).</P>
+	</li>
+	<li>
+	<P align=left>Trap handler in test extracted wrong bits from ExcCode field 
+	of Cause register.</P></li>
+	<li>
+	<P align=left>Pervasive restructuring of files to put 3 UIs (spim, xspim, 
+	PCSpim) in separate directories and cleanup organization and Makefiles.</P>
+	</li>
+	<li>
+	<P align=left>Use correct help file in install process.</P></li>
+	<li>
+	<P align=left>Added work-around for bug in flex 2.5.31 that left yytext_ptr 
+	undefined.</P></li>
+	<li>
+	<P align=left>Epilogue code restored $at register, then used a pseduo 
+	instructions that smashed it.</P></li>
+	<li>
+	<P align=left>Cleared filename when reinitializing PCSpim, which broke next 
+	reload command.</P></li>
+</ul>
+<P align=left>The previous version of <B>spim</B> is 7.1 (January 2005), which is
 a minor release that cleans up a number of bugs in 7.0:</P>
 <ul>
 	<li>

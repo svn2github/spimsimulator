@@ -6,24 +6,28 @@
 #
 
 VERSION=7.2
-SRC="CPU spim xspim Tests"
+DIRS="CPU spim xspim Tests Documentation"
 TGT=spim-$VERSION
 
 rm -f */*~
 rm -f Tests/tt.endian.s
 pushd spim
-make -f Makefile.cygwin clean
-rm -f configuration
+make very-clean
 popd
-
+pushd xspim
+make clean
+popd
 
 rm -fr $TGT
 mkdir $TGT
 
-for f in $SRC ; do
-  cp -p -R $f $TGT
+for f in $DIRS ; do
+  cp -R $f $TGT
 done
-cp -p README VERSION $TGT
+
+rm -fr $TGT/Documentation/H_P_AppendixA/
+
+cp ChangeLog README VERSION $TGT
 
 
 pushd $TGT
