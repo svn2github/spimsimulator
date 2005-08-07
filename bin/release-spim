@@ -49,6 +49,8 @@ done
 chmod +x spim/Configure xspim/Configure
 popd
 
+sleep 65
+
+rm -f spim-$VERSION.tar spim-$VERSION.tar.gz
 tar cvf spim-$VERSION.tar spim-$VERSION
 gzip spim-$VERSION.tar
-mv spim-$VERSION.tar.gz ..
