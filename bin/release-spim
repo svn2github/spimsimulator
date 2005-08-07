@@ -1,4 +1,4 @@
-#!c:/progra~1/cygwin/bin/bash
+#!/bin/bash
 #
 # Shell script to create clean tar file under Cygwin.
 #
