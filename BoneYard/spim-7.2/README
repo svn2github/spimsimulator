@@ -1,0 +1,152 @@
+		  README FILE FOR SPIM, XSPIM, and PCSPIM
+		  =======================================
+
+This directory contains SPIM--an assembly language MIPS R2000/R3000
+simulator.
+
+
+SPIM is copyrighted by James R. Larus and distributed under the
+following conditions:
+
+    You may make copies of SPIM for your own use and modify those copies.
+
+    All copies of SPIM must retain my name and copyright notice.
+
+    You may not sell SPIM or distribute SPIM in conjunction with a
+    commercial product or service without the expressed written consent of
+    James Larus.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+			       BUILDING SPIM
+			       =============
+
+These instructions explain how to compile and install spim and xspim.
+
+It is not necessary to compile PCSpim (the Microsoft Windows version), as
+the spim web site contains a precompiled version.
+
+To build spim (the terminal version) or xspim (the X-windows and Mac
+version):
+
+1. Change to the directory "spim" to build spim. Change to the directory
+"xspim" to build xspim
+
+2. If necessary, edit the first few non-comment lines of the Makefile (or
+the Imakefile if you are building xspim) to set the pathnames for your
+system:
+
+	EXCEPTION_DIR -- The full pathname of the directory in which to
+			 install the SPIM exception handler.
+
+	BIN_DIR -- The full pathname of the directory in which spim and
+		   xspim should be installed.
+
+	MAN_DIR -- The full pathname of the directory in which the manual
+		   pages for spim and xspim should be installed.
+
+In general, the remaining parameters need not be changed.
+
+
+3. If you are building spim type:
+
+	% make
+
+
+4. If you are building xspim, type:
+
+	% xmkmf
+	% make
+
+5. To run spim or xspim, the exception handler code must be installed in the
+directory specified by the variable EXCEPTION_DIR in the Makefile.  If the
+file "exceptions."s is not installed, spim and xspim fail with a message
+before they start running.  You can either install this file by hand or by
+typing
+
+	% make install
+
+which also installs spim, xspim, and the manual pages in the directories
+that you set (above).
+
+
+6. To test that spim builds correctly, in the "spim" directory type
+
+	% make test
+
+and examine the output of the test.  (Note: the exception handler must be
+installed before running the test.)
+
+
+		     BUILDING SPIM ON MICROSOFT WINDOWS
+		     ==================================
+
+spim (the terminal version) works well on Microsoft Windows.  You can easily
+build it using the Cygwin port of the GNU tools (see www.cygwin.com).
+
+The Microsoft Windows version of spim is called PCSpim and is built using
+Microsoft Visual Studio. You can get the files separately from
+www.cs.wisc.edu/~larus/spim.html
+
+
+
+			 NEW VERSIONS OF SPIM
+			 ===================
+
+I generally release new version of SPIM once a year, before a semester
+boundary (late August or early January).  The new version are available on:
+
+		www.cs.wisc.edu/~larus/spim.html
+
+
+
+This directory contains several files and subdirectories:
+
+README	This file.
+
+VERSION
+	Version number of system.
+
+ChangeLog
+	Record of changes to spim code.
+
+Documentation/TeX
+	TeX document that describes SPIM.
+
+Documentation/H_P_AppendixA
+	Copy of Appendix A from Hennessey & Patterson's book "Computer
+Organization and Design". This more up-to-date than the TeX documentation.
+
+PCSpim
+	Microsoft Windows interface to SPIM
+
+Setup
+	Installer code for PCSpim.
+
+spim
+	Terminal interfaces to spim (Microsoft Windows, Unix, and Mac).
+
+Tests
+	Subdirectory contain torture tests to verify that SPIM works.
+
+xspim
+	X-Windows interface to spim (Unix and Mac).
+
+
+
+		  WHAT ABOUT SPIM ON SYSTEM XYZ?
+		  ==============================
+
+SPIM should run without many changes on many Unix systems.  Obviously,
+I have not tested SPIM on many system, nor can I port SPIM to systems
+that I don't have.  However, I would like to hear about the changes
+necessary to run SPIM on your favorite system.
+
+James Larus
+Microsoft Research
+(larus@microsoft.com)
