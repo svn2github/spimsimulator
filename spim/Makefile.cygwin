@@ -173,7 +173,7 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean:
-	rm -f *.exe  *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
+	rm -f *.exe *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
 
 install: spim
 	install -c -s  spim $(BIN_DIR)
@@ -181,7 +181,7 @@ install: spim
 	install -c -m 0444 spim.man $(MAN_DIR)
 
 very-clean: clean
-	rm -f y.tab.h y.tab.c lex.yy.c spim.tar* Documentation/spim.ps
+	rm -f configuration
 
 splint: spim.exe
 	splint -weak -preproc -warnposix +matchanyintegral spim.c y.tab.c lex.yy.c
