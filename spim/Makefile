@@ -172,7 +172,7 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean:
-	rm -f spim *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
+	rm -f spim spim.exe *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
 
 install: spim
 	install -c -s  spim $(BIN_DIR)

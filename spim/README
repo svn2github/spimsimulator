@@ -32,11 +32,8 @@ README
 	This file.
 
 Makefile
-	Makefile to build the terminal version of spim.
-
-Makefile.cygwin
-	Makefile to build the terminal version of spim on Windows using the
-Cygwin package.
+	Makefile to build the terminal version of spim. This Makefile works
+	for Unix and on Microsoft Windows under Cygwin.
 
 spim.c
 	Terminal interface to spim.

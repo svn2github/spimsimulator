@@ -57,7 +57,7 @@ else
   echo "-DLITTLEENDIAN" > ./configuration
   echo I believe this is a little-endian machine.
 fi;
-rm -f endian
+rm -f endian endian.exe
 
 
 if [ -f /usr/lib/libc.a ]; then
