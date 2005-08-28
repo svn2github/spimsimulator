@@ -1,4 +1,12 @@
+2005-08-28    <Jim@LS1>
+
+	* {spim,xspim}/Configure:
+	Use the "env" command to invoke bash, so pathname is not hardwired
+	into shell script (eg for Solaris).
+
 2005-08-07    <Jim@LS1>
+
+	* SPIM 7.2 Released
 
 	* README spim/Makfile
 	General cleanup of documentation in README files.
