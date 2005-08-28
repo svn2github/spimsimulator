@@ -1020,8 +1020,9 @@ console_to_program ()
       params = saved_console_state;
       params.c_iflag &= ~(ISTRIP|INLCR|ICRNL|IGNCR|IXON|IXOFF|INPCK|BRKINT|PARMRK);
 
-      params.c_iflag |= IGNBRK|IGNPAR;
-      params.c_oflag = 0;
+      /* Translate CR -> NL to canonicalize input. */
+      params.c_iflag |= IGNBRK|IGNPAR|ICRNL;
+      params.c_oflag = OPOST|ONLCR;
       params.c_cflag &= ~PARENB;
       params.c_cflag |= CREAD|CS8;
       params.c_lflag = 0;
