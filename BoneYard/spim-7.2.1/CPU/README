@@ -1,0 +1,74 @@
+		  README FILE FOR SPIM, XSPIM, and PCSPIM
+		  =======================================
+
+This directory contains part of SPIM--an assembly language MIPS R2000/R3000
+simulator. It contains the MIPS CPU simulator, but no user interface.
+
+
+SPIM is copyrighted by James R. Larus and distributed under the
+following conditions:
+
+    You may make copies of SPIM for your own use and modify those copies.
+
+    All copies of SPIM must retain my name and copyright notice.
+
+    You may not sell SPIM or distribute SPIM in conjunction with a
+    commercial product or service without the expressed written consent of
+    James Larus.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+The files in this directory are:
+
+Configure
+	A shell script to configure SPIM.
+
+README	This file.
+
+
+data.c, data.h
+	Code to handle data directives.
+
+inst.c, inst.h
+	Code to build instructions and manipulate symbol table.
+
+mem.c, mem.h
+	Code to maintain memory.
+
+syscall.c, syscall.h
+	Code to handle system calls and exceptions.
+
+op.h
+	Definition of operations.
+
+parser.y, parser.h
+	Assembly command parser (YACC).
+
+reg.h
+	Register access macros.
+
+run.c, run.h
+	Instruction simulator.
+
+scanner.l, scanner.h
+	Lexical analyzer (LEX).
+
+spim-syscall.h
+	System call numbers.
+
+spim-utils.c, spim-utils.h
+	Misc. routines.
+
+spim.h
+	Top-level interface.
+
+sym-tbl.c, sym-tbl.h
+	Symbol table.
+
+exceptions.s
+	Standard exception handler.

@@ -1,5 +1,21 @@
 2005-08-28    <Jim@LS1>
 
+	* SPIM 7.2.1 Released
+
+	* spim.c:
+	Translate CR -> NL on console input and echo CR following NL on
+	console output (to make IO consistent across all three platforms).
+
+	* spim.c:
+	Did not properly set console flags when passing console to program.
+
+	* xspim.c:
+	Fixed handling of carriage return and modifier keys in xspim
+	memory mapped IO.
+
+	* xspim.c:
+	Do not ignore trailing filename argument to xspim.
+
 	* {spim,xspim}/Configure:
 	Use the "env" command to invoke bash, so pathname is not hardwired
 	into shell script (eg for Solaris).
