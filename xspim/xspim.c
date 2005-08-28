@@ -471,9 +471,10 @@ main (int argc, char **argv)
   write_startup_message ();
   initialize_world (load_exception_handler ? exception_file_name : NULL);
 
-  if (file_name == NULL && argc > 0 && argv[argc - 1] != NULL)
+  if (file_name == NULL && argc > 1 && argv[argc - 1] != NULL)
     {
-      /* First unprocessed argument */
+      /* The first unprocessed argument (aside from program name) is taken
+	 as a filename containing input program. */
       file_name = argv[argc - 1];
     }
 
