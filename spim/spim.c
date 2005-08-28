@@ -1021,13 +1021,14 @@ console_to_program ()
       params.c_iflag &= ~(ISTRIP|INLCR|ICRNL|IGNCR|IXON|IXOFF|INPCK|BRKINT|PARMRK);
 
       params.c_iflag |= IGNBRK|IGNPAR;
-      /*params.c_oflag &= ~OPOST;*/
+      params.c_oflag = 0;
       params.c_cflag &= ~PARENB;
       params.c_cflag |= CREAD|CS8;
       params.c_lflag = 0;
       params.c_cc[VMIN] = 1;
       params.c_cc[VTIME] = 1;
-      tcsetattr (console_in.i, TCSANOW, &saved_console_state);
+
+      tcsetattr (console_in.i, TCSANOW, &params);
 #else
       int flags;
       ioctl ((int) console_in.i, TIOCGETP, (char *) &saved_console_state);
