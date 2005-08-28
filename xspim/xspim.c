@@ -814,8 +814,9 @@ read_input (char *str, int str_size)
 	    }
 	  else if (*buffer == 3) /* ^C */
 	    XtDispatchEvent (&event);
-	  else
+	  else if (chars > 0)
 	    {
+	      /* Event is a character, not a modifier key */
 	      int n = (chars < str_size - 1 ? chars : str_size - 1);
 
 	      strncpy (ptr, buffer, n);
@@ -864,13 +865,17 @@ console_input_available ()
 	  char buffer[11];
 	  KeySym key;
 	  XComposeStatus compose;
-	  XLookupString (&event.xkey, buffer, 10, &key, &compose);
-
-	  if (buffer[0] == 3)	/* ^C */
-	    XtDispatchEvent (&event);
-	  else if (buffer[0] != 0)
-	    previous_char = (int)buffer[0];
-	  return (1);		/* There is a character */
+	  if (XLookupString (&event.xkey, buffer, 10, &key, &compose) > 0)
+	    {
+	      /* Event is a character, not a modifier key */
+	      if ((key == XK_Return) || (key == XK_KP_Enter))
+		previous_char = '\n';
+	      else if (buffer[0] == 3)	/* ^C */
+		XtDispatchEvent (&event);
+	      else if (buffer[0] != 0)
+		previous_char = (int)buffer[0];
+	      return (1);		/* There is a character */
+	    }
 	}
       else
 	{
