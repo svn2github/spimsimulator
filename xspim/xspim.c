@@ -471,10 +471,10 @@ main (int argc, char **argv)
   write_startup_message ();
   initialize_world (load_exception_handler ? exception_file_name : NULL);
 
-  if (file_name == NULL && argc >= 0 && argv[argc] != NULL)
+  if (file_name == NULL && argc > 0 && argv[argc - 1] != NULL)
     {
       /* First unprocessed argument */
-      file_name = argv[argc];
+      file_name = argv[argc - 1];
     }
 
   if (file_name)
