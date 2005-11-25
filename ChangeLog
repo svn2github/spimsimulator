@@ -1,4 +1,13 @@
+2005-11-25    <Jim@LS1>
+
+	* xspim/Imakefile, spim/Makefile [Johannes Grassler
+	johannes.grassler@freenet.de]:
+	Fix paths for installing exception.s.
+
 2005-08-28    <Jim@LS1>
+
+	* Documentation/TeX/spim.tex:
+	Change psfig -> epsfig.
 
 	* SPIM 7.2.1 Released
 

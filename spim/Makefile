@@ -52,14 +52,11 @@ EXCEPTION_DIR = ../CPU
 TEST_DIR = ../Tests
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /usr/unsup/bin
+BIN_DIR = /usr/local/bin
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/unsup/man
+MAN_DIR = /usr/local/share/man1
 
-
-# Full path for the exception handler file:
-EXCEPTION_PATH = \"$(EXCEPTION_DIR)/exceptions.s\"
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -88,7 +85,7 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 
 ENDIAN=`cat configuration`
 
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=$(EXCEPTION_PATH) -DSPIM_VERSION="\"`cat ../VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\"" -DSPIM_VERSION="\"`cat ../VERSION`\""
 
 CC = gcc
 CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall
@@ -176,7 +173,7 @@ clean:
 
 install: spim
 	install -c -s  spim $(BIN_DIR)
-	install -c -m 0444 exceptions.s $(EXCEPTION_DIR)
+	install -c -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)
 	install -c -m 0444 spim.man $(MAN_DIR)
 
 very-clean: clean

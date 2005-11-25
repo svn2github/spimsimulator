@@ -38,10 +38,11 @@ BIN_DIR = /usr/local/bin
 # Full path for the directory that will hold the man files:
 MAN_DIR = /usr/local/share/man1
 
-# Full path for the exception handler file:
-#EXCEPTION_PATH = /usr/local/lib/exceptions.s
-# Use this path for testing:
-EXCEPTION_PATH = $(CPU_DIR)/exceptions.s
+# Full path for directory that will hold the exception handler file:
+#EXCEPTION_DIR = /usr/local/lib
+# Use this directory for testing:
+EXCEPTION_DIR = ../CPU
+
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -71,9 +72,6 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 CPU_DIR = ../CPU
 VPATH = src:$(CPU_DIR)
 
-# Full path for directory that will hold the exception handler file:
-EXCEPTION_DIR = ../CPU
-
 ENDIAN=`cat configuration`
 
 BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o syscall.o display-utils.o string-stream.o
@@ -95,7 +93,7 @@ CDEBUGFLAGS = -g
 
 INCLUDES = -I. -I$(CPU_DIR)
 
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=\"$(EXCEPTION_PATH)\" -DSPIM_VERSION="\"`cat ../VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\"" -DSPIM_VERSION="\"`cat ../VERSION`\""
 
 SYS_LIBRARIES = -lm
 
@@ -120,7 +118,7 @@ NormalProgramTarget(xspim_sub,$(XOBJS),$(DEPLIBS),$(LOCALLIBS),$(SYSLIBS))
 
 InstallProgram(xspim,$(BIN_DIR))
 InstallManPage(xspim,$(MAN_DIR))
-InstallNonExec($(EXCEPTION_DIR)/exceptions.s,$(EXCEPTION_PATH))
+InstallNonExec($(CPU_DIR)/exceptions.s,$(EXCEPTION_DIR))
 
 
 y.tab.h: y.tab.c
