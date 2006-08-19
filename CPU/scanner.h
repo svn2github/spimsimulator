@@ -47,5 +47,3 @@ typedef intptr_union yylval_t;
 extern YYSTYPE yylval;		/* Value of token from YYLEX */
 
 extern int line_no;		/* Line number in input file*/
-
-extern int y_str_length;	/* Length of Y_STR */

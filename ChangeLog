@@ -1,3 +1,13 @@
+2006-08-19    <Jim@LS1>
+
+	* PCSPimView.cpp:
+	Update register and memory display even after a parse error when
+	reading a file.
+
+	* parser.y, scanner.{h, l} [Jordi Ferrer Plana jferrerp@eia.udg.es]:
+	Added unnecessary null character between items in a list of
+	strings from .asciiz.
+
 2005-11-25    <Jim@LS1>
 
 	* xspim/Imakefile, spim/Makefile [Johannes Grassler

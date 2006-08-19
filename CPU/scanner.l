@@ -44,7 +44,6 @@
 
 int only_id;
 int line_no;		/* Line number in input file*/
-int y_str_length;	/* Length of Y_STR */
 
 
 /* Local Variables: */
@@ -499,7 +498,6 @@ copy_str (YY_CHAR *str, int chop)
       *n ++ = *str ++;
 
   *n = '\0';
-  y_str_length = n - new_str;
   return (new_str);
 }
 

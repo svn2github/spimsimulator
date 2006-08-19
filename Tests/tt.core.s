@@ -83,6 +83,70 @@ timer1_:
 
 
 #
+# Test .ASCIIZ
+#
+	.data
+asciiz_:.asciiz "Testing .asciiz\n"
+str0:	.asciiz ""
+str1:	.asciiz "a"
+str2:	.asciiz "bb"
+str3:	.asciiz "ccc"
+str4:	.asciiz "dddd"
+str5:	.asciiz "eeeee"
+str06:	.asciiz "", "a", "bb", "ccc", "dddd", "eeeee"
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 asciiz_
+	syscall
+
+	la $a0 str0
+	li $a1 6
+	jal ck_strings
+
+	la $a0 str06
+	li $a1 6
+	jal ck_strings
+
+	j over_strlen
+
+
+ck_strings:
+	move $s0 $a0
+	move $s1 $ra
+	li $s2 0
+
+l_asciiz1:
+	move $a0 $s0
+	jal strlen
+
+	bne $v0 $s2 fail
+
+	add $s0 $s0 $v0	# skip string
+	add $s0 $s0 1	# skip null byte
+
+	add $s2 1
+	blt $s2 $a1 l_asciiz1
+
+	move $ra $s1
+	jal $ra
+
+
+strlen:
+	li $v0 0	# num chars
+	move $t0 $a0	# str pointer
+
+l_strlen1:
+	lb $t1 0($t0)
+	add $t0 1
+	add $v0 1
+	bnez $t1 l_strlen1
+
+	sub $v0 $v0 1	# don't count null byte
+	jr $31
+
+over_strlen:
+
+#
 # Now, test each instruction
 #
 

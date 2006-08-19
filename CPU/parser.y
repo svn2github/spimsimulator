@@ -2553,7 +2553,7 @@ STR_LST:	STR_LST STR
 
 STR:		Y_STR
 		{
-		  store_string ((char*)$1.p, y_str_length, null_term);
+		  store_string ((char*)$1.p, strlen((char*)$1.p), null_term);
 		  free ((char*)$1.p);
 		}
 	|	Y_STR ':' Y_INT
@@ -2561,7 +2561,7 @@ STR:		Y_STR
 		  int i;
 
 		  for (i = 0; i < $3.i; i ++)
-		    store_string ((char*)$1.p, y_str_length, null_term);
+		    store_string ((char*)$1.p, strlen((char*)$1.p), null_term);
 		  free ((char*)$1.p);
 		}
 	;

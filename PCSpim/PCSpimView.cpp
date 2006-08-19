@@ -819,17 +819,15 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
 		}
 	  }
     }
-  else
+  else	// File loaded
     {
-      // Save the filename
-      m_strCurFilename = strFilename;
-
+      m_strCurFilename = strFilename;		// Save the filename
       PC = find_symbol_address (DEFAULT_RUN_LOCATION);
-      UpdateStatusDisplay();
-      HighlightCurrentInstruction();
-
       write_output(message_out, "%s successfully loaded\n", (char*)strFilename);
-    }
+    }	  
+
+	UpdateStatusDisplay();
+    HighlightCurrentInstruction();
 }
 
 
