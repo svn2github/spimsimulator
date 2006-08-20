@@ -1,3 +1,9 @@
+2006-08-20    <Jim@LS1>
+
+	* parser.y [Piotr Bieganowski bieganow@wsisiz.edu.pl]:
+	Memory corruption caused spim to crash when a label was defined
+	twice in succession.
+
 2006-08-19    <Jim@LS1>
 
 	* PCSPimView.cpp:

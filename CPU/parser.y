@@ -513,15 +513,13 @@ LBL_CMD:	OPT_LBL CMD
 
 
 OPT_LBL: ID ':' {
-			   this_line_labels =
-			     cons_label (record_label ((char*)$1.p,
-						       text_dir
-						       ? current_text_pc ()
-						       : current_data_pc (),
-						       0),
-					 this_line_labels);
-			     free ((char*)$1.p);
-			 }
+		  /* Call outside of cons_label, since an error sets that variable to NULL. */
+		  label* l = record_label ((char*)$1.p,
+					   text_dir ? current_text_pc () : current_data_pc (),
+					   0);
+		  this_line_labels = cons_label (l, this_line_labels);
+		  free ((char*)$1.p);
+		}
 
 	|	ID '=' Y_INT
 		{
@@ -2663,6 +2661,7 @@ clear_labels ()
       n = this_line_labels->tail;
       free (this_line_labels);
     }
+    this_line_labels = NULL;
 }
 
 
