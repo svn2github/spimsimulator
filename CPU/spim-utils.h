@@ -46,7 +46,7 @@ void format_mem (str_stream *ss, mem_addr from, mem_addr to);
 void format_registers (str_stream *ss, int print_gpr_hex, int print_fpr_hex);
 void initialize_registers ();
 void initialize_run_stack (int argc, char **argv);
-void initialize_world (char *exception_file_name);
+void initialize_world (char *exception_file_names);
 void list_breakpoints ();
 name_val_val *map_int_to_name_val_val (name_val_val tbl[], int tbl_len, int num);
 name_val_val *map_string_to_name_val_val (name_val_val tbl[], int tbl_len, char *id);

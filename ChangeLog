@@ -1,5 +1,9 @@
 2006-08-20    <Jim@LS1>
 
+	* spim-utils.c [Jeremy Huddleston jeremyhu@berkeley.edu]:
+	Allow a semicolon deliminated list of exception files, rather than
+	just a single file.
+
 	* parser.y [Piotr Bieganowski bieganow@wsisiz.edu.pl]:
 	Memory corruption caused spim to crash when a label was defined
 	twice in succession.

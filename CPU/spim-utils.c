@@ -76,7 +76,7 @@ mem_addr initial_k_data_limit = K_DATA_LIMIT;
 /* Initialize or reinitialize the state of the machine. */
 
 void
-initialize_world (char* exception_file_name)
+initialize_world (char* exception_file_names)
 {
   /* Allocate the floating point registers */
   if (FGR == NULL)
@@ -96,18 +96,34 @@ initialize_world (char* exception_file_name)
   data_begins_at_point (DATA_BOT);
   text_begins_at_point (TEXT_BOT);
 
-  if (exception_file_name != NULL)
+  if (exception_file_names != NULL)
     {
       int old_bare = bare_machine;
       int old_accept = accept_pseudo_insts;
+      char *filename;
+      char *files;
 
-      bare_machine = 0;		/* Exception handler uses extended machine */
+      /* Save machine state */
+      bare_machine = 0;	       /* Exception handler uses extended machine */
       accept_pseudo_insts = 1;
-      if (read_assembly_file (exception_file_name))
-	fatal_error ("Cannot read exception handler: %s\n", exception_file_name);
+
+      /* strtok modifies the string, so we must back up the string prior to use. */
+      if ((files = strdup (exception_file_names)) == NULL)
+         fatal_error ("Insufficient memory to complete.\n");
+
+      for (filename = strtok (files, ";"); filename != NULL; filename = strtok (NULL, ";"))
+         {
+            if (read_assembly_file (filename))
+               fatal_error ("Cannot read exception handler: %s\n", filename);
+
+            write_output (message_out, "Loaded: %s\n", filename);
+         }
+
+      free (files);
+
+      /* Restore machine state */
       bare_machine = old_bare;
       accept_pseudo_insts = old_accept;
-      write_output (message_out, "Loaded: %s\n", exception_file_name);
 
       if (!bare_machine)
       {
