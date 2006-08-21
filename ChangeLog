@@ -1,5 +1,9 @@
 2006-08-20    <Jim@LS1>
 
+	* CPU/scanner.l [many xspim bugs on Linux]:
+	flex 2.5.33 changed the polarity of the yy_init flag without
+	providing a backwardly compatible way of setting it (sigh).
+
 	* spim-utils.c [Jeremy Huddleston jeremyhu@berkeley.edu]:
 	Allow a semicolon deliminated list of exception files, rather than
 	just a single file.
