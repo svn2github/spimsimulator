@@ -583,7 +583,7 @@ static void
 clear_program_state_action (Widget w, XtPointer client_data,
 			    XtPointer call_data)
 {
-  int clear_op = (int) client_data;
+  long clear_op = (long) client_data;
 
   switch (clear_op)
     {

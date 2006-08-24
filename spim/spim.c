@@ -146,6 +146,9 @@ main (int argc, char **argv)
 
   write_startup_message ();
 
+  if (getenv ("SPIM_EXCEPTION_HANDLER") != NULL)
+    exception_fileg_name = getenv ("SPIM_EXCEPTION_HANDLER");
+
   for (i = 1; i < argc; i++)
     {
 #ifdef WIN32

@@ -1,3 +1,9 @@
+2006-08-23    <Jim@LS1>
+
+	* xspim/xspim.c, spim/spim.c [Jeremy Huddleston
+	jeremyhu@eecs.berkeley.edu]:
+	Read SPIM_EXCEPTION_HANDLER environment variable.
+
 2006-08-20    <Jim@LS1>
 
 	* CPU/scanner.l [many xspim bugs on Linux]:

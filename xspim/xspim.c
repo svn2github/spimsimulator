@@ -414,6 +414,9 @@ main (int argc, char **argv)
 
   spim_return_value = 0;
 
+  if (getenv ("SPIM_EXCEPTION_HANDLER") != NULL)
+    exception_file_name = getenv("SPIM_EXCEPTION_HANDLER");
+
   toplevel = XtAppInitialize (&app_context, "Xspim", options,
 			      XtNumber (options), &argc, argv,
 			      fallback_resources, NULL, ZERO);
