@@ -110,7 +110,7 @@ ss_printf (str_stream* ss, char* fmt, ...)
   while ((n = _vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) < 0)
 #else
     /* Returns necessary space when buffer is too small */
-    while ((n = vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) >= free_space)
+   while ((n = vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) >= free_space)
 #endif
       {
 	/* Not enough room to store output: double buffer size and try again */
@@ -119,6 +119,9 @@ ss_printf (str_stream* ss, char* fmt, ...)
 	free_space = ss->max_length - ss->empty_pos;
 	if (NULL == ss->buf)
 	  fatal_error ("realloc failed\n");
+
+	va_end (args);		/* Restart argument pointer */
+	va_start (args, fmt);
       }
   ss->empty_pos += n;
 

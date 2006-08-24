@@ -1,5 +1,10 @@
 2006-08-23    <Jim@LS1>
 
+	* CPU/string-stream.c [Jeremy Huddleston
+	jeremyhu@eecs.berkeley.edu]:
+	Segfault in ss_printf caused by incorrect usage of va_ interface
+	when string overflows and needs to be reallocated.
+
 	* xspim/xspim.c, spim/spim.c [Jeremy Huddleston
 	jeremyhu@eecs.berkeley.edu]:
 	Read SPIM_EXCEPTION_HANDLER environment variable.
