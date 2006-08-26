@@ -113,8 +113,8 @@ configuration:
 	./Configure
 
 InstallProgram(xspim,$(BIN_DIR))
-InstallManPage($(DOC_DIR)/xspim,$(MAN_DIR))
 InstallNonExec($(CPU_DIR)/exceptions.s,$(EXCEPTION_DIR))
+#InstallManPage($(DOC_DIR)/xspim,$(MAN_DIR))
 
 
 y.tab.h: y.tab.c

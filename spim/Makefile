@@ -179,6 +179,8 @@ clean:
 install: spim
 	install -c -s  spim $(BIN_DIR)
 	install -c -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)
+
+install-man:
 	install -c -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
 
 very-clean: clean
