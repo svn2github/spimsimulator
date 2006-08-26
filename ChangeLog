@@ -1,3 +1,11 @@
+2006-08-26    <Jim@LS1>
+
+	* Version 7.3
+
+	* spim/Makefile, xspim/Imakefile:
+	Fix installation process of man pages and make xspim compile under
+	Cygwin.
+
 2006-08-23    <Jim@LS1>
 
 	* CPU/string-stream.c [Jeremy Huddleston

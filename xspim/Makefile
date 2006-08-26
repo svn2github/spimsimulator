@@ -2,9 +2,9 @@
 # $Xorg: imake.c,v 1.6 2001/02/09 02:03:15 xorgcvs Exp $
 
 # ----------------------------------------------------------------------
-# Makefile generated from "Imake.tmpl" and </tmp/IIf.wsMNsj>
+# Makefile generated from "Imake.tmpl" and </tmp/IIf.vqSjFT>
 # $Xorg: Imake.tmpl,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
-# $XdotOrg: xc/config/cf/Imake.tmpl,v 1.6 2004/07/28 03:24:29 gisburn Exp $
+# $XdotOrg: xc/config/cf/Imake.tmpl,v 1.9 2005/01/24 06:37:31 daniels Exp $
 #
 #
 #
@@ -16,12 +16,10 @@ all::
 
 .SUFFIXES: .i
 
-# $XdotOrg: xc/config/cf/Imake.cf,v 1.4 2004/08/11 21:14:01 kem Exp $
+# $XdotOrg: xc/config/cf/Imake.cf,v 1.7 2005/03/02 11:20:29 gisburn Exp $
 # $Xorg: Imake.cf,v 1.4 2000/08/17 19:41:45 cpqbld Exp $
 
 # $XFree86: xc/config/cf/Imake.cf,v 3.88 2003/12/16 21:30:21 herrb Exp $
-
-# Keep cpp from replacing path elements containing i486/i586/i686
 
 # -----------------------------------------------------------------------
 # site-specific configuration parameters that need to come before
@@ -34,49 +32,7 @@ all::
 # $XFree86: xc/config/cf/xf86site.def,v 3.186 2003/06/25 18:06:22 eich Exp $
 
 # ----------------------------------------------------------------------
-# platform-specific configuration parameters - edit linux.cf to change
-
-# $XdotOrg: xc/config/cf/linux.cf,v 1.13 2004/08/11 21:14:01 kem Exp $
-# platform:  $Xorg: linux.cf,v 1.3 2000/08/17 19:41:47 cpqbld Exp $
-
-# platform:  $XFree86: xc/config/cf/linux.cf,v 3.220 2003/12/30 22:38:33 tsi Exp $
-
-# operating system:  Linux 2.6.12-1.1411_FC5 i686 [ELF] (2.6.12)
-# libc:	(6.3.5)
-# binutils:	(215)
-
-# $Xorg: lnxLib.rules,v 1.3 2000/08/17 19:41:47 cpqbld Exp $
-# $XFree86: xc/config/cf/lnxLib.rules,v 3.52 2003/10/31 20:49:03 herrb Exp $
-
-# $XdotOrg: xc/config/cf/xorg.cf,v 1.27.2.6 2005/01/24 03:11:42 gisburn Exp $
-
-# $Xorg: xfree86.cf,v 1.4 2000/08/17 19:41:49 cpqbld Exp $
-
-XORG_VERSION_CURRENT = (((6) * 10000000) + ((8) * 100000) + ((2) * 1000) + 0)
-RELEASE_VERSION = RELEASE-1
-
-AFB_DEFS = -DUSE_AFB
-
-DRIVERSDKDIR = $(USRLIBDIR)/Server
-DRIVERSDKMODULEDIR = $(USRLIBDIR)/Server/modules
-DRIVERSDKINCLUDEDIR = $(USRLIBDIR)/Server/include
-
-       XF86SRC = $(SERVERSRC)/hw/xfree86
-    XF86COMSRC = $(XF86SRC)/common
- XF86PARSERSRC = $(XF86SRC)/parser
-     XF86OSSRC = $(XF86SRC)/os-support
- XF86DRIVERSRC = $(XF86SRC)/drivers
-     DRIVERSRC = $(XF86DRIVERSRC)
-
-        XFREE86DOCDIR = $(DOCDIR)
-      XFREE86PSDOCDIR = $(DOCPSDIR)
-     XFREE86PDFDOCDIR = $(DOCPDFDIR)
-    XFREE86HTMLDOCDIR = $(DOCHTMLDIR)
-XFREE86JAPANESEDOCDIR = $(DOCDIR)/Japanese
-
-# $Xorg: xf86.rules,v 1.3 2000/08/17 19:41:48 cpqbld Exp $
-
-# $XFree86: xc/config/cf/xf86.rules,v 3.34tsi Exp $
+# platform-specific configuration parameters - edit cygwin.cf to change
 
 # ----------------------------------------------------------------------
 # site-specific configuration parameters that go after
@@ -89,7 +45,7 @@ XFREE86JAPANESEDOCDIR = $(DOCDIR)/Japanese
 # ---------------------------------------------------------------------
 # Imake rules for building libraries, programs, scripts, and data files
 # rules:  $Xorg: Imake.rules,v 1.3 2000/08/17 19:41:46 cpqbld Exp $
-# rules:  $XdotOrg: xc/config/cf/Imake.rules,v 1.6 2004/08/13 17:21:43 krh Exp $
+# rules:  $XdotOrg: xc/config/cf/Imake.rules,v 1.8 2005/02/01 22:27:00 ajax Exp $
 #
 #
 #
@@ -104,15 +60,15 @@ X_BYTE_ORDER = X_LITTLE_ENDIAN
 
 GLIDE2INCDIR =
 
-GLIDE3INCDIR = /usr/include/glide3
+GLIDE3INCDIR =
 
-GLIDE3LIBNAME = glide3
+GLIDE3LIBNAME =
 
-TKLIBNAME =
+TKLIBNAME = tk80
 
 TKLIBDIR =
 
-TCLLIBNAME =
+TCLLIBNAME = tcl80
 
 TCLIBDIR =
 
@@ -123,16 +79,16 @@ TCLIBDIR =
       CURRENT_DIR = .
 
             IMAKE = imake
-           DEPEND = gccmakedep
+           DEPEND = makedepend
         MKDIRHIER = mkdir -p
           REVPATH = revpath
     EXPORTLISTGEN =
              RMAN = rman
-     RMANBASENAME = rman
+     RMANBASENAME = rman.exe
       RMANOPTIONS = -f HTML
         CONFIGSRC = $(TOP)/config
          IMAKESRC = $(CONFIGSRC)/imake
-        DEPENDSRC = $(CONFIGSRC)/util
+        DEPENDSRC = $(CONFIGSRC)/makedepend
 
           INCROOT = /usr/X11R6/include
         USRLIBDIR = /usr/X11R6/lib
@@ -144,41 +100,35 @@ TCLIBDIR =
        LINTLIBDIR = $(USRLIBDIR)/lint
           MANPATH = /usr/X11R6/man
     MANSOURCEPATH = $(MANPATH)/man
-           MANDIR = $(MANSOURCEPATH)1
-        LIBMANDIR = $(MANSOURCEPATH)3
-       FILEMANDIR = $(MANSOURCEPATH)5
-       MISCMANDIR = $(MANSOURCEPATH)7
-     DRIVERMANDIR = $(MANSOURCEPATH)4
-          ICONDIR = /usr/share/icons
-      XCURSORPATH = "~/.icons:/usr/share/icons:/usr/share/pixmaps"
+           MANDIR = $(MANSOURCEPATH)$(MANSUFFIX)
+        LIBMANDIR = $(MANSOURCEPATH)$(LIBMANSUFFIX)
+       FILEMANDIR = $(MANSOURCEPATH)$(FILEMANSUFFIX)
+       MISCMANDIR = $(MANSOURCEPATH)$(MISCMANSUFFIX)
+     DRIVERMANDIR = $(MANSOURCEPATH)$(DRIVERMANSUFFIX)
      LOGDIRECTORY = $(VARDIR)/log
-
-        VARRUNDIR = $(VARDIR)/run
-
-         VARDBDIR = $(VARDIR)/lib
 
                AR = ar clq
 
 # Nice try but useless: make will inherit BOOTSTRAPCFLAGS
 # from  top Makefile
-  BOOTSTRAPCFLAGS = -O2  -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -m32 -march=i386 -mtune=pentium4 -fasynchronous-unwind-tables -pipe
+  BOOTSTRAPCFLAGS =
 
-               CC = gcc -m32
-               AS = gcc -m32 -c -x assembler -Wa,--noexecstack
+               CC = gcc
+               AS = as
 
 .SUFFIXES: .cc
 
-              CXX = c++ -m32
+              CXX = g++
 
           CXXFILT = c++filt
 
            CXXLIB = -lstdc++
 
-    CXXDEBUGFLAGS = -O2  -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -m32 -march=i386 -mtune=pentium4 -fasynchronous-unwind-tables -fno-strict-aliasing -pipe
+    CXXDEBUGFLAGS = -ggdb3 -O2 -fno-strength-reduce
 CXXDEPENDINCLUDES =
  CXXEXTRA_DEFINES =
 CXXEXTRA_INCLUDES =
-   CXXSTD_DEFINES = -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L 				-D_POSIX_SOURCE -D_XOPEN_SOURCE 				-D_BSD_SOURCE -D_SVID_SOURCE 				  				 $(CXXPROJECT_DEFINES)
+   CXXSTD_DEFINES = -D__i386__ -DWIN32_LEAN_AND_MEAN -DX_LOCALE 				-D_X86_ -D__CYGWIN__ -D_XOPEN_SOURCE 				-D_POSIX_C_SOURCE=199309L -D_BSD_SOURCE 				-D_SVID_SOURCE -D_GNU_SOURCE -DFD_SETSIZE=256 				-DXResExtension $(CXXPROJECT_DEFINES)
        CXXOPTIONS =
       CXXINCLUDES = $(INCLUDES) $(TOP_INCLUDES) $(CXXEXTRA_INCLUDES)
        CXXDEFINES = $(CXXINCLUDES) $(CXXSTD_DEFINES) $(THREADS_CXXDEFINES) $(DEFINES) $(CXXEXTRA_DEFINES)
@@ -189,12 +139,12 @@ CXXEXTRA_INCLUDES =
 
               CPP = cpp $(STD_CPP_DEFINES)
            RAWCPP = cpp -undef $(STD_CPP_OPTIONS)
-    PREPROCESSCMD = gcc -m32 -E $(STD_CPP_DEFINES)
+    PREPROCESSCMD = gcc -E $(STD_CPP_DEFINES)
 
           INSTALL = install
      INSTALLFLAGS = -c
 
-               LD = gcc -m32 -nostdlib
+               LD = gcc -lautomode
 
               LEX = flex -l
                M4 = m4
@@ -220,11 +170,11 @@ CXXEXTRA_INCLUDES =
              PERL = perl
          PERLOPTS =
      PERLENVSETUP = env LC_ALL=C
-        MANSUFFIX = 1x
-     LIBMANSUFFIX = 3x
-    FILEMANSUFFIX = 5x
-    MISCMANSUFFIX = 7x
-  DRIVERMANSUFFIX = 4x
+        MANSUFFIX = 1
+     LIBMANSUFFIX = 3
+    FILEMANSUFFIX = 5
+    MISCMANSUFFIX = 7
+  DRIVERMANSUFFIX = 4
    ADMINMANSUFFIX = 8
      MANSRCSUFFIX = man
      MANNEWSUFFIX = _man
@@ -232,7 +182,7 @@ CXXEXTRA_INCLUDES =
 
    COMPRESSMANCMD = gzip -n
 
-            TROFF = groff -Tps
+            TROFF = troff -Tps
             NROFF = nroff
 
          MSMACROS = -ms
@@ -243,14 +193,14 @@ CXXEXTRA_INCLUDES =
               COL = col
          COLFLAGS = -b
 
-            MODCC = gcc -m32
+            MODCC = gcc
 
            MODCPP = cpp
         MODCFLAGS = $(CFLAGS)
-            MODAS = gcc -m32 -c -x assembler -Wa,--noexecstack
+            MODAS = as
        MODASFLAGS =
 
-            MODLD = gcc -m32 -nostdlib
+            MODLD = gcc -lautomode
 
        MODLDFLAGS =
 MODLDCOMBINEFLAGS = -r
@@ -260,9 +210,9 @@ MODLDCOMBINEFLAGS = -r
 
      STD_INCLUDES =
   STD_CPP_OPTIONS = -traditional
-  STD_CPP_DEFINES = -traditional -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L 				-D_POSIX_SOURCE -D_XOPEN_SOURCE 				-D_BSD_SOURCE -D_SVID_SOURCE 				  				 $(PROJECT_DEFINES)
-      STD_DEFINES = -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L 				-D_POSIX_SOURCE -D_XOPEN_SOURCE 				-D_BSD_SOURCE -D_SVID_SOURCE 				  				 $(PROJECT_DEFINES)
- EXTRA_LOAD_FLAGS =
+  STD_CPP_DEFINES = -traditional -DHAS_THREADS -D__i386__ -DWIN32_LEAN_AND_MEAN -DX_LOCALE 				-D_X86_ -D__CYGWIN__ -D_XOPEN_SOURCE 				-D_POSIX_C_SOURCE=199309L -D_BSD_SOURCE 				-D_SVID_SOURCE -D_GNU_SOURCE -DFD_SETSIZE=256 				-DXResExtension $(PROJECT_DEFINES)
+      STD_DEFINES = -D__i386__ -DWIN32_LEAN_AND_MEAN -DX_LOCALE 				-D_X86_ -D__CYGWIN__ -D_XOPEN_SOURCE 				-D_POSIX_C_SOURCE=199309L -D_BSD_SOURCE 				-D_SVID_SOURCE -D_GNU_SOURCE -DFD_SETSIZE=256 				-DXResExtension $(PROJECT_DEFINES)
+ EXTRA_LOAD_FLAGS = -Wl,--enable-auto-import,--enable-runtime-pseudo-reloc
   EXTRA_LDOPTIONS =
   EXTRA_LIBRARIES =
              TAGS = ctags
@@ -272,15 +222,18 @@ MODLDCOMBINEFLAGS = -r
     SHAREDCODEDEF =
          SHLIBDEF =
 
-     SHLIBLDFLAGS = -shared $(SHLIBGLOBALSFLAGS)
+     SHLIBLDFLAGS = -dll $(SHLIBGLOBALSFLAGS)
 
-         PICFLAGS = -fPIC
+         NOSTDLIB = -nostdlib
+     POSTNOSTDLIB = -Bstatic -lgcc
 
-      CXXPICFLAGS = -fPIC
+         PICFLAGS = -D_DLL
+
+      CXXPICFLAGS = -D_DLL
 
     PROTO_DEFINES = -DFUNCPROTO=15 -DNARROWPROTO
 
-     INSTPGMFLAGS =
+     INSTPGMFLAGS = -s
 
      INSTBINFLAGS = -m 0755
      INSTUIDFLAGS = -m 4711
@@ -292,8 +245,8 @@ MODLDCOMBINEFLAGS = -r
 
       PROJECTROOT = /usr/X11R6
 
-      CDEBUGFLAGS = -O2  -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -m32 -march=i386 -mtune=pentium4 -fasynchronous-unwind-tables -fno-strict-aliasing -pipe
-        CCOPTIONS =
+      CDEBUGFLAGS = -ggdb3 -O2 -fno-strength-reduce
+        CCOPTIONS = -Wall -Wpointer-arith
 
       ALLINCLUDES = $(INCLUDES) $(EXTRA_INCLUDES) $(TOP_INCLUDES) $(INSTALLED_INCLUDES) $(STD_INCLUDES)
        ALLDEFINES = $(ALLINCLUDES) $(STD_DEFINES) $(PROTO_DEFINES) $(THREADS_DEFINES) $(MODULE_DEFINES) $(DEFINES) $(EXTRA_DEFINES)
@@ -313,28 +266,28 @@ MODLDCOMBINEFLAGS = -r
      LDSTRIPFLAGS = -x
    LDCOMBINEFLAGS = -r
       DEPENDFLAGS =
-   DEPEND_DEFINES =
+   DEPEND_DEFINES = -DUSE_MAKEDEPEND
 
 # Not sure this belongs here
          TKLIBDIR =
          TKINCDIR =
-        TKLIBNAME =
+        TKLIBNAME = tk80
         TKLIBRARY = -L$(TKLIBDIR) -l$(TKLIBNAME)
         TCLLIBDIR =
         TCLINCDIR =
-       TCLLIBNAME =
+       TCLLIBNAME = tcl80
        TCLLIBRARY = -L$(TCLLIBDIR) -l$(TCLLIBNAME)
 
-        MACROFILE = linux.cf
+        MACROFILE = cygwin.cf
            RM_CMD = $(RM)
 
     IMAKE_DEFINES =
-   IMAKE_WARNINGS = -Wundef
+   IMAKE_WARNINGS =
 
          IRULESRC = $(CONFIGDIR)
         IMAKE_CMD = $(IMAKE) -DUseInstalled -I$(IRULESRC) $(IMAKE_DEFINES) 		    $(IMAKE_WARNINGS)
 
-     ICONFIGFILES = $(IRULESRC)/Imake.tmpl $(IRULESRC)/X11.tmpl 			$(IRULESRC)/site.def $(IRULESRC)/$(MACROFILE) 			$(IRULESRC)/xfree86.cf $(IRULESRC)/xf86.rules $(IRULESRC)/xorgsite.def $(IRULESRC)/host.def $(EXTRA_ICONFIGFILES)
+     ICONFIGFILES = $(IRULESRC)/Imake.tmpl $(IRULESRC)/X11.tmpl 			$(IRULESRC)/site.def $(IRULESRC)/$(MACROFILE) 			 $(IRULESRC)/xorgsite.def $(IRULESRC)/host.def $(EXTRA_ICONFIGFILES)
 
 # $Xorg: X11.rules,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
 
@@ -342,13 +295,16 @@ MODLDCOMBINEFLAGS = -r
 
 # ----------------------------------------------------------------------
 # X Window System Build Parameters and Rules
-# $XdotOrg: xc/config/cf/X11.tmpl,v 1.35.2.3 2005/02/01 04:07:39 gisburn Exp $
+# $XdotOrg: xc/config/cf/X11.tmpl,v 1.52 2005/09/22 23:54:18 alanc Exp $
 # $Xorg: X11.tmpl,v 1.6 2000/08/17 19:41:46 cpqbld Exp $
 #
 #
 #
 #
 # $XFree86: xc/config/cf/X11.tmpl,v 1.248 2004/02/16 04:07:37 dawes Exp $
+
+XORGRELSTRING = XorgManVersionString
+  XORGMANNAME = X Version 11
 
 STICKY_DEFINES = -DHAS_STICKY_DIR_BIT
 
@@ -374,7 +330,7 @@ FCHOWN_DEFINES = -DHAS_FCHOWN
      XBUILDINCTOP = ../../..
      XBUILDBINDIR = $(XBUILDINCROOT)/bin
            INCDIR = $(INCROOT)
-           ADMDIR = /var/log
+           ADMDIR = /usr/adm
            LIBDIR = /usr/X11R6/lib/X11
        LIBEXECDIR = /usr/X11R6/libexec
         MODULEDIR = $(USRLIBDIR)/modules
@@ -392,17 +348,17 @@ FCHOWN_DEFINES = -DHAS_FCHOWN
          DOCPSDIR = $(DOCDIR)/PostScript
         DOCPDFDIR = $(DOCDIR)/PDF
           FONTDIR = $(LIBDIR)/fonts
-     ENCODINGSDIR = $(FONTDIR)/encodings
-         XINITDIR = /etc/X11/xinit
-           XDMDIR = /etc/X11/xdm
+     ENCODINGSDIR = $(LIBDIR)/fonts/encodings
+         XINITDIR = $(LIBDIR)/xinit
+           XDMDIR = $(LIBDIR)/xdm
         XDMVARDIR = $(VARLIBDIR)/xdm
            TWMDIR = $(LIBDIR)/twm
            XSMDIR = $(LIBDIR)/xsm
            NLSDIR = $(LIBDIR)/nls
        XLOCALEDIR = $(LIBDIR)/locale
-      LBXPROXYDIR = /etc/X11/lbxproxy
-  PROXYMANAGERDIR = /etc/X11/proxymngr
-        XPRINTDIR = /etc/X11/xserver
+      LBXPROXYDIR = $(LIBDIR)/lbxproxy
+  PROXYMANAGERDIR = $(LIBDIR)/proxymngr
+        XPRINTDIR = $(LIBDIR)/xserver
       XAPPLOADDIR = $(LIBDIR)/app-defaults
        FONTCFLAGS = -t
 
@@ -413,12 +369,12 @@ FCHOWN_DEFINES = -DHAS_FCHOWN
       MKFONTSCALE = $(XBINDIR)/mkfontscale
         MKFONTDIR = $(XBINDIR)/mkfontdir
       MKHTMLINDEX = $(XBINDIR)/mkhtmlindex
-          UCS2ANY = $(XBINDIR)/ucs2any
+          UCS2ANY = $(XBINDIR)/ucs2any.exe
       BDFTRUNCATE = $(XBINDIR)/bdftruncate
      UCSMAPPREFIX = $(FONTDIR)/util/map-
        XCURSORGEN = $(XBINDIR)/xcursorgen
 
-     HTMLINDEXCMD = HtmlIndexCmd
+     HTMLINDEXCMD = $(MKHTMLINDEX)
 
        DOCUTILSRC = $(XTOP)/doc/util
         CLIENTSRC = $(TOP)/clients
@@ -448,12 +404,12 @@ FCHOWN_DEFINES = -DHAS_FCHOWN
         PSWRAPSRC = $(XTOP)/config/pswrap
      TRANSCOMMSRC = $(LIBSRC)/xtrans
    TRANS_INCLUDES = -I$(TRANSCOMMSRC)
- CONNECTION_FLAGS = -DUNIXCONN -DTCPCONN $(STICKY_DEFINES) $(FCHOWN_DEFINES) -DIPv6
+ CONNECTION_FLAGS = -DTCPCONN -DUNIXCONN $(STICKY_DEFINES) $(FCHOWN_DEFINES)
 XTRANS_FAILDEFINES =
 
-    VENDORMANNAME = X.Org
- VENDORMANVERSION = `echo 6 8 2 | sed -e 's/ /./g' -e 's/^/Version\\\ /'`
-      XORGMANDEFS = -D__xorgversion__='"$(XORGRELSTRING)" "$(XORGMANNAME)"'
+    VENDORMANNAME = "Cygwin/X"
+ VENDORMANVERSION = `echo 6 8 99 901| sed -e 's/ /./g' -e 's/^/Version\\\ /'`
+      XORGMANDEFS = -D__xorgversion__="\"$(XORGRELSTRING)\" \"$(XORGMANNAME)\""
     VENDORMANDEFS = -D__vendorversion__="$(VENDORMANVERSION) $(VENDORMANNAME)"
        VENDORNAME = The X.Org Foundation
   VENDORNAMESHORT = X.Org
@@ -465,16 +421,15 @@ VENDORSUPPORTDEFS = -D__VENDORDWEBSUPPORT__='"$(VENDORWEBSUPPORT)"'
       XKBDEFRULES = xorg
   XKBDEFRULESDEFS = -D__XKBDEFRULES__='"$(XKBDEFRULES)"'
 
-     XCONFIGFILE = xorg.conf
-      XCONFIGDIR = /etc/X11
-        XLOGFILE = Xorg
-     XSERVERNAME = Xorg
+     XCONFIGFILE = XConfigFile
+      XCONFIGDIR = XConfigDir
+        XLOGFILE = XLogFile
+     XSERVERNAME = XServerName
 
        XENVLIBDIR = $(USRLIBDIR)
    CLIENTENVSETUP = LD_LIBRARY_PATH=$(XENVLIBDIR) XLOCALEDIR=$(BUILDLIBDIR)/locale
 
-# $Xorg: lnxLib.tmpl,v 1.3 2000/08/17 19:41:47 cpqbld Exp $
-# $XFree86: xc/config/cf/lnxLib.tmpl,v 3.19 2003/10/15 22:47:48 herrb Exp $
+# $XFree86: xc/config/cf/cygwin.tmpl,v 3.18 2003/10/19 08:27:05 herrb Exp $
 
           XLIBSRC = $(LIBSRC)/X11
 
@@ -503,64 +458,56 @@ LINTEXTENSIONLIB = $(LINTEXTENSION)
 
     XSSLIBSRC = $(LIBSRC)/Xss
 
-SOXSSREV = 1.0
-DEPXSSLIB =
+DEPXSSLIB = $(USRLIBDIR)/libXss.a
 XSSLIB =  -lXss
 
 LINTXSS = $(LINTLIBDIR)/llib-lXss.ln
 
     XXF86MISCLIBSRC = $(LIBSRC)/Xxf86misc
 
-SOXXF86MISCREV = 1.1
-DEPXXF86MISCLIB =
+DEPXXF86MISCLIB = $(USRLIBDIR)/libXxf86misc.a
 XXF86MISCLIB =  -lXxf86misc
 
 LINTXXF86MISC = $(LINTLIBDIR)/llib-lXxf86misc.ln
 
     XXF86VMLIBSRC = $(LIBSRC)/Xxf86vm
 
-SOXXF86VMREV = 1.0
-DEPXXF86VMLIB =
+DEPXXF86VMLIB = $(USRLIBDIR)/libXxf86vm.a
 XXF86VMLIB =  -lXxf86vm
 
 LINTXXF86VM = $(LINTLIBDIR)/llib-lXxf86vm.ln
 
     XXF86DGALIBSRC = $(LIBSRC)/Xxf86dga
 
-SOXXF86DGAREV = 1.0
-DEPXXF86DGALIB =
+DEPXXF86DGALIB = $(USRLIBDIR)/libXxf86dga.a
 XXF86DGALIB =  -lXxf86dga
 
 LINTXXF86DGA = $(LINTLIBDIR)/llib-lXxf86dga.ln
 
     XXF86RUSHLIBSRC = $(LIBSRC)/Xxf86rush
 
-SOXXF86RUSHREV = 1.0
-DEPXXF86RUSHLIB =
+DEPXXF86RUSHLIB = $(USRLIBDIR)/libXxf86rush.a
 XXF86RUSHLIB =  -lXxf86rush
 
 LINTXXF86RUSH = $(LINTLIBDIR)/llib-lXxf86rush.ln
 
     XVLIBSRC = $(LIBSRC)/Xv
 
-SOXVREV = 1.0
-DEPXVLIB =
+DEPXVLIB = $(USRLIBDIR)/libXv.a
 XVLIB =  -lXv
 
 LINTXV = $(LINTLIBDIR)/llib-lXv.ln
 
     XVMCLIBSRC = $(LIBSRC)/XvMC
 
-SOXVMCREV = 1.0
-DEPXVMCLIB =
+DEPXVMCLIB = $(USRLIBDIR)/libXvMC.a
 XVMCLIB =  -lXvMC
 
 LINTXVMC = $(LINTLIBDIR)/llib-lXvMC.ln
 
     XINERAMALIBSRC = $(LIBSRC)/Xinerama
 
-SOXINERAMAREV = 1.0
-DEPXINERAMALIB =
+DEPXINERAMALIB = $(USRLIBDIR)/libXinerama.a
 XINERAMALIB =  -lXinerama
 
 LINTXINERAMA = $(LINTLIBDIR)/llib-lXinerama.ln
@@ -582,24 +529,21 @@ LINTDMX = $(LINTLIBDIR)/llib-ldmx.ln
 
     DPSLIBSRC = $(LIBSRC)/dps
 
-SODPSREV = 1.0
-DEPDPSLIB =
+DEPDPSLIB = $(USRLIBDIR)/libdps.a
 DPSLIB =  -ldps
 
 LINTDPS = $(LINTLIBDIR)/llib-ldps.ln
 
     DPSTKLIBSRC = $(LIBSRC)/dpstk
 
-SODPSTKREV = 1.0
-DEPDPSTKLIB =
+DEPDPSTKLIB = $(USRLIBDIR)/libdpstk.a
 DPSTKLIB =  -ldpstk
 
 LINTDPSTK = $(LINTLIBDIR)/llib-ldpstk.ln
 
     PSRESLIBSRC = $(LIBSRC)/psres
 
-SOPSRESREV = 1.0
-DEPPSRESLIB =
+DEPPSRESLIB = $(USRLIBDIR)/libpsres.a
 PSRESLIB =  -lpsres
 
 LINTPSRES = $(LINTLIBDIR)/llib-lpsres.ln
@@ -622,8 +566,7 @@ LINTGLX = $(LINTLIBDIR)/llib-lGL.ln
 
     GLWIDGETSRC = $(LIBSRC)/GLw
 
-SOGLWREV = 1.0
-DEPGLWLIB =
+DEPGLWLIB = $(USRLIBDIR)/libGLw.a
 GLWLIB =  -lGLw
 
 LINTGLW = $(LINTLIBDIR)/llib-lGLw.ln
@@ -708,14 +651,16 @@ LINTXFONTCACHE = $(LINTLIBDIR)/llib-lXfontcache.ln
 
          XAUTHSRC = $(LIBSRC)/Xau
 
-DEPXAUTHLIB = $(USRLIBDIR)/libXau.a
+SOXAUTHREV = 6.0
+DEPXAUTHLIB =
 XAUTHLIB =  -lXau
 
 LINTXAUTH = $(LINTLIBDIR)/llib-lXau.ln
 
       XDMCPLIBSRC = $(LIBSRC)/Xdmcp
 
-DEPXDMCPLIB = $(USRLIBDIR)/libXdmcp.a
+SOXDMCPREV = 6.0
+DEPXDMCPLIB =
 XDMCPLIB =  -lXdmcp
 
 LINTXDMCP = $(LINTLIBDIR)/llib-lXdmcp.ln
@@ -738,7 +683,8 @@ LINTXMUU = $(LINTLIBDIR)/llib-lXmuu.ln
 
        OLDXLIBSRC = $(LIBSRC)/oldX
 
-DEPOLDXLIB = $(USRLIBDIR)/liboldX.a
+SOOLDXREV = 6.0
+DEPOLDXLIB =
 OLDXLIB =  -loldX
 
 LINTOLDX = $(LINTLIBDIR)/llib-loldX.ln
@@ -773,6 +719,12 @@ LINTXA = $(LINTLIBDIR)/llib-lXa.ln
 
        AWIDGETSRC = $(LIBSRC)/Xaw
 
+SOXAWREV = 8.0
+DEPXAWLIB =
+XAWLIB =  -lXaw
+
+LINTXAW = $(LINTLIBDIR)/llib-lXaw.ln
+
        AWIDGET7SRC = $(LIBSRC)/Xaw7
 
 SOXAW7REV = 7.0
@@ -780,12 +732,6 @@ DEPXAW7LIB =
 XAW7LIB =  -lXaw
 
 LINTXAW7 = $(LINTLIBDIR)/llib-lXaw.ln
-
-SOXAWREV = SharedXawRev
-DEPXAWLIB =
-XAWLIB =  -lXaw
-
-LINTXAW = $(LINTLIBDIR)/llib-lXaw.ln
 
        AWIDGET6SRC = $(LIBSRC)/Xaw6
 
@@ -818,7 +764,7 @@ LINTXBSD = $(LINTLIBDIR)/llib-lXbsd.ln
 
            ICESRC = $(LIBSRC)/ICE
 
-SOICEREV = 6.3
+SOICEREV = 6.4
 DEPICELIB =
 ICELIB =  -lICE
 
@@ -850,14 +796,12 @@ LINTFS = $(LINTLIBDIR)/llib-lFS.ln
 
          FONTLIBSRC = $(LIBSRC)/font
 
-SOFONTREV = 1.5
-DEPFONTLIB =
+DEPFONTLIB = $(USRLIBDIR)/libXfont.a
 FONTLIB = -L$(FREETYPELIBDIR) -L$(FONTLIBSRC)  -lXfont
 
 LINTXFONT = $(LINTLIBDIR)/llib-lXfont.ln
 #
-SOFONTREV = 1.5
-DEPXFONTLIB =
+DEPXFONTLIB = $(USRLIBDIR)/libXfont.a
 XFONTLIB =  -lXfont
 
 LINTXFONT = $(LINTLIBDIR)/llib-lXfont.ln
@@ -899,7 +843,7 @@ FREETYPE2DEFINES = -DFREETYPE2
 
           EXPATLIBSRC = $(LIBSRC)/expat
 
-SOEXPATREV = 0.4
+SOEXPATREV = 4.0
 DEPEXPATLIB =
 EXPATLIB =  -lexpat
 
@@ -974,11 +918,11 @@ XKBUILIB =  -lxkbui
 
 LINTXKBUI = $(LINTLIBDIR)/llib-lxkbui.ln
 
-EXTRAXAWREQS =
+EXTRAXAWREQS = $(XPLIB)
 
-EXTRAXAWCLIENTDEPLIBS =
+EXTRAXAWCLIENTDEPLIBS = $(DEPXPLIB)
 
-EXTRAXAWCLIENTLIBS =
+EXTRAXAWCLIENTLIBS = $(XPLIB)
 
         XTRAPLIBSRC = $(LIBSRC)/XTrap
 
@@ -1058,13 +1002,11 @@ CXXPROJECT_DEFINES =
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/local/bin
 
-# Full path for the directory that will hold the man files:
-MAN_DIR = /usr/local/share/man1
+# Full path for the directory that will hold the exception handler:
+EXCEPTION_DIR = /usr/local/lib
 
-# Full path for the exception handler file:
-# EXCEPTION_PATH = /usr/local/lib/exceptions.s
-# Use this path for testing:
-EXCEPTION_PATH = $(CPU_DIR)/exceptions.s
+# Full path for the directory that will hold the man files:
+MAN_DIR = /usr/man/mann
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -1091,8 +1033,8 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 CPU_DIR = ../CPU
 VPATH = src:$(CPU_DIR)
 
-# Full path for directory that will hold the exception handler file:
-EXCEPTION_DIR = ../CPU
+# Path of directory that contains documentation:
+DOC_DIR = ../Documentation
 
 ENDIAN=`cat configuration`
 
@@ -1114,7 +1056,7 @@ CDEBUGFLAGS = -g
 
 INCLUDES = -I. -I$(CPU_DIR)
 
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER=\"$(EXCEPTION_PATH)\" -DSPIM_VERSION="\"`cat ../VERSION`\""
+DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\"" -DSPIM_VERSION="\"`cat ../VERSION`\""
 
 SYS_LIBRARIES = -lm
 
@@ -1124,25 +1066,21 @@ SYS_LIBRARIES = -lm
 #  Program dependencies:
 #
 
-all:: xspim
+all:: xspim.exe
 
-xspim:	force
-	@make xspim_sub
-	mv xspim_sub xspim
+xspim.exe: $(XOBJS) $(DEPLIBS)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(XOBJS) $(LOCALLIBS) $(LDLIBS) $(SYSLIBS) $(EXTRA_LOAD_FLAGS)
+
+cleandir::
+	$(RM) xspim.exe
 
 force:  configuration
 
 configuration:
 	./Configure
 
-xspim_sub: $(XOBJS) $(DEPLIBS)
-	$(RM) $@
-	$(CCLINK) -o $@ $(LDOPTIONS) $(XOBJS) $(LOCALLIBS) $(LDLIBS) $(SYSLIBS) $(EXTRA_LOAD_FLAGS)
-
-cleandir::
-	$(RM) xspim_sub
-
-install:: xspim
+install:: xspim.exe
 	@if [ -d $(DESTDIR)$(BIN_DIR) ]; then \
 		set +x; \
 	else \
@@ -1151,24 +1089,47 @@ install:: xspim
 		fi; \
 		(set -x; $(MKDIRHIER) $(DESTDIR)$(BIN_DIR)); \
 	fi
-	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  xspim $(DESTDIR)$(BIN_DIR)/xspim
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  xspim.exe $(DESTDIR)$(BIN_DIR)/xspim.exe
 
-all:: xspim.$(MANNEWSUFFIX)
+all:: $(DOC_DIR)/xspim.$(MANSUFFIX).html
 
-xspim.$(MANNEWSUFFIX): xspim.$(MANSRCSUFFIX)
+$(DOC_DIR)/xspim.$(MANSUFFIX).html: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
+	$(RM) $(DOC_DIR)/xspim.$(MANSUFFIX).html $(DOC_DIR)/xspim.$(MANSUFFIX)-html
+	$(RMAN) $(RMANOPTIONS) < $(DOC_DIR)/xspim.$(MANNEWSUFFIX) \
+	  > $(DOC_DIR)/xspim.$(MANSUFFIX)-html && $(MV) $(DOC_DIR)/xspim.$(MANSUFFIX)-html $@
+
+install.man:: $(DOC_DIR)/xspim.$(MANSUFFIX).html
+	@if [ -d $(DESTDIR)$(DOCHTMLDIR) ]; then \
+		set +x; \
+	else \
+		if [ -h $(DESTDIR)$(DOCHTMLDIR) ]; then \
+			(set -x; rm -f $(DESTDIR)$(DOCHTMLDIR)); \
+		fi; \
+		(set -x; $(MKDIRHIER) $(DESTDIR)$(DOCHTMLDIR)); \
+	fi
+	@(SUF=`expr $(MANSUFFIX) \: '\(.\)'`; \
+	 set -x; \
+	 $(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) $(DOC_DIR)/xspim.$(MANSUFFIX).html $(DESTDIR)$(DOCHTMLDIR)/$(DOC_DIR)/xspim.$$SUF.html)
+
+cleandir::
+	$(RM) $(DOC_DIR)/xspim.$(MANSUFFIX).html $(DOC_DIR)/xspim.$(MANSUFFIX)-html
+
+all:: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
+
+$(DOC_DIR)/xspim.$(MANNEWSUFFIX): $(DOC_DIR)/xspim.$(MANSRCSUFFIX)
 	$(RM) $@
 	if test -z "$(PREPROCESSMANPAGES)" ; then \
-	   cd `dirname xspim` && \
-	   $(LN) `basename xspim.$(MANSRCSUFFIX)` `basename $@`; \
+	   cd `dirname $(DOC_DIR)/xspim` && \
+	   $(LN) `basename $(DOC_DIR)/xspim.$(MANSRCSUFFIX)` `basename $@`; \
 	else \
 	      	     $(RAWCPP)  $(MANDEFS) $(EXTRAMANDEFS) \
-	     < xspim.$(MANSRCSUFFIX) | sed -e '/^#  *[0-9][0-9]*  *.*$$/d' 			-e '/^#line  *[0-9][0-9]*  *.*$$/d' 			-e '/^[ 	]*XCOMM$$/s/XCOMM/#/' 			-e '/^[ 	]*XCOMM[^a-zA-Z0-9_]/s/XCOMM/#/' 			-e '/^[ 	]*XHASH/s/XHASH/#/' 			-e '/\@\@$$/s/\@\@$$/\\/' >$@; \
+	     < $(DOC_DIR)/xspim.$(MANSRCSUFFIX) | sed -e '/^#  *[0-9][0-9]*  *.*$$/d' 			-e '/^#line  *[0-9][0-9]*  *.*$$/d' 			-e '/^[ 	]*XCOMM$$/s/XCOMM/#/' 			-e '/^[ 	]*XCOMM[^a-zA-Z0-9_]/s/XCOMM/#/' 			-e '/^[ 	]*XHASH/s/XHASH/#/' 			-e '/\@\@$$/s/\@\@$$/\\/' >$@; \
 	fi
 
 cleandir::
-	$(RM) xspim.$(MANNEWSUFFIX)
+	$(RM) $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
 
-install.man:: xspim.$(MANNEWSUFFIX)
+install.man:: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
 	@if [ -d $(DESTDIR)$(MAN_DIR) ]; then \
 		set +x; \
 	else \
@@ -1177,10 +1138,10 @@ install.man:: xspim.$(MANNEWSUFFIX)
 		fi; \
 		(set -x; $(MKDIRHIER) $(DESTDIR)$(MAN_DIR)); \
 	fi
-	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) xspim.$(MANNEWSUFFIX) $(DESTDIR)$(MAN_DIR)/xspim.$(MANSUFFIX)
+	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) $(DOC_DIR)/xspim.$(MANNEWSUFFIX) $(DESTDIR)$(MAN_DIR)/$(DOC_DIR)/xspim.$(MANSUFFIX)
 
-install:: $(EXCEPTION_DIR)/exceptions.s
-	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $(EXCEPTION_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_PATH)
+install:: $(CPU_DIR)/exceptions.s
+	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $(CPU_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_DIR)
 
 y.tab.h: y.tab.c
 
@@ -1362,7 +1323,7 @@ lex.yy.o: $(CPU_DIR)/op.h
 emptyrule::
 
 cleandir::
-	$(RM) *.CKP *.ln *.BAK *.bak *.o core errs ,* *~ *.a .emacs_* tags TAGS make.log MakeOut   "#"*
+	$(RM) *.CKP *.ln *.BAK *.bak *.o core errs ,* *~ *.a .emacs_* tags TAGS make.log MakeOut *.obj *.orig *.rej junk.c *.exe *.dll *.lib *~  "#"*
 
 Makefile::
 	-@if [ -f Makefile ]; then set -x; \
@@ -1377,6 +1338,15 @@ tags::
 man_keywords::
 
 html_index::
+	@if [ -d $(DESTDIR)$(DOCHTMLDIR) ]; then \
+		set +x; \
+	else \
+		if [ -h $(DESTDIR)$(DOCHTMLDIR) ]; then \
+			(set -x; rm -f $(DESTDIR)$(DOCHTMLDIR)); \
+		fi; \
+		(set -x; $(MKDIRHIER) $(DESTDIR)$(DOCHTMLDIR)); \
+	fi
+	$(HTMLINDEXCMD) $(DESTDIR)$(DOCHTMLDIR)
 
 clean:: cleandir
 
@@ -1405,4 +1375,6 @@ distclean::
 
 # ----------------------------------------------------------------------
 # dependencies generated by makedepend
+
+sinclude Makefile.dep
 

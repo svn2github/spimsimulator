@@ -35,13 +35,11 @@
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/local/bin
 
-# Full path for the directory that will hold the man files:
-MAN_DIR = /usr/local/share/man1
+# Full path for the directory that will hold the exception handler:
+EXCEPTION_DIR = /usr/local/lib
 
-# Full path for directory that will hold the exception handler file:
-#EXCEPTION_DIR = /usr/local/lib
-# Use this directory for testing:
-EXCEPTION_DIR = ../CPU
+# Full path for the directory that will hold the man files:
+MAN_DIR = /usr/man/mann
 
 
 # If you have flex, use it instead of lex.  If you use flex, define this
@@ -71,6 +69,10 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 # Path for directory that contains the source of the CPU code:
 CPU_DIR = ../CPU
 VPATH = src:$(CPU_DIR)
+
+# Path of directory that contains documentation:
+DOC_DIR = ../Documentation
+
 
 ENDIAN=`cat configuration`
 
@@ -102,22 +104,16 @@ SYS_LIBRARIES = -lm
 #
 #  Program dependencies:
 #
-
-AllTarget(xspim)
-
-xspim:	force
-	@make xspim_sub
-	mv xspim_sub xspim
+AllTarget(ProgramTargetName(xspim))
+NormalProgramTarget(xspim,$(XOBJS),$(DEPLIBS),$(LOCALLIBS),$(SYSLIBS))
 
 force:  configuration
 
 configuration:
 	./Configure
 
-NormalProgramTarget(xspim_sub,$(XOBJS),$(DEPLIBS),$(LOCALLIBS),$(SYSLIBS))
-
 InstallProgram(xspim,$(BIN_DIR))
-InstallManPage(xspim,$(MAN_DIR))
+InstallManPage($(DOC_DIR)/xspim,$(MAN_DIR))
 InstallNonExec($(CPU_DIR)/exceptions.s,$(EXCEPTION_DIR))
 
 

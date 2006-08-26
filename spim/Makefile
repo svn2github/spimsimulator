@@ -45,17 +45,22 @@
 CPU_DIR = ../CPU
 VPATH = src:$(CPU_DIR)
 
-# Full path for directory that will hold the exception handler file:
-EXCEPTION_DIR = ../CPU
-
 # Path of directory that contains SPIM tests:
 TEST_DIR = ../Tests
+
+# Path of directory that contains documentation:
+DOC_DIR = ../Documentation
+
+
 
 # Full path for the directory that will hold the executable files:
 BIN_DIR = /usr/local/bin
 
+# Full path for the directory that will hold the exception handler:
+EXCEPTION_DIR = /usr/local/lib
+
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/local/share/man1
+MAN_DIR = /usr/man/mann
 
 
 # If you have flex, use it instead of lex.  If you use flex, define this
@@ -174,7 +179,7 @@ clean:
 install: spim
 	install -c -s  spim $(BIN_DIR)
 	install -c -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)
-	install -c -m 0444 spim.man $(MAN_DIR)
+	install -c -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
 
 very-clean: clean
 	rm -f configuration
