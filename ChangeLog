@@ -4,7 +4,8 @@
 
 	* spim/Makefile, xspim/Imakefile:
 	Fix installation process of man pages and make xspim compile under
-	Cygwin.
+	Cygwin. Do not install man page by default (too many different
+	options).
 
 2006-08-23    <Jim@LS1>
 

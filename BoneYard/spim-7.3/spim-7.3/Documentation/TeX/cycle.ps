@@ -1,0 +1,4788 @@
+%!PS-Adobe-2.0
+%%Title: TeX output 1993.07.02:1119
+%%Creator: DVILASER/PS, ArborText, Inc.
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%DocumentMedia: Plain 612 792 75 white {}
+%%EndComments
+
+%! 
+%  Dvips.pro - included prolog for DviLaser-generated PostScript files.
+%
+%	@(#)dvips.pro	1.2	/tmp_mnt/n/fs/cmnusr/local/lib/tex/dvilaser/s.dvips.pro
+%	Placed under SCCS for local changes - S. Beck, CS Dept., Princeton U.
+% 
+%  Copyright (c) 1986-91, ArborText, Inc.
+%  Permission to copy is granted so long as the PostScript code
+%  is not resold or used in a commercial product.
+%
+%  $Header: /ati/src/pub/pubps/src/RCS/dvips.pro,v 1.4 1993/02/27 20:01:04 jjs Exp $
+%
+systemdict /setpacking known  % use array packing mode if its available
+  {/savepackingmode currentpacking def 
+   true setpacking}
+  if
+ 
+/$DviLaser 400 dict def
+ 
+% Begin document
+/BeginDviLaserDoc {
+  0 0 moveto
+  vmstatus pop pop 0 eq 
+    { $DviLaser begin }
+    { /DviLaserJob save def
+      $DviLaser begin
+      /DviLaserFonts save def }
+    ifelse
+} bind def
+ 
+% End document
+/EndDviLaserDoc {
+  vmstatus pop pop 0 eq 
+    { end }
+    { DviLaserFonts restore
+      end
+      DviLaserJob restore }
+    ifelse
+} bind def
+ 
+$DviLaser begin
+
+/tempstr 64 string def
+/tempint 0 def
+/tempmatrix matrix def
+ 
+%
+%  Debugging routines
+%
+/DebugMode false def
+
+/PrintInt {
+  tempstr cvs print
+} bind def
+
+/PrintLn {
+  (\n) print flush
+} bind def
+ 
+/PrintVMStats {
+  print
+  PrintLn
+  (VM status - ) print
+  vmstatus
+  3 copy
+  PrintInt (\(total\), ) print
+  PrintInt (\(used\), ) print
+  pop
+  exch sub 
+  PrintInt (\(remaining\), ) print
+  PrintInt (\(level\)) print
+  PrintLn
+} bind def
+ 
+/VMS /PrintVMStats load def 
+ 
+/VMSDebug {
+  DebugMode
+    {PrintVMStats}
+    {pop}
+    ifelse
+} bind def
+ 
+(beginning of common prolog) VMSDebug 
+
+% Make it easy to bind definitions.
+/bdef { bind def } bind def
+/xdef { exch def } bdef
+
+% Bind some procedures that do restores and such to avoid InvalRestore problems.
+/RestoreDviLaserPage {
+  /DviLaserPage where {pop DviLaserPage restore} if
+} bdef
+
+/RestoreDviLaserFonts {
+  DocumentType 0 eq 
+    {/DviLaserFonts where 
+      {pop DviLaserFonts restore} 
+      if
+    }
+    if
+} bdef
+
+/SaveDviLaserFonts {
+  DocumentType 0 eq 
+   {/DviLaserFonts save def}
+   if
+} bdef
+
+/SetCurrentPoint {
+  /currentpoint cvx stopped {0 0 moveto currentpoint} if
+} bdef
+
+% Begin page
+/BP {
+  /Magnification xdef
+  /DviLaserPage save def
+  (beginning of page) VMSDebug 
+} bdef
+ 
+% End page
+/EP {
+  DviLaserPage restore
+} bdef
+ 
+% Exit page (temporarily) to add fonts/characters.
+/XP {
+  % Save current point information so it can be reset later. 
+  /Xpos where {pop Xpos} {0} ifelse
+  /Ypos where {pop Ypos} {0} ifelse
+  SetCurrentPoint
+  RestoreDviLaserPage
+  moveto
+  /Ypos xdef
+  /Xpos xdef
+} bdef
+ 
+% Resume page
+/RP {
+  /DviLaserPage save def
+} bdef
+ 
+% Purge all fonts to reclaim memory space. 
+/PF {
+  GlobalMode
+  LocalMode
+} bdef
+ 
+% Switch to base save/restore level, saving state information. 
+/GlobalMode {
+  /UserSave where {pop UserSave} if  % invoke "UserSave" if available
+  PortraitMode 
+  PaperWidth 
+  PaperHeight 
+  PxlResolution 
+  Resolution 
+  Magnification
+  Ymax
+  RasterScaleFactor
+  SetCurrentPoint
+  RestoreDviLaserPage
+  RestoreDviLaserFonts
+  RecoverState
+} bdef
+ 
+% Preserve state at the base level.
+/RecoverState {
+  10 copy
+  /Ypos xdef
+  /Xpos xdef
+  /RasterScaleFactor xdef
+  /Ymax xdef
+  /Magnification xdef
+  /Resolution xdef
+  /PxlResolution xdef
+  /PaperHeight xdef
+  /PaperWidth xdef
+  /PortraitMode xdef
+  DoInitialPageScaling
+  PortraitMode not {PaperWidth 0 SetupLandscape} if
+  Xpos Ypos moveto
+} bdef
+
+% Switch from base save/restore level, restoring state information. 
+/LocalMode {
+  /Ypos xdef
+  /Xpos xdef
+  /RasterScaleFactor xdef
+  /Ymax xdef
+  /Magnification xdef
+  /Resolution xdef
+  /PxlResolution xdef
+  /PaperHeight xdef
+  /PaperWidth xdef
+  /PortraitMode xdef
+  DoInitialPageScaling
+  PortraitMode not {PaperWidth 0 SetupLandscape} if
+  Xpos Ypos moveto
+  /UserRestore where {pop UserRestore} if  % invoke "UserRestore" if available
+  SaveDviLaserFonts 
+  /DviLaserPage save def
+} bdef
+ 
+% Abbreviations 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+ 
+/Yadjust {Ymax exch sub} bdef
+ 
+% (x,y) position absolute, just set Xpos & Ypos, don't move.
+/SXY {
+  Yadjust 
+  /Ypos xdef /Xpos xdef
+} bdef
+ 
+% (x,y) position absolute
+/XY {
+  Yadjust 
+  2 copy /Ypos xdef /Xpos xdef
+  moveto
+} bdef
+ 
+% (x,0) position absolute
+/X {
+  currentpoint exch pop 
+  2 copy /Ypos xdef /Xpos xdef
+  moveto
+} bdef
+ 
+% (0,y) position absolute
+/Y {
+  currentpoint pop exch Yadjust 
+  2 copy /Ypos xdef /Xpos xdef
+  moveto
+} bdef
+ 
+% (x,y) position relative
+/xy {
+  neg rmoveto
+  currentpoint /Ypos xdef /Xpos xdef
+} bdef
+ 
+% (x,0) position relative
+/x {
+  0.0 rmoveto
+  currentpoint /Ypos xdef /Xpos xdef
+} bdef
+ 
+% (0,y) position relative
+/y {
+  0.0 exch neg rmoveto
+  currentpoint /Ypos xdef /Xpos xdef
+  } bdef
+ 
+%
+% Print a rule.  Normally this is done with a filled area defined by rlineto.
+% Unfortunately, doing it this way introduces a 1 pixel error on some
+% PostScript printer implementations.  In order to get exactly correct
+% pixel size and positioning, an alternate approach is implemented under
+% control of boolean "PreciseRulePositioning".  With this approach,
+% we create a temporary font in which the rule is the only character.
+% Since the alternate mechanism causes documents with lots of rules to
+% print much more slowly, and since the 1 pixel maximum difference is
+% rarely noticed, it is not used by default.  Enable it by setting
+% "PreciseRulePositioning" true.
+%
+/PreciseRulePositioning false def
+
+/R {
+  /ht xdef
+  /wd xdef
+  PreciseRulePositioning ht 1950 le wd 1950 le and PxlResolution 400 le and and
+    {save
+    /tfd 6 dict def
+    tfd begin
+      /FontType 3 def
+      /FontMatrix [1 0 0 1 0 0] def
+      /FontBBox [0 0 wd ht] def
+      /Encoding 256 array dup 97 /a put def
+      /BuildChar {
+        pop   % ignore character code
+        pop   % ignore font dict, too
+        wd 0 0 0 wd ht setcachedevice
+        wd ht true
+        [1 0 0 -1 0 ht] {<FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF>} imagemask
+        } def
+      end % tfd
+    /tf tfd definefont setfont
+    (a) show
+    restore
+    }
+    {gsave
+    0 setgray
+    currentpoint
+    newpath
+      moveto
+      0.0 ht rlineto
+      wd 0.0 rlineto
+      0.0 ht neg rlineto
+      wd neg 0.0 rlineto
+    closepath fill
+    grestore
+    }
+  ifelse
+  wd 0.0 rmoveto
+  currentpoint /Ypos xdef /Xpos xdef
+} bdef
+
+/SHADE {
+  /percent xdef
+  /ht xdef
+  /wd xdef
+  /Red xdef
+  /Green xdef
+  /Blue xdef
+  gsave
+  0.01 percent mul setgray
+  currentpoint
+  newpath
+    moveto
+    0.0 ht rlineto
+    wd 0.0 rlineto
+    0.0 ht neg rlineto
+    wd neg 0.0 rlineto
+  closepath fill
+  grestore
+  wd 0.0 rmoveto
+  currentpoint /Ypos xdef /Xpos xdef
+} bdef
+
+%
+%  <PXL-file resolution(pix/inch)> <resolution(pix/inch)> RES
+%
+/RES {
+  /Resolution xdef
+  /PxlResolution xdef
+  /RasterScaleFactor PxlResolution Resolution div def
+} bdef
+
+% Document type: 0-document; 1-page; 2-EPS
+/DT {
+  /DocumentType xdef
+} bdef
+
+%
+% Initialize state variables to default values for the current page.
+%
+/InitializePageState {
+  /Xpos 0.0 def
+  /Ypos 0.0 def
+  /InitialMatrix matrix currentmatrix def
+} bdef
+
+%
+% Return to the initial page scaling parameters.
+%
+/DoInitialPageScaling {
+  InitialMatrix setmatrix
+  72.0 Resolution div dup scale   
+} bdef
+ 
+%
+%  <paper-height(pix)> <paper-width(pix)> PM 
+%
+/PM { 
+  XP
+  /PaperWidth xdef 
+  /PaperHeight xdef
+  /Ymax PaperHeight def
+  /PortraitMode true def
+  InitializePageState 
+  DoInitialPageScaling
+  RP
+} bdef  
+ 
+%
+%  <paper-height(pix)> <paper-width(pix)> LM 
+%
+/LM {
+  XP
+  /PaperWidth xdef 
+  /PaperHeight xdef
+  /Ymax PaperWidth def
+  /PortraitMode false def
+  InitializePageState 
+  DoInitialPageScaling
+  PaperWidth 0 SetupLandscape
+  RP
+} bdef  
+  
+% Change magnification setting
+/MAG {
+  XP
+  /Magnification xdef
+  RP
+} bdef
+ 
+%
+%  Switch to landscape mode
+%
+/SetupLandscape {
+  translate
+  90.0 rotate
+} bdef
+ 
+%
+%  <mode> SPB - begin "\special" mode
+%
+%  This is the PostScript procedure used to transfer from the internal
+%  environment used for the DVI translation code emitted by DVIPS to
+%  a standard PostScript environment.
+%
+%  Parameters: 0 - Local
+%              1 - Global
+%              2 - Inline
+%
+/SPB {
+  /spc_mode xdef
+  spc_mode 0 eq spc_mode 2 eq or
+    {XP}
+    {spc_mode 1 eq {GlobalMode} if} 
+    ifelse
+  Resolution 72.0 div dup scale        % Restore default scaling...
+  Magnification 1000.0 div dup scale   % Adjust for any magnification...
+  /Xpos Xpos 72.0 Resolution div mul 1000.0 Magnification div mul def
+  /Ypos Ypos 72.0 Resolution div mul 1000.0 Magnification div mul def
+} bdef
+ 
+%
+%  <mode> SPE - end "\special" mode
+%
+%  This is the PostScript procedure used to reenter the internal
+%  environment used for the DVI translation code emitted by DVIPS from 
+%  the standard PostScript environment provided for processing user-supplied
+%  PostScript code.
+%
+%  Parameters: 0 - Local
+%              1 - Global
+%              2 - Inline
+%
+/SPE {
+  /spc_mode xdef
+  1000.0 Magnification div dup scale   % Un-adjust for any magnification...
+  72.0 Resolution div dup scale        % Restore default internal scaling...
+  spc_mode 0 eq spc_mode 2 eq or
+    {RP}
+    {spc_mode 1 eq {LocalMode} if} 
+    ifelse
+} bdef
+ 
+%
+%  <num-copies> PP
+%
+/PP {
+  /#copies xdef
+  showpage
+  /#copies 1 def
+} bdef
+ 
+%
+%  /font-name <point-size(pix)> DMF
+%
+/DMF {
+  /psz xdef
+  /nam xdef
+  nam findfont psz scalefont setfont
+} bdef
+ 
+%
+%  /abcd (xxx) str-concat  ==> /abcdxxx
+%
+/str-concatstr 64 string def
+
+/str-concat {
+  /xxx xdef
+  /nam xdef
+  /namstr nam str-concatstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+} bdef
+ 
+%
+%  /abcdef 2 str-strip ==> /cdef
+%
+/str-strip {
+  /num xdef
+  /nam xdef
+  /namstr nam tempstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval
+  cvn
+} bdef
+ 
+%
+%  <old-dict> copydict ==> new-dict on stack
+%
+/copydict {
+  dup length 1 add dict /newdict xdef
+    {1 index /FID ne
+      {newdict 3 1 roll put}
+      {pop pop}
+     ifelse
+    } forall 
+  newdict
+} bdef
+ 
+%
+%  <font-type> DefineCMEncoding
+%
+/DefineCMEncoding {
+  /EncodeType xdef
+ 
+  /CMEncoding 256 array def
+  /Times-Roman findfont /Encoding get aload pop CMEncoding astore pop
+ 
+  EncodeType 11 eq {Do-CM-rm-encoding} if
+  EncodeType 12 eq {Do-CM-it-encoding} if
+  EncodeType 13 eq {Do-CM-tt-encoding} if
+} bdef
+ 
+%
+%  Do special mappings for the various CM-font types.  Characters that
+%  get "covered up" are repositioned in the range (128,128+32).  The 
+%  range (256-64,255) is filled with the standard ISO Latin/1 mappings.
+%
+/Do-standard-CM-encodings {
+  CMEncoding
+  dup 0 /.notdef put
+  dup 1 /.notdef put
+  dup 2 /.notdef put
+  dup 3 /.notdef put
+  dup 4 /.notdef put
+  dup 5 /.notdef put
+  dup 6 /.notdef put
+  dup 7 /.notdef put
+ 
+  dup 8 /.notdef put
+  dup 9 /.notdef put
+  dup 10 /.notdef put
+  dup 11 /.notdef put
+  dup 12 /fi put
+  dup 13 /fl put
+  dup 14 /.notdef put
+  dup 15 /.notdef put
+ 
+  dup 16 /dotlessi put
+  dup 17 /ogonek put
+  dup 18 /grave put
+  dup 19 /acute put
+  dup 20 /caron put
+  dup 21 /breve put
+  dup 22 /macron put
+  dup 23 /ring put
+ 
+  dup 24 /cedilla put
+  dup 25 /germandbls put
+  dup 26 /ae put
+  dup 27 /oe put
+  dup 28 /oslash put
+  dup 29 /AE put
+  dup 30 /OE put
+  dup 31 /Oslash put
+
+  dup 127 /dieresis put
+
+  dup 128 /space put
+  dup 129 /quotedbl put
+  dup 130 /sterling put
+  dup 131 /dollar put
+  dup 132 /less put
+  dup 133 /greater put
+  dup 134 /backslash put
+  dup 135 /asciicircum put
+
+  dup 136 /underscore put
+  dup 137 /braceleft put
+  dup 138 /bar put
+  dup 139 /braceright put
+  dup 140 /asciitilde put
+
+  dup 141 /brokenbar put
+  dup 142 /copyright put
+  dup 143 /logicalnot put
+  dup 144 /registered put
+  dup 145 /plusminus put
+  dup 146 /twosuperior put
+  dup 147 /threesuperior put
+  dup 148 /mu put
+  dup 149 /onesuperior put
+  dup 150 /onequarter put
+  dup 151 /onehalf put
+  dup 152 /threequarters put
+  dup 153 /Eth put
+  dup 154 /multiply put
+  dup 155 /Thorn put
+  dup 156 /eth put
+  dup 157 /divide put
+  dup 158 /thorn put
+  dup 159 /ordfeminine put
+  dup 160 /ordmasculine put
+  dup 176 /Lslash put
+  dup 181 /lslash put
+  pop
+  Do-ISO-Latin1-Encoding 
+} bdef
+
+% Fill the last 64 positions with ISOLatin1 composite character definitions.
+/Do-ISO-Latin1-Encoding {
+  CMEncoding
+  dup 192 /Agrave put
+  dup 193 /Aacute put
+  dup 194 /Acircumflex put
+  dup 195 /Atilde put
+  dup 196 /Adieresis put
+  dup 197 /Aring put
+  dup 198 /AE put
+  dup 199 /Ccedilla put
+
+  dup 200 /Egrave put
+  dup 201 /Eacute put
+  dup 202 /Ecircumflex put
+  dup 203 /Edieresis put
+  dup 204 /Igrave put
+  dup 205 /Iacute put
+  dup 206 /Icircumflex put
+  dup 207 /Idieresis put
+
+  dup 208 /Eth put
+  dup 209 /Ntilde put
+  dup 210 /Ograve put
+  dup 211 /Oacute put
+  dup 212 /Ocircumflex put
+  dup 213 /Otilde put
+  dup 214 /Odieresis put
+  dup 215 /multiply put
+
+  dup 216 /Oslash put
+  dup 217 /Ugrave put
+  dup 218 /Uacute put
+  dup 219 /Ucircumflex put
+  dup 220 /Udieresis put
+  dup 221 /Yacute put
+  dup 222 /Thorn put
+  dup 223 /germandbls put
+
+  dup 224 /agrave put
+  dup 225 /aacute put
+  dup 226 /acircumflex put
+  dup 227 /atilde put
+  dup 228 /adieresis put
+  dup 229 /aring put
+  dup 230 /ae put
+  dup 231 /ccedilla put
+
+  dup 232 /egrave put
+  dup 233 /eacute put
+  dup 234 /ecircumflex put
+  dup 235 /edieresis put
+  dup 236 /igrave put
+  dup 237 /iacute put
+  dup 238 /icircumflex put
+  dup 239 /idieresis put
+
+  dup 240 /eth put
+  dup 241 /ntilde put
+  dup 242 /ograve put
+  dup 243 /oacute put
+  dup 244 /ocircumflex put
+  dup 245 /otilde put
+  dup 246 /odieresis put
+  dup 247 /divide put
+
+  dup 248 /oslash put
+  dup 249 /ugrave put
+  dup 250 /uacute put
+  dup 251 /ucircumflex put
+  dup 252 /udieresis put
+  dup 253 /yacute put
+  dup 254 /thorn put
+  dup 255 /ydieresis put
+  pop
+} bdef
+ 
+/Do-CM-rm-encoding {
+  Do-standard-CM-encodings
+  CMEncoding
+  dup 32 /.notdef put
+  dup 34 /quotedblright put
+  dup 60 /exclamdown put
+  dup 62 /questiondown put
+  dup 92 /quotedblleft put
+  dup 94 /circumflex put
+  dup 95 /dotaccent put
+  dup 123 /endash put
+  dup 124 /emdash put
+  dup 125 /hungarumlaut put
+  dup 126 /tilde put
+  pop
+} bdef
+ 
+/Do-CM-it-encoding {
+  Do-standard-CM-encodings
+  CMEncoding
+  dup 32 /.notdef put
+  dup 34 /quotedblright put
+  dup 36 /sterling put
+  dup 60 /exclamdown put
+  dup 62 /questiondown put
+  dup 92 /quotedblleft put
+  dup 94 /circumflex put
+  dup 95 /dotaccent put
+  dup 123 /endash put
+  dup 124 /emdash put
+  dup 125 /hungarumlaut put
+  dup 126 /tilde put
+  pop
+} bdef
+ 
+/Do-CM-tt-encoding {
+  Do-standard-CM-encodings
+  CMEncoding
+  dup 12 /.notdef put
+  dup 13 /quotesingle put
+  dup 14 /exclamdown put
+  dup 15 /questiondown put
+  dup 94 /circumflex put
+  dup 126 /tilde put
+  pop
+} bdef
+
+%
+% Routines to handle packing/unpacking numbers.
+%
+%  <target> <pos> <num> PackHW --> <new target>
+%
+/PackHW {
+  /num xdef
+  /pos xdef
+  /target xdef
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift
+    target or
+} bdef
+
+%
+%  <target> <pos> <num> PackByte --> <new target>
+%
+/PackByte {
+  /num xdef
+  /pos xdef
+  /target xdef
+  num 16#000000FF and 3 pos sub 8 mul bitshift
+    target or
+} bdef
+
+%
+%  <pos> <num> UnpkHW --> <unpacked value>
+%
+/UnpkHW {
+  /num xdef
+  /pos xdef
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+} bdef
+
+%
+%  <pos> <num> UnpkByte --> <unpacked value>
+%
+/UnpkByte {
+  /num xdef
+  /pos xdef
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+} bdef
+
+%
+%  <int-font-name> <ext-font-name> <pt-sz(pix)> <type> <loaded-fg> DefineCMFont
+%
+%    type 10: "as-is" PostScript font
+%    type 11: CM-mapped PostScript font - roman
+%    type 12: CM-mapped PostScript font - text italic 
+%    type 13: CM-mapped PostScript font - typewriter type 
+%
+/int-dict-name {int (-dict) str-concat} bdef
+/int-dict {int (-dict) str-concat cvx load} bdef
+
+/DF {
+  true  % signal that the font is already loaded
+  DefineCMFont
+} bdef
+ 
+/DNF {
+  false  % signal that the font is not already loaded
+  DefineCMFont
+} bdef
+
+/DefineCMFont {
+  /loaded xdef
+  /typ xdef
+  /psz xdef
+  /ext xdef
+  /int xdef
+ 
+  typ 10 ne 
+    { % font_type = 11, 12, 13
+    loaded not
+      { /fnam ext 3 str-strip def
+        fnam findfont copydict /newdict xdef 
+        typ DefineCMEncoding
+        newdict /Encoding CMEncoding put
+        ext newdict definefont pop
+      } if
+    int-dict-name ext findfont psz scalefont def
+    currentdict int [int-dict /setfont cvx] cvx put
+    }
+    { % font_type = 10
+    /fnam ext def
+    int-dict-name fnam findfont psz scalefont def
+    currentdict int [int-dict /setfont cvx] cvx put
+    }
+  ifelse
+} bdef 
+ 
+%
+%  <int-font-name> <ext-font-name> <pt-sz(pix)> <PXL mag> <num-chars>
+%      [llx lly urx ury] <newfont-fg> DefinePXLFont
+%
+
+/PXLF {
+  true  % signal that the font is already loaded
+  DefinePXLFont
+} bdef
+ 
+/PXLNF {
+  false  % signal that the font is not already loaded
+  DefinePXLFont
+} bdef
+
+/PXLBuildCharDict 17 dict def
+ 
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup tempstr cvs cvn put} for
+
+/RasterConvert {RasterScaleFactor div} bdef
+ 
+/TransformBBox {
+  aload pop
+ 
+  /BB-ury xdef
+  /BB-urx xdef
+  /BB-lly xdef
+  /BB-llx xdef
+ 
+  [BB-llx RasterConvert BB-lly RasterConvert 
+   BB-urx RasterConvert BB-ury RasterConvert]
+} bdef
+
+/DefinePXLFont {
+  /newfont xdef
+  /bb xdef
+  /num xdef
+  /psz xdef
+  /dsz xdef
+  /pxlmag xdef
+  /ext xdef
+  /int xdef
+ 
+  /fnam ext (-) str-concat pxlmag tempstr cvs str-concat def
+ 
+  newfont not {
+    int-dict-name 13 dict def
+   
+    int-dict begin
+      /FontType 3 def
+      /FontMatrix [1 dsz div 0 0 1 dsz div 0 0] def
+      /FontBBox bb TransformBBox def
+      /Encoding CMEncodingArray def
+      /CharDict 1 dict def
+      CharDict begin
+        /Char-Info num array def
+        end
+  
+      /BuildChar
+        { 
+          PXLBuildCharDict begin
+            /char xdef
+            /fontdict xdef
+   
+            fontdict /CharDict get /Char-Info get char get aload pop
+   
+            /rasters xdef
+            /PackedWord1 xdef
+   
+            0 PackedWord1 UnpkHW 16#7FFF ne
+              { /PackedWord2 xdef
+                /wx 0 PackedWord1 UnpkHW def
+                /rows 2 PackedWord1 UnpkByte def
+                /cols 3 PackedWord1 UnpkByte def
+                /llx 0 PackedWord2 UnpkByte def
+                /lly 1 PackedWord2 UnpkByte def
+                /urx 2 PackedWord2 UnpkByte def
+                /ury 3 PackedWord2 UnpkByte def }
+              { /PackedWord2 xdef
+                /PackedWord3 xdef
+                /PackedWord4 xdef
+                /wx 1 PackedWord1 UnpkHW def
+                /rows 0 PackedWord2 UnpkHW def
+                /cols 1 PackedWord2 UnpkHW def
+                /llx 0 PackedWord3 UnpkHW def
+                /lly 1 PackedWord3 UnpkHW def
+                /urx 0 PackedWord4 UnpkHW def
+                /ury 1 PackedWord4 UnpkHW def }
+               ifelse
+
+            rows 0 lt
+              { /rows rows neg def
+                /runlength 1 def }
+              { /runlength 0 def }
+             ifelse
+ 
+            wx 0 
+            llx RasterConvert lly RasterConvert 
+            urx RasterConvert ury RasterConvert setcachedevice
+            rows 0 ne
+              {
+              gsave
+                cols rows true 
+		RasterScaleFactor 0 0 RasterScaleFactor neg llx neg .5 add ury .5 add
+
+                  tempmatrix astore
+                {GenerateRasters} imagemask
+              grestore
+              } if
+            end
+        } def
+      end
+   
+      fnam int-dict definefont pop 
+    } if 
+ 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [int-dict /setfont cvx] cvx put
+} bdef 
+ 
+%
+%  <int-font-name> <code> <wx> <llx> <lly> <urx> <ury> <rows> <cols> <runlength> <rasters> PXLC
+%
+/PXLC {
+ 
+  /rasters xdef
+  /runlength xdef
+  /cols xdef
+  /rows xdef
+  /ury xdef
+  /urx xdef
+  /lly xdef
+  /llx xdef
+  /wx xdef
+  /code xdef
+  /int xdef
+ 
+  % See if the long or short format is required
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+    TackRunLengthToRows
+    { int-dict /CharDict get /Char-Info get code 
+        [0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+         0 0 wx PackHW 2 rows PackByte 3 cols PackByte
+         rasters] put}
+    { int-dict /CharDict get /Char-Info get code 
+        [0 0 urx PackHW 1 ury PackHW
+         0 0 llx PackHW 1 lly PackHW
+         0 0 rows PackHW 1 cols PackHW
+         0 0 16#7FFF PackHW 1 wx PackHW
+         rasters] put} 
+    ifelse
+} bdef
+ 
+/CKSZ {abs 127 le and} bdef
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if} bdef
+ 
+%
+%  <wx> <dsz> <psz> <llx> <lly> <urx> <ury> <rows> <cols> <runlength> <rasters> PLOTC
+%
+/PLOTC {
+  /rasters xdef
+  /runlength xdef
+  /cols xdef
+  /rows xdef
+  /ury xdef
+  /urx xdef
+  /lly xdef
+  /llx xdef
+  /psz xdef
+  /dsz xdef
+  /wx xdef
+ 
+  % "Plot" a character's raster pattern.
+  rows 0 ne
+    {
+    gsave
+      currentpoint translate
+      psz dsz div dup scale
+      cols rows true 
+      RasterScaleFactor 0 0 RasterScaleFactor neg llx neg ury 
+        tempmatrix astore
+      {GenerateRasters} imagemask
+    grestore
+    } if
+  wx x
+} bdef
+ 
+% Routine to generate rasters for "imagemask".
+/GenerateRasters {
+  rasters
+  runlength 1 eq {RunLengthToRasters} if
+} bdef
+ 
+% Routine to convert from runlength encoding back to rasters.
+/RunLengthToRasters {
+  % ...not done yet...
+} bdef
+ 
+%
+%  These procedures handle bitmap processing.
+%
+%  <bitmap columns> <bitmap rows> <bitmap pix/inch> <magnification> BMbeg
+%
+/BMbeg {
+  /BMmagnification xdef
+  /BMresolution xdef
+  /BMrows xdef
+  /BMcols xdef
+
+  /BMcurrentrow 0 def
+  gsave
+    0.0 setgray
+    Resolution BMresolution div dup scale
+    currentpoint translate
+    BMmagnification 1000.0 div dup scale
+    0.0 BMrows moveto
+    BMrows dup scale
+    currentpoint translate
+    /BMCheckpoint save def
+  } bdef
+
+/BMend {
+  BMCheckpoint restore
+  grestore
+  } bdef
+
+%
+%  <hex raster bitmap> <rows> BMswath 
+%
+/BMswath {
+  /rows xdef
+  /rasters xdef
+
+  BMcols rows true
+  [BMrows 0 0 BMrows neg 0 BMcurrentrow neg]
+  {rasters}
+  imagemask
+
+  /BMcurrentrow BMcurrentrow rows add def
+  BMcurrentrow % save this on the stack around a restore...
+  BMCheckpoint restore
+  /BMcurrentrow xdef
+  /BMCheckpoint save def
+  } bdef
+
+%
+%  Procedures for implementing the "rotate <theta>" special:
+%  <theta> ROTB -
+%        - ROTE -
+
+/ROTB {
+  XP
+  gsave
+  Xpos Ypos translate
+  rotate % using <theta> from the stack
+  Xpos neg Ypos neg translate
+  RP
+  } bdef
+
+/ROTE {XP grestore RP} bdef
+
+%
+%  Procedures for implementing the "epsfile <filename> [<mag>]" special:
+%  <llx> <lly> <mag> EPSB -
+%  - EPSE -
+
+/EPSB {
+  0 SPB
+  save
+  4 1 roll % push the savelevel below the parameters
+  /showpage {} def
+  Xpos Ypos translate
+  1000 div dup scale % using <mag> from the stack
+  neg exch neg exch translate % using <llx> <lly> from the stack
+  } bdef
+
+/EPSE {restore 0 SPE} bdef
+
+%
+%  Procedure for implementing revision bars:
+%  <bary1> <bary2> <barx> <barw> REVB -
+%  The bar is a line of width barw drawn from (barx,bary1) to (barx,bary2).
+
+/REVB {
+  /barw xdef
+  /barx xdef
+  /bary2 xdef
+  /bary1 xdef
+  gsave
+    barw setlinewidth
+    barx bary1 Yadjust moveto
+    barx bary2 Yadjust lineto
+    stroke
+  grestore
+  } bdef
+
+%  
+%  A small array and two procedures to facilitate The Publisher's
+%  implementation of gray table cells:
+%                               <ptnum> GRSP -
+%  <ultpnum> <lrptnum> <graylev> <freq> GRFB -
+%  
+%  GRSP saves the current DVI location so that it can be retrieved later
+%  by the index <ptnum>.  GRFB fills a box whose corners are given by the
+%  indexes <ultpnum> and <lrptnum> with a halftone gray with the given
+%  level and frequency.  The array GRPM holds the coordinates of points
+%  marking the corners of gray table cells. <freq> is currently ignored
+%  since modifying it via setscreen is prohibited by Adobe's PostScript
+%  coding conventions.
+%  
+
+/GRPM 40 dict def
+
+/GRSP {GRPM exch [Xpos Ypos] put} bdef
+
+/GRFB {
+  /GRfreq xdef
+  /GRgraylev xdef
+  GRPM exch get aload pop /GRlry xdef /GRlrx xdef
+  GRPM exch get aload pop /GRuly xdef /GRulx xdef
+  gsave
+    % % set the screen frequency if it isn't zero
+    % % (disabled currently...)
+    % GRfreq 0 ne
+    %   {currentscreen
+    %   3 -1 roll pop GRfreq 3 1 roll
+    %   setscreen}
+    % if
+    % set the gray level
+    GRgraylev setgray
+    % draw and fill the path
+    GRulx GRuly moveto
+    GRlrx GRuly lineto
+    GRlrx GRlry lineto
+    GRulx GRlry lineto
+    closepath
+    fill
+  grestore
+  } bdef
+
+
+%
+%  Procedures for implementing the "paper <source>" option:
+%  <name> <eop> SPS          -
+%         <eop> paper-manual -
+%  etc.  The boolean <eop> is passed so that a paper source procedure
+%  knows if it is being called at the beginning (false) or end
+%  (true) of a page.
+
+/SPS {
+  /eop xdef
+  /name xdef
+  name where {pop eop name cvx exec} if
+  } bdef
+
+/paper-manual {
+    {statusdict /manualfeed known
+      {statusdict /manualfeed true put}
+    if}
+  if
+  } bdef
+
+/paper-automatic {
+    {statusdict /manualfeed known
+      {statusdict /manualfeed false put}
+    if}
+  if
+  } bdef
+
+/paper-top-tray {
+    {}
+    {statusdict /setpapertray known
+      {statusdict begin gsave 0 setpapertray grestore end}
+    if}
+  ifelse
+  } bdef
+
+/paper-bottom-tray {
+    {}
+    {statusdict /setpapertray known
+      {statusdict begin gsave 1 setpapertray grestore end}
+    if}
+  ifelse
+  } bdef
+
+/paper-both-trays {
+    {}
+    {statusdict /setpapertray known
+      {statusdict begin gsave 2 setpapertray grestore end}
+    if}
+  ifelse
+  } bdef
+
+/clipping_path {
+    /x1 xdef
+    /y1 xdef
+    /x2 xdef
+    /y2 xdef
+    newpath
+    x1 y1 moveto
+    x2 y1 lineto
+    x2 y2 lineto
+    x1 y2 lineto
+    closepath
+  }bdef
+
+
+(end of common prolog) VMSDebug 
+
+end
+ 
+systemdict /setpacking known 
+  {savepackingmode setpacking}
+  if
+
+%!
+% Psfig/TeX Release 1.2
+% dvips version
+%
+% All software, documentation, and related files in this distribution of
+% psfig/tex are Copyright 1987, 1988 Trevor J. Darrell
+%
+% Permission is granted for use and non-profit distribution of psfig/tex 
+% providing that this notice be clearly maintained, but the right to
+% distribute any portion of psfig/tex for profit or as part of any commercial
+% product is specifically reserved for the author.
+%
+%
+% $Header: figtex.pro,v 1.5 87/07/24 20:14:50 trevor Exp $
+% $Source: $
+%
+/TeXscale { 65536 div } def
+
+/DocumentInitState [ matrix currentmatrix currentlinewidth currentlinecap
+currentlinejoin currentdash currentgray currentmiterlimit ] cvx def
+
+/startTexFig {
+% usage :  x y bb-llx bb-lly bb-urx bb-ury startFig
+	/SavedState save def
+	userdict maxlength dict begin
+	currentpoint transform
+
+	DocumentInitState setmiterlimit setgray setdash setlinejoin setlinecap
+		setlinewidth setmatrix
+
+	$DviLaser /PortraitMode known {
+		$DviLaser /PortraitMode get not { 90 rotate } if } if
+
+	itransform moveto
+
+	/ury exch TeXscale def
+	/urx exch TeXscale def
+	/lly exch TeXscale def
+	/llx exch TeXscale def
+	/y exch TeXscale def
+	/x exch TeXscale def
+	
+	currentpoint /cy exch def /cx exch def
+
+	/sx x urx llx sub div def 	% scaling for x
+	/sy y ury lly sub div def	% scaling for y
+
+	sx sy scale			% scale by (sx,sy)
+
+	cx sx div llx sub
+	cy sy div ury sub translate
+	
+	/DefFigCTM matrix currentmatrix def
+
+	/initmatrix {
+		DefFigCTM setmatrix
+	} def
+	/defaultmatrix {
+		DefFigCTM exch copy
+	} def
+
+	/initgraphics {
+		DocumentInitState setmiterlimit setgray setdash 
+			setlinejoin setlinecap setlinewidth setmatrix
+		DefFigCTM setmatrix
+	} def
+
+	/showpage {
+		initgraphics
+	} def
+% /erasepage and /copypage added for MatLab support (tli)
+ 	/erasepage {
+ 		initgraphics
+ 	} def
+ 	/copypage {} def
+
+} def
+% Args are llx lly urx ury (in figure coordinates)
+/clipFig {
+	currentpoint 6 2 roll
+	newpath 4 copy
+	4 2 roll moveto
+	6 -1 roll exch lineto
+	exch lineto
+	exch lineto
+	closepath clip
+	newpath
+	moveto
+} def
+% doclip, if called, will always be just after a `startfig'
+/doclip { llx lly urx ury clipFig } def
+/endTexFig {
+	end SavedState restore
+} def
+%
+% End of psfig.tex additions
+% 
+% End of prolog section.
+%
+
+
+%%EndProlog
+%%BeginSetup
+BeginDviLaserDoc
+300 300 RES
+1 DT
+%%EndSetup
+
+
+%%Page: 1 1
+%%PageBoundingBox: (atend)
+%%BeginPageSetup
+1000 BP 3300 2550 PM /paper-automatic false SPS 1016 0 XY
+%%EndPageSetup
+XP /F57 /cmr17 300 71.7 71.7 128 [-3 -19 67 54] PXLNF RP
+XP /F57 67 48 4 -1 44 50 51 40 0
+<00001FE001 0001FFF803 0007F00E03 000F800307 003E0000C7 007C00004F
+ 00F800003F 01F000001F 03E000000F 07C000000F 0780000007 0F80000007
+ 1F00000003 1F00000003 3F00000003 3E00000001 3E00000001 7E00000001
+ 7E00000001 7C00000000 FC00000000 FC00000000 FC00000000 FC00000000
+ FC00000000 FC00000000 FC00000000 FC00000000 FC00000000 FC00000000
+ FC00000000 7C00000000 7E00000000 7E00000001 3E00000001 3E00000001
+ 3F00000001 1F00000001 1F00000002 0F80000002 0780000006 07C0000004
+ 03E000000C 01F0000008 00F8000010 007C000020 003E0000C0 000F800180
+ 0007F00F00 0001FFFC00 00001FE000>
+PXLC RP
+1016 456 XY F57(C)S
+XP /F57 121 35 1 -14 34 31 45 40 0
+<FFF801FF80 FFF801FF80 0FC0007C00 0780003800 07C0003000 03C0002000
+ 03C0002000 01E0004000 01E0004000 01F0004000 00F0008000 00F0008000
+ 0078010000 0078010000 007C010000 003C020000 003C020000 001E040000
+ 001E040000 001F040000 000F080000 000F080000 0007900000 0007900000
+ 0007D00000 0003E00000 0003E00000 0001C00000 0001C00000 0001C00000
+ 0000800000 0000800000 0001000000 0001000000 0001000000 0002000000
+ 0002000000 0004000000 7004000000 F80C000000 F808000000 F810000000
+ 7030000000 3040000000 1F80000000>
+PXLC RP
+1064 456 XY F57(y)S
+XP /F57 99 29 3 0 27 31 31 24 0
+<003F80 00E060 038018 070004 0F0004 1E001E 1C003E 3C003E 7C003E
+ 7C0008 780000 F80000 F80000 F80000 F80000 F80000 F80000 F80000
+ F80000 F80000 780000 7C0000 7C0000 3C0001 1E0001 1E0002 0F0002
+ 070004 038018 00E060 003F80>
+PXLC RP
+1098 456 XY F57(c)S
+XP /F57 108 18 2 0 16 50 50 16 0
+<0180 3F80 FF80 FF80 0F80 0780 0780 0780 0780 0780 0780 0780 0780
+ 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780
+ 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780 0780
+ 0780 0780 0780 0780 0780 0780 0780 0780 0FC0 FFFC FFFC>
+PXLC RP
+1127 456 XY F57(l)S
+XP /F57 101 29 2 0 27 31 31 32 0
+<003F8000 00E0E000 03803800 07003C00 0E001E00 1E001E00 1C000F00
+ 3C000F00 7C000F00 78000F80 78000780 F8000780 F8000780 FFFFFF80
+ F8000000 F8000000 F8000000 F8000000 F8000000 F8000000 78000000
+ 7C000000 3C000000 3C000080 1E000080 0E000100 0F000200 07800200
+ 01C00C00 00F03000 001FC000>
+PXLC RP
+1145 456 XY F57(e)S
+XP /F57 76 41 4 0 38 49 49 40 0
+<FFFFC00000 FFFFC00000 07F0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000040 03E0000040 03E0000040 03E0000040 03E0000080
+ 03E0000080 03E0000080 03E0000080 03E0000180 03E0000180 03E0000380
+ 03E0000380 03E0000780 03E0000F00 03E0003F00 07E000FF00 FFFFFFFF00
+ FFFFFFFF00>
+PXLC RP
+1196 456 XY F57(Le)S
+XP /F57 118 35 1 0 34 31 31 40 0
+<FFF801FF80 FFF801FF80 0FC0007C00 0780003800 07C0003000 03C0002000
+ 03C0002000 01E0004000 01E0004000 01F0004000 00F0008000 00F0008000
+ 0078010000 0078010000 007C010000 003C020000 003C020000 001E040000
+ 001E040000 001F040000 000F080000 000F080000 0007900000 0007900000
+ 0007D00000 0003E00000 0003E00000 0001C00000 0001C00000 0001C00000
+ 0000800000>
+PXLC RP
+1267 456 XY F57(v)S -2 x(el)S
+XP /F57 83 37 4 -1 33 50 51 32 0
+<007F8020 01FFE060 07C07860 0F001CE0 1E0006E0 3C0003E0 380001E0
+ 780000E0 700000E0 70000060 F0000060 F0000060 F0000020 F0000020
+ F0000020 F8000020 F8000000 7C000000 7E000000 3F000000 3FC00000
+ 1FFC0000 0FFF8000 07FFF800 03FFFE00 00FFFF00 000FFF80 0001FFC0
+ 00001FE0 000007E0 000003F0 000001F0 000000F0 000000F8 000000F8
+ 80000078 80000078 80000078 80000078 80000078 C0000078 C0000070
+ E00000F0 E00000E0 F00000E0 F80001C0 EC000380 E7000700 C1F01E00
+ C07FFC00 800FF000>
+PXLC RP
+1368 456 XY F57(S)S
+XP /F57 80 45 4 0 41 49 49 40 0
+<FFFFFFC000 FFFFFFF800 07E000FE00 03E0001F00 03E0000F80 03E00007C0
+ 03E00003E0 03E00003F0 03E00001F0 03E00001F0 03E00001F8 03E00001F8
+ 03E00001F8 03E00001F8 03E00001F8 03E00001F8 03E00001F0 03E00001F0
+ 03E00003E0 03E00003E0 03E00007C0 03E0000F80 03E0001F00 03E000FC00
+ 03FFFFF000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000 03E0000000
+ 03E0000000 03E0000000 03E0000000 03E0000000 07F0000000 FFFF800000
+ FFFF800000>
+PXLC RP
+1405 456 XY F57(P)S
+XP /F57 73 23 3 0 20 49 49 24 0
+<FFFF80 FFFF80 07F000 03E000 03E000 03E000 03E000 03E000 03E000
+ 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000
+ 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000
+ 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000
+ 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000
+ 03E000 07F000 FFFF80 FFFF80>
+PXLC RP
+1450 456 XY F57(I)S
+XP /F57 77 61 4 0 57 49 49 56 0
+<FFF00000007FF8 FFF00000007FF8 07F00000007F00 02F8000000BE00
+ 02F8000000BE00 02F8000000BE00 027C0000013E00 027C0000013E00
+ 023E0000023E00 023E0000023E00 023E0000023E00 021F0000043E00
+ 021F0000043E00 021F0000043E00 020F8000083E00 020F8000083E00
+ 020F8000083E00 0207C000103E00 0207C000103E00 0207C000103E00
+ 0203E000203E00 0203E000203E00 0201F000403E00 0201F000403E00
+ 0201F000403E00 0200F800803E00 0200F800803E00 0200F800803E00
+ 02007C01003E00 02007C01003E00 02007C01003E00 02003E02003E00
+ 02003E02003E00 02003E02003E00 02001F04003E00 02001F04003E00
+ 02000F88003E00 02000F88003E00 02000F88003E00 020007D0003E00
+ 020007D0003E00 020007D0003E00 020003E0003E00 020003E0003E00
+ 020003E0003E00 070001C0003E00 0F8001C0007F00 FFF801C00FFFF8
+ FFF800800FFFF8>
+PXLC RP
+1473 456 XY F57(M)S
+XP /F43 /cmr12 300 49.8 49.8 128 [-2 -13 48 37] PXLNF RP
+XP /F43 65 37 2 0 34 35 35 32 0
+<00018000 00018000 00018000 0003C000 0003C000 0003C000 0005E000
+ 0005E000 000DF000 0008F000 0008F000 0010F800 00107800 00107800
+ 00203C00 00203C00 00203C00 00401E00 00401E00 00401E00 00800F00
+ 00800F00 00FFFF00 01000780 01000780 030007C0 020003C0 020003C0
+ 040003E0 040001E0 040001E0 0C0000F0 0C0000F0 3E0001F8 FF800FFF>
+PXLC RP
+1138 585 XY F43(A)S
+XP /F43 110 27 1 0 25 21 21 24 0
+<0E1F80 FE60C0 1E80E0 0F0070 0F0070 0E0070 0E0070 0E0070 0E0070
+ 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070
+ 0E0070 0E0070 FFE7FF>
+PXLC RP
+1175 585 XY F43(nn)S
+XP /F43 101 22 1 0 20 21 21 24 0
+<01FC00 070700 0C0380 1C01C0 3801C0 7801E0 7000E0 F000E0 FFFFE0
+ F00000 F00000 F00000 F00000 F00000 700000 780020 380020 1C0040
+ 0E0080 070300 00FC00>
+PXLC RP
+1229 585 XY F43(e)S
+XP /F43 82 36 2 -1 35 34 35 40 0
+<FFFFE00000 0F803C0000 07800E0000 0780078000 078007C000 078003C000
+ 078003E000 078003E000 078003E000 078003E000 078003E000 078003C000
+ 078007C000 0780078000 07800E0000 07803C0000 07FFE00000 0780700000
+ 0780380000 07801C0000 07801E0000 07800E0000 07800F0000 07800F0000
+ 07800F0000 07800F0000 07800F8000 07800F8000 07800F8000 07800F8080
+ 07800FC080 078007C080 0FC003C100 FFFC01E200 0000007C00>
+PXLC RP
+1267 585 XY F43(R)S
+XP /F43 111 24 1 0 22 21 21 24 0
+<01FC00 070700 0C0180 1800C0 3800E0 700070 700070 F00078 F00078
+ F00078 F00078 F00078 F00078 F00078 700070 7800F0 3800E0 1C01C0
+ 0E0380 070700 01FC00>
+PXLC RP
+1303 585 XY F43(o)S
+XP /F43 103 24 1 -11 22 22 33 24 0
+<000070 01F198 071E18 0E0E18 1C0700 1C0700 3C0780 3C0780 3C0780
+ 3C0780 1C0700 1C0700 0E0E00 0F1C00 19F000 100000 100000 180000
+ 180000 1FFE00 0FFFC0 0FFFE0 3800F0 600030 400018 C00018 C00018
+ C00018 600030 600030 3800E0 0E0380 03FE00>
+PXLC RP
+1327 585 XY F43(ge)S
+XP /F43 114 19 1 0 17 21 21 16 0
+<0E3C FE46 1E8F 0F0F 0F06 0F00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0F00 FFF0>
+PXLC RP
+1373 585 XY F43(r)S
+XP /F43 115 19 2 0 16 21 21 16 0
+<0F88 3078 6018 C018 C008 C008 E008 F000 7F80 3FE0 0FF0 01F8 003C
+ 801C 800C 800C C00C C008 E018 D030 8FC0>
+PXLC RP
+1392 585 XY F43(s)S
+XP /F43 83 27 3 -1 23 35 36 24 0
+<03F020 0C0C60 180260 3001E0 7000E0 600060 E00060 E00060 E00020
+ E00020 E00020 F00000 F00000 780000 7F0000 3FF000 1FFE00 0FFF00
+ 03FF80 003FC0 0007E0 0001E0 0000F0 0000F0 000070 800070 800070
+ 800070 800070 C00060 C00060 E000C0 F000C0 C80180 C60700 81FC00>
+PXLC RP
+1101 643 XY F43(S)S
+XP /F43 99 22 2 0 20 21 21 24 0
+<01FE00 070300 0C0780 1C0780 380300 780000 700000 F00000 F00000
+ F00000 F00000 F00000 F00000 F00000 700000 780040 380040 1C0080
+ 0C0100 070600 01F800>
+PXLC RP
+1128 643 XY F43(co)S
+XP /F43 116 19 1 0 15 31 31 16 0
+<0200 0200 0200 0200 0600 0600 0600 0E00 1E00 3E00 FFF8 0E00 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E04 0E04 0E04 0E04
+ 0E04 0E04 0708 0308 01F0>
+PXLC RP
+1174 643 XY F43(tt)S 1228 X(Rosen)S
+XP /F43 98 27 1 0 24 35 35 24 0
+<0E0000 FE0000 1E0000 0E0000 0E0000 0E0000 0E0000 0E0000 0E0000
+ 0E0000 0E0000 0E0000 0E0000 0E0000 0E1F00 0E61C0 0E8060 0F0030
+ 0E0038 0E003C 0E001C 0E001E 0E001E 0E001E 0E001E 0E001E 0E001E
+ 0E001E 0E001C 0E003C 0E0038 0F0070 0C8060 0C41C0 083F00>
+PXLC RP
+1355 643 XY F43(b)S 1 x(erg)S
+XP /F43 68 37 2 0 33 34 34 32 0
+<FFFFF000 0F801E00 07800700 078003C0 078001C0 078000E0 078000F0
+ 07800078 07800078 0780007C 0780003C 0780003C 0780003C 0780003E
+ 0780003E 0780003E 0780003E 0780003E 0780003E 0780003E 0780003E
+ 0780003E 0780003C 0780003C 0780007C 07800078 07800078 078000F0
+ 078000E0 078001E0 078003C0 07800700 0F801E00 FFFFF800>
+PXLC RP
+919 701 XY F43(De)S
+XP /F43 112 27 1 -10 24 21 31 24 0
+<0E1F00 FE61C0 0E8060 0F0070 0E0038 0E003C 0E001C 0E001E 0E001E
+ 0E001E 0E001E 0E001E 0E001E 0E001E 0E003C 0E003C 0E0038 0F0070
+ 0E80E0 0E41C0 0E3F00 0E0000 0E0000 0E0000 0E0000 0E0000 0E0000
+ 0E0000 0E0000 0E0000 FFE000>
+PXLC RP
+978 701 XY F43(p)S
+XP /F43 97 24 2 0 23 21 21 24 0
+<0FE000 183800 3C0C00 3C0E00 180700 000700 000700 000700 00FF00
+ 07C700 1E0700 3C0700 780700 700700 F00708 F00708 F00708 F00F08
+ 781708 3C2390 0FC1E0>
+PXLC RP
+1005 701 XY F43(art)S
+XP /F43 109 41 1 0 40 21 21 40 0
+<0E1FC07F00 FE60E18380 1E807201C0 0F003C00E0 0F003C00E0 0E003800E0
+ 0E003800E0 0E003800E0 0E003800E0 0E003800E0 0E003800E0 0E003800E0
+ 0E003800E0 0E003800E0 0E003800E0 0E003800E0 0E003800E0 0E003800E0
+ 0E003800E0 0E003800E0 FFE3FF8FFE>
+PXLC RP
+1067 701 XY F43(men)S -1 x(t)S 1191 X(o)S
+XP /F43 102 15 0 0 16 35 35 16 0
+<003C 00C6 018F 038F 030F 0700 0700 0700 0700 0700 0700 0700 0700
+ 0700 FFF8 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0700 0700 0700 0700 0700 0700 0700 0780 7FF8>
+PXLC RP
+1215 701 XY F43(f)S
+XP /F43 67 35 3 -1 31 35 36 32 0
+<0007E010 00381830 00E00630 01C00170 038000F0 070000F0 0E000070
+ 1E000070 1C000030 3C000030 3C000030 7C000010 78000010 78000010
+ F8000000 F8000000 F8000000 F8000000 F8000000 F8000000 F8000000
+ F8000000 78000000 78000010 7C000010 3C000010 3C000010 1C000020
+ 1E000020 0E000040 07000040 03800080 01C00100 00E00200 00381C00
+ 0007E000>
+PXLC RP
+1246 701 XY F43(Comp)S
+XP /F43 117 27 1 0 25 21 21 24 0
+<0E0070 FE07F0 1E00F0 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070
+ 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070 0E0070 0E00F0 0E00F0
+ 060170 038278 00FC7F>
+PXLC RP
+1374 701 XY F43(uter)S 1477 X(Sc)S
+XP /F43 105 14 1 0 11 34 34 16 0
+<1C00 1E00 3E00 1E00 1C00 0000 0000 0000 0000 0000 0000 0000 0000
+ 0E00 FE00 1E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 FFC0>
+PXLC RP
+1525 701 XY F43(ience)S
+XP /F43 80 33 2 0 29 34 34 32 0
+<FFFFF000 0F803C00 07800F00 07800780 078007C0 078003C0 078003E0
+ 078003E0 078003E0 078003E0 078003E0 078003E0 078003C0 078007C0
+ 07800780 07800F00 07803C00 07FFF000 07800000 07800000 07800000
+ 07800000 07800000 07800000 07800000 07800000 07800000 07800000
+ 07800000 07800000 07800000 07800000 0FC00000 FFFC0000>
+PXLC RP
+1054 760 XY F43(Princeton)S
+XP /F43 85 37 2 -1 34 34 35 32 0
+<FFFC07FF 0FC000F8 07800070 07800020 07800020 07800020 07800020
+ 07800020 07800020 07800020 07800020 07800020 07800020 07800020
+ 07800020 07800020 07800020 07800020 07800020 07800020 07800020
+ 07800020 07800020 07800020 07800020 07800020 03800040 03C00040
+ 03C00040 01C00080 00E00080 00600100 00300600 001C0800 0003F000>
+PXLC RP
+1277 760 XY F43(Uni)S
+XP /F43 118 26 1 0 24 21 21 24 0
+<FFC1FE 1E0078 0E0030 0E0020 0E0020 070040 070040 038080 038080
+ 038080 01C100 01C100 00E200 00E200 00E200 007400 007400 003800
+ 003800 003800 001000>
+PXLC RP
+1354 760 XY F43(v)S -1 x(ersit)S
+XP /F43 121 26 1 -10 24 21 31 24 0
+<FFC1FE 1E0078 0E0030 0E0020 0E0020 070040 070040 038080 038080
+ 038080 01C100 01C100 00E200 00E200 00E200 007400 007400 003800
+ 003800 003800 001000 001000 002000 002000 002000 004000 F04000
+ F08000 F18000 430000 3C0000>
+PXLC RP
+1470 760 XY F43(y)S 58 y 967 X(Princeton)S
+XP /F43 44 14 4 -10 10 5 15 8 0
+<70 F8 FC FC 74 04 04 04 04 08 08 10 10 20 40>
+PXLC RP
+1173 818 XY F43(,)S
+XP /F43 78 37 2 0 34 34 34 32 0
+<FF8007FF 07C000F8 07C00070 05E00020 04F00020 04F00020 04780020
+ 047C0020 043C0020 041E0020 041F0020 040F0020 04078020 04078020
+ 0403C020 0401E020 0401E020 0400F020 0400F820 04007820 04003C20
+ 04003E20 04001E20 04000F20 04000F20 040007A0 040003E0 040003E0
+ 040001E0 040001E0 040000E0 0E000060 1F000060 FFE00020>
+PXLC RP
+1203 818 XY F43(Ne)S
+XP /F43 119 35 1 0 33 21 21 32 0
+<FF8FF8FF 1E01E03C 1C01C018 0E01C018 0E01E010 0E01E010 07026020
+ 07027020 07027020 03843040 03843840 03843840 01C81880 01C81C80
+ 01C81C80 00F00D00 00F00F00 00F00F00 00600600 00600600 00600600>
+PXLC RP
+1261 818 XY F43(w)S
+XP /F43 74 25 2 -1 22 34 35 24 0
+<03FFF0 001F00 000F00 000F00 000F00 000F00 000F00 000F00 000F00
+ 000F00 000F00 000F00 000F00 000F00 000F00 000F00 000F00 000F00
+ 000F00 000F00 000F00 000F00 000F00 000F00 000F00 000F00 700F00
+ F80F00 F80F00 F80E00 F01E00 401C00 203800 187000 07C000>
+PXLC RP
+1313 818 XY F43(Jersey)S
+XP /F43 48 24 2 -1 21 33 34 24 0
+<01F000 071C00 0C0600 180300 380380 380380 7001C0 7001C0 7001C0
+ 7001C0 F001E0 F001E0 F001E0 F001E0 F001E0 F001E0 F001E0 F001E0
+ F001E0 F001E0 F001E0 F001E0 F001E0 F001E0 7001C0 7001C0 7001C0
+ 7803C0 380380 380380 1C0700 0C0600 071C00 01F000>
+PXLC RP
+1461 818 XY F43(0)S
+XP /F43 56 24 2 -1 21 33 34 24 0
+<01F800 060E00 080300 100180 200180 2000C0 6000C0 6000C0 6000C0
+ 7000C0 780180 3E0100 3F0200 1FC400 0FF800 03F800 03FC00 067F00
+ 083F80 100F80 3007C0 6001C0 6000E0 C000E0 C00060 C00060 C00060
+ C00060 600040 6000C0 300080 180300 0E0E00 03F000>
+PXLC RP
+1486 818 XY F43(8)S
+XP /F43 53 24 2 -1 21 33 34 24 0
+<100080 1E0700 1FFF00 1FFE00 1FF800 13E000 100000 100000 100000
+ 100000 100000 100000 10F800 130E00 140700 180380 100380 0001C0
+ 0001C0 0001E0 0001E0 0001E0 0001E0 7001E0 F001E0 F001E0 E001C0
+ 8001C0 4003C0 400380 200700 100600 0C1C00 03F000>
+PXLC RP
+1510 818 XY F43(5)S
+XP /F43 52 24 1 0 22 33 33 24 0
+<000200 000600 000E00 000E00 001E00 001E00 002E00 004E00 004E00
+ 008E00 008E00 010E00 020E00 020E00 040E00 040E00 080E00 100E00
+ 100E00 200E00 200E00 400E00 800E00 FFFFF8 000E00 000E00 000E00
+ 000E00 000E00 000E00 000E00 001F00 01FFF0>
+PXLC RP
+1535 818 XY F43(44)S 924 Y 1145 X(Ju)S
+XP /F43 108 14 1 0 12 35 35 16 0
+<0E00 FE00 1E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 FFE0>
+PXLC RP
+1197 924 XY F43(ly)S
+XP /F43 50 24 2 0 21 33 33 24 0
+<03F000 0C1C00 100700 200780 4003C0 4003C0 8003E0 F003E0 F801E0
+ F801E0 F801E0 2003E0 0003E0 0003C0 0003C0 000780 000700 000E00
+ 001C00 001800 003000 006000 00C000 018000 010000 020020 040020
+ 080020 180060 300040 3FFFC0 7FFFC0 FFFFC0>
+PXLC RP
+1253 924 XY F43(2,)S
+XP /F43 49 24 4 0 19 33 33 16 0
+<0080 0380 0F80 F380 0380 0380 0380 0380 0380 0380 0380 0380 0380
+ 0380 0380 0380 0380 0380 0380 0380 0380 0380 0380 0380 0380 0380
+ 0380 0380 0380 0380 0380 07C0 FFFE>
+PXLC RP
+1307 924 XY F43(1)S
+XP /F43 57 24 2 -1 21 33 34 24 0
+<01F000 060C00 0C0600 180700 380380 700380 700380 F001C0 F001C0
+ F001C0 F001E0 F001E0 F001E0 F001E0 F001E0 7001E0 7003E0 3803E0
+ 1805E0 0C05E0 0619E0 03E1E0 0001C0 0001C0 0001C0 000380 000380
+ 300300 780700 780600 700C00 201800 103000 0FC000>
+PXLC RP
+1332 924 XY F43(99)S
+XP /F43 51 24 2 -1 21 33 34 24 0
+<03F800 0C1E00 100700 200780 4007C0 7807C0 7803C0 7807C0 3807C0
+ 000780 000780 000700 000F00 000E00 003800 03F000 001C00 000F00
+ 000780 000780 0003C0 0003C0 0003E0 2003E0 7003E0 F803E0 F803E0
+ F003C0 4003C0 400780 200780 100F00 0C1C00 03F000>
+PXLC RP
+1380 924 XY F43(3)S
+XP /F55 /cmbx10 432 59.8 59.8 128 [-4 -15 69 45] PXLNF RP
+XP /F55 49 34 5 0 28 39 39 24 0
+<000E00 001E00 007E00 07FE00 FFFE00 FFFE00 F8FE00 00FE00 00FE00
+ 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00
+ 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00
+ 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00 00FE00
+ 7FFFFE 7FFFFE 7FFFFE>
+PXLC RP
+225 1069 XY F55(1)S
+XP /F55 73 26 2 0 24 41 41 24 0
+<FFFFFC FFFFFC FFFFFC 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 FFFFFC FFFFFC FFFFFC>
+PXLC RP
+328 1069 XY F55(I)S
+XP /F55 110 38 3 0 36 27 27 40 0
+<FFC07F0000 FFC1FFC000 FFC787E000 0FCE07F000 0FDC03F800 0FF803F800
+ 0FF003F800 0FF003F800 0FF003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ FFFE3FFF80 FFFE3FFF80 FFFE3FFF80>
+PXLC RP
+354 1069 XY F55(n)S
+XP /F55 116 27 1 0 22 38 38 24 0
+<007000 007000 007000 007000 00F000 00F000 00F000 01F000 03F000
+ 03F000 07F000 1FFFF0 FFFFF0 FFFFF0 07F000 07F000 07F000 07F000
+ 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000
+ 07F038 07F038 07F038 07F038 07F038 07F038 07F038 03F870 01F8F0
+ 00FFE0 001F80>
+PXLC RP
+390 1069 XY F55(t)S
+XP /F55 114 28 2 0 26 27 27 24 0
+<FFC1F0 FFC7FC FFCE3E 0FDC7F 0FD87F 0FF87F 0FF07F 0FF03E 0FF000
+ 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000
+ 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 FFFF00 FFFF00 FFFF00>
+PXLC RP
+417 1069 XY F55(r)S
+XP /F55 111 34 2 0 31 27 27 32 0
+<003FE000 01FFFC00 03F07E00 0FC01F80 1F800FC0 3F800FE0 3F0007E0
+ 7F0007F0 7F0007F0 7F0007F0 FF0007F8 FF0007F8 FF0007F8 FF0007F8
+ FF0007F8 FF0007F8 FF0007F8 FF0007F8 7F0007F0 7F0007F0 3F800FE0
+ 3F800FE0 1F800FC0 0FC01F80 07F07F00 01FFFC00 003FE000>
+PXLC RP
+446 1069 XY F55(o)S
+XP /F55 100 38 2 0 35 42 42 40 0
+<00003FF800 00003FF800 00003FF800 000003F800 000003F800 000003F800
+ 000003F800 000003F800 000003F800 000003F800 000003F800 000003F800
+ 000003F800 000003F800 000003F800 001FE3F800 00FFFBF800 03F03FF800
+ 0FE00FF800 1FC007F800 3F8003F800 3F8003F800 7F8003F800 7F0003F800
+ FF0003F800 FF0003F800 FF0003F800 FF0003F800 FF0003F800 FF0003F800
+ FF0003F800 FF0003F800 FF0003F800 7F0003F800 7F0003F800 3F8003F800
+ 3F8007F800 1FC00FF800 0FE01FF800 03F03FFF80 00FFF3FF80 003FC3FF80>
+PXLC RP
+482 1069 XY F55(d)S
+XP /F55 117 38 3 0 36 27 27 40 0
+<FFE03FF800 FFE03FF800 FFE03FF800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE007F800 0FE007F800 0FE00FF800 07E01FF800
+ 03F03BFF80 01FFF3FF80 003FC3FF80>
+PXLC RP
+520 1069 XY F55(u)S
+XP /F55 99 31 2 0 28 27 27 32 0
+<001FF800 00FFFE00 03F01F00 0FE03F80 1FC03F80 3F803F80 3F803F80
+ 7F801F00 7F000000 FF000000 FF000000 FF000000 FF000000 FF000000
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8001C0
+ 3FC001C0 1FC003C0 0FE00780 03F01F00 00FFFC00 001FE000>
+PXLC RP
+558 1069 XY F55(ct)S
+XP /F55 105 19 3 0 18 43 43 16 0
+<0700 1FC0 1FE0 3FE0 3FE0 3FE0 1FE0 1FC0 0700 0000 0000 0000 0000
+ 0000 0000 0000 FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 FFFE FFFE FFFE>
+PXLC RP
+615 1069 XY F55(ion)S
+XP /F25 /cmr10 300 41.5 41.5 128 [-3 -11 41 31] PXLNF RP
+XP /F25 84 30 1 0 28 28 28 32 0
+<7FFFFFC0 700F01C0 600F00C0 400F0040 400F0040 C00F0020 800F0020
+ 800F0020 800F0020 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 001F8000 03FFFC00>
+PXLC RP
+225 1168 XY F25(T)S
+XP /F25 104 23 1 0 21 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 FF9FF0>
+PXLC RP
+255 1168 XY F25(h)S
+XP /F25 101 18 1 0 16 18 18 16 0
+<03E0 0C30 1818 300C 700E 6006 E006 FFFE E000 E000 E000 E000 6000
+ 7002 3002 1804 0C18 03E0>
+PXLC RP
+278 1168 XY F25(e)S
+XP /F25 111 21 1 0 19 18 18 24 0
+<03F000 0E1C00 180600 300300 700380 600180 E001C0 E001C0 E001C0
+ E001C0 E001C0 E001C0 600180 700380 300300 180600 0E1C00 03F000>
+PXLC RP
+310 1168 XY F25(o)S
+XP /F25 114 16 1 0 14 18 18 16 0
+<FCE0 1D30 1E78 1E78 1C30 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 FFC0>
+PXLC RP
+331 1168 XY F25(r)S
+XP /F25 105 12 1 0 10 29 29 16 0
+<1800 3C00 3C00 1800 0000 0000 0000 0000 0000 0000 0000 FC00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+347 1168 XY F25(i)S
+XP /F25 103 21 1 -9 19 19 28 24 0
+<000380 03C4C0 0C38C0 1C3880 181800 381C00 381C00 381C00 381C00
+ 181800 1C3800 0C3000 13C000 100000 300000 180000 1FF800 1FFF00
+ 1FFF80 300380 6001C0 C000C0 C000C0 C000C0 600180 300300 1C0E00
+ 07F800>
+PXLC RP
+358 1168 XY F25(gi)S
+XP /F25 110 23 1 0 21 18 18 24 0
+<FC7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 FF9FF0>
+PXLC RP
+391 1168 XY F25(n)S
+XP /F25 97 21 2 0 20 18 18 24 0
+<1FC000 307000 783800 781C00 301C00 001C00 001C00 01FC00 0F1C00
+ 381C00 701C00 601C00 E01C40 E01C40 E01C40 603C40 304E80 1F8700>
+PXLC RP
+414 1168 XY F25(a)S
+XP /F25 108 12 1 0 10 29 29 16 0
+<FC00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+435 1168 XY F25(l)S
+XP /F25 83 23 2 -1 20 29 30 24 0
+<07E080 1C1980 300580 700380 600180 E00180 E00080 E00080 E00080
+ F00000 F80000 7C0000 7FC000 3FF800 1FFE00 07FF00 00FF80 000F80
+ 0007C0 0003C0 0001C0 8001C0 8001C0 8001C0 C00180 C00180 E00300
+ D00200 CC0C00 83F800>
+PXLC RP
+459 1168 XY F25(S)S
+XP /F25 80 28 2 0 25 28 28 24 0
+<FFFF80 0F00E0 0F0078 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001E 0F001C 0F003C 0F0078 0F00E0 0FFF80 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ FFF000>
+PXLC RP
+483 1168 XY F25(P)S
+XP /F25 73 15 1 0 13 28 28 16 0
+<FFF0 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 FFF0>
+PXLC RP
+511 1168 XY F25(I)S
+XP /F25 77 38 2 0 35 28 28 40 0
+<FF8000FF80 0F8000F800 0F8000F800 0BC0017800 0BC0017800 0BC0017800
+ 09E0027800 09E0027800 08F0047800 08F0047800 08F0047800 0878087800
+ 0878087800 0878087800 083C107800 083C107800 083C107800 081E207800
+ 081E207800 081E207800 080F407800 080F407800 0807807800 0807807800
+ 0807807800 0803007800 1C03007800 FF8307FF80>
+PXLC RP
+526 1168 XY F25(M)S
+XP /F25 119 30 1 0 28 18 18 32 0
+<FF3FCFE0 3C0F0380 1C070180 1C070100 1C0B0100 0E0B8200 0E0B8200
+ 0E118200 0711C400 0711C400 0720C400 03A0E800 03A0E800 03C06800
+ 01C07000 01C07000 01803000 00802000>
+PXLC RP
+577 1168 XY F25(w)S -1 x(a)S
+XP /F25 115 16 1 0 14 18 18 16 0
+<1F90 3070 4030 C010 C010 E010 F800 7F80 3FE0 0FF0 00F8 8038 8018
+ C018 C018 E010 D060 8FC0>
+PXLC RP
+627 1168 XY F25(s)S 657 X(wri)S
+XP /F25 116 16 1 0 13 26 26 16 0
+<0400 0400 0400 0400 0C00 0C00 1C00 3C00 FFE0 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C10 1C10 1C10 1C10 1C10 0C10 0E20 03C0>
+PXLC RP
+714 1168 XY F25(tten)S
+XP /F25 98 23 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C00E0 1C00E0 1C00C0 1C01C0 1C0180 1E0300
+ 190600 10F800>
+PXLC RP
+802 1168 XY F25(b)S
+XP /F25 121 22 1 -8 20 18 26 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000
+ 004000 008000 008000 F08000 F10000 F30000 660000 3C0000>
+PXLC RP
+824 1168 XY F25(y)S
+XP /F25 74 21 1 -1 17 28 29 16 0
+<1FFF 00F8 0078 0078 0078 0078 0078 0078 0078 0078 0078 0078 0078
+ 0078 0078 0078 0078 0078 0078 0078 0078 7078 F878 F878 F878 F0F0
+ 40E0 21C0 1F00>
+PXLC RP
+859 1168 XY F25(Ji)S
+XP /F25 109 35 1 0 34 18 18 40 0
+<FC7E07E000 1C83883800 1D01901800 1E01E01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 FF8FF8FF80>
+PXLC RP
+892 1168 XY F25(m)S
+XP /F25 76 26 2 0 23 28 28 24 0
+<FFF800 0F8000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0008 0F0008 0F0008 0F0018 0F0018 0F0010 0F0030 0F0070 0F01F0
+ FFFFF0>
+PXLC RP
+940 1168 XY F25(Lar)S
+XP /F25 117 23 1 0 21 18 18 24 0
+<FC1F80 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0780 0C0780 0E1B80 03E3F0>
+PXLC RP
+1003 1168 XY F25(us)S 1055 X(at)S 1106 X(the)S
+XP /F25 85 31 2 -1 28 28 29 32 0
+<FFF07FC0 0F000E00 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 07000800 07800800 03801000 01801000 00C02000 0070C000
+ 001F0000>
+PXLC RP
+1177 1168 XY F25(Uni)S
+XP /F25 118 22 1 0 20 18 18 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000>
+PXLC RP
+1243 1168 XY F25(v)S -1 x(ersit)S -1 x(y)S 1376 X(o)S
+XP /F25 102 13 0 0 15 29 29 16 0
+<00F8 018C 071E 061E 0E0C 0E00 0E00 0E00 0E00 0E00 0E00 FFE0 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 7FE0>
+PXLC RP
+1397 1168 XY F25(f)S
+XP /F25 87 43 1 -1 41 28 29 40 0
+<FFE0FFE0FF 1F001F003C 1E001E0018 0F001F0010 0F001F0010 0F001F0010
+ 07801F0020 0780278020 0780278020 03C0278040 03C043C040 03C043C040
+ 03E043C040 01E081E080 01E081E080 01E081E080 00F100F100 00F100F100
+ 00F100F100 007900FA00 007A007A00 007A007A00 003E007C00 003C003C00
+ 003C003C00 003C003C00 0018001800 0018001800 0018001800>
+PXLC RP
+1423 1168 XY F25(Wis)S
+XP /F25 99 18 2 0 16 18 18 16 0
+<07E0 0C30 1878 3078 7030 6000 E000 E000 E000 E000 E000 E000 6000
+ 7004 3004 1808 0C30 07C0>
+PXLC RP
+1494 1168 XY F25(consin)S 1620 X(at)S 1671 X(Ma)S
+XP /F25 100 23 2 0 21 29 29 24 0
+<003F00 000700 000700 000700 000700 000700 000700 000700 000700
+ 000700 000700 03E700 0C1700 180F00 300700 700700 600700 E00700
+ E00700 E00700 E00700 E00700 E00700 600700 700700 300700 180F00
+ 0C3700 07C7E0>
+PXLC RP
+1729 1168 XY F25(dison)S
+XP /F25 46 12 4 0 8 4 4 8 0
+<60 F0 F0 60>
+PXLC RP
+1824 1168 XY F25(.)S 1854 X(It)S
+XP /F25 39 12 4 17 9 29 12 8 0
+<60 F0 F8 68 08 08 08 10 10 20 40 80>
+PXLC RP
+1885 1168 XY F25('s)S
+XP /F25 112 23 1 -8 20 18 26 24 0
+<FC7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0 1C00E0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C01C0 1C01C0 1C0180 1E0300 1D0600 1CF800
+ 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 FF8000>
+PXLC RP
+1927 1168 XY F25(purp)S 1 x(ose)S 2082 X(is)S 2123 X(to)S 2174 X
+(sim)S -1 x(ulate)S 50 y 225 X(the)S 293 X(function)S 452 X(of)S 
+495 X(the)S 563 X(MIPS)S
+XP /F25 82 31 2 -1 30 28 29 32 0
+<FFFF0000 0F01E000 0F007800 0F003C00 0F001C00 0F001E00 0F001E00
+ 0F001E00 0F001E00 0F001C00 0F003C00 0F007800 0F01E000 0FFF0000
+ 0F03C000 0F00E000 0F00F000 0F007800 0F007800 0F007800 0F007800
+ 0F007800 0F007800 0F007810 0F007810 0F003810 0F003C20 FFF01C20
+ 000007C0>
+PXLC RP
+678 1218 XY F25(R)S
+XP /F25 50 21 2 0 18 28 28 16 0
+<07C0 1830 201C 400C 400E F00F F80F F807 F807 7007 000F 000E 000E
+ 001C 001C 0038 0070 0060 00C0 0180 0300 0601 0C01 1801 1002 3FFE
+ 7FFE FFFE>
+PXLC RP
+708 1218 XY F25(2)S
+XP /F25 48 21 2 -1 18 28 29 16 0
+<03C0 0C30 1818 300C 300C 700E 6006 6006 E007 E007 E007 E007 E007
+ E007 E007 E007 E007 E007 E007 E007 E007 6006 6006 700E 300C 300C
+ 1818 0C30 07E0>
+PXLC RP
+729 1218 XY F25(000.)S
+XP /F25 67 30 2 -1 27 29 30 32 0
+<001F8080 00E06180 01801980 07000780 0E000380 1C000380 1C000180
+ 38000180 78000080 78000080 70000080 F0000000 F0000000 F0000000
+ F0000000 F0000000 F0000000 F0000000 F0000000 70000080 78000080
+ 78000080 38000080 1C000100 1C000100 0E000200 07000400 01800800
+ 00E03000 001FC000>
+PXLC RP
+820 1218 XY F25(Cycle)S 931 X(Lev)S -1 x(el)S 1036 X(SPIM)S
+XP /F25 40 16 3 -11 13 31 42 16 0
+<0040 0080 0100 0200 0600 0C00 0C00 1800 1800 3000 3000 7000 6000
+ 6000 6000 E000 E000 E000 E000 E000 E000 E000 E000 E000 E000 E000
+ E000 6000 6000 6000 7000 3000 3000 1800 1800 0C00 0C00 0600 0200
+ 0100 0080 0040>
+PXLC RP
+1150 1218 XY F25(\(clspim)S
+XP /F25 41 16 2 -11 12 31 42 16 0
+<8000 4000 2000 1000 1800 0C00 0C00 0600 0600 0300 0300 0380 0180
+ 0180 0180 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0
+ 01C0 0180 0180 0180 0380 0300 0300 0600 0600 0C00 0C00 1800 1000
+ 2000 4000 8000>
+PXLC RP
+1282 1218 XY F25(\))S 1308 X(is)S 1346 X(an)S 1400 X(outgro)S -1 x
+(wth)S 1596 X(of)S 1640 X(Larus's)S 1780 X(original)S 1927 X(co)S 
+1 x(de)S
+XP /F25 44 12 4 -8 8 4 12 8 0
+<60 F0 F0 70 10 10 10 10 20 20 40 80>
+PXLC RP
+2009 1218 XY F25(,)S 2031 X(built)S 2127 X(to)S 2174 X(sim)S -1 x
+(ulate)S 50 y 225 X(the)S 299 X(pip)S 1 x(eline)S 457 X(arc)S -1 x
+(hitecture)S 689 X(of)S 738 X(the)S 812 X(MIPS)S 932 X(mac)S -1 x
+(hine.)S 1118 X(Under)S 1246 X(its)S 1306 X(new)S 1393 X(cycle)S 
+1498 X(lev)S -1 x(el)S 1595 X(mo)S 1 x(de,)S 1721 X(SPIM)S 1842 X
+(sim)S -1 x(ulates)S 2025 X(b)S 1 x(oth)S 2125 X(the)S 2199 X(con)S
+-1 x(trol)S 50 y 225 X(and)S
+XP /F25 13 23 0 0 21 29 29 24 0
+<007FC0 01C1C0 0303C0 0703C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7FCFF8>
+PXLC RP
+305 1318 XY F25(\015oating)S 453 X(p)S 1 x(oin)S -1 x(t)S 561 X
+(pro)S 1 x(cessor)S 741 X(pip)S 1 x(elines.)S 929 X(The)S 1013 X
+(con)S -1 x(trol)S 1152 X(pro)S 1 x(cessor)S 1333 X(comes)S 1454 X
+(complete)S 1628 X(with)S 1722 X(sim)S -1 x(ulation)S 1923 X(of)S 
+1969 X(the)S 2039 X(R2000's)S 2193 X(on)S 2250 X(c)S -1 x(hip)S 50 y 
+225 X(TL)S
+XP /F25 66 29 2 0 26 28 28 24 0
+<FFFFC0 0F00F0 0F0038 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001C 0F003C 0F0078 0F01F0 0FFFE0 0F0078 0F003C 0F001E 0F000E
+ 0F000F 0F000F 0F000F 0F000F 0F000F 0F001E 0F001E 0F003C 0F0078
+ FFFFE0>
+PXLC RP
+281 1368 XY F25(B)S 326 X(and)S 408 X(m)S -1 x(ultiply)S
+XP /F25 47 21 2 -10 18 31 41 16 0
+<0003 0003 0007 0006 0006 000E 000C 001C 0018 0018 0038 0030 0030
+ 0070 0060 0060 00E0 00C0 00C0 01C0 0180 0380 0300 0300 0700 0600
+ 0600 0E00 0C00 0C00 1C00 1800 1800 3800 3000 7000 6000 6000 E000
+ C000 C000>
+PXLC RP
+560 1368 XY F25(/divide)S 706 X(units.)S 830 X(In)S 883 X
+(addition,)S 1061 X(SPIM's)S 1208 X(e)S
+XP /F25 120 22 0 0 21 18 18 24 0
+<7F8FF0 0F0380 0F0300 070200 038400 01C800 01D800 00F000 007000
+ 007800 00F800 009C00 010E00 020E00 060700 040380 1E07C0 FF0FF8>
+PXLC RP
+1227 1368 XY F25(xception)S 1395 X(handling)S 1567 X(has)S 1643 X
+(b)S 1 x(een)S 1742 X(expanded)S 1929 X(to)S 1982 X(w)S -1 x(or)S
+XP /F25 107 22 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C3FC0 1C0F00 1C0C00 1C0800 1C1000 1C2000 1C4000
+ 1CE000 1DE000 1E7000 1C7800 1C3800 1C3C00 1C1C00 1C0E00 1C0F00
+ 1C0F80 FF9FE0>
+PXLC RP
+2047 1368 XY F25(k)S 2085 X(with)S 2181 X(the)S 2254 X(new)S 50 y 
+225 X(pip)S 1 x(eline)S 382 X(sim)S -1 x(ulation)S 585 X(and)S 667 X
+(to)S 719 X(w)S -1 x(ork)S 822 X(in)S 871 X(con)S
+XP /F25 106 13 -3 -8 8 29 37 16 0
+<00C0 01E0 01E0 00C0 0000 0000 0000 0000 0000 0000 0000 0FE0 00E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 60E0 F0C0 F1C0 6180 3E00>
+PXLC RP
+933 1418 XY F25(juction)S 1074 X(with)S 1170 X(its)S 1229 X(new)S 
+1315 X(signal)S 1434 X(handling)S 1606 X(capabilities.)S 1843 X
+(System)S 1988 X(calls,)S 2094 X(pro)S 1 x(cessed)S 2281 X(b)S -1 x
+(y)S 49 y 225 X(the)S 295 X(R2000)S 420 X(as)S 470 X(traps)S 574 X
+(or)S 623 X(exceptions,)S 835 X(ha)S -1 x(v)S -1 x(e)S 929 X(also)S
+1011 X(b)S 1 x(een)S 1107 X(up)S 1 x(dated.)S
+XP /F25 70 27 2 0 24 28 28 24 0
+<FFFFF8 0F0078 0F0018 0F0008 0F0008 0F000C 0F0004 0F0004 0F0204
+ 0F0200 0F0200 0F0200 0F0600 0FFE00 0F0600 0F0200 0F0200 0F0200
+ 0F0200 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F8000
+ FFF800>
+PXLC RP
+1285 1467 XY F25(Finally)S -3 x(,)S 1433 X(the)S 1503 X(new)S 1586 X
+(SPIM)S 1703 X(con)S -1 x(tains)S 1864 X(t)S -1 x(w)S -1 x(o)S 1940 X
+(cac)S -1 x(hes)S 2067 X(for)S 2129 X(instruction)S 50 y 225 X(and)S
+307 X(data)S 403 X(reference)S 3 x(s.)S 615 X(This)S 711 X(note)S 
+805 X(outlines)S 961 X(the)S 1034 X(e)S
+XP /F25 11 24 0 0 26 29 29 32 0
+<007E1F00 01C1B180 0303E3C0 0703C3C0 0E03C180 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 FFFFFC00 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 7F87FC00>
+PXLC RP
+1053 1517 XY F25(\013ects)S 1162 X(of)S 1211 X(all)S 1270 X(these)S
+1378 X(c)S -1 x(hanges)S 1533 X(in)S 1583 X(SPIM)S 1702 X(and)S 
+1785 X(the)S 1858 X(new)S 1945 X(commands)S 2152 X(that)S 2243 X
+(ha)S -1 x(v)S -1 x(e)S 50 y 225 X(b)S 1 x(een)S 323 X(implemen)S 
+-1 x(ted)S 569 X(in)S 618 X(spim,)S 729 X(clspim,)S 871 X(and)S 
+952 X(xlspim,)S 1096 X(the)S
+XP /F25 88 31 1 0 29 28 28 32 0
+<7FF0FFC0 0FC03E00 07801800 03C01800 03E01000 01E02000 01F06000
+ 00F04000 00788000 007D8000 003D0000 001E0000 001F0000 000F0000
+ 000F8000 000F8000 0013C000 0023E000 0021E000 0041F000 00C0F800
+ 00807800 01007C00 03003C00 02001E00 06001F00 1F003F80 FFC0FFF0>
+PXLC RP
+1168 1567 XY F25(Xwindo)S -1 x(ws)S 1367 X(v)S -1 x(ersion.)S 1525 X
+(Cycle)S 1640 X(lev)S -1 x(el)S 1734 X(mo)S 1 x(de)S 1847 X(in)S 
+1895 X(SPIM)S 2014 X(can)S 2090 X(b)S 1 x(e)S 2147 X(turned)S 2281 X
+(on)S 50 y 225 X(at)S 274 X(run)S -1 x(time)S 428 X(with)S 520 X
+(the)S
+XP /F31 /cmtt10 300 41.5 41.5 128 [0 -10 22 29] PXLNF RP
+XP /F31 45 22 2 11 19 14 3 24 0
+<FFFF80 FFFF80 FFFF80>
+PXLC RP
+590 1617 XY F31(-)S
+XP /F31 99 22 3 0 19 18 18 16 0
+<03F8 0FFE 1FFE 3C1E 780C 7000 F000 E000 E000 E000 E000 F000 7007
+ 7807 3E0F 1FFE 0FFC 03F0>
+PXLC RP
+612 1617 XY F31(c)S
+XP /F31 121 22 1 -9 20 18 27 24 0
+<7F1FC0 FF9FE0 7F1FC0 1C0700 0E0700 0E0E00 0E0E00 070E00 071C00
+ 071C00 039C00 039C00 039800 01B800 01B800 00F000 00F000 00F000
+ 00E000 00E000 00E000 01C000 79C000 7BC000 7F8000 3F0000 3C0000>
+PXLC RP
+634 1617 XY F31(yc)S
+XP /F31 108 22 2 0 19 25 25 24 0
+<FFC000 FFC000 FFC000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 FFFF80 FFFF80 FFFF80>
+PXLC RP
+677 1617 XY F31(l)S
+XP /F31 101 22 3 0 19 18 18 16 0
+<03E0 0FF8 1FFC 3C1E 780E 7007 E007 FFFF FFFF FFFF E000 E000 7007
+ 7807 3C0F 1FFE 0FFC 03F0>
+PXLC RP
+699 1617 XY F31(e)S 733 X F25(\015ag)S 809 X(or)S 858 X(after)S 
+954 X(startup)S 1098 X(with)S 1191 X(the)S 1260 X(set)S 1323 X
+(cycle)S 1424 X(command)S 1611 X(in)S 1658 X(clspim)S 1785 X(or)S 
+1834 X(the)S 1904 X(mo)S 1 x(de)S 2014 X(button)S 2148 X(in)S 2194 X
+(xlspim.)S
+XP /F55 50 34 3 0 30 39 39 32 0
+<00FF8000 03FFF000 0FFFFC00 3F03FF00 7C00FF80 7C007FC0 FE007FC0
+ FF003FE0 FF003FE0 FF003FE0 FF001FE0 7E001FE0 3C003FE0 00003FE0
+ 00003FC0 00003FC0 00007F80 00007F80 0000FF00 0001FE00 0001FC00
+ 0003F000 0007E000 000FC000 001F0000 003E0000 007C00E0 007800E0
+ 00F000E0 01E001C0 038001C0 070001C0 0FFFFFC0 1FFFFFC0 3FFFFFC0
+ 7FFFFFC0 FFFFFF80 FFFFFF80 FFFFFF80>
+PXLC RP
+225 1761 XY F55(2)S
+XP /F55 84 48 2 0 45 40 40 48 0
+<7FFFFFFFFFC0 7FFFFFFFFFC0 7FFFFFFFFFC0 7F803FC03FC0 7E003FC007C0
+ 78003FC003C0 78003FC003C0 70003FC001C0 F0003FC001E0 F0003FC001E0
+ E0003FC000E0 E0003FC000E0 E0003FC000E0 E0003FC000E0 E0003FC000E0
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 007FFFFFE000 007FFFFFE000 007FFFFFE000>
+PXLC RP
+328 1761 XY F55(T)S
+XP /F55 104 38 3 0 36 42 42 40 0
+<FFE0000000 FFE0000000 FFE0000000 0FE0000000 0FE0000000 0FE0000000
+ 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000
+ 0FE0000000 0FE0000000 0FE0000000 0FE07F0000 0FE1FFC000 0FE787E000
+ 0FEE07F000 0FFC03F800 0FF803F800 0FF003F800 0FF003F800 0FF003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 FFFE3FFF80 FFFE3FFF80 FFFE3FFF80>
+PXLC RP
+376 1761 XY F55(h)S
+XP /F55 101 32 2 0 29 27 27 32 0
+<003FE000 01FFF800 03F07E00 0FE03F00 1FC01F80 3F800FC0 3F800FC0
+ 7F000FC0 7F0007E0 FF0007E0 FF0007E0 FF0007E0 FFFFFFE0 FFFFFFE0
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8000E0
+ 3F8001E0 1FC001C0 0FE003C0 03F81F80 00FFFE00 001FF000>
+PXLC RP
+414 1761 XY F55(e)S
+XP /F55 80 47 3 0 42 41 41 40 0
+<FFFFFFF800 FFFFFFFF00 FFFFFFFFC0 03FC003FE0 03FC000FF0 03FC0007F8
+ 03FC0007FC 03FC0003FC 03FC0003FE 03FC0003FE 03FC0003FE 03FC0003FE
+ 03FC0003FE 03FC0003FE 03FC0003FE 03FC0003FC 03FC0007FC 03FC0007F8
+ 03FC000FF0 03FC003FE0 03FFFFFF80 03FFFFFE00 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 FFFFF00000 FFFFF00000 FFFFF00000>
+PXLC RP
+469 1761 XY F55(Pi)S
+XP /F55 112 38 2 -12 35 27 39 40 0
+<FFE1FE0000 FFE7FF8000 FFFE07E000 0FF803F800 0FF001FC00 0FE001FE00
+ 0FE000FE00 0FE000FF00 0FE000FF00 0FE0007F80 0FE0007F80 0FE0007F80
+ 0FE0007F80 0FE0007F80 0FE0007F80 0FE0007F80 0FE0007F80 0FE0007F80
+ 0FE000FF00 0FE000FF00 0FE000FE00 0FF001FE00 0FF003FC00 0FF803F800
+ 0FFE0FE000 0FEFFF8000 0FE1FC0000 0FE0000000 0FE0000000 0FE0000000
+ 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000
+ FFFE000000 FFFE000000 FFFE000000>
+PXLC RP
+535 1761 XY F55(p)S 2 x(e)S
+XP /F55 108 19 3 0 18 42 42 16 0
+<FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ FFFE FFFE FFFE>
+PXLC RP
+606 1761 XY F55(line)S
+XP /F55 115 27 2 0 24 27 27 24 0
+<03FE30 0FFFF0 3E03F0 7800F0 7000F0 F00070 F00070 F80070 FC0000
+ FFE000 FFFE00 7FFFC0 3FFFE0 1FFFF0 07FFF8 00FFFC 0003FC 0000FC
+ E0007C E0003C F0003C F0003C F80078 FC0078 FF01F0 F7FFC0 C1FF00>
+PXLC RP
+714 1761 XY F55(s)S 1860 Y 225 X F25(Both)S 332 X(the)S 406 X(con)S
+-1 x(trol)S 549 X(and)S 634 X(\015oating)S 787 X(p)S 1 x(oin)S -1 x
+(t)S 899 X(pro)S 1 x(cessors's)S 1128 X(pip)S 1 x(elines)S 1303 X
+(are)S 1376 X(pro)S 1 x(cesse)S 3 x(d)S 1566 X(in)S 1618 X(rev)S 
+-1 x(erse)S 1760 X(order)S 1872 X(during)S 2007 X(eac)S -1 x(h)S 
+2104 X(cycle.)S 2233 X(This,)S 50 y 225 X(com)S -1 x(bined)S 412 X
+(with)S 508 X(b)S -1 x(ypassing,)S 711 X(is)S 755 X(done)S 856 X
+(so)S 908 X(that)S 1000 X(v)S -2 x(alues)S 1125 X(b)S 1 x(eing)S 
+1238 X(deriv)S -1 x(ed)S 1385 X(from)S 1485 X(the)S 1558 X
+(execution,)S 1757 X(memory)S -3 x(,)S 1928 X(and)S 2010 X(write)S
+2118 X(bac)S -1 x(k)S 2216 X(stages)S 50 y 225 X(are)S 294 X(a)S 
+-1 x(v)S -2 x(ailable)S 465 X(to)S 516 X(other)S 624 X
+(instructions)S 851 X(in)S 899 X(the)S 971 X(pip)S 1 x(eline)S 1126 X
+(during)S 1258 X(the)S 1329 X(same)S 1433 X(cycle.)S 59 y 287 X
+(The)S 373 X(follo)S -1 x(wi)S -3 x(ng)S 548 X(is)S 590 X(an)S 647 X
+(outline)S 786 X(of)S 833 X(what)S 937 X(tak)S -1 x(es)S 1043 X
+(place)S 1149 X(at)S 1200 X(eac)S -1 x(h)S 1293 X(of)S 1340 X(the)S
+XP /F25 12 23 0 0 21 29 29 24 0
+<007E00 01C180 030180 0703C0 0E03C0 0E0180 0E0000 0E0000 0E0000
+ 0E0000 0E0000 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7F87F8>
+PXLC RP
+1412 2019 XY F25(\014v)S -1 x(e)S 1488 X(stages)S 1611 X(of)S 1658 X
+(the)S 1730 X(con)S -1 x(trol)S 1869 X(pro)S 1 x(cessor)S 2051 X
+(pip)S 1 x(eline)S
+XP /F25 58 12 4 0 8 18 18 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 60>
+PXLC RP
+2193 2019 XY F25(:)S
+XP /F27 /cmsy10 300 41.5 41.5 128 [-1 -40 45 32] PXLNF RP
+XP /F27 15 21 2 2 18 18 16 16 0
+<07E0 1FF8 3FFC 7FFE 7FFE FFFF FFFF FFFF FFFF FFFF FFFF 7FFE 7FFE
+ 3FFC 1FF8 07E0>
+PXLC RP
+287 2105 XY F27(\017)S
+XP /F30 /cmbx10 300 41.5 41.5 128 [-3 -10 47 31] PXLNF RP
+XP /F30 87 49 1 0 47 28 28 48 0
+<FFFC7FFE0FFC FFFC7FFE0FFC 0FC007E000C0 0FC007F000C0 0FE003F001C0
+ 07E003F00180 07E007F80180 03F007F80300 03F007F80300 03F80CFC0700
+ 01F80CFC0600 01F81CFE0600 01FC187E0E00 00FC187E0C00 00FC387F0C00
+ 007E303F1800 007E303F1800 007F601FB800 003F601FB000 003FE01FF000
+ 003FC00FF000 001FC00FE000 001FC00FE000 000F8007C000 000F8007C000
+ 000F0003C000 000700038000 000700038000>
+PXLC RP
+329 2105 XY F30(W)S
+XP /F30 66 34 2 0 30 28 28 32 0
+<FFFFF800 FFFFFF00 0FC01F80 0FC00FC0 0FC007C0 0FC007E0 0FC007E0
+ 0FC007E0 0FC007E0 0FC007E0 0FC007C0 0FC00F80 0FC03F00 0FFFFE00
+ 0FC00F80 0FC007C0 0FC007E0 0FC003E0 0FC003F0 0FC003F0 0FC003F0
+ 0FC003F0 0FC003F0 0FC007E0 0FC007E0 0FC01FC0 FFFFFF00 FFFFFC00>
+PXLC RP
+378 2105 XY F30(B)S
+XP /F25 45 14 0 8 11 10 2 16 0
+<FFE0 FFE0>
+PXLC RP
+426 2105 XY F25(-)S 454 X(W)S -3 x(rite)S 569 X(Bac)S -1 x(k)S 63 y 
+329 X(p)S 1 x(ertinen)S -1 x(t)S 508 X(registers)S 671 X(are)S 739 X
+(written)S 884 X(b)S -1 x(y)S 940 X(the)S 1011 X(instruction)S 1220 X
+(unless)S 1342 X(it)S 1382 X(had)S 1462 X(caused)S 1595 X(an)S 1651 X
+(exception)S 1836 X(at)S 1886 X(some)S 1989 X(earlier)S 2115 X
+(stage)S 2220 X(in)S 2267 X(the)S 50 y 329 X(pip)S 1 x(eline)S 2296 Y 
+287 X F27(\017)S
+XP /F30 77 45 2 0 42 28 28 40 0
+<FFC00003FF FFE00007FF 0FE00007F0 0DF0000DF0 0DF0000DF0 0DF0000DF0
+ 0CF80019F0 0CF80019F0 0C7C0031F0 0C7C0031F0 0C3E0061F0 0C3E0061F0
+ 0C1F00C1F0 0C1F00C1F0 0C1F00C1F0 0C0F8181F0 0C0F8181F0 0C07C301F0
+ 0C07C301F0 0C03E601F0 0C03E601F0 0C01FC01F0 0C01FC01F0 0C01FC01F0
+ 0C00F801F0 0C00F801F0 FFC0701FFF FFC0701FFF>
+PXLC RP
+329 2296 XY F30(M)S
+XP /F30 69 31 2 0 29 28 28 32 0
+<FFFFFF00 FFFFFF00 0FC01F00 0FC00700 0FC00300 0FC00380 0FC00380
+ 0FC18180 0FC18180 0FC18180 0FC18000 0FC38000 0FFF8000 0FFF8000
+ 0FC38000 0FC18000 0FC18000 0FC18060 0FC18060 0FC000E0 0FC000C0
+ 0FC000C0 0FC001C0 0FC001C0 0FC003C0 0FC00F80 FFFFFF80 FFFFFF80>
+PXLC RP
+374 2296 XY F30(EM)S 465 X F25(-)S 492 X(Memory)S 63 y 329 X(v)S 
+-2 x(alues)S 452 X(are)S 521 X(fetc)S -1 x(hed)S 663 X(from)S 761 X
+(memory)S
+XP /F25 59 12 4 -8 8 18 26 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 70 10 10 10 10 20
+ 20 40 80>
+PXLC RP
+907 2359 XY F25(;)S 932 X(if)S 970 X(the)S 1041 X(TLB)S 1140 X(is)S
+1181 X(on)S 1238 X(and)S 1318 X(the)S 1389 X(page)S 1486 X(is)S 
+1527 X(not)S 1600 X(in)S 1648 X(memory)S -3 x(,)S 1816 X(an)S 1874 X
+(exception)S 2059 X(is)S 2100 X(\015agged)S 2240 X(-)S 2267 X(the)S
+50 y 329 X(data)S 423 X(will)S 502 X(not)S 576 X(b)S 1 x(e)S 632 X
+(loaded)S 764 X(or)S 815 X(stored)S 939 X(un)S -1 x(til)S 1037 X
+(SPIM)S 1156 X(has)S 1230 X(a)S 1264 X(c)S -1 x(hance)S 1399 X(to)S
+1450 X(bring)S 1559 X(in)S 1607 X(the)S 1679 X(page)S 1776 X(and)S
+1856 X(restart)S 1990 X(the)S 2062 X(pip)S 1 x(eline;)S 2229 X(if)S
+2267 X(the)S 50 y 329 X(data)S 424 X(cac)S -1 x(he)S 536 X(is)S 
+578 X(on)S 637 X(and)S 718 X(the)S 790 X(address)S 938 X(is)S 981 X
+(in)S 1029 X(one)S 1106 X(of)S 1154 X(the)S 1226 X(cac)S -1 x(he's)S
+1366 X(lines,)S 1473 X(no)S 1531 X(stall)S 1622 X(o)S 1 x(ccurs;)S
+1762 X(otherwise,)S 1959 X(a)S 1994 X(stall)S 2085 X(ma)S -1 x(y)S
+2175 X(o)S 1 x(ccur)S 2288 X(as)S 50 y 329 X(the)S 400 X(memory)S 
+561 X(bus)S 637 X(fetc)S -1 x(hes)S 773 X(or)S 824 X(stores)S 942 X
+(the)S 1014 X(information;)S 1250 X(results)S 1382 X(are)S 1452 X
+(sen)S -1 x(t)S 1538 X(along)S 1649 X(the)S 1721 X(memory)S 1881 X
+(b)S -1 x(ypass)S 2586 Y 287 X F27(\017)S 329 X F30(E)S
+XP /F30 88 36 1 0 34 28 28 40 0
+<7FFE1FFE00 7FFE1FFE00 07F0018000 03F8038000 01FC070000 00FC060000
+ 00FE0C0000 007F1C0000 003F380000 003FB00000 001FE00000 000FE00000
+ 000FE00000 0007F00000 0003F80000 0007F80000 000FFC0000 000CFE0000
+ 00187E0000 00387F0000 00703F8000 00601F8000 00C01FC000 01C00FE000
+ 018007F000 030007F000 FFF03FFF80 FFF03FFF80>
+PXLC RP
+360 2586 XY F30(X)S 410 X F25(-)S
+XP /F25 69 28 2 0 26 28 28 24 0
+<FFFFFC 0F003C 0F000C 0F0004 0F0004 0F0006 0F0002 0F0002 0F0202
+ 0F0200 0F0200 0F0200 0F0600 0FFE00 0F0600 0F0200 0F0200 0F0200
+ 0F0201 0F0001 0F0002 0F0002 0F0002 0F0006 0F0006 0F000C 0F003C
+ FFFFFC>
+PXLC RP
+438 2586 XY F25(Execution)S 64 y 329 X(all)S 386 X(calculations)S 
+613 X(are)S 682 X(pro)S 1 x(cessed)S 868 X(here;)S 970 X(results)S
+1102 X(are)S 1171 X(sen)S -1 x(t)S 1258 X(along)S 1369 X(the)S 1440 X
+(execution)S 1626 X(b)S -1 x(ypass)S 2727 Y 287 X F27(\017)S
+XP /F30 73 18 1 0 17 28 28 16 0
+<FFFF FFFF 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0
+ 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0
+ FFFF FFFF>
+PXLC RP
+329 2727 XY F30(I)S
+XP /F30 68 37 2 0 33 28 28 32 0
+<FFFFF800 FFFFFF00 0FC01FC0 0FC007E0 0FC001F0 0FC001F8 0FC000F8
+ 0FC000FC 0FC0007C 0FC0007C 0FC0007E 0FC0007E 0FC0007E 0FC0007E
+ 0FC0007E 0FC0007E 0FC0007E 0FC0007E 0FC0007C 0FC0007C 0FC0007C
+ 0FC000F8 0FC000F8 0FC001F0 0FC007E0 0FC01FC0 FFFFFF00 FFFFF800>
+PXLC RP
+347 2727 XY F30(D)S 397 X F25(-)S 425 X(Instruction)S
+XP /F25 68 32 2 0 29 28 28 32 0
+<FFFFC000 0F00F000 0F003C00 0F000E00 0F000700 0F000700 0F000380
+ 0F0003C0 0F0001C0 0F0001C0 0F0001E0 0F0001E0 0F0001E0 0F0001E0
+ 0F0001E0 0F0001E0 0F0001E0 0F0001E0 0F0001C0 0F0001C0 0F0003C0
+ 0F000380 0F000780 0F000700 0F000E00 0F001C00 0F007000 FFFFC000>
+PXLC RP
+639 2727 XY F25(Deco)S 1 x(de)S 64 y 329 X(instructions)S 557 X
+(are)S 629 X(in)S -1 x(terpreted)S 844 X(to)S 897 X(\014nd)S 982 X
+(their)S 1084 X(op)S 1 x(co)S 1 x(de)S 1226 X(and)S 1309 X
+(register)S 1459 X(reference)S 3 x(s;)S 1665 X(m)S -1 x(ultiply)S 
+1833 X(and)S 1915 X(divide)S 2041 X(instructions)S 2270 X(are)S 49 y 
+329 X(passed)S 460 X(to)S 511 X(the)S 582 X(MDU;)S 707 X(branc)S 
+-1 x(h)S 844 X(instructions)S 1070 X(set)S 1135 X(nPC;)S 1241 X
+(instructions)S 1467 X(referencing)S 1678 X(registers)S 1842 X
+(that)S 1931 X(are)S 2000 X(going)S 2110 X(to)S 2161 X(b)S 1 x(e)S
+2217 X(set)S 2281 X(b)S -1 x(y)S 50 y 329 X(the)S 403 X(MDU)S 520 X
+(or)S 574 X(\015oating)S 727 X(p)S 1 x(oin)S -1 x(t)S 838 X(unit)S
+928 X(stall;)S 1034 X(if)S 1075 X(the)S 1149 X(instruction)S 1362 X
+(in)S 1413 X(this)S 1497 X(stage)S 1606 X(is)S 1650 X(a)S 1687 X
+(branc)S -1 x(h,)S 1840 X(SPIM)S 1961 X(marks)S 2087 X(the)S 2161 X
+(incoming)S 50 y 329 X(instruction)S 539 X(\(in)S 604 X(IF\))S 676 X
+(as)S 727 X(b)S 1 x(eing)S 838 X(in)S 887 X(a)S 921 X(branc)S -1 x
+(h)S 1059 X(dela)S -1 x(y)S 1167 X(slot)S
+%%PageTrailer
+PF  EP /paper-automatic true SPS 1 PP
+%%PageBoundingBox: 54 84 558 696
+
+%%Page: 2 2
+%%PageBoundingBox: (atend)
+%%BeginPageSetup
+1000 BP 3300 2550 PM /paper-automatic false SPS 287 0 XY
+%%EndPageSetup
+XP /F27 /cmsy10 300 41.5 41.5 128 [-1 -40 45 32] PXLNF RP
+XP /F27 15 21 2 2 18 18 16 16 0
+<07E0 1FF8 3FFC 7FFE 7FFE FFFF FFFF FFFF FFFF FFFF FFFF 7FFE 7FFE
+ 3FFC 1FF8 07E0>
+PXLC RP
+287 282 XY F27(\017)S
+XP /F30 /cmbx10 300 41.5 41.5 128 [-3 -10 47 31] PXLNF RP
+XP /F30 73 18 1 0 17 28 28 16 0
+<FFFF FFFF 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0
+ 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0 07E0
+ FFFF FFFF>
+PXLC RP
+329 282 XY F30(I)S
+XP /F30 70 30 2 0 27 28 28 32 0
+<FFFFFF00 FFFFFF00 0FC01F00 0FC00700 0FC00300 0FC00380 0FC00380
+ 0FC00180 0FC18180 0FC18180 0FC18000 0FC18000 0FC38000 0FFF8000
+ 0FFF8000 0FC38000 0FC18000 0FC18000 0FC18000 0FC18000 0FC00000
+ 0FC00000 0FC00000 0FC00000 0FC00000 0FC00000 FFFF0000 FFFF0000>
+PXLC RP
+347 282 XY F30(F)S
+XP /F25 /cmr10 300 41.5 41.5 128 [-3 -11 41 31] PXLNF RP
+XP /F25 45 14 0 8 11 10 2 16 0
+<FFE0 FFE0>
+PXLC RP
+391 282 XY F25(-)S
+XP /F25 73 15 1 0 13 28 28 16 0
+<FFF0 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 FFF0>
+PXLC RP
+418 282 XY F25(I)S
+XP /F25 110 23 1 0 21 18 18 24 0
+<FC7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 FF9FF0>
+PXLC RP
+433 282 XY F25(n)S
+XP /F25 115 16 1 0 14 18 18 16 0
+<1F90 3070 4030 C010 C010 E010 F800 7F80 3FE0 0FF0 00F8 8038 8018
+ C018 C018 E010 D060 8FC0>
+PXLC RP
+456 282 XY F25(s)S
+XP /F25 116 16 1 0 13 26 26 16 0
+<0400 0400 0400 0400 0C00 0C00 1C00 3C00 FFE0 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C10 1C10 1C10 1C10 1C10 0C10 0E20 03C0>
+PXLC RP
+473 282 XY F25(t)S
+XP /F25 114 16 1 0 14 18 18 16 0
+<FCE0 1D30 1E78 1E78 1C30 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 FFC0>
+PXLC RP
+489 282 XY F25(r)S
+XP /F25 117 23 1 0 21 18 18 24 0
+<FC1F80 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0780 0C0780 0E1B80 03E3F0>
+PXLC RP
+505 282 XY F25(u)S
+XP /F25 99 18 2 0 16 18 18 16 0
+<07E0 0C30 1878 3078 7030 6000 E000 E000 E000 E000 E000 E000 6000
+ 7004 3004 1808 0C30 07C0>
+PXLC RP
+528 282 XY F25(ct)S
+XP /F25 105 12 1 0 10 29 29 16 0
+<1800 3C00 3C00 1800 0000 0000 0000 0000 0000 0000 0000 FC00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+563 282 XY F25(i)S
+XP /F25 111 21 1 0 19 18 18 24 0
+<03F000 0E1C00 180600 300300 700380 600180 E001C0 E001C0 E001C0
+ E001C0 E001C0 E001C0 600180 700380 300300 180600 0E1C00 03F000>
+PXLC RP
+574 282 XY F25(on)S
+XP /F25 70 27 2 0 24 28 28 24 0
+<FFFFF8 0F0078 0F0018 0F0008 0F0008 0F000C 0F0004 0F0004 0F0204
+ 0F0200 0F0200 0F0200 0F0600 0FFE00 0F0600 0F0200 0F0200 0F0200
+ 0F0200 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F8000
+ FFF800>
+PXLC RP
+632 282 XY F25(F)S
+XP /F25 101 18 1 0 16 18 18 16 0
+<03E0 0C30 1818 300C 700E 6006 E006 FFFE E000 E000 E000 E000 6000
+ 7002 3002 1804 0C18 03E0>
+PXLC RP
+656 282 XY F25(etc)S
+XP /F25 104 23 1 0 21 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 FF9FF0>
+PXLC RP
+708 282 XY F25(h)S 66 y 329 X(the)S 400 X(instruction)S
+XP /F25 108 12 1 0 10 29 29 16 0
+<FC00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+610 348 XY F25(lo)S 1 x(c)S
+XP /F25 97 21 2 0 20 18 18 24 0
+<1FC000 307000 783800 781C00 301C00 001C00 001C00 01FC00 0F1C00
+ 381C00 701C00 601C00 E01C40 E01C40 E01C40 603C40 304E80 1F8700>
+PXLC RP
+662 348 XY F25(ate)S
+XP /F25 100 23 2 0 21 29 29 24 0
+<003F00 000700 000700 000700 000700 000700 000700 000700 000700
+ 000700 000700 03E700 0C1700 180F00 300700 700700 600700 E00700
+ E00700 E00700 E00700 E00700 E00700 600700 700700 300700 180F00
+ 0C3700 07C7E0>
+PXLC RP
+717 348 XY F25(d)S 754 X(at)S 804 X(the)S
+XP /F25 112 23 1 -8 20 18 26 24 0
+<FC7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0 1C00E0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C01C0 1C01C0 1C0180 1E0300 1D0600 1CF800
+ 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 FF8000>
+PXLC RP
+875 348 XY F25(pro)S
+XP /F25 103 21 1 -9 19 19 28 24 0
+<000380 03C4C0 0C38C0 1C3880 181800 381C00 381C00 381C00 381C00
+ 181800 1C3800 0C3000 13C000 100000 300000 180000 1FF800 1FFF00
+ 1FFF80 300380 6001C0 C000C0 C000C0 C000C0 600180 300300 1C0E00
+ 07F800>
+PXLC RP
+935 348 XY F25(gra)S
+XP /F25 109 35 1 0 34 18 18 40 0
+<FC7E07E000 1C83883800 1D01901800 1E01E01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 FF8FF8FF80>
+PXLC RP
+993 348 XY F25(m)S 1041 X(coun)S -1 x(ter)S
+XP /F25 40 16 3 -11 13 31 42 16 0
+<0040 0080 0100 0200 0600 0C00 0C00 1800 1800 3000 3000 7000 6000
+ 6000 6000 E000 E000 E000 E000 E000 E000 E000 E000 E000 E000 E000
+ E000 6000 6000 6000 7000 3000 3000 1800 1800 0C00 0C00 0600 0200
+ 0100 0080 0040>
+PXLC RP
+1190 348 XY F25(\()S
+XP /F25 80 28 2 0 25 28 28 24 0
+<FFFF80 0F00E0 0F0078 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001E 0F001C 0F003C 0F0078 0F00E0 0FFF80 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ FFF000>
+PXLC RP
+1206 348 XY F25(P)S
+XP /F25 67 30 2 -1 27 29 30 32 0
+<001F8080 00E06180 01801980 07000780 0E000380 1C000380 1C000180
+ 38000180 78000080 78000080 70000080 F0000000 F0000000 F0000000
+ F0000000 F0000000 F0000000 F0000000 F0000000 70000080 78000080
+ 78000080 38000080 1C000100 1C000100 0E000200 07000400 01800800
+ 00E03000 001FC000>
+PXLC RP
+1234 348 XY F25(C)S
+XP /F25 41 16 2 -11 12 31 42 16 0
+<8000 4000 2000 1000 1800 0C00 0C00 0600 0600 0300 0300 0380 0180
+ 0180 0180 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0
+ 01C0 0180 0180 0180 0380 0300 0300 0600 0600 0C00 0C00 1800 1000
+ 2000 4000 8000>
+PXLC RP
+1264 348 XY F25(\))S 1294 X(is)S
+XP /F25 102 13 0 0 15 29 29 16 0
+<00F8 018C 071E 061E 0E0C 0E00 0E00 0E00 0E00 0E00 0E00 FFE0 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 7FE0>
+PXLC RP
+1335 348 XY F25(fetc)S -1 x(hed)S
+XP /F25 59 12 4 -8 8 18 26 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 70 10 10 10 10 20
+ 20 40 80>
+PXLC RP
+1464 348 XY F25(;)S 1489 X(if)S 1527 X(the)S
+XP /F25 84 30 1 0 28 28 28 32 0
+<7FFFFFC0 700F01C0 600F00C0 400F0040 400F0040 C00F0020 800F0020
+ 800F0020 800F0020 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 001F8000 03FFFC00>
+PXLC RP
+1598 348 XY F25(T)S
+XP /F25 76 26 2 0 23 28 28 24 0
+<FFF800 0F8000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0008 0F0008 0F0008 0F0018 0F0018 0F0010 0F0030 0F0070 0F01F0
+ FFFFF0>
+PXLC RP
+1628 348 XY F25(L)S
+XP /F25 66 29 2 0 26 28 28 24 0
+<FFFFC0 0F00F0 0F0038 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001C 0F003C 0F0078 0F01F0 0FFFE0 0F0078 0F003C 0F001E 0F000E
+ 0F000F 0F000F 0F000F 0F000F 0F000F 0F001E 0F001E 0F003C 0F0078
+ FFFFE0>
+PXLC RP
+1654 348 XY F25(B)S 1697 X(is)S 1738 X(on)S 1796 X(and)S 1876 X
+(this)S 1956 X(instruction)S 2166 X(is)S 2208 X(not)S 2281 X(on)S 
+50 y 329 X(a)S 365 X(page)S 464 X(in)S 514 X(memor)S
+XP /F25 121 22 1 -8 20 18 26 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000
+ 004000 008000 008000 F08000 F10000 F30000 660000 3C0000>
+PXLC RP
+639 398 XY F25(y)S
+XP /F25 44 12 4 -8 8 4 12 8 0
+<60 F0 F0 70 10 10 10 10 20 20 40 80>
+PXLC RP
+657 398 XY F25(,)S 685 X(an)S 745 X(e)S
+XP /F25 120 22 0 0 21 18 18 24 0
+<7F8FF0 0F0380 0F0300 070200 038400 01C800 01D800 00F000 007000
+ 007800 00F800 009C00 010E00 020E00 060700 040380 1E07C0 FF0FF8>
+PXLC RP
+763 398 XY F25(xception)S 932 X(o)S 1 x(ccurs;)S 1075 X(other)S
+XP /F25 119 30 1 0 28 18 18 32 0
+<FF3FCFE0 3C0F0380 1C070180 1C070100 1C0B0100 0E0B8200 0E0B8200
+ 0E118200 0711C400 0711C400 0720C400 03A0E800 03A0E800 03C06800
+ 01C07000 01C07000 01803000 00802000>
+PXLC RP
+1170 398 XY F25(wise,)S 1274 X(if)S 1314 X(the)S 1387 X
+(instruction)S 1599 X(cac)S -1 x(he)S 1713 X(is)S 1757 X(on)S 1816 X
+(and)S 1899 X(the)S 1972 X(PC)S 2046 X(is)S 2090 X(in)S 2140 X(one)S
+2218 X(of)S 2267 X(the)S 50 y 329 X(cac)S -1 x(he)S
+XP /F25 39 12 4 17 9 29 12 8 0
+<60 F0 F8 68 08 08 08 10 10 20 40 80>
+PXLC RP
+427 448 XY F25('s)S 469 X(lines,)S 575 X(the)S 646 X(instruction)S
+857 X(is)S
+XP /F25 98 23 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C00E0 1C00E0 1C00C0 1C01C0 1C0180 1E0300
+ 190600 10F800>
+PXLC RP
+898 448 XY F25(brough)S -1 x(t)S 1054 X(in;)S 1114 X(when)S 1222 X
+(the)S 1294 X(line)S 1372 X(is)S 1414 X(not)S 1488 X(in)S 1536 X
+(the)S 1608 X(cac)S -1 x(he,)S 1731 X(a)S 1766 X(stall)S 1856 X(o)S
+1 x(ccurs;)S 1996 X(PC)S 2068 X(is)S 2110 X(set)S 2174 X(to)S 2225 X
+(nPC)S 548 Y 287 X(The)S
+XP /F25 13 23 0 0 21 29 29 24 0
+<007FC0 01C1C0 0303C0 0703C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7FCFF8>
+PXLC RP
+372 548 XY F25(\015oating)S 522 X(p)S 1 x(oin)S -1 x(t)S 630 X
+(unit)S 718 X(is)S 759 X(dep)S 1 x(enden)S -1 x(t)S 960 X(up)S 1 x
+(on)S 1064 X(the)S 1136 X(con)S -1 x(trol)S 1275 X(pro)S 1 x
+(cessor)S 1457 X(b)S 1 x(ecause)S 1610 X(all)S 1668 X(instructions)S
+1894 X(m)S -1 x(ust)S
+XP /F25 12 23 0 0 21 29 29 24 0
+<007E00 01C180 030180 0703C0 0E03C0 0E0180 0E0000 0E0000 0E0000
+ 0E0000 0E0000 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7F87F8>
+PXLC RP
+1997 548 XY F25(\014rst)S 2082 X(b)S 1 x(e)S 2138 X(fetc)S -1 x
+(hed)S 2281 X(b)S -1 x(y)S 50 y 225 X(the)S 296 X(con)S -1 x(trol)S
+435 X(pro)S 1 x(cessor)S
+XP /F25 46 12 4 0 8 4 4 8 0
+<60 F0 F0 60>
+PXLC RP
+603 598 XY F25(.)S 633 X(It)S 678 X(is)S 719 X(only)S 810 X(at)S 
+860 X(the)S 931 X(deco)S 1 x(de)S 1068 X(stage)S 1174 X(that)S 1264 X
+(the)S 1335 X(con)S -1 x(trol)S 1474 X(pro)S 1 x(cessor)S 1655 X
+(\(also)S 1754 X(called)S 1872 X(copro)S 1 x(cessor)S
+XP /F25 48 21 2 -1 18 28 29 16 0
+<03C0 0C30 1818 300C 300C 700E 6006 6006 E007 E007 E007 E007 E007
+ E007 E007 E007 E007 E007 E007 E007 E007 6006 6006 700E 300C 300C
+ 1818 0C30 07E0>
+PXLC RP
+2092 598 XY F25(0\))S 2142 X(recogni)S
+XP /F25 122 18 1 0 15 18 18 16 0
+<7FFC 7038 6038 4070 40F0 40E0 41C0 03C0 0380 0700 0F04 0E04 1C04
+ 3C0C 3808 7008 7038 FFF8>
+PXLC RP
+2272 598 XY F25(zes)S 49 y 225 X(that)S 315 X(an)S 373 X
+(instruction)S 583 X(should)S 714 X(b)S 1 x(e)S 771 X(passed)S 903 X
+(on)S 961 X(to)S 1011 X(the)S 1083 X(\015oating)S 1233 X(p)S 1 x
+(oin)S -1 x(t)S 1341 X(unit)S 1429 X(\(copro)S 1 x(cessor)S
+XP /F25 49 21 4 0 17 28 28 16 0
+<0300 0700 3F00 C700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0F80 FFF8>
+PXLC RP
+1666 647 XY F25(1\))S 1717 X(or)S 1767 X(an)S -1 x(y)S 1846 X
+(other)S 1954 X(external)S 2115 X(pro)S 1 x(cessor.)S 59 y 287 X
+(The)S 373 X(follo)S -1 x(wi)S -3 x(ng)S 548 X(is)S 590 X(a)S 624 X
+(summary)S 806 X(of)S 853 X(the)S 924 X(\015oating)S 1074 X(p)S 1 x
+(oin)S -1 x(t)S 1183 X(pip)S 1 x(eline)S
+XP /F25 58 12 4 0 8 18 18 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 60>
+PXLC RP
+1324 706 XY F25(:)S 806 Y 287 X F27(\017)S 329 X F30(F)S
+XP /F30 87 49 1 0 47 28 28 48 0
+<FFFC7FFE0FFC FFFC7FFE0FFC 0FC007E000C0 0FC007F000C0 0FE003F001C0
+ 07E003F00180 07E007F80180 03F007F80300 03F007F80300 03F80CFC0700
+ 01F80CFC0600 01F81CFE0600 01FC187E0E00 00FC187E0C00 00FC387F0C00
+ 007E303F1800 007E303F1800 007F601FB800 003F601FB000 003FE01FF000
+ 003FC00FF000 001FC00FE000 001FC00FE000 000F8007C000 000F8007C000
+ 000F0003C000 000700038000 000700038000>
+PXLC RP
+359 806 XY F30(W)S
+XP /F30 66 34 2 0 30 28 28 32 0
+<FFFFF800 FFFFFF00 0FC01F80 0FC00FC0 0FC007C0 0FC007E0 0FC007E0
+ 0FC007E0 0FC007E0 0FC007E0 0FC007C0 0FC00F80 0FC03F00 0FFFFE00
+ 0FC00F80 0FC007C0 0FC007E0 0FC003E0 0FC003F0 0FC003F0 0FC003F0
+ 0FC003F0 0FC003F0 0FC007E0 0FC007E0 0FC01FC0 FFFFFF00 FFFFFC00>
+PXLC RP
+408 806 XY F30(B)S 456 X F25(-)S 484 X(Floating)S 649 X(P)S -1 x
+(oin)S -1 x(t)S
+XP /F25 87 43 1 -1 41 28 29 40 0
+<FFE0FFE0FF 1F001F003C 1E001E0018 0F001F0010 0F001F0010 0F001F0010
+ 07801F0020 0780278020 0780278020 03C0278040 03C043C040 03C043C040
+ 03E043C040 01E081E080 01E081E080 01E081E080 00F100F100 00F100F100
+ 00F100F100 007900FA00 007A007A00 007A007A00 003E007C00 003C003C00
+ 003C003C00 003C003C00 0018001800 0018001800 0018001800>
+PXLC RP
+760 806 XY F25(W)S -3 x(rite)S 876 X(Bac)S
+XP /F25 107 22 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C3FC0 1C0F00 1C0C00 1C0800 1C1000 1C2000 1C4000
+ 1CE000 1DE000 1E7000 1C7800 1C3800 1C3C00 1C1C00 1C0E00 1C0F00
+ 1C0F80 FF9FE0>
+PXLC RP
+943 806 XY F25(k)S 67 y 329 X(up)S 388 X(to)S 438 X(t)S -1 x(w)S 
+-1 x(o)S 516 X(instructions)S 742 X(ma)S -1 x(y)S 831 X(b)S 1 x(e)S
+887 X(p)S 1 x(ending)S 1044 X(in)S 1092 X(this)S 1172 X(stage;)S
+XP /F25 118 22 1 0 20 18 18 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000>
+PXLC RP
+1290 873 XY F25(v)S -2 x(alues)S 1413 X(are)S 1481 X(will)S 1559 X
+(b)S 1 x(e)S 1615 X(written)S 1760 X(to)S 1810 X(the)S 1881 X
+(\015oating)S 2030 X(p)S 1 x(oin)S -1 x(t)S 2137 X(unit's)S 2252 X
+(o)S -1 x(wn)S 50 y 329 X(register)S 477 X(set)S 1006 Y 287 X F27
+(\017)S 329 X F30(F)S
+XP /F30 69 31 2 0 29 28 28 32 0
+<FFFFFF00 FFFFFF00 0FC01F00 0FC00700 0FC00300 0FC00380 0FC00380
+ 0FC18180 0FC18180 0FC18180 0FC18000 0FC38000 0FFF8000 0FFF8000
+ 0FC38000 0FC18000 0FC18000 0FC18060 0FC18060 0FC000E0 0FC000C0
+ 0FC000C0 0FC001C0 0FC001C0 0FC003C0 0FC00F80 FFFFFF80 FFFFFF80>
+PXLC RP
+359 1006 XY F30(E)S
+XP /F30 88 36 1 0 34 28 28 40 0
+<7FFE1FFE00 7FFE1FFE00 07F0018000 03F8038000 01FC070000 00FC060000
+ 00FE0C0000 007F1C0000 003F380000 003FB00000 001FE00000 000FE00000
+ 000FE00000 0007F00000 0003F80000 0007F80000 000FFC0000 000CFE0000
+ 00187E0000 00387F0000 00703F8000 00601F8000 00C01FC000 01C00FE000
+ 018007F000 030007F000 FFF03FFF80 FFF03FFF80>
+PXLC RP
+390 1006 XY F30(X)S
+XP /F30 51 24 2 0 21 27 27 24 0
+<03F800 1FFE00 3C1F00 3C0F80 7C07C0 7E07C0 7C07C0 3807C0 000F80
+ 000F80 001E00 003C00 03F800 001E00 000F80 0007C0 0007C0 0007E0
+ 3007E0 7807E0 FC07E0 FC07E0 FC07C0 780F80 781F00 1FFE00 07F800>
+PXLC RP
+426 1006 XY F30(3)S 464 X F25(-)S 492 X(Floating)S 657 X(P)S -1 x
+(oin)S -1 x(t)S
+XP /F25 69 28 2 0 26 28 28 24 0
+<FFFFFC 0F003C 0F000C 0F0004 0F0004 0F0006 0F0002 0F0002 0F0202
+ 0F0200 0F0200 0F0200 0F0600 0FFE00 0F0600 0F0200 0F0200 0F0200
+ 0F0201 0F0001 0F0002 0F0002 0F0002 0F0006 0F0006 0F000C 0F003C
+ FFFFFC>
+PXLC RP
+768 1006 XY F25(Execution)S 964 X(\()S
+XP /F25 83 23 2 -1 20 29 30 24 0
+<07E080 1C1980 300580 700380 600180 E00180 E00080 E00080 E00080
+ F00000 F80000 7C0000 7FC000 3FF800 1FFE00 07FF00 00FF80 000F80
+ 0007C0 0003C0 0001C0 8001C0 8001C0 8001C0 C00180 C00180 E00300
+ D00200 CC0C00 83F800>
+PXLC RP
+980 1006 XY F25(Stage)S
+XP /F25 51 21 2 -1 18 28 29 16 0
+<07E0 1830 201C 201C 781E 780E 781E 381E 001C 001C 0018 0030 0060
+ 07E0 0030 001C 001C 000E 000F 000F 700F F80F F80F F80F F00E 401C
+ 201C 1830 07E0>
+PXLC RP
+1093 1006 XY F25(3\))S 66 y 329 X(up)S 388 X(to)S 438 X(four)S 524 X
+(instructions)S 750 X(ma)S -1 x(y)S 840 X(b)S 1 x(e)S 895 X(p)S 1 x
+(ending)S 1053 X(in)S 1101 X(this)S 1181 X(stage;)S 1298 X(an)S 
+1355 X(instruction)S 1565 X(ma)S -1 x(y)S 1654 X(b)S 1 x(e)S 1710 X
+(caugh)S -1 x(t)S 1845 X(in)S 1892 X(this)S 1973 X(phase)S 2088 X
+(for)S 2151 X(n)S -1 x(umerous)S 50 y 329 X(cycles)S 1205 Y 287 X 
+F27(\017)S 329 X F30(FEX)S
+XP /F30 50 24 2 0 21 27 27 24 0
+<07F800 1FFE00 383F80 780FC0 FC07C0 FC07E0 FC03E0 FC03E0 7803E0
+ 0007E0 0007C0 0007C0 000F80 001F00 001E00 003800 007000 00E000
+ 018060 030060 060060 0800E0 1FFFC0 3FFFC0 7FFFC0 FFFFC0 FFFFC0>
+PXLC RP
+426 1205 XY F30(2)S
+XP /F30 44 13 3 -8 10 6 14 8 0
+<78 FC FC FE FE 7A 02 02 04 04 08 08 30 40>
+PXLC RP
+450 1205 XY F30(,)S 479 X(FEX)S
+XP /F30 49 24 3 0 20 27 27 24 0
+<006000 01E000 0FE000 FFE000 F3E000 03E000 03E000 03E000 03E000
+ 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000 03E000
+ 03E000 03E000 03E000 03E000 03E000 03E000 03E000 7FFF80 7FFF80>
+PXLC RP
+577 1205 XY F30(1)S 615 X F25(-)S 642 X(Floating)S 808 X(P)S -1 x
+(oin)S -1 x(t)S 919 X(Execution)S 1114 X(\(Stages)S
+XP /F25 50 21 2 0 18 28 28 16 0
+<07C0 1830 201C 400C 400E F00F F80F F807 F807 7007 000F 000E 000E
+ 001C 001C 0038 0070 0060 00C0 0180 0300 0601 0C01 1801 1002 3FFE
+ 7FFE FFFE>
+PXLC RP
+1260 1205 XY F25(2)S 1294 X(and)S 1375 X(1\))S 66 y 329 X(the)S 
+400 X(b)S 1 x(eginning)S 591 X(stages)S 713 X(of)S 760 X
+(\015oating)S 910 X(p)S 1 x(oin)S -1 x(t)S 1019 X(execution;)S 1216 X
+(instructions)S 1443 X(ha)S -1 x(v)S -1 x(e)S
+XP /F25 106 13 -3 -8 8 29 37 16 0
+<00C0 01E0 01E0 00C0 0000 0000 0000 0000 0000 0000 0000 0FE0 00E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 60E0 F0C0 F1C0 6180 3E00>
+PXLC RP
+1538 1271 XY F25(just)S 1620 X(come)S 1726 X(o)S
+XP /F25 11 24 0 0 26 29 29 32 0
+<007E1F00 01C1B180 0303E3C0 0703C3C0 0E03C180 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 FFFFFC00 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 7F87FC00>
+PXLC RP
+1747 1271 XY F25(\013)S 1785 X(of)S 1833 X(the)S 1904 X(con)S -1 x
+(trol)S 2044 X(pro)S 1 x(cessor)S 1372 Y 287 X(The)S 375 X(status)S
+500 X(of)S 550 X(the)S 624 X(pip)S 1 x(elines)S 799 X(and)S 882 X
+(b)S -1 x(ypass)S 1019 X(v)S -2 x(alues)S 1145 X(can)S 1223 X(b)S 
+1 x(e)S 1282 X(view)S -1 x(ed)S 1421 X(while)S 1532 X(running)S 
+1689 X(clspim)S 1821 X(in)S
+XP /F31 /cmtt10 300 41.5 41.5 128 [0 -10 22 29] PXLNF RP
+XP /F31 45 22 2 11 19 14 3 24 0
+<FFFF80 FFFF80 FFFF80>
+PXLC RP
+1872 1372 XY F31(-)S
+XP /F31 110 22 0 0 21 18 18 24 0
+<7E3C00 FEFF00 7FFF80 0F8780 0F0380 0F0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 0E0380 0E0380 7FC7F0 FFE7F8 7FC7F0>
+PXLC RP
+1894 1372 XY F31(n)S
+XP /F31 111 22 2 0 19 18 18 24 0
+<03E000 0FF800 1FFC00 3C1E00 780F00 700700 E00380 E00380 E00380
+ E00380 E00380 F00780 700700 780F00 3C1E00 1FFC00 0FF800 03E000>
+PXLC RP
+1916 1372 XY F31(o)S
+XP /F31 113 22 2 -9 22 18 27 24 0
+<07C700 1FF700 3FFF00 7C3F00 781F00 F00F00 F00700 E00700 E00700
+ E00700 E00700 F00700 F00F00 781F00 7C3F00 3FFF00 1FF700 07C700
+ 000700 000700 000700 000700 000700 000700 003FE0 007FF0 003FE0>
+PXLC RP
+1937 1372 XY F31(q)S
+XP /F31 117 22 0 0 21 18 18 24 0
+<7E1F80 FE3F80 7E1F80 0E0380 0E0380 0E0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 0E0780 0F0F80 0FFFF0 07FFF8 03E3F0>
+PXLC RP
+1959 1372 XY F31(u)S
+XP /F31 105 22 3 0 19 26 26 16 0
+<0180 03C0 03C0 0180 0000 0000 0000 0000 7FC0 7FC0 7FC0 01C0 01C0
+ 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 7FFF FFFF 7FFF>
+PXLC RP
+1981 1372 XY F31(i)S
+XP /F31 101 22 3 0 19 18 18 16 0
+<03E0 0FF8 1FFC 3C1E 780E 7007 E007 FFFF FFFF FFFF E000 E000 7007
+ 7807 3C0F 1FFE 0FFC 03F0>
+PXLC RP
+2003 1372 XY F31(e)S
+XP /F31 116 22 1 0 18 23 23 24 0
+<030000 070000 070000 070000 070000 7FFF00 FFFF00 FFFF00 070000
+ 070000 070000 070000 070000 070000 070000 070100 070380 070380
+ 070780 078780 03FF00 03FE00 00F800>
+PXLC RP
+2025 1372 XY F31(t)S 2063 X F25(mo)S 1 x(de)S 2177 X(or)S 2230 X
+(when)S 49 y 225 X(stepping)S 398 X(through)S 561 X(sim)S -1 x
+(ulated)S 756 X(co)S 1 x(de)S 858 X(using)S 973 X(the)S
+XP /F31 115 22 3 0 18 18 18 16 0
+<0FEC 3FFC 7FFC F03C E01C E01C F000 7F80 1FF0 07FC 003E E00E E00E
+ F00E F81E FFFC FFF8 C7E0>
+PXLC RP
+1051 1421 XY F31(ste)S
+XP /F31 112 22 0 -9 20 18 27 24 0
+<7E3E00 FEFF80 7FFFC0 0F83E0 0F01E0 0E00F0 0E00F0 0E0070 0E0070
+ 0E0070 0E0070 0E00F0 0F00E0 0F01E0 0F83C0 0FFFC0 0EFF00 0E3C00
+ 0E0000 0E0000 0E0000 0E0000 0E0000 0E0000 7FC000 FFE000 7FC000>
+PXLC RP
+1116 1421 XY F31(p)S 1158 X F25(command.)S 1383 X(The)S 1475 X F31
+(in)S
+XP /F31 102 22 1 0 18 25 25 24 0
+<001F00 007F80 00FF80 01E780 01C300 01C000 01C000 7FFF00 FFFF00
+ FFFF00 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 3FFE00 7FFF00 3FFE00>
+PXLC RP
+1518 1421 XY F31(fo)S 1584 X(pipe)S
+XP /F31 108 22 2 0 19 25 25 24 0
+<FFC000 FFC000 FFC000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 FFFF80 FFFF80 FFFF80>
+PXLC RP
+1671 1421 XY F31(line)S 1779 X F25(command)S 1974 X(will)S 2059 X
+(also)S 2149 X(prin)S -1 x(t)S 2258 X(this)S 50 y 225 X
+(information.)S 466 X(When)S 587 X(running)S 741 X(xlspim,)S 886 X
+(the)S 957 X(pip)S 1 x(eline)S 1112 X(can)S 1188 X(b)S 1 x(e)S 1245 X
+(view)S -1 x(ed)S 1380 X(b)S -1 x(y)S 1438 X(clic)S -1 x(king)S 
+1588 X(on)S 1645 X(the)S 1716 X F31(pipeline)S 1904 X F25(button.)S
+2056 X(It)S 2101 X(is)S 2143 X(imp)S 1 x(ortan)S -1 x(t)S 50 y 225 X
+(to)S 276 X(note)S 369 X(that)S 460 X(when)S 569 X(viewing)S 720 X
+(the)S 793 X(pip)S 1 x(elines,)S 977 X(y)S -1 x(ou)S 1056 X(are)S 
+1126 X(witnessing)S 1328 X(the)S 1400 X(state)S 1502 X(of)S 1550 X
+(the)S 1622 X(mac)S -1 x(hine)S 1785 X(as)S 1837 X(it)S 1879 X(is)S
+XP /F30 97 23 1 0 22 18 18 24 0
+<0FF800 1C1E00 3E0F80 3E0780 3E07C0 1C07C0 0007C0 007FC0 07E7C0
+ 1F07C0 3C07C0 7C07C0 F807C0 F807C0 F807C0 780BC0 3E13F8 0FE1F8>
+PXLC RP
+1921 1521 XY F30(a)S
+XP /F30 98 27 1 0 24 29 29 24 0
+<FF0000 FF0000 1F0000 1F0000 1F0000 1F0000 1F0000 1F0000 1F0000
+ 1F0000 1F0000 1F3F80 1FE1E0 1F8070 1F0078 1F003C 1F003C 1F003E
+ 1F003E 1F003E 1F003E 1F003E 1F003E 1F003C 1F003C 1F0078 1F8070
+ 1EC1E0 1C3F00>
+PXLC RP
+1944 1521 XY F30(b)S
+XP /F30 111 24 1 0 22 18 18 24 0
+<01FC00 0F0780 1C01C0 3C01E0 7800F0 7800F0 F800F8 F800F8 F800F8
+ F800F8 F800F8 F800F8 7800F0 7800F0 3C01E0 1E03C0 0F0780 01FC00>
+PXLC RP
+1972 1521 XY F30(o)S
+XP /F30 117 27 1 0 25 18 18 24 0
+<FF07F8 FF07F8 1F00F8 1F00F8 1F00F8 1F00F8 1F00F8 1F00F8 1F00F8
+ 1F00F8 1F00F8 1F00F8 1F00F8 1F00F8 1F01F8 0F01F8 0786FF 01F8FF>
+PXLC RP
+1996 1521 XY F30(u)S
+XP /F30 116 19 1 0 15 26 26 16 0
+<0300 0300 0300 0300 0700 0700 0F00 0F00 3FFC FFFC 1F00 1F00 1F00
+ 1F00 1F00 1F00 1F00 1F00 1F00 1F0C 1F0C 1F0C 1F0C 0F08 0798 03F0>
+PXLC RP
+2023 1521 XY F30(t)S 2056 X F25(to)S 2107 X(execute.)S 2274 X(By)S
+50 y 225 X(stepping)S 389 X(or)S 438 X(con)S -1 x(tin)S -1 x(uing)S
+638 X(from)S 734 X(y)S -1 x(our)S 827 X(curren)S -1 x(t)S 969 X(p)S
+1 x(oin)S -1 x(t,)S 1087 X(y)S -1 x(ou)S 1163 X(are)S 1230 X
+(telling)S 1355 X(SPI)S
+XP /F25 77 38 2 0 35 28 28 40 0
+<FF8000FF80 0F8000F800 0F8000F800 0BC0017800 0BC0017800 0BC0017800
+ 09E0027800 09E0027800 08F0047800 08F0047800 08F0047800 0878087800
+ 0878087800 0878087800 083C107800 083C107800 083C107800 081E207800
+ 081E207800 081E207800 080F407800 080F407800 0807807800 0807807800
+ 0807807800 0803007800 1C03007800 FF8307FF80>
+PXLC RP
+1421 1571 XY F25(M)S 1471 X(to)S 1519 X(execute)S 1666 X(whatev)S 
+-1 x(er)S 1841 X(is)S 1881 X(curren)S -1 x(tly)S 2056 X(in)S 2102 X
+(the)S 2172 X(pip)S 1 x(eline.)S
+XP /F55 /cmbx10 432 59.8 59.8 128 [-4 -15 69 45] PXLNF RP
+XP /F55 51 34 3 0 30 39 39 32 0
+<007F8000 03FFF000 07FFFC00 1F81FE00 1F00FF00 3F80FF00 3F807F80
+ 3FC07F80 3F807F80 3F807F80 1F007F80 0000FF80 0000FF00 0000FF00
+ 0001FE00 0003F800 0007F000 00FFC000 00FFF000 0001FC00 0000FF00
+ 00007F80 00007FC0 00003FC0 00003FE0 00003FE0 00003FE0 3C003FE0
+ 7E003FE0 FF003FE0 FF003FE0 FF003FC0 FF007FC0 FE007F80 7C00FF80
+ 3F01FF00 1FFFFC00 07FFF000 00FF8000>
+PXLC RP
+225 1717 XY F55(3)S
+XP /F55 69 45 3 0 42 41 41 40 0
+<FFFFFFFFE0 FFFFFFFFE0 FFFFFFFFE0 03FC001FE0 03FC0007F0 03FC0001F0
+ 03FC0001F0 03FC0000F0 03FC000070 03FC000070 03FC000070 03FC01C078
+ 03FC01C038 03FC01C038 03FC01C038 03FC03C000 03FC03C000 03FC0FC000
+ 03FFFFC000 03FFFFC000 03FFFFC000 03FC0FC000 03FC03C000 03FC03C000
+ 03FC01C00E 03FC01C00E 03FC01C00E 03FC01C01C 03FC00001C 03FC00001C
+ 03FC00001C 03FC00003C 03FC000038 03FC000078 03FC0000F8 03FC0001F8
+ 03FC0003F8 03FC001FF8 FFFFFFFFF0 FFFFFFFFF0 FFFFFFFFF0>
+PXLC RP
+328 1717 XY F55(E)S
+XP /F55 120 36 1 0 34 27 27 40 0
+<FFFC0FFF00 FFFC0FFF00 FFFC0FFF00 07F003C000 03F8078000 01FC078000
+ 00FE0F0000 00FF1E0000 007F3C0000 003FF80000 001FF00000 000FF00000
+ 000FF00000 0007F00000 0007F80000 000FFC0000 001FFE0000 001EFE0000
+ 003C7F0000 00783F8000 00F01FC000 01E01FE000 01C00FE000 03C007F000
+ FFF01FFF80 FFF01FFF80 FFF01FFF80>
+PXLC RP
+373 1717 XY F55(x)S
+XP /F55 99 31 2 0 28 27 27 32 0
+<001FF800 00FFFE00 03F01F00 0FE03F80 1FC03F80 3F803F80 3F803F80
+ 7F801F00 7F000000 FF000000 FF000000 FF000000 FF000000 FF000000
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8001C0
+ 3FC001C0 1FC003C0 0FE00780 03F01F00 00FFFC00 001FE000>
+PXLC RP
+410 1717 XY F55(c)S
+XP /F55 101 32 2 0 29 27 27 32 0
+<003FE000 01FFF800 03F07E00 0FE03F00 1FC01F80 3F800FC0 3F800FC0
+ 7F000FC0 7F0007E0 FF0007E0 FF0007E0 FF0007E0 FFFFFFE0 FFFFFFE0
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8000E0
+ 3F8001E0 1FC001C0 0FE003C0 03F81F80 00FFFE00 001FF000>
+PXLC RP
+440 1717 XY F55(e)S
+XP /F55 112 38 2 -12 35 27 39 40 0
+<FFE1FE0000 FFE7FF8000 FFFE07E000 0FF803F800 0FF001FC00 0FE001FE00
+ 0FE000FE00 0FE000FF00 0FE000FF00 0FE0007F80 0FE0007F80 0FE0007F80
+ 0FE0007F80 0FE0007F80 0FE0007F80 0FE0007F80 0FE0007F80 0FE0007F80
+ 0FE000FF00 0FE000FF00 0FE000FE00 0FF001FE00 0FF003FC00 0FF803F800
+ 0FFE0FE000 0FEFFF8000 0FE1FC0000 0FE0000000 0FE0000000 0FE0000000
+ 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000
+ FFFE000000 FFFE000000 FFFE000000>
+PXLC RP
+472 1717 XY F55(p)S
+XP /F55 116 27 1 0 22 38 38 24 0
+<007000 007000 007000 007000 00F000 00F000 00F000 01F000 03F000
+ 03F000 07F000 1FFFF0 FFFFF0 FFFFF0 07F000 07F000 07F000 07F000
+ 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000
+ 07F038 07F038 07F038 07F038 07F038 07F038 07F038 03F870 01F8F0
+ 00FFE0 001F80>
+PXLC RP
+510 1717 XY F55(t)S
+XP /F55 105 19 3 0 18 43 43 16 0
+<0700 1FC0 1FE0 3FE0 3FE0 3FE0 1FE0 1FC0 0700 0000 0000 0000 0000
+ 0000 0000 0000 FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 FFFE FFFE FFFE>
+PXLC RP
+537 1717 XY F55(i)S
+XP /F55 111 34 2 0 31 27 27 32 0
+<003FE000 01FFFC00 03F07E00 0FC01F80 1F800FC0 3F800FE0 3F0007E0
+ 7F0007F0 7F0007F0 7F0007F0 FF0007F8 FF0007F8 FF0007F8 FF0007F8
+ FF0007F8 FF0007F8 FF0007F8 FF0007F8 7F0007F0 7F0007F0 3F800FE0
+ 3F800FE0 1F800FC0 0FC01F80 07F07F00 01FFFC00 003FE000>
+PXLC RP
+556 1717 XY F55(o)S
+XP /F55 110 38 3 0 36 27 27 40 0
+<FFC07F0000 FFC1FFC000 FFC787E000 0FCE07F000 0FDC03F800 0FF803F800
+ 0FF003F800 0FF003F800 0FF003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ FFFE3FFF80 FFFE3FFF80 FFFE3FFF80>
+PXLC RP
+590 1717 XY F55(n)S
+XP /F55 115 27 2 0 24 27 27 24 0
+<03FE30 0FFFF0 3E03F0 7800F0 7000F0 F00070 F00070 F80070 FC0000
+ FFE000 FFFE00 7FFFC0 3FFFE0 1FFFF0 07FFF8 00FFFC 0003FC 0000FC
+ E0007C E0003C F0003C F0003C F80078 FC0078 FF01F0 F7FFC0 C1FF00>
+PXLC RP
+628 1717 XY F55(s)S 1817 Y 225 X F25(The)S 310 X(MIPS)S
+XP /F25 82 31 2 -1 30 28 29 32 0
+<FFFF0000 0F01E000 0F007800 0F003C00 0F001C00 0F001E00 0F001E00
+ 0F001E00 0F001E00 0F001C00 0F003C00 0F007800 0F01E000 0FFF0000
+ 0F03C000 0F00E000 0F00F000 0F007800 0F007800 0F007800 0F007800
+ 0F007800 0F007800 0F007810 0F007810 0F003810 0F003C20 FFF01C20
+ 000007C0>
+PXLC RP
+428 1817 XY F25(R2000)S 555 X(sp)S 1 x(eci\014es)S 715 X(t)S -1 x
+(w)S -1 x(elv)S -1 x(e)S 841 X(t)S -1 x(yp)S 1 x(es)S 951 X(of)S 
+998 X(in)S -1 x(ternal)S 1151 X(exceptions.)S 1369 X(SPIM)S 1487 X
+(ma)S -1 x(y)S 1576 X(pic)S -1 x(k)S 1663 X(up)S 1723 X(on)S 1780 X
+(an)S -1 x(y)S 1858 X(one)S 1934 X(of)S 1981 X(these)S 2086 X
+(exceptions)S 2288 X(at)S 50 y 225 X(an)S -1 x(y)S 302 X(p)S 1 x
+(oin)S -1 x(t)S 410 X(during)S 541 X(the)S 611 X(pip)S 1 x(eline.)S
+XP /F25 79 32 2 -1 29 29 30 32 0
+<003F8000 00E0E000 03803800 07001C00 0E000E00 1C000700 3C000780
+ 38000380 780003C0 780003C0 700001C0 F00001E0 F00001E0 F00001E0
+ F00001E0 F00001E0 F00001E0 F00001E0 F00001E0 700001C0 780003C0
+ 780003C0 38000380 3C000780 1C000700 0E000E00 07001C00 03803800
+ 00E0E000 003F8000>
+PXLC RP
+783 1867 XY F25(Once)S 888 X(an)S 945 X(instruction)S 1154 X(has)S
+1227 X(caused)S 1360 X(an)S 1417 X(exception,)S 1613 X(the)S 1684 X
+(pip)S 1 x(eline)S 1838 X(after)S 1936 X(it)S 1976 X(is)S 2017 X
+(killed,)S 2140 X(that)S 2229 X(is,)S 2281 X(no)S 50 y 225 X(more)S
+329 X(instructions)S 556 X(will)S 635 X(b)S 1 x(e)S 692 X(fetc)S 
+-1 x(hed)S 836 X(un)S -1 x(til)S 934 X(the)S 1006 X(exception)S 
+1192 X(is)S 1234 X(handled.)S 1409 X(The)S 1494 X(actual)S 1619 X
+(pro)S 1 x(cessing)S 1820 X(of)S 1868 X(an)S 1926 X(exception)S 
+2112 X(o)S 1 x(ccurs)S 2241 X(after)S 49 y 225 X(the)S 294 X(bad)S
+372 X(instruction)S 579 X(has)S 651 X(reac)S -1 x(hed)S 799 X(the)S
+868 X(write)S 971 X(bac)S -1 x(k)S 1065 X(stage.)S 1187 X(Before)S
+1314 X(handling)S 1482 X(the)S 1551 X(exception,)S 1746 X(SPIM)S 
+1861 X(sets)S 1940 X(four)S 2024 X(bits)S 2102 X(in)S 2148 X(the)S
+2216 X(Cause)S 50 y 225 X(register)S 370 X(corresp)S 1 x(onding)S 
+634 X(to)S 682 X(the)S 751 X(exception's)S 962 X(co)S 1 x(de)S 1055 X
+(and)S 1133 X(sets)S 1211 X(the)S 1280 X(EPC)S 1377 X(\(Execution)S
+1586 X(Program)S 1755 X(Coun)S -1 x(ter\))S 1929 X(register)S 2074 X
+(to)S 2122 X(the)S 2191 X(address)S 50 y 225 X(of)S 271 X(the)S 
+340 X(bad)S 420 X(instruction)S 628 X(or)S 677 X(to)S 726 X(the)S 
+796 X(address)S 943 X(of)S 988 X(the)S 1058 X(instruction)S 1267 X
+(preceding)S 1452 X(if)S 1489 X(it)S 1528 X(w)S -1 x(as)S 1607 X
+(in)S 1653 X(a)S 1686 X(branc)S -1 x(h)S 1822 X(dela)S -1 x(y)S 
+1929 X(slot.)S 2023 X(SPIM)S 2140 X(then)S 2233 X(tak)S -1 x(es)S 
+50 y 225 X(appropriate)S 450 X(action)S 576 X(to)S 627 X(remedy)S 
+775 X(the)S 848 X(exception,)S 1046 X(b)S 1 x(e)S 1104 X(it)S 1146 X
+(the)S 1219 X(execution)S 1405 X(of)S 1454 X(a)S 1489 X(system)S 
+1628 X(call,)S 1717 X(paging)S 1852 X(of)S 1900 X(memory)S -3 x(,)S
+2070 X(stopping)S 2240 X(for)S 2304 X(a)S 50 y 225 X(breakp)S 1 x
+(oin)S -1 x(t,)S 447 X(or)S 499 X(p)S 1 x(osting)S 647 X(of)S 695 X
+(a)S 731 X(signal.)S 868 X(In)S 921 X(the)S 994 X(case)S 1083 X(of)S
+1132 X(a)S 1167 X(prop)S 1 x(erly)S 1335 X(executed)S 1508 X
+(system)S 1647 X(call,)S 1736 X(SPIM,)S 1867 X(as)S 1919 X(with)S
+XP /F25 85 31 2 -1 28 28 29 32 0
+<FFF07FC0 0F000E00 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 07000800 07800800 03801000 01801000 00C02000 0070C000
+ 001F0000>
+PXLC RP
+2015 2166 XY F25(U)S
+XP /F25 78 31 2 0 28 28 28 32 0
+<FF007FC0 0F800E00 0F800400 0BC00400 09E00400 09E00400 08F00400
+ 08F80400 08780400 083C0400 083C0400 081E0400 080F0400 080F0400
+ 08078400 0807C400 0803C400 0801E400 0801E400 0800F400 08007C00
+ 08007C00 08003C00 08003C00 08001C00 08000C00 1C000C00 FF800400>
+PXLC RP
+2046 2166 XY F25(NI)S
+XP /F25 88 31 1 0 29 28 28 32 0
+<7FF0FFC0 0FC03E00 07801800 03C01800 03E01000 01E02000 01F06000
+ 00F04000 00788000 007D8000 003D0000 001E0000 001F0000 000F0000
+ 000F8000 000F8000 0013C000 0023E000 0021E000 0041F000 00C0F800
+ 00807800 01007C00 03003C00 02001E00 06001F00 1F003F80 FFC0FFF0>
+PXLC RP
+2092 2166 XY F25(X,)S 2150 X(calculates)S 49 y 225 X(a)S 260 X
+(startup)S 406 X(address)S 554 X(so)S 605 X(that)S 695 X(the)S 767 X
+(system)S 905 X(call)S 981 X(instruction)S 1192 X(is)S 1234 X(not)S
+1308 X(executed)S 1480 X(again.)S
+XP /F25 65 31 1 0 29 29 29 32 0
+<00060000 00060000 00060000 000F0000 000F0000 000F0000 00178000
+ 00178000 00178000 0023C000 0023C000 0023C000 0041E000 0041E000
+ 0041E000 0080F000 0080F000 0180F800 01007800 01FFF800 03007C00
+ 02003C00 02003C00 06003E00 04001E00 04001E00 0C001F00 1E001F00
+ FF80FFF0>
+PXLC RP
+1607 2215 XY F25(A)S 1653 X(TLB)S 1752 X(or)S 1803 X(breakp)S 1 x
+(oin)S -1 x(t)S 2012 X(exception,)S 2209 X(on)S 2267 X(the)S 50 y 
+225 X(other)S 336 X(hand,)S 454 X(will)S 534 X(start)S 636 X(the)S
+710 X(program)S 878 X(up)S 940 X(at)S 993 X(the)S 1067 X(EPC.)S 
+1181 X(Exceptions)S 1395 X(suc)S -1 x(h)S 1491 X(as)S 1544 X(bus)S
+1623 X(errors,)S 1755 X(illegal)S 1877 X(instructions,)S 2118 X
+(bad)S 2201 X(system)S 50 y 225 X(calls,)S 332 X(o)S -1 x(v)S -1 x
+(er)S
+(\015o)S -1 x(ws,)S 525 X(and)S 608 X(unimplemen)S -1 x(ted)S 902 X
+(CPU's,)S 1048 X(can)S 1127 X(b)S 1 x(e)S 1186 X(translated)S 1385 X
+(in)S -1 x(to)S 1471 X(signals,)S 1620 X(and)S 1703 X(are)S 1775 X
+(th)S -1 x(us,)S 1881 X(p)S 1 x(osted)S 2016 X(on)S 2077 X(the)S 
+2151 X(sim)S -1 x(ulated)S 50 y 225 X(program's)S 419 X(p)S 1 x
+(ending)S 577 X(signal)S 695 X(list.)S 59 y 287 X(External)S 458 X
+(exceptions,)S 671 X(including)S 851 X(those)S 960 X(that)S 1050 X
+(migh)S -1 x(t)S 1169 X(o)S 1 x(ccur)S 1281 X(in)S 1330 X(the)S 
+1401 X(MIPS's)S 1548 X(\015oating)S 1698 X(p)S 1 x(oin)S -1 x(t)S 
+1806 X(unit,)S 1905 X(are)S 1975 X(not)S 2049 X(curren)S -1 x(tly)S
+2227 X(sim)S -1 x(u-)S 49 y 225 X(lated)S 329 X(in)S 377 X(SPIM.)S
+59 y 287 X(T)S -3 x(o)S 347 X(see)S 413 X(ho)S -1 x(w)S 499 X(man)S
+-1 x(y)S 611 X(exceptions)S 812 X(and)S 891 X(of)S 938 X(what)S 
+1040 X(t)S -1 x(yp)S 1 x(e)S 1133 X(ha)S -1 x(v)S -1 x(e)S 1227 X
+(b)S 1 x(een)S 1324 X(handled,)S 1492 X(one)S 1567 X(can)S 1642 X
+(t)S -1 x(yp)S 1 x(e)S 1734 X F31(info)S 1843 X(s)S
+XP /F31 121 22 1 -9 20 18 27 24 0
+<7F1FC0 FF9FE0 7F1FC0 1C0700 0E0700 0E0E00 0E0E00 070E00 071C00
+ 071C00 039C00 039C00 039800 01B800 01B800 00F000 00F000 00F000
+ 00E000 00E000 00E000 01C000 79C000 7BC000 7F8000 3F0000 3C0000>
+PXLC RP
+1865 2532 XY F31(ys)S
+XP /F31 99 22 3 0 19 18 18 16 0
+<03F8 0FFE 1FFE 3C1E 780C 7000 F000 E000 E000 E000 E000 F000 7007
+ 7807 3E0F 1FFE 0FFC 03F0>
+PXLC RP
+1909 2532 XY F31(c)S
+XP /F31 97 22 2 0 21 18 18 24 0
+<1FE000 7FF800 7FFC00 783C00 301E00 000E00 000E00 03FE00 1FFE00
+ 7E0E00 F00E00 E00E00 E00E00 F01E00 F83E00 7FFFE0 3FE7E0 0F83E0>
+PXLC RP
+1930 2532 XY F31(alls)S 2030 X F25(in)S 2078 X(clspim)S 2206 X(or)S
+2256 X(pull)S 50 y 225 X(do)S -1 x(wn)S 335 X(the)S 406 X F31(info)S
+507 X F25(button)S 643 X(to)S 694 X(select)S 807 X F31(syscalls)S 
+995 X F25(in)S 1044 X(xlspim.)S
+XP /F55 52 34 2 0 31 39 39 32 0
+<00000E00 00001E00 00003E00 00007E00 0000FE00 0000FE00 0001FE00
+ 0003FE00 00077E00 000E7E00 000E7E00 001C7E00 00387E00 00707E00
+ 00E07E00 00E07E00 01C07E00 03807E00 07007E00 0E007E00 0E007E00
+ 1C007E00 38007E00 70007E00 E0007E00 FFFFFFF8 FFFFFFF8 FFFFFFF8
+ 0000FE00 0000FE00 0000FE00 0000FE00 0000FE00 0000FE00 0000FE00
+ 0000FE00 007FFFF8 007FFFF8 007FFFF8>
+PXLC RP
+225 2728 XY F55(4)S
+XP /F55 83 38 4 0 33 41 41 32 0
+<007F8060 03FFF0E0 0FFFFFE0 1F807FE0 3F001FE0 7E0007E0 7E0003E0
+ 7C0003E0 FC0001E0 FC0001E0 FC0000E0 FE0000E0 FE0000E0 FF000000
+ FFC00000 7FFE0000 7FFFE000 3FFFFC00 3FFFFF00 1FFFFF80 07FFFFC0
+ 03FFFFE0 00FFFFF0 0007FFF0 00007FF0 00000FF8 000007F8 000003F8
+ E00003F8 E00001F8 E00001F8 E00001F8 F00001F8 F00001F0 F80003F0
+ FC0003E0 FF0007E0 FFE01FC0 FFFFFF00 E0FFFE00 C01FF000>
+PXLC RP
+328 2728 XY F55(S)S
+XP /F55 121 36 1 -12 34 27 39 40 0
+<FFFE03FF80 FFFE03FF80 FFFE03FF80 07F0007000 07F0007000 07F800F000
+ 03F800E000 03FC01E000 01FC01C000 01FC01C000 00FE038000 00FE038000
+ 007F070000 007F070000 007F8F0000 003F8E0000 003FDE0000 001FDC0000
+ 001FDC0000 000FF80000 000FF80000 000FF80000 0007F00000 0007F00000
+ 0003E00000 0003E00000 0001C00000 0001C00000 0003800000 0003800000
+ 3807800000 7C07000000 FE0F000000 FE0E000000 FE1E000000 FE3C000000
+ 7C78000000 3FE0000000 0FC0000000>
+PXLC RP
+366 2728 XY F55(yste)S
+XP /F55 109 57 3 0 56 27 27 56 0
+<FFC07F800FF000 FFC1FFE03FFC00 FFC783F0F07E00 0FCE03F9C07F00
+ 0FDC01FB803F00 0FF801FF003F80 0FF001FE003F80 0FF001FE003F80
+ 0FF001FE003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ FFFE1FFFC3FFF8 FFFE1FFFC3FFF8 FFFE1FFFC3FFF8>
+PXLC RP
+488 2728 XY F55(m)S
+XP /F55 67 50 4 0 45 41 41 48 0
+<00003FF00180 0003FFFE0780 000FFFFF8F80 003FF007FF80 00FF8001FF80
+ 01FE00007F80 07FC00003F80 07F800001F80 0FF000000F80 1FE000000F80
+ 3FE000000780 3FC000000780 7FC000000380 7FC000000380 7FC000000380
+ FF8000000000 FF8000000000 FF8000000000 FF8000000000 FF8000000000
+ FF8000000000 FF8000000000 FF8000000000 FF8000000000 FF8000000000
+ FF8000000000 7FC000000000 7FC000000380 7FC000000380 3FC000000380
+ 3FE000000380 1FE000000780 0FF000000700 07F800000F00 07FC00001E00
+ 01FE00003C00 00FF8000F800 003FF007F000 000FFFFFC000 0003FFFF0000
+ 00003FF80000>
+PXLC RP
+568 2728 XY F55(C)S
+XP /F55 97 33 2 0 32 27 27 32 0
+<01FF8000 07FFF000 0F81FC00 1FC0FE00 1FC07F00 1FC07F00 1FC03F80
+ 0F803F80 00003F80 00003F80 00003F80 000FFF80 00FFFF80 07FC3F80
+ 1FE03F80 3F803F80 7F803F80 7F003F80 FE003F80 FE003F80 FE003F80
+ FE007F80 FF007F80 7F00FFC0 3F83DFFC 0FFF0FFC 01FC03FC>
+PXLC RP
+618 2728 XY F55(a)S
+XP /F55 108 19 3 0 18 42 42 16 0
+<FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ FFFE FFFE FFFE>
+PXLC RP
+651 2728 XY F55(lls)S 2828 Y 225 X F25(System)S 371 X(calls)S 466 X
+(in)S 516 X(the)S 589 X(new)S 676 X(cycle)S 781 X(lev)S -1 x(el)S 
+877 X(SPIM)S 997 X(are)S 1069 X(pro)S 1 x(cessed)S 1257 X(as)S 1310 X
+(exceptions)S 1513 X(or)S 1566 X(traps,)S 1686 X(as)S 1739 X(the)S
+1813 X(MIPS)S 1933 X(R2000)S 2062 X(instruction)S 2274 X(set)S 50 y 
+225 X(dictates.)S 395 X(When)S 515 X(a)S 548 X(system)S 684 X(call)S
+758 X(instruction)S 967 X(en)S -1 x(ters)S 1087 X(the)S 1157 X(pip)S
+1 x(eline,)S 1322 X(it)S 1362 X(is)S 1403 X(noted)S 1516 X(b)S -1 x
+(y)S 1572 X(SPIM)S 1689 X(as)S 1738 X(an)S 1794 X(exception.)S 1995 X
+(It)S 2039 X(will)S 2116 X(b)S 1 x(e)S 2170 X(handled,)S 50 y 225 X
+(as)S 273 X(with)S 365 X(all)S 420 X(other)S 526 X(exceptions,)S 
+738 X(when)S 844 X(it)S 882 X(reac)S -1 x(hes)S 1024 X(the)S 1093 X
+(write)S 1197 X(bac)S -1 x(k)S 1291 X(stage)S 1395 X(of)S 1439 X
+(the)S 1508 X(pip)S 1 x(eline.)S 1679 X(The)S 1762 X(system)S 1897 X
+(call,)S 1983 X(whose)S 2103 X(v)S -2 x(alue)S 2207 X(should)S
+%%PageTrailer
+PF  EP /paper-automatic true SPS 1 PP
+%%PageBoundingBox: 54 87 558 732
+
+%%Page: 3 3
+%%PageBoundingBox: (atend)
+%%BeginPageSetup
+1000 BP 3300 2550 PM /paper-automatic false SPS 225 0 XY
+%%EndPageSetup
+XP /F25 /cmr10 300 41.5 41.5 128 [-3 -11 41 31] PXLNF RP
+XP /F25 97 21 2 0 20 18 18 24 0
+<1FC000 307000 783800 781C00 301C00 001C00 001C00 01FC00 0F1C00
+ 381C00 701C00 601C00 E01C40 E01C40 E01C40 603C40 304E80 1F8700>
+PXLC RP
+225 282 XY F25(a)S
+XP /F25 108 12 1 0 10 29 29 16 0
+<FC00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+246 282 XY F25(l)S
+XP /F25 114 16 1 0 14 18 18 16 0
+<FCE0 1D30 1E78 1E78 1C30 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 FFC0>
+PXLC RP
+257 282 XY F25(r)S
+XP /F25 101 18 1 0 16 18 18 16 0
+<03E0 0C30 1818 300C 700E 6006 E006 FFFE E000 E000 E000 E000 6000
+ 7002 3002 1804 0C18 03E0>
+PXLC RP
+274 282 XY F25(ea)S
+XP /F25 100 23 2 0 21 29 29 24 0
+<003F00 000700 000700 000700 000700 000700 000700 000700 000700
+ 000700 000700 03E700 0C1700 180F00 300700 700700 600700 E00700
+ E00700 E00700 E00700 E00700 E00700 600700 700700 300700 180F00
+ 0C3700 07C7E0>
+PXLC RP
+313 282 XY F25(d)S
+XP /F25 121 22 1 -8 20 18 26 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000
+ 004000 008000 008000 F08000 F10000 F30000 660000 3C0000>
+PXLC RP
+336 282 XY F25(y)S
+XP /F25 104 23 1 0 21 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 FF9FF0>
+PXLC RP
+373 282 XY F25(ha)S
+XP /F25 118 22 1 0 20 18 18 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000>
+PXLC RP
+416 282 XY F25(v)S -1 x(e)S
+XP /F25 98 23 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C00E0 1C00E0 1C00C0 1C01C0 1C0180 1E0300
+ 190600 10F800>
+PXLC RP
+470 282 XY F25(b)S 1 x(ee)S
+XP /F25 110 23 1 0 21 18 18 24 0
+<FC7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 FF9FF0>
+PXLC RP
+531 282 XY F25(n)S
+XP /F25 112 23 1 -8 20 18 26 24 0
+<FC7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0 1C00E0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C01C0 1C01C0 1C0180 1E0300 1D0600 1CF800
+ 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 FF8000>
+PXLC RP
+569 282 XY F25(p)S
+XP /F25 117 23 1 0 21 18 18 24 0
+<FC1F80 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0780 0C0780 0E1B80 03E3F0>
+PXLC RP
+592 282 XY F25(u)S
+XP /F25 116 16 1 0 13 26 26 16 0
+<0400 0400 0400 0400 0C00 0C00 1C00 3C00 FFE0 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C10 1C10 1C10 1C10 1C10 0C10 0E20 03C0>
+PXLC RP
+615 282 XY F25(t)S
+XP /F25 105 12 1 0 10 29 29 16 0
+<1800 3C00 3C00 1800 0000 0000 0000 0000 0000 0000 0000 FC00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+647 282 XY F25(in)S 697 X(re)S
+XP /F25 103 21 1 -9 19 19 28 24 0
+<000380 03C4C0 0C38C0 1C3880 181800 381C00 381C00 381C00 381C00
+ 181800 1C3800 0C3000 13C000 100000 300000 180000 1FF800 1FFF00
+ 1FFF80 300380 6001C0 C000C0 C000C0 C000C0 600180 300300 1C0E00
+ 07F800>
+PXLC RP
+731 282 XY F25(gi)S
+XP /F25 115 16 1 0 14 18 18 16 0
+<1F90 3070 4030 C010 C010 E010 F800 7F80 3FE0 0FF0 00F8 8038 8018
+ C018 C018 E010 D060 8FC0>
+PXLC RP
+764 282 XY F25(ster)S
+XP /F25 36 21 2 -2 18 31 33 16 0
+<0080 0080 07E0 1898 3084 6082 4081 C087 C08F C08F C086 E080 F080
+ 7E80 3FC0 1FF0 0FF8 03FC 00BE 008E 0087 6087 F083 F083 E083 8082
+ 4082 4084 2088 1890 07E0 0080 0080>
+PXLC RP
+846 282 XY F25($v)S
+XP /F25 48 21 2 -1 18 28 29 16 0
+<03C0 0C30 1818 300C 300C 700E 6006 6006 E007 E007 E007 E007 E007
+ E007 E007 E007 E007 E007 E007 E007 E007 6006 6006 700E 300C 300C
+ 1818 0C30 07E0>
+PXLC RP
+889 282 XY F25(0)S
+XP /F25 44 12 4 -8 8 4 12 8 0
+<60 F0 F0 70 10 10 10 10 20 20 40 80>
+PXLC RP
+909 282 XY F25(,)S
+XP /F25 99 18 2 0 16 18 18 16 0
+<07E0 0C30 1878 3078 7030 6000 E000 E000 E000 E000 E000 E000 6000
+ 7004 3004 1808 0C30 07C0>
+PXLC RP
+936 282 XY F25(can)S 1014 X(b)S 1 x(e)S
+XP /F25 111 21 1 0 19 18 18 24 0
+<03F000 0E1C00 180600 300300 700380 600180 E001C0 E001C0 E001C0
+ E001C0 E001C0 E001C0 600180 700380 300300 180600 0E1C00 03F000>
+PXLC RP
+1072 282 XY F25(one)S 1149 X(o)S
+XP /F25 102 13 0 0 15 29 29 16 0
+<00F8 018C 071E 061E 0E0C 0E00 0E00 0E00 0E00 0E00 0E00 FFE0 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 7FE0>
+PXLC RP
+1170 282 XY F25(f)S 1198 X(three)S 1305 X(t)S -1 x(yp)S 1 x(es)S
+XP /F25 58 12 4 0 8 18 18 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 60>
+PXLC RP
+1401 282 XY F25(:)S
+XP /F25 49 21 4 0 17 28 28 16 0
+<0300 0700 3F00 C700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0F80 FFF8>
+PXLC RP
+1434 282 XY F25(1)S
+XP /F25 46 12 4 0 8 4 4 8 0
+<60 F0 F0 60>
+PXLC RP
+1455 282 XY F25(.)S
+XP /F25 41 16 2 -11 12 31 42 16 0
+<8000 4000 2000 1000 1800 0C00 0C00 0600 0600 0300 0300 0380 0180
+ 0180 0180 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0
+ 01C0 0180 0180 0180 0380 0300 0300 0600 0600 0C00 0C00 1800 1000
+ 2000 4000 8000>
+PXLC RP
+1466 282 XY F25(\))S 1505 X(uni)S
+XP /F25 109 35 1 0 34 18 18 40 0
+<FC7E07E000 1C83883800 1D01901800 1E01E01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 FF8FF8FF80>
+PXLC RP
+1562 282 XY F25(mplemen)S -1 x(ted)S
+XP /F25 59 12 4 -8 8 18 26 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 70 10 10 10 10 20
+ 20 40 80>
+PXLC RP
+1783 282 XY F25(;)S
+XP /F25 50 21 2 0 18 28 28 16 0
+<07C0 1830 201C 400C 400E F00F F80F F807 F807 7007 000F 000E 000E
+ 001C 001C 0038 0070 0060 00C0 0180 0300 0601 0C01 1801 1002 3FFE
+ 7FFE FFFE>
+PXLC RP
+1810 282 XY F25(2.\))S 1881 X(sp)S 1 x(ecial;)S 2030 X(or,)S
+XP /F25 51 21 2 -1 18 28 29 16 0
+<07E0 1830 201C 201C 781E 780E 781E 381E 001C 001C 0018 0030 0060
+ 07E0 0030 001C 001C 000E 000F 000F 700F F80F F80F F80F F00E 401C
+ 201C 1830 07E0>
+PXLC RP
+2094 282 XY F25(3.\))S 2165 X(rela)S -1 x(y)S -1 x(able)S 49 y 225 X
+(to)S
+XP /F25 85 31 2 -1 28 28 29 32 0
+<FFF07FC0 0F000E00 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400 0F000400
+ 0F000400 07000800 07800800 03801000 01801000 00C02000 0070C000
+ 001F0000>
+PXLC RP
+275 331 XY F25(U)S
+XP /F25 78 31 2 0 28 28 28 32 0
+<FF007FC0 0F800E00 0F800400 0BC00400 09E00400 09E00400 08F00400
+ 08F80400 08780400 083C0400 083C0400 081E0400 080F0400 080F0400
+ 08078400 0807C400 0803C400 0801E400 0801E400 0800F400 08007C00
+ 08007C00 08003C00 08003C00 08001C00 08000C00 1C000C00 FF800400>
+PXLC RP
+306 331 XY F25(N)S
+XP /F25 73 15 1 0 13 28 28 16 0
+<FFF0 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 FFF0>
+PXLC RP
+337 331 XY F25(I)S
+XP /F25 88 31 1 0 29 28 28 32 0
+<7FF0FFC0 0FC03E00 07801800 03C01800 03E01000 01E02000 01F06000
+ 00F04000 00788000 007D8000 003D0000 001E0000 001F0000 000F0000
+ 000F8000 000F8000 0013C000 0023E000 0021E000 0041F000 00C0F800
+ 00807800 01007C00 03003C00 02001E00 06001F00 1F003F80 FFC0FFF0>
+PXLC RP
+352 331 XY F25(X.)S
+XP /F25 40 16 3 -11 13 31 42 16 0
+<0040 0080 0100 0200 0600 0C00 0C00 1800 1800 3000 3000 7000 6000
+ 6000 6000 E000 E000 E000 E000 E000 E000 E000 E000 E000 E000 E000
+ E000 6000 6000 6000 7000 3000 3000 1800 1800 0C00 0C00 0600 0200
+ 0100 0080 0040>
+PXLC RP
+408 331 XY F25(\()S
+XP /F25 83 23 2 -1 20 29 30 24 0
+<07E080 1C1980 300580 700380 600180 E00180 E00080 E00080 E00080
+ F00000 F80000 7C0000 7FC000 3FF800 1FFE00 07FF00 00FF80 000F80
+ 0007C0 0003C0 0001C0 8001C0 8001C0 8001C0 C00180 C00180 E00300
+ D00200 CC0C00 83F800>
+PXLC RP
+424 331 XY F25(See)S 498 X(the)S
+XP /F25 12 23 0 0 21 29 29 24 0
+<007E00 01C180 030180 0703C0 0E03C0 0E0180 0E0000 0E0000 0E0000
+ 0E0000 0E0000 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7F87F8>
+PXLC RP
+568 331 XY F25(\014le)S 635 X(cl)S
+XP /F25 45 14 0 8 11 10 2 16 0
+<FFE0 FFE0>
+PXLC RP
+665 331 XY F25(-mips-syscall.c)S 938 X(for)S 1001 X(the)S 1072 X
+(table)S
+XP /F25 119 30 1 0 28 18 18 32 0
+<FF3FCFE0 3C0F0380 1C070180 1C070100 1C0B0100 0E0B8200 0E0B8200
+ 0E118200 0711C400 0711C400 0720C400 03A0E800 03A0E800 03C06800
+ 01C07000 01C07000 01803000 00802000>
+PXLC RP
+1175 331 XY F25(whic)S -1 x(h)S 1293 X(tells)S 1380 X(eac)S -1 x(h)S
+1473 X(system)S 1610 X(call)S
+XP /F25 39 12 4 17 9 29 12 8 0
+<60 F0 F8 68 08 08 08 10 10 20 40 80>
+PXLC RP
+1672 331 XY F25('s)S 1713 X(t)S -1 x(yp)S 1 x(e\).)S 1839 X(Some)S
+1949 X(system)S 2086 X(calls)S 2178 X(li)S
+XP /F25 107 22 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C3FC0 1C0F00 1C0C00 1C0800 1C1000 1C2000 1C4000
+ 1CE000 1DE000 1E7000 1C7800 1C3800 1C3C00 1C1C00 1C0E00 1C0F00
+ 1C0F80 FF9FE0>
+PXLC RP
+2201 331 XY F25(k)S -1 x(e)S 2253 X(fork)S 50 y 225 X(could)S 336 X
+(not)S 410 X(b)S 1 x(e)S 467 X(implemen)S -1 x(ted)S 713 X(in)S 
+761 X(S)S
+XP /F25 80 28 2 0 25 28 28 24 0
+<FFFF80 0F00E0 0F0078 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001E 0F001C 0F003C 0F0078 0F00E0 0FFF80 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ FFF000>
+PXLC RP
+785 381 XY F25(PI)S
+XP /F25 77 38 2 0 35 28 28 40 0
+<FF8000FF80 0F8000F800 0F8000F800 0BC0017800 0BC0017800 0BC0017800
+ 09E0027800 09E0027800 08F0047800 08F0047800 08F0047800 0878087800
+ 0878087800 0878087800 083C107800 083C107800 083C107800 081E207800
+ 081E207800 081E207800 080F407800 080F407800 0807807800 0807807800
+ 0807807800 0803007800 1C03007800 FF8307FF80>
+PXLC RP
+828 381 XY F25(M.)S
+XP /F25 79 32 2 -1 29 29 30 32 0
+<003F8000 00E0E000 03803800 07001C00 0E000E00 1C000700 3C000780
+ 38000380 780003C0 780003C0 700001C0 F00001E0 F00001E0 F00001E0
+ F00001E0 F00001E0 F00001E0 F00001E0 F00001E0 700001C0 780003C0
+ 780003C0 38000380 3C000780 1C000700 0E000E00 07001C00 03803800
+ 00E0E000 003F8000>
+PXLC RP
+891 381 XY F25(Other)S 1012 X(calls,)S 1116 X(lik)S -1 x(e)S 1193 X
+(brk,)S 1279 X(sbrk,)S 1383 X(op)S 1 x(en,)S 1495 X(close,)S 1606 X
+(e)S
+XP /F25 120 22 0 0 21 18 18 24 0
+<7F8FF0 0F0380 0F0300 070200 038400 01C800 01D800 00F000 007000
+ 007800 00F800 009C00 010E00 020E00 060700 040380 1E07C0 FF0FF8>
+PXLC RP
+1625 381 XY F25(xit,)S 1700 X(and)S 1781 X(sev)S -1 x(eral)S 1918 X
+(others,)S 2054 X(are)S 2124 X(handled)S 2281 X(b)S -1 x(y)S 50 y 
+225 X(SPIM)S 346 X(b)S 1 x(ecause)S 502 X(they)S 597 X(deal)S 687 X
+(with)S 784 X(sim)S -1 x(ulated)S 975 X(data)S 1072 X(space)S 1185 X
+(or)S 1239 X(\014le)S 1308 X(descriptors.)S 1542 X(Some)S 1655 X
+(calls,)S 1762 X(ho)S -1 x(w)S -1 x(ev)S -1 x(er,)S 1936 X(\(and)S
+2035 X(this)S 2118 X(dep)S 1 x(ends)S 2281 X(on)S 50 y 225 X(the)S
+298 X(arc)S -1 x(hitecture)S 528 X(where)S 649 X(SPIM)S 769 X(is)S
+812 X(running\))S 983 X(can)S 1061 X(b)S 1 x(e)S 1118 X(sen)S -1 x
+(t)S 1206 X(on)S 1265 X(to)S 1317 X(UNIX.)S
+XP /F25 67 30 2 -1 27 29 30 32 0
+<001F8080 00E06180 01801980 07000780 0E000380 1C000380 1C000180
+ 38000180 78000080 78000080 70000080 F0000000 F0000000 F0000000
+ F0000000 F0000000 F0000000 F0000000 F0000000 70000080 78000080
+ 78000080 38000080 1C000100 1C000100 0E000200 07000400 01800800
+ 00E03000 001FC000>
+PXLC RP
+1451 481 XY F25(Curren)S -1 x(tly)S -3 x(,)S 1650 X(only)S 1742 X
+(a)S 1778 X(SPIM)S 1897 X(that)S 1988 X(w)S -1 x(as)S 2069 X
+(compiled)S 2246 X(on)S 2304 X(a)S 50 y 225 X(MIPS)S 343 X(mac)S 
+-1 x(hine)S 505 X(is)S 547 X(capable)S 696 X(of)S 743 X(sending)S 
+893 X(system)S 1030 X(calls)S 1123 X(on)S 1180 X(to)S 1230 X(UNIX.)S
+XP /F25 87 43 1 -1 41 28 29 40 0
+<FFE0FFE0FF 1F001F003C 1E001E0018 0F001F0010 0F001F0010 0F001F0010
+ 07801F0020 0780278020 0780278020 03C0278040 03C043C040 03C043C040
+ 03E043C040 01E081E080 01E081E080 01E081E080 00F100F100 00F100F100
+ 00F100F100 007900FA00 007A007A00 007A007A00 003E007C00 003C003C00
+ 003C003C00 003C003C00 0018001800 0018001800 0018001800>
+PXLC RP
+1364 531 XY F25(When)S 1485 X(compiled)S 1660 X(on)S 1717 X(a)S 
+1751 X(non-MIPS)S 1950 X(mac)S -1 x(hine,)S 2124 X(SPIM's)S 2270 X
+(old)S 49 y 225 X(set)S 290 X(of)S 337 X(pseudo-system)S 613 X
+(calls)S 706 X(applies.)S
+XP /F25 84 30 1 0 28 28 28 32 0
+<7FFFFFC0 700F01C0 600F00C0 400F0040 400F0040 C00F0020 800F0020
+ 800F0020 800F0020 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 001F8000 03FFFC00>
+PXLC RP
+287 639 XY F25(The)S 372 X(clspim)S 501 X(command)S
+XP /F31 /cmtt10 300 41.5 41.5 128 [0 -10 22 29] PXLNF RP
+XP /F31 105 22 3 0 19 26 26 16 0
+<0180 03C0 03C0 0180 0000 0000 0000 0000 7FC0 7FC0 7FC0 01C0 01C0
+ 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 7FFF FFFF 7FFF>
+PXLC RP
+689 639 XY F31(i)S
+XP /F31 110 22 0 0 21 18 18 24 0
+<7E3C00 FEFF00 7FFF80 0F8780 0F0380 0F0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 0E0380 0E0380 7FC7F0 FFE7F8 7FC7F0>
+PXLC RP
+711 639 XY F31(n)S
+XP /F31 102 22 1 0 18 25 25 24 0
+<001F00 007F80 00FF80 01E780 01C300 01C000 01C000 7FFF00 FFFF00
+ FFFF00 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 3FFE00 7FFF00 3FFE00>
+PXLC RP
+733 639 XY F31(f)S
+XP /F31 111 22 2 0 19 18 18 24 0
+<03E000 0FF800 1FFC00 3C1E00 780F00 700700 E00380 E00380 E00380
+ E00380 E00380 F00780 700700 780F00 3C1E00 1FFC00 0FF800 03E000>
+PXLC RP
+755 639 XY F31(o)S
+XP /F31 115 22 3 0 18 18 18 16 0
+<0FEC 3FFC 7FFC F03C E01C E01C F000 7F80 1FF0 07FC 003E E00E E00E
+ F00E F81E FFFC FFF8 C7E0>
+PXLC RP
+798 639 XY F31(s)S
+XP /F31 121 22 1 -9 20 18 27 24 0
+<7F1FC0 FF9FE0 7F1FC0 1C0700 0E0700 0E0E00 0E0E00 070E00 071C00
+ 071C00 039C00 039C00 039800 01B800 01B800 00F000 00F000 00F000
+ 00E000 00E000 00E000 01C000 79C000 7BC000 7F8000 3F0000 3C0000>
+PXLC RP
+820 639 XY F31(ys)S
+XP /F31 99 22 3 0 19 18 18 16 0
+<03F8 0FFE 1FFE 3C1E 780C 7000 F000 E000 E000 E000 E000 F000 7007
+ 7807 3E0F 1FFE 0FFC 03F0>
+PXLC RP
+864 639 XY F31(c)S
+XP /F31 97 22 2 0 21 18 18 24 0
+<1FE000 7FF800 7FFC00 783C00 301E00 000E00 000E00 03FE00 1FFE00
+ 7E0E00 F00E00 E00E00 E00E00 F01E00 F83E00 7FFFE0 3FE7E0 0F83E0>
+PXLC RP
+885 639 XY F31(a)S
+XP /F31 108 22 2 0 19 25 25 24 0
+<FFC000 FFC000 FFC000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 FFFF80 FFFF80 FFFF80>
+PXLC RP
+907 639 XY F31(ll)S 964 X F25(will)S 1042 X(tell)S 1113 X(the)S 
+1184 X(fre)S
+XP /F25 113 22 2 -8 21 18 26 24 0
+<03C100 0C3300 180B00 300F00 700700 700700 E00700 E00700 E00700
+ E00700 E00700 E00700 600700 700700 300F00 180F00 0C3700 07C700
+ 000700 000700 000700 000700 000700 000700 000700 003FE0>
+PXLC RP
+1231 639 XY F25(quency)S 1371 X(of)S 1418 X(eac)S -1 x(h)S 1511 X
+(of)S 1557 X(the)S 1628 X(system)S 1765 X(calls)S 1857 X(in)S 1905 X
+(a)S 1939 X(program.)S 2121 X(The)S 2206 X(xlspim)S 50 y 225 X F31
+(info)S 326 X F25(button's)S 490 X F31(syscalls)S 678 X F25(option)S
+807 X(do)S 1 x(es)S 901 X(the)S 972 X(same.)S
+XP /F55 /cmbx10 432 59.8 59.8 128 [-4 -15 69 45] PXLNF RP
+XP /F55 53 34 3 0 30 39 39 32 0
+<0C000300 0F803F00 0FFFFE00 0FFFFE00 0FFFFC00 0FFFF800 0FFFE000
+ 0FFFC000 0FFE0000 0E000000 0E000000 0E000000 0E000000 0E000000
+ 0E000000 0E7FC000 0FFFF800 0F80FE00 0E007F00 0C003F80 00003F80
+ 00001FC0 00001FC0 00001FE0 00001FE0 18001FE0 7E001FE0 FE001FE0
+ FE001FE0 FE001FE0 FE001FE0 FE001FC0 78003FC0 78003F80 3C007F00
+ 1F01FE00 0FFFFC00 03FFF000 00FF8000>
+PXLC RP
+225 835 XY F55(5)S
+XP /F55 83 38 4 0 33 41 41 32 0
+<007F8060 03FFF0E0 0FFFFFE0 1F807FE0 3F001FE0 7E0007E0 7E0003E0
+ 7C0003E0 FC0001E0 FC0001E0 FC0000E0 FE0000E0 FE0000E0 FF000000
+ FFC00000 7FFE0000 7FFFE000 3FFFFC00 3FFFFF00 1FFFFF80 07FFFFC0
+ 03FFFFE0 00FFFFF0 0007FFF0 00007FF0 00000FF8 000007F8 000003F8
+ E00003F8 E00001F8 E00001F8 E00001F8 F00001F8 F00001F0 F80003F0
+ FC0003E0 FF0007E0 FFE01FC0 FFFFFF00 E0FFFE00 C01FF000>
+PXLC RP
+328 835 XY F55(S)S
+XP /F55 105 19 3 0 18 43 43 16 0
+<0700 1FC0 1FE0 3FE0 3FE0 3FE0 1FE0 1FC0 0700 0000 0000 0000 0000
+ 0000 0000 0000 FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 FFFE FFFE FFFE>
+PXLC RP
+366 835 XY F55(i)S
+XP /F55 103 34 2 -13 32 27 40 32 0
+<00FF81F0 03FFE7FC 0FC1FE7C 1F80FC7C 3F80FE7C 3F007E10 7F007F00
+ 7F007F00 7F007F00 7F007F00 7F007F00 7F007F00 3F007E00 3F80FE00
+ 1F80FC00 0FC1F800 1FFFE000 18FF8000 38000000 3C000000 3C000000
+ 3E000000 3FFFF800 3FFFFF00 1FFFFFC0 0FFFFFE0 07FFFFF0 1FFFFFF0
+ 7E0007F8 7C0001F8 F80001F8 F80000F8 F80000F8 F80000F8 FC0001F8
+ 7E0003F0 3F0007E0 0FC01F80 03FFFE00 007FF000>
+PXLC RP
+385 835 XY F55(g)S
+XP /F55 110 38 3 0 36 27 27 40 0
+<FFC07F0000 FFC1FFC000 FFC787E000 0FCE07F000 0FDC03F800 0FF803F800
+ 0FF003F800 0FF003F800 0FF003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ FFFE3FFF80 FFFE3FFF80 FFFE3FFF80>
+PXLC RP
+420 835 XY F55(n)S
+XP /F55 97 33 2 0 32 27 27 32 0
+<01FF8000 07FFF000 0F81FC00 1FC0FE00 1FC07F00 1FC07F00 1FC03F80
+ 0F803F80 00003F80 00003F80 00003F80 000FFF80 00FFFF80 07FC3F80
+ 1FE03F80 3F803F80 7F803F80 7F003F80 FE003F80 FE003F80 FE003F80
+ FE007F80 FF007F80 7F00FFC0 3F83DFFC 0FFF0FFC 01FC03FC>
+PXLC RP
+458 835 XY F55(a)S
+XP /F55 108 19 3 0 18 42 42 16 0
+<FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ FFFE FFFE FFFE>
+PXLC RP
+491 835 XY F55(l)S
+XP /F55 115 27 2 0 24 27 27 24 0
+<03FE30 0FFFF0 3E03F0 7800F0 7000F0 F00070 F00070 F80070 FC0000
+ FFE000 FFFE00 7FFFC0 3FFFE0 1FFFF0 07FFF8 00FFFC 0003FC 0000FC
+ E0007C E0003C F0003C F0003C F80078 FC0078 FF01F0 F7FFC0 C1FF00>
+PXLC RP
+510 835 XY F55(s)S 935 Y 225 X F25(Signals)S 365 X(can)S 440 X
+(reac)S -1 x(h)S 548 X(a)S 582 X(sim)S -1 x(ulated)S 769 X(program)S
+934 X(in)S 982 X(one)S 1057 X(of)S 1103 X(t)S -1 x(w)S -1 x(o)S 
+1180 X(w)S -1 x(a)S -1 x(ys.)S 1296 X(The)S 1381 X(\014rst,)S 1477 X
+(as)S 1527 X(alluded)S 1671 X(to)S 1721 X(earlier,)S 1859 X(is)S 
+1899 X(b)S -1 x(y)S 1956 X(w)S -1 x(a)S -1 x(y)S 2039 X(of)S 2085 X
+(an)S 2142 X(exception.)S
+XP /F25 66 29 2 0 26 28 28 24 0
+<FFFFC0 0F00F0 0F0038 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001C 0F003C 0F0078 0F01F0 0FFFE0 0F0078 0F003C 0F001E 0F000E
+ 0F000F 0F000F 0F000F 0F000F 0F000F 0F001E 0F001E 0F003C 0F0078
+ FFFFE0>
+PXLC RP
+225 985 XY F25(Bus)S 304 X(errors,)S 431 X(bad)S 508 X(system)S 
+642 X(calls,)S 743 X(illegal)S 859 X(instructions,)S 1095 X(and)S 
+1172 X(CPU)S 1271 X(errors)S 1386 X(all)S 1440 X(get)S 1505 X
+(translated)S 1698 X(in)S -1 x(to)S 1779 X(signals)S 1909 X(and)S 
+1986 X(ma)S -1 x(y)S 2073 X(b)S 1 x(e)S 2125 X(p)S 1 x(osted)S 2255 X
+(in)S -1 x(to)S 50 y 225 X(the)S 298 X(sim)S -1 x(ulated)S 488 X
+(program's)S 685 X(p)S 1 x(ending)S 844 X(signal)S 964 X(list.)S 
+1055 X(The)S 1143 X(second)S 1279 X(means)S 1408 X(b)S -1 x(y)S 
+1467 X(whic)S -1 x(h)S 1588 X(a)S 1624 X(signal)S 1744 X(can)S 1822 X
+(reac)S -1 x(h)S 1934 X(a)S 1970 X(program)S 2138 X(is)S 2182 X
+(through)S 49 y 225 X(SPIM's)S 375 X(o)S -1 x(wn)S 466 X(signal)S 
+588 X(catc)S -1 x(hing.)S 781 X(If)S 827 X(a)S 866 X(signal)S 988 X
+(is)S 1033 X(caugh)S -1 x(t)S 1172 X(o)S
+XP /F25 11 24 0 0 26 29 29 32 0
+<007E1F00 01C1B180 0303E3C0 0703C3C0 0E03C180 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 FFFFFC00 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 7F87FC00>
+PXLC RP
+1193 1084 XY F25(\013)S 1235 X(of)S 1287 X(UNIX)S 1413 X(b)S -1 x
+(y)S 1475 X(SPIM)S 1597 X(and)S 1682 X(deemed)S 1836 X(p)S 1 x
+(ertinen)S -1 x(t)S 2020 X(to)S 2075 X(the)S 2151 X(sim)S -1 x
+(ulated)S 50 y 225 X(program,)S 403 X(it)S 444 X(can)S 520 X(b)S 
+1 x(e)S 577 X(passed)S 709 X(on.)S 59 y 287 X(Whether)S 460 X(a)S 
+495 X(signal)S 614 X(is)S 657 X(actually)S 815 X(passed)S 948 X(on)S
+1007 X(to)S 1058 X(a)S 1094 X(program)S 1261 X(is)S 1303 X
+(determined)S 1521 X(b)S -1 x(y)S 1579 X(a)S 1615 X(table)S 1719 X
+(in)S 1769 X(cl-except.c.)S 1991 X(In)S 2044 X(clspim,)S 2186 X
+(one)S 2263 X(can)S 50 y 225 X(alter)S 322 X(this)S 403 X(table)S 
+507 X(using)S 615 X(the)S 687 X(handle)S 821 X(command.)S
+XP /F25 65 31 1 0 29 29 29 32 0
+<00060000 00060000 00060000 000F0000 000F0000 000F0000 00178000
+ 00178000 00178000 0023C000 0023C000 0023C000 0041E000 0041E000
+ 0041E000 0080F000 0080F000 0180F800 01007800 01FFF800 03007C00
+ 02003C00 02003C00 06003E00 04001E00 04001E00 0C001F00 1E001F00
+ FF80FFF0>
+PXLC RP
+1026 1243 XY F25(As)S 1087 X(in)S 1136 X(gdb,)S 1228 X(the)S 1299 X
+(command)S 1488 X(line)S
+XP /F31 104 22 0 0 21 25 25 24 0
+<7E0000 FE0000 7E0000 0E0000 0E0000 0E0000 0E0000 0E3C00 0EFF00
+ 0FFF80 0F8780 0F0380 0F0380 0E0380 0E0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 7FC7F0 FFE7F8 7FC7F0>
+PXLC RP
+839 1307 XY F31(han)S
+XP /F31 100 22 1 0 21 25 25 24 0
+<003F00 007F00 003F00 000700 000700 000700 000700 03C700 0FF700
+ 3FFF00 3C1F00 780F00 F00700 F00700 E00700 E00700 E00700 E00700
+ F00700 F00F00 781F00 7C3F00 3FFFE0 1FF7F0 07C7E0>
+PXLC RP
+904 1307 XY F31(dl)S
+XP /F31 101 22 3 0 19 18 18 16 0
+<03E0 0FF8 1FFC 3C1E 780E 7007 E007 FFFF FFFF FFFF E000 E000 7007
+ 7807 3C0F 1FFE 0FFC 03F0>
+PXLC RP
+948 1307 XY F31(e)S
+XP /F31 60 22 2 2 19 23 21 24 0
+<000180 000780 001F80 003E00 00F800 01F000 07C000 0F8000 3E0000
+ FC0000 F00000 FC0000 3E0000 0F8000 07C000 01F000 00F800 003E00
+ 001F80 000780 000180>
+PXLC RP
+991 1307 XY F31(<si)S
+XP /F31 103 22 1 -10 20 18 28 24 0
+<03E3C0 0FFFE0 1FFFE0 1E3CC0 3C1E00 380E00 380E00 380E00 3C1E00
+ 1E3C00 1FFC00 1FF800 3BE000 380000 380000 1FFC00 1FFF00 3FFFC0
+ 7803C0 F001E0 E000E0 E000E0 E000E0 F001E0 7C07C0 3FFF80 0FFE00
+ 03F800>
+PXLC RP
+1057 1307 XY F31(gnal)S 1166 X(na)S
+XP /F31 109 22 0 0 21 18 18 24 0
+<F9C380 FFEFC0 FFFFE0 3E7CE0 3C78E0 3870E0 3870E0 3870E0 3870E0
+ 3870E0 3870E0 3870E0 3870E0 3870E0 3870E0 FE7CF8 FE7CF8 FE3C78>
+PXLC RP
+1209 1307 XY F31(me)S 1275 X(o)S
+XP /F31 114 22 1 0 20 18 18 24 0
+<FF0FC0 FF3FE0 FF7FE0 07F040 07E000 07C000 078000 078000 070000
+ 070000 070000 070000 070000 070000 070000 FFFC00 FFFC00 FFFC00>
+PXLC RP
+1296 1307 XY F31(r)S 1340 X(n)S
+XP /F31 117 22 0 0 21 18 18 24 0
+<7E1F80 FE3F80 7E1F80 0E0380 0E0380 0E0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 0E0780 0F0F80 0FFFF0 07FFF8 03E3F0>
+PXLC RP
+1362 1307 XY F31(um)S
+XP /F31 98 22 0 0 20 25 25 24 0
+<7E0000 FE0000 7E0000 0E0000 0E0000 0E0000 0E0000 0E3E00 0EFF80
+ 0FFFC0 0F83E0 0F01E0 0E00F0 0E00F0 0E0070 0E0070 0E0070 0E0070
+ 0E00F0 0F00E0 0F01E0 0F83C0 0FFFC0 0EFF00 063C00>
+PXLC RP
+1405 1307 XY F31(ber)S
+XP /F31 62 22 2 2 19 23 21 24 0
+<C00000 F00000 FC0000 3E0000 0F8000 07C000 01F000 00F800 003E00
+ 001F80 000780 001F80 003E00 00F800 01F000 07C000 0F8000 3E0000
+ FC0000 F00000 C00000>
+PXLC RP
+1471 1307 XY F31(>)S 1514 X(<flag>)S 65 y 225 X F25(tells)S 317 X
+(SPIM)S 439 X(to)S 494 X(apply)S 612 X(the)S
+XP /F25 13 23 0 0 21 29 29 24 0
+<007FC0 01C1C0 0303C0 0703C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7FCFF8>
+PXLC RP
+687 1372 XY F25(\015ag)S 770 X(to)S 824 X(the)S 900 X(giv)S -1 x
+(en)S 1012 X(signal.)S
+XP /F25 86 31 1 -1 29 28 29 32 0
+<FFE00FF0 1F0003C0 0F000180 0F000100 0F800300 07800200 07800200
+ 03C00400 03C00400 03C00400 01E00800 01E00800 01F00800 00F01000
+ 00F01000 00F83000 00782000 00782000 003C4000 003C4000 003C4000
+ 001E8000 001E8000 001F8000 000F0000 000F0000 00060000 00060000
+ 00060000>
+PXLC RP
+1158 1372 XY F25(V)S -3 x(alid)S 1270 X(\015ags)S 1369 X(are:)S 
+1462 X(pass,)S 1569 X(nopass,)S 1720 X(prin)S -1 x(t,)S 1839 X
+(noprin)S -1 x(t,)S 2002 X(stop,)S 2109 X(and)S 2193 X(nostop.)S 
+50 y 225 X(The)S 312 X(prin)S -1 x(t)S 416 X(commands)S 624 X(tell)S
+697 X(SPIM)S 817 X(to)S 869 X(prin)S -1 x(t)S 974 X(a)S 1010 X
+(message)S 1171 X(when)S 1281 X(it)S 1324 X(sees)S 1410 X(the)S 
+1483 X(signal.)S 1622 X(The)S 1709 X(stop)S 1801 X(commands)S 2008 X
+(tell)S 2081 X(SPIM)S 2201 X(to)S 2254 X(halt)S 50 y 225 X
+(execution)S 413 X(if)S 453 X(the)S 526 X(signal)S 646 X(o)S 1 x
+(ccurs.)S 796 X(Curren)S -1 x(tly)S -3 x(,)S 996 X(no)S 1056 X
+(parallel)S 1205 X(exists)S 1322 X(in)S 1372 X(xlspim.)S 1527 X(T)S
+-3 x(o)S 1590 X(c)S -1 x(hange)S 1729 X(SPIM's)S 1877 X(default)S 
+2019 X(metho)S 1 x(d)S 2172 X(of)S 2221 X(signal)S 50 y 225 X
+(handling)S 393 X(\(whic)S -1 x(h)S 525 X(can)S 599 X(b)S 1 x(e)S 
+652 X(view)S -1 x(ed)S 786 X(at)S 834 X(an)S -1 x(y)S 909 X(time)S
+1001 X(with)S 1093 X(clspim's)S 1248 X F31(info)S 1357 X(signals)S
+1520 X F25(command)S 1707 X(or)S 1755 X(xlspim's)S 1913 X F31(info)S
+2011 X F25(button's)S 2172 X F31(signals)S 49 y 225 X F25
+(option\),)S 382 X(one)S 458 X(w)S -1 x(ould)S 579 X(ha)S -1 x(v)S
+-1 x(e)S 675 X(to)S 725 X(c)S -1 x(hange)S 863 X(the)S 934 X(table)S
+1038 X(in)S 1086 X(cl-except.c)S 1290 X(and)S 1371 X(recompile.)S 
+59 y 287 X(In)S 337 X(line)S 413 X(with)S 505 X(its)S 561 X(new)S 
+644 X(signal)S 759 X(handling,)S 939 X(sev)S -1 x(eral)S 1073 X
+(system)S 1209 X(calls)S 1299 X(previously)S 1495 X(meaningless)S 
+1722 X(can)S 1795 X(no)S -1 x(w)S 1880 X(b)S 1 x(e)S 1934 X(used)S
+2026 X(b)S -1 x(y)S 2082 X(the)S 2151 X(sim)S -1 x(ulated)S 50 y 
+225 X(program.)S 407 X(These)S 526 X(are:)S 610 X(sigv)S -1 x(ec,)S
+741 X(sigreturn,)S 927 X(sigsetmask,)S 1144 X(and)S 1223 X(sigblo)S
+1 x(c)S -1 x(k.)S
+XP /F25 76 26 2 0 23 28 28 24 0
+<FFF800 0F8000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0008 0F0008 0F0008 0F0018 0F0018 0F0010 0F0030 0F0070 0F01F0
+ FFFFF0>
+PXLC RP
+1397 1680 XY F25(Library)S 1545 X(routines)S 1703 X(lik)S -1 x(e)S
+1778 X F31(sig)S
+XP /F31 118 22 1 0 20 18 18 24 0
+<7F1FC0 FF1FE0 7F1FC0 1C0700 1E0F00 0E0E00 0E0E00 0E0E00 071C00
+ 071C00 071C00 071C00 03B800 03B800 03B800 01F000 01F000 00E000>
+PXLC RP
+1843 1680 XY F31(vec)S
+XP /F31 40 22 6 -4 17 29 33 16 0
+<00E0 01E0 07C0 0700 0F00 1E00 3C00 3800 7800 7000 7000 7000 F000
+ E000 E000 E000 E000 E000 E000 E000 F000 7000 7000 7000 7800 3800
+ 3C00 1E00 0F00 0700 07C0 01E0 00E0>
+PXLC RP
+1909 1680 XY F31(\()S
+XP /F31 41 22 4 -4 15 29 33 16 0
+<E000 F000 7C00 1C00 1E00 0F00 0780 0380 03C0 01C0 01C0 01C0 01E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 00E0 01E0 01C0 01C0 01C0 03C0 0380
+ 0780 0F00 1E00 1C00 7C00 F000 E000>
+PXLC RP
+1930 1680 XY F31(\))S 1965 X F25(and)S 2044 X F31(signal\(\))S 2230 X 
+F25(mak)S -1 x(e)S 50 y 225 X(use)S 295 X(of)S 341 X(these)S 445 X
+(system)S 581 X(calls.)S 689 X(\(The)S 789 X(system)S 925 X(call)S
+1000 X(sigreturn)S 1174 X(is)S 1214 X(usually)S 1354 X(used)S 1447 X
+(b)S -1 x(y)S 1503 X(a)S 1536 X(segmen)S -1 x(t)S 1695 X(of)S 1741 X
+(tramp)S 1 x(oline)S 1950 X(co)S 1 x(de)S 2044 X(that)S 2133 X(is)S
+2173 X(included)S 50 y 225 X(automatically)S 484 X(with)S 575 X
+(these)S 679 X(library)S 811 X(routines.)S 986 X(It)S 1028 X
+(should)S 1156 X(therefore)S 1328 X(probably)S 1499 X(not)S 1570 X
+(b)S 1 x(e)S 1623 X(used)S 1715 X(explicitly)S -3 x(.)S 1907 X(The)S
+1989 X(creators)S 2143 X(of)S
+XP /F25 52 21 1 0 19 28 28 24 0
+<000C00 000C00 001C00 003C00 003C00 005C00 00DC00 009C00 011C00
+ 031C00 021C00 041C00 0C1C00 081C00 101C00 301C00 201C00 401C00
+ C01C00 FFFFC0 001C00 001C00 001C00 001C00 001C00 001C00 001C00
+ 01FFC0>
+PXLC RP
+2188 1780 XY F25(4.3BS)S
+XP /F25 68 32 2 0 29 28 28 32 0
+<FFFFC000 0F00F000 0F003C00 0F000E00 0F000700 0F000700 0F000380
+ 0F0003C0 0F0001C0 0F0001C0 0F0001E0 0F0001E0 0F0001E0 0F0001E0
+ 0F0001E0 0F0001E0 0F0001E0 0F0001E0 0F0001C0 0F0001C0 0F0003C0
+ 0F000380 0F000780 0F000700 0F000E00 0F001C00 0F007000 FFFFC000>
+PXLC RP
+2293 1780 XY F25(D)S 49 y 225 X(UNIX)S 345 X(apparen)S -1 x(tly)S 
+550 X(mean)S -1 x(t)S 673 X(it)S 712 X(this)S 790 X(w)S -1 x(a)S 
+-1 x(y)S
+XP /F25 123 21 0 11 20 12 1 24 0
+<FFFFF0>
+PXLC RP
+872 1829 XY F25({)S 904 X(no)S 959 X(library)S 1091 X(routine)S 
+1232 X(exists)S 1344 X(for)S 1405 X(sigreturn.\))S 1612 X(When)S 
+1731 X(one)S 1804 X(of)S 1849 X(these)S 1952 X(system)S 2088 X
+(calls)S 2177 X(is)S 2217 X(made,)S 50 y 225 X(SPIM)S 346 X(in)S 
+-1 x(ternally)S 535 X(tak)S -1 x(es)S 644 X(note)S 739 X(of)S 789 X
+(the)S 863 X(new)S 951 X(handler)S 1103 X(or)S 1157 X(new)S 1245 X
+(mask)S 1355 X(b)S 1 x(eing)S 1469 X(implemen)S -1 x(ted.)S 1739 X
+(When)S 1862 X(and)S 1945 X(if)S 1986 X(that)S 2079 X(signal)S 2199 X
+(o)S 1 x(ccurs,)S 50 y 225 X(SPIM)S 345 X(p)S 1 x(osts)S 454 X(a)S
+490 X(signal)S 610 X(in)S -1 x(to)S 696 X(the)S 769 X(program's)S 
+965 X(p)S 1 x(ending)S 1124 X(signal)S 1244 X(list.)S
+XP /F25 69 28 2 0 26 28 28 24 0
+<FFFFFC 0F003C 0F000C 0F0004 0F0004 0F0006 0F0002 0F0002 0F0202
+ 0F0200 0F0200 0F0200 0F0600 0FFE00 0F0600 0F0200 0F0200 0F0200
+ 0F0201 0F0001 0F0002 0F0002 0F0002 0F0006 0F0006 0F000C 0F003C
+ FFFFFC>
+PXLC RP
+1334 1929 XY F25(Eac)S -1 x(h)S 1439 X(time)S 1535 X(the)S 1608 X
+(sim)S -1 x(ulated)S 1798 X(program)S 1966 X(has)S 2042 X(an)S 2101 X
+(exception)S 2288 X(to)S 50 y 225 X(b)S 1 x(e)S 284 X(pro)S 1 x
+(cessed,)S 484 X(that)S 576 X(list)S 647 X(is)S 691 X(c)S -1 x(hec)S
+-1 x(k)S -1 x(ed.)S 866 X(If)S 909 X(a)S 946 X(signal)S 1066 X(is)S
+1110 X(p)S 1 x(ending,)S 1282 X(SPIM)S 1402 X(c)S -1 x(hec)S -1 x
+(ks)S 1533 X(to)S 1585 X(see)S 1655 X(if)S 1695 X(the)S 1768 X
+(signal)S 1888 X(should)S 2022 X(b)S 1 x(e)S 2081 X(passed)S 2215 X
+(to)S 2267 X(the)S 50 y 225 X(program,)S 405 X(then)S 502 X(if)S 
+542 X(it)S 586 X(is)S 629 X(b)S 1 x(eing)S 743 X(mask)S -1 x(ed,)S
+905 X(and)S 988 X(then)S 1084 X(if)S 1124 X(a)S 1161 X(handler)S 
+1313 X(has)S 1389 X(b)S 1 x(een)S 1489 X(sp)S 1 x(eci\014ed.)S 1679 X
+(If)S 1722 X(a)S 1759 X(handler)S 1911 X(exists,)S 2040 X(SPIM)S 
+2160 X(sa)S -1 x(v)S -1 x(es)S 2267 X(the)S 49 y 225 X(state)S 326 X
+(of)S 372 X(the)S 443 X(mac)S -1 x(hine)S 605 X(on)S 662 X(the)S 
+732 X(stac)S -1 x(k)S 838 X(and)S
+XP /F25 106 13 -3 -8 8 29 37 16 0
+<00C0 01E0 01E0 00C0 0000 0000 0000 0000 0000 0000 0000 0FE0 00E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0 00E0
+ 00E0 00E0 00E0 00E0 00E0 00E0 60E0 F0C0 F1C0 6180 3E00>
+PXLC RP
+918 2078 XY F25(jumps)S 1041 X(to)S 1091 X(a)S 1124 X(segmen)S -1 x
+(t)S 1284 X(of)S 1331 X(co)S 1 x(de)S 1425 X(\(actually)S 1599 X
+(in)S 1646 X(the)S 1717 X(sigv)S -1 x(ec)S 1836 X(library)S 1971 X
+(routine\))S 2129 X(that)S 2218 X(serv)S -1 x(es)S 50 y 225 X(as)S
+277 X(a)S 313 X(tramp)S 1 x(oline)S 525 X(to)S 576 X(the)S 649 X
+(sp)S 1 x(eci\014ed)S 817 X(handler.)S 986 X(The)S 1073 X(call)S 
+1150 X(ev)S -1 x(en)S -1 x(tually)S 1349 X(comes)S 1473 X(bac)S -1 x
+(k)S 1570 X(from)S 1669 X(the)S 1742 X(handler,)S 1905 X(a)S 1940 X
+(sigreturn)S 2117 X(o)S 1 x(ccurs,)S 2258 X(and)S 50 y 225 X
+(regular)S 363 X(execution)S 546 X(resumes.)S 719 X(When)S 837 X
+(no)S 892 X(handler)S 1039 X(has)S 1111 X(b)S 1 x(een)S 1206 X(sp)S
+1 x(eci\014ed)S 1370 X(and)S 1448 X(a)S 1480 X(signal)S 1595 X(is)S
+1634 X(passed)S 1764 X(to)S 1812 X(the)S 1880 X(program,)S 2056 X
+(SPIM's)S 2199 X(default)S 50 y 225 X(action)S 350 X(is)S 391 X(to)S
+442 X(halt)S 527 X(execution.)S 59 y 287 X(Signal)S 413 X(handling)S
+586 X(in)S 636 X(SPIM)S 756 X(w)S -1 x(as)S 837 X(designed)S 1008 X
+(to)S 1060 X(function)S 1224 X(similarly)S 1396 X(to)S 1448 X
+(4.3BSD)S 1601 X(UNIX)S 1725 X(as)S 1777 X(describ)S 1 x(ed)S 1963 X
+(in)S
+XP /F25 92 21 6 17 19 29 12 16 0
+<0808 1010 2020 4040 4040 8080 8080 8080 B0B0 F8F8 7878 3030>
+PXLC RP
+2013 2287 XY F25(\\The)S 2121 X(Design)S 2258 X(and)S 49 y 225 X
+(Implemen)S -1 x(tation)S 525 X(of)S 572 X(the)S 644 X(4.3BSD)S 
+795 X(UNIX)S 917 X(Op)S 1 x(erating)S 1114 X(System)S
+XP /F25 34 21 1 17 14 29 12 16 0
+<6060 F0F0 F8F8 6868 0808 0808 0808 1010 1010 2020 4040 8080>
+PXLC RP
+1245 2336 XY F25(",)S 1291 X(b)S -1 x(y)S 1348 X(Le)S
+XP /F25 15 35 0 0 33 29 29 40 0
+<003F07FC00 01C0DC1C00 0381F03C00 0701F03C00 0E01E01C00 0E00E01C00
+ 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 FFFFFFFC00
+ 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00
+ 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00
+ 0E00E01C00 0E00E01C00 0E00E01C00 0E00E01C00 7FC7FCFF80>
+PXLC RP
+1393 2336 XY F25(\017er,)S 1488 X(Mc)S
+XP /F25 75 32 2 0 30 28 28 32 0
+<FFF03FE0 0F000F00 0F000C00 0F000800 0F001000 0F002000 0F004000
+ 0F008000 0F010000 0F020000 0F040000 0F0E0000 0F1F0000 0F2F0000
+ 0F278000 0F478000 0F83C000 0F01E000 0F01E000 0F00F000 0F00F800
+ 0F007800 0F003C00 0F003C00 0F001E00 0F001F00 0F001F80 FFF07FF0>
+PXLC RP
+1544 2336 XY F25(Kusic)S -1 x(k,)S 1692 X(Karels,)S 1833 X(and)S
+XP /F25 81 32 2 -8 29 29 37 32 0
+<003F8000 00E0E000 03803800 07001C00 0E000E00 1C000700 3C000780
+ 38000380 780003C0 780003C0 700001C0 F00001E0 F00001E0 F00001E0
+ F00001E0 F00001E0 F00001E0 F00001E0 F00001E0 700001C0 780003C0
+ 780003C0 38000380 3C0E0780 1C110700 0E208E00 07205C00 03A07800
+ 00F0E020 003FE020 00006020 00003060 000038E0 00003FC0 00003FC0
+ 00001F80 00000F00>
+PXLC RP
+1914 2336 XY F25(Quarterman.)S
+XP /F55 54 34 3 0 30 39 39 32 0
+<0007F000 003FFC00 00FFFF00 01FC0F00 07F01F80 0FE03F80 0FC03F80
+ 1FC03F80 3F803F80 3F801F00 7F800000 7F000000 7F000000 7F000000
+ FF000000 FF0FC000 FF3FF800 FF70FE00 FFE03F00 FFC03F80 FF801FC0
+ FF801FC0 FF801FC0 FF001FE0 FF001FE0 FF001FE0 FF001FE0 7F001FE0
+ 7F001FE0 7F001FE0 7F001FE0 3F801FC0 3F801FC0 1F803F80 0FC03F80
+ 07E0FF00 03FFFC00 00FFF000 003FC000>
+PXLC RP
+225 2483 XY F55(6)S
+XP /F55 86 52 1 0 50 41 41 56 0
+<FFFFF0003FFF80 FFFFF0003FFF80 FFFFF0003FFF80 03FE000001E000
+ 01FE000001C000 01FF000003C000 00FF0000038000 00FF0000038000
+ 007F8000070000 007F8000070000 007FC0000F0000 003FC0000E0000
+ 003FE0001E0000 001FE0001C0000 001FF0001C0000 000FF000380000
+ 000FF000380000 0007F800700000 0007F800700000 0007FC00F00000
+ 0003FC00E00000 0003FE01E00000 0001FE01C00000 0001FF01C00000
+ 0000FF03800000 0000FF03800000 0000FF87800000 00007F87000000
+ 00007FCF000000 00003FCE000000 00003FFE000000 00001FFC000000
+ 00001FFC000000 00000FF8000000 00000FF8000000 00000FF8000000
+ 000007F0000000 000007F0000000 000003E0000000 000003E0000000
+ 000001C0000000>
+PXLC RP
+328 2483 XY F55(Vi)S
+XP /F55 114 28 2 0 26 27 27 24 0
+<FFC1F0 FFC7FC FFCE3E 0FDC7F 0FD87F 0FF87F 0FF07F 0FF03E 0FF000
+ 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000
+ 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 FFFF00 FFFF00 FFFF00>
+PXLC RP
+399 2483 XY F55(r)S
+XP /F55 116 27 1 0 22 38 38 24 0
+<007000 007000 007000 007000 00F000 00F000 00F000 01F000 03F000
+ 03F000 07F000 1FFFF0 FFFFF0 FFFFF0 07F000 07F000 07F000 07F000
+ 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000
+ 07F038 07F038 07F038 07F038 07F038 07F038 07F038 03F870 01F8F0
+ 00FFE0 001F80>
+PXLC RP
+427 2483 XY F55(t)S
+XP /F55 117 38 3 0 36 27 27 40 0
+<FFE03FF800 FFE03FF800 FFE03FF800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE007F800 0FE007F800 0FE00FF800 07E01FF800
+ 03F03BFF80 01FFF3FF80 003FC3FF80>
+PXLC RP
+454 2483 XY F55(ual)S
+XP /F55 77 65 3 0 61 41 41 64 0
+<FFFE0000001FFFC0 FFFE0000001FFFC0 FFFF0000003FFFC0 03FF0000003FF000
+ 03FF0000003FF000 03BF80000077F000 03BF80000077F000 039FC00000E7F000
+ 039FC00000E7F000 038FE00001C7F000 038FE00001C7F000 0387F0000387F000
+ 0387F0000387F000 0387F0000387F000 0383F8000707F000 0383F8000707F000
+ 0381FC000E07F000 0381FC000E07F000 0380FE001C07F000 0380FE001C07F000
+ 0380FF003807F000 03807F003807F000 03807F003807F000 03803F807007F000
+ 03803F807007F000 03801FC0E007F000 03801FC0E007F000 03800FE1C007F000
+ 03800FE1C007F000 03800FE1C007F000 038007F38007F000 038007F38007F000
+ 038003FF0007F000 038003FF0007F000 038001FE0007F000 038001FE0007F000
+ 038000FC0007F000 038000FC0007F000 FFFE00FC01FFFFC0 FFFE007801FFFFC0
+ FFFE007801FFFFC0>
+PXLC RP
+568 2483 XY F55(M)S
+XP /F55 101 32 2 0 29 27 27 32 0
+<003FE000 01FFF800 03F07E00 0FE03F00 1FC01F80 3F800FC0 3F800FC0
+ 7F000FC0 7F0007E0 FF0007E0 FF0007E0 FF0007E0 FFFFFFE0 FFFFFFE0
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8000E0
+ 3F8001E0 1FC001C0 0FE003C0 03F81F80 00FFFE00 001FF000>
+PXLC RP
+633 2483 XY F55(e)S
+XP /F55 109 57 3 0 56 27 27 56 0
+<FFC07F800FF000 FFC1FFE03FFC00 FFC783F0F07E00 0FCE03F9C07F00
+ 0FDC01FB803F00 0FF801FF003F80 0FF001FE003F80 0FF001FE003F80
+ 0FF001FE003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80 0FE001FC003F80
+ FFFE1FFFC3FFF8 FFFE1FFFC3FFF8 FFFE1FFFC3FFF8>
+PXLC RP
+665 2483 XY F55(m)S
+XP /F55 111 34 2 0 31 27 27 32 0
+<003FE000 01FFFC00 03F07E00 0FC01F80 1F800FC0 3F800FE0 3F0007E0
+ 7F0007F0 7F0007F0 7F0007F0 FF0007F8 FF0007F8 FF0007F8 FF0007F8
+ FF0007F8 FF0007F8 FF0007F8 FF0007F8 7F0007F0 7F0007F0 3F800FE0
+ 3F800FE0 1F800FC0 0FC01F80 07F07F00 01FFFC00 003FE000>
+PXLC RP
+722 2483 XY F55(or)S
+XP /F55 121 36 1 -12 34 27 39 40 0
+<FFFE03FF80 FFFE03FF80 FFFE03FF80 07F0007000 07F0007000 07F800F000
+ 03F800E000 03FC01E000 01FC01C000 01FC01C000 00FE038000 00FE038000
+ 007F070000 007F070000 007F8F0000 003F8E0000 003FDE0000 001FDC0000
+ 001FDC0000 000FF80000 000FF80000 000FF80000 0007F00000 0007F00000
+ 0003E00000 0003E00000 0001C00000 0001C00000 0003800000 0003800000
+ 3807800000 7C07000000 FE0F000000 FE0E000000 FE1E000000 FE3C000000
+ 7C78000000 3FE0000000 0FC0000000>
+PXLC RP
+785 2483 XY F55(y)S
+XP /F55 45 23 1 11 18 17 6 24 0
+<FFFF80 FFFF80 FFFF80 FFFF80 FFFF80 FFFF80>
+PXLC RP
+844 2483 XY F55(-)S 890 X(S)S
+XP /F55 80 47 3 0 42 41 41 40 0
+<FFFFFFF800 FFFFFFFF00 FFFFFFFFC0 03FC003FE0 03FC000FF0 03FC0007F8
+ 03FC0007FC 03FC0003FC 03FC0003FE 03FC0003FE 03FC0003FE 03FC0003FE
+ 03FC0003FE 03FC0003FE 03FC0003FE 03FC0003FC 03FC0007FC 03FC0007F8
+ 03FC000FF0 03FC003FE0 03FFFFFF80 03FFFFFE00 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 FFFFF00000 FFFFF00000 FFFFF00000>
+PXLC RP
+928 2483 XY F55(P)S
+XP /F55 73 26 2 0 24 41 41 24 0
+<FFFFFC FFFFFC FFFFFC 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 FFFFFC FFFFFC FFFFFC>
+PXLC RP
+975 2483 XY F55(IM)S
+XP /F55 39 19 5 21 15 42 21 16 0
+<1C00 7F00 FF80 FF80 FFC0 FFC0 FFC0 7FC0 1CC0 00C0 00C0 01C0 0180
+ 0180 0380 0700 0600 0E00 1C00 3800 3000>
+PXLC RP
+1066 2483 XY F55('s)S 1135 X(ne)S
+XP /F55 119 50 1 0 48 27 27 48 0
+<FFFE7FFC0FFE FFFE7FFC0FFE FFFE7FFC0FFE 0FE007E000E0 07F003F001C0
+ 07F003F001C0 07F807F803C0 03F807F80380 03F807F80380 01FC0EFC0700
+ 01FC0EFC0700 01FE1EFC0F00 00FE1C7E0E00 00FE1C7E0E00 00FF383F1E00
+ 007F383F1C00 007F783F3C00 003FF01FB800 003FF01FB800 003FF01FF800
+ 001FE00FF000 001FE00FF000 000FC007E000 000FC007E000 000FC007E000
+ 00078003C000 00078003C000>
+PXLC RP
+1205 2483 XY F55(w)S
+XP /F55 84 48 2 0 45 40 40 48 0
+<7FFFFFFFFFC0 7FFFFFFFFFC0 7FFFFFFFFFC0 7F803FC03FC0 7E003FC007C0
+ 78003FC003C0 78003FC003C0 70003FC001C0 F0003FC001E0 F0003FC001E0
+ E0003FC000E0 E0003FC000E0 E0003FC000E0 E0003FC000E0 E0003FC000E0
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 00003FC00000 00003FC00000 00003FC00000
+ 00003FC00000 00003FC00000 007FFFFFE000 007FFFFFE000 007FFFFFE000>
+PXLC RP
+1277 2483 XY F55(T)S
+XP /F55 76 41 3 0 37 41 41 40 0
+<FFFFFC0000 FFFFFC0000 FFFFFC0000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000 03FC000000
+ 03FC0001C0 03FC0001C0 03FC0001C0 03FC0001C0 03FC0003C0 03FC000380
+ 03FC000380 03FC000780 03FC000780 03FC000F80 03FC000F80 03FC001F80
+ 03FC007F80 03FC01FF00 FFFFFFFF00 FFFFFFFF00 FFFFFFFF00>
+PXLC RP
+1325 2483 XY F55(L)S
+XP /F55 66 49 3 0 44 41 41 48 0
+<FFFFFFF80000 FFFFFFFF8000 FFFFFFFFC000 03F8001FF000 03F8000FF800
+ 03F80007FC00 03F80003FC00 03F80003FC00 03F80003FE00 03F80001FE00
+ 03F80001FE00 03F80001FE00 03F80003FE00 03F80003FC00 03F80003FC00
+ 03F80007F800 03F8000FF000 03F8001FE000 03F800FFC000 03FFFFFE0000
+ 03FFFFFFE000 03F80007F000 03F80003FC00 03F80001FE00 03F80001FE00
+ 03F80000FF00 03F80000FF00 03F80000FF80 03F80000FF80 03F80000FF80
+ 03F80000FF80 03F80000FF80 03F80000FF80 03F80000FF00 03F80001FF00
+ 03F80003FE00 03F80007FC00 03F8001FF800 FFFFFFFFF000 FFFFFFFFC000
+ FFFFFFFE0000>
+PXLC RP
+1367 2483 XY F55(B)S 2582 Y 225 X F25(When)S 345 X(the)S 415 X(T)S
+-3 x(ranslation)S 635 X(Lo)S 1 x(ok)S -2 x(aside)S 826 X(Bu\013er)S
+950 X(is)S 991 X(on,)S 1059 X(SPIM)S 1176 X(executes)S 1340 X(a)S 
+1373 X(remapping)S 1577 X(of)S 1624 X(virtual)S 1758 X(address)S 
+1905 X(space)S 2014 X(\(as)S 2080 X(the)S 2151 X(sim)S -1 x(ulated)S
+50 y 225 X(program)S 391 X(sees)S 475 X(it\))S 533 X(to)S 583 X(ph)S
+-1 x(ysical)S 743 X(paged)S 863 X(address)S 1011 X(space.)S 1138 X
+(SPIM's)S 1284 X(TLB)S 1384 X(con)S -1 x(tains)S
+XP /F25 54 21 2 -1 18 28 29 16 0
+<00F0 030C 0604 0C0E 181E 301E 300C 7000 7000 6000 E3E0 E430 E818
+ F00C F00E E006 E007 E007 E007 E007 E007 6007 6007 7006 300E 300C
+ 1818 0C30 03E0>
+PXLC RP
+1546 2632 XY F25(64)S 1602 X(registers)S 1766 X(and)S 1847 X(the)S
+1919 X(sim)S -1 x(ulated)S 2107 X(hardw)S -1 x(are)S 2288 X(to)S 
+50 y 225 X(map)S 317 X(the)S 388 X(upp)S 1 x(er)S 507 X(t)S -1 x(w)S
+-1 x(en)S -1 x(t)S -1 x(y)S 642 X(bits)S 722 X(of)S 769 X(a)S 804 X
+(virtual)S 938 X(address)S 1086 X(to)S 1137 X(a)S 1171 X(ph)S -1 x
+(ysical)S 1330 X(page.)S 1443 X(Eac)S -1 x(h)S 1546 X(page)S 1643 X
+(is)S 1684 X(therefore,)S 1870 X(b)S -1 x(y)S 1927 X(default,)S 
+2078 X(four)S 2164 X(kilob)S -1 x(ytes)S 50 y 225 X(\(12)S 299 X
+(bits\).)S 419 X(When)S 542 X(a)S 579 X(memory)S 741 X(access)S 
+866 X(refers)S 981 X(to)S 1034 X(an)S 1094 X(address)S 1244 X(that)S
+1336 X(is)S 1380 X(not)S 1456 X(mapp)S 1 x(ed)S 1616 X(to)S 1669 X
+(one)S 1748 X(of)S 1797 X(the)S 1871 X(64)S 1928 X(pages)S 2044 X
+(in)S 2095 X(the)S 2168 X(TLB,)S 2281 X(an)S 50 y 225 X(exception)S
+415 X(o)S 1 x(ccurs.)S 571 X(Up)S 1 x(on)S 688 X(pro)S 1 x(cessing)S
+892 X(that)S 986 X(exception,)S 1189 X(SPIM)S 1311 X(replaces)S 
+1472 X(one)S 1552 X(of)S 1603 X(the)S 1679 X(TLB's)S 1810 X
+(registers)S 1979 X(with)S 2077 X(the)S 2153 X(new)S 2242 X(page)S
+49 y 225 X(n)S -1 x(um)S -1 x(b)S 1 x(er)S 376 X(and)S 457 X
+(resumes)S 614 X(execution.)S 59 y 287 X(The)S 370 X(TLB)S 467 X
+(can)S 541 X(b)S 1 x(e)S 596 X(turned)S 727 X(on)S 783 X(in)S 829 X
+(clspim)S 956 X(with)S 1049 X(the)S
+XP /F31 45 22 2 11 19 14 3 24 0
+<FFFF80 FFFF80 FFFF80>
+PXLC RP
+1118 2890 XY F31(-)S
+XP /F31 116 22 1 0 18 23 23 24 0
+<030000 070000 070000 070000 070000 7FFF00 FFFF00 FFFF00 070000
+ 070000 070000 070000 070000 070000 070000 070100 070380 070380
+ 070780 078780 03FF00 03FE00 00F800>
+PXLC RP
+1140 2890 XY F31(tlb)S 1217 X F25(\015ag)S 1293 X(at)S 1342 X(run)S
+-1 x(time)S 1495 X(or)S 1544 X(b)S -1 x(y)S 1600 X(toggling)S 1757 X
+(it)S 1796 X(on)S 1851 X(with)S 1944 X(the)S 2013 X(set)S 2076 X
+(tlb)S 2138 X(command.)S 50 y 225 X(In)S 274 X(xlspim,)S 416 X(the)S
+485 X(TLB)S 581 X(can)S 655 X(b)S 1 x(e)S 708 X(turned)S 840 X(on)S
+894 X(at)S 942 X(run)S -1 x(time)S 1095 X(with)S 1187 X(the)S 1256 X 
+F31(-tlb)S 1354 X F25(\015ag)S 1430 X(or)S 1478 X(b)S -1 x(y)S 1533 X
+(pulling)S 1668 X(do)S -1 x(wn)S 1775 X(the)S 1844 X(mo)S 1 x(de)S
+1953 X(button)S 2086 X(after)S 2182 X(startup.)S
+%%PageTrailer
+PF  EP /paper-automatic true SPS 1 PP
+%%PageBoundingBox: 54 84 558 732
+
+%%Page: 4 4
+%%PageBoundingBox: (atend)
+%%BeginPageSetup
+1000 BP 3300 2550 PM /paper-automatic false SPS 225 0 XY
+%%EndPageSetup
+XP /F25 /cmr10 300 41.5 41.5 128 [-3 -11 41 31] PXLNF RP
+XP /F25 84 30 1 0 28 28 28 32 0
+<7FFFFFC0 700F01C0 600F00C0 400F0040 400F0040 C00F0020 800F0020
+ 800F0020 800F0020 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000 000F0000
+ 000F0000 000F0000 000F0000 000F0000 000F0000 001F8000 03FFFC00>
+PXLC RP
+225 282 XY F25(T)S
+XP /F25 104 23 1 0 21 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 FF9FF0>
+PXLC RP
+255 282 XY F25(h)S
+XP /F25 101 18 1 0 16 18 18 16 0
+<03E0 0C30 1818 300C 700E 6006 E006 FFFE E000 E000 E000 E000 6000
+ 7002 3002 1804 0C18 03E0>
+PXLC RP
+278 282 XY F25(e)S 310 X(T)S
+XP /F25 76 26 2 0 23 28 28 24 0
+<FFF800 0F8000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ 0F0008 0F0008 0F0008 0F0018 0F0018 0F0010 0F0030 0F0070 0F01F0
+ FFFFF0>
+PXLC RP
+340 282 XY F25(L)S
+XP /F25 66 29 2 0 26 28 28 24 0
+<FFFFC0 0F00F0 0F0038 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001C 0F003C 0F0078 0F01F0 0FFFE0 0F0078 0F003C 0F001E 0F000E
+ 0F000F 0F000F 0F000F 0F000F 0F000F 0F001E 0F001E 0F003C 0F0078
+ FFFFE0>
+PXLC RP
+366 282 XY F25(B)S
+XP /F25 100 23 2 0 21 29 29 24 0
+<003F00 000700 000700 000700 000700 000700 000700 000700 000700
+ 000700 000700 03E700 0C1700 180F00 300700 700700 600700 E00700
+ E00700 E00700 E00700 E00700 E00700 600700 700700 300700 180F00
+ 0C3700 07C7E0>
+PXLC RP
+409 282 XY F25(de)S
+XP /F25 102 13 0 0 15 29 29 16 0
+<00F8 018C 071E 061E 0E0C 0E00 0E00 0E00 0E00 0E00 0E00 FFE0 0E00
+ 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00 0E00
+ 0E00 0E00 7FE0>
+PXLC RP
+450 282 XY F25(f)S
+XP /F25 97 21 2 0 20 18 18 24 0
+<1FC000 307000 783800 781C00 301C00 001C00 001C00 01FC00 0F1C00
+ 381C00 701C00 601C00 E01C40 E01C40 E01C40 603C40 304E80 1F8700>
+PXLC RP
+463 282 XY F25(a)S
+XP /F25 117 23 1 0 21 18 18 24 0
+<FC1F80 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0780 0C0780 0E1B80 03E3F0>
+PXLC RP
+484 282 XY F25(u)S
+XP /F25 108 12 1 0 10 29 29 16 0
+<FC00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+507 282 XY F25(l)S
+XP /F25 116 16 1 0 13 26 26 16 0
+<0400 0400 0400 0400 0C00 0C00 1C00 3C00 FFE0 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C10 1C10 1C10 1C10 1C10 0C10 0E20 03C0>
+PXLC RP
+518 282 XY F25(t)S
+XP /F25 115 16 1 0 14 18 18 16 0
+<1F90 3070 4030 C010 C010 E010 F800 7F80 3FE0 0FF0 00F8 8038 8018
+ C018 C018 E010 D060 8FC0>
+PXLC RP
+535 282 XY F25(s)S 564 X(t)S
+XP /F25 111 21 1 0 19 18 18 24 0
+<03F000 0E1C00 180600 300300 700380 600180 E001C0 E001C0 E001C0
+ E001C0 E001C0 E001C0 600180 700380 300300 180600 0E1C00 03F000>
+PXLC RP
+581 282 XY F25(o)S 615 X(o)S
+XP /F25 110 23 1 0 21 18 18 24 0
+<FC7C00 1C8700 1D0300 1E0380 1C0380 1C0380 1C0380 1C0380 1C0380
+ 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 1C0380 FF9FF0>
+PXLC RP
+636 282 XY F25(n)S
+XP /F25 105 12 1 0 10 29 29 16 0
+<1800 3C00 3C00 1800 0000 0000 0000 0000 0000 0000 0000 FC00 1C00
+ 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 FF80>
+PXLC RP
+672 282 XY F25(in)S
+XP /F25 99 18 2 0 16 18 18 16 0
+<07E0 0C30 1878 3078 7030 6000 E000 E000 E000 E000 E000 E000 6000
+ 7004 3004 1808 0C30 07C0>
+PXLC RP
+720 282 XY F25(c)S
+XP /F25 121 22 1 -8 20 18 26 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000
+ 004000 008000 008000 F08000 F10000 F30000 660000 3C0000>
+PXLC RP
+739 282 XY F25(ycle)S 823 X(le)S
+XP /F25 118 22 1 0 20 18 18 24 0
+<FF07E0 3C0380 1C0100 1C0100 0E0200 0E0200 070400 070400 070400
+ 038800 038800 03D800 01D000 01D000 00E000 00E000 00E000 004000>
+PXLC RP
+853 282 XY F25(v)S -1 x(el)S
+XP /F25 109 35 1 0 34 18 18 40 0
+<FC7E07E000 1C83883800 1D01901800 1E01E01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00
+ 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 1C01C01C00 FF8FF8FF80>
+PXLC RP
+917 282 XY F25(mo)S 1 x(de)S 1029 X(fo)S
+XP /F25 114 16 1 0 14 18 18 16 0
+<FCE0 1D30 1E78 1E78 1C30 1C00 1C00 1C00 1C00 1C00 1C00 1C00 1C00
+ 1C00 1C00 1C00 1C00 FFC0>
+PXLC RP
+1062 282 XY F25(r)S
+XP /F25 83 23 2 -1 20 29 30 24 0
+<07E080 1C1980 300580 700380 600180 E00180 E00080 E00080 E00080
+ F00000 F80000 7C0000 7FC000 3FF800 1FFE00 07FF00 00FF80 000F80
+ 0007C0 0003C0 0001C0 8001C0 8001C0 8001C0 C00180 C00180 E00300
+ D00200 CC0C00 83F800>
+PXLC RP
+1092 282 XY F25(S)S
+XP /F25 80 28 2 0 25 28 28 24 0
+<FFFF80 0F00E0 0F0078 0F003C 0F001C 0F001E 0F001E 0F001E 0F001E
+ 0F001E 0F001C 0F003C 0F0078 0F00E0 0FFF80 0F0000 0F0000 0F0000
+ 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000
+ FFF000>
+PXLC RP
+1115 282 XY F25(P)S
+XP /F25 73 15 1 0 13 28 28 16 0
+<FFF0 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00 0F00
+ 0F00 FFF0>
+PXLC RP
+1143 282 XY F25(I)S
+XP /F25 77 38 2 0 35 28 28 40 0
+<FF8000FF80 0F8000F800 0F8000F800 0BC0017800 0BC0017800 0BC0017800
+ 09E0027800 09E0027800 08F0047800 08F0047800 08F0047800 0878087800
+ 0878087800 0878087800 083C107800 083C107800 083C107800 081E207800
+ 081E207800 081E207800 080F407800 080F407800 0807807800 0807807800
+ 0807807800 0803007800 1C03007800 FF8307FF80>
+PXLC RP
+1158 282 XY F25(M)S 1210 X(unless)S 1332 X(the)S
+XP /F31 /cmtt10 300 41.5 41.5 128 [0 -10 22 29] PXLNF RP
+XP /F31 45 22 2 11 19 14 3 24 0
+<FFFF80 FFFF80 FFFF80>
+PXLC RP
+1403 282 XY F31(-)S
+XP /F31 110 22 0 0 21 18 18 24 0
+<7E3C00 FEFF00 7FFF80 0F8780 0F0380 0F0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 0E0380 0E0380 7FC7F0 FFE7F8 7FC7F0>
+PXLC RP
+1425 282 XY F31(n)S
+XP /F31 111 22 2 0 19 18 18 24 0
+<03E000 0FF800 1FFC00 3C1E00 780F00 700700 E00380 E00380 E00380
+ E00380 E00380 F00780 700700 780F00 3C1E00 1FFC00 0FF800 03E000>
+PXLC RP
+1447 282 XY F31(o)S
+XP /F31 116 22 1 0 18 23 23 24 0
+<030000 070000 070000 070000 070000 7FFF00 FFFF00 FFFF00 070000
+ 070000 070000 070000 070000 070000 070000 070100 070380 070380
+ 070780 078780 03FF00 03FE00 00F800>
+PXLC RP
+1469 282 XY F31(t)S
+XP /F31 108 22 2 0 19 25 25 24 0
+<FFC000 FFC000 FFC000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000 01C000
+ 01C000 01C000 01C000 01C000 FFFF80 FFFF80 FFFF80>
+PXLC RP
+1490 282 XY F31(l)S
+XP /F31 98 22 0 0 20 25 25 24 0
+<7E0000 FE0000 7E0000 0E0000 0E0000 0E0000 0E0000 0E3E00 0EFF80
+ 0FFFC0 0F83E0 0F01E0 0E00F0 0E00F0 0E0070 0E0070 0E0070 0E0070
+ 0E00F0 0F00E0 0F01E0 0F83C0 0FFFC0 0EFF00 063C00>
+PXLC RP
+1512 282 XY F31(b)S
+XP /F25 13 23 0 0 21 29 29 24 0
+<007FC0 01C1C0 0303C0 0703C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 FFFFC0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0 0E01C0
+ 0E01C0 7FCFF8>
+PXLC RP
+1548 282 XY F25(\015a)S
+XP /F25 103 21 1 -9 19 19 28 24 0
+<000380 03C4C0 0C38C0 1C3880 181800 381C00 381C00 381C00 381C00
+ 181800 1C3800 0C3000 13C000 100000 300000 180000 1FF800 1FFF00
+ 1FFF80 300380 6001C0 C000C0 C000C0 C000C0 600180 300300 1C0E00
+ 07F800>
+PXLC RP
+1591 282 XY F25(g)S 1626 X(is)S 1667 X(giv)S -1 x(en)S 1775 X(at)S
+1826 X(run)S -1 x(time)S 1981 X(or)S 2032 X(the)S 2103 X(tl)S
+XP /F25 98 23 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C00E0 1C00E0 1C00C0 1C01C0 1C0180 1E0300
+ 190600 10F800>
+PXLC RP
+2130 282 XY F25(b)S 2167 X(has)S 2241 X(b)S 1 x(een)S 49 y 225 X(e)S
+XP /F25 120 22 0 0 21 18 18 24 0
+<7F8FF0 0F0380 0F0300 070200 038400 01C800 01D800 00F000 007000
+ 007800 00F800 009C00 010E00 020E00 060700 040380 1E07C0 FF0FF8>
+PXLC RP
+243 331 XY F25(x)S
+XP /F25 112 23 1 -8 20 18 26 24 0
+<FC7C00 1D8600 1E0300 1C0180 1C01C0 1C00C0 1C00E0 1C00E0 1C00E0
+ 1C00E0 1C00E0 1C00E0 1C01C0 1C01C0 1C0180 1E0300 1D0600 1CF800
+ 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 FF8000>
+PXLC RP
+265 331 XY F25(plicitly)S 407 X(toggled)S 555 X(o)S
+XP /F25 11 24 0 0 26 29 29 32 0
+<007E1F00 01C1B180 0303E3C0 0703C3C0 0E03C180 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 FFFFFC00 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000 0E01C000
+ 7F87FC00>
+PXLC RP
+576 331 XY F25(\013)S
+XP /F25 46 12 4 0 8 4 4 8 0
+<60 F0 F0 60>
+PXLC RP
+600 331 XY F25(.)S
+XP /F25 87 43 1 -1 41 28 29 40 0
+<FFE0FFE0FF 1F001F003C 1E001E0018 0F001F0010 0F001F0010 0F001F0010
+ 07801F0020 0780278020 0780278020 03C0278040 03C043C040 03C043C040
+ 03E043C040 01E081E080 01E081E080 01E081E080 00F100F100 00F100F100
+ 00F100F100 007900FA00 007A007A00 007A007A00 003E007C00 003C003C00
+ 003C003C00 003C003C00 0018001800 0018001800 0018001800>
+PXLC RP
+638 331 XY F25(When)S 762 X(the)S 836 X(TLB)S 937 X(is)S
+XP /F25 79 32 2 -1 29 29 30 32 0
+<003F8000 00E0E000 03803800 07001C00 0E000E00 1C000700 3C000780
+ 38000380 780003C0 780003C0 700001C0 F00001E0 F00001E0 F00001E0
+ F00001E0 F00001E0 F00001E0 F00001E0 F00001E0 700001C0 780003C0
+ 780003C0 38000380 3C000780 1C000700 0E000E00 07001C00 03803800
+ 00E0E000 003F8000>
+PXLC RP
+982 331 XY F25(O)S
+XP /F25 70 27 2 0 24 28 28 24 0
+<FFFFF8 0F0078 0F0018 0F0008 0F0008 0F000C 0F0004 0F0004 0F0204
+ 0F0200 0F0200 0F0200 0F0600 0FFE00 0F0600 0F0200 0F0200 0F0200
+ 0F0200 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F0000 0F8000
+ FFF800>
+PXLC RP
+1014 331 XY F25(FF)S
+XP /F25 44 12 4 -8 8 4 12 8 0
+<60 F0 F0 70 10 10 10 10 20 20 40 80>
+PXLC RP
+1068 331 XY F25(,)S 1096 X(SPIM)S 1217 X(acts)S 1305 X(as)S 1359 X
+(if)S 1399 X(all)S 1460 X(pages)S 1575 X(are)S 1647 X(accessible)S
+1837 X(and)S
+XP /F25 119 30 1 0 28 18 18 32 0
+<FF3FCFE0 3C0F0380 1C070180 1C070100 1C0B0100 0E0B8200 0E0B8200
+ 0E118200 0711C400 0711C400 0720C400 03A0E800 03A0E800 03C06800
+ 01C07000 01C07000 01803000 00802000>
+PXLC RP
+1920 331 XY F25(will)S 2001 X(not)S 2078 X(\015ag)S 2159 X(an)S -1 x
+(y)S 2240 X(TLB)S 50 y 225 X(exceptions.)S
+XP /F55 /cmbx10 432 59.8 59.8 128 [-4 -15 69 45] PXLNF RP
+XP /F55 55 34 4 0 32 41 41 32 0
+<38000000 3E000000 3FFFFFF0 3FFFFFF0 3FFFFFF0 7FFFFFE0 7FFFFFC0
+ 7FFFFFC0 7FFFFF80 70000F00 70001E00 70003C00 E0003800 E0007800
+ E000F000 0001E000 0003C000 0003C000 00078000 00078000 000F0000
+ 001F0000 001F0000 001F0000 003F0000 003F0000 003E0000 007E0000
+ 007E0000 007E0000 007E0000 00FE0000 00FE0000 00FE0000 00FE0000
+ 00FE0000 00FE0000 00FE0000 00FE0000 00FE0000 00380000>
+PXLC RP
+225 527 XY F55(7)S
+XP /F55 73 26 2 0 24 41 41 24 0
+<FFFFFC FFFFFC FFFFFC 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00 01FE00
+ 01FE00 01FE00 FFFFFC FFFFFC FFFFFC>
+PXLC RP
+328 527 XY F55(I)S
+XP /F55 110 38 3 0 36 27 27 40 0
+<FFC07F0000 FFC1FFC000 FFC787E000 0FCE07F000 0FDC03F800 0FF803F800
+ 0FF003F800 0FF003F800 0FF003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ FFFE3FFF80 FFFE3FFF80 FFFE3FFF80>
+PXLC RP
+354 527 XY F55(n)S
+XP /F55 115 27 2 0 24 27 27 24 0
+<03FE30 0FFFF0 3E03F0 7800F0 7000F0 F00070 F00070 F80070 FC0000
+ FFE000 FFFE00 7FFFC0 3FFFE0 1FFFF0 07FFF8 00FFFC 0003FC 0000FC
+ E0007C E0003C F0003C F0003C F80078 FC0078 FF01F0 F7FFC0 C1FF00>
+PXLC RP
+392 527 XY F55(s)S
+XP /F55 116 27 1 0 22 38 38 24 0
+<007000 007000 007000 007000 00F000 00F000 00F000 01F000 03F000
+ 03F000 07F000 1FFFF0 FFFFF0 FFFFF0 07F000 07F000 07F000 07F000
+ 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000 07F000
+ 07F038 07F038 07F038 07F038 07F038 07F038 07F038 03F870 01F8F0
+ 00FFE0 001F80>
+PXLC RP
+419 527 XY F55(t)S
+XP /F55 114 28 2 0 26 27 27 24 0
+<FFC1F0 FFC7FC FFCE3E 0FDC7F 0FD87F 0FF87F 0FF07F 0FF03E 0FF000
+ 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000
+ 0FE000 0FE000 0FE000 0FE000 0FE000 0FE000 FFFF00 FFFF00 FFFF00>
+PXLC RP
+446 527 XY F55(r)S
+XP /F55 117 38 3 0 36 27 27 40 0
+<FFE03FF800 FFE03FF800 FFE03FF800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE007F800 0FE007F800 0FE00FF800 07E01FF800
+ 03F03BFF80 01FFF3FF80 003FC3FF80>
+PXLC RP
+475 527 XY F55(u)S
+XP /F55 99 31 2 0 28 27 27 32 0
+<001FF800 00FFFE00 03F01F00 0FE03F80 1FC03F80 3F803F80 3F803F80
+ 7F801F00 7F000000 FF000000 FF000000 FF000000 FF000000 FF000000
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8001C0
+ 3FC001C0 1FC003C0 0FE00780 03F01F00 00FFFC00 001FE000>
+PXLC RP
+513 527 XY F55(ct)S
+XP /F55 105 19 3 0 18 43 43 16 0
+<0700 1FC0 1FE0 3FE0 3FE0 3FE0 1FE0 1FC0 0700 0000 0000 0000 0000
+ 0000 0000 0000 FFE0 FFE0 FFE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0 0FE0
+ 0FE0 FFFE FFFE FFFE>
+PXLC RP
+570 527 XY F55(i)S
+XP /F55 111 34 2 0 31 27 27 32 0
+<003FE000 01FFFC00 03F07E00 0FC01F80 1F800FC0 3F800FE0 3F0007E0
+ 7F0007F0 7F0007F0 7F0007F0 FF0007F8 FF0007F8 FF0007F8 FF0007F8
+ FF0007F8 FF0007F8 FF0007F8 FF0007F8 7F0007F0 7F0007F0 3F800FE0
+ 3F800FE0 1F800FC0 0FC01F80 07F07F00 01FFFC00 003FE000>
+PXLC RP
+589 527 XY F55(on)S
+XP /F55 97 33 2 0 32 27 27 32 0
+<01FF8000 07FFF000 0F81FC00 1FC0FE00 1FC07F00 1FC07F00 1FC03F80
+ 0F803F80 00003F80 00003F80 00003F80 000FFF80 00FFFF80 07FC3F80
+ 1FE03F80 3F803F80 7F803F80 7F003F80 FE003F80 FE003F80 FE003F80
+ FE007F80 FF007F80 7F00FFC0 3F83DFFC 0FFF0FFC 01FC03FC>
+PXLC RP
+685 527 XY F55(an)S
+XP /F55 100 38 2 0 35 42 42 40 0
+<00003FF800 00003FF800 00003FF800 000003F800 000003F800 000003F800
+ 000003F800 000003F800 000003F800 000003F800 000003F800 000003F800
+ 000003F800 000003F800 000003F800 001FE3F800 00FFFBF800 03F03FF800
+ 0FE00FF800 1FC007F800 3F8003F800 3F8003F800 7F8003F800 7F0003F800
+ FF0003F800 FF0003F800 FF0003F800 FF0003F800 FF0003F800 FF0003F800
+ FF0003F800 FF0003F800 FF0003F800 7F0003F800 7F0003F800 3F8003F800
+ 3F8007F800 1FC00FF800 0FE01FF800 03F03FFF80 00FFF3FF80 003FC3FF80>
+PXLC RP
+756 527 XY F55(d)S
+XP /F55 68 53 3 0 48 41 41 48 0
+<FFFFFFF80000 FFFFFFFF8000 FFFFFFFFE000 03FC001FF800 03FC0007FC00
+ 03FC0001FE00 03FC0000FF00 03FC00007F80 03FC00003FC0 03FC00001FC0
+ 03FC00001FE0 03FC00001FE0 03FC00000FF0 03FC00000FF0 03FC00000FF0
+ 03FC00000FF0 03FC00000FF8 03FC00000FF8 03FC00000FF8 03FC00000FF8
+ 03FC00000FF8 03FC00000FF8 03FC00000FF8 03FC00000FF8 03FC00000FF8
+ 03FC00000FF8 03FC00000FF0 03FC00000FF0 03FC00000FF0 03FC00001FE0
+ 03FC00001FE0 03FC00001FC0 03FC00003FC0 03FC00007F80 03FC00007F00
+ 03FC0001FE00 03FC0003FC00 03FC001FF800 FFFFFFFFE000 FFFFFFFF8000
+ FFFFFFFC0000>
+PXLC RP
+817 527 XY F55(Data)S
+XP /F55 67 50 4 0 45 41 41 48 0
+<00003FF00180 0003FFFE0780 000FFFFF8F80 003FF007FF80 00FF8001FF80
+ 01FE00007F80 07FC00003F80 07F800001F80 0FF000000F80 1FE000000F80
+ 3FE000000780 3FC000000780 7FC000000380 7FC000000380 7FC000000380
+ FF8000000000 FF8000000000 FF8000000000 FF8000000000 FF8000000000
+ FF8000000000 FF8000000000 FF8000000000 FF8000000000 FF8000000000
+ FF8000000000 7FC000000000 7FC000000380 7FC000000380 3FC000000380
+ 3FE000000380 1FE000000780 0FF000000700 07F800000F00 07FC00001E00
+ 01FE00003C00 00FF8000F800 003FF007F000 000FFFFFC000 0003FFFF0000
+ 00003FF80000>
+PXLC RP
+986 527 XY F55(Cac)S
+XP /F55 104 38 3 0 36 42 42 40 0
+<FFE0000000 FFE0000000 FFE0000000 0FE0000000 0FE0000000 0FE0000000
+ 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000 0FE0000000
+ 0FE0000000 0FE0000000 0FE0000000 0FE07F0000 0FE1FFC000 0FE787E000
+ 0FEE07F000 0FFC03F800 0FF803F800 0FF003F800 0FF003F800 0FF003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800 0FE003F800
+ 0FE003F800 0FE003F800 0FE003F800 FFFE3FFF80 FFFE3FFF80 FFFE3FFF80>
+PXLC RP
+1098 527 XY F55(h)S
+XP /F55 101 32 2 0 29 27 27 32 0
+<003FE000 01FFF800 03F07E00 0FE03F00 1FC01F80 3F800FC0 3F800FC0
+ 7F000FC0 7F0007E0 FF0007E0 FF0007E0 FF0007E0 FFFFFFE0 FFFFFFE0
+ FF000000 FF000000 FF000000 FF000000 7F000000 7F800000 3F8000E0
+ 3F8001E0 1FC001C0 0FE003C0 03F81F80 00FFFE00 001FF000>
+PXLC RP
+1136 527 XY F55(es)S
+XP /F25 67 30 2 -1 27 29 30 32 0
+<001F8080 00E06180 01801980 07000780 0E000380 1C000380 1C000180
+ 38000180 78000080 78000080 70000080 F0000000 F0000000 F0000000
+ F0000000 F0000000 F0000000 F0000000 F0000000 70000080 78000080
+ 78000080 38000080 1C000100 1C000100 0E000200 07000400 01800800
+ 00E03000 001FC000>
+PXLC RP
+225 627 XY F25(Cycle)S 343 X(lev)S -1 x(el)S 441 X(SPIM)S 564 X
+(comes)S 690 X(with)S 788 X(t)S -1 x(w)S -1 x(o)S 871 X(iden)S -1 x
+(tical)S 1042 X(direct)S 1163 X(mapp)S 1 x(ed)S 1325 X(cac)S -1 x
+(hes,)S 1470 X(with)S
+XP /F25 53 21 2 -1 18 28 29 16 0
+<300C 3FF8 3FF0 3FC0 2000 2000 2000 2000 2000 2000 23E0 2430 2818
+ 301C 200E 000E 000F 000F 000F 600F F00F F00F F00F 800E 401E 401C
+ 2038 1870 07C0>
+PXLC RP
+1568 627 XY F25(5)S
+XP /F25 49 21 4 0 17 28 28 16 0
+<0300 0700 3F00 C700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700 0700
+ 0F80 FFF8>
+PXLC RP
+1589 627 XY F25(1)S
+XP /F25 50 21 2 0 18 28 28 16 0
+<07C0 1830 201C 400C 400E F00F F80F F807 F807 7007 000F 000E 000E
+ 001C 001C 0038 0070 0060 00C0 0180 0300 0601 0C01 1801 1002 3FFE
+ 7FFE FFFE>
+PXLC RP
+1610 627 XY F25(2)S 1648 X(lines)S 1747 X(at)S
+XP /F25 51 21 2 -1 18 28 29 16 0
+<07E0 1830 201C 201C 781E 780E 781E 381E 001C 001C 0018 0030 0060
+ 07E0 0030 001C 001C 000E 000F 000F 700F F80F F80F F80F F00E 401C
+ 201C 1830 07E0>
+PXLC RP
+1802 627 XY F25(32)S 1861 X(b)S -1 x(ytes)S 1973 X(p)S 1 x(er)S 
+2050 X(line.)S 2156 X(When)S 2281 X(an)S 50 y 225 X(instruction)S 
+435 X(fetc)S -1 x(h)S 536 X(is)S 578 X(made)S 688 X(and)S 768 X
+(the)S 840 X(instruction)S 1050 X(cac)S -1 x(he)S 1161 X(is)S 1203 X
+(on,)S 1272 X(SPIM)S 1390 X(c)S -1 x(hec)S
+XP /F25 107 22 1 0 20 29 29 24 0
+<FC0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000 1C0000
+ 1C0000 1C0000 1C3FC0 1C0F00 1C0C00 1C0800 1C1000 1C2000 1C4000
+ 1CE000 1DE000 1E7000 1C7800 1C3800 1C3C00 1C1C00 1C0E00 1C0F00
+ 1C0F80 FF9FE0>
+PXLC RP
+1466 677 XY F25(ks)S 1518 X(to)S 1568 X(see)S 1635 X(if)S 1673 X
+(the)S 1744 X(curren)S -1 x(t)S 1888 X(address)S 2036 X(matc)S -1 x
+(hes)S 2196 X(the)S 2267 X(tag)S 50 y 225 X(in)S 270 X(the)S 339 X
+(cac)S -1 x(he)S 448 X(line)S 523 X(to)S 571 X(whic)S -1 x(h)S 687 X
+(it)S 726 X(maps.)S 849 X(If)S 888 X(the)S 957 X(line)S 1032 X(is)S
+1071 X(v)S -2 x(alid,)S 1180 X(no)S 1235 X(stall)S 1322 X(o)S 1 x
+(ccurs.)S 1466 X(Otherwise,)S 1671 X(the)S 1740 X(instruction)S 
+1947 X(m)S -1 x(ust)S 2047 X(b)S 1 x(e)S 2101 X(fetc)S -1 x(hed)S 
+2241 X(from)S 50 y 225 X(memory)S 386 X(and)S 467 X(a)S 502 X
+(stall)S 592 X(o)S 1 x(ccurs)S 721 X(while)S 829 X(the)S 901 X
+(memory)S 1062 X(bus)S 1139 X(w)S -1 x(orks)S 1257 X(to)S 1308 X
+(load)S 1398 X(the)S 1470 X(instruction.)S 1697 X(The)S 1783 X
+(data)S 1878 X(cac)S -1 x(he)S 1990 X(functions)S 2169 X(similarly)S
+49 y 225 X(to)S 275 X(the)S 346 X(instruction)S 556 X(cac)S -1 x
+(he)S 667 X(with)S 761 X(the)S 832 X(di\013erence)S 1017 X(lying)S
+1119 X(in)S 1167 X(the)S 1238 X(fact)S 1319 X(that)S 1409 X(it)S 
+1450 X(has)S 1523 X(the)S 1594 X(added)S 1716 X(concern)S 1867 X
+(of)S 1914 X(stores.)S 2048 X(The)S 2133 X(data)S 2227 X(cac)S -1 x
+(he)S 50 y 225 X(is)S 266 X(write)S 371 X(through,)S 539 X(no)S 
+596 X(allo)S 1 x(cate,)S 760 X(whic)S -1 x(h)S 878 X(means)S 1005 X
+(that)S 1094 X(a)S 1128 X(store)S 1229 X(writes)S 1350 X(memory)S 
+1510 X(whether)S 1668 X(the)S 1739 X(address)S 1887 X(it)S 1927 X
+(is)S 1968 X(referencing)S 2179 X(is)S 2220 X(in)S 2267 X(the)S 50 y 
+225 X(cac)S -1 x(he)S 339 X(or)S 392 X(not.)S 487 X(The)S 574 X
+(write)S 683 X(bu\013er)S 803 X(is)S 847 X(six)S 913 X(re)S
+XP /F25 113 22 2 -8 21 18 26 24 0
+<03C100 0C3300 180B00 300F00 700700 700700 E00700 E00700 E00700
+ E00700 E00700 E00700 600700 700700 300F00 180F00 0C3700 07C700
+ 000700 000700 000700 000700 000700 000700 000700 003FE0>
+PXLC RP
+947 926 XY F25(quests)S 1075 X(deep.)S 1194 X(The)S 1281 X(read)S 
+1376 X(bu\013er)S 1496 X(is)S 1540 X(one)S 1618 X(request)S 1764 X
+(deep)S 1863 X(and)S 1946 X(alw)S -1 x(a)S -1 x(ys)S 2080 X(tak)S 
+-1 x(es)S 2189 X(priorit)S -1 x(y)S 50 y 225 X(unless)S 348 X(the)S
+419 X(bus)S 496 X(is)S 537 X(busy)S 635 X(or)S 686 X(the)S 758 X
+(load)S 848 X(address)S 996 X(con\015icts)S 1158 X(with)S 1252 X
+(an)S 1310 X(address)S 1458 X(in)S 1506 X(the)S 1578 X(write)S 1684 X
+(bu)S
+(\013er.)S 59 y 287 X(Cac)S -1 x(hing)S 447 X(can)S 524 X(b)S 1 x
+(e)S 580 X(turned)S 714 X(on)S 771 X(or)S 822 X(o\013)S 881 X(at)S
+932 X(run)S -1 x(time)S 1087 X(for)S 1151 X(either)S 1269 X(clspim)S
+1398 X(or)S 1449 X(xlspim)S 1582 X(using)S 1690 X(the)S 1762 X F31
+(-)S
+XP /F31 105 22 3 0 19 26 26 16 0
+<0180 03C0 03C0 0180 0000 0000 0000 0000 7FC0 7FC0 7FC0 01C0 01C0
+ 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 01C0 7FFF FFFF 7FFF>
+PXLC RP
+1783 1035 XY F31(i)S
+XP /F31 99 22 3 0 19 18 18 16 0
+<03F8 0FFE 1FFE 3C1E 780C 7000 F000 E000 E000 E000 E000 F000 7007
+ 7807 3E0F 1FFE 0FFC 03F0>
+PXLC RP
+1805 1035 XY F31(c)S
+XP /F31 97 22 2 0 21 18 18 24 0
+<1FE000 7FF800 7FFC00 783C00 301E00 000E00 000E00 03FE00 1FFE00
+ 7E0E00 F00E00 E00E00 E00E00 F01E00 F83E00 7FFFE0 3FE7E0 0F83E0>
+PXLC RP
+1827 1035 XY F31(ac)S
+XP /F31 104 22 0 0 21 25 25 24 0
+<7E0000 FE0000 7E0000 0E0000 0E0000 0E0000 0E0000 0E3C00 0EFF00
+ 0FFF80 0F8780 0F0380 0F0380 0E0380 0E0380 0E0380 0E0380 0E0380
+ 0E0380 0E0380 0E0380 0E0380 7FC7F0 FFE7F8 7FC7F0>
+PXLC RP
+1871 1035 XY F31(h)S
+XP /F31 101 22 3 0 19 18 18 16 0
+<03E0 0FF8 1FFC 3C1E 780E 7007 E007 FFFF FFFF FFFF E000 E000 7007
+ 7807 3C0F 1FFE 0FFC 03F0>
+PXLC RP
+1892 1035 XY F31(e)S F25(,)S 1939 X F31(-noicache)S F25(,)S 2161 X 
+F31(-)S
+XP /F31 100 22 1 0 21 25 25 24 0
+<003F00 007F00 003F00 000700 000700 000700 000700 03C700 0FF700
+ 3FFF00 3C1F00 780F00 F00700 F00700 E00700 E00700 E00700 E00700
+ F00700 F00F00 781F00 7C3F00 3FFFE0 1FF7F0 07C7E0>
+PXLC RP
+2183 1035 XY F31(dcache)S F25(,)S 49 y 225 X(and)S 308 X F31
+(-nodcache)S 520 X F25(\015ags.)S 636 X(In)S 690 X(in)S -1 x
+(teractiv)S -1 x(e)S 896 X(clspim,)S 1040 X(the)S
+XP /F31 115 22 3 0 18 18 18 16 0
+<0FEC 3FFC 7FFC F03C E01C E01C F000 7F80 1FF0 07FC 003E E00E E00E
+ F00E F81E FFFC FFF8 C7E0>
+PXLC RP
+1113 1084 XY F31(set)S 1200 X(icache)S 1347 X F25(and)S 1430 X F31
+(set)S 1517 X(dcache)S 1663 X F25(commands)S 1871 X(toggle)S 1995 X
+(the)S 2068 X(cac)S -1 x(hes)S 2199 X(on)S 2258 X(and)S 50 y 225 X
+(o)S
+(\013.)S 307 X(In)S 361 X(xlspim,)S 508 X(the)S
+XP /F31 109 22 0 0 21 18 18 24 0
+<F9C380 FFEFC0 FFFFE0 3E7CE0 3C78E0 3870E0 3870E0 3870E0 3870E0
+ 3870E0 3870E0 3870E0 3870E0 3870E0 3870E0 FE7CF8 FE7CF8 FE3C78>
+PXLC RP
+582 1134 XY F31(mode)S 685 X F25(button)S
+XP /F25 39 12 4 17 9 29 12 8 0
+<60 F0 F8 68 08 08 08 10 10 20 40 80>
+PXLC RP
+807 1134 XY F25('s)S 851 X F31(icache)S 998 X F25(and)S 1081 X F31
+(dcache)S 1228 X F25(options)S 1376 X(toggle)S 1500 X(the)S 1574 X
+(cac)S -1 x(hes.)S
+XP /F25 65 31 1 0 29 29 29 32 0
+<00060000 00060000 00060000 000F0000 000F0000 000F0000 00178000
+ 00178000 00178000 0023C000 0023C000 0023C000 0041E000 0041E000
+ 0041E000 0080F000 0080F000 0180F800 01007800 01FFF800 03007C00
+ 02003C00 02003C00 06003E00 04001E00 04001E00 0C001F00 1E001F00
+ FF80FFF0>
+PXLC RP
+1725 1134 XY F25(Also,)S 1833 X(in)S 1884 X(xlspim)S 2019 X(the)S 
+2093 X(cac)S -1 x(hes's)S 2251 X(tags)S 50 y 225 X(and)S 306 X(v)S
+-2 x(alid)S 406 X(bits)S 487 X(can)S 563 X(b)S 1 x(e)S 620 X(view)S
+-1 x(ed)S 756 X(using)S 864 X(the)S 936 X(new)S 1021 X F31(cache)S
+1144 X F25(button.)S 59 y 287 X(Tw)S -1 x(o)S 385 X(imp)S 1 x
+(ortan)S -1 x(t)S 585 X(p)S 1 x(oin)S -1 x(ts)S 714 X(to)S 769 X
+(note)S
+XP /F25 58 12 4 0 8 18 18 8 0
+<60 F0 F0 60 00 00 00 00 00 00 00 00 00 00 60 F0 F0 60>
+PXLC RP
+847 1243 XY F25(:)S 885 X(First,)S 1003 X(to)S 1058 X(sa)S -1 x(y)S
+1133 X(a)S 1172 X(cac)S -1 x(he)S 1288 X(is)S 1334 X(OFF)S 1438 X
+(in)S 1491 X(SPIM)S 1613 X(is)S 1659 X(equiv)S -2 x(alen)S -1 x(t)S
+1860 X(to)S 1915 X(sa)S -1 x(ying)S 2046 X(that)S 2140 X(a)S 2178 X
+(memory)S 50 y 225 X(reference)S 401 X(will)S 480 X(not)S 555 X
+(stall.)S 665 X(It)S 712 X(do)S 1 x(es)S 806 X(not)S 882 X(mean)S 
+993 X(that)S 1085 X(all)S 1144 X(references)S 1336 X(will)S 1415 X
+(directly)S 1568 X(access)S 1692 X(the)S 1764 X(bus.)S 1861 X
+(Second,)S 2014 X(when)S 2124 X(the)S 2197 X(TLB)S 2297 X(is)S 49 y 
+225 X(on,)S 298 X(tags)S 389 X(written)S 537 X(to)S 591 X(the)S 
+666 X(cac)S -1 x(hes)S 797 X(represen)S -1 x(t)S 979 X(the)S 1054 X
+(upp)S 1 x(er)S 1176 X(bits)S 1260 X(of)S 1310 X(a)S 1348 X(ph)S 
+-1 x(ysical)S 1510 X(address.)S 1684 X(When)S 1808 X(the)S 1883 X
+(TLB)S 1985 X(is)S 2030 X(o\013,)S 2104 X(the)S 2179 X(tags)S 2270 X
+(are)S 50 y 225 X(indicativ)S -1 x(e)S 414 X(of)S 461 X(a)S 496 X
+(virtual)S 631 X(address.)S
+%%PageTrailer
+PF  EP /paper-automatic true SPS 1 PP
+%%PageBoundingBox: 54 455 558 732
+
+%%Trailer
+EndDviLaserDoc
+
+%%BoundingBox: 54 84 558 732
+%%Pages: 4
+%%DocumentFonts:

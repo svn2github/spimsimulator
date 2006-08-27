@@ -318,7 +318,33 @@ commercial product, and it offers a limited time trial version.</P>
 <HR width="100%">
 
 <H2 align=center>Changes in Latest Version</H2>
-<P align=left>The current version of <B>spim</B> is 7.2.1 (August 2005), which is
+<p align=left>The current version of <B>spim</B> is 7.3 (August 2006), which is
+a minor release that cleans up a number of bugs in 7.2:</p>
+<ul>
+	<li>
+	<p align=left>Fix for flex 2.5.33 (internal change broke spim's scanner).</li>
+<li>
+<p align=left>Exception handler can be a semicolon-separated list of files that 
+will be loaded in order. On Unix, SPIM_EXCEPTION_HANDLER environment variable is 
+consulted before command line arguments.</li>
+<li>
+<p align=left>Memory corruption caused spim to crash when label was defined 
+twice in succession.</li>
+<li>
+<p align=left>PCSpim updates register and memory display after a parse error 
+while reading a file.</li>
+<li>
+<p align=left>Eliminated unnecessary null char between strings in list of 
+strings produced by .asciiz.</li>
+<li>
+<p align=left>Makefiles (in spim/ and xspim/) now contain clearly defined paths 
+for installing executables, exception handler, and man pages. The man pages are 
+no longer installed by the &quot;make install&quot; command.</li>
+<li>
+<p align=left>Change psfig to epsfig in spim.tex (does anyone still use this 
+obsolete documentation?).</li>
+</ul>
+<P align=left>The previous version of <B>spim</B> is 7.2.1 (August 2005), which is
 a minor release that cleans up a number of bugs in 7.1:</P>
 <ul>
 	<li>
