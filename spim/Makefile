@@ -134,18 +134,15 @@ test:	spim
 	@tail -2 test.out
 	@echo
 
-	@if [ ! -f $(EXCEPTION_DIR)/exceptions.s ]; then echo "Exception Handler not installed; do make install"; exit 1; else true; fi
-	@if diff $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)/exceptions.s > /dev/null ; then true ; else echo "Old exception_handler installed.  Type: make install" ; exit 1; fi
-
 	@echo
 	@echo "Testing tt.core.s:"
-	$(CSH) -c "./spim -file $(TEST_DIR)/tt.core.s < $(TEST_DIR)/tt.in >& test.out"
+	$(CSH) -c "./spim -ef $(CPU_DIR)/exceptions.s -file $(TEST_DIR)/tt.core.s < $(TEST_DIR)/tt.in >& test.out"
 	@tail -2 test.out
 	@echo
 
 	@echo
 	@echo "Testing tt.endian.s:"
-	$(CSH) -c "./spim -file $(TEST_DIR)/tt.endian.s >& test.out"
+	$(CSH) -c "./spim -ef $(CPU_DIR)/exceptions.s -file $(TEST_DIR)/tt.endian.s  >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo

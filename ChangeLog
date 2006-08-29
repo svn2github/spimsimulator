@@ -1,3 +1,9 @@
+2006-08-28    <Jim@LS1>
+
+	* spim/Makefile:
+	Explicitly include exception handler path for "make test" to
+	eliminate need to install it before running test.
+
 2006-08-26    <Jim@LS1>
 
 	* Version 7.3
