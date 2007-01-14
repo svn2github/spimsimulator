@@ -1,3 +1,8 @@
+2007-01-14    <Jim@LS1>
+
+	* CPU/inst.c (inst_decode) Cai Hongxu [caihongxu@gmail.com]:
+	Did not correctly decode SPECIAL2 instructions (e.g., madd).
+
 2006-08-28    <Jim@LS1>
 
 	* spim/Makefile:

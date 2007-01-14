@@ -1406,21 +1406,22 @@ inst_decode (int32 val)
   name_val_val *entry;
   int32 i_opcode;
 
-  if (a_opcode == 0)		/* SPECIAL */
+  /* Field classes: (opcode is continued in other part of instruction): */
+  if (a_opcode == 0 || a_opcode == 0x70000000) /* SPECIAL or SPECIAL2 */
     a_opcode |= (val & 0x3f);
-  else if (a_opcode == 0x04000000) /* BCOND */
+  else if (a_opcode == 0x04000000)		/* REGIMM */
     a_opcode |= (val & 0x001f0000);
-  else if (a_opcode == 0x40000000) /* COP0 */
+  else if (a_opcode == 0x40000000)		/* COP0 */
     a_opcode |= (val & 0x03e00000) | (val & 0x1f);
-  else if (a_opcode == 0x44000000) /* COP1 */
+  else if (a_opcode == 0x44000000)		/* COP1 */
     {
       a_opcode |= (val & 0x03e00000);
       if ((val & 0xff000000) == 0x45000000)
-	a_opcode |= (val & 0x00010000); /* BC1f/t */
+	a_opcode |= (val & 0x00010000);		/* BC1f/t */
       else
 	a_opcode |= (val & 0x3f);
     }
-  else if (a_opcode == 0x48000000 /* COPz */
+  else if (a_opcode == 0x48000000		/* COPz */
 	   || a_opcode == 0x4c000000)
     a_opcode |= (val & 0x03e00000);
 
