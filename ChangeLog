@@ -1,3 +1,9 @@
+2007-04-15    <Jim@LS1>
+
+	* Documentation/spim.html:
+	Updated MIPS documenation links to reflect new file
+	versions. Included link to Nokia 660 port.
+
 2007-01-14    <Jim@LS1>
 
 	* CPU/inst.c (inst_decode) Cai Hongxu [caihongxu@gmail.com]:
