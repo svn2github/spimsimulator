@@ -12,7 +12,7 @@ SPIM MIPS Simulator</TITLE>
 <P style="margin-top: 0; margin-bottom: 0"><a href="mailto:larus@microsoft.com">
 larus@microsoft.com</a></P>
 <P style="margin-top: 0; margin-bottom: 0">&nbsp;</P>
-<P style="margin-top: 0; margin-bottom: 0">Senior Researcher, Microsoft Research<i><br>
+<P style="margin-top: 0; margin-bottom: 0">Microsoft Research<i><br>
 Formerly:</i> Professor, Computer
 Sciences Department, University of Wisconsin-Madison</P>
 </CENTER>
@@ -116,7 +116,7 @@ http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>, unzip it, and click on <i>set
 the file <A
       href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</A>.
 </P></li>
-  <li><P style="margin-top: 6">There is no  Macintosh version of <B>spim</B>. 
+  <li><P style="margin-top: 6">There is no  native Macintosh version of <B>spim</B>. 
 	However, the <i>xspim</i> will compiles and runs on Mac
 OS X. </P>
   </li>
@@ -262,28 +262,31 @@ Organization and Design: The Hardware/Software Interface</a></I> (above), is
 more up-to-date and correct..</P>
   </li>
   <li>
-<P style="margin-top: 12; margin-bottom: 2">The best book on MIPS programming
+<P style="margin-top: 12; margin-bottom: 2">The best book I have seen on MIPS programming
 is: Dominic Sweetman, <I>
 <a href="http://books.elsevier.com/us/mk/us/subindex.asp?isbn=1558604103&country=United+States&community=mk&mscssid=T3GQV69C1T2T8NHKQJH2H7ANRW84FXW3">See
 MIPS Run,</a></I> Morgan Kaufmann, San Francisco, CA, 1999, ISBN
-1-55860-410-3. MIPS, Inc. has excellent  free
-documentation on the MIPS32 architecture on their website (registration
-required):<ul style="margin-top: 12">
+1-55860-410-3.</li>
+  <li>
+	<P style="margin-top: 12; margin-bottom: 2">MIPS, Inc. has excellent free 
+	documentation on the MIPS32 architecture on their website (registration 
+	required)
+	<a href="http://www.mips.com/products/resource_library/product_materials/MIPS_Architecture.php">
+	http://www.mips.com/products/resource_library/product_materials/MIPS_Architecture.php</a>: <ul style="margin-top: 12">
   <li>
 <P style="margin-top: 12; margin-bottom: 2">
-<a href="http://mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00082-2B-MIPS32INT-AFP-02.00.pdf/getDownload">
-MIPS32&#8482; Architecture for Programmers Volume I: Introduction to the MIPS32&#8482;
-Architecture</a> <span class="doclibrary_details">v2.00 (1249 KB)</span></li>
+<a href="http://www.mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00082-2B-MIPS32INT-AFP-02.50.pdf/getDownload">
+MIPS32® Architecture for Programmers Volume I: Introduction to the MIPS32® 
+Architecture (.pdf)</a> </li>
   <li>
 <P style="margin-top: 12; margin-bottom: 2">
-<a href="http://mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00086-2B-MIPS32BIS-AFP-02.00.pdf/getDownload">
-MIPS32&#8482; Architecture for Programmers Volume II: The MIPS32&#8482; Instruction Set</a>
-<span class="doclibrary_details">v2.00 (3258 KB)</span></li>
+<a href="http://www.mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00086-2B-MIPS32BIS-AFP-02.50.pdf/getDownload">
+MIPS32® Architecture for Programmers Volume II: The MIPS32® Instruction Set (.pdf)</a> </li>
   <li>
 <P style="margin-top: 12; margin-bottom: 2">
-<a href="http://mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00090-2B-MIPS32PRA-AFP-02.00.pdf/getDownload">
-MIPS32&#8482; Architecture for Programmers Volume III: The MIPS32&#8482; Privileged Resource
-Architecture</a> <span class="doclibrary_details">v2.00 (1507 KB)</span></li>
+<a href="http://www.mips.com/content/Documentation/MIPSDocumentation/ProcessorArchitecture/ArchitectureProgrammingPublicationsforMIPS32/MD00090-2B-MIPS32PRA-AFP-02.50.pdf/getDownload">
+MIPS32® Architecture for Programmers Volume III: The MIPS32® Privileged Resource 
+Architecture (.pdf)</a> </li>
 </ul>
   </li>
   <li>
@@ -294,7 +297,7 @@ Architecture</I>, Prentice Hall, Englewood Cliffs, N.J. 07632 ISBN 0-13-1059254.
   </li>
   <li>
 
-<P style="margin-top: 12; margin-bottom: 2">Another good book for MIPS R2000 and R3000 programmers is: Erin Farquhar and
+<P style="margin-top: 12; margin-bottom: 2">Another good book for the MIPS R2000 and R3000 is: Erin Farquhar and
 Philip Bunce, <I>
 <a href="http://books.elsevier.com/us/mk/us/subindex.asp?isbn=1558602976&country=United+States&community=mk&mscssid=T3GQV69C1T2T8NHKQJH2H7ANRW84FXW3">The
 MIPS Programmer's Handbook,</a></I> Morgan Kaufmann, San Francisco, CA, 1994,
@@ -302,7 +305,7 @@ ISBN 1-55860-297-6.</P>
   </li>
   <li>
 <P style="margin-top: 12; margin-bottom: 2">The GNU C compiler can generate code
-for the MIPS R3000 and can easily be used as a cross compiler. A retargeted port
+for the MIPS R3000 and can be used as a cross compiler. A retargeted port
 of gcc is available on the <a href="http://www.cs.unibo.it/mps/">MPS Resource
 Page</a>. I have not used this compiler.</P>
   </li>
@@ -313,6 +316,12 @@ text editor for MIPS assembly code called
 highlight, MIPS-specific help, good integration with SPIM, and a number of other
 features to make it easier to write assembly code. MIPSter is an inexpensive
 commercial product, and it offers a limited time trial version.</P>
+  </li>
+	<li>
+<P style="margin-top: 12; margin-bottom: 2">Andrea Grandi ported SPIM to the
+<a href="http://www.nokiausa.com/770">Nokia 770/800 Internet Tablet</a> so you 
+never need to be without the ability to run MIPS programs. The port of SPIM is 
+available at: http://www.ptlug.org/wiki/SPIM_N770. </P>
   </li>
 </ul>
 <HR width="100%">
