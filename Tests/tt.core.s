@@ -853,29 +853,45 @@ madd_:	.asciiz "Testing MADD\n"
 
 	mthi $0
 	mtlo $0
-
-	madd $0 $0
+	madd $0, $0
 	mfhi $3
 	bnez $3 fail
 	mflo $3
 	bnez $3 fail
 
+        mtlo $0
+        mthi $0
 	li $4, 1
-	madd $4 $4
+	madd $4, $4
 	mfhi $3
 	bnez $3 fail
 	mflo $3
 	bne $3 1 fail
 
+	li $3, 1
+        mtlo $3
+        mthi $0
 	li $4, -1
-	madd $3 $4
+	madd $3, $4
 	mfhi $3
 	bnez $3 fail
 	mflo $3
 	bnez $3 fail
 
+        mtlo $0
+        mthi $0
+        li $3, 1
+        li $4, -1
+        madd $3, $4
+        mfhi $3
+	bne $3 0xffffffff fail
+	mflo $3
+	bne $3 0xffffffff fail
+
+        mtlo $0
+        mthi $0
 	li $4, 0x10000
-	madd $4 $4
+	madd $4, $4
 	mfhi $3
 	bne $3 1 fail
 	mflo $3

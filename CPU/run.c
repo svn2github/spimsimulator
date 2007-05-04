@@ -710,7 +710,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word tmp;
 		signed_multiply(R[RS (inst)], R[RT (inst)]);
 		tmp = lo + LO;
-		if (tmp < LO || tmp < lo)
+		if ((unsigned)tmp < (unsigned)LO || (unsigned)tmp < (unsigned)lo)
 		  /* Overflow */
 		  hi += 1;
 		LO = tmp;
@@ -724,7 +724,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		reg_word tmp;
 		unsigned_multiply(R[RS (inst)], R[RT (inst)]);
 		tmp = lo + LO;
-		if (tmp < LO || tmp < lo)
+		if ((unsigned)tmp < (unsigned)LO || (unsigned)tmp < (unsigned)lo)
 		  /* Overflow */
 		  hi += 1;
 		LO = tmp;
@@ -1782,9 +1782,15 @@ signed_multiply (reg_word v1, reg_word v2)
   int neg_sign = 0;
 
   if (v1 < 0)
-    v1 = - v1, neg_sign = 1;
+    {
+      v1 = - v1;
+      neg_sign = 1;
+    }
   if (v2 < 0)
-    v2 = - v2, neg_sign = ! neg_sign;
+    {
+      v2 = - v2;
+      neg_sign = ! neg_sign;
+    }
 
   unsigned_multiply (v1, v2);
   if (neg_sign)

@@ -1,3 +1,9 @@
+2007-05-03    <Jim@LS1>
+
+	* CPU/run.c Tim ODonnell [timodonnell@gmail.com]:
+	Fixed handling of overflow from add of low-order word in MADD and
+	UMADD.
+
 2007-04-15    <Jim@LS1>
 
 	* Documentation/spim.html:
