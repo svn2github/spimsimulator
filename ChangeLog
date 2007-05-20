@@ -1,8 +1,14 @@
+2007-05-20    <Jim@LS1>
+
+	* CPU/run.c (run_spim):
+	Fixed handlinger of borrow from subtract of low-order word in MSUB
+	and MSUBU
+
 2007-05-03    <Jim@LS1>
 
 	* CPU/run.c Tim ODonnell [timodonnell@gmail.com]:
 	Fixed handling of overflow from add of low-order word in MADD and
-	UMADD.
+	MADDU.
 
 2007-04-15    <Jim@LS1>
 

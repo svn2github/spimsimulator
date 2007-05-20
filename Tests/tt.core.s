@@ -1065,13 +1065,14 @@ msub_:	.asciiz "Testing MSUB\n"
 
 	mthi $0
 	mtlo $0
-
 	msub $0 $0
 	mfhi $3
 	bnez $3 fail
 	mflo $3
 	bnez $3 fail
 
+	mthi $0
+	mtlo $0
 	li $4, 1
 	msub $4 $4
 	mfhi $3
@@ -1086,6 +1087,8 @@ msub_:	.asciiz "Testing MSUB\n"
 	mflo $3
 	bnez $3 fail
 
+	mthi $0
+	mtlo $0
 	li $4, 0x10000
 	msub $4 $4
 	mfhi $3
@@ -1093,6 +1096,15 @@ msub_:	.asciiz "Testing MSUB\n"
 	mflo $3
 	bne $3 0 fail
 
+	mtlo $0
+	mthi $0
+	li $4, 1
+	li $5, -1
+	msub $5, $4
+	mfhi $3
+	bne $3 0 fail
+	mflo $3
+	bne $3 1 fail
 
 	.data
 msubu_:	.asciiz "Testing MSUBU\n"
@@ -1103,13 +1115,14 @@ msubu_:	.asciiz "Testing MSUBU\n"
 
 	mthi $0
 	mtlo $0
-
 	msubu $0 $0
 	mfhi $3
 	bnez $3 fail
 	mflo $3
 	bnez $3 fail
 
+	mthi $0
+	mtlo $0
 	li $4, 1
 	msubu $4 $4
 	mfhi $3
@@ -1117,6 +1130,15 @@ msubu_:	.asciiz "Testing MSUBU\n"
 	mflo $3
 	bne $3 0xffffffff fail
 
+	mtlo $0
+	mthi $0
+	li $4, 1
+	li $5, -1
+	msubu $5, $4
+	mfhi $3
+	bne $3 0xffffffff fail
+	mflo $3
+	bne $3 1 fail
 
 	.data
 mul_:	.asciiz "Testing MUL\n"

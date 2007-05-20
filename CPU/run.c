@@ -705,28 +705,24 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      }
 
 	    case Y_MADD_OP:
-	      {
-		reg_word lo = LO, hi = HI;
-		reg_word tmp;
-		signed_multiply(R[RS (inst)], R[RT (inst)]);
-		tmp = lo + LO;
-		if ((unsigned)tmp < (unsigned)LO || (unsigned)tmp < (unsigned)lo)
-		  /* Overflow */
-		  hi += 1;
-		LO = tmp;
-		HI = hi + HI;
-		break;
-	      }
-
 	    case Y_MADDU_OP:
 	      {
 		reg_word lo = LO, hi = HI;
 		reg_word tmp;
-		unsigned_multiply(R[RS (inst)], R[RT (inst)]);
+		if (OPCODE (inst) == Y_MADD_OP)
+		  {
+		    signed_multiply(R[RS (inst)], R[RT (inst)]);
+		  }
+		else		/* Y_MADDU_OP */
+		  {
+		    unsigned_multiply(R[RS (inst)], R[RT (inst)]);
+		  }
 		tmp = lo + LO;
 		if ((unsigned)tmp < (unsigned)LO || (unsigned)tmp < (unsigned)lo)
-		  /* Overflow */
-		  hi += 1;
+		  {
+		    /* Addition of low-order word overflows */
+		    hi += 1;
+		  }
 		LO = tmp;
 		HI = hi + HI;
 		break;
@@ -759,28 +755,26 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      break;
 
 	    case Y_MSUB_OP:
-	      {
-		reg_word lo = LO, hi = HI;
-		reg_word tmp;
-		signed_multiply(R[RS (inst)], R[RT (inst)]);
-		tmp = lo - LO;
-		if (tmp < LO || tmp < lo)
-		  /* Underflow */
-		  hi -= 1;
-		LO = tmp;
-		HI = hi - HI;
-		break;
-	      }
-
 	    case Y_MSUBU_OP:
 	      {
 		reg_word lo = LO, hi = HI;
 		reg_word tmp;
-		unsigned_multiply(R[RS (inst)], R[RT (inst)]);
+
+		if (OPCODE (inst) == Y_MSUB_OP)
+		  {
+		    signed_multiply(R[RS (inst)], R[RT (inst)]);
+		  }
+		else		/* Y_MSUBU_OP */
+		  {
+		    unsigned_multiply(R[RS (inst)], R[RT (inst)]);
+		  }
+
 		tmp = lo - LO;
-		if (tmp < LO || tmp < lo)
-		  /* Underflow */
-		  hi -= 1;
+		if ((unsigned)LO > (unsigned)lo)
+		  {
+		    /* Subtraction of low-order word borrows */
+		    hi -= 1;
+		  }
 		LO = tmp;
 		HI = hi - HI;
 		break;
