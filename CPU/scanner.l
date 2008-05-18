@@ -309,8 +309,8 @@ initialize_scanner (FILE *in_file)
   yyin = in_file;
 #ifdef FLEX_SCANNER
   yyrestart(in_file);
-#if (YY_FLEX_MAJOR_VERSION==2 && YY_FLEX_MINOR_VERSION==5 && YY_FLEX_SUBMINOR_VERSION==33)
-  /* flex 2.5.33 flips the polarity of this flag (sigh) */
+#if (YY_FLEX_MAJOR_VERSION==2 && YY_FLEX_MINOR_VERSION==5 && YY_FLEX_SUBMINOR_VERSION>=33)
+  /* flex 2.5.33 flipped the polarity of this flag (sigh) */
   yy_init = 0;
 #else
   yy_init = 1;
