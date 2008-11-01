@@ -1,3 +1,15 @@
+2008-11-01    <Jim@LS1>
+
+	* Tests/tt.core.s (madd_) Miguel Barão [mailto:mjsb@di.uevora.pt]:
+	Added test for madd(2, -1) with (hi, lo) = (0, -1).
+
+2008-05-18    <Jim@LS1>
+
+	* CPU/scanner.l [liblit@cs.wisc.edu]:
+	Fix for flex 2.5.33 was too specific for that version and failed
+	on later versions, which propagated the change recoganized by fix
+	of2005-02-05.
+
 2007-05-20    <Jim@LS1>
 
 	* CPU/run.c (run_spim):

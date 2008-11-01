@@ -888,6 +888,17 @@ madd_:	.asciiz "Testing MADD\n"
 	mflo $3
 	bne $3 0xffffffff fail
 
+	li $t0 1
+	mtlo $t0
+	mthi $0
+	li $t0 2
+	li $t1 -1
+        madd $t0, $t1
+        mfhi $3
+	bne $3 0xffffffff fail
+	mflo $3
+	bne $3 0xffffffff fail
+
         mtlo $0
         mthi $0
 	li $4, 0x10000
