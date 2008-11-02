@@ -52,7 +52,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/D SPIM_VERSION=&quot;\&quot;Version 7.3 of August 26, 2006\&quot;&quot;"
+				AdditionalOptions="/D SPIM_VERSION=&quot;\&quot;Version 7.4 of November 2, 2008\&quot;&quot;"
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
@@ -146,7 +146,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/D SPIM_VERSION=&quot;\&quot;Version Version 7.3 of August 26, 2006\&quot;&quot;"
+				AdditionalOptions="/D SPIM_VERSION=&quot;\&quot;Version Version 7.4 of November 2, 2008\&quot;&quot;"
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
