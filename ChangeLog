@@ -1,5 +1,7 @@
 2008-11-01    <Jim@LS1>
 
+	* Version 7.4
+
 	* Tests/tt.core.s (madd_) Miguel Barão [mailto:mjsb@di.uevora.pt]:
 	Added test for madd(2, -1) with (hi, lo) = (0, -1).
 
@@ -13,7 +15,7 @@
 2007-05-20    <Jim@LS1>
 
 	* CPU/run.c (run_spim):
-	Fixed handlinger of borrow from subtract of low-order word in MSUB
+	Fixed handling of borrow from subtract of low-order word in MSUB
 	and MSUBU
 
 2007-05-03    <Jim@LS1>
