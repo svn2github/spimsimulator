@@ -38,7 +38,7 @@
 #ifndef YY_CHAR
 #define YY_CHAR char
 #endif
-
+#define YY_NO_UNISTD_H
 
 /* Exported Variables: */
 
