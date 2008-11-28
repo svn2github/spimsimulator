@@ -98,7 +98,6 @@ CPCSpimView::CPCSpimView()
 {
   g_fRunning = FALSE;
 
-  m_fStackInitialized = FALSE;
   m_fCapture = FALSE;
   m_fConsoleMinimized = TRUE;
   m_fSimulatorInitialized = FALSE;
@@ -384,9 +383,6 @@ void CPCSpimView::InitializeSimulator()
 
       initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL);
 
-      // We need to set up the stack for the next time we run.
-      m_fStackInitialized = FALSE;
-
       m_fSimulatorInitialized = TRUE;
 
       UpdateStatusDisplay();
@@ -443,11 +439,6 @@ void CPCSpimView::InitStack(LPCTSTR szCmdLine)
   char *args = argsOrig;
   lstrcpy(args, szCmdLine);
 
-  if (m_fStackInitialized)
-    {
-      return;
-    }
-
   while (*args != '\0')
     {
       /* Skip leading blanks */
@@ -469,7 +460,6 @@ void CPCSpimView::InitStack(LPCTSTR szCmdLine)
     }
 
   initialize_run_stack (argc, argv);
-  m_fStackInitialized = TRUE;
 
   delete [] argsOrig;
 }

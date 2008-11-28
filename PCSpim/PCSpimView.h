@@ -118,7 +118,6 @@ protected:
 private:
 
 	BOOL m_fSimulatorInitialized;
-	BOOL m_fStackInitialized;
 	CString m_strCurFilename;
 	CString m_strMsgCaptureBuf;
 	BOOL m_fCapture;
