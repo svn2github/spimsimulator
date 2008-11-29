@@ -143,15 +143,16 @@ static void warp_to_second_dialog (Widget widget, XEvent *event,
 
 static Widget breakpointButton;
 static void (*confirmAction) () = noop;
-static int stack_initialized = 0;
-char *xspim_file_name = NULL;	/* Retain last file's name. */
+static char *program_file_name = NULL;	/* Retain last file's name. */
+static char *command_line = NULL;	/* argv */
 
 
 
 void
 record_file_name_for_prompt (char *name)
 {
-  xspim_file_name = str_copy (name);
+  program_file_name = str_copy (name);
+  command_line = program_file_name;
 }
 
 
@@ -308,10 +309,14 @@ load_prompt (Widget button, XtPointer client_data, XtPointer call_data)
       XtAddCallback (load_popup, XtNdestroyCallback, load_prompt_destroyed,
 		     (XtPointer) 0);
 
-      if (xspim_file_name == NULL)
-	xspim_file_name = str_copy ("");
+      if (program_file_name == NULL)
+        {
+          program_file_name = str_copy ("");
+          command_line = program_file_name;
+        }
+
       XtSetArg (args[0], XtNlabel, "input filename:");
-      XtSetArg (args[1], XtNvalue, xspim_file_name);
+      XtSetArg (args[1], XtNvalue, program_file_name);
       dialog = XtCreateManagedWidget ("dialog", dialogWidgetClass, load_popup,
 				      args, TWO);
 
@@ -332,9 +337,10 @@ read_assm_file_action (Widget w, XtPointer client_data, XtPointer call_data)
   Widget dialog = (Widget) client_data;
   String value = XawDialogGetValueString (dialog);
 
-  free (xspim_file_name);
-  xspim_file_name = str_copy (value);
-  read_file (value);
+  free (program_file_name);
+  program_file_name = str_copy (value);
+  command_line = program_file_name;
+  read_file (program_file_name);
 
   destroy_popup_prompt (NULL, (XtPointer) dialog, (XtPointer) NULL);
 }
@@ -362,12 +368,12 @@ run_prompt (Widget button, XtPointer client_data, XtPointer call_data)
       sprintf (sa, "0x%08x", starting_address ());
       run_popup = popup_two_field_dialog (button, "run program",
 					 "starting address:", sa,
-					 "args:", xspim_file_name,
+					 "args:", command_line,
 					 "ok", run_program_action,
 					 NULL, NULL,
 					 &run_field1_text, &run_field2_text);
       XtAddCallback (run_popup, XtNdestroyCallback, run_prompt_destroyed,
-		     (XtPointer) 0);
+                     (XtPointer) 0);
     }
   confirmAction =  run_program_action;
   XtPopup (run_popup, XtGrabNone);
@@ -378,52 +384,61 @@ static void
 run_program_action (Widget w, XtPointer client_data, XtPointer call_data)
 {
   Arg args[10];
-  String value1, value2;
-  Widget form = XtParent (w);
+  String sa, cl;
   mem_addr addr;
+  Widget form = XtParent (w);
 
-  XtSetArg (args[0], XtNstring, &value1);
+  XtSetArg (args[0], XtNstring, &sa);
   XtGetValues (run_field1_text, args, ONE);
 
-  XtSetArg (args[0], XtNstring, &value2);
+  XtSetArg (args[0], XtNstring, &cl);
   XtGetValues (run_field2_text, args, ONE);
 
   destroy_popup_prompt (NULL, (XtPointer) form, NULL);
 
-  init_stack (value2);
-  addr = strtoul (value1, NULL, 0);
+  command_line = str_copy(cl);
+  init_stack (cl);
+
+  addr = strtoul (sa, NULL, 0);
   if (addr > 0)
     start_program (addr);
 }
 
 
+#define MAX_ARGS 10000
+
 static void
 init_stack (char *args)
 {
   int argc = 0;
-  char *argv[10000];
+  char *argv[MAX_ARGS];
   char *a;
+  char *args_str = str_copy (args); /* Destructively modify string */
 
-  if (stack_initialized)
-    return;
-  while (*args != '\0')
+  while (*args_str != '\0')
     {
       /* Skip leading blanks */
-      while (*args == ' ' || *args == '\t') args++;
-      /* First non-blank char */
-      a = args;
-      /* Last non-blank, non-null char */
-      while (*args != ' ' && *args != '\t' && *args != '\0') args++;
-      /* Terminate word */
-      if (a != args)
+      while (*args_str == ' ' || *args_str == '\t') args_str++;
+      a = args_str;             /* First non-blank char */
+
+      /* Find last non-blank, non-null char */
+      while (*args_str != ' ' && *args_str != '\t' && *args_str != '\0') args_str++;
+
+      /* Null terminate word */
+      if (a != args_str)
 	{
-	  if (*args != '\0')
-	    *args++ = '\0';	/* Null terminate */
-	  argv [argc++] = a;
+	  if (*args_str != '\0')
+	    *args_str++ = '\0';
+	  argv [argc++] = a;    /* Set next argument to word */
+
+          if (MAX_ARGS == argc)
+            {
+              break;            /* If too many, ignore rest of list */
+            }
 	}
     }
+
   initialize_run_stack (argc, argv);
-  stack_initialized = 1;
 }
 
 
@@ -450,13 +465,13 @@ step_prompt (Widget button, XtPointer client_data, XtPointer call_data)
 	step_size = str_copy ("1");
       step_popup = popup_two_field_dialog (button, "step program",
 					  "number of steps:", step_size,
-					  "args:", xspim_file_name,
+					  "args:", command_line,
 					  "step", step_program_action,
 					  "continue", step_continue_action,
 					  &step_field1_text,
 					  &step_field2_text);
       XtAddCallback (step_popup, XtNdestroyCallback, step_prompt_destroyed,
-		     (XtPointer) 0);
+                     (XtPointer) 0);
     }
   confirmAction =  step_program_action;
   XtPopup (step_popup, XtGrabNone);
@@ -467,21 +482,24 @@ static void
 step_program_action (Widget w, XtPointer client_data, XtPointer call_data)
 {
   Arg args[10];
-  String value1, value2;
+  String st, cl;
   mem_addr addr;
   int steps;
 
-  XtSetArg (args[0], XtNstring, &value1);
+  XtSetArg (args[0], XtNstring, &st);
   XtGetValues (step_field1_text, args, ONE);
 
-  XtSetArg (args[0], XtNstring, &value2);
+  XtSetArg (args[0], XtNstring, &cl);
   XtGetValues (step_field2_text, args, ONE);
 
-  steps = atoi (value1);
+  steps = atoi (st);
   free (step_size);
-  step_size = str_copy (value1);
+  step_size = str_copy (st);
+
+  command_line = str_copy(cl);
+  init_stack (cl);
+
   addr = starting_address ();
-  init_stack (value2);
   if (steps > 0 && addr > 0)
     execute_program (addr, steps, 1, 1);
   else
@@ -532,14 +550,13 @@ add_reload_button (Widget parent)
 static void
 reload_action (Widget w, XtPointer client_data, XtPointer call_data)
 {
-  if (xspim_file_name == NULL)
+  if (program_file_name == NULL)
     return;
 
   write_output (message_out, "Memory and registers cleared\n\n");
   initialize_world (load_exception_handler ? exception_file_name : NULL);
   write_startup_message ();
-  stack_initialized = 0;
-  read_file (xspim_file_name);
+  read_file (program_file_name);
 }
 
 
@@ -596,7 +613,6 @@ clear_program_state_action (Widget w, XtPointer client_data,
       write_output (message_out, "Memory and registers cleared\n\n");
       initialize_world (load_exception_handler ? exception_file_name : NULL);
       write_startup_message ();
-      stack_initialized = 0;
       break;
 
     case CLEAR_CONSOLE:
