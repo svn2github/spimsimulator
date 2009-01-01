@@ -5,7 +5,7 @@
 # Usage: release-spim <source-dir> <target-dir>
 #
 
-VERSION=7.3
+VERSION=7.4
 DIRS="CPU spim xspim Tests Documentation"
 TGT=spim-$VERSION
 
