@@ -327,7 +327,18 @@ available at: http://www.ptlug.org/wiki/SPIM_N770. </P>
 <HR width="100%">
 
 <H2 align=center>Changes in Latest Version</H2>
-<p align=left>The current version of <B>spim</B> is 7.3 (August 2006), which is
+<p align=left>The current version of <B>spim</B> is 7.4 (January 2009), which is
+a minor release that cleans up a number of bugs in 7.3:</p>
+<ul>
+	<li>
+	<p align=left>Retained command line arguments in second and subsequent runs.</p>
+	</li>
+	<li>
+	<p align=left>Bug in overflow from low-order word in MADD, MSUB.</p></li>
+	<li>
+	<p align=left>Bug in decoding SPECIAL2 instructions (e.g. madd).</p></li>
+</ul>
+<p align=left>The previous version of <B>spim</B> is 7.3 (August 2006), which is
 a minor release that cleans up a number of bugs in 7.2:</p>
 <ul>
 	<li>
@@ -501,7 +512,6 @@ return, spim and xspim don't. Or, is this consistent with the underlying
 platform?</P>
     </li>
 </ul>
-<P align=left>&nbsp;</P>
 <P align=left>The previous version of <B>spim</B> is 6.5 (January 2003), which contains the
 following changes from version 6.4:</P>
 <ul>
@@ -620,7 +630,7 @@ following changes from version 6.2:</P>
 <HR width="100%">
 
 <H2 align=center><B><FONT size=+2>Copyright</FONT></B></H2>
-<P><b>spim</b> is copyrighted by James R. Larus and distributed under the
+<P><b>spim</b> is copyrighted by James Larus and distributed under the
 following conditions:</P>
 <ul>
   <li>You may make copies of <b>spim</b> for your own use and modify those
