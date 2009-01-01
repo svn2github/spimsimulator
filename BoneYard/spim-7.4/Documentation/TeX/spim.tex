@@ -1,0 +1,1491 @@
+% Master File: spim.tex
+% Document type: LaTeX
+%
+% Documentation for SPIM.  This is a latex file.
+%
+% Copyright (C) 1990-2004 by James R. Larus (larus@cs.wisc.edu).
+%
+% Modified 2003 Deborah Pickett (debbiep@csse.monash.edu.au).
+%
+%   SPIM is distributed under the following conditions:
+%
+%    You may make copies of SPIM for your own use and modify those copies.
+%
+%    All copies of SPIM must retain my name and copyright notice.
+%
+%    You may not sell SPIM or distributed SPIM in conjunction with a
+%    commerical product or service without the expressed written consent of
+%    James Larus.
+%
+%   THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+%   IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+%   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+%   PURPOSE. */
+
+% $Header: $
+
+%
+% You are free to make and distribute copies of this documentation as
+% long as my name, address and copyright notices remain on both the
+% source and printed versions.
+%
+
+
+\documentclass[11pt]{article}
+
+% This is necessary for LaTeX2e.  Comment it out for older versions.
+\usepackage{epsfig}
+
+% Use this command for older versions of LaTeX.
+%\input{psfig}
+
+
+% Change margins:
+\setlength{\oddsidemargin}{0.1 true in}
+\setlength{\evensidemargin}{0.15 true in}
+\setlength{\marginparwidth}{1 true in}
+\setlength{\oddsidemargin}{0.125 true in}
+\setlength{\evensidemargin}{0.125 true in}
+\setlength{\marginparwidth}{0.75 true in}
+\setlength{\topmargin}{-.50 true in}
+\setlength{\textheight}{9.0 true in}
+\setlength{\textwidth}{6.30 true in}
+
+\begin{document}
+
+
+\title{SPIM S20: A MIPS R2000 Simulator\thanks
+{I grateful to the many students at UW who used SPIM in their courses
+and happily found bugs in a professor's code.  In particular, the
+students in CS536, Spring 1990, painfully found the last few bugs in
+an ``already-debugged'' simulator.  I am grateful for their patience
+and persistence.  Alan Yuen-wui Siow wrote the X-window interface.}
+\\
+{\small ``$\frac{1}{25}^{th}$ the performance at none of 	the
+cost''}}
+
+\author{{\normalsize James R. Larus} \\
+	{\normalsize larus@cs.wisc.edu} \\
+	{\normalsize Computer Sciences Department} \\
+	{\normalsize University of Wisconsin--Madison} \\
+	{\normalsize 1210 West Dayton Street} \\
+	{\normalsize Madison, WI 53706, USA} \\
+	{\normalsize 608-262-9519}}
+
+\date{Copyright \copyright 1990--2004 by James R. Larus \\
+      (This document may be copied without royalties, \\
+	so long as this copyright notice remains on it.)}
+
+\maketitle
+
+
+\newcommand {\pinst} [2]%
+	{\bigskip\noindent{\em{{\tt #1}\hfill#2 ${}^{\dagger}$\newline}}}
+\newcommand {\inst} [2]%
+	 {\bigskip\noindent{\em{{\tt #1}\hfill#2\newline}}}
+\newcommand {\pinstX} [2]%
+	{\noindent{\em{{\tt #1}\hfill#2 ${}^{\dagger}$\newline}}}
+\newcommand {\instX} [2]%
+	{\noindent{\em{{\tt #1}\hfill#2\newline}}}
+
+
+\section{SPIM}
+
+SPIM S20 is a simulator that runs programs for the MIPS R2000/R3000 RISC
+computers.\footnote{For a description of the real machines, see Gerry Kane
+and Joe Heinrich, {\em MIPS RISC Architecture,\/} Prentice Hall, 1992.} SPIM
+can read and immediately execute files containing assembly language.  SPIM
+is a self-contained system for running these programs and contains a
+debugger and interface to a few operating system services.
+
+The architecture of the MIPS computers is simple and regular, which
+makes it easy to learn and understand.  The processor contains 32
+general-purpose 32-bit registers and a well-designed instruction set that
+make it a propitious target for generating code in a compiler.
+
+However, the obvious question is: why use a simulator when many people
+have workstations that contain a hardware, and hence significantly
+faster, implementation of this computer?  One reason is that these
+workstations are not generally available.  Another reason is that
+these machine will not persist for many years because of the rapid
+progress leading to new and faster computers.  Unfortunately, the
+trend is to make computers faster by executing several instructions
+concurrently, which makes their architecture more difficult to
+understand and program.  The MIPS architecture may be the epitome of a
+simple, clean RISC machine.
+
+In addition, simulators can provide a better environment for low-level
+programming than an actual machine because they can detect more errors
+and provide more features than an actual computer.  For example, SPIM
+has an X-window interface that is better than most debuggers for the
+actual machines.
+
+Finally, simulators are an useful tool for studying computers and the
+programs that run on them.  Because they are implemented in software,
+not silicon, they can be easily modified to add new instructions,
+build new systems such as multiprocessors, or simply to collect data.
+
+\subsection{Simulation of a Virtual Machine}
+
+The MIPS architecture, like that of most RISC computers, is difficult
+to program directly because of its delayed branches, delayed loads,
+and restricted address modes.  This difficulty is tolerable since
+these computers were designed to be programmed in high-level languages
+and so present an interface designed for compilers, not programmers.
+A good part of the complexity results from delayed instructions.  A
+{\em delayed branch\/} takes two cycles to execute.  In the second
+cycle, the instruction immediately following the branch executes.
+This instruction can perform useful work that normally would have been
+done before the branch or it can be a {\tt nop} (no operation).
+Similarly, {\em delayed loads\/} take two cycles so the instruction
+immediately following a load cannot use the value loaded from memory.
+
+MIPS wisely choose to hide this complexity by implementing a {\em
+virtual machine\/} with their assembler.  This virtual computer
+appears to have non-delayed branches and loads and a richer
+instruction set than the actual hardware.  The assembler {\em
+reorganizes\/} (rearranges) instructions to fill the delay slots.  It
+also simulates the additional, {\em pseudoinstructions\/} by
+generating short sequences of actual instructions.
+
+By default, SPIM simulates the richer, virtual machine.  It can also
+simulate the actual hardware.  We will describe the virtual machine
+and only mention in passing features that do not belong to the actual
+hardware.  In doing so, we are following the convention of MIPS
+assembly language programmers (and compilers), who routinely take
+advantage of the extended machine.  Instructions marked with a dagger
+($\dagger$) are pseudoinstructions.
+
+\subsection{SPIM Interface}
+
+SPIM provides a simple terminal and a X-window interface.  Both
+provide equivalent functionality, but the X interface is generally
+easier to use and more informative.
+
+{\tt spim}, the terminal version, and {\tt xspim}, the X version, have
+the following command-line options:
+\begin{description}
+  \item [] {\tt -bare}\newline Simulate a bare MIPS machine without
+pseudoinstructions or the additional addressing modes provided by the
+assembler.  Implies {\tt -quiet -delayed\_branches -delayed\_loads}.
+
+  \item [] {\tt -asm}\newline Simulate the virtual MIPS machine
+provided by the assembler.  This is the default.
+
+  \item [] {\tt -delayed\_branches}\newline Simulate the branch delay
+feature of bare MIPS machines; the instruction following a branch is
+always executed, even if the branch succeeded.
+
+  \item [] {\tt -delayed\_loads}\newline Simulate the load delay
+feature of bare MIPS machines; a value loaded from memory is not
+available in the register until two instruction cycles after the load.
+
+  \item [] {\tt -pseudo} \newline Accept pseudoinstructions in assembly
+code.
+
+  \item [] {\tt -nopseudo} \newline Do not accept pseudoinstructions in
+assembly code.
+
+  \item [] {\tt -notrap} \newline Do not load the standard trap
+handler.  This trap handler has two functions that must be assumed by
+the user's program.  First, it handles traps.  When a trap occurs,
+SPIM jumps to location 0x80000080, which should contain code to
+service the exception.  Second, this file contains startup code that
+invokes the routine {\tt main}.  Without the trap handler, execution
+begins at the instruction labeled {\tt \_\_start}.
+
+  \item [] {\tt -trap}\newline Load the standard trap handler.  This
+is the default.
+
+  \item [] {\tt -trap\_file}\newline Load the trap handler in the file.
+
+  \item [] {\tt -noquiet}\newline Print a message when an exception
+occurs.  This is the default.
+
+  \item [] {\tt -quiet}\newline Do not print a message at an
+exception.
+
+  \item [] {\tt -nomapped\_io}\newline Disable the memory-mapped IO
+facility (see Section~\ref{sec:IO}).
+
+  \item [] {\tt -mapped\_io}\newline Enable the memory-mapped IO facility
+(see Section~\ref{sec:IO}).  Programs that use SPIM syscalls (see
+Section~\ref{sec:scall}) to read from the terminal should not also use
+memory-mapped IO.
+
+  \item [] {\tt -file}\newline Load and execute the assembly code in
+the file.
+
+  \item [] {\tt -s{seg} size} Sets the initial size of memory segment
+{\em seg\/} to be {\em size\/} bytes.  The memory segments are named:
+{\tt text}, {\tt data}, {\tt stack}, {\tt ktext}, and {\tt kdata}.
+For example, the pair of arguments {\tt -sdata 2000000} starts the
+user data segment at 2,000,000 bytes.
+
+  \item [] {\tt -l{seg} size} Sets the limit on how large memory segment
+{\em seg\/} can grow to be {\em size\/} bytes.  The memory segments
+that can grow are: {\tt data}, {\tt stack}, and {\tt kdata}.
+\end{description}
+
+\subsubsection{Terminal Interface}
+
+The terminal interface ({\tt spim}) provides the following commands:
+\begin{description}
+  \item [] {\tt exit}\newline Exit the simulator.
+
+  \item [] {\tt quit}\newline Synonym for {\tt exit}.
+
+  \item [] {\tt read "file"}\newline Read {\em file\/} of assembly
+language commands into SPIM's memory.  If the file has already been
+read into SPIM, the system should be cleared (see {\tt reinitialize},
+below) or global symbols will be multiply defined.
+
+  \item [] {\tt load "file"}\newline Synonym for {\tt read}.
+
+  \item [] {\tt run <addr>}\newline Start running a program.  If the
+optional address {\em addr\/} is provided, the program starts at that
+address.  Otherwise, the program starts at the global symbol {\tt
+\_\_start}, which is defined by the default trap handler to call the
+routine at the global symbol {\tt main} with the usual MIPS calling
+convention.
+
+  \item [] {\tt step <N>}\newline Step the program for {\em N\/}
+(default: 1) instructions.  Print instructions as they execute.
+
+  \item [] {\tt continue}\newline Continue program execution without
+stepping.
+
+  \item [] {\tt print \$N}\newline Print register {\em N\/}.
+
+  \item [] {\tt print \$fN}\newline Print floating point register {\em
+N\/}.
+
+  \item [] {\tt print addr}\newline Print the contents of memory at
+address {\em addr\/}.
+
+  \item [] {\tt print\_symbols}\newline Print the contents of the symbol
+table, i.e., the addresses of the global (but not local) symbols.
+
+  \item [] {\tt print\_all\_regs <hex>}\newline Print the contents of all
+registers.  If {\tt hex} is specified, print them in hexadecimal.
+
+  \item [] {\tt reinitialize}\newline Clear the memory and registers.
+
+  \item [] {\tt breakpoint addr}\newline Set a breakpoint at address
+{\em addr\/}.  {\em addr\/} can be either a memory address or symbolic
+label.
+
+  \item [] {\tt delete addr}\newline Delete all breakpoints at address
+{\em addr\/}.
+
+  \item [] {\tt list}\newline List all breakpoints.
+
+  \item [] {\tt dump "FILE"}\newline Write the contents of the text
+segment to {\em FILE} in network (big-endian) byte order.  If {\em FILE}
+is not specified, save to {\tt spim.dump}.
+
+  \item [] {\tt dumpnative "FILE"}\newline Write the contents of the text
+segment to {\em FILE} in the host's native byte order.  If {\em FILE}
+is not specified, save to {\tt spim.dump}.
+
+  \item [] {\tt .}\newline Rest of line is an assembly instruction
+that is stored in memory.
+
+  \item [] {\tt <nl>}\newline A newline reexecutes previous command.
+
+  \item [] {\tt ?}\newline Print a help message.
+\end{description}
+
+Most commands can be abbreviated to their unique prefix e.g., {\tt
+ex}, {\tt re}, {\tt l}, {\tt ru}, {\tt s}, {\tt p}.  More dangerous
+commands, such as {\tt reinitialize}, require a longer prefix.
+
+\subsubsection{X-Window Interface}
+
+\begin{figure}
+  \centerline{\psfig{figure=xinterface.id,height=4.5in}}
+  \caption{X-window interface to SPIM.}
+  \label{fig:xinterface}
+\end{figure}
+The X version of SPIM, {\tt xspim}, looks different, but should
+operate in the same manner as {\tt spim}.  The X window has five panes
+(see Figure~\ref{fig:xinterface}).  The top pane displays the contents
+of the registers.  It is continually updated, except while a program
+is running.
+
+The next pane contains the buttons that control the simulator:
+\begin{itemize}
+  \item [] {\bf quit}\newline Exit from the simulator.
+
+  \item [] {\bf load}\newline Read a source file into memory.
+
+  \item [] {\bf reload}\newline Reinitialize memory and then reload the
+last file read with {\bf load}.
+
+  \item [] {\bf run}\newline Start the program running.
+
+  \item [] {\bf step}\newline Single-step through a program.
+
+  \item [] {\bf clear}\newline Reinitialize registers or memory.
+
+  \item [] {\bf set value}\newline Set the value in a register or
+memory location.
+
+  \item [] {\bf print}\newline Print the value in a register or memory
+location.
+
+  \item [] {\bf breakpoints}\newline Set or delete a breakpoint or list
+all breakpoints.
+
+  \item [] {\bf help}\newline Print a help message.
+
+  \item [] {\bf terminal}\newline Raise or hide the console window.
+
+  \item [] {\bf mode}\newline Set SPIM operating modes.
+\end{itemize}
+
+The next two panes display the memory contents.  The top one shows
+instructions from the user and kernel text segments.\footnote{These
+instructions are real---not pseudo---MIPS instructions.  SPIM
+translates assembler pseudoinstructions to 1--3 MIPS instructions
+before storing the program in memory.  Each source instruction appears
+as a comment on the first instruction to which it is translated.} The
+first few instructions in the text segment are startup code ({\tt
+\_\_start}) that loads {\tt argc} and {\tt argv} into registers and
+invokes the {\tt main} routine.
+
+The lower of these two panes displays the data and stack segments.
+Both panes are updated as a program executes.
+
+The bottom pane is used to display messages from the simulator.  It
+does not display output from an executing program.  When a program
+reads or writes, its IO appears in a separate window, called the
+Console, which pops up when needed.
+
+\subsection{Surprising Features}
+
+Although SPIM faithfully simulates the MIPS computer, it is a
+simulator and certain things are not identical to the actual computer.
+The most obvious differences are that instruction timing and the
+memory systems are not identical.  SPIM does not simulate caches or
+memory latency, nor does it accurate reflect the delays for floating
+point operations or multiplies and divides.
+
+Another surprise (which occurs on the real machine as well) is that a
+pseudoinstruction expands into several machine instructions.  When
+single-stepping or examining memory, the instructions that you see are
+slightly different from the source program.  The correspondence
+between the two sets of instructions is fairly simple since SPIM does
+not reorganize the instructions to fill delay slots.
+
+\subsection{Assembler Syntax}
+\label{sec:syntax}
+
+Comments in assembler files begin with a sharp-sign ({\tt \#}).
+Everything from the sharp-sign to the end of the line is ignored.
+
+Identifiers are a sequence of alphanumeric characters, underbars ({\tt
+\_}), and dots ({\tt .}) that do not begin with a number.  Opcodes for
+instructions are reserved words that are {\bf not} valid identifiers.
+Labels are declared by putting them at the beginning of a line
+followed by a colon, for example:
+\begin{verbatim}
+        .data
+  item: .word 1
+        .text
+        .globl main             # Must be global
+  main: lw $t0, item
+\end{verbatim}
+
+Strings are enclosed in double-quotes ({\tt "}).  Special characters
+in strings follow the C convention:
+\begin{verbatim}
+    newline        \n
+    tab            \t
+    quote          \"
+\end{verbatim}
+
+SPIM supports a subset of the assembler directives provided by the
+MIPS assembler:
+\begin{description}
+  \item [] {\tt .align n}\newline Align the next datum on a $2^n$ byte
+boundary.  For example, {\tt .align 2} aligns the next value on a word
+boundary.  {\tt .align 0} turns off automatic alignment of {\tt
+.half}, {\tt .word}, {\tt .float}, and {\tt .double} directives until
+the next {\tt .data} or {\tt .kdata} directive.
+
+  \item [] {\tt .ascii str}\newline Store the string in memory, but do
+not null-terminate it.
+
+  \item [] {\tt .asciiz str}\newline Store the string in memory and
+null-terminate it.
+
+  \item [] {\tt .byte b1, ..., bn}\newline Store the $n$ values in
+successive bytes of memory.
+
+  \item [] {\tt .comm sym size}\newline Allocate {\em size} bytes of
+data segment for symbol {\em sym}.
+
+  \item [] {\tt .data <addr>}\newline The following data items should
+be stored in the data segment.  If the optional argument {\em addr\/}
+is present, the items are stored beginning at address {\em addr\/}.
+
+  \item [] {\tt .double d1, ..., dn}\newline Store the $n$ floating
+point double precision numbers in successive memory locations.
+
+  \item [] {\tt .extern sym size}\newline Declare that the datum
+stored at {\tt sym} is {\tt size} bytes large and is a global symbol.
+This directive enables the assembler to store the datum in a portion
+of the data segment that is efficiently accessed via register {\tt
+\$gp}.
+
+  \item [] {\tt .float f1, ..., fn}\newline Store the $n$ floating
+point single precision numbers in successive memory locations.
+
+  \item [] {\tt .globl sym}\newline Declare that symbol {\tt sym} is
+global and can be referenced from other files.
+
+  \item [] {\tt .half h1, ..., hn}\newline Store the $n$ 16-bit
+quantities in successive memory halfwords.
+
+  \item [] {\tt .kdata <addr>}\newline The following data items should
+be stored in the kernel data segment. If the optional argument {\em
+addr\/} is present, the items are stored beginning at address {\em
+addr\/}.
+
+  \item [] {\tt .ktext <addr>}\newline The next items are put in the
+kernel text segment.  In SPIM, these items may only be instructions or
+words (see the {\tt .word} directive below). If the optional argument
+{\em addr\/} is present, the items are stored beginning at address
+{\em addr\/}.
+
+  \item [] {\tt .label sym}\newline Declare that symbol {\tt sym} is a
+label.
+
+  \item [] {\tt .lcomm sym size}\newline Allocate {\em size} bytes
+for symbol {\em sym} in the portion of the data segment that can be
+accessed via register {\tt \$gp}.
+
+  \item [] {\tt .space n}\newline Allocate $n$ bytes of space in the
+current segment (which must be the data segment in SPIM).
+
+  \item [] {\tt .set noat}\newline Permit the program to refer to the
+{\tt \$at} register explicitly, and forbid SPIM from generating pseudoinstructions
+that modify {\tt \$at}.
+
+  \item [] {\tt .set at}\newline Forbid the program from referring to the
+{\tt \$at} register explicitly, and permit SPIM to generate pseudoinstructions
+that modify {\tt \$at} (the default).
+
+  \item [] {\tt .text <addr>}\newline The next items are put in the
+user text segment.  In SPIM, these items may only be instructions or
+words (see the {\tt .word} directive below).  If the optional argument
+{\em addr\/} is present, the items are stored beginning at address
+{\em addr\/}.
+
+  \item [] {\tt .word w1, ..., wn}\newline Store the $n$ 32-bit
+quantities in successive memory words.
+\end{description}
+SPIM does not distinguish various parts of the data segment ({\tt
+.data}, {\tt .rdata}, and {\tt .sdata}).
+
+\subsection{System Calls}
+\label{sec:scall}
+
+\begin{table}
+  \small
+  \begin{center}
+  \begin{tabular}{|l|c|l|l|}
+    \hline
+     \multicolumn{1}{|c|}{\bf Service} &
+	{\bf System Call Code} &
+	\multicolumn{1}{|c|}{\bf Arguments} &
+	\multicolumn{1}{|c|}{\bf Result} \\
+     \hline
+     \hline
+      print\_int & 1 & {\tt \$a0} = integer & \\
+      print\_float & 2 & {\tt \$f12} = float & \\
+      print\_double & 3 & {\tt \$f12} = double & \\
+      print\_string & 4 & {\tt \$a0} = string & \\
+      read\_int & 5 & & integer (in {\tt \$v0}) \\
+      read\_float & 6 & & float (in {\tt \$f0}) \\
+      read\_double & 7 & & double (in {\tt \$f0}) \\
+      read\_string & 8 & {\tt \$a0} = buffer, {\tt \$a1} = length & \\
+      sbrk & 9 & {\tt \$a0} = amount & address (in {\tt \$v0}) \\
+      exit & 10 & & \\
+      print\_character & 11 & {\tt \$a0} = character & \\
+      read\_character & 12 & & character (in {\tt \$v0}) \\
+      open & 13 &  {\tt \$a0} = filename, & file descriptor (in {\tt \$v0}) \\
+           &    &  \ \ \ \ {\tt \$a1} = flags, {\tt \$a2} = mode & \\
+      read & 14 & {\tt \$a0} = file descriptor, & bytes read (in {\tt \$v0}) \\
+           &    &  \ \ \ \ {\tt \$a1} = buffer, {\tt \$a2} = count & \\
+      write & 15 & {\tt \$a0} = file descriptor,& bytes written (in {\tt \$v0}) \\
+            &    & \ \ \ \ {\tt \$a1} = buffer, {\tt \$a2} = count &                               \\
+      close & 16 & {\tt \$a0} = file descriptor & 0 (in {\tt \$v0}) \\
+      exit2 & 17 & {\tt \$a0} =  value &  \\
+     \hline
+  \end{tabular}
+  \end{center}
+  \caption{System services.}
+  \label{tab:syscall}
+\end{table}
+SPIM provides a small set of operating-system-like services through
+the system call ({\tt syscall}) instruction.  To request a service, a
+program loads the system call code (see Table~\ref{tab:syscall}) into
+register {\tt \$v0} and the arguments into registers {\tt
+\$a0}$\ldots${\tt \$a3} (or {\tt \$f12} for floating point values).
+System calls that return values put their result in register {\tt
+\$v0} (or {\tt \$f0} for floating point results).  For example, to
+print ``{\tt the answer = 5}'', use the commands:
+\begin{verbatim}
+        .data
+  str:  .asciiz "the answer = "
+        .text
+        li $v0, 4        # system call code for print_str
+        la $a0, str      # address of string to print
+        syscall          # print the string
+
+        li $v0, 1        # system call code for print_int
+        li $a0, 5        # integer to print
+        syscall          # print it
+\end{verbatim}
+
+{\tt print\_int} is passed an integer and prints it on the console.
+{\tt print\_float} prints a single floating point number. {\tt
+print\_double} prints a double precision number.  {\tt print\_string}
+is passed a pointer to a null-terminated string, which it writes to
+the console. {\tt print\_character} prints a single ASCII character.
+
+{\tt read\_int}, {\tt read\_float}, and {\tt read\_double} read an
+entire line of input up to and including the newline.  Characters
+following the number are ignored.  {\tt read\_string} has the same
+semantics as the Unix library routine {\tt fgets}.  It reads up to
+$n-1$ characters into a buffer and terminates the string with a null
+byte.  If there are fewer characters on the current line, it reads
+through the newline and again null-terminates the string.  {\tt
+read\_character} reads a single ASCII character.  {\bf
+Warning:} programs that use these syscalls to read from the terminal
+should not use memory-mapped IO (see Section~\ref{sec:IO}).
+
+{\tt sbrk} returns a pointer to a block of memory containing $n$ additional
+bytes.  This pointer is word aligned. {\tt exit} stops a program from
+running. {\tt exit2} stops the program from running and takes an argument,
+which is the value that {\tt spim} or {\tt xspim} uses in its call on {\tt
+exit}.
+
+{\tt open}, {\tt read}, {\tt write} and {\tt close} behave the same as
+the Unix system calls of the same name.  They all return $-1$ on
+failure.
+\section{Description of the MIPS R2000}
+\label{sec:mips}
+
+\begin{figure}
+  \centerline{\psfig{figure=mips.id,height=4in}}
+  \caption{MIPS R2000 CPU and FPU}
+  \label{fig:mips}
+\end{figure}
+A MIPS processor consists of an integer processing unit (the CPU) and
+a collection of coprocessors that perform ancillary tasks or operate
+on other types of data such as floating point numbers (see
+Figure~\ref{fig:mips}).  SPIM simulates two coprocessors.  Coprocessor
+0 handles traps, exceptions, and the virtual memory system.  SPIM
+simulates most of the first two and entirely omits details of the
+memory system.  Coprocessor 1 is the floating point unit.  SPIM
+simulates most aspects of this unit.
+
+\subsection{CPU Registers}
+
+\begin{table}
+  \small
+  \begin{center}
+  \begin{tabular}{|l|r|l|}
+    \hline
+     {\bf Register Name} & {\bf Number} & \multicolumn{1}{|c|}{\bf Usage} \\
+     \hline
+     \hline
+      zero & 0 & Constant 0 \\
+      at & 1 & Reserved for assembler \\
+      v0 & 2 & Expression evaluation and \\
+      v1 & 3 & \ \ \ \ results of a function \\
+      a0 & 4 & Argument 1 \\
+      a1 & 5 & Argument 2 \\
+      a2 & 6 & Argument 3 \\
+      a3 & 7 & Argument 4 \\
+      t0 & 8 & Temporary (not preserved across call) \\
+      t1 & 9 & Temporary (not preserved across call) \\
+      t2 & 10 & Temporary (not preserved across call) \\
+      t3 & 11 & Temporary (not preserved across call) \\
+      t4 & 12 & Temporary (not preserved across call) \\
+      t5 & 13 & Temporary (not preserved across call) \\
+      t6 & 14 & Temporary (not preserved across call) \\
+      t7 & 15 & Temporary (not preserved across call) \\
+      s0 & 16 & Saved temporary (preserved across call) \\
+      s1 & 17 & Saved temporary (preserved across call) \\
+      s2 & 18 & Saved temporary (preserved across call) \\
+      s3 & 19 & Saved temporary (preserved across call) \\
+      s4 & 20 & Saved temporary (preserved across call) \\
+      s5 & 21 & Saved temporary (preserved across call) \\
+      s6 & 22 & Saved temporary (preserved across call) \\
+      s7 & 23 & Saved temporary (preserved across call) \\
+      t8 & 24 & Temporary (not preserved across call) \\
+      t9 & 25 & Temporary (not preserved across call) \\
+      k0 & 26 & Reserved for OS kernel \\
+      k1 & 27 & Reserved for OS kernel \\
+      gp & 28 & Pointer to global area \\
+      sp & 29 & Stack pointer \\
+      fp or s8 & 30 & Frame pointer \\
+      ra & 31 & Return address (used by function call) \\
+     \hline
+  \end{tabular}
+  \end{center}
+  \caption{MIPS registers and the convention governing their use.}
+  \label{tab:reg}
+\end{table}
+
+The MIPS (and SPIM) central processing unit contains 32 general
+purpose 32-bit registers that are numbered 0--31.  Register $n$ is designated
+by {\tt \$n}.  Register {\tt \$0} always contains the hardwired value
+0.  MIPS has established a set of conventions as to how registers
+should be used.  These suggestions are guidelines, which are not
+enforced by the hardware.  However a program that violates them will
+not work properly with other software.  Table~\ref{tab:reg} lists the
+registers and describes their intended use.
+
+Registers {\tt \$at} (1), {\tt \$k0} (26), and {\tt \$k1} (27) are
+reserved for use by the assembler and operating system.
+
+Registers {\tt \$a0}--{\tt \$a3} (4--7) are used to pass the first
+four arguments to routines (remaining arguments are passed on the
+stack).  Registers {\tt \$v0} and {\tt \$v1} (2, 3) are used to return
+values from functions.  Registers {\tt \$t0}--{\tt \$t9} (8--15, 24,
+25) are caller-saved registers used for temporary quantities that do
+not need to be preserved across calls.  Registers {\tt \$s0}--{\tt
+\$s7} (16--23) are callee-saved registers that hold long-lived values
+that should be preserved across calls.
+
+Register {\tt \$sp} (29) is the stack pointer, which points to the last
+location in use on the stack.\footnote{In earlier version of SPIM, {\tt
+\$sp} was documented as pointing at the first free word on the stack (not
+the last word of the stack frame).  Recent MIPS documents have made it clear
+that this was an error.  Both conventions work equally well, but we choose
+to follow the real system.}  Register {\tt \$fp} (30) is the frame
+pointer.\footnote{The MIPS compiler does not use a frame pointer, so this
+register is used as callee-saved register {\tt \$s8}.} Register {\tt \$ra}
+(31) is written with the return address for a call by the {\tt jal}
+instruction.
+
+Register {\tt \$gp} (28) is a global pointer that points into the
+middle of a 64K block of memory in the heap that holds constants and
+global variables.  The objects in this heap can be quickly accessed
+with a single load or store instruction.
+
+In addition, coprocessor 0 contains registers that are useful to
+handle exceptions.  SPIM does not implement all of these registers,
+since they are not of much use in a simulator or are part of the
+memory system, which is not implemented.  However, it does provide the
+following:
+\begin{center}
+  \small
+  \begin{tabular}{|l|c|l|}
+    \hline
+    {\bf Register Name} & {\bf Number} & \multicolumn{1}{|c|}{\bf Usage} \\
+    \hline
+    \hline
+    BadVAddr & 8 & Memory address at which address exception occurred \\
+    Status & 12 & Interrupt mask and enable bits \\
+    Cause & 13 & Exception type and pending interrupt bits \\
+    EPC & 14 & Address of instruction that caused exception \\
+    \hline
+  \end{tabular}
+\end{center}
+These registers are part of coprocessor 0's register set and are
+accessed by the {\tt lwc0}, {\tt mfc0}, {\tt mtc0}, and {\tt swc0}
+instructions.
+
+\begin{figure}
+  \centerline{\psfig{figure=status_reg.id}}
+  \caption{The {\tt Status} register.}
+  \label{fig:status_reg}
+\end{figure}
+\begin{figure}
+  \centerline{\psfig{figure=cause_reg.id}}
+  \caption{The {\tt Cause} register.}
+  \label{fig:cause_reg}
+\end{figure}
+Figure~\ref{fig:status_reg} describes the bits in the {\tt Status}
+register that are implemented by SPIM.  The {\tt interrupt mask}
+contains a bit for each of the eight interrupt levels.  If a bit is
+one, interrupts at that level are allowed.  If the bit is zero,
+interrupts at that level are disabled.  The low six bits of the {\tt
+Status} register implement a three-level stack for the {\tt
+kernel/user} and {\tt interrupt enable} bits.  The {\tt kernel/user}
+bit is 0 if the program was running in the kernel when the interrupt
+occurred and 1 if it was in user mode. If the {\tt interrupt enable}
+bit is 1, interrupts are allowed.  If it is 0, they are disabled. At an
+interrupt, these six bits are shifted left by two bits, so the current
+bits become the previous bits and the previous bits become the old
+bits.  The current bits are both set to 0 (i.e., kernel mode with
+interrupts disabled).
+
+Figure~\ref{fig:cause_reg} describes the bits in the {\tt Cause}
+register.  The eight {\tt pending interrupt} bits correspond to the
+eight interrupt levels.  A bit becomes 1 when an interrupt at its level
+has occurred but has not been serviced.  The {\tt exception code}
+bits contain a code from the following table describing the cause
+of an exception.
+\begin{center}
+  \small
+  \begin{tabular}{|l|l|l|}
+    \hline
+    {\bf Number} & {\bf Name} & {\bf Description} \\
+    \hline
+    \hline
+    0 & INT & External interrupt \\
+    4 & ADDRL & Address error exception (load or instruction fetch) \\
+    5 & ADDRS & Address error exception (store) \\
+    6 & IBUS & Bus error on instruction fetch \\
+    7 & DBUS & Bus error on data load or store \\
+    8 & SYSCALL & Syscall exception \\
+    9 & BKPT & Breakpoint exception \\
+    10&  RI & Reserved instruction exception \\
+    12&  OVF & Arithmetic overflow exception \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Byte Order}
+
+Processors can number the bytes within a word to make the byte with
+the lowest number either the leftmost or rightmost one.  The convention
+used by a machine is its {\em byte order\/}.  MIPS processors can
+operate with either {\em big-endian\/} byte order:
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \multicolumn{4}{c}{{\bf Byte \#}} \\
+    \hline
+    0 & 1 & 2 & 3 \\
+    \hline
+  \end{tabular}
+\end{center}
+or {\em little-endian\/} byte order:
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \multicolumn{4}{c}{{\bf Byte \#}} \\
+    \hline
+    3 & 2 & 1 & 0 \\
+    \hline
+  \end{tabular}
+\end{center}
+SPIM operates with both byte orders.  SPIM's byte order is determined
+by the byte order of the underlying hardware running the simulator.
+On a DECstation 3100, SPIM is little-endian, while on a HP Bobcat, Sun
+4 or PC/RT, SPIM is big-endian.
+
+\subsection {Addressing Modes}
+
+MIPS is a load/store architecture, which means that only load and
+store instructions access memory.  Computation instructions operate
+only on values in registers.  The bare machine provides only one
+memory addressing mode: {\tt c(rx)}, which uses the sum of the
+immediate (integer) {\tt c} and the contents of register {\tt rx} as
+the address.  The virtual machine provides the following addressing
+modes for load and store instructions:
+\begin{center}
+  \small
+  \begin{tabular}{|l|l|}
+    \hline
+    \multicolumn{1}{|c|}{\bf Format} &
+	\multicolumn{1}{|c|}{\bf Address Computation} \\
+    \hline
+    \hline
+    (register) &  contents of register \\
+    imm & immediate \\
+    imm (register) & immediate + contents of register \\
+    symbol & address of symbol \\
+    symbol $\pm$ imm & address of symbol $+$ or $-$ immediate \\
+    symbol (register) & address of symbol + contents of register \\
+    symbol $\pm$ imm (register) & (address of symbol $+$ or $-$ immediate) + contents of register \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Most load and store instructions operate only on aligned data.  A
+quantity is {\em aligned\/} if its memory address is a multiple of its
+size in bytes.  Therefore, a halfword object must be stored at even
+addresses and a full word object must be stored at addresses that are
+a multiple of 4.  However, MIPS provides some instructions for
+manipulating unaligned data.
+
+\subsection {Arithmetic and Logical Instructions}
+
+In all instructions below, {\tt Src2} can either be a register or an
+immediate value (a 16 bit integer). The immediate forms of the
+instructions are only included for reference.  The assembler will
+translate the more general form of an instruction (e.g., {\tt add})
+into the immediate form (e.g., {\tt addi}) if the second argument is
+constant.
+
+\pinst{abs Rdest, Rsrc}{Absolute Value}
+Put the absolute value of the integer from register {\tt Rsrc} in
+register {\tt Rdest}.
+
+\inst{add Rdest, Rsrc1, Src2}{Addition (with overflow)}
+\instX{addi Rdest, Rsrc1, Imm}{Addition Immediate (with overflow)}
+\instX{addu Rdest, Rsrc1, Src2}{Addition (without overflow)}
+\instX{addiu Rdest, Rsrc1, Imm}{Addition Immediate (without overflow)}
+Put the sum of the integers from register {\tt Rsrc1} and {\tt
+Src2} (or {\tt Imm}) into register {\tt Rdest}.
+
+\inst{and Rdest, Rsrc1, Src2}{AND}
+\instX{andi Rdest, Rsrc1, Imm}{AND Immediate}
+Put the logical AND of the integers from register {\tt Rsrc1} and
+{\tt Src2} (or {\tt Imm}) into register {\tt Rdest}.
+
+\inst{div Rsrc1, Rsrc2}{Divide (signed)}
+\instX{divu Rsrc1, Rsrc2}{Divide (unsigned)}
+Divide the contents of the two registers.
+{\tt divu} treats is operands as unsigned values.  Leave the quotient in
+register {\tt lo} and the remainder in register {\tt hi}.  Note that
+if an operand is negative, the remainder is unspecified by the MIPS
+architecture and depends on the conventions of the machine on which
+SPIM is run.
+
+\pinst{div Rdest, Rsrc1, Src2}{Divide (signed, with overflow)}
+\pinstX{divu Rdest, Rsrc1, Src2}{Divide (unsigned, without overflow)}
+Put the quotient of the integers from register {\tt Rsrc1} and {\tt
+Src2} into register {\tt Rdest}. {\tt divu} treats is operands as
+unsigned values.
+
+\pinst{mul Rdest, Rsrc1, Src2}{Multiply (without overflow)}
+\pinst{mulo Rdest, Rsrc1, Src2}{Multiply (with overflow)}
+\pinstX{mulou Rdest, Rsrc1, Src2}{Unsigned Multiply (with overflow)}
+Put the product of the integers from register {\tt Rsrc1} and {\tt
+Src2} into register {\tt Rdest}.
+
+\inst{mult Rsrc1, Rsrc2}{Multiply}
+\instX{multu Rsrc1, Rsrc2}{Unsigned Multiply}
+Multiply the contents of the two registers.  Leave the low-order word
+of the product in register {\tt lo} and the high-word in register {\tt
+hi}.
+
+\pinst{neg Rdest, Rsrc}{Negate Value (with overflow)}
+\pinstX{negu Rdest, Rsrc}{Negate Value (without overflow)}
+Put the negative of the integer from register {\tt Rsrc} into
+register {\tt Rdest}.
+
+\inst{nor Rdest, Rsrc1, Src2}{NOR}
+Put the logical NOR of the integers from register {\tt Rsrc1} and
+{\tt Src2} into register {\tt Rdest}.
+
+\pinst{not Rdest, Rsrc}{NOT}
+Put the bitwise logical negation of the integer from register {\tt
+Rsrc} into register {\tt Rdest}.
+
+\inst{or Rdest, Rsrc1, Src2}{OR}
+\instX{ori Rdest, Rsrc1, Imm}{OR Immediate}
+Put the logical OR of the integers from register {\tt Rsrc1} and {\tt
+Src2} (or {\tt Imm}) into register {\tt Rdest}.
+
+\pinst{rem Rdest, Rsrc1, Src2}{Remainder}
+\pinstX{remu Rdest, Rsrc1, Src2}{Unsigned Remainder}
+Put the remainder from dividing the integer in register {\tt Rsrc1} by
+the integer in {\tt Src2} into register {\tt Rdest}.  Note that if an
+operand is negative, the remainder is unspecified by the MIPS
+architecture and depends on the conventions of the machine on which
+SPIM is run.
+
+\pinst{rol Rdest, Rsrc1, Src2}{Rotate Left}
+\pinstX{ror Rdest, Rsrc1, Src2}{Rotate Right}
+Rotate the contents of register {\tt Rsrc1} left (right) by the
+distance indicated by {\tt Src2} and put the result in register
+{\tt Rdest}.
+
+\inst{sll Rdest, Rsrc1, Src2}{Shift Left Logical}
+\instX{sllv Rdest, Rsrc1, Rsrc2}{Shift Left Logical Variable}
+\instX{sra Rdest, Rsrc1, Src2}{Shift Right Arithmetic}
+\instX{srav Rdest, Rsrc1, Rsrc2}{Shift Right Arithmetic Variable}
+\instX{srl Rdest, Rsrc1, Src2}{Shift Right Logical}
+\instX{srlv Rdest, Rsrc1, Rsrc2}{Shift Right Logical Variable}
+Shift the contents of register {\tt Rsrc1} left (right) by the
+distance indicated by {\tt Src2} ({\tt Rsrc2}) and put the
+result in register {\tt Rdest}.
+
+\inst{sub Rdest, Rsrc1, Src2}{Subtract (with overflow)}
+\instX{subu Rdest, Rsrc1, Src2}{Subtract (without overflow)}
+Put the difference of the integers from register {\tt Rsrc1} and {\tt
+Src2} into register {\tt Rdest}.
+
+\inst{xor Rdest, Rsrc1, Src2}{XOR}
+\instX{xori Rdest, Rsrc1, Imm}{XOR Immediate}
+Put the logical XOR of the integers from register {\tt Rsrc1} and
+{\tt Src2} (or {\tt Imm}) into register {\tt Rdest}.
+
+
+\subsection {Constant-Manipulating Instructions}
+
+\pinst{li Rdest, imm}{Load Immediate}
+Move the immediate {\tt imm} into register {\tt Rdest}.
+
+\inst{lui Rdest, imm}{Load Upper Immediate}
+Load the lower halfword of the immediate {\tt imm} into the upper
+halfword of register {\tt Rdest}.  The lower bits of the register are
+set to 0.
+
+
+\subsection {Comparison Instructions}
+
+In all instructions below, {\tt Src2} can either be a register or an
+immediate value (a 16 bit integer).
+
+\pinst{seq Rdest, Rsrc1, Src2}{Set Equal}
+Set register {\tt Rdest} to 1 if register {\tt Rsrc1} equals {\tt
+Src2} and to be 0 otherwise.
+
+\pinst{sge Rdest, Rsrc1, Src2}{Set Greater Than Equal}
+\pinstX{sgeu Rdest, Rsrc1, Src2}{Set Greater Than Equal Unsigned}
+Set register {\tt Rdest} to 1 if register {\tt Rsrc1} is greater
+than or equal to {\tt Src2} and to 0 otherwise.
+
+\pinst{sgt Rdest, Rsrc1, Src2}{Set Greater Than}
+\pinstX{sgtu Rdest, Rsrc1, Src2}{Set Greater Than Unsigned}
+Set register {\tt Rdest} to 1 if register {\tt Rsrc1} is greater
+than {\tt Src2} and to 0 otherwise.
+
+\pinst{sle Rdest, Rsrc1, Src2}{Set Less Than Equal}
+\pinstX{sleu Rdest, Rsrc1, Src2}{Set Less Than Equal Unsigned}
+Set register {\tt Rdest} to 1 if register {\tt Rsrc1} is less than
+or equal to {\tt Src2} and to 0 otherwise.
+
+\inst{slt Rdest, Rsrc1, Src2}{Set Less Than}
+\instX{slti Rdest, Rsrc1, Imm}{Set Less Than Immediate}
+\instX{sltu Rdest, Rsrc1, Src2}{Set Less Than Unsigned}
+\instX{sltiu Rdest, Rsrc1, Imm}{Set Less Than Unsigned Immediate}
+Set register {\tt Rdest} to 1 if register {\tt Rsrc1} is less than
+{\tt Src2} (or {\tt Imm}) and to 0 otherwise.
+
+\pinst{sne Rdest, Rsrc1, Src2}{Set Not Equal}
+Set register {\tt Rdest} to 1 if register {\tt Rsrc1} is not equal
+to {\tt Src2} and to 0 otherwise.
+
+
+\subsection {Branch and Jump Instructions}
+
+In all instructions below, {\tt Src2} can either be a register or an
+immediate value (integer).  Branch instructions use a signed 16-bit
+offset field; hence they can jump $2^{15}-1$ {\em instructions\/} (not
+bytes) forward or $2^{15}$ instructions backwards.  The {\em jump\/}
+instruction contains a 26 bit address field.
+
+\pinst{b label}{Branch instruction}
+Unconditionally branch to the instruction at the label.
+
+\inst{bc{\em z}t label}{Branch Coprocessor $z$ True}
+\instX{bc{\em z}f label}{Branch Coprocessor $z$ False}
+Conditionally branch to the instruction at the label if coprocessor
+$z$'s condition flag is true (false).
+
+\inst{beq Rsrc1, Src2, label}{Branch on Equal}
+Conditionally branch to the instruction at the label if the contents
+of register {\tt Rsrc1} equals {\tt Src2}.
+
+\pinst{beqz Rsrc, label}{Branch on Equal Zero}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} equals 0.
+
+\pinst{bge Rsrc1, Src2, label}{Branch on Greater Than Equal}
+\pinstX{bgeu Rsrc1, Src2, label}{Branch on GTE Unsigned}
+Conditionally branch to the instruction at the label if the contents
+of register {\tt Rsrc1} are greater than or equal to {\tt Src2}.
+
+\inst{bgez Rsrc, label}{Branch on Greater Than Equal Zero}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are greater than or equal to 0.
+
+\inst{bgezal Rsrc, label}{Branch on Greater Than Equal Zero And Link}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are greater than or equal to 0. Save the address of
+the next instruction in register 31.
+
+\pinst{bgt Rsrc1, Src2, label}{Branch on Greater Than}
+\pinstX{bgtu Rsrc1, Src2, label}{Branch on Greater Than Unsigned}
+Conditionally branch to the instruction at the label if the contents
+of register {\tt Rsrc1} are greater than {\tt Src2}.
+
+\inst{bgtz Rsrc, label}{Branch on Greater Than Zero}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are greater than 0.
+
+\pinst{ble Rsrc1, Src2, label}{Branch on Less Than Equal}
+\pinstX{bleu Rsrc1, Src2, label}{Branch on LTE Unsigned}
+Conditionally branch to the instruction at the label if the contents
+of register {\tt Rsrc1} are less than or equal to {\tt Src2}.
+
+\inst{blez Rsrc, label}{Branch on Less Than Equal Zero}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are less than or equal to 0.
+
+\inst{bgezal Rsrc, label}{Branch on Greater Than Equal Zero And Link}
+\instX{bltzal Rsrc, label}{Branch on Less Than And Link}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are greater or equal to 0 or less than 0,
+respectively. Save the address of the next instruction in register 31.
+
+\pinst{blt Rsrc1, Src2, label}{Branch on Less Than}
+\pinstX{bltu Rsrc1, Src2, label}{Branch on Less Than Unsigned}
+Conditionally branch to the instruction at the label if the contents
+of register {\tt Rsrc1} are less than {\tt Src2}.
+
+\inst{bltz Rsrc, label}{Branch on Less Than Zero}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are less than 0.
+
+\inst{bne Rsrc1, Src2, label}{Branch on Not Equal}
+Conditionally branch to the instruction at the label if the contents
+of register {\tt Rsrc1} are not equal to {\tt Src2}.
+
+\pinst{bnez Rsrc, label}{Branch on Not Equal Zero}
+Conditionally branch to the instruction at the label if the contents
+of {\tt Rsrc} are not equal to 0.
+
+\inst{j label}{Jump}
+Unconditionally jump to the instruction at the label.
+
+\inst{jal label}{Jump and Link}
+\instX{jalr Rsrc}{Jump and Link Register}
+Unconditionally jump to the instruction at the label or whose address
+is in register {\tt Rsrc}.  Save the address of the next
+instruction in register 31.
+
+\inst{jr Rsrc}{Jump Register}
+Unconditionally jump to the instruction whose address is in register
+{\tt Rsrc}.
+
+
+\subsection {Load Instructions}
+
+\pinst{la Rdest, address}{Load Address}
+Load computed {\em address\/}, not the contents of the location, into
+register {\tt Rdest}.
+
+\inst{lb Rdest, address}{Load Byte}
+\instX{lbu Rdest, address}{Load Unsigned Byte}
+Load the byte at {\em address\/} into register {\tt Rdest}.  The byte
+is sign-extended by the {\tt lb}, but not the {\tt lbu}, instruction.
+
+\pinst{ld Rdest, address}{Load Double-Word}
+Load the 64-bit quantity at {\em address\/} into registers {\tt Rdest}
+and {\tt Rdest + 1}.
+
+\inst{lh Rdest, address}{Load Halfword}
+\instX{lhu Rdest, address}{Load Unsigned Halfword}
+Load the 16-bit quantity (halfword) at {\em address\/} into register
+{\tt Rdest}.  The halfword is sign-extended by the {\tt lh}, but not
+the {\tt lhu}, instruction
+
+\inst{lw Rdest, address}{Load Word}
+Load the 32-bit quantity (word) at {\em address\/} into register {\tt
+Rdest}.
+
+\inst{lwc{\em z\/} Rdest, address}{Load Word Coprocessor}
+Load the word at {\em address\/} into register {\tt Rdest} of
+coprocessor $z$ (0--3).
+
+\inst{lwl Rdest, address}{Load Word Left}
+\instX{lwr Rdest, address}{Load Word Right}
+Load the left (right) bytes from the word at the possibly-unaligned
+{\em address\/} into register {\tt Rdest}.
+
+\pinst{ulh Rdest, address}{Unaligned Load Halfword}
+\pinstX{ulhu Rdest, address}{Unaligned Load Halfword Unsigned}
+Load the 16-bit quantity (halfword) at the possibly-unaligned {\em
+address\/} into register {\tt Rdest}.  The halfword is sign-extended
+by the {\tt ulh}, but not the {\tt ulhu}, instruction
+
+\pinst{ulw Rdest, address}{Unaligned Load Word}
+Load the 32-bit quantity (word) at the possibly-unaligned {\em
+address\/}  into register {\tt Rdest}.
+
+
+\subsection {Store Instructions}
+
+\inst{sb Rsrc, address}{Store Byte}
+Store the low byte from register {\tt Rsrc} at {\em address\/}.
+
+\pinst{sd Rsrc, address}{Store Double-Word}
+Store the 64-bit quantity in registers {\tt Rsrc} and {\tt Rsrc
++ 1} at {\em address\/}.
+
+\inst{sh Rsrc, address}{Store Halfword}
+Store the low halfword from register {\tt Rsrc} at {\em address\/}.
+
+\inst{sw Rsrc, address}{Store Word}
+Store the word from register {\tt Rsrc} at {\em address\/}.
+
+\inst{swc{\em z\/} Rsrc, address}{Store Word Coprocessor}
+Store the word from register {\tt Rsrc} of coprocessor $z$ at
+{\em address\/}.
+
+\inst{swl Rsrc, address}{Store Word Left}
+\instX{swr Rsrc, address}{Store Word Right}
+Store the left (right) bytes from register {\tt Rsrc} at the
+possibly-unaligned {\em address\/}.
+
+\pinst{ush Rsrc, address}{Unaligned Store Halfword}
+Store the low halfword from register {\tt Rsrc} at the
+possibly-unaligned {\em address\/}.
+
+\pinst{usw Rsrc, address}{Unaligned Store Word}
+Store the word from register {\tt Rsrc} at the possibly-unaligned
+{\em address\/}.
+
+
+\subsection{Data Movement Instructions}
+
+\pinst{move Rdest, Rsrc}{Move}
+Move the contents of {\tt Rsrc} to {\tt Rdest}.
+
+\bigskip
+
+The multiply and divide unit produces its result in two additional
+registers, hi and lo.  These instructions move values to and from
+these registers.  The multiply, divide, and remainder instructions
+described above are pseudoinstructions that make it appear as if this
+unit operates on the general registers and detect error conditions
+such as divide by zero or overflow.
+
+\inst{mfhi Rdest}{Move From hi}
+\instX{mflo Rdest}{Move From lo}
+Move the contents of the hi (lo) register to register {\tt Rdest}.
+
+\inst{mthi Rdest}{Move To hi}
+\instX{mtlo Rdest}{Move To lo}
+Move the contents register {\tt Rdest} to the hi (lo) register.
+
+\bigskip
+
+Coprocessors have their own register sets.  These instructions move
+values between these registers and the CPU's registers.
+
+\inst{mfc{\em z\/} Rdest, CPsrc}{Move From Coprocessor $z$}
+Move the contents of coprocessor $z$'s register {\tt CPsrc} to CPU
+register {\tt Rdest}.
+
+\pinst{mfc1.d Rdest, FRsrc1}{Move Double From Coprocessor 1}
+Move the contents of floating point registers {\tt FRsrc1} and
+{\tt FRsrc1 + 1} to CPU registers {\tt Rdest} and {\tt Rdest + 1}.
+
+\inst{mtc{\em z\/} Rsrc, CPdest}{Move To Coprocessor $z$}
+Move the contents of CPU register {\tt Rsrc} to coprocessor $z$'s
+register {\tt CPdest}.
+
+
+\subsection{Floating Point Instructions}
+
+The MIPS has a floating point coprocessor (numbered 1) that operates
+on single precision (32-bit) and double precision (64-bit) floating
+point numbers.  This coprocessor has its own registers, which are
+numbered {\tt \$f0}--{\tt \$f31}.  Because these registers are only
+32-bits wide, two of them are required to hold doubles. To simplify
+matters, floating point operations only use even-numbered
+registers---including instructions that operate on single floats.
+
+Values are moved in or out of these registers a word (32-bits) at a
+time by {\tt lwc1}, {\tt swc1}, {\tt mtc1}, and {\tt mfc1}
+instructions described above or by the {\tt l.s}, {\tt l.d}, {\tt
+s.s}, and {\tt s.d} pseudoinstructions described below.  The flag set
+by floating point comparison operations is read by the CPU with its
+{\tt bc1t} and {\tt bc1f} instructions.
+
+In all instructions below, {\tt FRdest}, {\tt FRsrc1}, {\tt FRsrc2},
+and {\tt FRsrc} are floating point registers (e.g., {\tt \$f2}).
+
+\inst{abs.d FRdest, FRsrc}{Floating Point Absolute Value Double}
+\instX{abs.s FRdest, FRsrc}{Floating Point Absolute Value Single}
+Compute the absolute value of the floating float double (single) in
+register {\tt FRsrc} and put it in register {\tt FRdest}.
+
+\inst{add.d FRdest, FRsrc1, FRsrc2}{Floating Point Addition Double}
+\instX{add.s FRdest, FRsrc1, FRsrc2}{Floating Point Addition Single}
+Compute the sum of the floating float doubles (singles) in registers
+{\tt FRsrc1} and {\tt FRsrc2} and put it in register {\tt FRdest}.
+
+\inst{c.eq.d FRsrc1, FRsrc2}{Compare Equal Double}
+\instX{c.eq.s FRsrc1, FRsrc2}{Compare Equal Single}
+Compare the floating point double in register {\tt FRsrc1} against
+the one in {\tt FRsrc2} and set the floating point condition flag
+true if they are equal.
+
+\inst{c.le.d FRsrc1, FRsrc2}{Compare Less Than Equal Double}
+\instX{c.le.s FRsrc1, FRsrc2}{Compare Less Than Equal Single}
+Compare the floating point double in register {\tt FRsrc1} against
+the one in {\tt FRsrc2} and set the floating point condition flag
+true if the first is less than or equal to the second.
+
+\inst{c.lt.d FRsrc1, FRsrc2}{Compare Less Than Double}
+\instX{c.lt.s FRsrc1, FRsrc2}{Compare Less Than Single}
+Compare the floating point double in register {\tt FRsrc1} against
+the one in {\tt FRsrc2} and set the condition flag true if the first
+is less than the second.
+
+\inst{cvt.d.s FRdest, FRsrc}{Convert Single to Double}
+\instX{cvt.d.w FRdest, FRsrc}{Convert Integer to Double}
+Convert the single precision floating point number or integer in
+register {\tt FRsrc} to a double precision number and put it in
+register {\tt FRdest}.
+
+\inst{cvt.s.d FRdest, FRsrc}{Convert Double to Single}
+\instX{cvt.s.w FRdest, FRsrc}{Convert Integer to Single}
+Convert the double precision floating point number or integer in
+register {\tt FRsrc} to a single precision number and put it in
+register {\tt FRdest}.
+
+\inst{cvt.w.d FRdest, FRsrc}{Convert Double to Integer}
+\instX{cvt.w.s FRdest, FRsrc}{Convert Single to Integer}
+Convert the double or single precision floating point number in
+register {\tt FRsrc} to an integer and put it in register {\tt
+FRdest}.
+
+\inst{div.d FRdest, FRsrc1, FRsrc2}{Floating Point Divide Double}
+\instX{div.s FRdest, FRsrc1, FRsrc2}{Floating Point Divide Single}
+Compute the quotient of the floating float doubles (singles) in
+registers {\tt FRsrc1} and {\tt FRsrc2} and put it in register
+{\tt FRdest}.
+
+\pinst{l.d FRdest, address}{Load Floating Point Double}
+\pinstX{l.s FRdest, address}{Load Floating Point Single}
+Load the floating float double (single) at {\tt address} into register
+{\tt FRdest}.
+
+\inst{mov.d FRdest, FRsrc}{Move Floating Point Double}
+\instX{mov.s FRdest, FRsrc}{Move Floating Point Single}
+Move the floating float double (single) from register {\tt FRsrc} to
+register {\tt FRdest}.
+
+\inst{mul.d FRdest, FRsrc1, FRsrc2}{Floating Point Multiply Double}
+\instX{mul.s FRdest, FRsrc1, FRsrc2}{Floating Point Multiply Single}
+Compute the product of the floating float doubles (singles) in
+registers {\tt FRsrc1} and {\tt FRsrc2} and put it in register
+{\tt FRdest}.
+
+\inst{neg.d FRdest, FRsrc}{Negate Double}
+\instX{neg.s FRdest, FRsrc}{Negate Single}
+Negate the floating point double (single) in register {\tt FRsrc}
+and put it in register {\tt FRdest}.
+
+\pinst{s.d FRdest, address}{Store Floating Point Double}
+\pinstX{s.s FRdest, address}{Store Floating Point Single}
+Store the floating float double (single) in register {\tt FRdest} at
+{\tt address}.
+
+\inst{sub.d FRdest, FRsrc1, FRsrc2}{Floating Point Subtract Double}
+\instX{sub.s FRdest, FRsrc1, FRsrc2}{Floating Point Subtract Single}
+Compute the difference of the floating float doubles (singles) in
+registers {\tt FRsrc1} and {\tt FRsrc2} and put it in register
+{\tt FRdest}.
+
+
+\subsection {Exception and Trap Instructions}
+
+\inst{rfe}{Restore From Exception}
+Restore the Status register.
+
+\inst{syscall}{System Call}
+Register {\tt \$v0} contains the number of the system call (see
+Table~\ref{tab:syscall}) provided by SPIM.
+
+\inst{break n}{Break}
+Cause exception $n$.  Exception 1 is reserved for the debugger.
+
+\inst{nop}{No operation}
+Do nothing.
+
+
+\section{Memory Usage}
+
+\begin{figure}
+  \centerline{\psfig{figure=mem.id,height=4in}}
+  \caption{Layout of memory.}
+  \label{fig:mem}
+\end{figure}
+The organization of memory in MIPS systems is conventional.  A
+program's address space is composed of three parts (see
+Figure~\ref{fig:mem}).
+
+At the bottom of the user address space (0x400000) is the text
+segment, which holds the instructions for a program.
+
+Above the text segment is the data segment (starting at 0x10000000),
+which is divided into two parts.  The static data portion contains
+objects whose size and address are known to the compiler and linker.
+Immediately above these objects is dynamic data.  As a program
+allocates space dynamically (i.e., by {\tt malloc}), the {\tt sbrk}
+system call moves the top of the data segment up.
+
+% {f} stuff to stop TeX from trying to put ligatures on address hex
+% constants.
+The program stack resides at the top of the address space
+(0x7f{f}f{f}f{f}f).  It grows down, towards the data segment.
+
+\section{Calling Convention}
+
+The calling convention described in this section is the one used by
+{\em gcc\/}, not the native MIPS compiler, which uses a more complex
+convention that is slightly faster.
+
+\begin{figure}
+  \centerline{\psfig{figure=stack-frame.id,height=4in}}
+  \caption{Layout of a stack frame.  The frame pointer points just
+below the last argument passed on the stack.  The stack pointer points
+to the last word in the frame.}
+  \label{fig:stack}
+\end{figure}
+Figure~\ref{fig:stack} shows a diagram of a stack frame.  A frame
+consists of the memory between the frame pointer ({\tt \$fp}), which
+points to the word immediately after the last argument passed on the
+stack, and the stack pointer ({\tt \$sp}), which points to the last
+word in the frame.  As typical of Unix systems, the stack grows
+down from higher memory addresses, so the frame pointer is above stack
+pointer.
+
+The following steps are necessary to effect a call:
+\begin{enumerate}
+  \item Pass the arguments.  By convention, the first four arguments
+are passed in registers {\tt \$a0}--{\tt \$a3} (though simpler
+compilers may choose to ignore this convention and pass all arguments
+via the stack).  The remaining arguments are pushed on the stack.
+
+  \item Save the caller-saved registers.  This includes registers {\tt
+\$t0}--{\tt \$t9}, if they contain live values at the call site.
+
+  \item Execute a {\tt jal} instruction.
+\end{enumerate}
+
+Within the called routine, the following steps are necessary:
+\begin{enumerate}
+  \item Establish the stack frame by subtracting the frame size from
+the stack pointer.
+
+  \item Save the callee-saved registers in the frame.  Register {\tt
+\$fp} is always saved.  Register {\tt \$ra} needs to be saved if the
+routine itself makes calls.  Any of the registers {\tt \$s0}--{\tt
+\$s7} that are used by the callee need to be saved.
+
+  \item Establish the frame pointer by adding the stack frame size - 4
+to the address in {\tt \$sp}.
+\end{enumerate}
+
+Finally, to return from a call, a function places the returned value
+into {\tt \$v0} and executes the following steps:
+\begin{enumerate}
+  \item Restore any callee-saved registers that were saved upon entry
+(including the frame pointer {\tt \$fp}).
+
+  \item Pop the stack frame by adding the frame size to {\tt \$sp}.
+
+  \item Return by jumping to the address in register {\tt \$ra}.
+\end{enumerate}
+
+\section{Input and Output}
+\label{sec:IO}
+
+In addition to simulating the basic operation of the CPU and operating
+system, SPIM also simulates a memory-mapped terminal connected to the
+machine.  When a program is ``running,'' SPIM connects its own
+terminal (or a separate console window in {\tt xspim}) to the
+processor.  The program can read characters that you type while the
+processor is running.  Similarly, if SPIM executes instructions to
+write characters to the terminal, the characters will appear on SPIM's
+terminal or console window.  One exception to this rule is control-C:
+it is not passed to the processor, but instead causes SPIM to stop
+simulating and return to command mode.  When the processor stops
+executing (for example, because you typed control-C or because the
+machine hit a breakpoint), the terminal is reconnected to SPIM so you
+can type SPIM commands.  To use memory-mapped IO, {\tt spim} or {\tt
+xspim} must be started with the {\tt -mapped\_io} flag.
+
+The terminal device consists of two independent units: a {\em
+receiver\/} and a {\em transmitter\/}.  The receiver unit reads
+characters from the keyboard as they are typed.  The transmitter unit
+writes characters to the terminal's display.  The two units are
+completely independent.  This means, for example, that characters
+typed at the keyboard are not automatically ``echoed'' on the display.
+Instead, the processor must get an input character from the receiver
+and re-transmit it to echo it.
+
+\begin{figure}
+  \centerline{\psfig{figure=io_reg.id,height=4in}}
+  \caption{The terminal is controlled by four device registers,
+each of which appears as a special memory location at the given
+address.  Only a few bits of the registers are actually used: the
+others always read as zeroes and are ignored on writes.}
+  \label{fig:io_reg}
+\end{figure}
+
+The processor accesses the terminal using four memory-mapped device
+registers, as shown in Figure~\ref{fig:io_reg}.  ``Memory-mapped''
+means that each register appears as a special memory location.  The
+Receiver Control Register is at location 0xf{f}f{f}0000; only two of its
+bits are actually used.  Bit 0 is called ``ready'': if it is one it
+means that a character has arrived from the keyboard but has not yet
+been read from the receiver data register.  The ready bit is
+read-only: attempts to write it are ignored.  The ready bit changes
+automatically from zero to one when a character is typed at the
+keyboard, and it changes automatically from one to zero when the
+character is read from the receiver data register.
+
+Bit one of the Receiver Control Register is ``interrupt enable''.
+This bit may be both read and written by the processor.  The interrupt
+enable is initially zero.  If it is set to one by the processor, an
+interrupt is requested by the terminal on level zero (bit 8 of Status
+and Cause registers) whenever the
+ready bit is one.  For the interrupt actually to be received by the
+processor, interrupts must be enabled in the status register of the
+system coprocessor (see Section \ref{sec:mips}).
+
+Other bits of the Receiver Control Register are unused: they always
+read as zeroes and are ignored in writes.
+
+The second terminal device register is the Receiver Data Register (at
+address 0xf{f}f{f}0004).  The low-order eight bits of this register
+contain the last character typed on the keyboard, and all the other
+bits contain zeroes.  This register is read-only and only changes
+value when a new character is typed on the keyboard.  Reading the
+Receiver Data Register causes the ready bit in the Receiver Control
+Register to be reset to zero.
+
+The third terminal device register is the Transmitter Control Register
+(at address 0xf{f}f{f}0008).  Only the low-order two bits of this register
+are used, and they behave much like the corresponding bits of the
+Receiver Control Register.  Bit 0 is called ``ready'' and is
+read-only.  If it is one it means the transmitter is ready to accept a
+new character for output.  If it is zero it means the transmitter is
+still busy outputting the previous character given to it.  Bit one is
+``interrupt enable''; it is readable and writable.  If it is set to
+one, then an interrupt will be requested on level one (bit 9 of Status
+and Cause registers) whenever the
+ready bit is one.
+
+The final device register is the Transmitter Data Register (at address
+0xf{f}f{f}000c).  When it is written, the low-order eight bits are taken
+as an ASCII character to output to the display.  When the Transmitter
+Data Register is written, the ready bit in the Transmitter Control
+Register will be reset to zero.  The bit will stay zero until enough
+time has elapsed to transmit the character to the terminal; then the
+ready bit will be set back to one again.  The Transmitter Data
+Register should only be written when the ready bit of the Transmitter
+Control Register is one; if the transmitter isn't ready then writes to
+the Transmitter Data Register are ignored (the write appears to
+succeed but the character will not be output).
+
+In real computers it takes time to send characters over the serial
+lines that connect terminals to computers.  These time lags are
+simulated by SPIM.  For example, after the transmitter starts
+transmitting a character, the transmitter's ready bit will become zero
+for a while.  SPIM measures this time in instructions executed, not in
+real clock time.  This means that the transmitter will not become
+ready again until the processor has executed a certain number of
+instructions.  If you stop the machine and look at the ready bit using
+SPIM, it will not change.  However, if you let the machine run then
+the bit will eventually change back to one.
+
+\end{document}
