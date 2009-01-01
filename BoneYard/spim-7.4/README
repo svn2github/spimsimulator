@@ -72,7 +72,12 @@ typing
 	% make install
 
 which also installs spim, xspim, and the manual pages in the directories
-that you set (above).
+that you set (above). If you use the default paths, then you will need root
+permissions to install the files, so instead type:
+
+	% sudo make install
+
+This will prompt you for the root password.
 
 
 6. To test that spim builds correctly, in the "spim" directory type

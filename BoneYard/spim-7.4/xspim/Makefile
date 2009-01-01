@@ -2,7 +2,7 @@
 # $Xorg: imake.c,v 1.6 2001/02/09 02:03:15 xorgcvs Exp $
 
 # ----------------------------------------------------------------------
-# Makefile generated from "Imake.tmpl" and </tmp/IIf.Tl3mfG>
+# Makefile generated from "Imake.tmpl" and </tmp/IIf.raT6we>
 # $Xorg: Imake.tmpl,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
 # $XdotOrg: util/cf/Imake.tmpl,v 1.17 2006/04/15 15:55:25 herrb Exp $
 #
@@ -1076,13 +1076,13 @@ CXXPROJECT_DEFINES =
 #
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /usr/local/bin
+BIN_DIR = /usr/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /usr/local/lib
+EXCEPTION_DIR = /usr/lib/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/man/mann
+MAN_DIR = /usr/share/man/en
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -1156,6 +1156,8 @@ force:  configuration
 configuration:
 	./Configure
 
+INSTALLFLAGS = -D
+
 install:: xspim
 	@if [ -d $(DESTDIR)$(BIN_DIR) ]; then \
 		set +x; \
@@ -1168,7 +1170,7 @@ install:: xspim
 	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  xspim $(DESTDIR)$(BIN_DIR)/xspim
 
 install:: $(CPU_DIR)/exceptions.s
-	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $(CPU_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_DIR)
+	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $(CPU_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_DIR)/exceptions.s
 #
 
 all:: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
