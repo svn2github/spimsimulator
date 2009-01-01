@@ -2,6 +2,11 @@
 
 	* Released version 7.4
 
+2009-01-01  James larus  <larus@ubuntu-laptop>
+
+	* xspim/Imakefile, spim/Makefile:
+	Fix install directories for Linux.
+
 2008-11-29    <Jim@LS1>
 
 	* xspim/buttons.c [karl.marklund@gmail.com]:
