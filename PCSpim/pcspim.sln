@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCSpim", "pcspim.vcproj", "{56488352-0EC0-4FA0-B5CE-FD6746615E15}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{43FD43C4-0035-4EB4-AA58-FE8DBB1D91A4}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{B482E8AE-045E-4930-BA4F-DC9D81292FB6}"
 EndProject
 Global
 	GlobalSection(SourceCodeControl) = preSolution
@@ -22,8 +22,8 @@ Global
 		{56488352-0EC0-4FA0-B5CE-FD6746615E15}.Debug|Win32.Build.0 = Debug|Win32
 		{56488352-0EC0-4FA0-B5CE-FD6746615E15}.Release|Win32.ActiveCfg = Release|Win32
 		{56488352-0EC0-4FA0-B5CE-FD6746615E15}.Release|Win32.Build.0 = Release|Win32
-		{43FD43C4-0035-4EB4-AA58-FE8DBB1D91A4}.Debug|Win32.ActiveCfg = Debug
-		{43FD43C4-0035-4EB4-AA58-FE8DBB1D91A4}.Release|Win32.ActiveCfg = Release
+		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Debug|Win32.ActiveCfg = Debug
+		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
