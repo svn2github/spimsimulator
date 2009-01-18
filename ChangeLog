@@ -1,3 +1,9 @@
+2009-01-14    <Jim@LS1>
+
+	* pcspim.zip: 
+	Rerelease of pcspim to correct installer problem. Visual Studio
+	9.0 required new crt and mfc libraries.
+
 2009-01-01    <Jim@LS1>
 
 	* Released version 7.4
