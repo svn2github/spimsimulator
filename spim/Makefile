@@ -174,8 +174,8 @@ clean:
 	rm -f spim spim.exe *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
 
 install: spim
-	install -D spim $(BIN_DIR)
-	install -D -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)
+	install -D spim $(BIN_DIR)/spim
+	install -D -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)/exceptions.s
 
 install-man:
 	install -D -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
