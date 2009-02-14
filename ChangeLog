@@ -1,8 +1,12 @@
+2009-02-13    <Jim@LS1>
+
+	* spim/Configure, xspim/Configure [Carlos Pantelides carlos_pantelides@yahoo.com]:
+	Added test for 64 bit Linux systems.
+
 2009-01-22    <Jim@LS1>
 
 	* spim/Makefile:
-	Fix install commands so exceptions.s is not installed at
-	/usr/lib/spim.
+	Fix install commands so exceptions.s is installed at /usr/lib/spim.
 	Rerelease of spim.tar.*
 
 2009-01-14    <Jim@LS1>
