@@ -519,7 +519,6 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
       tmp = ((tmp & ~(0xff << (8 * (addr & 0x3))))
 	       | (value & 0xff) << (8 * (addr & 0x3)));
 #endif
-      text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
       break;
 
     case 0x1:
@@ -531,16 +530,21 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
       tmp = ((tmp & ~(0xffff << (8 * (addr & 0x2))))
 	       | (value & 0xffff) << (8 * (addr & 0x2)));
 #endif
-      text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
       break;
 
     case 0x3:
-      text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (value);
+      tmp = value;
       break;
 
     default:
       run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);
     }
+
+    if (text_seg [(addr - TEXT_BOT) >> 2] != NULL)
+    {
+      free_inst (text_seg[(addr - TEXT_BOT) >> 2]);
+    }
+    text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
 
     text_modified = 1;
   }

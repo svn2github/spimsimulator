@@ -1,5 +1,9 @@
 2009-02-13    <Jim@LS1>
 
+	* CPU/mem.c (bad_mem_write) [phong le phongle@nlsim.com]:
+	Major memory leak: instructions overwritten by self-modifying code
+	were not freed! 
+
 	* spim/Configure, xspim/Configure [Carlos Pantelides carlos_pantelides@yahoo.com]:
 	Added test for 64 bit Linux systems.
 
