@@ -1,8 +1,24 @@
+2009-03-01    <Jim@LS1>
+
+	* Documentation/spim.html:
+	Updated web page to remove reference to spim source in PCSpim source distribution.
+
+	* PCSpim/PCSpimView.{cpp, h}, SettingsDlg.cpp, BreakpointDlg.cpp, MainFrm.{cpp, h}:
+	Force redisplay of data segment in situations in which register
+	values may have changed, such as $sp. Some cleanup as well.
+
+	* PCSpim/PCSpimView.cpp:
+	Properly initialize the PC at the first invocation of the step operation.
+
+	* PCSpim/PCSpimView.cpp, spim/spim.c [Pierce, Bill [pierce@hood.edu]:
+	Initialize the stack when initializing the world, so the stack is
+	initialized when single stepping as well as running.
+
 2009-02-13    <Jim@LS1>
 
 	* CPU/mem.c (bad_mem_write) [phong le phongle@nlsim.com]:
 	Major memory leak: instructions overwritten by self-modifying code
-	were not freed! 
+	were not freed!
 
 	* spim/Configure, xspim/Configure [Carlos Pantelides carlos_pantelides@yahoo.com]:
 	Added test for 64 bit Linux systems.
@@ -15,7 +31,7 @@
 
 2009-01-14    <Jim@LS1>
 
-	* pcspim.zip: 
+	* pcspim.zip:
 	Rerelease of pcspim to correct installer problem. Visual Studio
 	9.0 required new crt and mfc libraries.
 
@@ -42,7 +58,7 @@
 
 	* Version 7.4
 
-	* Tests/tt.core.s (madd_) Miguel Barão [mailto:mjsb@di.uevora.pt]:
+	* Tests/tt.core.s (madd_) Miguel Barão [mjsb@di.uevora.pt]:
 	Added test for madd(2, -1) with (hi, lo) = (0, -1).
 
 2008-05-18    <Jim@LS1>
