@@ -245,9 +245,12 @@ main (int argc, char **argv)
       else if (streq (argv [i], "-lkdata")
 	       || streq (argv [i], "-lkd"))
 	{ initial_k_data_limit = atoi (argv[++i]); }
-      else if ((streq (argv [i], "-file")
-		|| streq (argv [i], "-f"))
-	       && (i + 1 < argc))
+      else if (((streq (argv [i], "-file")
+                 || streq (argv [i], "-f"))
+                && (i + 1 < argc))
+               /* Assume this argument is a file name and everything following are
+                  arguments for program */
+               || (argv [i][0] != '-'))
 	{
 	  program_argc = argc - (i + 1);
 	  program_argv = &argv[i + 1]; /* Everything following is argv */
@@ -255,22 +258,9 @@ main (int argc, char **argv)
 	  if (!assembly_file_loaded)
 	    {
 	      initialize_world (load_exception_handler ? exception_file_name : NULL);
+              initialize_run_stack (program_argc, program_argv);
 	    }
 	  assembly_file_loaded |= !read_assembly_file (argv[++i]);
-	  break;
-	}
-      else if (argv [i][0] != '-')
-	{
-	  /* Assume this argument is a file name and everything following is
-	     arguments to program */
-	  program_argc = argc - i;
-	  program_argv = &argv[i]; /* Everything following is argv */
-
-	  if (!assembly_file_loaded)
-	    {
-	      initialize_world (load_exception_handler ? exception_file_name : NULL);
-	    }
-	  assembly_file_loaded |= !read_assembly_file (argv[i]);
 	  break;
 	}
       else
@@ -300,6 +290,7 @@ main (int argc, char **argv)
   if (!assembly_file_loaded)
     {
       initialize_world (load_exception_handler ? exception_file_name : NULL);
+      initialize_run_stack (program_argc, program_argv);
       top_level ();
     }
   else /* assembly_file_loaded */
@@ -439,8 +430,7 @@ parse_spim_command (FILE *file, int redo)
 	    }
 
 	  if (run_program (addr, DEFAULT_RUN_STEPS, 0, 0))
-	    write_output (message_out, "Breakpoint encountered at 0x%08x\n",
-			  PC);
+	    write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	}
 	console_to_spim ();
 
@@ -550,6 +540,7 @@ parse_spim_command (FILE *file, int redo)
     case REINITIALIZE_CMD:
       flush_to_newline ();
       initialize_world (load_exception_handler ? exception_file_name : NULL);
+      initialize_run_stack (program_argc, program_argv);
       write_startup_message ();
       prev_cmd = NOP_CMD;
       return (0);
