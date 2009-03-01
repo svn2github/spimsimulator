@@ -382,6 +382,7 @@ void CPCSpimView::InitializeSimulator()
       write_startup_message();
 
       initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL);
+      InitStack(g_strCmdLine);	// Stack starts with argc, argv, environ
 
       m_fSimulatorInitialized = TRUE;
 
@@ -398,8 +399,8 @@ void CPCSpimView::OnSimulatorReinitialize()
 
 void CPCSpimView::ReinitializeSimulator()
 {
-	write_output(message_out, "Memory and registers cleared and the simulator reinitialized.\n\n");
-	InitializeSimulator();
+  write_output(message_out, "Memory and registers cleared and the simulator reinitialized.\n\n");
+  InitializeSimulator();
 }
 
 void CPCSpimView::OnSimulatorClearRegisters()
@@ -477,7 +478,6 @@ void CPCSpimView::OnSimulatorRun()
       return;
     }
 
-  InitStack(g_strCmdLine);
   addr = strtoul(dlg.m_strAddress, NULL, 0);
 
   if (addr == 0)
