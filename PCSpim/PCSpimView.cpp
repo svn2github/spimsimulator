@@ -386,7 +386,7 @@ void CPCSpimView::InitializeSimulator()
 
       m_fSimulatorInitialized = TRUE;
 
-      UpdateStatusDisplay();
+      UpdateStatusDisplay(TRUE);
       HighlightCurrentInstruction();
     }
 }
@@ -406,7 +406,7 @@ void CPCSpimView::ReinitializeSimulator()
 void CPCSpimView::OnSimulatorClearRegisters()
 {
   initialize_registers();
-  UpdateStatusDisplay();
+  UpdateStatusDisplay(TRUE);
 
   write_output(message_out, "Registers cleared.\n\n");
 }
@@ -504,7 +504,7 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
 	{
 	    if (0 != run_program(pc, steps, display, cont_bkpt))
 	    {
-		UpdateStatusDisplay();
+		UpdateStatusDisplay(TRUE);
 		HighlightCurrentInstruction();
 
 		// If we hit a breakpoint, and the user doesn't
@@ -526,7 +526,7 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
 
 	if (::IsWindow(m_hWnd))	// We may have ended while running.
 	{
-	    UpdateStatusDisplay();
+	    UpdateStatusDisplay(TRUE);
 	    HighlightCurrentInstruction();
 
 	    g_fRunning = FALSE;
@@ -536,19 +536,19 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
 }
 
 
-void CPCSpimView::UpdateStatusDisplay()
+void CPCSpimView::UpdateStatusDisplay(BOOL forceDisplay)
 {
-  DisplayDataSegment();
-  DisplayTextSegment();
-  DisplayRegisters();
+  DisplayDataSegment(forceDisplay);
+  DisplayTextSegment(forceDisplay);
+  DisplayRegisters(forceDisplay);
 }
 
 
-void CPCSpimView::DisplayRegisters()
+void CPCSpimView::DisplayRegisters(BOOL forceDisplay)
 {
   static str_stream ss;
 
-  if (!m_fSimulatorInitialized)
+  if (!forceDisplay && !m_fSimulatorInitialized)
     {
       return;
     }
@@ -563,14 +563,14 @@ void CPCSpimView::DisplayRegisters()
 }
 
 
-void CPCSpimView::DisplayDataSegment()
+void CPCSpimView::DisplayDataSegment(BOOL forceDisplay)
 {
   static str_stream ss;
 
-  if (!m_fSimulatorInitialized)
+  if (!forceDisplay && !m_fSimulatorInitialized)
     return;
 
-  if (!data_modified)
+  if (!forceDisplay && !data_modified)
     return;
 
   ss_clear (&ss);
@@ -586,14 +586,14 @@ void CPCSpimView::DisplayDataSegment()
 
 
 
-void CPCSpimView::DisplayTextSegment()
+void CPCSpimView::DisplayTextSegment(BOOL forceDisplay)
 {
   static str_stream ss;
 
-  if (!m_fSimulatorInitialized)
+  if (!forceDisplay && !m_fSimulatorInitialized)
     return;
 
-  if (!text_modified)
+  if (!forceDisplay && !text_modified)
     return;
 
   ss_clear (&ss);
@@ -662,7 +662,7 @@ void CPCSpimView::OnSimulatorSetvalue()
   CSetValueDlg dlg;
   dlg.DoModal();
 
-  UpdateStatusDisplay();
+  UpdateStatusDisplay(TRUE);
 }
 
 
@@ -671,7 +671,7 @@ void CPCSpimView::OnSimulatorBreak()
 {
   if (g_fRunning)	// "Break" mode
     {
-      UpdateStatusDisplay();
+      UpdateStatusDisplay(TRUE);
       HighlightCurrentInstruction();
 
       if (!AskContinue(TRUE))
@@ -816,8 +816,8 @@ void CPCSpimView::LoadFile(LPCTSTR strFilename)
       write_output(message_out, "%s successfully loaded\n", (char*)strFilename);
     }	  
 
-	UpdateStatusDisplay();
-    HighlightCurrentInstruction();
+  UpdateStatusDisplay(TRUE);
+  HighlightCurrentInstruction();
 }
 
 
@@ -842,7 +842,9 @@ void CPCSpimView::ShowRunning()
 
   CString strTitle = pWnd->GetTitleBase();
   if (g_fRunning)
+  {
     strTitle += " [Running]";
+  }
 
   pWnd->SetWindowText(strTitle);
 }

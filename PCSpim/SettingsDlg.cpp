@@ -164,7 +164,7 @@ void CSettingsDlg::OnOK()
   g_fSaveWinPos = m_fSaveWinPos;
   pApp->WriteSetting(SPIM_REG_SAVEWINPOS, g_fSaveWinPos);
 
-  g_pView->DisplayRegisters();
+  g_pView->DisplayRegisters(FALSE);
 
   CDialog::OnOK();
 }

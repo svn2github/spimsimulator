@@ -120,7 +120,7 @@ void CBreakpointDlg::OnAdd()
       MessageBox(strResult);
     }
 
-  g_pView->UpdateStatusDisplay();
+  g_pView->UpdateStatusDisplay(FALSE);
 }
 
 
@@ -155,7 +155,7 @@ void CBreakpointDlg::OnRemove()
   // Disable the Remove button.
   GetDlgItem(IDC_REMOVE)->EnableWindow(FALSE);
 
-  g_pView->UpdateStatusDisplay();
+  g_pView->UpdateStatusDisplay(FALSE);
 }
 
 

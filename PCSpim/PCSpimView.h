@@ -44,7 +44,7 @@ public:
 	void BringConsoleToTop();
 	void MakeConsoleVisible();
 	CConsoleWnd * GetConsole();
-	void UpdateStatusDisplay();
+	void UpdateStatusDisplay(BOOL forceDisplay);
 	BOOL AskContinue(BOOL fBreak);
 	void HighlightCurrentInstruction();
 	LPCTSTR GetMessageCaptureBuf();
@@ -73,7 +73,7 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-	void DisplayRegisters();
+	void DisplayRegisters(BOOL forceDisplay);
 
 protected:
 
@@ -135,8 +135,8 @@ private:
 	void ShowRunning();
 	void InitStack(LPCTSTR args);
 	void LoadFile(LPCTSTR strFilename);
-	void DisplayTextSegment();
-	void DisplayDataSegment();
+	void DisplayTextSegment(BOOL forceDisplay);
+	void DisplayDataSegment(BOOL forceDisplay);
 	void ExecuteProgram(mem_addr pc, int steps, int display, int cont_bkpt);
 	void InitializeSimulator();
 	void Initialize();

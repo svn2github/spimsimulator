@@ -47,7 +47,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
-	ON_COMMAND(ID_SIMULATOR_SETFONT, OnSimulatorSetfont)
+	ON_COMMAND(ID_SIMULATOR_SETFONT, OnSimulatorSetFont)
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_REGS, UpdateStatusRegs)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_BARE, UpdateStatusBare)
@@ -226,7 +226,7 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
   g_pView->TileWindows(r.right - r.left, r.bottom - r.top, r.bottom);
 }
 
-void CMainFrame::OnSimulatorSetfont() 
+void CMainFrame::OnSimulatorSetFont() 
 {
   CHOOSEFONT choiceFont;
 
