@@ -850,7 +850,7 @@ void CPCSpimView::ShowRunning()
 
 void CPCSpimView::OnSimulatorStep()
 {
-    ExecuteProgram(PC, 1, 1, 1);
+    ExecuteProgram(starting_address(), 1, 1, 1);
 }
 
 
@@ -862,7 +862,7 @@ void CPCSpimView::OnSimulatorMultistep()
   if (IDCANCEL == dlg.DoModal())
     return;
 
-  ExecuteProgram(PC, dlg.m_cSteps, 1, 1);
+  ExecuteProgram(starting_address(), dlg.m_cSteps, 1, 1);
 }
 
 
