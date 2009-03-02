@@ -1,3 +1,8 @@
+2009-03-01  James larus  <larus@ubuntu-laptop>
+
+	* xspim/buttons.c [Karl Ljungkvist k.ljungkvist@gmail.com]:
+	Step command reinitialized the stack, which changed registers (argc, argv).
+
 2009-03-01    <Jim@LS1>
 
 	* Documentation/spim.html:
