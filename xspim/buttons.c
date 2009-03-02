@@ -90,6 +90,13 @@ static void parse_print_value (Widget w, XtPointer client_data,
 			       XtPointer call_data);
 static void parse_set_value (Widget w, XtPointer client_data,
 			     XtPointer call_data);
+static Widget popup_one_field_dialog (Widget button, String name,
+				      String field1_label, String field1_value,
+				      String action_name,
+				      void (*action) (/* ??? */),
+				      String action2_name,
+				      void (*action2) (/* ??? */),
+				      Widget *field1_text);
 static Widget popup_two_field_dialog (Widget button, String name,
 				      String field1_label, String field1_value,
 				      String field2_label, String field2_value,
@@ -454,7 +461,7 @@ run_prompt_destroyed (Widget w, XtPointer client_data, XtPointer call_data)
 static char *step_size = NULL;	/* Retain step size */
 
 static Widget step_popup = NULL;
-static Widget step_field1_text, step_field2_text;
+static Widget step_field1_text;
 
 static void
 step_prompt (Widget button, XtPointer client_data, XtPointer call_data)
@@ -463,13 +470,11 @@ step_prompt (Widget button, XtPointer client_data, XtPointer call_data)
     {
       if (step_size == NULL)
 	step_size = str_copy ("1");
-      step_popup = popup_two_field_dialog (button, "step program",
+      step_popup = popup_one_field_dialog (button, "step program",
 					  "number of steps:", step_size,
-					  "args:", command_line,
 					  "step", step_program_action,
 					  "continue", step_continue_action,
-					  &step_field1_text,
-					  &step_field2_text);
+					  &step_field1_text);
       XtAddCallback (step_popup, XtNdestroyCallback, step_prompt_destroyed,
                      (XtPointer) 0);
     }
@@ -482,22 +487,16 @@ static void
 step_program_action (Widget w, XtPointer client_data, XtPointer call_data)
 {
   Arg args[10];
-  String st, cl;
+  String st;
   mem_addr addr;
   int steps;
 
   XtSetArg (args[0], XtNstring, &st);
   XtGetValues (step_field1_text, args, ONE);
 
-  XtSetArg (args[0], XtNstring, &cl);
-  XtGetValues (step_field2_text, args, ONE);
-
   steps = atoi (st);
   free (step_size);
   step_size = str_copy (st);
-
-  command_line = str_copy(cl);
-  init_stack (cl);
 
   addr = starting_address ();
   if (steps > 0 && addr > 0)
@@ -1116,12 +1115,75 @@ noop ()
 
 
 static Widget
-popup_two_field_dialog (Widget button, String name, String field1_label,
-			String field1_value, String field2_label,
-			String field2_value, String action_name,
-			void (*action) (/* ??? */), String action2_name,
-			void (*action2) (/* ??? */), Widget *field1_text,
-			Widget *field2_text)
+popup_one_field_dialog (Widget button, String name,
+                        String field1_label, String field1_value,
+			String action1_name, void (*action1) (/* ??? */),
+                        String action2_name, void (*action2) (/* ??? */),
+                        Widget *field1_text)
+{
+  Widget parent = XtParent (button);
+  Widget popup, form;
+  Widget labelx, field1;
+  Widget button1, button2, cancelbutton;
+  Arg args[10];
+  Position x, y;
+  static XtActionsRec action_table []
+    = {{"warp_to_second_dialog", warp_to_second_dialog},};
+
+  XtTranslateCoords (button, (Position) 0, (Position) 0, &x, &y);
+  XtSetArg (args[0], XtNx, x);
+  XtSetArg (args[1], XtNy, y);
+
+  popup = XtCreatePopupShell ("prompt", transientShellWidgetClass, parent, args, TWO);
+
+  form = XtCreateManagedWidget ("form", formWidgetClass, popup, NULL, ZERO);
+
+  XtSetArg (args[0], XtNlabel, name);
+  XtSetArg (args[1], XtNborderWidth, 0);
+  labelx = XtCreateManagedWidget ("label", labelWidgetClass, form, args, TWO);
+
+  XtSetArg (args[0], XtNfromVert, labelx);
+  XtSetArg (args[1], XtNborderWidth, 0);
+  XtSetArg (args[2], XtNlabel, field1_label);
+  field1 = XtCreateManagedWidget ("field1", labelWidgetClass, form, args, THREE);
+
+  XtSetArg (args[0], XtNfromHoriz, field1);
+  XtSetArg (args[1], XtNfromVert, labelx);
+  XtSetArg (args[2], XtNeditType, "edit");
+  XtSetArg (args[3], XtNstring, field1_value);
+  XtSetArg (args[4], XtNtype, XawAsciiString);
+  *field1_text = XtCreateManagedWidget ("field1_text", asciiTextWidgetClass, form, args, FIVE);
+
+  XtOverrideTranslations (*field1_text,
+			  XtParseTranslationTable
+			  ("#override \n <Key>Return:warp_to_second_dialog()"));
+  XtAppAddActions (app_context, action_table, XtNumber (action_table));
+
+  button1 = XtCreateManagedWidget (action1_name, commandWidgetClass, form, args, ONE);
+  XtAddCallback (button1, XtNcallback, action1, (XtPointer) form);
+
+  if (action2 != NULL)
+    {
+      XtSetArg (args[0], XtNfromHoriz, button1);
+      button2 = XtCreateManagedWidget (action2_name, commandWidgetClass, form, args, ONE);
+      XtAddCallback (button2, XtNcallback, action2, (XtPointer) form);
+    }
+
+  XtSetArg (args[0], XtNfromHoriz, action2 == NULL ? button1 : button2);
+  cancelbutton = XtCreateManagedWidget ("abort command", commandWidgetClass, form, args, ONE);
+  XtAddCallback (cancelbutton, XtNcallback, destroy_popup_prompt, (XtPointer) form);
+
+  return (popup);
+}
+
+
+static Widget
+popup_two_field_dialog (Widget button, String name,
+                        String field1_label, String field1_value,
+                        String field2_label, String field2_value,
+                        String action1_name, void (*action1) (/* ??? */),
+                        String action2_name, void (*action2) (/* ??? */),
+                        Widget *field1_text, Widget *field2_text)
 {
   Widget popup, form;
   Widget labelx, field1, field2;
@@ -1181,9 +1243,9 @@ popup_two_field_dialog (Widget button, String name, String field1_label,
 			  ("#override \n <Key>Return: confirm()"));
 
   XtSetArg (args[0], XtNfromVert, *field2_text);
-  button1 = XtCreateManagedWidget (action_name, commandWidgetClass, form,
+  button1 = XtCreateManagedWidget (action1_name, commandWidgetClass, form,
 				   args, ONE);
-  XtAddCallback (button1, XtNcallback, action, (XtPointer) form);
+  XtAddCallback (button1, XtNcallback, action1, (XtPointer) form);
 
   if (action2 != NULL)
     {
