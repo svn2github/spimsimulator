@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+#
+# Shell script to configure SPIM.
+#
+# Copyright (C) 1992-2004 by James Larus (larus@cs.wisc.edu).
+# ALL RIGHTS RESERVED.
+#
+# SPIM is distributed under the following conditions:
+#
+#   You may make copies of SPIM for your own use and modify those copies.
+#
+#   All copies of SPIM must retain my name and copyright notice.
+#
+#   You may not sell SPIM or distributed SPIM in conjunction with a commerical
+#   product or service without the expressed written consent of James Larus.
+#
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE.
+#
+# $Header: /u/l/a/larus/Software/SPIM/RCS/Configure,v 1.13 1997/12/30 21:49:27 larus Exp $
+#
+# Shell script to create proper links to machine-dependent files for SPIM.
+#
+#
+# Usage: Configure
+#
+# (Environment variable CC can be set to name a compiler--besides the
+# default of cc)
+
+set CC = ${CC:=cc}
+echo $CC
+
+
+export CPU_DIR=../CPU
+export TEST_DIR=../Tests
+
+
+rm -f ./configuration $TEST_DIR/tt.endian.s
+
+echo Check if this machine is big-endian or little-endian.
+echo This may take a few minutes.
+
+$CC $CPU_DIR/endian.c -o endian
+
+if ./endian; then
+  # Big endian
+  rm -f $TEST_DIR/tt.s ./configuration
+  ln -s $TEST_DIR/tt.be.s $TEST_DIR/tt.endian.s
+  echo "-DBIGENDIAN" > ./configuration
+  echo I believe this is a big-endian machine.
+else
+  # Little endian
+  rm -f $TEST_DIR/tt.s ./configuration
+  ln -s $TEST_DIR/tt.le.s $TEST_DIR/tt.endian.s
+  echo "-DLITTLEENDIAN" > ./configuration
+  echo I believe this is a little-endian machine.
+fi;
+rm -f endian endian.exe
+
+
+if [ -f /usr/lib/libc.a ]; then
+  # BSD Universe:
+  echo Looks like a BSD universe exists...
+  echo Scaning libc
+  nm /usr/lib/libc.a > library_contents
+  set flag = -s
+else if [ -f /lib/libc.a ]; then
+  # System V Universe:
+  echo Looks like a System V universe exists...
+  echo Scaning libc
+  nm /lib/libc.a > library_contents
+  set flag = -q
+else if [ -f /usr/lib/libc.so ]; then
+  # System V Universe?
+  echo Looks like a System V universe exists...
+  echo Scaning libc
+  nm /usr/lib/libc.so > library_contents
+  set flag = -q
+else if [ -f /usr/lib/libc.dylib ]; then
+  # Mac OS X Universe:
+  echo Looks like a Mac OS X / OpenStep universe exists...
+  echo Scanning libc.dylib
+  nm /usr/lib/libc.dylib > library_contents
+  set flag = -q
+else if [ -f /usr/lib64/libc.a ]; then
+  echo Look like a 64 bits linux universe exists...
+  echo Scanning libc
+  nm /usr/lib64/libc.a > library_contents
+  set flag = -q
+fi;
+fi;
+fi;
+fi;
+fi;
+
+
+echo
+echo Checking if libc on this machine contains:
+
+
+if  grep $flag 'vsprintf' library_contents > /dev/null; then
+  echo "  vsprintf: Yes, I think so"
+else
+  echo "-DNEED_VSPRINTF" >> ./configuration
+  echo "  vsprintf: No, I don't think"
+
+  if  grep $flag '_doprnt' library_contents > /dev/null; then
+    echo "    _doprnt: Yes, I think, so I will use it instead"
+  else
+    echo "    _doprnt: NO, THIS IS A PROBLEM: NO VSPRINTF AND NO _DOPRNT"
+    echo "SPIM WILL NOT RUN PROPERLY"
+  fi;
+fi;
+
+
+if  grep $flag 'vfprintf' library_contents > /dev/null; then
+  echo "  vfprintf: Yes, I think"
+else
+  echo "-DNO_VFPRINTF" >> ./configuration
+  echo "  vfprintf: No, I don't think"
+
+  if  grep $flag '_doprnt' library_contents > /dev/null; then
+    echo "    _doprnt: Yes, I think"
+  else
+    echo "    _doprnt: NO, THIS IS A PROBLEM: NO VFPRINTF AND NO _DOPRNT"
+    echo "SPIM WILL NOT RUN PROPERLY"
+  fi;
+fi;
+
+
+if grep $flag 'strtoul' library_contents > /dev/null; then
+  echo "  strtoul: Yes, I think"
+else
+  # No strtol
+  echo "-DNEED_STRTOUL" >> ./configuration
+  echo "  strtoul: No, I don't think"
+fi;
+
+
+if grep $flag 'strtol' library_contents > /dev/null; then
+    echo "  strtol: Yes, I think"
+else
+  # No strtol
+  echo "-DNEED_STRTOL" >> ./configuration
+  echo "  strtol: No, I don't think"
+fi;
+
+
+if grep $flag 'memcpy' library_contents > /dev/null; then
+  echo "  memcpy: Yes, I think"
+else
+  # No memcpy
+  echo "-DNO_MEM_FUNCTIONS" >> ./configuration
+  echo "  memcpy: No, I don't think"
+fi;
+
+
+echo
+echo Checking for /usr/include/termios.h
+if [ -f /usr/include/termios.h ]; then
+  echo "-DUSE_TERMIOS" >> ./configuration
+  echo "Yes, it is there"
+else
+  # No termios
+  echo "No, it is not there"
+fi;
+
+
+if [ -f /usr/lib/libc.dylib ]; then
+  # Darwin headers restricted if _POSIX_SOURCE
+  echo "-U_POSIX_SOURCE" >> ./configuration
+fi;
+
+rm -f library_contents

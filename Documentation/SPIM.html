@@ -327,13 +327,36 @@ available at: http://www.ptlug.org/wiki/SPIM_N770. </P>
 <HR width="100%">
 
 <H2 align=center>Changes in Latest Version</H2>
+<p align=left>The current version of <B>spim</B> is 7.5 (August 2009), which is
+a minor release that cleans up bugs in 7.4:</p>
+<ul>
+	<li>
+	<p align=left>Correct problem with installer script that did not install 
+	appropriate versions of msvcrt and mfc 
+dlls for Visual Studio 9.0.</p></li>
+	<li>
+	<p align=left>Fix install scripts to put exceptions.s at /usr/lib/spim on 
+	Linux.</p></li>
+	<li>
+	<p align=left>Fixed major memory leak caused by overwritten instructions not 
+	being freed.</p></li>
+	<li>
+	<p align=left>Force redisplay of data segment in situations when register 
+	values (such as $sp) have changed.</p></li>
+	<li>
+	<p align=left>Properly initialize PC at first invocation of step operation 
+	on PCSPim.</p></li>
+	<li>
+	<p align=left>Fixed bug in Xxpim that caused the step commend to 
+	reinitialize the stack.</p></li>
+</ul>
+<p align=left>The current version of <B>spim</B> is 7.4 (January 2009), which is
+a minor release that cleans up bugs in 7.3:</p>
 <p align=left>1/14/09: Released new version of pcspim.zip to correct problem 
 with installer script that did not install appropriate versions of msvcrt and mfc 
 dlls.<br>
 1/21/09: Released new version of spim.tar.Z and spim.tar.gz to correct problem 
 with install command for spim program (but not xspim).</p>
-<p align=left>The current version of <B>spim</B> is 7.4 (January 2009), which is
-a minor release that cleans up bugs in 7.3:</p>
 <ul>
 	<li>
 	<p align=left>Fixed install directories for Linux systems.</p>
