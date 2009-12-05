@@ -485,6 +485,8 @@ void CPCSpimView::OnSimulatorRun()
       addr = starting_address ();
     }
 
+	InitStack(g_strCmdLine);	// Stack starts with argc, argv, environ
+
     ExecuteProgram(addr, DEFAULT_RUN_STEPS, 0, 0);
 }
 
