@@ -313,7 +313,6 @@ main (int argc, char **argv)
       console_to_spim ();
     }
 
-  spim_return_value = 0;
   return (spim_return_value);
 }
 
@@ -983,7 +982,8 @@ read_input (char *str, int str_size)
   while (1 < str_size)		/* Reserve space for null */
     {
       char buf[1];
-      read ((int) console_in.i, buf, 1); /* Not in raw mode! */
+      if (read ((int) console_in.i, buf, 1) <= 0) /* Not in raw mode! */
+        break;
 
       *ptr ++ = buf[0];
       str_size -= 1;
