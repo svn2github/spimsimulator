@@ -242,8 +242,10 @@ initialize_run_stack (int argc, char **argv)
   int i, j = 0, env_j;
   mem_addr addrs[10000];
 
-  /* Put strings on stack: */
 
+  R[REG_SP] = STACK_TOP - 1; /* Initialize $sp */
+
+  /* Put strings on stack: */
   /* env: */
   for (p = environ; *p != NULL; p++)
     addrs[j++] = copy_str_to_stack (*p);
@@ -253,18 +255,12 @@ initialize_run_stack (int argc, char **argv)
   for (i = 0; i < argc; i++)
     addrs[j++] = copy_str_to_stack (argv[i]);
 
-  R[REG_SP] = STACK_TOP - BYTES_PER_WORD - 4096; /* Initialize $sp */
+  /* Align stack pointer for word-size data */
   R[REG_SP] = R[REG_SP] & ~3;	/* Round down to nearest word */
   R[REG_SP] -= BYTES_PER_WORD;	/* First free word on stack */
-
   R[REG_SP] = R[REG_SP] & ~7;	/* Double-word align stack-pointer*/
-  if ((j % 2) != 0)		/* Odd number of arguments */
-    {
-      R[REG_SP] -= BYTES_PER_WORD; /* Ensure stack ends up double-word aligned */
-    }
 
   /* Build vectors on stack: */
-
   /* env: */
   (void)copy_int_to_stack (0);	/* Null-terminate vector */
   for (i = env_j - 1; i >= 0; i--)
