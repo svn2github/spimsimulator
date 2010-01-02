@@ -1,0 +1,23 @@
+There also exists a port of SPIM to the Amiga.  I haven't tried it, but the
+diff's are in Documentation/Amiga_Patches and the compiled files are also
+available:
+
+  Hello.
+
+  I did a port of your SPIM, and I have uploaded a source distribution
+  and a binary distribution at ftp.funet.fi (pub/amiga/apps/emulations):
+
+  -rw-r--r--   1 10000    20        420185  Mar 10 16:24 amiSPIM-bin.lha
+  -rw-r--r--   1 10000    20        450614  Mar 10 16:25 amiSPIM-src.lha
+  -rw-r--r--   1 10000    20          1045  Mar 10 16:25 amiSPIM.readme
+
+  The binary distribution does not have the Documentation and the Tests,
+  but includes binaries for spim and xspim.
+
+  I've sent you the diffs necessary to compile SPIM before, and the
+  source distribution is nothing more than these diffs applied to the
+  original source tree.
+
+  Regards,
+	  -kjetil (kjetilja@stud.cs.uit.no)
+

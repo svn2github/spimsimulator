@@ -1,0 +1,293 @@
+SPIM Version 6.4 of January 1, 2002
+Copyright 1990-2002 by James R. Larus (larus@cs.wisc.edu).
+All Rights Reserved.
+See the file README for a full copyright notice.
+Loaded: ./trap.handler
+Target of jump differs in high-order 4 bits from instruction pc 0x80000130
+Target of jump differs in high-order 4 bits from instruction pc 0x40052c
+The next few lines should contain exception error messages
+Exception occurred at PC=0x0040003c
+  Unaligned address in inst/data fetch: 0x00400001
+  Exception 4  [Unaligned address in inst/data fetch]  occurred and ignored
+Exception occurred at PC=0x00400040
+  Unaligned address in store: 0x00400001
+  Exception 5  [Unaligned address in store]  occurred and ignored
+Exception occurred at PC=0x0040004c
+  Bad address in data/stack read: 0x00d89680
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Exception occurred at PC=0x00400050
+  Exception 9  [Breakpoint]  occurred and ignored
+Exception occurred at PC=0x0040005c
+  Arithmetic overflow
+  Exception 12  [Arithmetic overflow]  occurred and ignored
+Done with exceptions
+
+Testing ADD
+Testing ADDI
+Testing ADDIU
+Testing ADDU
+Testing AND
+Testing ANDI
+Testing BEQ
+Testing BGEZ
+Testing BGEZAL
+Testing BGTZ
+Testing BLEZ
+Testing BLTZ
+Testing BLTZAL
+Testing BNE
+Testing BREAK
+Expect a exception message:
+  Exception occurred at PC=0x004003a0
+  Exception 9  [Breakpoint]  occurred and ignored
+Testing move to/from coprocessor control z
+Testing DIV
+Expect exception caused by divide by 0:
+  Exception occurred at PC=0x0040046c
+  Exception 9  [Breakpoint]  occurred and ignored
+Testing DIVU
+Expect exception caused by divide by 0:
+  Exception occurred at PC=0x00400504
+  Exception 9  [Breakpoint]  occurred and ignored
+Testing J
+Testing JAL
+Testing JALR
+Expect an non-word boundary exception:
+  Exception occurred at PC=0x004005a4
+  Bad address in text read: 0x004005a6
+  Exception 6  [Bad address in text read]  occurred and ignored
+Testing JR
+Expect an non-word boundary exception:
+  Exception occurred at PC=0x004005e4
+  Bad address in text read: 0x004005e6
+  Exception 6  [Bad address in text read]  occurred and ignored
+Testing LA
+Testing LB
+Expect an address error exceptions:
+	Exception occurred at PC=0x004006e4
+  Bad address in data/stack read: 0x800003e7
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LBU
+Expect an address error exceptions:
+	Exception occurred at PC=0x004007ac
+  Bad address in data/stack read: 0x800003e7
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LD
+Expect four address error exceptions:
+Exception occurred at PC=0x00400810
+  Unaligned address in inst/data fetch: 0x800003e7
+  Exception 4  [Unaligned address in inst/data fetch]  occurred and ignored
+Exception occurred at PC=0x00400814
+  Unaligned address in inst/data fetch: 0x800003eb
+  Exception 4  [Unaligned address in inst/data fetch]  occurred and ignored
+Exception occurred at PC=0x00400818
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Exception occurred at PC=0x0040081c
+  Bad address in data/stack read: 0x800003ec
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LH
+Expect two address error exceptions:
+Exception occurred at PC=0x00400884
+  Unaligned address in inst/data fetch: 0x800003e7
+  Exception 4  [Unaligned address in inst/data fetch]  occurred and ignored
+Exception occurred at PC=0x00400888
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LHU
+Expect two address error exceptions:
+Exception occurred at PC=0x004008e8
+  Unaligned address in inst/data fetch: 0x800003e7
+  Exception 4  [Unaligned address in inst/data fetch]  occurred and ignored
+Exception occurred at PC=0x004008ec
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LUI
+Testing LW
+Expect two address error exceptions:
+Exception occurred at PC=0x004009cc
+  Unaligned address in inst/data fetch: 0x800003e7
+  Exception 4  [Unaligned address in inst/data fetch]  occurred and ignored
+Exception occurred at PC=0x004009d0
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LWL
+Expect two address error exceptions:
+Exception occurred at PC=0x00400a88
+  Bad address in data/stack read: 0x800003e4
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Exception occurred at PC=0x00400a8c
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing LWR
+Expect two address error exceptions:
+Exception occurred at PC=0x00400b40
+  Bad address in data/stack read: 0x800003e4
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Exception occurred at PC=0x00400b44
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing move to/from coprocessor z
+Testing move to/from HI/LO
+Testing MUL
+Testing MULTU
+Testing MULO
+Expect an exception:
+	 Exception occurred at PC=0x00400f60
+  Exception 9  [Breakpoint]  occurred and ignored
+Testing NOR
+Testing OR
+Testing ORI
+Testing SB
+Expect an address error exceptions:
+	Exception occurred at PC=0x004010b4
+  Bad address in data/stack read: 0x800003e7
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing SD
+Expect two address error exceptions:
+Exception occurred at PC=0x00401110
+  Unaligned address in store: 0x800003e7
+  Exception 5  [Unaligned address in store]  occurred and ignored
+Exception occurred at PC=0x00401114
+  Unaligned address in store: 0x800003eb
+  Exception 5  [Unaligned address in store]  occurred and ignored
+Exception occurred at PC=0x00401118
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Exception occurred at PC=0x0040111c
+  Bad address in data/stack read: 0x800003ec
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing SH
+Expect two address error exceptions:
+Exception occurred at PC=0x0040117c
+  Unaligned address in store: 0x800003e7
+  Exception 5  [Unaligned address in store]  occurred and ignored
+Exception occurred at PC=0x00401180
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing SLL
+Testing SLLV
+Testing SLT
+Testing SLTI
+Testing SLTIU
+Testing SLTU
+Testing SRA
+Testing SRAV
+Testing SRL
+Testing SRLV
+Testing SUB
+Expect an overflow exceptions:
+  Exception occurred at PC=0x0040156c
+  Arithmetic overflow
+  Exception 12  [Arithmetic overflow]  occurred and ignored
+Testing SUBU
+Testing SW
+Expect two address error exceptions:
+Exception occurred at PC=0x00401624
+  Unaligned address in store: 0x800003e7
+  Exception 5  [Unaligned address in store]  occurred and ignored
+Exception occurred at PC=0x00401628
+  Bad address in data/stack read: 0x800003e8
+  Exception 7  [Bad address in data/stack read]  occurred and ignored
+Testing load/store word coprocessor z
+Testing SWL
+Testing SWR
+Testing SYSCALL
+The next line should contain: -1, -1.000000, -2.000000
+-1, -1.000000000000000000, -2
+Testing XOR
+Testing XORI
+Testing ABS.S
+Testing ABS.D
+Testing ADD.S
+Testing ADD.D
+Testing C.EQ.D
+Testing C.EQ.S
+Testing C.F.D
+Testing C.F.S
+Testing C.LE.D
+Testing C.LE.S
+Testing C.LT.D
+Testing C.LT.S
+Testing C.NGE.D
+Testing C.NGE.S
+Testing C.NGLE.D
+Testing C.NGLE.S
+Testing C.NGL.D
+Testing C.NGL.S
+Testing C.NGT.D
+Testing C.NGT.S
+Testing C.OLE.D
+Testing C.OLE.S
+Testing C.SEQ.D
+Testing C.SEQ.S
+Testing C.SF.D
+Testing C.SF.S
+Testing C.UEQ.D
+Testing C.UEQ.S
+Testing C.ULE.D
+Testing C.ULE.S
+Testing C.UN.D
+Testing C.UN.S
+Testing CVT.D.S
+Testing CVT.D.W
+Testing CVT.S.D
+Testing CVT.S.W
+Testing CVT.W.D
+Testing CVT.W.S
+Testing DIV.S
+Testing DIV.D
+Testing MOV.S
+Testing MOV.D
+Testing MUL.S
+Testing MUL.D
+Testing NEG.S
+Testing NEG.D
+Testing SUB.S
+Testing SUB.D
+Testing ABS
+Testing B
+Testing BAL
+Testing BEQZ
+Testing BGE
+Testing BGEU
+Testing BGT
+Testing BGTU
+Testing BLE
+Testing BLEU
+Testing BLT
+Testing BLTU
+Testing BNEZ
+Testing L_S
+Testing L_D
+Testing LI
+Testing LI.d
+Testing LI.s
+Testing MOVE
+Testing NEG
+Testing NEGU
+Testing NOP
+Testing NOT
+Testing REM
+Testing REMU
+Testing ROL
+Testing ROR
+Testing S_S
+Testing S_D
+Testing SEQ
+Testing SGE
+Testing SGEU
+Testing SGT
+Testing SGTU
+Testing SLE
+Testing SLEU
+Testing SNE
+Testing ULH
+Testing ULHU
+Testing ULHU
+Testing ULW
+Testing USH
+Testing USW
+Testing .WORD
+
+Passed all tests

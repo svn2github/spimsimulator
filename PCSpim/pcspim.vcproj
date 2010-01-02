@@ -4,9 +4,6 @@
 	Version="9.00"
 	Name="PCSpim"
 	ProjectGUID="{56488352-0EC0-4FA0-B5CE-FD6746615E15}"
-	SccProjectName="&quot;$/Software/SPIM/PCSpim&quot;, GAAAAAAA"
-	SccLocalPath=".."
-	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>System Calls</TITLE>
+<META NAME="description" CONTENT="System Calls">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html125" HREF="node9.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html123" HREF="node1.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html119" HREF="node7.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html126" HREF="node9.htm">Description of the MIPS </A>
+<B>Up:</B> <A NAME="tex2html124" HREF="node1.htm">SPIM</A>
+<B> Previous:</B> <A NAME="tex2html120" HREF="node7.htm">Assembler Syntax</A>
+<BR> <P>
+<H2><A NAME="SECTION00015000000000000000">System Calls</A></H2>
+<P>
+<A NAME="secscall">&#160;</A>
+<P>
+<P><A NAME="240">&#160;</A><A NAME="tabsyscall">&#160;</A> <IMG WIDTH=609 HEIGHT=215 ALIGN=BOTTOM ALT="table213" SRC="img5.gif"  > <BR>
+<STRONG>Table:</STRONG> System services.<BR>
+<P>
+SPIM provides a small set of operating-system-like services through
+the system call (<TT>syscall</TT>) instruction.  To request a service, a
+program loads the system call code (see Table&nbsp;<A HREF="node8.htm#tabsyscall"><IMG  ALIGN=BOTTOM ALT="gif" SRC="xref.gif"></A>) into
+register <TT>$v0</TT> and the arguments into registers <TT>
+$a0</TT> <IMG WIDTH=19 HEIGHT=2 ALIGN=BOTTOM ALT="tex2html_wrap_inline1521" SRC="img6.gif"  > <TT>$a3</TT> (or <TT>$f12</TT> for floating point values).
+System calls that return values put their result in register <TT>
+$v0</TT> (or <TT>$f0</TT> for floating point results).  For example, to
+print ``<TT>the answer = 5</TT>'', use the commands:
+<PRE>
+        .data
+  str:  .asciiz &quot;the answer = &quot;
+        .text
+        li $v0, 4        # system call code for print_str
+        la $a0, str      # address of string to print
+        syscall          # print the string
+
+        li $v0, 1        # system call code for print_int
+        li $a0, 5        # integer to print
+        syscall          # print it</PRE>
+<P>
+<TT>print_int</TT> is passed an integer and prints it on the console.
+<TT>print_float</TT> prints a single floating point number. <TT>
+print_double</TT> prints a double precision number.  <TT>print_string</TT>
+is passed a pointer to a null-terminated string, which it writes to
+the console.
+<P>
+<TT>read_int</TT>, <TT>read_float</TT>, and <TT>read_double</TT> read an
+entire line of input up to and including the newline.  Characters
+following the number are ignored.  <TT>read_string</TT> has the same
+semantics as the Unix library routine <TT>fgets</TT>.  It reads up to
+<I>n</I>-1 characters into a buffer and terminates the string with a null
+byte.  If there are fewer characters on the current line, it reads
+through the newline and again null-terminates the string.  <B>
+Warning:</B> programs that use these syscalls to read from the terminal
+should not use memory-mapped IO (see Section&nbsp;<A HREF="node24.htm#secIO"><IMG  ALIGN=BOTTOM ALT="gif" SRC="xref.gif"></A>).
+<P>
+<TT>sbrk</TT> returns a pointer to a block of memory containing <I>n</I>
+additional bytes.  <TT>exit</TT> stops a program from running.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

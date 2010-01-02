@@ -1,0 +1,105 @@
+////////////////////////////////////////////////////////////////////////////////
+///////////////////InstallShield Media Library Report Summary///////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+Media Name      : Default
+Report Filename : D:\Larus\Software\SPIM\InstallShield\PCSpim\Media\Default\Report Files\1-05-2002 2.27.09PM.rpt
+Date            : 01/05/2002
+Time            : 2:27PM
+
+Number of Components:                4 
+Number of File Groups:               4 
+Number of Files:                     6 
+Total Size of Files:         1,284,061 (bytes)
+
+==========
+COMPONENTS
+==========
+
+
+     Program Files
+     Example Files
+     Help Files
+     Shared DLLs
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////Report Details/////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+================================================================================
+                           COMPONENT: "Program Files"
+================================================================================
+
+SUMMARY:
+    Total Files:                2 (files for this component only)
+    Source Bytes:         195,620 (files for this component only)
+
+
+                      **** File Group: "Program DLLs" ****
+
+
+<Directory>: D:\Larus\Software\SPIM\src
+
+    Filename                    Date        Time      Size         Version      
+    --------------------------  ----------  --------  -----------  -------------
+    trap.handler                01/05/2002  13:29:23        3,043               
+    --------------------------  ----------  --------  -----------  -------------
+    Count=1                                                 3,043               
+
+
+                **** File Group: "Program Executable Files" ****
+
+
+<Directory>: D:\Larus\Software\SPIM\PCSpim\Release
+
+    Filename                    Date        Time      Size         Version      
+    --------------------------  ----------  --------  -----------  -------------
+    pcspim.exe                  01/05/2002  14:17:54      192,577  1.0.0.1      
+    --------------------------  ----------  --------  -----------  -------------
+    Count=1                                               192,577               
+
+
+================================================================================
+                            COMPONENT: "Help Files"
+================================================================================
+
+SUMMARY:
+    Total Files:                2 (files for this component only)
+    Source Bytes:         223,654 (files for this component only)
+
+
+                       **** File Group: "Help Files" ****
+
+
+<Directory>: D:\Larus\Software\SPIM\PCSpim
+
+    Filename                    Date        Time      Size         Version      
+    --------------------------  ----------  --------  -----------  -------------
+    PCSpim.cnt                  01/05/2002  13:28:56          165               
+    PCSPIM.HLP                  01/05/2002  13:28:55       27,869               
+    --------------------------  ----------  --------  -----------  -------------
+    Count=2                                                28,034               
+
+
+================================================================================
+                            COMPONENT: "Shared DLLs"
+================================================================================
+
+SUMMARY:
+    Total Files:                2 (files for this component only)
+    Source Bytes:       1,284,061 (files for this component only)
+
+
+                      **** File Group: "Shared DLLs" ****
+
+
+<Directory>: C:\WINDOWS\system32
+
+    Filename                    Date        Time      Size         Version      
+    --------------------------  ----------  --------  -----------  -------------
+    mfc42.dll                   08/23/2001  04:00:00      995,383  6.0.8665.0   
+    msvcrt40.dll                08/23/2001  04:00:00       65,024  4.2000.0.6201
+    --------------------------  ----------  --------  -----------  -------------
+    Count=2                                             1,060,407               

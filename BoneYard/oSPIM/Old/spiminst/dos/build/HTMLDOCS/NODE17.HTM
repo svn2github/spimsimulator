@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Load Instructions</TITLE>
+<META NAME="description" CONTENT="Load Instructions">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html227" HREF="node18.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html225" HREF="node9.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html219" HREF="node16.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html228" HREF="node18.htm">Store Instructions</A>
+<B>Up:</B> <A NAME="tex2html226" HREF="node9.htm">Description of the MIPS </A>
+<B> Previous:</B> <A NAME="tex2html220" HREF="node16.htm">Branch and Jump Instructions</A>
+<BR> <P>
+<H2><A NAME="SECTION00028000000000000000">Load Instructions</A></H2>
+<P>
+<P><EM><TT>la Rdest, address</TT>Address  <IMG WIDTH=5 HEIGHT=12 ALIGN=BOTTOM ALT="tex2html_wrap_inline1547" SRC="img16.gif"  > <BR></EM>
+Load computed <EM>address</EM>, not the contents of the location, into
+register <TT>Rdest</TT>.
+<P>
+<P><EM><TT>lb Rdest, address</TT>Byte<BR></EM>
+<EM><TT>lbu Rdest, address</TT>Unsigned Byte<BR></EM>
+Load the byte at <EM>address</EM> into register <TT>Rdest</TT>.  The byte
+is sign-extended by the <TT>lb</TT>, but not the <TT>lbu</TT>, instruction.
+<P>
+<P><EM><TT>ld Rdest, address</TT>Double-Word  <IMG WIDTH=5 HEIGHT=12 ALIGN=BOTTOM ALT="tex2html_wrap_inline1547" SRC="img16.gif"  > <BR></EM>
+Load the 64-bit quantity at <EM>address</EM> into registers <TT>Rdest</TT>
+and <TT>Rdest + 1</TT>.
+<P>
+<P><EM><TT>lh Rdest, address</TT>Halfword<BR></EM>
+<EM><TT>lhu Rdest, address</TT>Unsigned Halfword<BR></EM>
+Load the 16-bit quantity (halfword) at <EM>address</EM> into register
+<TT>Rdest</TT>.  The halfword is sign-extended by the <TT>lh</TT>, but not
+the <B>lhu</B>, instruction
+<P>
+<P><EM><TT>lw Rdest, address</TT>Word<BR></EM>
+Load the 32-bit quantity (word) at <EM>address</EM> into register <TT>
+Rdest</TT>.
+<P>
+<P><EM><TT>lwc<EM>z</EM> Rdest, address</TT>Word Coprocessor<BR></EM>
+Load the word at <EM>address</EM> into register <TT>Rdest</TT> of
+coprocessor <I>z</I> (0-3).
+<P>
+<P><EM><TT>lwl Rdest, address</TT>Word Left<BR></EM>
+<EM><TT>lwr Rdest, address</TT>Word Right<BR></EM>
+Load the left (right) bytes from the word at the possibly-unaligned
+<EM>address</EM> into register <TT>Rdest</TT>.
+<P>
+<P><EM><TT>ulh Rdest, address</TT>Load Halfword  <IMG WIDTH=5 HEIGHT=12 ALIGN=BOTTOM ALT="tex2html_wrap_inline1547" SRC="img16.gif"  > <BR></EM>
+<EM><TT>ulhu Rdest, address</TT>Load Halfword Unsigned  <IMG WIDTH=5 HEIGHT=12 ALIGN=BOTTOM ALT="tex2html_wrap_inline1547" SRC="img16.gif"  > <BR></EM>
+Load the 16-bit quantity (halfword) at the possibly-unaligned <EM>
+address</EM> into register <TT>Rdest</TT>.  The halfword is sign-extended
+by the <TT>ulh</TT>, but not the <B>ulhu</B>, instruction
+<P>
+<P><EM><TT>ulw Rdest, address</TT>Load Word  <IMG WIDTH=5 HEIGHT=12 ALIGN=BOTTOM ALT="tex2html_wrap_inline1547" SRC="img16.gif"  > <BR></EM>
+Load the 32-bit quantity (word) at the possibly-unaligned <EM>
+address</EM>  into register <TT>Rdest</TT>.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

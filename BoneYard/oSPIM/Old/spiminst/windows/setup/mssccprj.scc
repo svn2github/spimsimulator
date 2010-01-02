@@ -1,0 +1,5 @@
+SCC = This is a Source Code Control file
+
+[SETUP.MAK]
+SCC_Aux_Path = "D:\Jim\Software\VSS\Data"
+SCC_Project_Name = "$/Software/SPIM/SPIM/Old/spiminst/windows/setup", CSBAAAAA

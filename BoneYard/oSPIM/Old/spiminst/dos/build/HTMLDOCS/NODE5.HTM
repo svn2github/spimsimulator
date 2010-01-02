@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>X-Window Interface</TITLE>
+<META NAME="description" CONTENT="X-Window Interface">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html97" HREF="node6.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html95" HREF="node3.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html91" HREF="node4.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html98" HREF="node6.htm">Surprising Features</A>
+<B>Up:</B> <A NAME="tex2html96" HREF="node3.htm">SPIM Interface</A>
+<B> Previous:</B> <A NAME="tex2html92" HREF="node4.htm">Terminal Interface</A>
+<BR> <P>
+<H3><A NAME="SECTION00012200000000000000">X-Window Interface</A></H3>
+<P>
+<P><A NAME="137">&#160;</A><A NAME="figxinterface">&#160;</A> <IMG WIDTH=510 HEIGHT=517 ALIGN=BOTTOM ALT="figure135" SRC="img3.gif"  > <BR>
+<STRONG>Figure:</STRONG> X-window interface to SPIM.<BR>
+<P>
+The X version of SPIM, <TT>xspim</TT>, looks different, but should
+operate in the same manner as <TT>spim</TT>.  The X window has five panes
+(see Figure&nbsp;<A HREF="node5.htm#figxinterface"><IMG  ALIGN=BOTTOM ALT="gif" SRC="xref.gif"></A>).  The top pane displays the contents
+of the registers.  It is continually updated, except while a program
+is running.
+<P>
+The next pane contains the buttons that control the simulator:
+<DL COMPACT><DT><STRONG></STRONG>
+<DD> <B>quit</B><BR>Exit from the simulator.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>load</B><BR>Read a source file into memory.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>run</B><BR>Start the program running.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>step</B><BR>Single-step through a program.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>clear</B><BR>Reinitialize registers or memory.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>set value</B><BR>Set the value in a register or
+memory location.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>print</B><BR>Print the value in a register or memory
+location.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>breakpoint</B><BR>Set or delete a breakpoint or list
+all breakpoints.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>help</B><BR>Print a help message.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>terminal</B><BR>Raise or hide the console window.
+<P>
+  <DT><STRONG></STRONG>
+<DD> <B>mode</B><BR>Set SPIM operating modes.
+<P>
+ </DL>
+<P>
+The next two panes display the memory contents.  The top one shows
+instructions from the user and kernel text segments.<A NAME="tex2html4" HREF="footnode.htm#156"><IMG  ALIGN=BOTTOM ALT="gif" SRC="foot.gif"></A> The
+first few instructions in the text segment are startup code (<TT>
+__start</TT>) that loads <TT>argc</TT> and <TT>argv</TT> into registers and
+invokes the <TT>main</TT> routine.
+<P>
+The lower of these two panes displays the data and stack segments.
+Both panes are updated as a program executes.
+<P>
+The bottom pane is used to display messages from the simulator.  It
+does not display output from an executing program.  When a program
+reads or writes, its IO appears in a separate window, called the
+Console, which pops up when needed.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

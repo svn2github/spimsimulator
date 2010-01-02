@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Simulation of a Virtual Machine</TITLE>
+<META NAME="description" CONTENT="Simulation of a Virtual Machine">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html67" HREF="node3.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html65" HREF="node1.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html59" HREF="node1.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html68" HREF="node3.htm">SPIM Interface</A>
+<B>Up:</B> <A NAME="tex2html66" HREF="node1.htm">SPIM</A>
+<B> Previous:</B> <A NAME="tex2html60" HREF="node1.htm">SPIM</A>
+<BR> <P>
+<H2><A NAME="SECTION00011000000000000000">Simulation of a Virtual Machine</A></H2>
+<P>
+The MIPS architecture, like that of most RISC computers, is difficult
+to program directly because of its delayed branches, delayed loads,
+and restricted address modes.  This difficulty is tolerable since
+these computers were designed to be programmed in high-level languages
+and so present an interface designed for compilers, not programmers.
+A good part of the complexity results from delayed instructions.  A
+<EM>delayed branch</EM> takes two cycles to execute.  In the second
+cycle, the instruction immediately following the branch executes.
+This instruction can perform useful work that normally would have been
+done before the branch or it can be a <TT>nop</TT> (no operation).
+Similarly, <EM>delayed loads</EM> take two cycles so the instruction
+immediately following a load cannot use the value loaded from memory.
+<P>
+MIPS wisely choose to hide this complexity by implementing a <EM>
+virtual machine</EM> with their assembler.  This virtual computer
+appears to have non-delayed branches and loads and a richer
+instruction set than the actual hardware.  The assembler <EM>
+reorganizes</EM> (rearranges) instructions to fill the delay slots.  It
+also simulates the additional, <EM>pseudoinstructions</EM> by
+generating short sequences of actual instructions.
+<P>
+By default, SPIM simulates the richer, virtual machine.  It can also
+simulate the actual hardware.  We will describe the virtual machine
+and only mention in passing features that do not belong to the actual
+hardware.  In doing so, we are following the convention of MIPS
+assembly language programmers (and compilers), who routinely take
+advantage of the extended machine.  Instructions marked with a dagger
+( <IMG WIDTH=6 HEIGHT=25 ALIGN=MIDDLE ALT="tex2html_wrap_inline1503" SRC="img2.gif"  > ) are pseudoinstructions.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

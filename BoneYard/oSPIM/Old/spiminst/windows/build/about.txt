@@ -1,0 +1,2 @@
+PCSpim for Windows Setup
+Copyright (C) 1997 Morgan Kaufmann, Inc,

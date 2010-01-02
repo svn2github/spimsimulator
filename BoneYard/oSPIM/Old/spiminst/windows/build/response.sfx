@@ -1,0 +1,7 @@
+-setup
+-t maintext.txt
+-i ..\setup\setup.ico
+-a about.txt
+-le
+-O
+-c "setup.exe /install"

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Input and Output</TITLE>
+<META NAME="description" CONTENT="Input and Output">
+<META NAME="keywords" CONTENT="spim">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="spim.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html295" HREF="node25.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html293" HREF="spim.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html287" HREF="node23.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html296" HREF="node25.htm">  About this document </A>
+<B>Up:</B> <A NAME="tex2html294" HREF="spim.htm">SPIM S20: A MIPS </A>
+<B> Previous:</B> <A NAME="tex2html288" HREF="node23.htm">Calling Convention</A>
+<BR> <P>
+<H1><A NAME="SECTION00050000000000000000">Input and Output</A></H1>
+<P>
+<A NAME="secIO">&#160;</A>
+<P>
+In addition to simulating the basic operation of the CPU and operating
+system, SPIM also simulates a memory-mapped terminal connected to the
+machine.  When a program is ``running,'' SPIM connects its own
+terminal (or a separate console window in <TT>xspim</TT>) to the
+processor.  The program can read characters that you type while the
+processor is running.  Similarly, if SPIM executes instructions to
+write characters to the terminal, the characters will appear on SPIM's
+terminal or console window.  One exception to this rule is control-C:
+it is not passed to the processor, but instead causes SPIM to stop
+simulating and return to command mode.  When the processor stops
+executing (for example, because you typed control-C or because the
+machine hit a breakpoint), the terminal is reconnected to SPIM so you
+can type SPIM commands.  To use memory-mapped IO, <TT>spim</TT> or <TT>
+xspim</TT> must be started with the <TT>-mapped_io</TT> flag.
+<P>
+The terminal device consists of two independent units: a <EM>
+receiver</EM> and a <EM>transmitter</EM>.  The receiver unit reads
+characters from the keyboard as they are typed.  The transmitter unit
+writes characters to the terminal's display.  The two units are
+completely independent.  This means, for example, that characters
+typed at the keyboard are not automatically ``echoed'' on the display.
+Instead, the processor must get an input character from the receiver
+and re-transmit it to echo it.
+<P>
+<P><A NAME="938">&#160;</A><A NAME="figio_reg">&#160;</A> <IMG WIDTH=403 HEIGHT=453 ALIGN=BOTTOM ALT="figure936" SRC="img21.gif"  > <BR>
+<STRONG>Figure:</STRONG> The terminal is controlled by four device registers,
+each of which appears as a special memory location at the given
+address.  Only a few bits of the registers are actually used: the
+others always read as zeroes and are ignored on writes.<BR>
+<P>
+<P>
+The processor accesses the terminal using four memory-mapped device
+registers, as shown in Figure&nbsp;<A HREF="node24.htm#figio_reg"><IMG  ALIGN=BOTTOM ALT="gif" SRC="xref.gif"></A>.  ``Memory-mapped''
+means that each register appears as a special memory location.  The
+Receiver Control Register is at location 0xffff0000; only two of its
+bits are actually used.  Bit 0 is called ``ready'': if it is one it
+means that a character has arrived from the keyboard but has not yet
+been read from the receiver data register.  The ready bit is
+read-only: attempts to write it are ignored.  The ready bit changes
+automatically from zero to one when a character is typed at the
+keyboard, and it changes automatically from one to zero when the
+character is read from the receiver data register.
+<P>
+Bit one of the Receiver Control Register is ``interrupt enable''.
+This bit may be both read and written by the processor.  The interrupt
+enable is initially zero.  If it is set to one by the processor, an
+interrupt is requested by the terminal on level zero whenever the
+ready bit is one.  For the interrupt actually to be received by the
+processor, interrupts must be enabled in the status register of the
+system coprocessor (see Section <A HREF="node9.htm#secmips"><IMG  ALIGN=BOTTOM ALT="gif" SRC="xref.gif"></A>).
+<P>
+Other bits of the Receiver Control Register are unused: they always
+read as zeroes and are ignored in writes.
+<P>
+The second terminal device register is the Receiver Data Register (at
+address 0xffff0004).  The low-order eight bits of this register
+contain the last character typed on the keyboard, and all the other
+bits contain zeroes.  This register is read-only and only changes
+value when a new character is typed on the keyboard.  Reading the
+Receiver Data Register causes the ready bit in the Receiver Control
+Register to be reset to zero.
+<P>
+The third terminal device register is the Transmitter Control Register
+(at address 0xffff0008).  Only the low-order two bits of this register
+are used, and they behave much like the corresponding bits of the
+Receiver Control Register.  Bit 0 is called ``ready'' and is
+read-only.  If it is one it means the transmitter is ready to accept a
+new character for output.  If it is zero it means the transmitter is
+still busy outputting the previous character given to it.  Bit one is
+``interrupt enable''; it is readable and writable.  If it is set to
+one, then an interrupt will be requested on level one whenever the
+ready bit is one.
+<P>
+The final device register is the Transmitter Data Register (at address
+0xffff000c).  When it is written, the low-order eight bits are taken
+as an ASCII character to output to the display.  When the Transmitter
+Data Register is written, the ready bit in the Transmitter Control
+Register will be reset to zero.  The bit will stay zero until enough
+time has elapsed to transmit the character to the terminal; then the
+ready bit will be set back to one again.  The Transmitter Data
+Register should only be written when the ready bit of the Transmitter
+Control Register is one; if the transmitter isn't ready then writes to
+the Transmitter Data Register are ignored (the write appears to
+succeed but the character will not be output).
+<P>
+In real computers it takes time to send characters over the serial
+lines that connect terminals to computers.  These time lags are
+simulated by SPIM.  For example, after the transmitter starts
+transmitting a character, the transmitter's ready bit will become zero
+for a while.  SPIM measures this time in instructions executed, not in
+real clock time.  This means that the transmitter will not become
+ready again until the processor has executed a certain number of
+instructions.  If you stop the machine and look at the ready bit using
+SPIM, it will not change.  However, if you let the machine run then
+the bit will eventually change back to one.
+<P>
+<HR><A NAME="tex2html295" HREF="node25.htm"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="next.gif"></A> <A NAME="tex2html293" HREF="spim.htm"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="up.gif"></A> <A NAME="tex2html287" HREF="node23.htm"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="prev.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html296" HREF="node25.htm">  About this document </A>
+<B>Up:</B> <A NAME="tex2html294" HREF="spim.htm">SPIM S20: A MIPS </A>
+<B> Previous:</B> <A NAME="tex2html288" HREF="node23.htm">Calling Convention</A>
+<P><ADDRESS>
+<I>David A. Carley <BR>
+Thu Jul 24 11:21:53 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>
