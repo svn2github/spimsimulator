@@ -1,3 +1,13 @@
+2010-01-05    <Jim@LS-RED>
+
+	* xspim/Imakefile, spim/Makefile Jaymie Strecker [JStrecker@wooster.edu]:
+	Change install path from /usr to /usr/local.
+	Removed -D option, which doesn't exists on MacOS.
+
+	* pervasive:
+	Change license to a BSD license, update copyright notices, and
+	eliminated references to my old email address.	
+
 2009-12-05    <Jim@LS1>
 
 	* CPU/spim-utils.c (initialize_run_stack) [이법재 bupjae@hotmail.com]:

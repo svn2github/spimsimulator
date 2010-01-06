@@ -43,13 +43,13 @@
 #
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /usr/bin
+BIN_DIR = /usr/local/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /usr/lib/spim
+EXCEPTION_DIR = /usr/local/lib/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/share/man/en
+MAN_DIR = /usr/local/man/en
 
 
 # If you have flex, use it instead of lex.  If you use flex, define this
@@ -122,7 +122,6 @@ force:  configuration
 configuration:
 	./Configure
 
-INSTALLFLAGS = -D
 InstallProgram(xspim,$(BIN_DIR))
 InstallNonExec($(CPU_DIR)/exceptions.s,$(EXCEPTION_DIR)/exceptions.s)
 #InstallManPage($(DOC_DIR)/xspim,$(MAN_DIR))
