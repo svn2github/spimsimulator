@@ -1,24 +1,33 @@
 # SPIM S20 MIPS simulator.
 # A torture test for the ALU instructions in the bare SPIM simulator.
-# Copyright (C) 1990-2004 James Larus, larus@cs.wisc.edu.
-# ALL RIGHTS RESERVED.
+# Copyright (c) 1990-2010, James R. Larus.
+# All rights reserved.
 #
-# SPIM is distributed under the following conditions:
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
 #
-# You may make copies of SPIM for your own use and modify those copies.
+# Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
 #
-# All copies of SPIM must retain my name and copyright notice.
+# Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation and/or
+# other materials provided with the distribution.
 #
-# You may not sell SPIM or distributed SPIM in conjunction with a commerical
-# product or service without the expressed written consent of James Larus.
+# Neither the name of the James R. Larus nor the names of its contributors may be
+# used to endorse or promote products derived from this software without specific
+# prior written permission.
 #
-# THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
-# IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-# PURPOSE.
-#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# $Header: /u/faculty/larus/Software/larus/SPIM/Tests/RCS/tt.alu.bare.s,v 1.5 1994/01/19 21:30:43 larus Exp $
 
 # Adapted by Anne Rogers <amr@blueline.Princeton.EDU> from tt.le.s.
 # Run -bare -notrap.
@@ -36,7 +45,7 @@
 
 	.data
 saved_ret_pc:	.word 0		# Holds PC to return from main
-sm:      .asciiz "Failed  "   
+sm:      .asciiz "Failed  "
 	.text
 # Standard startup code.  Invoke the routine main with no arguments.
 	.globl __start
@@ -91,7 +100,7 @@ addi_:	.asciiz "Testing ADDI\n"
 	addi $2 $0 4	# syscall 4 (print_str)
 #	la $a0 addi_
 	lui $a0, 0x1000
-	ori $a0 $a0 0x1a          
+	ori $a0 $a0 0x1a
 	syscall
 
 	addi $2 $0 1
@@ -153,7 +162,7 @@ addu_:	.asciiz "Testing ADDU\n"
 	bne $4 $0 fail
 	addu $0 $0 $0		# Nop
 
-	
+
 	lui $2 0x3fff
 	ori $2 $2 0xffff
 	addu $2 $2 $2
@@ -212,7 +221,7 @@ andi_:	.asciiz "Testing ANDI\n"
 beq_:	.asciiz "Testing BEQ\n"
 	.text
 	add $v0 $0 4	# syscall 4 (print_str)
-#	la $a0 beq_               
+#	la $a0 beq_
 	lui $a0, 0x1000
 	ori $a0 $a0 0x60
 	syscall
@@ -222,12 +231,12 @@ beq_:	.asciiz "Testing BEQ\n"
 
 	beq $0 $0 l1
 #	j fail
-   	addu $0 $0 $0		# Nop		
+   	addu $0 $0 $0		# Nop
 l1:	beq $2 $2 l2
 #	j fail
-   	addu $0 $0 $0		# Nop	
+   	addu $0 $0 $0		# Nop
 l2:	beq $3 $2 fail
-   	addu $0 $0 $0		# Nop	
+   	addu $0 $0 $0		# Nop
 
 	addi $2 $0 3
 l2_1:	sub $2 $2 $3
@@ -242,7 +251,7 @@ bgez_:	.asciiz "Testing BGEZ\n"
 #	la $a0 bgez_
 	lui $a0, 0x1000
 	ori $a0 $a0 0x6d
-        
+
 	syscall
 
 	addi $2 $0 -1
@@ -443,16 +452,16 @@ lbu_:	.asciiz "Testing LBU\n"
 	addi $4 $0 0xff
 	bne $3 $4 fail
 	lbu $3 2($2)
-        addu $0 $0 $0         # Nop 
+        addu $0 $0 $0         # Nop
 	bne $3 $0 fail
 	lbu $3 3($2)
 	addu $4 $0 128
 	bne $3 $4 fail
-	
+
 #	la $t0 lbd1_
 	lui $t0, 0x1000
 	ori $t0 $t0 0xd0
-	
+
 	lbu $t1 0($t0)
 	addi $4 $0 0x10
 	bne $t1 $4 fail
@@ -1160,7 +1169,7 @@ srl_:	.asciiz "Testing SRL\n"
 	lui $5 0x0800
 	ori $5 $0 0x0000
 	bne $3 $5 fail
-	addu $0 $0 $0           #Nop 
+	addu $0 $0 $0           #Nop
 
 
 	.data
@@ -1311,7 +1320,7 @@ swld_:	.word 0 0
 #	la $2 swld_
 	lui $2, 0x1000
 	ori $2 $2 0x26c
-#       addi $3 $0 0x01000000	
+#       addi $3 $0 0x01000000
 	lui $3 0x0100
 	ori $3 $3 0x0000
 	swl $3 0($2)
@@ -1412,7 +1421,7 @@ xor_:	.asciiz "Testing XOR\n"
 	bne $4 $0 fail
 	xor $4 $2 $3
 	lui $5 0xffff
-	ori $5 $5 0xfffe 
+	ori $5 $5 0xfffe
 	bne $4 $5 fail
 	addu $0 $0 $0                #Nop
 
@@ -1467,7 +1476,7 @@ jalr_:	.asciiz "Testing JALR\n"
 #	la $a0 jalr_
 	lui $a0, 0x1000
 	ori $a0 $a0 0x2b4
-	syscall                      
+	syscall
 
 #	la $2 l21
 	lui $2 0x0040                # 0x00400ed0
@@ -1479,7 +1488,7 @@ l23:	j l22
 l21:	addu $0 $0 $0             # la $4 l21  -- delay slot.
 	bne $3 $4 fail
 	addu $0 $0 $0             # Nop  -- 00400ef0
-	jr $3                     
+	jr $3
 l22:	addu $0 $0 $0             # Nop
 
 #       li $v0 4	# syscall 4 (print_str)
@@ -1497,7 +1506,7 @@ bgezal_:.asciiz "Testing BGEZAL\n"
 #	la $a0 bgezal_
 	lui $a0, 0x1000           # 00400f00
 	ori $a0 $a0 0x2c2
-	syscall                   
+	syscall
 
 	addi $2 $0 -1
 	addi $3 $0 1              # 00400f10
@@ -1507,11 +1516,11 @@ bgezal_:.asciiz "Testing BGEZAL\n"
 	j fail
 	addu $0 $0 $0             # Nop -- 00400f20
 l5:	bgezal $2 fail
-	addu $0 $0 $0             # Nop 
+	addu $0 $0 $0             # Nop
 	bgezal $3 l6
 	addu $0 $0 $0             # Nop -- 00400f30
 l55:	j fail
-	addu $0 $0 $0             # Nop 
+	addu $0 $0 $0             # Nop
 l6:	lui $4 0x0040             #  la $4 l55
 	ori $4 $4 0x0f48          # 00400f40
 	bne $31 $4 fail
@@ -1534,7 +1543,7 @@ bltzal_:.asciiz "Testing BLTZAL\n"
 	bltzal $3 fail
 	addu $0 $0 $0          # Nop --  00400f70
 l13:	bltzal $2 l15
-	addu $0 $0 $0          # Nop 
+	addu $0 $0 $0          # Nop
 l14:	j fail
 	addu $0 $0 $0          # Nop --  00400f80
 l15:	lui $4 0x0040          # la $4 l14

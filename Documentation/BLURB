@@ -37,8 +37,8 @@ interface and the xspim program provides the X window interface.  On PCs,
 the spim program provides a DOS interface and PCSpim provides a Windows
 interface.
 
-SPIM is copyrighted by me and can be freely used for non-commercial
-purposes.  You can get source and compiled files from:
+SPIM is copyrighted by me and is covered by a BSD license.
+You can get source and compiled files from:
 
 	http://www.cs.wisc.edu/~larus/spim.html
 
@@ -65,6 +65,3 @@ had the following features:
   Includes an optional extension by Anne Rogers and Scott Rosenberg of
 Princeton that performs a cycle-by-cycle MIPS simulation that exposes the
 hardware pipeline.
-
-
-$Header: $

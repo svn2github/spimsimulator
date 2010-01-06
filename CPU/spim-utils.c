@@ -1,27 +1,33 @@
 /* SPIM S20 MIPS simulator.
    Misc. routines for SPIM.
 
-   Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
-   ALL RIGHTS RESERVED.
-   Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
+   Copyright (c) 1990-2010, James R. Larus.
+   All rights reserved.
 
-   SPIM is distributed under the following conditions:
+   Redistribution and use in source and binary forms, with or without modification,
+   are permitted provided that the following conditions are met:
 
-     You may make copies of SPIM for your own use and modify those copies.
+   Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
 
-     All copies of SPIM must retain my name and copyright notice.
+   Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation and/or
+   other materials provided with the distribution.
 
-     You may not sell SPIM or distributed SPIM in conjunction with a
-     commerical product or service without the expressed written consent of
-     James Larus.
+   Neither the name of the James R. Larus nor the names of its contributors may be
+   used to endorse or promote products derived from this software without specific
+   prior written permission.
 
-   THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
-   IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
-   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-   PURPOSE. */
-
-
-/* $Header: /Software/SPIM/src/spim-utils.c 28    1/02/05 7:59p Larus $
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+   GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+   HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+   LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+   OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
@@ -140,12 +146,11 @@ void
 write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
-  write_output (message_out,
-		"Copyright 1990-2004 by James R. Larus (larus@cs.wisc.edu).\n");
+  write_output (message_out, "Copyright 1990-2010, James R. Larus.\n");
   write_output (message_out, "All Rights Reserved.\n");
 #ifdef WIN32
-  write_output (message_out, "DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).\n");
-  write_output (message_out, "Copyright 1997 by Morgan Kaufmann Publishers, Inc.\n");
+  write_output (message_out, "DOS and Windows ports by David A. Carley.\n");
+  write_output (message_out, "Copyright 1997, Morgan Kaufmann Publishers, Inc.\n");
 #endif
   write_output (message_out, "See the file README for a full copyright notice.\n");
 }

@@ -1,35 +1,45 @@
 # SPIM S20 MIPS simulator.
 # A torture test for the FPU instructions in the bare SPIM simulator.
-# Copyright (C) 1990-2004 by James Larus, larus@cs.wisc.edu.
-# ALL RIGHTS RESERVED.
+# Copyright (c) 1990-2010, James R. Larus.
+# All rights reserved.
 #
-# SPIM is distributed under the following conditions:
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
 #
-# You may make copies of SPIM for your own use and modify those copies.
+# Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
 #
-# All copies of SPIM must retain my name and copyright notice.
+# Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation and/or
+# other materials provided with the distribution.
 #
-# You may not sell SPIM or distributed SPIM in conjunction with a commerical
-# product or service without the expressed written consent of James Larus.
+# Neither the name of the James R. Larus nor the names of its contributors may be
+# used to endorse or promote products derived from this software without specific
+# prior written permission.
 #
-# THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
-# IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-# PURPOSE.
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# $Header: /u/faculty/larus/Software/larus/SPIM/Tests/RCS/tt.fpu.bare.s,v 1.3 1994/01/18 03:23:44 larus Exp $
 
 # Adapted by Anne Rogers <amr@blueline.Princeton.EDU> from tt.le.s.
 # Run -bare -notrap.
 
 
-# Test floating point instructions.  Warning: This code is not relocatable.  
+# Test floating point instructions.  Warning: This code is not relocatable.
 # New data statements should be added after "Testing C.UN.S\n".
 
 	.data
 saved_ret_pc:	.word 0		# Holds PC to return from main
-sm:      .asciiz "Failed  "   
+sm:      .asciiz "Failed  "
 pt:      .asciiz "Passed all tests\n"
 
 	.text
@@ -92,7 +102,7 @@ fp_dm100:.double -100.0
 #	la $a0 abs.d_
 	lui $a0, 0x1000
 	ori $a0 $a0 0x38
-	syscall	
+	syscall
 
 #	la $2 fp_d100
 	lui $2, 0x1000
@@ -230,7 +240,7 @@ cvt.d.s_:	.asciiz "Testing CVT.D.S\n"
 	ori $a0 $a0 0xa0
 	syscall
 
-	
+
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lw $4 0($1)                                #fp_d0
@@ -344,20 +354,20 @@ cvt.s.d_:	.asciiz "Testing CVT.S.D\n"
 	addu $0 $0 $0              #Nop
 	cvt.s.d $f2 $f0
 	mfc1 $6 $f2
-	addu $0 $0 $0          
+	addu $0 $0 $0
 	bne $4 $6 fail
-	addu $0 $0 $0          
+	addu $0 $0 $0
 
 	lw $4 4($1)                           # fp_s1
 	lwc1 $f0 8($2)                        # fp_d1
 	lwc1 $f1 12($2)                       # fp_d1+4
 	addu $0 $0 $0              #Nop
 	cvt.s.d $f2 $f0
-	addu $0 $0 $0          
+	addu $0 $0 $0
 	mfc1 $6 $f2
-	addu $0 $0 $0          
+	addu $0 $0 $0
 	bne $4 $6 fail
-	addu $0 $0 $0          
+	addu $0 $0 $0
 
 	lw $4 8($1)                           # fp_sm1
 	lwc1 $f0 16($2)                       # fp_dm1
@@ -552,7 +562,7 @@ fp_d1p5:.double 1.5
 
 	lui $2 0x1000
 	ori $2 $2 0x138                          # Nop
-	lw $4 16($2)                              # fp_d1p5         
+	lw $4 16($2)                              # fp_d1p5
 	lw $5 20($2)                              # fp_d1p5+4
 	lwc1 $f0 8($2)                          # fp_d3
 	lwc1 $f1 12($2)                          # fp_d3+4
@@ -895,29 +905,29 @@ c.eq.d_:	.asciiz "Testing C.EQ.D\n"
 	lwc1 $f2 8($1)                        # fp_d1
 	lwc1 $f3 12($1)                       # fp_d1+4
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 	lwc1 $f4 16($2)                       # fp_d1p5
 	lwc1 $f5 20($2)                       # fp_d1p5+4
-	addu $0 $0 $0                         # Nop	
+	addu $0 $0 $0                         # Nop
 	c.eq.d $f0 $f2
 	addu $0 $0 $0
-        addu $0 $0 $0                         
-	bc1f fail            
+        addu $0 $0 $0
+	bc1f fail
 	addu $0 $0 $0                         # Nop Delay slot
         bc1t l200
 	addu $0 $0 $0                         # Nop Delay slot
 	j fail
  	addu $0 $0 $0                         # Nop Delay slot
 l200:	c.eq.d $f0 $f4
-	addu $0 $2 $2                         	
-        addu $0 $3 $3	                       
-	bc1t fail                             
+	addu $0 $2 $2
+        addu $0 $3 $3
+	bc1t fail
 	addu $0 $0 $0                         # Nop Delay slot
-	bc1f l201	                      
+	bc1f l201
 	addu $0 $0 $0                         # Nop Delay slot
-	j fail	
+	j fail
 	addu $0 $4 $4                         # Nop Delay slot
-l201:   addu $0 $5 $5                         
+l201:   addu $0 $5 $5
 
 
 	.data
@@ -971,7 +981,7 @@ c.f.d_:	.asciiz "Testing C.F.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 	lwc1 $f0 8($1)                             # fp_d1
 	lwc1 $f1 12($1)                            # fp_d1+4
 	lwc1 $f2 8($1)                             # fp_d1
@@ -1049,7 +1059,7 @@ fp_dm2:	.double -2.0
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # fp_d1+4
@@ -1069,7 +1079,7 @@ fp_dm2:	.double -2.0
 	j fail
 	addu $0 $0 $0                         # Nop Delay slot
 l240:	c.le.d $f2 $f0
-	addu $0 $0 $0                         # Nop Delay slot	
+	addu $0 $0 $0                         # Nop Delay slot
 	addu $0 $0 $0                         # Nop Delay slot
 	bc1t fail
 	addu $0 $0 $0                         # Nop Delay slot
@@ -1173,7 +1183,7 @@ c.lt.d_:	.asciiz "Testing C.LT.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # fp_d1+4
@@ -1292,7 +1302,7 @@ c.nge.d_:	.asciiz "Testing C.NGE.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # fp_d1+4
@@ -1411,7 +1421,7 @@ c.ngle.d_:	.asciiz "Testing C.NGLE.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # fp_d1+4
@@ -1474,7 +1484,7 @@ c.ngl.d_:	.asciiz "Testing C.NGL.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -1551,7 +1561,7 @@ c.ngt.d_:	.asciiz "Testing C.NGT.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -1670,7 +1680,7 @@ c.ole.d_:	.asciiz "Testing C.OLE.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -1789,7 +1799,7 @@ c.seq.d_:	.asciiz "Testing C.SEQ.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -1868,7 +1878,7 @@ c.sf.d_:	.asciiz "Testing C.SF.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -1931,7 +1941,7 @@ c.ueq.d_:	.asciiz "Testing C.UEQ.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -2010,7 +2020,7 @@ c.ule.d_:	.asciiz "Testing C.ULE.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop
@@ -2129,7 +2139,7 @@ c.un.d_:	.asciiz "Testing C.UN.D\n"
 	lui $1 0x1000
 	ori $1 $1 0x88
 	lui $2 0x1000
-	ori $2 $2 0x138                       
+	ori $2 $2 0x138
 
 	lwc1 $f0 8($1)                      # fp_d1
 	lwc1 $f1 12($1)                       # Nop

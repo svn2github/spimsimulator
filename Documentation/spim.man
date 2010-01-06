@@ -1,5 +1,3 @@
-.\" $Header: /Software/SPIM/src/spim.man 7     3/25/04 9:33p Larus $
-
 .TH spim 1
 .SH NAME
 spim \- A MIPS32 Simulator

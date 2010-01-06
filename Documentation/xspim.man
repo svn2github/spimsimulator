@@ -1,4 +1,3 @@
-.\" $Header: /Software/SPIM/src/xspim.man 8     3/25/04 9:33p Larus $
 .TH spim 1
 .SH NAME
 xspim \- A MIPS32 Simulator

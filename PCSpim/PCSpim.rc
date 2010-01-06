@@ -203,8 +203,8 @@ CAPTION "About PCSpim"
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "PCSpim Version 7.2.1",IDC_STATIC,40,13,119,8,SS_NOPREFIX
-    LTEXT           "Copyright © 1990-2006 by James R. Larus (larus@cs.wisc.edu). Portions © Morgan Kaufmann Publishers.",
+    LTEXT           "PCSpim Version 8.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
+    LTEXT           "Copyright © 1990-2010 by James R. Larus. Portions © Morgan Kaufmann Publishers.",
                     IDC_COPYRIGHT,40,27,204,55
     DEFPUSHBUTTON   "OK",IDOK,212,7,32,14,WS_GROUP
 END
@@ -303,8 +303,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 7,0,1,0
- PRODUCTVERSION 7,0,1,0
+ FILEVERSION 8,0,0,0
+ PRODUCTVERSION 8,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -321,22 +321,22 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Larus-Stone"
             VALUE "FileDescription", "pcspim"
-            VALUE "FileVersion", "7, 0, 1, 0"
+            VALUE "FileVersion", "8, 0, 0, 0"
             VALUE "InternalName", "pcspim"
-            VALUE "LegalCopyright", "Copyright © 2006"
+            VALUE "LegalCopyright", "Copyright © 2010 by James R. Larus"
             VALUE "OriginalFilename", "pcspim.exe"
             VALUE "ProductName", "Larus-Stone pcspim"
-            VALUE "ProductVersion", "7, 0, 1, 0"
+            VALUE "ProductVersion", "8, 0, 0, 0"
         END
         BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "PCSPIM Application"
-            VALUE "FileVersion", "7.2.1.0"
+            VALUE "FileVersion", "8.0.0.0"
             VALUE "InternalName", "PCSPIM"
-            VALUE "LegalCopyright", "Copyright © 1990-2006 by James R. Larus"
+            VALUE "LegalCopyright", "Copyright © 1990-2010 by James R. Larus"
             VALUE "OriginalFilename", "PCSPIM.EXE"
             VALUE "ProductName", "PCSPIM Application"
-            VALUE "ProductVersion", "7.2.1.0"
+            VALUE "ProductVersion", "8.0.0.0"
         END
     END
     BLOCK "VarFileInfo"

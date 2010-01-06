@@ -1,26 +1,36 @@
 REM SPIM S20 MIPS simulator.
 REM Definitions for the SPIM S20.
 REM
-REM Copyright (C) 1990-2004 by James Larus (larus@cs.wisc.edu).
-REM ALL RIGHTS RESERVED.
+REM Copyright (c) 1990-2010, James R. Larus.
 REM Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
+REM All rights reserved.
 REM
-REM SPIM is distributed under the following conditions:
+REM Redistribution and use in source and binary forms, with or without modification,
+REM are permitted provided that the following conditions are met:
 REM
-REM   You may make copies of SPIM for your own use and modify those copies.
+REM Redistributions of source code must retain the above copyright notice,
+REM this list of conditions and the following disclaimer.
 REM
-REM   All copies of SPIM must retain my name and copyright notice.
+REM Redistributions in binary form must reproduce the above copyright notice,
+REM this list of conditions and the following disclaimer in the documentation and/or
+REM other materials provided with the distribution.
 REM
-REM   You may not sell SPIM or distributed SPIM in conjunction with a
-REM   commerical product or service without the expressed written consent of
-REM   James Larus.
+REM Neither the name of the James R. Larus nor the names of its contributors may be
+REM used to endorse or promote products derived from this software without specific
+REM prior written permission.
 REM
-REM THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
-REM IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
-REM WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-REM PURPOSE.
+REM THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+REM AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+REM IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+REM ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+REM LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+REM CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+REM GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+REM HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+REM LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+REM OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+REM
 
-REM $Header: $
 
 REM Batch file to produce PCSPIM help files.
 REM
