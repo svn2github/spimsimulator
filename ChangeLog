@@ -6,7 +6,7 @@
 
 	* pervasive:
 	Change license to a BSD license, update copyright notices, and
-	eliminated references to my old email address.	
+	eliminated references to my old email address.
 
 2009-12-05    <Jim@LS1>
 
@@ -14,7 +14,7 @@
 	Simplify alignment of data on stack to ensure enough room is left
 	for environment and args at top of stack.
 
-	* PCSpim/PCSpimView.cpp: 
+	* PCSpim/PCSpimView.cpp:
 	Initialize stack with arguments when running program from run dialog.
 
 	* spim/spim.c (read_input) [Adam Wolfe Gordon

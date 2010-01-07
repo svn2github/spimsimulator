@@ -1,10 +1,15 @@
-<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- saved from url=(0039)http://www.cs.wisc.edu/~larus/spim.html --><!-- saved from url=(0039)http://www.cs.wisc.edu/~larus/spim.html -->
-<html>
+
 <head>
 <title>SPIM MIPS Simulator</title>
 <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<meta content="Microsoft FrontPage 6.0" name=GENERATOR></head>
+<style type="text/css">
+.style1 {
+	text-align: left;
+}
+</style>
+</head>
+
+<html>
 <body>
 <h1 align=center>SPIM</h1>
 <h2 align=center>A MIPS32 Simulator</h2>
@@ -47,9 +52,20 @@ provides a  console interface and <i>PCSpim</i> provides a
 Windows interface.</p>
 <hr width="100%">
 
-<h2 align=center><b><font size=+2>Downloading SPIM</font></b></h2>
+<h2 align=center><font size="+2">Happy Birthday</font><b><font size=+2> SPIM!</font></b></h2>
+<p class="style1"><strong>spim</strong> is 20 years old this January (2010). I 
+wrote the original version of <strong>spim</strong> as the target machine for my 
+first compiler class at University of Wisconsin, Madison in the spring semester 
+1990. <strong>spim</strong> is likely older than most of the students currently 
+using it!</p>
+<p class="style1">As a birthday present, the new version of <strong>spim</strong> 
+(8.0) has a simpler, less restrictive license, namely the standard BSD license.</p>
 <div align=center>
 <center>
+<hr width="100%">
+
+<h2 align=center><b><font size=+2>Downloading SPIM</font></b></h2>
+<p align=center>&nbsp;</p>
 <table width=732 border=1>
   <tbody>
   <tr>
@@ -174,50 +190,54 @@ to build <b>spim</b> and untar it:<br>
 <br>
 &nbsp;&nbsp;&nbsp; <i>% tar xf spim.tar<br>
 <br>
-</i>It will create a directory named <i>spim-7.2</i> (or the most recent version
+</i>It will create a directory named <i>spim-8.0</i> (or the most recent version
 number).<br>
 &nbsp;</li>
 	<li>
 	<p align=left>The simple terminal interface is contained in the <i>
-	spim-7.2/spim</i> directory and the X-windows interfaces is in the <i>
-	spim-7.2/xspim</i> directory.<i> </i>The other directories are described in
+	spim-8.0/spim</i> directory and the X-windows interfaces is in the <i>
+	spim-8.0/xspim</i> directory.<i> </i>The other directories are described in
 	the README file.<i><br>&nbsp;</i></li>
 	<li>
 	<p align=left>Next, you must set the directories in which <b>spim </b>will be
-installed by editing the Makefile (the file that contains instructions on building
+installed by editing the <i>Makefile</i> (the file that contains instructions on building
 	<b>spim</b>).
 In general, if you are installing <b>spim</b> and want the windowing version (<i>xspim</i>),
 edit the file <u><i>xspim/Imakefile</i></u>. If you don't want <i>xspim</i>
 or are running on a system without X-windows installed, you use the file <i>
-	spim/Makefile</i>.<br><br>Set these pathnames to the appropriate locations for your system:</p>
+	spim/Makefile</i>.<br><br>
+The programs are installed in standard locations, but you can change the pathnames to other locations:</p>
 	<p align=left>&nbsp;&nbsp;&nbsp; EXCEPTION_DIR -- The full pathname of the directory
 in which to install the <b>spim </b>exception handler <i>(exceptions.s</i>)<i>.</i></p>
 	<p align=left>&nbsp;&nbsp;&nbsp; BIN_DIR -- The full pathname of the directory
 in which <i>spim</i> and <i>xspim</i> should be installed.</p>
 	<p align=left>&nbsp;&nbsp;&nbsp; MAN_DIR -- The full pathname of the directory
 in which the manual pages for <i>spim</i> and <i>xspim</i> should be installed.<br>
-	<br>In general, the remaining parameters in a Makefile need not be changed.<br>&nbsp;</li>
+	<br>In general, the remaining parameters in a <i>Makefile</i> need not be changed.<br>&nbsp;</li>
 	<li>
-	<p align=left>Then, if you are using <u><i>Imakefile</i></u> file, change to
-	the <i>spim-7.2/xspim </i>directory and type:<br><br>&nbsp;&nbsp;&nbsp; <i>% xmkmf<br>&nbsp;&nbsp;&nbsp; % make<br>
-	</i>If you do not have a copy of <i>xmkmf</i>, you can use the Makefile in
+	<p align=left>Then, if you are building <i>xspim</i>, change to
+	the <i>spim-8.0/xspim </i>directory and type:<br><br>&nbsp;&nbsp;&nbsp; <i>% xmkmf<br>&nbsp;&nbsp;&nbsp; % make<br>
+	</i>If you do not have a copy of <i>xmkmf</i>, you can use the <i>Makefile</i> in
 	the <i>xspim</i> directory, but beware that it may not work on your system
 	because the paths to the X windows libraries could be different.<br>&nbsp;</li>
 	<li>
-	<p align=left>If you do not have X-windows, change to the<i> spim-7.2/spim</i>
-	directory, edit <i>Makefile,</i> and type:<br><br><i>&nbsp;&nbsp;&nbsp; %
-	make<br>&nbsp;&nbsp;&nbsp; </i></li>
+	<p align=left>If you do not have X-windows, change to the<i>spim-8.0/spim</i>
+	directory, edit <i>Makefile,</i> and type:
+          <br><br><i>&nbsp;&nbsp;&nbsp; % make<br>&nbsp;&nbsp;&nbsp; </i></li>
 	<li>
 	<p align=left>To run <i>spim</i> or <i>xspim</i>, the exception handler must be
-installed in the directory specified by the variable EXCEPTION_DIR in the Makefile.
+installed in the directory specified by the variable EXCEPTION_DIR in the <i>Makefile</i>.
 If the file <i>exception.s</i> is not installed, <i>spim</i> and <i>xspim</i>
 fail  before they start running. You can either install this file
-by hand or by typing<br><br><i>&nbsp;&nbsp;&nbsp; % make install</i><br><br>which also installs
-	<i>spim</i> or <i>xspim</i>, and the manual pages in the directories that
-you set (above).<br>&nbsp;</li>
+by hand or by typing:
+<br><br> <i>&nbsp;&nbsp;&nbsp; % make install</i><br><br>
+which also installs <i>spim</i> or <i>xspim</i>, and the manual pages in the directories that
+you set (above). You may need root permission to install these files, in which case type:
+<br><br> <i>&nbsp;&nbsp;&nbsp; % sudo make install</i><br><br>
+</li>
 	<li>
 	<p align=left>To test that <b>spim </b>is correctly built, change to the <i>
-	spim-7.2/spim </i>directory and type:<br><br><i>&nbsp;&nbsp;&nbsp; % make test</i><br>
+	spim-8.0/spim </i>directory and type:<br><br><i>&nbsp;&nbsp;&nbsp; % make test</i><br>
 	<br>and examine the output of the test. (Note: the exception handler must be installed
 before running the test.)</li>
 </ol>
@@ -325,6 +345,20 @@ available at: http://www.ptlug.org/wiki/SPIM_N770. </p>
 <hr width="100%">
 
 <h2 align=center>Changes in Latest Version</h2>
+<p align=left>The current version of <b>spim</b> is 8.0 (January 2010), which is
+a minor release that cleans up bugs in 7.5 and moves to a BSD license:</p>
+<ul>
+	<li><p>Changed install path from /usr to /usr/local and removed -D option to install 
+command (which doesn&#39;t exists on MacOS).</p></li>
+	<li><p>Change license to a BSD license, update copyright notices, and eliminated 
+references to my old email address.</p></li>
+	<li><p>Simplify alignment of data on stack to ensure enough room is left for 
+environment and args at top of stack.</p></li>
+	<li><p>Initialize stack with arguments when running program from run dialog.</p></li>
+	<li><p>read_input filled buffer with last character of file not terminated by newline.</p></li>
+	<li><p>Links to MIPS documentation were broken.</p></li>
+	<li><p>Did not return value from exit syscall.</p></li>
+</ul>
 <p align=left>The current version of <b>spim</b> is 7.5 (August 2009), which is
 a minor release that cleans up bugs in 7.4:</p>
 <ul>
