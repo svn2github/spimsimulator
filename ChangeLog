@@ -1,3 +1,8 @@
+2010-07-21    <Jim@LS-RED>
+
+	* CPU/version.h, CPU/spim-utils.c, spim/Makefile, xspim/Makefile, xspim/IMakefile, PCSpim/pcspim.vcproj:
+	Move spim version information from file to CPU/version.h.
+
 2010-01-23    <Jim@LS-RED>
 
 	* CPU/endian.c: 

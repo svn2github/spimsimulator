@@ -37,6 +37,7 @@
 #include <stdarg.h>
 
 #include "spim.h"
+#include "version.h"
 #include "string-stream.h"
 #include "spim-utils.h"
 #include "inst.h"
