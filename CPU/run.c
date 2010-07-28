@@ -500,7 +500,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      /* The behavior of this instruction is undefined on divide by
 		 zero or overflow. */
 	      if (R[RT (inst)] != 0
-		  && !(R[RS (inst)] == 0x80000000 && R[RT (inst)] == 0xffffffff))
+		  && !(R[RS (inst)] == (reg_word)0x80000000
+                       && R[RT (inst)] == (reg_word)0xffffffff))
 		{
 		  LO = (reg_word) R[RS (inst)] / (reg_word) R[RT (inst)];
 		  HI = (reg_word) R[RS (inst)] % (reg_word) R[RT (inst)];
@@ -511,7 +512,8 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      /* The behavior of this instruction is undefined on divide by
 		 zero or overflow. */
 	      if (R[RT (inst)] != 0
-		  && !(R[RS (inst)] == 0x80000000 && R[RT (inst)] == 0xffffffff))
+		  && !(R[RS (inst)] == (reg_word)0x80000000
+                       && R[RT (inst)] == (reg_word)0xffffffff))
 		{
 		  LO = (u_reg_word) R[RS (inst)] / (u_reg_word) R[RT (inst)];
 		  HI = (u_reg_word) R[RS (inst)] % (u_reg_word) R[RT (inst)];

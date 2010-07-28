@@ -534,7 +534,7 @@ parse_spim_command (FILE *file, int redo)
       {
 	int hex_flag = 0;
 	int token = (redo ? prev_token : read_token ());
-	if (token == Y_ID && streq(yylval.p, "hex"))
+	if (token == Y_ID && streq((char*)yylval.p, "hex"))
 	  hex_flag = 1;
 	print_all_regs (hex_flag);
 	if (!redo) flush_to_newline ();

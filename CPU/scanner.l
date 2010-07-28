@@ -42,6 +42,9 @@
 #include "scanner.h"
 #include "y.tab.h"
 
+#include <unistd.h>
+
+
 #ifndef YY_CHAR
 #define YY_CHAR char
 #endif
@@ -549,7 +552,11 @@ print_erroneous_line ()
   /* Flush the rest of the line (not consumed) from lex input. */
   if (*yytext != '\n')
     {
+#ifdef __cplusplus
+      while ((c = yyinput ()) != '\n' && c != EOF && c != 1)
+#else
       while ((c = input ()) != '\n' && c != EOF && c != 1)
+#endif
 	*bp ++ = (char)c;
       *bp = '\0';
       error ("%s\n", buffer);

@@ -246,13 +246,13 @@ i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 {
   if (opcode_is_load_store (opcode))
     {
-      int offset;
+      int32 offset;
 
       if (expr->symbol != NULL
 	  && expr->symbol->gp_flag
 	  && rs == 0
-	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
-	  && offset <= IMM_MAX)
+	  && (int32)IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
+	  && offset <= (int32)IMM_MAX)
 	{
 	  i_type_inst_free (opcode, rt, REG_GP, make_imm_expr (offset, NULL, 0));
 	}
@@ -310,8 +310,8 @@ i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 
       if (expr->symbol != NULL
 	  && expr->symbol->gp_flag && rs == 0
-	  && IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
-	  && offset <= IMM_MAX)
+	  && (int32)IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
+	  && offset <= (int32)IMM_MAX)
 	{
 	i_type_inst_free ((opcode == Y_LUI_OP ? Y_ADDIU_OP : opcode),
 			  rt, REG_GP, make_imm_expr (offset, NULL, 0));

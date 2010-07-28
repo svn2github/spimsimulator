@@ -569,7 +569,7 @@ strtoul (const char* str, char** eptr, int base)
 char *
 str_copy (char *str)
 {
-  return (strcpy (xmalloc (strlen (str) + 1), str));
+  return (strcpy ((char*)xmalloc (strlen (str) + 1), str));
 }
 
 

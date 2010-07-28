@@ -156,7 +156,7 @@ do_syscall ()
 #ifdef WIN32
 	R[REG_RES] = _open(mem_reference (R[REG_A0]), R[REG_A1], R[REG_A2]);
 #else
-	R[REG_RES] = open(mem_reference (R[REG_A0]), R[REG_A1], R[REG_A2]);
+	R[REG_RES] = open((char*)mem_reference (R[REG_A0]), R[REG_A1], R[REG_A2]);
 #endif
 	break;
       }

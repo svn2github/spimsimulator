@@ -379,7 +379,8 @@ resolve_a_label_sub (label *sym, instruction *inst, mem_addr pc)
 	      field_mask = 0xffff;
 	    }
 
-	  if ((value & ~field_mask) != 0 && (value & ~field_mask) != 0xffff0000)
+	  if ((value & ~field_mask) != (int32)0
+              && (value & ~field_mask) != (int32)0xffff0000)
 	    {
 	      error ("Immediate value is too large for field: ");
 	      print_inst (pc);
@@ -484,7 +485,7 @@ undefined_symbol_string ()
 {
   int buffer_length = 128;
   int string_length = 0;
-  char *buffer = malloc(buffer_length);
+  char *buffer = (char*)malloc(buffer_length);
 
   int i;
   label *l;
@@ -498,7 +499,7 @@ undefined_symbol_string ()
 	if (buffer_length < after_length)
 	{
 	  buffer_length = MAX (2 * buffer_length, 2 * after_length);
-	  buffer = realloc (buffer, buffer_length);
+	  buffer = (char*)realloc (buffer, buffer_length);
 	}
 	memcpy (buffer + string_length, l->name, name_length);
 	string_length += name_length;

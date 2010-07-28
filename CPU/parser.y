@@ -497,7 +497,7 @@ static void yywarn (char*);
 
 static int null_term;		/* Non-zero means string terminate by \0 */
 
-static void (*store_op) ();	/* Function to store items in an EXPR_LST */
+static void (*store_op) (void*); /* Function to store items in an EXPR_LST */
 
 static label_list *this_line_labels = NULL; /* List of label for curent line */
 
@@ -2114,7 +2114,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 
 	|	Y_BYTE_DIR
-		{store_op = store_byte;}
+		{store_op = (void(*)(void*))store_byte;}
 		EXPR_LST
 		{
 		  if (text_dir)
@@ -2168,7 +2168,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_DOUBLE_DIR
 		{
-		  store_op = store_double;
+		  store_op = (void(*)(void*))store_double;
 		  if (data_dir) set_data_alignment (3);
 		}
 		FP_EXPR_LST
@@ -2206,7 +2206,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_FLOAT_DIR
 		{
-		  store_op = store_float;
+		  store_op = (void(*)(void*))store_float;
 		  if (data_dir) set_data_alignment (2);
 		}
 		FP_EXPR_LST
@@ -2230,7 +2230,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_HALF_DIR
 		{
-		  store_op = store_half;
+		  store_op = (void(*)(void*))store_half;
 		  if (data_dir) set_data_alignment (1);
 		}
 		EXPR_LST
@@ -2370,7 +2370,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_WORD_DIR
 		{
-		  store_op = store_word_data;
+		  store_op = (void(*)(void*))store_word_data;
 		  if (data_dir) set_data_alignment (2);
 		}
 		EXPR_LST
@@ -2443,13 +2443,13 @@ BR_IMM32:	{only_id = 1;} IMM32 {only_id = 0; $$ = $2;}
 
 IMM16:	IMM32
 		{
-		  check_imm_range ($1.p, IMM_MIN, IMM_MAX);
+                  check_imm_range ((imm_expr*)$1.p, IMM_MIN, IMM_MAX);
 		  $$ = $1;
 		}
 
 UIMM16:	IMM32
 		{
-		  check_uimm_range ($1.p, UIMM_MIN, UIMM_MAX);
+                  check_uimm_range ((imm_expr*)$1.p, UIMM_MIN, UIMM_MAX);
 		  $$ = $1;
 		}
 

@@ -1,3 +1,9 @@
+2010-07-27    <Jim@LS-RED>
+
+	* CPU/{inst.c, parser.y, run.c, scanner.l, spim-utils.c,
+	sym-tbl.c, syscall.c}, spim/{Makefile, spim.c}:
+	Fix type errors so spim compiles as C++.
+
 2010-07-21    <Jim@LS-RED>
 
 	* CPU/version.h, CPU/spim-utils.c, spim/Makefile, xspim/Makefile, xspim/IMakefile, PCSpim/pcspim.vcproj:
