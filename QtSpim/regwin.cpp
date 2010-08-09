@@ -9,7 +9,7 @@
 // Integer registers window
 //
 
-void SpimView::displayIntRegisters()
+void SpimView::DisplayIntRegisters()
 {
     QTextEdit* te = ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit");
     QString windowContents = windowFormattingStart();
@@ -36,7 +36,7 @@ void SpimView::displayIntRegisters()
     ui->IntRegDockWidget->setWindowTitle(QString("Integer Registers [")
                                          + QString::number(st_intRegBase)
                                          + QString("]"));
-    captureIntRegisters();
+    CaptureIntRegisters();
 }
 
 
@@ -57,7 +57,7 @@ QString SpimView::formatIntRegister(int regNum, int value, char* name, bool chan
 }
 
 
-void SpimView::captureIntRegisters()
+void SpimView::CaptureIntRegisters()
 {
     int i;
     for (i = 0; i < R_LENGTH; i++)
@@ -78,7 +78,7 @@ void SpimView::captureIntRegisters()
 //
 // Floating point registers
 //
-void SpimView::displayFPRegisters()
+void SpimView::DisplayFPRegisters()
 {
     QTextEdit* te = ui->FPRegDockWidget->findChild<QTextEdit *>("FPRegTextEdit");
     te->clear();
@@ -109,13 +109,13 @@ QString SpimView::formatSFPRegisters()
         windowContents += formatSFPRegister(i, FPR_S(i), FPR_S(i) != oldFPR_S[i]);
     }
 
-    captureSFPRegisters();
+    CaptureSFPRegisters();
 
     return windowContents;
 }
 
 
-void SpimView::captureSFPRegisters()
+void SpimView::CaptureSFPRegisters()
 {
     int i;
     for (i = 0; i < FGR_LENGTH; i++)
@@ -158,13 +158,13 @@ QString SpimView::formatDFPRegisters()
         windowContents += formatDFPRegister(2 * i, FPR_D(i), FPR_D(i) != oldFPR_D[i]);
     }
 
-    captureDFPRegisters();
+    CaptureDFPRegisters();
 
     return windowContents;
 }
 
 
-void SpimView::captureDFPRegisters()
+void SpimView::CaptureDFPRegisters()
 {
     int i;
     for (i = 0; i < FPR_LENGTH; i++)

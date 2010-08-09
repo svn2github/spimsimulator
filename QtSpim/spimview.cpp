@@ -11,15 +11,12 @@ SpimView::SpimView(QWidget *parent) :
     ui(new Ui::SpimView),
     settings("Larus-Stone", "QtSpim")
 {
-    initialize_world("../CPU/exceptions.s");
-    //initialize_run_stack(program_argc, program_argv);
-
-    //
     // Open windows
+    //
     ui->setupUi(this);
 
-    //
     // Set style parameters for docking widgets
+    //
     setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
@@ -30,9 +27,26 @@ SpimView::SpimView(QWidget *parent) :
 
     // Wire up the menu commands
     //
-    QObject::connect(ui->action_File_Open, SIGNAL(triggered(bool)), this, SLOT(file_OpenFile()));
+    wireMenuCommands();
+
+
+    // Restore program settings and window positions
+    //
+    readSettings();
+}
+
+
+SpimView::~SpimView()
+{
+    writeSettings();
+    delete ui;
+}
+
+
+void SpimView::wireMenuCommands()
+{
+    QObject::connect(ui->action_File_Load, SIGNAL(triggered(bool)), this, SLOT(file_LoadFile()));
     QObject::connect(ui->action_File_Reload, SIGNAL(triggered(bool)), this, SLOT(file_ReloadFile()));
-    QObject::connect(ui->action_File_Close, SIGNAL(triggered(bool)), this, SLOT(file_CloseFile()));
     QObject::connect(ui->action_File_SaveLog, SIGNAL(triggered(bool)), this, SLOT(file_SaveLogFile()));
     QObject::connect(ui->action_File_Exit, SIGNAL(triggered(bool)), this, SLOT(file_Exit()));
 
@@ -78,31 +92,6 @@ SpimView::SpimView(QWidget *parent) :
 
     QObject::connect(ui->action_Help_ViewHelp, SIGNAL(triggered(bool)), this, SLOT(help_ViewHelp()));
     QObject::connect(ui->action_Help_AboutSPIM, SIGNAL(triggered(bool)), this, SLOT(help_AboutSPIM()));
-
-
-    // Restore program settings and window positions
-    //
-    readSettings();
-
-
-    // Initialize the contents of the windows
-    //
-    captureIntRegisters();
-    captureSFPRegisters();
-    captureDFPRegisters();
-
-    displayIntRegisters();
-    displayFPRegisters();
-
-    displayTextSegments();
-    displayDataSegments();
-}
-
-
-SpimView::~SpimView()
-{
-    writeSettings();
-    delete ui;
 }
 
 
@@ -153,6 +142,8 @@ void SpimView::readSettings()
     accept_pseudo_insts = settings.value("AcceptPseudoInsts", 1).toInt();
     delayed_branches = settings.value("DelayedBranches", 0).toInt();
     quiet = settings.value("Quiet", 0).toInt();
+    st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
+    st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", "../CPU/exceptions.s").toString();
     settings.endGroup();
 }
 
@@ -200,6 +191,8 @@ void SpimView::writeSettings()
     settings.setValue("AcceptPseudoInsts", accept_pseudo_insts);
     settings.setValue("DelayedBranches", delayed_branches);
     settings.setValue("Quiet", quiet);
+    settings.setValue("LoadExceptionHandler", st_loadExceptionHandler);
+    settings.setValue("ExceptionHandlerFileName", st_ExceptionHandlerFileName);
     settings.endGroup();
 
     settings.sync();
@@ -218,6 +211,18 @@ QString SpimView::windowFormattingEnd()
 }
 
 
+char* SpimView::ExceptionFileOrNull()
+{
+    QByteArray ba = st_ExceptionHandlerFileName.toLocal8Bit(); // char* is deallocated when QByteArray is
+    char* ef = ba.data();                                      // So, make a copy of string while BA is
+    int len = strlen(ef) + 1;                                  // still alive -- tricky
+    char* nef = new char[len];
+    strncpy(nef, ef, len);
+
+    return st_loadExceptionHandler ? nef : NULL;
+}
+
+
 void SpimView::SaveStateAndExit(int val)
 {
     writeSettings();
@@ -225,20 +230,33 @@ void SpimView::SaveStateAndExit(int val)
 }
 
 
+QString SpimView::WriteOutput(QString message)
+{
+    if (message.endsWith("\n"))
+    {
+        message.chop(1);        // Appending adds a <br>, so avoid doubling last newline
+    }
+    message.replace("\n", "<br>");
+    message.replace(" ", "&nbsp;");
+
+    Window->ui->centralWidget->append(QString("<span>") + message + QString("</span>"));
+
+    return message;
+}
+
+
 void SpimView::Error(QString message, bool fatal)
 {
-  message = message.replace("\n", "<br>");
-  message = message.replace(" ", "&nbsp;");
-  Window->ui->centralWidget->append(message);
+    message = WriteOutput(message);
 
-  QMessageBox msgBox(fatal ? QMessageBox::Critical : QMessageBox::Warning,
-                     "Error",
-                     message,
-                     QMessageBox::Close);
-  msgBox.exec();
+    QMessageBox msgBox(fatal ? QMessageBox::Critical : QMessageBox::Warning,
+                       "Error",
+                       message,
+                       QMessageBox::Close);
+    msgBox.exec();
 
-  if (fatal)
+    if (fatal)
     {
-      SaveStateAndExit(1);
+        SaveStateAndExit(1);
     }
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sun Aug 8 16:47:14 2010
+** Created: Sun Aug 8 21:08:37 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -28,8 +28,7 @@ QT_BEGIN_NAMESPACE
 class Ui_SpimView
 {
 public:
-    QAction *action_File_Open;
-    QAction *action_File_Close;
+    QAction *action_File_Load;
     QAction *action_File_SaveLog;
     QAction *action_File_Exit;
     QAction *action_Sim_ClearRegisters;
@@ -99,10 +98,8 @@ public:
             SpimView->setObjectName(QString::fromUtf8("SpimView"));
         SpimView->resize(1024, 768);
         SpimView->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks|QMainWindow::VerticalTabs);
-        action_File_Open = new QAction(SpimView);
-        action_File_Open->setObjectName(QString::fromUtf8("action_File_Open"));
-        action_File_Close = new QAction(SpimView);
-        action_File_Close->setObjectName(QString::fromUtf8("action_File_Close"));
+        action_File_Load = new QAction(SpimView);
+        action_File_Load->setObjectName(QString::fromUtf8("action_File_Load"));
         action_File_SaveLog = new QAction(SpimView);
         action_File_SaveLog->setObjectName(QString::fromUtf8("action_File_SaveLog"));
         action_File_Exit = new QAction(SpimView);
@@ -309,9 +306,8 @@ public:
         menuBar->addAction(menu_Data_Segment->menuAction());
         menuBar->addAction(menu_Window->menuAction());
         menuBar->addAction(menu_Help->menuAction());
-        menu_File->addAction(action_File_Open);
+        menu_File->addAction(action_File_Load);
         menu_File->addAction(action_File_Reload);
-        menu_File->addAction(action_File_Close);
         menu_File->addSeparator();
         menu_File->addAction(action_File_SaveLog);
         menu_File->addSeparator();
@@ -371,13 +367,12 @@ public:
     void retranslateUi(QMainWindow *SpimView)
     {
         SpimView->setWindowTitle(QApplication::translate("SpimView", "SpimView", 0, QApplication::UnicodeUTF8));
-        action_File_Open->setText(QApplication::translate("SpimView", "&Open Source File", 0, QApplication::UnicodeUTF8));
-        action_File_Close->setText(QApplication::translate("SpimView", "&Close Source File", 0, QApplication::UnicodeUTF8));
+        action_File_Load->setText(QApplication::translate("SpimView", "&Load File", 0, QApplication::UnicodeUTF8));
         action_File_SaveLog->setText(QApplication::translate("SpimView", "&Save Log File", 0, QApplication::UnicodeUTF8));
         action_File_Exit->setText(QApplication::translate("SpimView", "&Exit", 0, QApplication::UnicodeUTF8));
         action_Sim_ClearRegisters->setText(QApplication::translate("SpimView", "&Clear Registers", 0, QApplication::UnicodeUTF8));
         action_Sim_Reinitialize->setText(QApplication::translate("SpimView", "Re&initialize Simulator", 0, QApplication::UnicodeUTF8));
-        action_File_Reload->setText(QApplication::translate("SpimView", "Re&load Source File", 0, QApplication::UnicodeUTF8));
+        action_File_Reload->setText(QApplication::translate("SpimView", "Re&intialize and Load File", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setText(QApplication::translate("SpimView", "&Run", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setText(QApplication::translate("SpimView", "&Single Step", 0, QApplication::UnicodeUTF8));
         action_Sim_MultipleStep->setText(QApplication::translate("SpimView", "&Multiple Step", 0, QApplication::UnicodeUTF8));

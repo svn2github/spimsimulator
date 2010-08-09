@@ -47,12 +47,14 @@ int delayed_loads;             /* Non-zero => simulate delayed loads */
 int quiet;                     /* Non-zero => no warning messages */
 int source_file;               /* Non-zero => program is source, not binary */
 char* exception_file_name = 0; /* The path from which to load the exception handler, if desired */
-port message_out, console_out;
 int mapped_io;                  /* Non-zero => activate memory-mapped IO */
 int spim_return_value;          /* Value returned when spim exits */
 
+port message_out;
+port console_out;
 
 
+#define BIG_BUF_SIZE 10000
 
 int console_input_available()
 {
@@ -70,8 +72,8 @@ void error(char *fmt, ...)
     va_list args;
     va_start (args, fmt);
 
-    char buf[1000];
-    qvsnprintf(buf, 1000, fmt, args);
+    char buf[BIG_BUF_SIZE];
+    qvsnprintf(buf, BIG_BUF_SIZE, fmt, args);
     va_end(args);
 
     Window->Error(buf, 0);
@@ -83,8 +85,8 @@ void fatal_error(char *fmt, ...)
     va_list args;
     va_start (args, fmt);
 
-    char buf[1000];
-    qvsnprintf(buf, 1000, fmt, args);
+    char buf[BIG_BUF_SIZE];
+    qvsnprintf(buf, BIG_BUF_SIZE, fmt, args);
     va_end(args);
 
     Window->Error(buf, 1);
@@ -114,4 +116,18 @@ void run_error (char *fmt, ...)
 
 void write_output (port fp, char *fmt, ...)
 {
+    va_list args;
+    va_start (args, fmt);
+
+    char buf[BIG_BUF_SIZE];
+    qvsnprintf(buf, BIG_BUF_SIZE, fmt, args);
+    va_end(args);
+
+    if (fp.i == message_out.i)
+    {
+        Window->WriteOutput(buf);
+    }
+    else if (fp.i == console_out.i)
+    {
+    }
 }

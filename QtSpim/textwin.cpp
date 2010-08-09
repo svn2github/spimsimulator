@@ -11,7 +11,7 @@
 // Text segment window
 //
 
-void SpimView::displayTextSegments()
+void SpimView::DisplayTextSegments()
 {
     QTextEdit* te = ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit");
 

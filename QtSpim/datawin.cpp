@@ -9,7 +9,7 @@
 // Data segment window
 //
 
-void SpimView::displayDataSegments()
+void SpimView::DisplayDataSegments()
 {
     QTextEdit* te = ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegTextEdit");
 

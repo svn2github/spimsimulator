@@ -17,7 +17,7 @@
 // File menu
 //
 
-void SpimView::file_OpenFile()
+void SpimView::file_LoadFile()
 {
   QString file = QFileDialog::getOpenFileName(this,
                                               tr("Open Assembly Code"),
@@ -29,19 +29,19 @@ void SpimView::file_OpenFile()
       st_commandLine = st_programFileName;
       read_assembly_file(st_programFileName.toLocal8Bit().data());
 
-      displayTextSegments();
-      displayDataSegments();
+      DisplayTextSegments();
+      DisplayDataSegments();
     }
 }
 
 
 void SpimView::file_ReloadFile()
 {
-}
+    write_output(message_out, "<hr>Memory and registers cleared");
+    initialize_world(ExceptionFileOrNull());
+    write_startup_message();
 
-
-void SpimView::file_CloseFile()
-{
+    file_LoadFile();
 }
 
 

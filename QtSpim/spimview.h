@@ -20,18 +20,30 @@ namespace Ui {
 
 class SpimView : public QMainWindow
 {
-    Q_OBJECT
+ Q_OBJECT
 
-public:
+     public:
     explicit SpimView(QWidget *parent = 0);
     ~SpimView();
 
+    QString WriteOutput(QString message);
     void Error(QString message, bool fatal);
 
     void SaveStateAndExit(int val);
 
+    char* ExceptionFileOrNull();
 
-private:
+    void CaptureIntRegisters();
+    void CaptureSFPRegisters();
+    void CaptureDFPRegisters();
+
+    void DisplayIntRegisters();
+    void DisplayFPRegisters();
+    void DisplayTextSegments();
+    void DisplayDataSegments();
+
+
+ private:
     Ui::SpimView *ui;
 
 
@@ -68,6 +80,11 @@ private:
     QString st_programFileName;
     QString st_commandLine;
 
+    // Spim
+    //
+    bool st_loadExceptionHandler;
+    QString st_ExceptionHandlerFileName;
+
 
     //
     // Establish text formatting for a window
@@ -79,7 +96,6 @@ private:
     //
     // Integer registers window
     //
-    void displayIntRegisters();
     QString formatSpecialIntRegister(int value, char* name, bool changed);
     QString formatIntRegister(int regNum, int value, char* name, bool changed);
 
@@ -94,13 +110,11 @@ private:
     reg_word oldStatus;
     reg_word oldHI;
     reg_word oldLO;
-    void captureIntRegisters();
 
 
     //
     // Floating point registers window
     //
-    void displayFPRegisters();
 
     //
     // Single precision FP registers window
@@ -108,7 +122,6 @@ private:
     QString formatSFPRegisters();
     QString formatSpecialSFPRegister(int value, char* name, bool changed);
     QString formatSFPRegister(int regNum, float value, bool changed);
-    void captureSFPRegisters();
 
     float oldFPR_S[FGR_LENGTH];
     reg_word oldFIR;
@@ -122,7 +135,6 @@ private:
     //
     QString formatDFPRegisters();
     QString formatDFPRegister(int regNum, double value, bool changed);
-    void captureDFPRegisters();
 
     float oldFPR_D[FPR_LENGTH];
 
@@ -140,7 +152,6 @@ private:
     //
     // Text segment window
     //
-    void displayTextSegments();
     QString formatUserTextSeg();
     QString formatKernelTextSeg();
     QString formatInstructions(mem_addr from, mem_addr to);
@@ -150,7 +161,6 @@ private:
     //
     // Data segment window
     //
-    void displayDataSegments();
     QString formatUserDataSeg();
     QString formatUserStack();
     QString formatKernelDataSeg();
@@ -170,10 +180,11 @@ private:
     //
     // Menu functions
     //
+    void wireMenuCommands();
+
  public slots:
-    void file_OpenFile();
+    void file_LoadFile();
     void file_ReloadFile();
-    void file_CloseFile();
     void file_SaveLogFile();
     void file_Exit();
 
