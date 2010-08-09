@@ -40,6 +40,7 @@ typedef struct str_stm
 } str_stream;
 
 
+void ss_init (str_stream* ss);
 void ss_clear (str_stream* ss);
 void ss_erase (str_stream* ss, int n);
 int ss_length (str_stream* ss);

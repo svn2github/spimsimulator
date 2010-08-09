@@ -42,8 +42,11 @@
 #include "scanner.h"
 #include "y.tab.h"
 
+#ifdef WIN32
+#include <io.h>
+#else
 #include <unistd.h>
-
+#endif
 
 #ifndef YY_CHAR
 #define YY_CHAR char
@@ -521,31 +524,32 @@ copy_str (YY_CHAR *str, int chop)
    below the point at which the error occured.	Also, reset the input
    stream to the begining of the next line. */
 
-void
-print_erroneous_line ()
+char*
+erroneous_line ()
 {
   int prefix_length = yytext - current_line;
   int i, c;
-  YY_CHAR buffer[1024], *bp = buffer;
+  str_stream ss;
 
-  if (current_line == NULL) return;
+  ss_init (&ss);
+
+  if (current_line == NULL) return ss_to_string (&ss);
 
   /* Print part of line that has been consumed. */
+  ss_printf (&ss, "	  ");
   if (0 <= prefix_length)
     {
       /* yytext and current_line point to same line */
-      error ("	  ");
       c = *(current_line + prefix_length);
       *(current_line + prefix_length) = '\0';
-      error ("%s", current_line);
+      ss_printf (&ss, "%s", current_line);
       *(current_line + prefix_length) = (char)c;
-      error ("%s", yytext);
+      ss_printf (&ss, "%s", yytext);
     }
   else
     {
       /* yytext and current_line point to different lines */
-      error ("	  ");
-      error ("%s", current_line);
+      ss_printf (&ss, "%s", current_line);
       prefix_length = strlen(current_line);
     }
 
@@ -557,19 +561,19 @@ print_erroneous_line ()
 #else
       while ((c = input ()) != '\n' && c != EOF && c != 1)
 #endif
-	*bp ++ = (char)c;
-      *bp = '\0';
-      error ("%s\n", buffer);
+      {
+        ss_printf (&ss, "%c", c);
+      }
       if (c == '\n') unput ('\n');
       current_line = NULL;
     }
 
   /* Print marker to point at which consumption stopped. */
-  if (1024 <= prefix_length) return;
-  error ("	  ");
-  for (i = 0; i < prefix_length; i ++) buffer[i] = ' ';
-  buffer[i] = '\0';
-  error ("%s^\n", buffer);
+  ss_printf (&ss, "\n	  ");
+  for (i = 0; i < prefix_length; i ++) ss_printf (&ss, " ");
+  ss_printf (&ss, "^\n");
+
+  return ss_to_string (&ss);
 }
 
 

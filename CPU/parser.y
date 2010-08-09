@@ -2908,8 +2908,7 @@ yyerror (char *s)
 void
 yywarn (char *s)
 {
-  error ("spim: (parser) %s on line %d of file %s\n", s, line_no, input_file_name);
-  print_erroneous_line ();
+  error ("spim: (parser) %s on line %d of file %s\n%s", s, line_no, input_file_name, erroneous_line ());
 }
 
 

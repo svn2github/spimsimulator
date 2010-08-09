@@ -34,7 +34,7 @@
 /* Exported functions (besides yylex): */
 
 void initialize_scanner (FILE *in_file);
-void print_erroneous_line ();
+char* erroneous_line ();
 void scanner_start_line ();
 int register_name_to_number (char *name);
 char *source_line ();

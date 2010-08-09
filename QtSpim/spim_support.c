@@ -31,20 +31,28 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#include "spim.h"
+
+#include <stdarg.h>
+
+#include "spimview.h"
+#include "ui_spimview.h"
 
 
-// Necessary SPIM globals
-int bare_machine;                /* Non-zero => simulate bare machine */
-int accept_pseudo_insts;	 /* Non-Zero => parse pseudo instructions  */
-int delayed_branches;		 /* Non-zero => simulate delayed branches */
-int delayed_loads;		 /* Non-zero => simulate delayed loads */
-int quiet;			 /* Non-zero => no warning messages */
-int source_file;		 /* Non-zero => program is source, not binary */
+// SPIM globals
+//
+int bare_machine;              /* Non-zero => simulate bare machine */
+int accept_pseudo_insts;       /* Non-Zero => parse pseudo instructions  */
+int delayed_branches;          /* Non-zero => simulate delayed branches */
+int delayed_loads;             /* Non-zero => simulate delayed loads */
+int quiet;                     /* Non-zero => no warning messages */
+int source_file;               /* Non-zero => program is source, not binary */
 char* exception_file_name = 0; /* The path from which to load the exception handler, if desired */
 port message_out, console_out;
-int mapped_io;			 /* Non-zero => activate memory-mapped IO */
-int spim_return_value;		/* Value returned when spim exits */
+int mapped_io;                  /* Non-zero => activate memory-mapped IO */
+int spim_return_value;          /* Value returned when spim exits */
+
+
+
 
 int console_input_available()
 {
@@ -57,14 +65,29 @@ void control_c_seen(int arg)
 }
 
 
-#define IO_BUFFSIZE 10000
 void error(char *fmt, ...)
 {
+    va_list args;
+    va_start (args, fmt);
+
+    char buf[1000];
+    qvsnprintf(buf, 1000, fmt, args);
+    va_end(args);
+
+    Window->Error(buf, 0);
 }
 
 
 void fatal_error(char *fmt, ...)
 {
+    va_list args;
+    va_start (args, fmt);
+
+    char buf[1000];
+    qvsnprintf(buf, 1000, fmt, args);
+    va_end(args);
+
+    Window->Error(buf, 1);
 }
 
 

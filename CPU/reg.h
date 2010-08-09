@@ -67,6 +67,8 @@ extern mem_addr PC, nPC;
 
 #define REG_GP		28
 
+extern char *int_reg_names[];
+
 
 
 /* Coprocessor registers: */

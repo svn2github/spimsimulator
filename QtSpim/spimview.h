@@ -26,6 +26,11 @@ public:
     explicit SpimView(QWidget *parent = 0);
     ~SpimView();
 
+    void Error(QString message, bool fatal);
+
+    void SaveStateAndExit(int val);
+
+
 private:
     Ui::SpimView *ui;
 
@@ -33,27 +38,35 @@ private:
     //
     // Program state
     //
+    void writeSettings();
+    void readSettings();
+
     QSettings settings;
 
     // Register window
     //
-    bool colorChangedRegisters;
-    QString changedRegisterColor;
-    int intRegBase;
+    bool st_colorChangedRegisters;
+    QString st_changedRegisterColor;
+    int st_intRegBase;
 
     // Text window
     //
-    bool showUserTextSegment;
-    bool showKernelTextSegment;
-    bool showTextComments;
-    bool showTextDisassembly;
+    bool st_showUserTextSegment;
+    bool st_showKernelTextSegment;
+    bool st_showTextComments;
+    bool st_showTextDisassembly;
 
     // Data window
     //
-    bool showUserDataSegment;
-    bool showUserStackSegment;
-    bool showKernelDataSegment;
-    int dataSegmentBase;
+    bool st_showUserDataSegment;
+    bool st_showUserStackSegment;
+    bool st_showKernelDataSegment;
+    int st_dataSegmentBase;
+
+    // File menu
+    //
+    QString st_programFileName;
+    QString st_commandLine;
 
 
     //
@@ -152,6 +165,62 @@ private:
     QString formatWord(mem_word word, int base);
     QString formatChar(int chr);
     QString formatSegLabel(QString segName, mem_addr low, mem_addr high);
+
+
+    //
+    // Menu functions
+    //
+ public slots:
+    void file_OpenFile();
+    void file_ReloadFile();
+    void file_CloseFile();
+    void file_SaveLogFile();
+    void file_Exit();
+
+    void sim_ClearRegisters();
+    void sim_ReinitializeSimulator();
+    void sim_Run();
+    void sim_SingleStep();
+    void sim_MultipleStep();
+    void sim_SetBreakpoint();
+    void sim_ListBreakpoints();
+    void sim_SetMemoryLocation();
+    void sim_DisplaySymbols();
+    void sim_Settings();
+
+    void reg_DisplayBinary();
+    void reg_DisplayOctal();
+    void reg_DisplayHex();
+    void reg_DisplayDecimal();
+    void reg_DisplayChar();
+
+    void text_DisplayUserText();
+    void text_DisplayKernelText();
+    void text_NarrowRange();
+    void text_DisplayComments();
+    void text_DisplayInstructionValue();
+
+    void data_DisplayUserData();
+    void data_DisplayUserStack();
+    void data_DisplayKernelData();
+    void data_NarrowDisplay();
+    void data_DisplayBinary();
+    void data_DisplayOctal();
+    void data_DisplayHex();
+    void data_DisplayDecimal();
+
+    void win_IntRegisters();
+    void win_FPRegisters();
+    void win_TextSegment();
+    void win_DataSegment();
+    void win_Console();
+    void win_Messages();
+    void win_ClearConsole();
+
+    void help_ViewHelp();
+    void help_AboutSPIM();
 };
+
+extern SpimView* Window;
 
 #endif // SPIMVIEW_H

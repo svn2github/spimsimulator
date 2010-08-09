@@ -1688,7 +1688,7 @@ static void
 start_CP0_timer ()
 {
 #ifdef WIN32
-  HANDLE timer = CreateWaitableTimer(NULL, TRUE, "SPIMTimer");
+  HANDLE timer = CreateWaitableTimer(NULL, TRUE, TEXT("SPIMTimer"));
   if (NULL == timer)
     {
       error ("CreateWaitableTimer failed");

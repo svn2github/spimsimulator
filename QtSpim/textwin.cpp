@@ -26,7 +26,7 @@ void SpimView::displayTextSegments()
 
 QString SpimView::formatUserTextSeg()
 {
-    if (showUserTextSegment) 
+    if (st_showUserTextSegment) 
     {
         return formatSegLabel("User Text Segment", TEXT_BOT, text_top)
             % formatInstructions(TEXT_BOT, text_top);
@@ -40,7 +40,7 @@ QString SpimView::formatUserTextSeg()
 
 QString SpimView::formatKernelTextSeg()
 {
-    if (showKernelTextSegment)
+    if (st_showKernelTextSegment)
     {
         return formatSegLabel("Kernel Text Segment", K_TEXT_BOT, k_text_top)
             % formatInstructions(K_TEXT_BOT, k_text_top);
@@ -83,10 +83,10 @@ QString SpimView::formatInstructions(mem_addr from, mem_addr to)
                 *(s + 1) = '\0';
             }
             windowContents += QString("[") % QString(pc) % QString("] ")
-                % (showTextDisassembly ? QString(binInst) : QString(""))
+                % (st_showTextDisassembly ? QString(binInst) : QString(""))
                 % nnbsp(2) % QString("<b>") % QString(disassembly) % QString("</b>")
                 % nnbsp(25 - strlen(disassembly))
-                % (comment != NULL && showTextComments
+                % (comment != NULL && st_showTextComments
                    ? QString("<i>") % QString(comment) % QString("</i>")
                    : QString(""))
                 % QString("<br>");

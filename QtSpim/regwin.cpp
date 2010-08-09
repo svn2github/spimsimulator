@@ -34,7 +34,7 @@ void SpimView::displayIntRegisters()
     te->clear();
     te->setHtml(windowContents);
     ui->IntRegDockWidget->setWindowTitle(QString("Integer Registers [")
-                                         + QString::number(intRegBase)
+                                         + QString::number(st_intRegBase)
                                          + QString("]"));
     captureIntRegisters();
 }
@@ -188,7 +188,7 @@ QString SpimView::formatDFPRegister(int regNum, double value, bool changed)
 
 QString SpimView::formatInt(int value)
 {
-    return formatWord(value, intRegBase);
+    return formatWord(value, st_intRegBase);
 }
 
 
@@ -205,15 +205,15 @@ QString SpimView::formatReg(QString name, QString value, bool changed)
 
 QString SpimView::registerBefore(bool changed)
 {
-    return QString(changed && colorChangedRegisters
-                   ? QString("<font color='") % QString(changedRegisterColor) % QString("'>")
+    return QString(changed && st_colorChangedRegisters
+                   ? QString("<font color='") % QString(st_changedRegisterColor) % QString("'>")
                    : QString(""));
 }
 
 
 QString SpimView::registerAfter(bool changed)
 {
-    return QString(changed && colorChangedRegisters ? "</font>" : "");
+    return QString(changed && st_colorChangedRegisters ? "</font>" : "");
 }
 
 

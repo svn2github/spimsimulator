@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1042</width>
+    <width>1024</width>
     <height>768</height>
    </rect>
   </property>
@@ -16,30 +16,20 @@
   <property name="dockOptions">
    <set>QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks|QMainWindow::VerticalTabs</set>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QTextEdit" name="xTextSegTextEdit">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>0</width>
-      <height>0</height>
-     </rect>
-    </property>
-    <property name="undoRedoEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
+  <widget class="QTextEdit" name="centralWidget">
+   <property name="undoRedoEnabled">
+    <bool>false</bool>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1042</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>
@@ -47,92 +37,89 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Open"/>
-    <addaction name="actionRe_Load_Source_File"/>
-    <addaction name="action_Close"/>
+    <addaction name="action_File_Open"/>
+    <addaction name="action_File_Reload"/>
+    <addaction name="action_File_Close"/>
     <addaction name="separator"/>
-    <addaction name="action_Save_Log_FIle"/>
+    <addaction name="action_File_SaveLog"/>
     <addaction name="separator"/>
-    <addaction name="action_Exit"/>
+    <addaction name="action_File_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Simulator">
     <property name="title">
      <string>&amp;Simulator</string>
     </property>
-    <addaction name="action_Clear_Registers"/>
-    <addaction name="action_Reinitialize_Simulator"/>
+    <addaction name="action_Sim_ClearRegisters"/>
+    <addaction name="action_Sim_Reinitialize"/>
     <addaction name="separator"/>
-    <addaction name="action_Run"/>
-    <addaction name="action_Single_Step"/>
-    <addaction name="action_Multiple_Step"/>
+    <addaction name="action_Sim_Run"/>
+    <addaction name="action_Sim_SingleStep"/>
+    <addaction name="action_Sim_MultipleStep"/>
     <addaction name="separator"/>
-    <addaction name="actionSet_Breakpoint"/>
-    <addaction name="action_List_Breakpoints"/>
+    <addaction name="action_Sim_SetBreakpoint"/>
+    <addaction name="action_Sim_ListBreakpoints"/>
     <addaction name="separator"/>
-    <addaction name="actionChange_Memory_Location"/>
+    <addaction name="action_Sim_SetMemoryLocation"/>
     <addaction name="separator"/>
-    <addaction name="action_Display_Symbols"/>
+    <addaction name="action_Sim_DisplaySymbols"/>
     <addaction name="separator"/>
-    <addaction name="actionSettings"/>
+    <addaction name="action_Sim_Settings"/>
    </widget>
    <widget class="QMenu" name="menu_Registers">
     <property name="title">
      <string>&amp;Registers</string>
     </property>
-    <addaction name="actionBinary"/>
-    <addaction name="actionOctal"/>
-    <addaction name="actionHex"/>
-    <addaction name="actionDecimal"/>
-    <addaction name="actionChar"/>
+    <addaction name="action_Reg_DisplayBinary"/>
+    <addaction name="action_Reg_DisplayOctal"/>
+    <addaction name="action_Reg_DisplayHex"/>
+    <addaction name="action_Reg_DisplayDecimal"/>
+    <addaction name="action_Reg_DisplayChar"/>
    </widget>
    <widget class="QMenu" name="menu_Text_Segment">
     <property name="title">
      <string>&amp;Text Segment</string>
     </property>
-    <addaction name="actionUser_Text"/>
-    <addaction name="actionKernel_Text"/>
+    <addaction name="action_Text_DisplayUserText"/>
+    <addaction name="action_Text_DisplayKernelText"/>
     <addaction name="separator"/>
-    <addaction name="actionNarrow_Range"/>
-    <addaction name="separator"/>
-    <addaction name="actionComments"/>
-    <addaction name="actionInstruction_Value"/>
+    <addaction name="action_Text_NarrowRange"/>
+    <addaction name="action_Text_DisplayComments"/>
+    <addaction name="action_Text_DisplayInstructionValue"/>
    </widget>
    <widget class="QMenu" name="menu_Data_Segment">
     <property name="title">
      <string>&amp;Data Segment</string>
     </property>
-    <addaction name="actionUser_Data"/>
-    <addaction name="actionUser_Stack"/>
-    <addaction name="actionKernel_Data"/>
+    <addaction name="action_Data_DisplayUserData"/>
+    <addaction name="action_Data_DisplayUserStack"/>
+    <addaction name="action_Data_DisplayKernelData"/>
     <addaction name="separator"/>
-    <addaction name="actionNarrow_Display"/>
     <addaction name="separator"/>
-    <addaction name="actionBinary_2"/>
-    <addaction name="actionOctal_2"/>
-    <addaction name="actionHex_2"/>
-    <addaction name="actionDecimal_2"/>
-    <addaction name="actionString"/>
+    <addaction name="action_Data_DisplayBinary"/>
+    <addaction name="action_Data_DisplayOctal"/>
+    <addaction name="action_Data_DisplayHex"/>
+    <addaction name="action_Data_DisplayDecimal"/>
    </widget>
    <widget class="QMenu" name="menu_Window">
     <property name="title">
      <string>&amp;Window</string>
     </property>
-    <addaction name="actionInteger_Registers"/>
-    <addaction name="actionFP_Registers"/>
-    <addaction name="actionText_Segment"/>
-    <addaction name="actionData_Segment"/>
-    <addaction name="actionConsole"/>
-    <addaction name="actionSPIM_Messages"/>
+    <addaction name="action_Win_IntRegisters"/>
+    <addaction name="action_Win_FPRegisters"/>
+    <addaction name="action_Win_TextSegment"/>
+    <addaction name="action_Win_Data_Segment"/>
+    <addaction name="action_Win_Console"/>
+    <addaction name="action_Win_Messages"/>
     <addaction name="separator"/>
-    <addaction name="actionClear_Console"/>
-    <addaction name="actionToolbar"/>
+    <addaction name="action_Win_ClearConsole"/>
+    <addaction name="action_Win_Toolbar"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionView_Help"/>
-    <addaction name="actionAbout_SPIM"/>
+    <addaction name="action_Help_ViewHelp"/>
+    <addaction name="action_Help_AboutSPIM"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Simulator"/>
@@ -142,7 +129,7 @@
    <addaction name="menu_Window"/>
    <addaction name="menu_Help"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="main_Win_ToolBar">
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -153,19 +140,19 @@
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="IntRegDockWidget">
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea</set>
+    <set>Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Integer Registers</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>1</number>
+    <number>4</number>
    </attribute>
    <widget class="QTextEdit" name="IntRegTextEdit">
     <property name="minimumSize">
      <size>
-      <width>275</width>
-      <height>310</height>
+      <width>250</width>
+      <height>600</height>
      </size>
     </property>
     <property name="undoRedoEnabled">
@@ -178,13 +165,13 @@
   </widget>
   <widget class="QDockWidget" name="FPRegDockWidget">
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea</set>
+    <set>Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>FP Registers</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>1</number>
+    <number>4</number>
    </attribute>
    <widget class="QTextEdit" name="FPRegTextEdit">
     <property name="undoRedoEnabled">
@@ -196,16 +183,25 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="TextSegDockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
+   </property>
    <property name="windowTitle">
     <string>Text Segment</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>4</number>
    </attribute>
    <widget class="QTextEdit" name="TextSegmentTextEdit">
     <property name="minimumSize">
      <size>
-      <width>749</width>
+      <width>700</width>
       <height>600</height>
      </size>
     </property>
@@ -219,13 +215,13 @@
   </widget>
   <widget class="QDockWidget" name="DataSegDockWidget">
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Data Segment</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>4</number>
    </attribute>
    <widget class="QTextEdit" name="DataSegTextEdit">
     <property name="undoRedoEnabled">
@@ -236,104 +232,82 @@
     </property>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="ConsoleDockWidget">
-   <property name="allowedAreas">
-    <set>Qt::AllDockWidgetAreas</set>
-   </property>
-   <property name="windowTitle">
-    <string>Console</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QTextEdit" name="ConsoleTextEdit">
-    <property name="windowTitle">
-     <string>Console</string>
-    </property>
-    <property name="undoRedoEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
-  </widget>
-  <action name="action_Open">
+  <action name="action_File_Open">
    <property name="text">
     <string>&amp;Open Source File</string>
    </property>
   </action>
-  <action name="action_Close">
+  <action name="action_File_Close">
    <property name="text">
     <string>&amp;Close Source File</string>
    </property>
   </action>
-  <action name="action_Save_Log_FIle">
+  <action name="action_File_SaveLog">
    <property name="text">
-    <string>&amp;Save Log FIle</string>
+    <string>&amp;Save Log File</string>
    </property>
   </action>
-  <action name="action_Exit">
+  <action name="action_File_Exit">
    <property name="text">
     <string>&amp;Exit</string>
    </property>
   </action>
-  <action name="action_Clear_Registers">
+  <action name="action_Sim_ClearRegisters">
    <property name="text">
     <string>&amp;Clear Registers</string>
    </property>
   </action>
-  <action name="action_Reinitialize_Simulator">
+  <action name="action_Sim_Reinitialize">
    <property name="text">
     <string>Re&amp;initialize Simulator</string>
    </property>
   </action>
-  <action name="actionRe_Load_Source_File">
+  <action name="action_File_Reload">
    <property name="text">
-    <string>Re&amp;Load Source File</string>
+    <string>Re&amp;load Source File</string>
    </property>
   </action>
-  <action name="action_Run">
+  <action name="action_Sim_Run">
    <property name="text">
     <string>&amp;Run</string>
    </property>
   </action>
-  <action name="action_Single_Step">
+  <action name="action_Sim_SingleStep">
    <property name="text">
     <string>&amp;Single Step</string>
    </property>
   </action>
-  <action name="action_Multiple_Step">
+  <action name="action_Sim_MultipleStep">
    <property name="text">
     <string>&amp;Multiple Step</string>
    </property>
   </action>
-  <action name="actionSet_Breakpoint">
+  <action name="action_Sim_SetBreakpoint">
    <property name="text">
-    <string>Set &amp;Breakpoint</string>
+    <string>Set&amp;Breakpoint</string>
    </property>
   </action>
-  <action name="action_List_Breakpoints">
+  <action name="action_Sim_ListBreakpoints">
    <property name="text">
     <string>&amp;List Breakpoints</string>
    </property>
   </action>
-  <action name="actionChange_Memory_Location">
+  <action name="action_Sim_SetMemoryLocation">
    <property name="text">
     <string>Change &amp;Memory Location</string>
    </property>
   </action>
-  <action name="action_Display_Symbols">
+  <action name="action_Sim_DisplaySymbols">
    <property name="text">
     <string>&amp;Display Symbols</string>
    </property>
   </action>
-  <action name="actionSettings">
+  <action name="action_Sim_Settings">
    <property name="text">
     <string>Settings</string>
    </property>
   </action>
-  <action name="actionBinary">
+  <action name="action_Reg_DisplayBinary">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -341,7 +315,7 @@
     <string>Binary</string>
    </property>
   </action>
-  <action name="actionOctal">
+  <action name="action_Reg_DisplayOctal">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -349,7 +323,7 @@
     <string>Octal</string>
    </property>
   </action>
-  <action name="actionHex">
+  <action name="action_Reg_DisplayHex">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -360,7 +334,7 @@
     <string>Hex</string>
    </property>
   </action>
-  <action name="actionDecimal">
+  <action name="action_Reg_DisplayDecimal">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -368,7 +342,7 @@
     <string>Decimal</string>
    </property>
   </action>
-  <action name="actionChar">
+  <action name="action_Reg_DisplayChar">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -376,7 +350,7 @@
     <string>Char</string>
    </property>
   </action>
-  <action name="actionUser_Text">
+  <action name="action_Text_DisplayUserText">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -387,7 +361,7 @@
     <string>User Text</string>
    </property>
   </action>
-  <action name="actionKernel_Text">
+  <action name="action_Text_DisplayKernelText">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -398,12 +372,12 @@
     <string>Kernel Text</string>
    </property>
   </action>
-  <action name="actionNarrow_Range">
+  <action name="action_Text_NarrowRange">
    <property name="text">
     <string>Narrow Display</string>
    </property>
   </action>
-  <action name="actionComments">
+  <action name="action_Text_DisplayComments">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -414,7 +388,7 @@
     <string>Comments</string>
    </property>
   </action>
-  <action name="actionInstruction_Value">
+  <action name="action_Text_DisplayInstructionValue">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -425,7 +399,7 @@
     <string>Instruction Value</string>
    </property>
   </action>
-  <action name="actionUser_Data">
+  <action name="action_Data_DisplayUserData">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -436,7 +410,7 @@
     <string>User Data</string>
    </property>
   </action>
-  <action name="actionUser_Stack">
+  <action name="action_Data_DisplayUserStack">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -447,7 +421,7 @@
     <string>User Stack</string>
    </property>
   </action>
-  <action name="actionKernel_Data">
+  <action name="action_Data_DisplayKernelData">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -458,12 +432,12 @@
     <string>Kernel Data</string>
    </property>
   </action>
-  <action name="actionNarrow_Display">
+  <action name="action_Data_NarrowDisplay">
    <property name="text">
     <string>Narrow Display</string>
    </property>
   </action>
-  <action name="actionBinary_2">
+  <action name="action_Data_DisplayBinary">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -471,7 +445,7 @@
     <string>Binary</string>
    </property>
   </action>
-  <action name="actionOctal_2">
+  <action name="action_Data_DisplayOctal">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -479,7 +453,7 @@
     <string>Octal</string>
    </property>
   </action>
-  <action name="actionHex_2">
+  <action name="action_Data_DisplayHex">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -490,7 +464,7 @@
     <string>Hex</string>
    </property>
   </action>
-  <action name="actionDecimal_2">
+  <action name="action_Data_DisplayDecimal">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -506,7 +480,7 @@
     <string>String</string>
    </property>
   </action>
-  <action name="actionInteger_Registers">
+  <action name="action_Win_IntRegisters">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -517,7 +491,7 @@
     <string>Integer Registers</string>
    </property>
   </action>
-  <action name="actionFP_Registers">
+  <action name="action_Win_FPRegisters">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -528,7 +502,7 @@
     <string>FP Registers</string>
    </property>
   </action>
-  <action name="actionText_Segment">
+  <action name="action_Win_TextSegment">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -539,7 +513,7 @@
     <string>Text Segment</string>
    </property>
   </action>
-  <action name="actionData_Segment">
+  <action name="action_Win_Data_Segment">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -550,7 +524,7 @@
     <string>Data Segment</string>
    </property>
   </action>
-  <action name="actionConsole">
+  <action name="action_Win_Console">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -561,7 +535,7 @@
     <string>Console</string>
    </property>
   </action>
-  <action name="actionSPIM_Messages">
+  <action name="action_Win_Messages">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -572,12 +546,12 @@
     <string>SPIM Messages</string>
    </property>
   </action>
-  <action name="actionClear_Console">
+  <action name="action_Win_ClearConsole">
    <property name="text">
     <string>Clear Console</string>
    </property>
   </action>
-  <action name="actionToolbar">
+  <action name="action_Win_Toolbar">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -593,12 +567,12 @@
     <string>Status Bar</string>
    </property>
   </action>
-  <action name="actionView_Help">
+  <action name="action_Help_ViewHelp">
    <property name="text">
     <string>View Help</string>
    </property>
   </action>
-  <action name="actionAbout_SPIM">
+  <action name="action_Help_AboutSPIM">
    <property name="text">
     <string>About SPIM</string>
    </property>

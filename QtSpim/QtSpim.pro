@@ -12,6 +12,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         spimview.cpp\
+        menu.cpp\
         regwin.cpp\
         textwin.cpp\
         datawin.cpp\

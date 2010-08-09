@@ -24,7 +24,7 @@ void SpimView::displayDataSegments()
 
 QString SpimView::formatUserDataSeg()
 {
-    if (showUserDataSegment)
+    if (st_showUserDataSegment)
     {
         return formatSegLabel("User data segment", DATA_BOT, data_top)
             % formatMemoryContents(DATA_BOT, data_top);
@@ -38,7 +38,7 @@ QString SpimView::formatUserDataSeg()
 
 QString SpimView::formatUserStack()
 {
-    if (showUserStackSegment)
+    if (st_showUserStackSegment)
     {
         return formatSegLabel("<br>User Stack", ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP - 4096)
             % formatMemoryContents(ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP - 4096);
@@ -52,7 +52,7 @@ QString SpimView::formatUserStack()
 
 QString SpimView::formatKernelDataSeg()
 {
-    if (showKernelDataSegment)
+    if (st_showKernelDataSegment)
     {
         return formatSegLabel("<br>Kernel data segment", K_DATA_BOT, k_data_top)
             % formatMemoryContents(K_DATA_BOT, k_data_top);
@@ -106,7 +106,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
             do
 	    {
                 val = read_mem_word(i);
-                windowContents += nnbsp(2) % formatWord(val, dataSegmentBase);
+                windowContents += nnbsp(2) % formatWord(val, st_dataSegmentBase);
                 i += BYTES_PER_WORD;
 	    }
             while (i % BYTES_PER_LINE != 0);
@@ -135,7 +135,7 @@ QString SpimView::formatPartialQuadWord (mem_addr addr)
         for (; (addr % BYTES_PER_LINE) != 0; addr += BYTES_PER_WORD)
 	{
             mem_word val = read_mem_word (addr);
-            windowContents += nnbsp(2) % formatWord(val, dataSegmentBase);
+            windowContents += nnbsp(2) % formatWord(val, st_dataSegmentBase);
 	}
 
         windowContents += "<br>";

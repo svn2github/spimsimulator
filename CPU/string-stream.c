@@ -45,7 +45,7 @@
 #endif
 
 
-static void
+void
 ss_init (str_stream* ss)
 {
   ss->buf = (char *) malloc (SS_BUF_LENGTH);
