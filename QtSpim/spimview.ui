@@ -41,6 +41,7 @@
     <addaction name="action_File_Reload"/>
     <addaction name="separator"/>
     <addaction name="action_File_SaveLog"/>
+    <addaction name="action_File_Print"/>
     <addaction name="separator"/>
     <addaction name="action_File_Exit"/>
    </widget>
@@ -72,7 +73,6 @@
     <addaction name="action_Reg_DisplayOctal"/>
     <addaction name="action_Reg_DisplayHex"/>
     <addaction name="action_Reg_DisplayDecimal"/>
-    <addaction name="action_Reg_DisplayChar"/>
    </widget>
    <widget class="QMenu" name="menu_Text_Segment">
     <property name="title">
@@ -321,9 +321,6 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Hex</string>
    </property>
@@ -348,18 +345,12 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>User Text</string>
    </property>
   </action>
   <action name="action_Text_DisplayKernelText">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -375,18 +366,12 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Comments</string>
    </property>
   </action>
   <action name="action_Text_DisplayInstructionValue">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -397,9 +382,6 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>User Data</string>
    </property>
@@ -408,18 +390,12 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>User Stack</string>
    </property>
   </action>
   <action name="action_Data_DisplayKernelData">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -451,9 +427,6 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Hex</string>
    </property>
@@ -478,18 +451,12 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Integer Registers</string>
    </property>
   </action>
   <action name="action_Win_FPRegisters">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -500,18 +467,12 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Text Segment</string>
    </property>
   </action>
   <action name="action_Win_Data_Segment">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -522,18 +483,12 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Console</string>
    </property>
   </action>
   <action name="action_Win_Messages">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -547,9 +502,6 @@
   </action>
   <action name="action_Win_Toolbar">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -569,6 +521,11 @@
   <action name="action_Help_AboutSPIM">
    <property name="text">
     <string>About SPIM</string>
+   </property>
+  </action>
+  <action name="action_File_Print">
+   <property name="text">
+    <string>Print</string>
    </property>
   </action>
  </widget>

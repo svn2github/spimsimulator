@@ -48,6 +48,7 @@ void SpimView::wireMenuCommands()
     QObject::connect(ui->action_File_Load, SIGNAL(triggered(bool)), this, SLOT(file_LoadFile()));
     QObject::connect(ui->action_File_Reload, SIGNAL(triggered(bool)), this, SLOT(file_ReloadFile()));
     QObject::connect(ui->action_File_SaveLog, SIGNAL(triggered(bool)), this, SLOT(file_SaveLogFile()));
+    QObject::connect(ui->action_File_Print, SIGNAL(triggered(bool)), this, SLOT(file_Print()));
     QObject::connect(ui->action_File_Exit, SIGNAL(triggered(bool)), this, SLOT(file_Exit()));
 
     QObject::connect(ui->action_Sim_ClearRegisters, SIGNAL(triggered(bool)), this, SLOT(sim_ClearRegisters()));
@@ -65,7 +66,6 @@ void SpimView::wireMenuCommands()
     QObject::connect(ui->action_Reg_DisplayOctal, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayOctal()));
     QObject::connect(ui->action_Reg_DisplayHex, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayHex()));
     QObject::connect(ui->action_Reg_DisplayDecimal, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayDecimal()));
-    QObject::connect(ui->action_Reg_DisplayChar, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayChar()));
 
     QObject::connect(ui->action_Text_DisplayUserText, SIGNAL(triggered(bool)), this, SLOT(text_DisplayUserText()));
     QObject::connect(ui->action_Text_DisplayKernelText, SIGNAL(triggered(bool)), this, SLOT(text_DisplayKernelText()));
@@ -110,6 +110,8 @@ void SpimView::readSettings()
     st_colorChangedRegisters = settings.value("ColorChangedRegs", true).toBool();
     st_changedRegisterColor = settings.value("ChangedRegColor", "red").toString();
     st_intRegBase = settings.value("IntRegisterBase", 16).toInt();
+
+    st_intRegBase = setCheckedReg(st_intRegBase);
 
     ui->IntRegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();

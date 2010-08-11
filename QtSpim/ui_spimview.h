@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sun Aug 8 21:08:37 2010
+** Created: Tue Aug 10 21:11:10 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -72,6 +72,7 @@ public:
     QAction *actionStatus_Bar;
     QAction *action_Help_ViewHelp;
     QAction *action_Help_AboutSPIM;
+    QAction *action_File_Print;
     QTextEdit *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu_File;
@@ -135,7 +136,6 @@ public:
         action_Reg_DisplayHex = new QAction(SpimView);
         action_Reg_DisplayHex->setObjectName(QString::fromUtf8("action_Reg_DisplayHex"));
         action_Reg_DisplayHex->setCheckable(true);
-        action_Reg_DisplayHex->setChecked(true);
         action_Reg_DisplayDecimal = new QAction(SpimView);
         action_Reg_DisplayDecimal->setObjectName(QString::fromUtf8("action_Reg_DisplayDecimal"));
         action_Reg_DisplayDecimal->setCheckable(true);
@@ -145,33 +145,26 @@ public:
         action_Text_DisplayUserText = new QAction(SpimView);
         action_Text_DisplayUserText->setObjectName(QString::fromUtf8("action_Text_DisplayUserText"));
         action_Text_DisplayUserText->setCheckable(true);
-        action_Text_DisplayUserText->setChecked(true);
         action_Text_DisplayKernelText = new QAction(SpimView);
         action_Text_DisplayKernelText->setObjectName(QString::fromUtf8("action_Text_DisplayKernelText"));
         action_Text_DisplayKernelText->setCheckable(true);
-        action_Text_DisplayKernelText->setChecked(true);
         action_Text_NarrowRange = new QAction(SpimView);
         action_Text_NarrowRange->setObjectName(QString::fromUtf8("action_Text_NarrowRange"));
         action_Text_DisplayComments = new QAction(SpimView);
         action_Text_DisplayComments->setObjectName(QString::fromUtf8("action_Text_DisplayComments"));
         action_Text_DisplayComments->setCheckable(true);
-        action_Text_DisplayComments->setChecked(true);
         action_Text_DisplayInstructionValue = new QAction(SpimView);
         action_Text_DisplayInstructionValue->setObjectName(QString::fromUtf8("action_Text_DisplayInstructionValue"));
         action_Text_DisplayInstructionValue->setCheckable(true);
-        action_Text_DisplayInstructionValue->setChecked(true);
         action_Data_DisplayUserData = new QAction(SpimView);
         action_Data_DisplayUserData->setObjectName(QString::fromUtf8("action_Data_DisplayUserData"));
         action_Data_DisplayUserData->setCheckable(true);
-        action_Data_DisplayUserData->setChecked(true);
         action_Data_DisplayUserStack = new QAction(SpimView);
         action_Data_DisplayUserStack->setObjectName(QString::fromUtf8("action_Data_DisplayUserStack"));
         action_Data_DisplayUserStack->setCheckable(true);
-        action_Data_DisplayUserStack->setChecked(true);
         action_Data_DisplayKernelData = new QAction(SpimView);
         action_Data_DisplayKernelData->setObjectName(QString::fromUtf8("action_Data_DisplayKernelData"));
         action_Data_DisplayKernelData->setCheckable(true);
-        action_Data_DisplayKernelData->setChecked(true);
         action_Data_NarrowDisplay = new QAction(SpimView);
         action_Data_NarrowDisplay->setObjectName(QString::fromUtf8("action_Data_NarrowDisplay"));
         action_Data_DisplayBinary = new QAction(SpimView);
@@ -183,7 +176,6 @@ public:
         action_Data_DisplayHex = new QAction(SpimView);
         action_Data_DisplayHex->setObjectName(QString::fromUtf8("action_Data_DisplayHex"));
         action_Data_DisplayHex->setCheckable(true);
-        action_Data_DisplayHex->setChecked(true);
         action_Data_DisplayDecimal = new QAction(SpimView);
         action_Data_DisplayDecimal->setObjectName(QString::fromUtf8("action_Data_DisplayDecimal"));
         action_Data_DisplayDecimal->setCheckable(true);
@@ -193,39 +185,34 @@ public:
         action_Win_IntRegisters = new QAction(SpimView);
         action_Win_IntRegisters->setObjectName(QString::fromUtf8("action_Win_IntRegisters"));
         action_Win_IntRegisters->setCheckable(true);
-        action_Win_IntRegisters->setChecked(true);
         action_Win_FPRegisters = new QAction(SpimView);
         action_Win_FPRegisters->setObjectName(QString::fromUtf8("action_Win_FPRegisters"));
         action_Win_FPRegisters->setCheckable(true);
-        action_Win_FPRegisters->setChecked(true);
         action_Win_TextSegment = new QAction(SpimView);
         action_Win_TextSegment->setObjectName(QString::fromUtf8("action_Win_TextSegment"));
         action_Win_TextSegment->setCheckable(true);
-        action_Win_TextSegment->setChecked(true);
         action_Win_Data_Segment = new QAction(SpimView);
         action_Win_Data_Segment->setObjectName(QString::fromUtf8("action_Win_Data_Segment"));
         action_Win_Data_Segment->setCheckable(true);
-        action_Win_Data_Segment->setChecked(true);
         action_Win_Console = new QAction(SpimView);
         action_Win_Console->setObjectName(QString::fromUtf8("action_Win_Console"));
         action_Win_Console->setCheckable(true);
-        action_Win_Console->setChecked(true);
         action_Win_Messages = new QAction(SpimView);
         action_Win_Messages->setObjectName(QString::fromUtf8("action_Win_Messages"));
         action_Win_Messages->setCheckable(true);
-        action_Win_Messages->setChecked(true);
         action_Win_ClearConsole = new QAction(SpimView);
         action_Win_ClearConsole->setObjectName(QString::fromUtf8("action_Win_ClearConsole"));
         action_Win_Toolbar = new QAction(SpimView);
         action_Win_Toolbar->setObjectName(QString::fromUtf8("action_Win_Toolbar"));
         action_Win_Toolbar->setCheckable(true);
-        action_Win_Toolbar->setChecked(true);
         actionStatus_Bar = new QAction(SpimView);
         actionStatus_Bar->setObjectName(QString::fromUtf8("actionStatus_Bar"));
         action_Help_ViewHelp = new QAction(SpimView);
         action_Help_ViewHelp->setObjectName(QString::fromUtf8("action_Help_ViewHelp"));
         action_Help_AboutSPIM = new QAction(SpimView);
         action_Help_AboutSPIM->setObjectName(QString::fromUtf8("action_Help_AboutSPIM"));
+        action_File_Print = new QAction(SpimView);
+        action_File_Print->setObjectName(QString::fromUtf8("action_File_Print"));
         centralWidget = new QTextEdit(SpimView);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setUndoRedoEnabled(false);
@@ -310,6 +297,7 @@ public:
         menu_File->addAction(action_File_Reload);
         menu_File->addSeparator();
         menu_File->addAction(action_File_SaveLog);
+        menu_File->addAction(action_File_Print);
         menu_File->addSeparator();
         menu_File->addAction(action_File_Exit);
         menu_Simulator->addAction(action_Sim_ClearRegisters);
@@ -331,7 +319,6 @@ public:
         menu_Registers->addAction(action_Reg_DisplayOctal);
         menu_Registers->addAction(action_Reg_DisplayHex);
         menu_Registers->addAction(action_Reg_DisplayDecimal);
-        menu_Registers->addAction(action_Reg_DisplayChar);
         menu_Text_Segment->addAction(action_Text_DisplayUserText);
         menu_Text_Segment->addAction(action_Text_DisplayKernelText);
         menu_Text_Segment->addSeparator();
@@ -411,6 +398,7 @@ public:
         actionStatus_Bar->setText(QApplication::translate("SpimView", "Status Bar", 0, QApplication::UnicodeUTF8));
         action_Help_ViewHelp->setText(QApplication::translate("SpimView", "View Help", 0, QApplication::UnicodeUTF8));
         action_Help_AboutSPIM->setText(QApplication::translate("SpimView", "About SPIM", 0, QApplication::UnicodeUTF8));
+        action_File_Print->setText(QApplication::translate("SpimView", "Print", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("SpimView", "&File", 0, QApplication::UnicodeUTF8));
         menu_Simulator->setTitle(QApplication::translate("SpimView", "&Simulator", 0, QApplication::UnicodeUTF8));
         menu_Registers->setTitle(QApplication::translate("SpimView", "&Registers", 0, QApplication::UnicodeUTF8));

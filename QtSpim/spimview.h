@@ -186,6 +186,7 @@ class SpimView : public QMainWindow
     void file_LoadFile();
     void file_ReloadFile();
     void file_SaveLogFile();
+    void file_Print();
     void file_Exit();
 
     void sim_ClearRegisters();
@@ -203,7 +204,7 @@ class SpimView : public QMainWindow
     void reg_DisplayOctal();
     void reg_DisplayHex();
     void reg_DisplayDecimal();
-    void reg_DisplayChar();
+    int setCheckedReg(int base);
 
     void text_DisplayUserText();
     void text_DisplayKernelText();

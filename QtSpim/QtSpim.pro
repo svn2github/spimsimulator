@@ -31,7 +31,9 @@ SOURCES += main.cpp\
 
 HEADERS  += spimview.h
 
-FORMS    += spimview.ui
+FORMS    += spimview.ui\
+	savelogfile.ui\
+	printwindows.ui
 
 INCLUDEPATH = ../CPU ../spim
 
