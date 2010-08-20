@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QSettings>
+#include <QList>
+#include <QString>
 
 #include "ui_spimview.h"
 
@@ -77,7 +79,10 @@ class SpimView : public QMainWindow
 
     // File menu
     //
-    QString st_programFileName;
+    void rebuildRecentFilesMenu();
+
+    int st_recentFilesLength;
+    QList<QString> st_recentFiles;
     QString st_commandLine;
 
     // Spim
@@ -204,7 +209,8 @@ class SpimView : public QMainWindow
     void reg_DisplayOctal();
     void reg_DisplayHex();
     void reg_DisplayDecimal();
-    int setCheckedReg(int base);
+    int setCheckedRegBase(int base);
+    int setBaseInternal(int base, QAction* actionBinary, QAction* actionOctal, QAction* actionDecimal, QAction* actionHex);
 
     void text_DisplayUserText();
     void text_DisplayKernelText();
@@ -220,6 +226,7 @@ class SpimView : public QMainWindow
     void data_DisplayOctal();
     void data_DisplayHex();
     void data_DisplayDecimal();
+    int setCheckedDataSegmentBase(int base);
 
     void win_IntRegisters();
     void win_FPRegisters();

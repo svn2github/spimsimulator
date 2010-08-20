@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1113</width>
     <height>768</height>
    </rect>
   </property>
@@ -29,7 +29,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
+     <width>1113</width>
      <height>21</height>
     </rect>
    </property>
@@ -37,10 +37,17 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menuRecent_Files">
+     <property name="title">
+      <string>Recent Files</string>
+     </property>
+    </widget>
     <addaction name="action_File_Load"/>
+    <addaction name="menuRecent_Files"/>
     <addaction name="action_File_Reload"/>
     <addaction name="separator"/>
     <addaction name="action_File_SaveLog"/>
+    <addaction name="separator"/>
     <addaction name="action_File_Print"/>
     <addaction name="separator"/>
     <addaction name="action_File_Exit"/>
@@ -526,6 +533,11 @@
   <action name="action_File_Print">
    <property name="text">
     <string>Print</string>
+   </property>
+  </action>
+  <action name="actionFile_1">
+   <property name="text">
+    <string>File 1</string>
    </property>
   </action>
  </widget>

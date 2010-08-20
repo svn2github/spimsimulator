@@ -110,32 +110,47 @@ void SpimView::readSettings()
     st_colorChangedRegisters = settings.value("ColorChangedRegs", true).toBool();
     st_changedRegisterColor = settings.value("ChangedRegColor", "red").toString();
     st_intRegBase = settings.value("IntRegisterBase", 16).toInt();
-
-    st_intRegBase = setCheckedReg(st_intRegBase);
+    st_intRegBase = setCheckedRegBase(st_intRegBase);
 
     ui->IntRegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();
 
     settings.beginGroup("TextWin");
     st_showUserTextSegment = settings.value("ShowUserTextSeg", true).toBool();
+    ui->action_Text_DisplayUserText->setChecked(st_showUserTextSegment);
     st_showKernelTextSegment = settings.value("ShowKernelTextSeg", true).toBool();
+    ui->action_Text_DisplayKernelText->setChecked(st_showKernelTextSegment);
     st_showTextComments =  settings.value("ShowTextComments", true).toBool();
+    ui->action_Text_DisplayComments->setChecked(st_showTextComments);
     st_showTextDisassembly =  settings.value("ShowInstDisassembly", true).toBool();
+    ui->action_Text_DisplayInstructionValue->setChecked(st_showTextDisassembly);
 
     ui->TextSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();
 
     settings.beginGroup("DataWin");
     st_showUserDataSegment = settings.value("ShowUserDataSeg", true).toBool();
+    ui->action_Data_DisplayUserData->setChecked(st_showUserDataSegment);
     st_showUserStackSegment = settings.value("ShowUserStackSeg", true).toBool();
+    ui->action_Data_DisplayUserStack->setChecked(st_showUserStackSegment);
     st_showKernelDataSegment = settings.value("ShowKernelDataSeg", true).toBool();
+    ui->action_Data_DisplayKernelData->setChecked(st_showKernelDataSegment);
     st_dataSegmentBase = settings.value("DataSegmentBase", 16).toInt();
+    st_dataSegmentBase = setCheckedDataSegmentBase(st_dataSegmentBase);
 
     ui->DataSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();
 
     settings.beginGroup("FileMenu");
-    st_programFileName = settings.value("ProgramFileName", "").toString();
+    st_recentFilesLength = settings.value("RecentFilesLength", 4).toInt();
+    st_recentFiles.clear();
+    int i;
+    for (i = 0; i < st_recentFilesLength; i++)
+    {
+        QString file = settings.value("RecentFile" + QString(i), "").toString();
+        st_recentFiles.append(file);
+    }
+    rebuildRecentFilesMenu();
     st_commandLine = settings.value("CommandLine", "").toString();
     settings.endGroup();
 
@@ -147,6 +162,18 @@ void SpimView::readSettings()
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
     st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", "../CPU/exceptions.s").toString();
     settings.endGroup();
+}
+
+
+void SpimView::rebuildRecentFilesMenu()
+{
+    ui->menuRecent_Files->clear();
+    int i;
+    for (i = 0; i < st_recentFilesLength; i++)
+    {
+        QAction* action = ui->menuRecent_Files->addAction(st_recentFiles[i]);
+        QObject::connect(action, SIGNAL(triggered(bool)), this, SLOT(file_LoadFile()));
+    }
 }
 
 
@@ -184,7 +211,12 @@ void SpimView::writeSettings()
     settings.endGroup();
 
     settings.beginGroup("FileMenu");
-    settings.setValue("ProgramFileName", st_programFileName);
+    settings.setValue("RecentFilesLength", st_recentFilesLength);
+    int i;
+    for (i = 0; i < st_recentFilesLength; i++)
+    {
+        settings.setValue("RecentFile" + QString(i), st_recentFiles[i]);
+    }
     settings.setValue("CommandLine", st_commandLine);
     settings.endGroup();
 
@@ -249,7 +281,7 @@ QString SpimView::WriteOutput(QString message)
 
 void SpimView::Error(QString message, bool fatal)
 {
-    message = WriteOutput(message);
+    WriteOutput(message);
 
     QMessageBox msgBox(fatal ? QMessageBox::Critical : QMessageBox::Warning,
                        "Error",

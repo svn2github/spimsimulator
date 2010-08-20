@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Tue Aug 10 21:11:10 2010
+** Created: Thu Aug 19 20:40:44 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -73,9 +73,11 @@ public:
     QAction *action_Help_ViewHelp;
     QAction *action_Help_AboutSPIM;
     QAction *action_File_Print;
+    QAction *actionFile_1;
     QTextEdit *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu_File;
+    QMenu *menuRecent_Files;
     QMenu *menu_Simulator;
     QMenu *menu_Registers;
     QMenu *menu_Text_Segment;
@@ -97,7 +99,7 @@ public:
     {
         if (SpimView->objectName().isEmpty())
             SpimView->setObjectName(QString::fromUtf8("SpimView"));
-        SpimView->resize(1024, 768);
+        SpimView->resize(1113, 768);
         SpimView->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks|QMainWindow::VerticalTabs);
         action_File_Load = new QAction(SpimView);
         action_File_Load->setObjectName(QString::fromUtf8("action_File_Load"));
@@ -213,6 +215,8 @@ public:
         action_Help_AboutSPIM->setObjectName(QString::fromUtf8("action_Help_AboutSPIM"));
         action_File_Print = new QAction(SpimView);
         action_File_Print->setObjectName(QString::fromUtf8("action_File_Print"));
+        actionFile_1 = new QAction(SpimView);
+        actionFile_1->setObjectName(QString::fromUtf8("actionFile_1"));
         centralWidget = new QTextEdit(SpimView);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setUndoRedoEnabled(false);
@@ -220,9 +224,11 @@ public:
         SpimView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SpimView);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1024, 21));
+        menuBar->setGeometry(QRect(0, 0, 1113, 21));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
+        menuRecent_Files = new QMenu(menu_File);
+        menuRecent_Files->setObjectName(QString::fromUtf8("menuRecent_Files"));
         menu_Simulator = new QMenu(menuBar);
         menu_Simulator->setObjectName(QString::fromUtf8("menu_Simulator"));
         menu_Registers = new QMenu(menuBar);
@@ -294,9 +300,11 @@ public:
         menuBar->addAction(menu_Window->menuAction());
         menuBar->addAction(menu_Help->menuAction());
         menu_File->addAction(action_File_Load);
+        menu_File->addAction(menuRecent_Files->menuAction());
         menu_File->addAction(action_File_Reload);
         menu_File->addSeparator();
         menu_File->addAction(action_File_SaveLog);
+        menu_File->addSeparator();
         menu_File->addAction(action_File_Print);
         menu_File->addSeparator();
         menu_File->addAction(action_File_Exit);
@@ -399,7 +407,9 @@ public:
         action_Help_ViewHelp->setText(QApplication::translate("SpimView", "View Help", 0, QApplication::UnicodeUTF8));
         action_Help_AboutSPIM->setText(QApplication::translate("SpimView", "About SPIM", 0, QApplication::UnicodeUTF8));
         action_File_Print->setText(QApplication::translate("SpimView", "Print", 0, QApplication::UnicodeUTF8));
+        actionFile_1->setText(QApplication::translate("SpimView", "File 1", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("SpimView", "&File", 0, QApplication::UnicodeUTF8));
+        menuRecent_Files->setTitle(QApplication::translate("SpimView", "Recent Files", 0, QApplication::UnicodeUTF8));
         menu_Simulator->setTitle(QApplication::translate("SpimView", "&Simulator", 0, QApplication::UnicodeUTF8));
         menu_Registers->setTitle(QApplication::translate("SpimView", "&Registers", 0, QApplication::UnicodeUTF8));
         menu_Text_Segment->setTitle(QApplication::translate("SpimView", "&Text Segment", 0, QApplication::UnicodeUTF8));

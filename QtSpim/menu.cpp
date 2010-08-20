@@ -23,18 +23,26 @@
 
 void SpimView::file_LoadFile()
 {
-  QString file = QFileDialog::getOpenFileName(this,
-                                              "Open Assembly Code",
-                                              st_programFileName,
-                                              "Assembly (*.s *.asm);;Text files (*.txt)");
-  if (!file.isNull())
+    QString defaultFile(st_recentFiles[0]);
+    if (sender() != 0)
     {
-      st_programFileName = file;
-      st_commandLine = st_programFileName;
-      read_assembly_file(st_programFileName.toLocal8Bit().data());
+        defaultFile = ((QAction*)sender())->text(); // File name is text associated with action
+    }
 
-      DisplayTextSegments();
-      DisplayDataSegments();
+    QString file = QFileDialog::getOpenFileName(this,
+                                                "Open Assembly Code",
+                                                defaultFile,
+                                                "Assembly (*.s *.asm);;Text files (*.txt)");
+    if (!file.isNull())
+    {
+        st_commandLine = file;
+        read_assembly_file(file.toLocal8Bit().data());
+        st_recentFiles.removeAll(file);
+        st_recentFiles.prepend(file);
+        rebuildRecentFilesMenu();
+
+        DisplayTextSegments();
+        DisplayDataSegments();
     }
 }
 
@@ -222,7 +230,7 @@ void SpimView::sim_Settings()
 void SpimView::reg_DisplayBinary()
 {
     st_intRegBase = 2;
-    setCheckedReg(st_intRegBase);
+    setCheckedRegBase(st_intRegBase);
     DisplayIntRegisters();
 }
 
@@ -230,7 +238,7 @@ void SpimView::reg_DisplayBinary()
 void SpimView::reg_DisplayOctal()
 {
     st_intRegBase = 8;
-    setCheckedReg(st_intRegBase);
+    setCheckedRegBase(st_intRegBase);
     DisplayIntRegisters();
 }
 
@@ -238,7 +246,7 @@ void SpimView::reg_DisplayOctal()
 void SpimView::reg_DisplayDecimal()
 {
     st_intRegBase = 10;
-    setCheckedReg(st_intRegBase);
+    setCheckedRegBase(st_intRegBase);
     DisplayIntRegisters();
 }
 
@@ -246,38 +254,48 @@ void SpimView::reg_DisplayDecimal()
 void SpimView::reg_DisplayHex()
 {
     st_intRegBase = 16;
-    setCheckedReg(st_intRegBase);
+    setCheckedRegBase(st_intRegBase);
     DisplayIntRegisters();
 }
 
 
-int SpimView::setCheckedReg(int base)
+int SpimView::setCheckedRegBase(int base)
 {
-    ui->action_Reg_DisplayBinary->setChecked(false);
-    ui->action_Reg_DisplayOctal->setChecked(false);
-    ui->action_Reg_DisplayDecimal->setChecked(false);
-    ui->action_Reg_DisplayHex->setChecked(false);
+    return setBaseInternal(base,
+                           ui->action_Reg_DisplayBinary,
+                           ui->action_Reg_DisplayOctal,
+                           ui->action_Reg_DisplayDecimal,
+                           ui->action_Reg_DisplayHex);
+}
+
+
+int SpimView::setBaseInternal(int base, QAction* actionBinary, QAction* actionOctal, QAction* actionDecimal, QAction* actionHex)
+{
+    actionBinary->setChecked(false);
+    actionOctal->setChecked(false);
+    actionDecimal->setChecked(false);
+    actionHex->setChecked(false);
 
     switch (base)
     {
     case 2: 
-        ui->action_Reg_DisplayBinary->setChecked(true);
+        actionBinary->setChecked(true);
         return base;
 
     case 8: 
-        ui->action_Reg_DisplayOctal->setChecked(true);
+        actionOctal->setChecked(true);
         return base;
 
     case 10: 
-        ui->action_Reg_DisplayDecimal->setChecked(true);
+        actionDecimal->setChecked(true);
         return base;
 
     case 16: 
-        ui->action_Reg_DisplayHex->setChecked(true);
+        actionHex->setChecked(true);
         return base;
 
     default:
-        ui->action_Reg_DisplayHex->setChecked(true);
+        actionHex->setChecked(true);
         return 16;
     }
 }
@@ -288,26 +306,35 @@ int SpimView::setCheckedReg(int base)
 
 void SpimView::text_DisplayUserText()
 {
+    st_showUserTextSegment = ui->action_Text_DisplayUserText->isChecked();
+    DisplayTextSegments();
 }
 
 
 void SpimView::text_DisplayKernelText()
 {
+    st_showKernelTextSegment = ui->action_Text_DisplayKernelText->isChecked();
+    DisplayTextSegments();
 }
 
 
 void SpimView::text_NarrowRange()
 {
+    //FIXME!!
 }
 
 
 void SpimView::text_DisplayComments()
 {
+    st_showTextComments = ui->action_Text_DisplayComments->isChecked();
+    DisplayTextSegments();
 }
 
 
 void SpimView::text_DisplayInstructionValue()
 {
+    st_showTextDisassembly = ui->action_Text_DisplayInstructionValue->isChecked();
+    DisplayTextSegments();
 }
 
 
@@ -317,43 +344,71 @@ void SpimView::text_DisplayInstructionValue()
 
 void SpimView::data_DisplayUserData()
 {
+    st_showUserDataSegment = ui->action_Data_DisplayUserData->isChecked();
+    DisplayDataSegments();
 }
 
 
 void SpimView::data_DisplayUserStack()
 {
+    st_showUserStackSegment = ui->action_Data_DisplayUserStack->isChecked();
+    DisplayDataSegments();
 }
 
 
 void SpimView::data_DisplayKernelData()
 {
+    st_showKernelDataSegment = ui->action_Data_DisplayKernelData->isChecked();
+    DisplayDataSegments();
 }
 
 
 void SpimView::data_NarrowDisplay()
 {
+    //FIXME!!
 }
 
 
 void SpimView::data_DisplayBinary()
 {
+    st_dataSegmentBase = 2;
+    setCheckedDataSegmentBase(st_dataSegmentBase);
+    DisplayDataSegments();
 }
 
 
 void SpimView::data_DisplayOctal()
 {
-}
-
-
-void SpimView::data_DisplayHex()
-{
+    st_dataSegmentBase = 8;
+    setCheckedDataSegmentBase(st_dataSegmentBase);
+    DisplayDataSegments();
 }
 
 
 void SpimView::data_DisplayDecimal()
 {
+    st_dataSegmentBase = 10;
+    setCheckedDataSegmentBase(st_dataSegmentBase);
+    DisplayDataSegments();
 }
 
+
+void SpimView::data_DisplayHex()
+{
+    st_dataSegmentBase = 16;
+    setCheckedDataSegmentBase(st_dataSegmentBase);
+    DisplayDataSegments();
+}
+
+
+int SpimView::setCheckedDataSegmentBase(int base)
+{
+    return setBaseInternal(base,
+                           ui->action_Data_DisplayBinary,
+                           ui->action_Data_DisplayOctal,
+                           ui->action_Data_DisplayDecimal,
+                           ui->action_Data_DisplayHex);
+}
 
 
 // Window menu
