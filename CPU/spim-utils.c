@@ -234,6 +234,50 @@ starting_address ()
 }
 
 
+#define MAX_ARGS 10000
+
+/* Initialize the SPIM stack from a string containing the command line. */
+
+void
+initialize_stack(char *command_line)
+{
+    int argc = 0;
+    char *argv[MAX_ARGS];
+    char *a;
+    char *args = str_copy(command_line); /* Destructively modify string */
+    char *orig_args = args;
+
+    while (*args != '\0')
+    {
+        /* Skip leading blanks */
+        while (*args == ' ' || *args == '\t') args++;
+
+        /* First non-blank char */
+        a = args;
+
+        /* Last non-blank, non-null char */
+        while (*args != ' ' && *args != '\t' && *args != '\0') args++;
+
+        /* Terminate word */
+        if (a != args)
+        {
+            if (*args != '\0')
+                *args++ = '\0';	/* Null terminate */
+
+            argv[argc++] = a;
+
+            if (MAX_ARGS == argc)
+            {
+                break;            /* If too many, ignore rest of list */
+            }
+        }
+    }
+
+    initialize_run_stack (argc, argv);
+    free (orig_args);
+}
+
+
 /* Initialize the SPIM stack with ARGC, ARGV, and ENVP data. */
 
 #ifdef _MSC_VER

@@ -52,6 +52,7 @@ void format_insts (str_stream *ss, mem_addr from, mem_addr to);
 void format_mem (str_stream *ss, mem_addr from, mem_addr to);
 void format_registers (str_stream *ss, int print_gpr_hex, int print_fpr_hex);
 void initialize_registers ();
+void initialize_stack (char *command_line);
 void initialize_run_stack (int argc, char **argv);
 void initialize_world (char *exception_file_names);
 void list_breakpoints ();
