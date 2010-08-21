@@ -143,7 +143,6 @@ private:
 	void OutputLog(CString &strBuf);
 	void ProcessCommandLine();
 	void ShowRunning();
-	void InitStack(LPCTSTR args);
 	void LoadFile(LPCTSTR strFilename);
 	void DisplayTextSegment(BOOL forceDisplay);
 	void DisplayDataSegment(BOOL forceDisplay);

@@ -392,7 +392,7 @@ void CPCSpimView::InitializeSimulator()
       write_startup_message();
 
       initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL);
-      InitStack(g_strCmdLine);	// Stack starts with argc, argv, environ
+      initialize_stack(g_strCmdLine);	// Stack starts with argc, argv, environ
 
       m_fSimulatorInitialized = TRUE;
 
@@ -441,42 +441,6 @@ void CPCSpimView::OnFileOpen()
 }
 
 
-void CPCSpimView::InitStack(LPCTSTR szCmdLine)
-{
-  int argc = 0;
-  char *argv[10000];
-  char *a;
-  char *argsOrig = new char[lstrlen(szCmdLine) + 1];
-  char *args = argsOrig;
-  lstrcpy(args, szCmdLine);
-
-  while (*args != '\0')
-    {
-      /* Skip leading blanks */
-      while (*args == ' ' || *args == '\t') args++;
-
-      /* First non-blank char */
-      a = args;
-
-      /* Last non-blank, non-null char */
-      while (*args != ' ' && *args != '\t' && *args != '\0') args++;
-
-      /* Terminate word */
-      if (a != args)
-	{
-	  if (*args != '\0')
-	    *args++ = '\0';	/* Null terminate */
-	  argv [argc++] = a;
-	}
-    }
-
-  initialize_run_stack (argc, argv);
-
-  delete [] argsOrig;
-}
-
-
-
 #include "RunDlg.h"
 void CPCSpimView::OnSimulatorRun()
 {
@@ -495,7 +459,7 @@ void CPCSpimView::OnSimulatorRun()
       addr = starting_address ();
     }
 
-	InitStack(g_strCmdLine);	// Stack starts with argc, argv, environ
+	initialize_stack(g_strCmdLine);	// Stack starts with argc, argv, environ
 
     ExecuteProgram(addr, DEFAULT_RUN_STEPS, 0, 0);
 }

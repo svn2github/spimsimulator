@@ -86,7 +86,6 @@ static void delete_breakpoint_action (Widget w, XtPointer client_data,
 static void destroy_popup_prompt (Widget w, XtPointer client_data,
 				  XtPointer call_data);
 static void help_action (Widget w, XtPointer ignore, XtPointer ignored);
-static void init_stack (char *args);
 static void load_prompt (Widget button, XtPointer client_data,
 			 XtPointer call_data);
 static void load_prompt_destroyed (Widget w, XtPointer client_data,
@@ -412,48 +411,11 @@ run_program_action (Widget w, XtPointer client_data, XtPointer call_data)
   destroy_popup_prompt (NULL, (XtPointer) form, NULL);
 
   command_line = str_copy(cl);
-  init_stack (cl);
+  initialize_stack (cl);
 
   addr = strtoul (sa, NULL, 0);
   if (addr > 0)
     start_program (addr);
-}
-
-
-#define MAX_ARGS 10000
-
-static void
-init_stack (char *args)
-{
-  int argc = 0;
-  char *argv[MAX_ARGS];
-  char *a;
-  char *args_str = str_copy (args); /* Destructively modify string */
-
-  while (*args_str != '\0')
-    {
-      /* Skip leading blanks */
-      while (*args_str == ' ' || *args_str == '\t') args_str++;
-      a = args_str;             /* First non-blank char */
-
-      /* Find last non-blank, non-null char */
-      while (*args_str != ' ' && *args_str != '\t' && *args_str != '\0') args_str++;
-
-      /* Null terminate word */
-      if (a != args_str)
-	{
-	  if (*args_str != '\0')
-	    *args_str++ = '\0';
-	  argv [argc++] = a;    /* Set next argument to word */
-
-          if (MAX_ARGS == argc)
-            {
-              break;            /* If too many, ignore rest of list */
-            }
-	}
-    }
-
-  initialize_run_stack (argc, argv);
 }
 
 
