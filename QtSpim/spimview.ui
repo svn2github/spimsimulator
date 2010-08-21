@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1113</width>
+    <width>1024</width>
     <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SpimView</string>
+   <string>QtSpim</string>
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks|QMainWindow::VerticalTabs</set>
@@ -29,7 +29,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1113</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>
@@ -59,9 +59,9 @@
     <addaction name="action_Sim_ClearRegisters"/>
     <addaction name="action_Sim_Reinitialize"/>
     <addaction name="separator"/>
+    <addaction name="action_Sim_SetRunParameters"/>
     <addaction name="action_Sim_Run"/>
     <addaction name="action_Sim_SingleStep"/>
-    <addaction name="action_Sim_MultipleStep"/>
     <addaction name="separator"/>
     <addaction name="action_Sim_SetBreakpoint"/>
     <addaction name="action_Sim_ListBreakpoints"/>
@@ -268,19 +268,25 @@
     <string>Re&amp;intialize and Load File</string>
    </property>
   </action>
+  <action name="action_Sim_SetRunParameters">
+   <property name="text">
+    <string>Run &amp;Parmeters</string>
+   </property>
+  </action>
   <action name="action_Sim_Run">
    <property name="text">
     <string>&amp;Run</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
   <action name="action_Sim_SingleStep">
    <property name="text">
     <string>&amp;Single Step</string>
    </property>
-  </action>
-  <action name="action_Sim_MultipleStep">
-   <property name="text">
-    <string>&amp;Multiple Step</string>
+   <property name="shortcut">
+    <string>F10</string>
    </property>
   </action>
   <action name="action_Sim_SetBreakpoint">

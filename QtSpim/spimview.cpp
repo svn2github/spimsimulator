@@ -53,9 +53,9 @@ void SpimView::wireMenuCommands()
 
     QObject::connect(ui->action_Sim_ClearRegisters, SIGNAL(triggered(bool)), this, SLOT(sim_ClearRegisters()));
     QObject::connect(ui->action_Sim_Reinitialize, SIGNAL(triggered(bool)), this, SLOT(sim_ReinitializeSimulator()));
+    QObject::connect(ui->action_Sim_SetRunParameters, SIGNAL(triggered(bool)), this, SLOT(sim_SetRunParameters()));
     QObject::connect(ui->action_Sim_Run, SIGNAL(triggered(bool)), this, SLOT(sim_Run()));
     QObject::connect(ui->action_Sim_SingleStep, SIGNAL(triggered(bool)), this, SLOT(sim_SingleStep()));
-    QObject::connect(ui->action_Sim_MultipleStep, SIGNAL(triggered(bool)), this, SLOT(sim_MultipleStep()));
     QObject::connect(ui->action_Sim_SetBreakpoint, SIGNAL(triggered(bool)), this, SLOT(sim_SetBreakpoint()));
     QObject::connect(ui->action_Sim_ListBreakpoints, SIGNAL(triggered(bool)), this, SLOT(sim_ListBreakpoints()));
     QObject::connect(ui->action_Sim_SetMemoryLocation, SIGNAL(triggered(bool)), this, SLOT(sim_SetMemoryLocation()));
@@ -151,7 +151,6 @@ void SpimView::readSettings()
         st_recentFiles.append(file);
     }
     rebuildRecentFilesMenu();
-    st_commandLine = settings.value("CommandLine", "").toString();
     settings.endGroup();
 
     settings.beginGroup("Spim");
@@ -161,6 +160,8 @@ void SpimView::readSettings()
     quiet = settings.value("Quiet", 0).toInt();
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
     st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", "../CPU/exceptions.s").toString();
+    st_startAddress = settings.value("StartingAddress", starting_address()).toInt();
+    st_commandLine = settings.value("CommandLineArguments", "").toString();
     settings.endGroup();
 }
 
@@ -217,7 +218,6 @@ void SpimView::writeSettings()
     {
         settings.setValue("RecentFile" + QString(i), st_recentFiles[i]);
     }
-    settings.setValue("CommandLine", st_commandLine);
     settings.endGroup();
 
     settings.beginGroup("Spim");
@@ -227,6 +227,8 @@ void SpimView::writeSettings()
     settings.setValue("Quiet", quiet);
     settings.setValue("LoadExceptionHandler", st_loadExceptionHandler);
     settings.setValue("ExceptionHandlerFileName", st_ExceptionHandlerFileName);
+    settings.setValue("StartingAddress", st_startAddress);
+    settings.setValue("CommandLine", st_commandLine);
     settings.endGroup();
 
     settings.sync();

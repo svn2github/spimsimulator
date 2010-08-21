@@ -57,6 +57,19 @@ class SpimView : public QMainWindow
 
     QSettings settings;
 
+    // File menu
+    //
+    int st_recentFilesLength;
+    QList<QString> st_recentFiles;
+    void rebuildRecentFilesMenu();
+
+    // Simulator menu
+    //
+    bool st_loadExceptionHandler;
+    QString st_ExceptionHandlerFileName;
+    int st_startAddress;
+    QString st_commandLine;
+
     // Register window
     //
     bool st_colorChangedRegisters;
@@ -77,28 +90,19 @@ class SpimView : public QMainWindow
     bool st_showKernelDataSegment;
     int st_dataSegmentBase;
 
-    // File menu
     //
-    void rebuildRecentFilesMenu();
-
-    int st_recentFilesLength;
-    QList<QString> st_recentFiles;
-    QString st_commandLine;
-
-    // Spim
-    //
-    bool st_loadExceptionHandler;
-    QString st_ExceptionHandlerFileName;
-
+    // End of state
 
     //
+    // Methods:
+    //
+
     // Establish text formatting for a window
     //
     QString windowFormattingStart();
     QString windowFormattingEnd();
 
 
-    //
     // Integer registers window
     //
     QString formatSpecialIntRegister(int value, char* name, bool changed);
@@ -117,11 +121,6 @@ class SpimView : public QMainWindow
     reg_word oldLO;
 
 
-    //
-    // Floating point registers window
-    //
-
-    //
     // Single precision FP registers window
     //
     QString formatSFPRegisters();
@@ -135,7 +134,6 @@ class SpimView : public QMainWindow
     reg_word oldFEXR;
 
 
-    //
     // Double precision FP registers window
     //
     QString formatDFPRegisters();
@@ -144,8 +142,7 @@ class SpimView : public QMainWindow
     float oldFPR_D[FPR_LENGTH];
 
 
-    //
-    // Common register functions
+    // Common register methods
     //
     QString formatInt(int value);
     QString formatReg(QString reg, QString value, bool changed);
@@ -154,16 +151,14 @@ class SpimView : public QMainWindow
     QString nnbsp(int n);
 
 
-    //
     // Text segment window
     //
     QString formatUserTextSeg();
     QString formatKernelTextSeg();
     QString formatInstructions(mem_addr from, mem_addr to);
-    void highlightPC(QTextEdit *te, mem_addr pc);
+    void highlightInstruction(mem_addr pc);
 
 
-    //
     // Data segment window
     //
     QString formatUserDataSeg();
@@ -173,8 +168,7 @@ class SpimView : public QMainWindow
     QString formatPartialQuadWord (mem_addr addr);
 
 
-    //
-    // Common segment functions
+    // Common segment methods
     //
     QString formatAddress(mem_addr addr);
     QString formatWord(mem_word word, int base);
@@ -186,6 +180,9 @@ class SpimView : public QMainWindow
     // Menu functions
     //
     void wireMenuCommands();
+    void initStack();
+    void executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
+
 
  public slots:
     void file_LoadFile();
@@ -196,9 +193,9 @@ class SpimView : public QMainWindow
 
     void sim_ClearRegisters();
     void sim_ReinitializeSimulator();
+    void sim_SetRunParameters();
     void sim_Run();
     void sim_SingleStep();
-    void sim_MultipleStep();
     void sim_SetBreakpoint();
     void sim_ListBreakpoints();
     void sim_SetMemoryLocation();

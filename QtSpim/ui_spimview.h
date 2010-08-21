@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Thu Aug 19 20:40:44 2010
+** Created: Sat Aug 21 14:06:55 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -34,9 +34,9 @@ public:
     QAction *action_Sim_ClearRegisters;
     QAction *action_Sim_Reinitialize;
     QAction *action_File_Reload;
+    QAction *action_Sim_SetRunParameters;
     QAction *action_Sim_Run;
     QAction *action_Sim_SingleStep;
-    QAction *action_Sim_MultipleStep;
     QAction *action_Sim_SetBreakpoint;
     QAction *action_Sim_ListBreakpoints;
     QAction *action_Sim_SetMemoryLocation;
@@ -99,7 +99,7 @@ public:
     {
         if (SpimView->objectName().isEmpty())
             SpimView->setObjectName(QString::fromUtf8("SpimView"));
-        SpimView->resize(1113, 768);
+        SpimView->resize(1024, 768);
         SpimView->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks|QMainWindow::VerticalTabs);
         action_File_Load = new QAction(SpimView);
         action_File_Load->setObjectName(QString::fromUtf8("action_File_Load"));
@@ -113,12 +113,12 @@ public:
         action_Sim_Reinitialize->setObjectName(QString::fromUtf8("action_Sim_Reinitialize"));
         action_File_Reload = new QAction(SpimView);
         action_File_Reload->setObjectName(QString::fromUtf8("action_File_Reload"));
+        action_Sim_SetRunParameters = new QAction(SpimView);
+        action_Sim_SetRunParameters->setObjectName(QString::fromUtf8("action_Sim_SetRunParameters"));
         action_Sim_Run = new QAction(SpimView);
         action_Sim_Run->setObjectName(QString::fromUtf8("action_Sim_Run"));
         action_Sim_SingleStep = new QAction(SpimView);
         action_Sim_SingleStep->setObjectName(QString::fromUtf8("action_Sim_SingleStep"));
-        action_Sim_MultipleStep = new QAction(SpimView);
-        action_Sim_MultipleStep->setObjectName(QString::fromUtf8("action_Sim_MultipleStep"));
         action_Sim_SetBreakpoint = new QAction(SpimView);
         action_Sim_SetBreakpoint->setObjectName(QString::fromUtf8("action_Sim_SetBreakpoint"));
         action_Sim_ListBreakpoints = new QAction(SpimView);
@@ -224,7 +224,7 @@ public:
         SpimView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SpimView);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1113, 21));
+        menuBar->setGeometry(QRect(0, 0, 1024, 21));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menuRecent_Files = new QMenu(menu_File);
@@ -311,9 +311,9 @@ public:
         menu_Simulator->addAction(action_Sim_ClearRegisters);
         menu_Simulator->addAction(action_Sim_Reinitialize);
         menu_Simulator->addSeparator();
+        menu_Simulator->addAction(action_Sim_SetRunParameters);
         menu_Simulator->addAction(action_Sim_Run);
         menu_Simulator->addAction(action_Sim_SingleStep);
-        menu_Simulator->addAction(action_Sim_MultipleStep);
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_SetBreakpoint);
         menu_Simulator->addAction(action_Sim_ListBreakpoints);
@@ -361,16 +361,18 @@ public:
 
     void retranslateUi(QMainWindow *SpimView)
     {
-        SpimView->setWindowTitle(QApplication::translate("SpimView", "SpimView", 0, QApplication::UnicodeUTF8));
+        SpimView->setWindowTitle(QApplication::translate("SpimView", "QtSpim", 0, QApplication::UnicodeUTF8));
         action_File_Load->setText(QApplication::translate("SpimView", "&Load File", 0, QApplication::UnicodeUTF8));
         action_File_SaveLog->setText(QApplication::translate("SpimView", "&Save Log File", 0, QApplication::UnicodeUTF8));
         action_File_Exit->setText(QApplication::translate("SpimView", "&Exit", 0, QApplication::UnicodeUTF8));
         action_Sim_ClearRegisters->setText(QApplication::translate("SpimView", "&Clear Registers", 0, QApplication::UnicodeUTF8));
         action_Sim_Reinitialize->setText(QApplication::translate("SpimView", "Re&initialize Simulator", 0, QApplication::UnicodeUTF8));
         action_File_Reload->setText(QApplication::translate("SpimView", "Re&intialize and Load File", 0, QApplication::UnicodeUTF8));
+        action_Sim_SetRunParameters->setText(QApplication::translate("SpimView", "Run &Parmeters", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setText(QApplication::translate("SpimView", "&Run", 0, QApplication::UnicodeUTF8));
+        action_Sim_Run->setShortcut(QApplication::translate("SpimView", "F5", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setText(QApplication::translate("SpimView", "&Single Step", 0, QApplication::UnicodeUTF8));
-        action_Sim_MultipleStep->setText(QApplication::translate("SpimView", "&Multiple Step", 0, QApplication::UnicodeUTF8));
+        action_Sim_SingleStep->setShortcut(QApplication::translate("SpimView", "F10", 0, QApplication::UnicodeUTF8));
         action_Sim_SetBreakpoint->setText(QApplication::translate("SpimView", "Set&Breakpoint", 0, QApplication::UnicodeUTF8));
         action_Sim_ListBreakpoints->setText(QApplication::translate("SpimView", "&List Breakpoints", 0, QApplication::UnicodeUTF8));
         action_Sim_SetMemoryLocation->setText(QApplication::translate("SpimView", "Change &Memory Location", 0, QApplication::UnicodeUTF8));

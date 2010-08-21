@@ -20,7 +20,7 @@ void SpimView::DisplayTextSegments()
                 % formatUserTextSeg()
                 % formatKernelTextSeg()
                 % windowFormattingEnd());
-    highlightPC(te, PC);
+    highlightInstruction(PC);
 }
 
 
@@ -82,6 +82,10 @@ QString SpimView::formatInstructions(mem_addr from, mem_addr to)
                 for (s = comment - 1; *s == ' '; s--);
                 *(s + 1) = '\0';
             }
+            if (inst_is_breakpoint(a))
+            {
+                windowContents += QString("<font face='Wingdings 2' color='red'>N</font> ");
+            }
             windowContents += QString("[") % QString(pc) % QString("] ")
                 % (st_showTextDisassembly ? QString(binInst) : QString(""))
                 % nnbsp(2) % QString("<b>") % QString(disassembly) % QString("</b>")
@@ -98,33 +102,39 @@ QString SpimView::formatInstructions(mem_addr from, mem_addr to)
 }
 
 
-void SpimView::highlightPC(QTextEdit *te, mem_addr pc)
+void SpimView::highlightInstruction(mem_addr pc)
 {
+    QTextEdit* te = ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit");
+
     QString str = te->toHtml();
 
     QRegExp rx("\\[" + formatAddress(pc) + "\\]"); // Start of specific line
-    QRegExp rx2("\\[[0-9a-fA-F]{8}\\]");                                        // Start of any line
+    QRegExp rx2("(\\[[0-9a-fA-F]{8}\\])|(N \\[)"); // Start of any line
 
     QTextCursor cursor(te->document());
     cursor = te->document()->find(rx, cursor);
     if (!cursor.isNull())
     {
-        QTextCursor endCursor(te->document()); // Find start of next line
+        // Find end of current line by finding start of next line
+        //
+        QTextCursor endCursor(te->document());
         endCursor = te->document()->find(rx2, cursor);
+
         if (endCursor.isNull())
         {
             // Last line does not have successor
+            //
             cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
         }
         else
         {
-            // Advance cursor over the address at start of next line, then back up
-            while (cursor <= endCursor)
-            {
-                cursor.movePosition(QTextCursor::NextWord, QTextCursor::KeepAnchor);
-            }
-            cursor.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor, 2);
-            cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+            // Backup over match to end of current line
+            //
+            endCursor.movePosition(QTextCursor::PreviousCharacter,
+                                   QTextCursor::KeepAnchor,
+                                   endCursor.selectedText().length());
+
+            cursor.setPosition(endCursor.position(), QTextCursor::KeepAnchor);
         }
 
         QTextCharFormat format;

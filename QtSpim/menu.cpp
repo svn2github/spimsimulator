@@ -1,6 +1,7 @@
 #include "spimview.h"
 #include "ui_savelogfile.h"
 #include "ui_printwindows.h"
+#include "ui_runparams.h"
 
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
@@ -35,7 +36,6 @@ void SpimView::file_LoadFile()
                                                 "Assembly (*.s *.asm);;Text files (*.txt)");
     if (!file.isNull())
     {
-        st_commandLine = file;
         read_assembly_file(file.toLocal8Bit().data());
         st_recentFiles.removeAll(file);
         st_recentFiles.prepend(file);
@@ -49,10 +49,7 @@ void SpimView::file_LoadFile()
 
 void SpimView::file_ReloadFile()
 {
-    write_output(message_out, "<hr>Memory and registers cleared");
-    initialize_world(ExceptionFileOrNull());
-    write_startup_message();
-
+    sim_ReinitializeSimulator();
     file_LoadFile();
 }
 
@@ -175,26 +172,101 @@ void SpimView::file_Exit()
 
 void SpimView::sim_ClearRegisters()
 {
+    initialize_registers();
 }
 
 
 void SpimView::sim_ReinitializeSimulator()
 {
+    write_output(message_out, "<hr>Memory and registers cleared");
+    initialize_world(ExceptionFileOrNull());
+    initStack();
+    write_startup_message();
+
+    add_breakpoint(0x400010);
+
+    DisplayTextSegments();
+    DisplayDataSegments();
+
+    CaptureIntRegisters();
+    CaptureSFPRegisters();
+    CaptureDFPRegisters();
+
+    DisplayIntRegisters();
+    DisplayFPRegisters();
+}
+
+
+void SpimView::sim_SetRunParameters()
+{
+    QDialog d;
+    Ui::SetRunParametersDialog srp;
+    srp.setupUi(&d);
+
+    // Default values:
+    //
+    srp.addressLineEdit->setText(QString("0x") + formatAddress(st_startAddress));
+    srp.argsLineEdit->setText(st_commandLine);
+
+    if (d.exec() == QDialog::Accepted)
+    {
+        if (!srp.addressLineEdit->text().isNull())
+        {
+            bool ok;
+            st_startAddress = srp.addressLineEdit->text().toInt(&ok, 0);
+        }
+        if (!srp.argsLineEdit->text().isNull())
+        {
+            st_commandLine = srp.argsLineEdit->text();
+        }
+    }
 }
 
 
 void SpimView::sim_Run()
 {
+  if (st_startAddress == 0)
+    {
+      st_startAddress = starting_address ();
+    }
+    initStack();
+    executeProgram(st_startAddress, DEFAULT_RUN_STEPS, false, false);
 }
 
 
 void SpimView::sim_SingleStep()
 {
+    executeProgram(starting_address(), 1, false, false);
 }
 
 
-void SpimView::sim_MultipleStep()
+void SpimView::initStack()
 {
+    // Prepend file name to arg list
+    //
+    initialize_stack((st_recentFiles[0] + " " + st_commandLine).toLocal8Bit().data());
+}
+
+
+void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkpt)
+{
+    if (pc != 0)
+    {
+        bool breakpointEncountered = run_program(pc, steps, display, contBkpt);
+        highlightInstruction(PC);
+        DisplayIntRegisters();
+        DisplayFPRegisters();
+        DisplayDataSegments();
+        
+        if (breakpointEncountered)
+        {
+            QMessageBox msgBox(QMessageBox::Information,
+                               "Execution Stopped",
+                               "Execution stopped due to breakpoint",
+                       QMessageBox::Close);
+            msgBox.exec();
+        }
+    }
 }
 
 

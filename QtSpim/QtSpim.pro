@@ -33,7 +33,8 @@ HEADERS  += spimview.h
 
 FORMS    += spimview.ui\
 	savelogfile.ui\
-	printwindows.ui
+	printwindows.ui\
+        runparams.ui
 
 INCLUDEPATH = ../CPU ../spim
 
