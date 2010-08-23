@@ -68,6 +68,18 @@ pickFormat(QTextEdit* te, bool toHTML)
 }
 
 
+void SpimView::rebuildRecentFilesMenu()
+{
+    ui->menuRecent_Files->clear();
+    int i;
+    for (i = 0; i < st_recentFilesLength; i++)
+    {
+        QAction* action = ui->menuRecent_Files->addAction(st_recentFiles[i]);
+        QObject::connect(action, SIGNAL(triggered(bool)), this, SLOT(file_LoadFile()));
+    }
+}
+
+
 void SpimView::file_SaveLogFile()
 {
     QDialog d;
@@ -183,8 +195,6 @@ void SpimView::sim_ReinitializeSimulator()
     initStack();
     write_startup_message();
 
-    add_breakpoint(0x400010);
-
     DisplayTextSegments();
     DisplayDataSegments();
 
@@ -267,16 +277,6 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
             msgBox.exec();
         }
     }
-}
-
-
-void SpimView::sim_SetBreakpoint()
-{
-}
-
-
-void SpimView::sim_ListBreakpoints()
-{
 }
 
 

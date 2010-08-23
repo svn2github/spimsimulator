@@ -16,6 +16,7 @@ SOURCES += main.cpp\
         regwin.cpp\
         textwin.cpp\
         datawin.cpp\
+        state.cpp\
         ../CPU/data.c\
         ../CPU/display-utils.c\
         ../CPU/inst.c\
@@ -29,7 +30,8 @@ SOURCES += main.cpp\
         lex_yy.c\
         spim_support.c
 
-HEADERS  += spimview.h
+HEADERS  += spimview.h\
+	texttextedit.h
 
 FORMS    += spimview.ui\
 	savelogfile.ui\

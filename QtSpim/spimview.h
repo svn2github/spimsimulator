@@ -196,8 +196,6 @@ class SpimView : public QMainWindow
     void sim_SetRunParameters();
     void sim_Run();
     void sim_SingleStep();
-    void sim_SetBreakpoint();
-    void sim_ListBreakpoints();
     void sim_SetMemoryLocation();
     void sim_DisplaySymbols();
     void sim_Settings();

@@ -2,7 +2,7 @@
 #include "ui_spimview.h"
 
 #include <QRegExp>
-
+#include <QContextMenuEvent>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
 
@@ -52,6 +52,12 @@ QString SpimView::formatKernelTextSeg()
 }
 
 
+QString breakpointMark()
+{
+    return QString("<font face='Wingdings 2' color='red'>N</font> ");
+}
+
+
 QString SpimView::formatInstructions(mem_addr from, mem_addr to)
 {
     str_stream ss;
@@ -84,7 +90,7 @@ QString SpimView::formatInstructions(mem_addr from, mem_addr to)
             }
             if (inst_is_breakpoint(a))
             {
-                windowContents += QString("<font face='Wingdings 2' color='red'>N</font> ");
+                windowContents += QString(breakpointMark());
             }
             windowContents += QString("[") % QString(pc) % QString("] ")
                 % (st_showTextDisassembly ? QString(binInst) : QString(""))
@@ -105,13 +111,11 @@ QString SpimView::formatInstructions(mem_addr from, mem_addr to)
 void SpimView::highlightInstruction(mem_addr pc)
 {
     QTextEdit* te = ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit");
-
-    QString str = te->toHtml();
+    QTextCursor cursor(te->document());
 
     QRegExp rx("\\[" + formatAddress(pc) + "\\]"); // Start of specific line
     QRegExp rx2("(\\[[0-9a-fA-F]{8}\\])|(N \\[)"); // Start of any line
 
-    QTextCursor cursor(te->document());
     cursor = te->document()->find(rx, cursor);
     if (!cursor.isNull())
     {
@@ -147,4 +151,88 @@ void SpimView::highlightInstruction(mem_addr pc)
         ess << es;
         te->setExtraSelections(ess);
     }
+}
+
+
+//
+// Breakpoint
+//
+
+textTextEdit::textTextEdit()
+{
+    action_Context_SetBreakpoint = new QAction(this);
+    action_Context_SetBreakpoint->setObjectName("action_SetBreakpoint");
+    action_Context_SetBreakpoint->setText("Set Breakpoint");
+
+    action_Context_ClearBreakpoint = new QAction(this);
+    action_Context_ClearBreakpoint->setObjectName("action_ClearBreakpoint");
+    action_Context_ClearBreakpoint->setText("Clear Breakpoint");
+}
+
+
+void textTextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+    QMenu *menu = createStandardContextMenu();
+    menu->addSeparator();
+    menu->addAction(action_Context_SetBreakpoint);
+    menu->addAction(action_Context_ClearBreakpoint);
+    contextGlobalPos = event->globalPos();
+
+    menu->exec(event->globalPos());
+}
+
+
+void textTextEdit::setBreakpoint()
+{
+    QTextCursor cursor;
+    int pc = pcFromPos(&cursor);
+    if (pc != 0 && !inst_is_breakpoint(pc))
+    {
+        add_breakpoint(pc);
+
+        cursor.setPosition(cursor.anchor());
+        cursor.insertHtml(breakpointMark());
+        update();
+    }
+}
+
+
+void textTextEdit::clearBreakpoint()
+{
+    QTextCursor cursor;
+    int pc = pcFromPos(&cursor);
+    if (pc != 0 && inst_is_breakpoint(pc))
+    {
+        delete_breakpoint(pc);
+
+        cursor.setPosition(cursor.anchor());
+        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, 2);
+        cursor.removeSelectedText();
+        update();
+    }
+}
+
+
+int textTextEdit::pcFromPos(QTextCursor* cursor)
+{
+    // Position of context menu is location user right-click. Find the line at this point
+    // extract the pc.
+    //
+    QPoint mouseViewportPos = this->viewport()->mapFromGlobal(contextGlobalPos);
+
+    *cursor = this->cursorForPosition(mouseViewportPos);
+    cursor->select(QTextCursor::LineUnderCursor);
+    QString line = cursor->selectedText();
+
+    QRegExp rx("\\[([0-9a-fA-F]{8})\\]"); // Address of instruction
+
+    rx.indexIn(line);
+    QString pcStr = rx.cap(1);
+    if (pcStr != "")
+    {
+        bool ok;
+        int pc = pcStr.toInt(&ok, 16);
+        return (ok ? pc : 0);
+    }
+    return 0;
 }

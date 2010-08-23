@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sat Aug 21 14:06:55 2010
+** Created: Sun Aug 22 19:45:40 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTextEdit>
 #include <QtGui/QToolBar>
+#include <texttextedit.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -37,8 +38,6 @@ public:
     QAction *action_Sim_SetRunParameters;
     QAction *action_Sim_Run;
     QAction *action_Sim_SingleStep;
-    QAction *action_Sim_SetBreakpoint;
-    QAction *action_Sim_ListBreakpoints;
     QAction *action_Sim_SetMemoryLocation;
     QAction *action_Sim_DisplaySymbols;
     QAction *action_Sim_Settings;
@@ -91,7 +90,7 @@ public:
     QDockWidget *FPRegDockWidget;
     QTextEdit *FPRegTextEdit;
     QDockWidget *TextSegDockWidget;
-    QTextEdit *TextSegmentTextEdit;
+    textTextEdit *TextSegmentTextEdit;
     QDockWidget *DataSegDockWidget;
     QTextEdit *DataSegTextEdit;
 
@@ -119,10 +118,6 @@ public:
         action_Sim_Run->setObjectName(QString::fromUtf8("action_Sim_Run"));
         action_Sim_SingleStep = new QAction(SpimView);
         action_Sim_SingleStep->setObjectName(QString::fromUtf8("action_Sim_SingleStep"));
-        action_Sim_SetBreakpoint = new QAction(SpimView);
-        action_Sim_SetBreakpoint->setObjectName(QString::fromUtf8("action_Sim_SetBreakpoint"));
-        action_Sim_ListBreakpoints = new QAction(SpimView);
-        action_Sim_ListBreakpoints->setObjectName(QString::fromUtf8("action_Sim_ListBreakpoints"));
         action_Sim_SetMemoryLocation = new QAction(SpimView);
         action_Sim_SetMemoryLocation->setObjectName(QString::fromUtf8("action_Sim_SetMemoryLocation"));
         action_Sim_DisplaySymbols = new QAction(SpimView);
@@ -275,7 +270,7 @@ public:
         sizePolicy.setHeightForWidth(TextSegDockWidget->sizePolicy().hasHeightForWidth());
         TextSegDockWidget->setSizePolicy(sizePolicy);
         TextSegDockWidget->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea);
-        TextSegmentTextEdit = new QTextEdit();
+        TextSegmentTextEdit = new textTextEdit();
         TextSegmentTextEdit->setObjectName(QString::fromUtf8("TextSegmentTextEdit"));
         TextSegmentTextEdit->setMinimumSize(QSize(700, 600));
         TextSegmentTextEdit->setUndoRedoEnabled(false);
@@ -314,9 +309,6 @@ public:
         menu_Simulator->addAction(action_Sim_SetRunParameters);
         menu_Simulator->addAction(action_Sim_Run);
         menu_Simulator->addAction(action_Sim_SingleStep);
-        menu_Simulator->addSeparator();
-        menu_Simulator->addAction(action_Sim_SetBreakpoint);
-        menu_Simulator->addAction(action_Sim_ListBreakpoints);
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_SetMemoryLocation);
         menu_Simulator->addSeparator();
@@ -373,8 +365,6 @@ public:
         action_Sim_Run->setShortcut(QApplication::translate("SpimView", "F5", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setText(QApplication::translate("SpimView", "&Single Step", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setShortcut(QApplication::translate("SpimView", "F10", 0, QApplication::UnicodeUTF8));
-        action_Sim_SetBreakpoint->setText(QApplication::translate("SpimView", "Set&Breakpoint", 0, QApplication::UnicodeUTF8));
-        action_Sim_ListBreakpoints->setText(QApplication::translate("SpimView", "&List Breakpoints", 0, QApplication::UnicodeUTF8));
         action_Sim_SetMemoryLocation->setText(QApplication::translate("SpimView", "Change &Memory Location", 0, QApplication::UnicodeUTF8));
         action_Sim_DisplaySymbols->setText(QApplication::translate("SpimView", "&Display Symbols", 0, QApplication::UnicodeUTF8));
         action_Sim_Settings->setText(QApplication::translate("SpimView", "Settings", 0, QApplication::UnicodeUTF8));

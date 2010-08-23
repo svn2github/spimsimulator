@@ -63,9 +63,6 @@
     <addaction name="action_Sim_Run"/>
     <addaction name="action_Sim_SingleStep"/>
     <addaction name="separator"/>
-    <addaction name="action_Sim_SetBreakpoint"/>
-    <addaction name="action_Sim_ListBreakpoints"/>
-    <addaction name="separator"/>
     <addaction name="action_Sim_SetMemoryLocation"/>
     <addaction name="separator"/>
     <addaction name="action_Sim_DisplaySymbols"/>
@@ -204,7 +201,7 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QTextEdit" name="TextSegmentTextEdit">
+   <widget class="textTextEdit" name="TextSegmentTextEdit">
     <property name="minimumSize">
      <size>
       <width>700</width>
@@ -287,16 +284,6 @@
    </property>
    <property name="shortcut">
     <string>F10</string>
-   </property>
-  </action>
-  <action name="action_Sim_SetBreakpoint">
-   <property name="text">
-    <string>Set&amp;Breakpoint</string>
-   </property>
-  </action>
-  <action name="action_Sim_ListBreakpoints">
-   <property name="text">
-    <string>&amp;List Breakpoints</string>
    </property>
   </action>
   <action name="action_Sim_SetMemoryLocation">
