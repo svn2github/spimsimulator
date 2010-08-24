@@ -114,32 +114,11 @@ void SpimView::highlightInstruction(mem_addr pc)
     QTextCursor cursor(te->document());
 
     QRegExp rx("\\[" + formatAddress(pc) + "\\]"); // Start of specific line
-    QRegExp rx2("(\\[[0-9a-fA-F]{8}\\])|(N \\[)"); // Start of any line
-
     cursor = te->document()->find(rx, cursor);
     if (!cursor.isNull())
     {
-        // Find end of current line by finding start of next line
-        //
-        QTextCursor endCursor(te->document());
-        endCursor = te->document()->find(rx2, cursor);
-
-        if (endCursor.isNull())
-        {
-            // Last line does not have successor
-            //
-            cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-        }
-        else
-        {
-            // Backup over match to end of current line
-            //
-            endCursor.movePosition(QTextCursor::PreviousCharacter,
-                                   QTextCursor::KeepAnchor,
-                                   endCursor.selectedText().length());
-
-            cursor.setPosition(endCursor.position(), QTextCursor::KeepAnchor);
-        }
+        cursor.select(QTextCursor::LineUnderCursor);
+        QString l = cursor.selectedText();
 
         QTextCharFormat format;
         format.setBackground(QBrush(Qt::cyan));
