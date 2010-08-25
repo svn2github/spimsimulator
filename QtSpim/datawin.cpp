@@ -261,20 +261,13 @@ int dataTextEdit::addrFromPos(QTextCursor* cursor)
             line.truncate(offset);                                  // Remove address
             line.remove(0, 14);                                     // Remove line after mouse position
 
-            QRegExp rx2("\\s\\s");
-            int numWords = 0;
-            int i = 0;
-            while ((i = rx2.indexIn(line, i)) != -1)
-            {
-                numWords ++;
-                i += 1;
-            }
-            if (numWords > 3)
-            {
-                numWords = 3;
-            }
-
-            return addr + numWords * BYTES_PER_WORD;
+            QRegExp rx2("^([0-9a-fA-F]+\\s*)?([0-9a-fA-F]+\\s*)?([0-9a-fA-F]+\\s*)?([0-9a-fA-F]+\\s*)?");
+            rx2.indexIn(line, 0);
+            return addr
+                + (rx2.cap(1) == "" ? 0 : 0)
+                + (rx2.cap(2) == "" ? 0 : BYTES_PER_WORD)
+                + (rx2.cap(3) == "" ? 0 : BYTES_PER_WORD)
+                + (rx2.cap(4) == "" ? 0 : BYTES_PER_WORD);
         }
     }
     return 0;
