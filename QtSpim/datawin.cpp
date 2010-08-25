@@ -1,8 +1,11 @@
 #include "spimview.h"
 #include "ui_spimview.h"
 
+#include <QRegExp>
+#include <QContextMenuEvent>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
+#include <QInputDialog>
 
 
 //
@@ -11,8 +14,7 @@
 
 void SpimView::DisplayDataSegments()
 {
-    QTextEdit* te = ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegTextEdit");
-
+    dataTextEdit* te = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
     te->clear();
     te->setHtml(windowFormattingStart()
                 % formatUserDataSeg()
@@ -145,18 +147,17 @@ QString SpimView::formatPartialQuadWord (mem_addr addr)
 }
 
 
-
 //
 // Utility functions
 //
 
-QString SpimView::formatAddress(mem_addr addr)
+QString formatAddress(mem_addr addr)
 {
     return QString::number(addr, 16).rightJustified(8, '0');
 }
 
 
-QString SpimView::formatWord(mem_word word, int base)
+QString formatWord(mem_word word, int base)
 {
     int width = 0;
     switch (base)
@@ -172,14 +173,109 @@ QString SpimView::formatWord(mem_word word, int base)
 }
 
 
-QString SpimView::formatChar(int chr)
+QString formatChar(int chr)
 {
     return QString(QChar(chr));
 }
 
-QString SpimView::formatSegLabel(QString segName, mem_addr low, mem_addr high)
+QString formatSegLabel(QString segName, mem_addr low, mem_addr high)
 {
     return QString("<center><b>") % segName
         % QString(" [") % formatAddress(low) % QString("]..[") % formatAddress(high)
         % QString("]</b></center>");
+}
+
+
+//
+// Change memory value
+//
+
+dataTextEdit::dataTextEdit()
+{
+    action_Context_ChangeValue = new QAction(this);
+    action_Context_ChangeValue->setObjectName("action_ChangeValue");
+    action_Context_ChangeValue->setText("Change Memory Contents");
+}
+
+
+void dataTextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+    QMenu *menu = createStandardContextMenu();
+    menu->addSeparator();
+    menu->addAction(action_Context_ChangeValue);
+    contextGlobalPos = event->globalPos();
+
+    menu->exec(event->globalPos());
+}
+
+
+void dataTextEdit::changeValue()
+{
+    QTextCursor cursor;
+    mem_addr addr = addrFromPos(&cursor);
+    if (addr != 0)
+    {
+        bool ok;
+        int value = QInputDialog::getInt(this,
+                                         "Change Memory Contents",
+                                         "New Contents for " + formatAddress(addr),
+                                         0,
+                                         -2147483647,
+                                         2147483647,
+                                         1,
+                                         &ok);
+        if (ok)
+        {
+            set_mem_word(addr, value);
+        }
+        Window->DisplayDataSegments();
+    }
+}
+
+
+int dataTextEdit::addrFromPos(QTextCursor* cursor)
+{
+    // Position of context menu is location user right-click. Find the line at this point
+    // and compute the address of the memory location the user clicked on.
+    //
+    QPoint mouseViewportPos = this->viewport()->mapFromGlobal(contextGlobalPos);
+    QTextCursor mouseCursor = this->cursorForPosition(mouseViewportPos);
+    *cursor = mouseCursor;
+
+    cursor->select(QTextCursor::LineUnderCursor);
+    QString line = cursor->selectedText();
+
+    QRegExp rx("\\[([0-9a-fA-F]{8})\\]"); // Address of instruction
+
+    rx.indexIn(line);
+    QString addrStr = rx.cap(1);
+    if (addrStr != "")
+    {
+        bool ok;
+        mem_addr addr = addrStr.toUInt(&ok, 16);
+        if (ok)
+        {
+            // [...]<sp><sp><sp><sp>#<sp><sp>#<sp><sp>#<sp><sp>#<sp><sp>
+            //
+            int offset = mouseCursor.position() - cursor->anchor(); // Start of line to mouse location
+            line.truncate(offset);                                  // Remove address
+            line.remove(0, 14);                                     // Remove line after mouse position
+
+            QRegExp rx2("\\s\\s");
+            int numWords = 0;
+            int i = 0;
+            while ((i = rx2.indexIn(line, i)) != -1)
+            {
+                numWords ++;
+                i += 1;
+            }
+            if (numWords > 3)
+            {
+                numWords = 3;
+            }
+
+            return addr + numWords * BYTES_PER_WORD;
+        }
+    }
+    return 0;
 }

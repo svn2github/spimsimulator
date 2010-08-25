@@ -115,7 +115,7 @@ void SpimView::file_SaveLogFile()
             }
             if (slf.DataCheckBox->isChecked())
             {
-                outFile << pickFormat(ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegTextEdit"), toHtml);
+                outFile << pickFormat(ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegmentTextEdit"), toHtml);
                 outFile << "\n\n";
             }
 #if 0                           // FIXME
@@ -154,7 +154,7 @@ void SpimView::file_Print()
             }
             if (pwd.DataCheckBox->isChecked())
             {
-                ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegTextEdit")->print(&printer);
+                ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegmentTextEdit")->print(&printer);
             }
 #if 0                           // FIXME
             if (pwd.ConsoleCheckBox->isChecked())
@@ -277,11 +277,6 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
             msgBox.exec();
         }
     }
-}
-
-
-void SpimView::sim_SetMemoryLocation()
-{
 }
 
 

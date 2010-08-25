@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'runparams.ui'
 **
-** Created: Sun Aug 22 19:45:40 2010
+** Created: Mon Aug 23 20:38:13 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

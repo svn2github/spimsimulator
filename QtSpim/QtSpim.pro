@@ -31,7 +31,8 @@ SOURCES += main.cpp\
         spim_support.c
 
 HEADERS  += spimview.h\
-	texttextedit.h
+	texttextedit.h\
+	datatextedit.h
 
 FORMS    += spimview.ui\
 	savelogfile.ui\

@@ -25,9 +25,9 @@ SpimView::SpimView(QWidget *parent) :
     tabifyDockWidget(ui->DataSegDockWidget, ui->TextSegDockWidget);
 
 
-    // Wire up the menu commands
+    // Wire up the menu and context menu commands
     //
-    wireMenuCommands();
+    wireCommands();
 
 
     // Restore program settings and window positions
@@ -43,7 +43,7 @@ SpimView::~SpimView()
 }
 
 
-void SpimView::wireMenuCommands()
+void SpimView::wireCommands()
 {
     QObject::connect(ui->action_File_Load, SIGNAL(triggered(bool)), this, SLOT(file_LoadFile()));
     QObject::connect(ui->action_File_Reload, SIGNAL(triggered(bool)), this, SLOT(file_ReloadFile()));
@@ -56,7 +56,6 @@ void SpimView::wireMenuCommands()
     QObject::connect(ui->action_Sim_SetRunParameters, SIGNAL(triggered(bool)), this, SLOT(sim_SetRunParameters()));
     QObject::connect(ui->action_Sim_Run, SIGNAL(triggered(bool)), this, SLOT(sim_Run()));
     QObject::connect(ui->action_Sim_SingleStep, SIGNAL(triggered(bool)), this, SLOT(sim_SingleStep()));
-    QObject::connect(ui->action_Sim_SetMemoryLocation, SIGNAL(triggered(bool)), this, SLOT(sim_SetMemoryLocation()));
     QObject::connect(ui->action_Sim_DisplaySymbols, SIGNAL(triggered(bool)), this, SLOT(sim_DisplaySymbols()));
     QObject::connect(ui->action_Sim_Settings, SIGNAL(triggered(bool)), this, SLOT(sim_Settings()));
 
@@ -95,6 +94,10 @@ void SpimView::wireMenuCommands()
                      ui->TextSegmentTextEdit, SLOT(setBreakpoint()));
     QObject::connect(ui->TextSegmentTextEdit->action_Context_ClearBreakpoint, SIGNAL(triggered(bool)),
                      ui->TextSegmentTextEdit, SLOT(clearBreakpoint()));
+
+
+    QObject::connect(ui->DataSegmentTextEdit->action_Context_ChangeValue, SIGNAL(triggered(bool)),
+                     ui->DataSegmentTextEdit, SLOT(changeValue()));
 }
 
 

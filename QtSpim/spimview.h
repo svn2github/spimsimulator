@@ -168,18 +168,10 @@ class SpimView : public QMainWindow
     QString formatPartialQuadWord (mem_addr addr);
 
 
-    // Common segment methods
-    //
-    QString formatAddress(mem_addr addr);
-    QString formatWord(mem_word word, int base);
-    QString formatChar(int chr);
-    QString formatSegLabel(QString segName, mem_addr low, mem_addr high);
-
-
     //
     // Menu functions
     //
-    void wireMenuCommands();
+    void wireCommands();
     void initStack();
     void executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
 
@@ -196,7 +188,6 @@ class SpimView : public QMainWindow
     void sim_SetRunParameters();
     void sim_Run();
     void sim_SingleStep();
-    void sim_SetMemoryLocation();
     void sim_DisplaySymbols();
     void sim_Settings();
 
@@ -236,5 +227,14 @@ class SpimView : public QMainWindow
 };
 
 extern SpimView* Window;
+
+
+// Format SPIM abstractions for display
+//
+QString formatAddress(mem_addr addr);
+QString formatWord(mem_word word, int base);
+QString formatChar(int chr);
+QString formatSegLabel(QString segName, mem_addr low, mem_addr high);
+
 
 #endif // SPIMVIEW_H

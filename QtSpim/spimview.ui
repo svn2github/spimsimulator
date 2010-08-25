@@ -226,7 +226,7 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QTextEdit" name="DataSegTextEdit">
+   <widget class="dataTextEdit" name="DataSegmentTextEdit">
     <property name="undoRedoEnabled">
      <bool>false</bool>
     </property>
@@ -284,11 +284,6 @@
    </property>
    <property name="shortcut">
     <string>F10</string>
-   </property>
-  </action>
-  <action name="action_Sim_SetMemoryLocation">
-   <property name="text">
-    <string>Change &amp;Memory Location</string>
    </property>
   </action>
   <action name="action_Sim_DisplaySymbols">

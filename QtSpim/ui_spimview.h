@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sun Aug 22 19:45:40 2010
+** Created: Tue Aug 24 22:18:37 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTextEdit>
 #include <QtGui/QToolBar>
+#include <datatextedit.h>
 #include <texttextedit.h>
 
 QT_BEGIN_NAMESPACE
@@ -38,7 +39,6 @@ public:
     QAction *action_Sim_SetRunParameters;
     QAction *action_Sim_Run;
     QAction *action_Sim_SingleStep;
-    QAction *action_Sim_SetMemoryLocation;
     QAction *action_Sim_DisplaySymbols;
     QAction *action_Sim_Settings;
     QAction *action_Reg_DisplayBinary;
@@ -92,7 +92,7 @@ public:
     QDockWidget *TextSegDockWidget;
     textTextEdit *TextSegmentTextEdit;
     QDockWidget *DataSegDockWidget;
-    QTextEdit *DataSegTextEdit;
+    dataTextEdit *DataSegmentTextEdit;
 
     void setupUi(QMainWindow *SpimView)
     {
@@ -118,8 +118,6 @@ public:
         action_Sim_Run->setObjectName(QString::fromUtf8("action_Sim_Run"));
         action_Sim_SingleStep = new QAction(SpimView);
         action_Sim_SingleStep->setObjectName(QString::fromUtf8("action_Sim_SingleStep"));
-        action_Sim_SetMemoryLocation = new QAction(SpimView);
-        action_Sim_SetMemoryLocation->setObjectName(QString::fromUtf8("action_Sim_SetMemoryLocation"));
         action_Sim_DisplaySymbols = new QAction(SpimView);
         action_Sim_DisplaySymbols->setObjectName(QString::fromUtf8("action_Sim_DisplaySymbols"));
         action_Sim_Settings = new QAction(SpimView);
@@ -280,11 +278,11 @@ public:
         DataSegDockWidget = new QDockWidget(SpimView);
         DataSegDockWidget->setObjectName(QString::fromUtf8("DataSegDockWidget"));
         DataSegDockWidget->setAllowedAreas(Qt::TopDockWidgetArea);
-        DataSegTextEdit = new QTextEdit();
-        DataSegTextEdit->setObjectName(QString::fromUtf8("DataSegTextEdit"));
-        DataSegTextEdit->setUndoRedoEnabled(false);
-        DataSegTextEdit->setReadOnly(true);
-        DataSegDockWidget->setWidget(DataSegTextEdit);
+        DataSegmentTextEdit = new dataTextEdit();
+        DataSegmentTextEdit->setObjectName(QString::fromUtf8("DataSegmentTextEdit"));
+        DataSegmentTextEdit->setUndoRedoEnabled(false);
+        DataSegmentTextEdit->setReadOnly(true);
+        DataSegDockWidget->setWidget(DataSegmentTextEdit);
         SpimView->addDockWidget(static_cast<Qt::DockWidgetArea>(4), DataSegDockWidget);
 
         menuBar->addAction(menu_File->menuAction());
@@ -310,7 +308,6 @@ public:
         menu_Simulator->addAction(action_Sim_Run);
         menu_Simulator->addAction(action_Sim_SingleStep);
         menu_Simulator->addSeparator();
-        menu_Simulator->addAction(action_Sim_SetMemoryLocation);
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_DisplaySymbols);
         menu_Simulator->addSeparator();
@@ -365,7 +362,6 @@ public:
         action_Sim_Run->setShortcut(QApplication::translate("SpimView", "F5", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setText(QApplication::translate("SpimView", "&Single Step", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setShortcut(QApplication::translate("SpimView", "F10", 0, QApplication::UnicodeUTF8));
-        action_Sim_SetMemoryLocation->setText(QApplication::translate("SpimView", "Change &Memory Location", 0, QApplication::UnicodeUTF8));
         action_Sim_DisplaySymbols->setText(QApplication::translate("SpimView", "&Display Symbols", 0, QApplication::UnicodeUTF8));
         action_Sim_Settings->setText(QApplication::translate("SpimView", "Settings", 0, QApplication::UnicodeUTF8));
         action_Reg_DisplayBinary->setText(QApplication::translate("SpimView", "Binary", 0, QApplication::UnicodeUTF8));

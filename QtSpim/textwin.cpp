@@ -1,5 +1,6 @@
 #include "spimview.h"
 #include "ui_spimview.h"
+#
 
 #include <QRegExp>
 #include <QContextMenuEvent>
@@ -164,7 +165,7 @@ void textTextEdit::contextMenuEvent(QContextMenuEvent* event)
 void textTextEdit::setBreakpoint()
 {
     QTextCursor cursor;
-    int pc = pcFromPos(&cursor);
+    mem_addr pc = pcFromPos(&cursor);
     if (pc != 0 && !inst_is_breakpoint(pc))
     {
         add_breakpoint(pc);
@@ -179,7 +180,7 @@ void textTextEdit::setBreakpoint()
 void textTextEdit::clearBreakpoint()
 {
     QTextCursor cursor;
-    int pc = pcFromPos(&cursor);
+    mem_addr pc = pcFromPos(&cursor);
     if (pc != 0 && inst_is_breakpoint(pc))
     {
         delete_breakpoint(pc);
@@ -210,7 +211,7 @@ int textTextEdit::pcFromPos(QTextCursor* cursor)
     if (pcStr != "")
     {
         bool ok;
-        int pc = pcStr.toInt(&ok, 16);
+        mem_addr pc = pcStr.toUInt(&ok, 16);
         return (ok ? pc : 0);
     }
     return 0;
