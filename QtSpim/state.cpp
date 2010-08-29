@@ -7,7 +7,7 @@
 
 void SpimView::readSettings()
 {
-    settings.beginGroup("Mainin");
+    settings.beginGroup("Main");
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("WindowState").toByteArray());
     settings.endGroup();
@@ -18,8 +18,13 @@ void SpimView::readSettings()
     st_intRegBase = settings.value("IntRegisterBase", 16).toInt();
     st_intRegBase = setCheckedRegBase(st_intRegBase);
 
+    st_regWinFont = settings.value("Font", QFont("Courier")).value<QFont>();
+    st_regWinFontColor = settings.value("FontColor", QColor("black")).value<QColor>();
+    st_regWinBackgroundColor = settings.value("BackgroundColor", QColor("white")).value<QColor>();
+
     ui->IntRegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();
+
 
     settings.beginGroup("TextWin");
     st_showUserTextSegment = settings.value("ShowUserTextSeg", true).toBool();
@@ -31,8 +36,13 @@ void SpimView::readSettings()
     st_showTextDisassembly =  settings.value("ShowInstDisassembly", true).toBool();
     ui->action_Text_DisplayInstructionValue->setChecked(st_showTextDisassembly);
 
+    st_textWinFont = settings.value("Font", QFont("Courier")).value<QFont>();
+    st_textWinFontColor = settings.value("FontColor", QColor("black")).value<QColor>();
+    st_textWinBackgroundColor = settings.value("BackgroundColor", QColor("white")).value<QColor>();
+
     ui->TextSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();
+
 
     settings.beginGroup("DataWin");
     st_showUserDataSegment = settings.value("ShowUserDataSeg", true).toBool();
@@ -47,6 +57,7 @@ void SpimView::readSettings()
     ui->DataSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     settings.endGroup();
 
+
     settings.beginGroup("FileMenu");
     st_recentFilesLength = settings.value("RecentFilesLength", 4).toInt();
     st_recentFiles.clear();
@@ -59,11 +70,14 @@ void SpimView::readSettings()
     rebuildRecentFilesMenu();
     settings.endGroup();
 
+
     settings.beginGroup("Spim");
     bare_machine = settings.value("BareMachine", 0).toInt();
     accept_pseudo_insts = settings.value("AcceptPseudoInsts", 1).toInt();
     delayed_branches = settings.value("DelayedBranches", 0).toInt();
-    quiet = settings.value("Quiet", 0).toInt();
+    delayed_loads = settings.value("DelayedLoads", 0).toInt();
+    mapped_io = settings.value("MappedIO", 0).toInt();
+
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
     st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", "../CPU/exceptions.s").toString();
     st_startAddress = settings.value("StartingAddress", starting_address()).toInt();
@@ -79,13 +93,19 @@ void SpimView::writeSettings()
     settings.setValue("WindowState", saveState());
     settings.endGroup();
 
+
     settings.beginGroup("RegWin");
     settings.setValue("ColorChangedRegs", st_colorChangedRegisters);
     settings.setValue("ChangedRegColor", st_changedRegisterColor);
     settings.setValue("IntRegisterBase", st_intRegBase);
 
+    settings.setValue("Font", st_regWinFont);
+    settings.setValue("FontColor", st_regWinFontColor);
+    settings.setValue("BackgroundColor", st_regWinBackgroundColor);
+
     settings.setValue("Geometry", ui->IntRegDockWidget->saveGeometry());
     settings.endGroup();
+
 
     settings.beginGroup("TextWin");
     settings.setValue("ShowUserTextSeg", st_showUserTextSegment);
@@ -93,8 +113,13 @@ void SpimView::writeSettings()
     settings.setValue("ShowTextComments", st_showTextComments);
     settings.setValue("ShowInstDisassembly", st_showTextDisassembly);
 
+    settings.setValue("Font", st_textWinFont);
+    settings.setValue("FontColor", st_textWinFontColor);
+    settings.setValue("BackgroundColor", st_textWinBackgroundColor);
+
     settings.setValue("Geometry", ui->TextSegDockWidget->saveGeometry());
     settings.endGroup();
+
 
     settings.beginGroup("DataWin");
     settings.setValue("ShowUserDataSeg", st_showUserDataSegment);
@@ -110,15 +135,25 @@ void SpimView::writeSettings()
     int i;
     for (i = 0; i < st_recentFilesLength; i++)
     {
-        settings.setValue("RecentFile" + QString(i), st_recentFiles[i]);
+        if (i < st_recentFiles.length())
+        {
+            settings.setValue("RecentFile" + QString(i), st_recentFiles[i]);
+        }
+        else
+        {
+            settings.setValue("RecentFile" + QString(i), "");
+        }
     }
     settings.endGroup();
+
 
     settings.beginGroup("Spim");
     settings.setValue("BareMachine", bare_machine);
     settings.setValue("AcceptPseudoInsts", accept_pseudo_insts);
     settings.setValue("DelayedBranches", delayed_branches);
-    settings.setValue("Quiet", quiet);
+    settings.setValue("DelayedLoads", delayed_loads);
+    settings.setValue("MappedIO", mapped_io);
+
     settings.setValue("LoadExceptionHandler", st_loadExceptionHandler);
     settings.setValue("ExceptionHandlerFileName", st_ExceptionHandlerFileName);
     settings.setValue("StartingAddress", st_startAddress);

@@ -101,9 +101,13 @@ void SpimView::wireCommands()
 }
 
 
-QString SpimView::windowFormattingStart()
+QString SpimView::windowFormattingStart(QFont font, QColor fontColor, QColor backgroundColor)
 {
-    return "<span style='font-size:10pt;font-family:courier;color:black'>";
+    return QString("<span style='font-family:" + font.family()
+                   + "; font-size:" + QString::number(font.pointSize(), 10)
+                   + "pt; color:" + fontColor.name()
+                   + ";background-color:" + backgroundColor.name()
+                   +"'>");
 }
 
 
@@ -142,6 +146,7 @@ QString SpimView::WriteOutput(QString message)
     message.replace(" ", "&nbsp;");
 
     Window->ui->centralWidget->append(QString("<span>") + message + QString("</span>"));
+    Window->ui->centralWidget->ensureCursorVisible();
 
     return message;
 }

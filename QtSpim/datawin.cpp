@@ -16,7 +16,7 @@ void SpimView::DisplayDataSegments()
 {
     dataTextEdit* te = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
     te->clear();
-    te->setHtml(windowFormattingStart()
+    te->setHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
                 % formatUserDataSeg()
                 % formatUserStack()
                 % formatKernelDataSeg()

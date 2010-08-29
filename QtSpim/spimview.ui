@@ -154,7 +154,7 @@
    <widget class="QTextEdit" name="IntRegTextEdit">
     <property name="minimumSize">
      <size>
-      <width>250</width>
+      <width>200</width>
       <height>600</height>
      </size>
     </property>
@@ -204,7 +204,7 @@
    <widget class="textTextEdit" name="TextSegmentTextEdit">
     <property name="minimumSize">
      <size>
-      <width>700</width>
+      <width>800</width>
       <height>600</height>
      </size>
     </property>

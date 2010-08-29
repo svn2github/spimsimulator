@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'printwindows.ui'
 **
-** Created: Mon Aug 23 20:38:13 2010
+** Created: Sun Aug 29 11:45:02 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,10 +16,10 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
-#include <QtGui/QPushButton>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,17 +34,16 @@ public:
     QCheckBox *TextCheckBox;
     QCheckBox *DataCheckBox;
     QCheckBox *ConsoleCheckBox;
-    QPushButton *SavePushButton;
-    QPushButton *AbortPushButton;
+    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *PrintWindowsDialog)
     {
         if (PrintWindowsDialog->objectName().isEmpty())
             PrintWindowsDialog->setObjectName(QString::fromUtf8("PrintWindowsDialog"));
-        PrintWindowsDialog->resize(370, 230);
+        PrintWindowsDialog->resize(297, 174);
         verticalLayoutWidget = new QWidget(PrintWindowsDialog);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 350, 210));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 261, 121));
         gridLayout = new QGridLayout(verticalLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -73,22 +72,15 @@ public:
 
         gridLayout->addWidget(ConsoleCheckBox, 5, 1, 1, 1);
 
-        SavePushButton = new QPushButton(verticalLayoutWidget);
-        SavePushButton->setObjectName(QString::fromUtf8("SavePushButton"));
-
-        gridLayout->addWidget(SavePushButton, 6, 1, 1, 1);
-
-        AbortPushButton = new QPushButton(verticalLayoutWidget);
-        AbortPushButton->setObjectName(QString::fromUtf8("AbortPushButton"));
-
-        gridLayout->addWidget(AbortPushButton, 6, 2, 1, 1);
-
-        verticalLayoutWidget->raise();
-        AbortPushButton->raise();
+        buttonBox = new QDialogButtonBox(PrintWindowsDialog);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setGeometry(QRect(-10, 140, 273, 23));
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        buttonBox->setCenterButtons(true);
 
         retranslateUi(PrintWindowsDialog);
-        QObject::connect(SavePushButton, SIGNAL(clicked()), PrintWindowsDialog, SLOT(accept()));
-        QObject::connect(AbortPushButton, SIGNAL(clicked()), PrintWindowsDialog, SLOT(reject()));
+        QObject::connect(buttonBox, SIGNAL(accepted()), PrintWindowsDialog, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), PrintWindowsDialog, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(PrintWindowsDialog);
     } // setupUi
@@ -101,8 +93,6 @@ public:
         TextCheckBox->setText(QApplication::translate("PrintWindowsDialog", "Text Segments", 0, QApplication::UnicodeUTF8));
         DataCheckBox->setText(QApplication::translate("PrintWindowsDialog", "Data Segments", 0, QApplication::UnicodeUTF8));
         ConsoleCheckBox->setText(QApplication::translate("PrintWindowsDialog", "Console", 0, QApplication::UnicodeUTF8));
-        SavePushButton->setText(QApplication::translate("PrintWindowsDialog", "Print", 0, QApplication::UnicodeUTF8));
-        AbortPushButton->setText(QApplication::translate("PrintWindowsDialog", "Abort", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -17,7 +17,7 @@ void SpimView::DisplayTextSegments()
     QTextEdit* te = ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit");
 
     te->clear();
-    te->setHtml(windowFormattingStart()
+    te->setHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
                 % formatUserTextSeg()
                 % formatKernelTextSeg()
                 % windowFormattingEnd());

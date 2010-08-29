@@ -75,6 +75,9 @@ class SpimView : public QMainWindow
     bool st_colorChangedRegisters;
     QString st_changedRegisterColor;
     int st_intRegBase;
+    QFont st_regWinFont;
+    QColor st_regWinFontColor;
+    QColor st_regWinBackgroundColor;
 
     // Text window
     //
@@ -82,6 +85,9 @@ class SpimView : public QMainWindow
     bool st_showKernelTextSegment;
     bool st_showTextComments;
     bool st_showTextDisassembly;
+    QFont st_textWinFont;
+    QColor st_textWinFontColor;
+    QColor st_textWinBackgroundColor;
 
     // Data window
     //
@@ -99,7 +105,7 @@ class SpimView : public QMainWindow
 
     // Establish text formatting for a window
     //
-    QString windowFormattingStart();
+    QString windowFormattingStart(QFont font, QColor fontColor, QColor backgroundColor);
     QString windowFormattingEnd();
 
 

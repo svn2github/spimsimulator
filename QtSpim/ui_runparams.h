@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'runparams.ui'
 **
-** Created: Mon Aug 23 20:38:13 2010
+** Created: Sun Aug 29 11:45:02 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,11 +15,11 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QWidget>
 
@@ -35,18 +35,17 @@ public:
     QSpacerItem *horizontalSpacer;
     QLabel *label_2;
     QLineEdit *argsLineEdit;
-    QPushButton *acceptPushButton;
-    QPushButton *abortPushButton;
+    QDialogButtonBox *buttonBox;
     QSpacerItem *verticalSpacer;
 
     void setupUi(QDialog *SetRunParametersDialog)
     {
         if (SetRunParametersDialog->objectName().isEmpty())
             SetRunParametersDialog->setObjectName(QString::fromUtf8("SetRunParametersDialog"));
-        SetRunParametersDialog->resize(318, 182);
+        SetRunParametersDialog->resize(318, 207);
         gridLayoutWidget = new QWidget(SetRunParametersDialog);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 10, 298, 162));
+        gridLayoutWidget->setGeometry(QRect(10, 10, 298, 187));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -81,28 +80,21 @@ public:
 
         gridLayout->addWidget(argsLineEdit, 4, 0, 1, 1);
 
-        acceptPushButton = new QPushButton(gridLayoutWidget);
-        acceptPushButton->setObjectName(QString::fromUtf8("acceptPushButton"));
-        sizePolicy.setHeightForWidth(acceptPushButton->sizePolicy().hasHeightForWidth());
-        acceptPushButton->setSizePolicy(sizePolicy);
+        buttonBox = new QDialogButtonBox(gridLayoutWidget);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        buttonBox->setCenterButtons(true);
 
-        gridLayout->addWidget(acceptPushButton, 6, 0, 1, 1);
+        gridLayout->addWidget(buttonBox, 6, 0, 1, 1);
 
-        abortPushButton = new QPushButton(gridLayoutWidget);
-        abortPushButton->setObjectName(QString::fromUtf8("abortPushButton"));
-        sizePolicy.setHeightForWidth(abortPushButton->sizePolicy().hasHeightForWidth());
-        abortPushButton->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(abortPushButton, 6, 1, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
 
 
         retranslateUi(SetRunParametersDialog);
-        QObject::connect(acceptPushButton, SIGNAL(clicked()), SetRunParametersDialog, SLOT(accept()));
-        QObject::connect(abortPushButton, SIGNAL(clicked()), SetRunParametersDialog, SLOT(reject()));
+        QObject::connect(buttonBox, SIGNAL(accepted()), SetRunParametersDialog, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), SetRunParametersDialog, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(SetRunParametersDialog);
     } // setupUi
@@ -112,8 +104,6 @@ public:
         SetRunParametersDialog->setWindowTitle(QApplication::translate("SetRunParametersDialog", "Set Run Parameters", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("SetRunParametersDialog", "Address or label to start running program", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("SetRunParametersDialog", "Command-line arguments to pass to program", 0, QApplication::UnicodeUTF8));
-        acceptPushButton->setText(QApplication::translate("SetRunParametersDialog", "Accept", 0, QApplication::UnicodeUTF8));
-        abortPushButton->setText(QApplication::translate("SetRunParametersDialog", "Abort", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

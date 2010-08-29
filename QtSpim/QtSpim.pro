@@ -32,12 +32,15 @@ SOURCES += main.cpp\
 
 HEADERS  += spimview.h\
 	texttextedit.h\
-	datatextedit.h
+	datatextedit.h\
+        spim_settings.h\
+        settablecheckbox.h
 
 FORMS    += spimview.ui\
 	savelogfile.ui\
 	printwindows.ui\
-        runparams.ui
+        runparams.ui\
+        settings.ui
 
 INCLUDEPATH = ../CPU ../spim
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Tue Aug 24 22:18:37 2010
+** Created: Sun Aug 29 11:45:02 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -246,7 +246,7 @@ public:
         IntRegDockWidget->setAllowedAreas(Qt::TopDockWidgetArea);
         IntRegTextEdit = new QTextEdit();
         IntRegTextEdit->setObjectName(QString::fromUtf8("IntRegTextEdit"));
-        IntRegTextEdit->setMinimumSize(QSize(250, 600));
+        IntRegTextEdit->setMinimumSize(QSize(200, 600));
         IntRegTextEdit->setUndoRedoEnabled(false);
         IntRegTextEdit->setReadOnly(true);
         IntRegDockWidget->setWidget(IntRegTextEdit);
@@ -270,7 +270,7 @@ public:
         TextSegDockWidget->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea);
         TextSegmentTextEdit = new textTextEdit();
         TextSegmentTextEdit->setObjectName(QString::fromUtf8("TextSegmentTextEdit"));
-        TextSegmentTextEdit->setMinimumSize(QSize(700, 600));
+        TextSegmentTextEdit->setMinimumSize(QSize(800, 600));
         TextSegmentTextEdit->setUndoRedoEnabled(false);
         TextSegmentTextEdit->setReadOnly(true);
         TextSegDockWidget->setWidget(TextSegmentTextEdit);

@@ -2,6 +2,8 @@
 #include "ui_savelogfile.h"
 #include "ui_printwindows.h"
 #include "ui_runparams.h"
+#include "ui_settings.h"
+#include "spim_settings.h"
 
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
@@ -11,6 +13,8 @@
 #include <QTextStream>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QFontDialog>
+#include <QColorDialog>
 
 
 //
@@ -86,12 +90,9 @@ void SpimView::file_SaveLogFile()
     Ui::SaveLogFileDialog slf;
     slf.setupUi(&d);
 
-    // If user clicks on browser button, open a file browser and grab the file name.
-    //
     QFileDialog browser(0, "Open Log File", "", "Text files (*.txt);; HTML files (*.html *.htm);;All (*)");
-    QObject::connect(slf.BrowsePushButton, SIGNAL(clicked()), &browser, SLOT(exec()));
+    QObject::connect(slf.saveFileToolButton, SIGNAL(clicked()), &browser, SLOT(exec()));
     QObject::connect(&browser, SIGNAL(fileSelected(QString)), slf.SaveLineEdit, SLOT(setText(QString)));
-
 
     if (d.exec() == QDialog::Accepted)
     {
@@ -267,7 +268,7 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
         DisplayIntRegisters();
         DisplayFPRegisters();
         DisplayDataSegments();
-        
+
         if (breakpointEncountered)
         {
             QMessageBox msgBox(QMessageBox::Information,
@@ -282,13 +283,129 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
 
 void SpimView::sim_DisplaySymbols()
 {
+    WriteOutput("<br>");
+    print_symbols();
 }
 
 
 void SpimView::sim_Settings()
 {
-}
+    QDialog d;
+    Ui::SpimSettingDialog sd;
+    sd.setupUi(&d);
 
+    sd.bareMachineCheckBox->setChecked(bare_machine);
+    sd.pseudoInstCheckBox->setChecked(accept_pseudo_insts);
+    sd.delayedBranchCheckBox->setChecked(delayed_branches);
+    sd.delayedLoadCheckBox->setChecked(delayed_loads);
+    sd.mappedIOCheckBox->setChecked(mapped_io);
+
+    QObject::connect(sd.simplePushButton, SIGNAL(clicked()), sd.bareMachineCheckBox, SLOT(unset()));
+    QObject::connect(sd.simplePushButton, SIGNAL(clicked()), sd.pseudoInstCheckBox, SLOT(set()));
+    QObject::connect(sd.simplePushButton, SIGNAL(clicked()), sd.delayedBranchCheckBox, SLOT(unset()));
+    QObject::connect(sd.simplePushButton, SIGNAL(clicked()), sd.delayedLoadCheckBox, SLOT(unset()));
+    QObject::connect(sd.barePushButton, SIGNAL(clicked()), sd.bareMachineCheckBox, SLOT(set()));
+    QObject::connect(sd.barePushButton, SIGNAL(clicked()), sd.pseudoInstCheckBox, SLOT(unset()));
+    QObject::connect(sd.barePushButton, SIGNAL(clicked()), sd.delayedBranchCheckBox, SLOT(set()));
+    QObject::connect(sd.barePushButton, SIGNAL(clicked()), sd.delayedLoadCheckBox, SLOT(set()));
+
+    sd.loadExceptionHandlerCheckBox->setChecked(st_loadExceptionHandler);
+    sd.exceptionHandlerLineEdit->setText(st_ExceptionHandlerFileName);
+    QFileDialog exceptionFileDialog(0,
+                                    "Open Exception File",
+                                    st_ExceptionHandlerFileName,
+                                    "Assembly (*.s *.asm);;Text files (*.txt)");
+    QObject::connect(sd.exceptionHandlerToolButton, SIGNAL(clicked()), &exceptionFileDialog, SLOT(exec()));
+    QObject::connect(&exceptionFileDialog, SIGNAL(fileSelected(QString)),
+                     sd.exceptionHandlerLineEdit, SLOT(setText(QString)));
+
+    sd.recentFilesLineEdit->setText(QString::number(st_recentFilesLength, 10));
+
+    sd.regWinFontLineEdit->setText(st_regWinFont.family());
+    QFontDialog* regWinFontDialog = new QFontDialog(st_regWinFont);
+    QObject::connect(sd.regWinFontToolButton, SIGNAL(clicked()), regWinFontDialog, SLOT(exec()));
+    QObject::connect(regWinFontDialog, SIGNAL(fontSelected(QFont)), &sd, SLOT(setRegWinFont(QFont)));
+
+    sd.regWinFontColorLineEdit->setText(st_regWinFontColor.name());
+    QColorDialog* regWinColorDialog = new QColorDialog(st_regWinFontColor);
+    QObject::connect(sd.regWinFontColorToolButton, SIGNAL(clicked()), regWinColorDialog, SLOT(exec()));
+    QObject::connect(regWinColorDialog, SIGNAL(colorSelected(QColor)), &sd, SLOT(setRegWinColor(QColor)));
+
+    sd.regWinBackgroundLineEdit->setText(st_regWinBackgroundColor.name());
+    QColorDialog* regWinBackgroundDialog = new QColorDialog(st_regWinBackgroundColor);
+    QObject::connect(sd.regWinBackgroundToolButton, SIGNAL(clicked()), regWinBackgroundDialog, SLOT(exec()));
+    QObject::connect(regWinBackgroundDialog, SIGNAL(colorSelected(QColor)), &sd, SLOT(setRegWinBackground(QColor)));
+
+    sd.textWinFontLineEdit->setText(st_textWinFont.family());
+    QFontDialog* textWinFontDialog = new QFontDialog(st_textWinFont);
+    QObject::connect(sd.textWinFontToolButton, SIGNAL(clicked()), textWinFontDialog, SLOT(exec()));
+    QObject::connect(textWinFontDialog, SIGNAL(fontSelected(QFont)), &sd, SLOT(setTextWinFont(QFont)));
+
+    sd.textWinFontColorLineEdit->setText(st_textWinFontColor.name());
+    QColorDialog* textWinColorDialog = new QColorDialog(st_textWinFontColor);
+    QObject::connect(sd.textWinFontColorToolButton, SIGNAL(clicked()), textWinColorDialog, SLOT(exec()));
+    QObject::connect(textWinColorDialog, SIGNAL(colorSelected(QColor)), &sd, SLOT(setTextWinColor(QColor)));
+
+    sd.textWinBackgroundLineEdit->setText(st_textWinBackgroundColor.name());
+    QColorDialog* textWinBackgroundDialog = new QColorDialog(st_textWinBackgroundColor);
+    QObject::connect(sd.textWinBackgroundToolButton, SIGNAL(clicked()), textWinBackgroundDialog, SLOT(exec()));
+    QObject::connect(textWinBackgroundDialog, SIGNAL(colorSelected(QColor)), &sd, SLOT(setTextWinBackground(QColor)));
+
+    if (d.exec() == QDialog::Accepted)
+    {
+        bare_machine = sd.bareMachineCheckBox->isChecked();
+        accept_pseudo_insts = sd.pseudoInstCheckBox->isChecked();
+        delayed_branches = sd.delayedBranchCheckBox->isChecked();
+        delayed_loads = sd.delayedLoadCheckBox->isChecked();
+        mapped_io = sd.mappedIOCheckBox->isChecked();
+
+        if (bare_machine)
+        {
+            accept_pseudo_insts = 0;
+            delayed_branches = delayed_loads = 1;
+        }
+
+        st_loadExceptionHandler = sd.loadExceptionHandlerCheckBox->isChecked();
+        st_ExceptionHandlerFileName = sd.exceptionHandlerLineEdit->text();
+
+        st_recentFilesLength = sd.recentFilesLineEdit->text().toInt();
+        if (st_recentFilesLength <= 0 || st_recentFilesLength > 20)
+        {
+            st_recentFilesLength = 4;
+        }
+
+        if (sd.regWinFont != NULL)
+        {
+            st_regWinFont = *sd.regWinFont;
+        }
+        if (sd.regWinColor != NULL)
+        {
+            st_regWinFontColor = *sd.regWinColor;
+        }
+        if (sd.regWinBackground != NULL)
+        {
+            st_regWinBackgroundColor = *sd.regWinBackground;
+        }
+
+        if (sd.textWinFont != NULL)
+        {
+            st_textWinFont = *sd.textWinFont;
+        }
+        if (sd.textWinColor != NULL)
+        {
+            st_textWinFontColor = *sd.textWinColor;
+        }
+        if (sd.textWinBackground != NULL)
+        {
+            st_textWinBackgroundColor = *sd.textWinBackground;
+        }
+
+        DisplayIntRegisters();
+        DisplayFPRegisters();
+        DisplayTextSegments();
+        DisplayDataSegments();
+    }
+}
 
 
 // Registers menu
@@ -345,19 +462,19 @@ int SpimView::setBaseInternal(int base, QAction* actionBinary, QAction* actionOc
 
     switch (base)
     {
-    case 2: 
+    case 2:
         actionBinary->setChecked(true);
         return base;
 
-    case 8: 
+    case 8:
         actionOctal->setChecked(true);
         return base;
 
-    case 10: 
+    case 10:
         actionDecimal->setChecked(true);
         return base;
 
-    case 16: 
+    case 16:
         actionHex->setChecked(true);
         return base;
 

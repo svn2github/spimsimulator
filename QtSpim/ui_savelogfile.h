@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'savelogfile.ui'
 **
-** Created: Mon Aug 23 20:38:13 2010
+** Created: Sun Aug 29 11:45:01 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,13 +16,14 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSpacerItem>
+#include <QtGui/QToolButton>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -37,23 +38,23 @@ public:
     QCheckBox *TextCheckBox;
     QCheckBox *DataCheckBox;
     QCheckBox *ConsoleCheckBox;
-    QPushButton *BrowsePushButton;
     QLabel *label_2;
     QLineEdit *SaveLineEdit;
-    QPushButton *SavePushButton;
-    QPushButton *AbortPushButton;
-    QRadioButton *TextRadioButton;
     QSpacerItem *verticalSpacer;
+    QToolButton *saveFileToolButton;
+    QRadioButton *TextRadioButton;
     QRadioButton *HTMLRadioButton;
+    QSpacerItem *verticalSpacer_2;
+    QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *SaveLogFileDialog)
     {
         if (SaveLogFileDialog->objectName().isEmpty())
             SaveLogFileDialog->setObjectName(QString::fromUtf8("SaveLogFileDialog"));
-        SaveLogFileDialog->resize(370, 230);
+        SaveLogFileDialog->resize(370, 286);
         verticalLayoutWidget = new QWidget(SaveLogFileDialog);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 350, 210));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 350, 235));
         gridLayout = new QGridLayout(verticalLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -82,50 +83,48 @@ public:
 
         gridLayout->addWidget(ConsoleCheckBox, 5, 1, 1, 1);
 
-        BrowsePushButton = new QPushButton(verticalLayoutWidget);
-        BrowsePushButton->setObjectName(QString::fromUtf8("BrowsePushButton"));
-
-        gridLayout->addWidget(BrowsePushButton, 8, 2, 1, 1);
-
         label_2 = new QLabel(verticalLayoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        gridLayout->addWidget(label_2, 9, 0, 1, 1);
+        gridLayout->addWidget(label_2, 10, 0, 1, 1);
 
         SaveLineEdit = new QLineEdit(verticalLayoutWidget);
         SaveLineEdit->setObjectName(QString::fromUtf8("SaveLineEdit"));
 
-        gridLayout->addWidget(SaveLineEdit, 9, 1, 1, 1);
+        gridLayout->addWidget(SaveLineEdit, 10, 1, 1, 1);
 
-        SavePushButton = new QPushButton(verticalLayoutWidget);
-        SavePushButton->setObjectName(QString::fromUtf8("SavePushButton"));
+        verticalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-        gridLayout->addWidget(SavePushButton, 9, 2, 1, 1);
+        gridLayout->addItem(verticalSpacer, 6, 0, 1, 1);
 
-        AbortPushButton = new QPushButton(verticalLayoutWidget);
-        AbortPushButton->setObjectName(QString::fromUtf8("AbortPushButton"));
+        saveFileToolButton = new QToolButton(verticalLayoutWidget);
+        saveFileToolButton->setObjectName(QString::fromUtf8("saveFileToolButton"));
 
-        gridLayout->addWidget(AbortPushButton, 10, 2, 1, 1);
+        gridLayout->addWidget(saveFileToolButton, 10, 2, 1, 1);
 
         TextRadioButton = new QRadioButton(verticalLayoutWidget);
         TextRadioButton->setObjectName(QString::fromUtf8("TextRadioButton"));
         TextRadioButton->setChecked(true);
 
-        gridLayout->addWidget(TextRadioButton, 7, 0, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 60, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(verticalSpacer, 6, 0, 1, 1);
+        gridLayout->addWidget(TextRadioButton, 7, 1, 1, 1);
 
         HTMLRadioButton = new QRadioButton(verticalLayoutWidget);
         HTMLRadioButton->setObjectName(QString::fromUtf8("HTMLRadioButton"));
 
-        gridLayout->addWidget(HTMLRadioButton, 7, 1, 1, 1);
+        gridLayout->addWidget(HTMLRadioButton, 8, 1, 1, 1);
 
+        verticalSpacer_2 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
+
+        gridLayout->addItem(verticalSpacer_2, 9, 0, 1, 1);
+
+        buttonBox = new QDialogButtonBox(SaveLogFileDialog);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setGeometry(QRect(110, 250, 156, 23));
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
         retranslateUi(SaveLogFileDialog);
-        QObject::connect(SavePushButton, SIGNAL(clicked()), SaveLogFileDialog, SLOT(accept()));
-        QObject::connect(AbortPushButton, SIGNAL(clicked()), SaveLogFileDialog, SLOT(reject()));
+        QObject::connect(buttonBox, SIGNAL(accepted()), SaveLogFileDialog, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), SaveLogFileDialog, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(SaveLogFileDialog);
     } // setupUi
@@ -138,10 +137,8 @@ public:
         TextCheckBox->setText(QApplication::translate("SaveLogFileDialog", "Text Segments", 0, QApplication::UnicodeUTF8));
         DataCheckBox->setText(QApplication::translate("SaveLogFileDialog", "Data Segments", 0, QApplication::UnicodeUTF8));
         ConsoleCheckBox->setText(QApplication::translate("SaveLogFileDialog", "Console", 0, QApplication::UnicodeUTF8));
-        BrowsePushButton->setText(QApplication::translate("SaveLogFileDialog", "Browse", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("SaveLogFileDialog", "Save to file", 0, QApplication::UnicodeUTF8));
-        SavePushButton->setText(QApplication::translate("SaveLogFileDialog", "Save", 0, QApplication::UnicodeUTF8));
-        AbortPushButton->setText(QApplication::translate("SaveLogFileDialog", "Abort", 0, QApplication::UnicodeUTF8));
+        saveFileToolButton->setText(QApplication::translate("SaveLogFileDialog", "...", 0, QApplication::UnicodeUTF8));
         TextRadioButton->setText(QApplication::translate("SaveLogFileDialog", "Text", 0, QApplication::UnicodeUTF8));
         HTMLRadioButton->setText(QApplication::translate("SaveLogFileDialog", "HTML", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

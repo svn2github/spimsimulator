@@ -12,7 +12,7 @@
 void SpimView::DisplayIntRegisters()
 {
     QTextEdit* te = ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit");
-    QString windowContents = windowFormattingStart();
+    QString windowContents = windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor);
 
     windowContents += formatSpecialIntRegister(PC, "PC", PC != oldPC);
     windowContents += formatSpecialIntRegister(CP0_EPC, "EPC", CP0_EPC != oldEPC);
@@ -82,7 +82,7 @@ void SpimView::DisplayFPRegisters()
 {
     QTextEdit* te = ui->FPRegDockWidget->findChild<QTextEdit *>("FPRegTextEdit");
     te->clear();
-    te->setHtml(windowFormattingStart()
+    te->setHtml(windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor)
                 % formatSFPRegisters()
                 % formatDFPRegisters()
                 % windowFormattingEnd());
