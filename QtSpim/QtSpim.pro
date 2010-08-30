@@ -17,6 +17,7 @@ SOURCES += main.cpp\
         textwin.cpp\
         datawin.cpp\
         state.cpp\
+        console.cpp\
         ../CPU/data.c\
         ../CPU/display-utils.c\
         ../CPU/inst.c\
@@ -34,7 +35,8 @@ HEADERS  += spimview.h\
 	texttextedit.h\
 	datatextedit.h\
         spim_settings.h\
-        settablecheckbox.h
+        settablecheckbox.h\
+        console.h
 
 FORMS    += spimview.ui\
 	savelogfile.ui\

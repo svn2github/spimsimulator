@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'printwindows.ui'
 **
-** Created: Sun Aug 29 11:45:02 2010
+** Created: Sun Aug 29 14:37:39 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

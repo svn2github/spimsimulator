@@ -130,6 +130,9 @@ void SpimView::highlightInstruction(mem_addr pc)
         QList<QTextEdit::ExtraSelection> ess;
         ess << es;
         te->setExtraSelections(ess);
+
+        te->setTextCursor(cursor);
+        te->ensureCursorVisible();
     }
 }
 

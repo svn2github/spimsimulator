@@ -14,6 +14,8 @@ SpimView::SpimView(QWidget *parent) :
     // Open windows
     //
     ui->setupUi(this);
+    SpimConsole = new Console(0);
+
 
     // Set style parameters for docking widgets
     //
@@ -33,12 +35,16 @@ SpimView::SpimView(QWidget *parent) :
     // Restore program settings and window positions
     //
     readSettings();
+
+    SpimConsole->show();
 }
 
 
 SpimView::~SpimView()
 {
     writeSettings();
+    SpimConsole->close();
+    delete SpimConsole;
     delete ui;
 }
 
@@ -156,14 +162,21 @@ void SpimView::Error(QString message, bool fatal)
 {
     WriteOutput(message);
 
-    QMessageBox msgBox(fatal ? QMessageBox::Critical : QMessageBox::Warning,
-                       "Error",
-                       message,
-                       QMessageBox::Close);
-    msgBox.exec();
-
     if (fatal)
     {
+        QMessageBox::critical(0, "Error", message, QMessageBox::Ok | QMessageBox::Abort, QMessageBox::Ok);
         SaveStateAndExit(1);
+    }
+    else
+    {
+        QMessageBox::StandardButton b = QMessageBox::information(0,
+                                                                 "Error",
+                                                                 message,
+                                                                 QMessageBox::Ok | QMessageBox::Abort,
+                                                                 QMessageBox::Ok);
+        if (b == QMessageBox::Abort)
+        {
+            force_break = 1;
+        }
     }
 }

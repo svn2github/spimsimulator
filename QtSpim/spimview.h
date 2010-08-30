@@ -7,6 +7,7 @@
 #include <QString>
 
 #include "ui_spimview.h"
+#include "console.h"
 
 #include "../CPU/spim.h"
 #include "../CPU/string-stream.h"
@@ -22,9 +23,9 @@ namespace Ui {
 
 class SpimView : public QMainWindow
 {
- Q_OBJECT
+Q_OBJECT
 
-     public:
+ public:
     explicit SpimView(QWidget *parent = 0);
     ~SpimView();
 
@@ -182,7 +183,14 @@ class SpimView : public QMainWindow
     void executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
 
 
- public slots:
+    //
+    // Console
+    //
+ public:
+    Console* SpimConsole;
+
+
+    public slots:
     void file_LoadFile();
     void file_ReloadFile();
     void file_SaveLogFile();

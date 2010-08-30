@@ -28,16 +28,19 @@
 
 void SpimView::file_LoadFile()
 {
-    QString defaultFile(st_recentFiles[0]);
-    if (sender() != 0)
+    QString file;
+    if (((QAction*)sender())->objectName() != "action_File_Load"
+        && ((QAction*)sender())->objectName() != "action_File_Reload")
     {
-        defaultFile = ((QAction*)sender())->text(); // File name is text associated with action
+        file = ((QAction*)sender())->text(); // Recent file menu entry's names are file names
     }
-
-    QString file = QFileDialog::getOpenFileName(this,
-                                                "Open Assembly Code",
-                                                defaultFile,
-                                                "Assembly (*.s *.asm);;Text files (*.txt)");
+    else
+    {
+        file = QFileDialog::getOpenFileName(this,
+                                            "Open Assembly Code",
+                                            st_recentFiles[0],
+                                            "Assembly (*.s *.asm);;Text files (*.txt)");
+    }
     if (!file.isNull())
     {
         read_assembly_file(file.toLocal8Bit().data());
@@ -170,12 +173,15 @@ void SpimView::file_Print()
 
 void SpimView::file_Exit()
 {
+#if 0
     QMessageBox msgBox(QMessageBox::Question, "Exit", "Exit?", QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec())
     {
         this->SaveStateAndExit(0);
     }
+#endif
+    this->SaveStateAndExit(0);
 }
 
 
@@ -193,6 +199,7 @@ void SpimView::sim_ReinitializeSimulator()
 {
     write_output(message_out, "<hr>Memory and registers cleared");
     initialize_world(ExceptionFileOrNull());
+    SpimConsole->clear();
     initStack();
     write_startup_message();
 
@@ -358,12 +365,6 @@ void SpimView::sim_Settings()
         delayed_branches = sd.delayedBranchCheckBox->isChecked();
         delayed_loads = sd.delayedLoadCheckBox->isChecked();
         mapped_io = sd.mappedIOCheckBox->isChecked();
-
-        if (bare_machine)
-        {
-            accept_pseudo_insts = 0;
-            delayed_branches = delayed_loads = 1;
-        }
 
         st_loadExceptionHandler = sd.loadExceptionHandlerCheckBox->isChecked();
         st_ExceptionHandlerFileName = sd.exceptionHandlerLineEdit->text();

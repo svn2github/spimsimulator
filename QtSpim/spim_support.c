@@ -37,6 +37,8 @@
 #include "spimview.h"
 #include "ui_spimview.h"
 
+#include <QChar>
+
 
 // SPIM globals
 //
@@ -80,6 +82,19 @@ void error(char *fmt, ...)
 }
 
 
+void run_error (char *fmt, ...)
+{
+    va_list args;
+    va_start (args, fmt);
+
+    char buf[BIG_BUF_SIZE];
+    qvsnprintf(buf, BIG_BUF_SIZE, fmt, args);
+    va_end(args);
+
+    Window->Error(buf, 0);
+}
+
+
 void fatal_error(char *fmt, ...)
 {
     va_list args;
@@ -95,22 +110,50 @@ void fatal_error(char *fmt, ...)
 
 char get_console_char()
 {
-  return 'x';
+    QString c = Window->SpimConsole->ReadChar();;
+    if (c != "")
+    {
+        char ac = c[0].toAscii();
+        if (ac == '\r')
+        {
+            return '\n';
+        }
+        return ac;
+    }
+    else
+    {
+        return 0;               // FIXME
+    }
 }
 
 
 void put_console_char(char c)
 {
+    Window->SpimConsole->WriteOutput(QString(c));
+    Window->SpimConsole->raise();
 }
 
 
 void read_input(char *str, int str_size)
 {
-}
+    while ((1 < str_size) && (!force_break))
+    {
+        char ch = get_console_char();
 
+        *str = ch;
+        str += 1;
+        str_size -= 1;
 
-void run_error (char *fmt, ...)
-{
+        if (ch == '\n')
+        {
+            break;
+        }
+    }
+
+    if (0 < str_size)
+    {
+        *str = '\0';
+    }
 }
 
 
@@ -129,5 +172,7 @@ void write_output (port fp, char *fmt, ...)
     }
     else if (fp.i == console_out.i)
     {
+        Window->SpimConsole->WriteOutput(QString(buf));
+        Window->SpimConsole->raise();
     }
 }
