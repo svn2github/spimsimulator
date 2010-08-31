@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sun Aug 29 14:37:39 2010
+** Created: Mon Aug 30 19:53:44 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -63,11 +63,9 @@ public:
     QAction *action_Win_IntRegisters;
     QAction *action_Win_FPRegisters;
     QAction *action_Win_TextSegment;
-    QAction *action_Win_Data_Segment;
+    QAction *action_Win_DataSegment;
     QAction *action_Win_Console;
-    QAction *action_Win_Messages;
-    QAction *action_Win_ClearConsole;
-    QAction *action_Win_Toolbar;
+    QAction *action_Win_Tile;
     QAction *actionStatus_Bar;
     QAction *action_Help_ViewHelp;
     QAction *action_Help_AboutSPIM;
@@ -186,20 +184,14 @@ public:
         action_Win_TextSegment = new QAction(SpimView);
         action_Win_TextSegment->setObjectName(QString::fromUtf8("action_Win_TextSegment"));
         action_Win_TextSegment->setCheckable(true);
-        action_Win_Data_Segment = new QAction(SpimView);
-        action_Win_Data_Segment->setObjectName(QString::fromUtf8("action_Win_Data_Segment"));
-        action_Win_Data_Segment->setCheckable(true);
+        action_Win_DataSegment = new QAction(SpimView);
+        action_Win_DataSegment->setObjectName(QString::fromUtf8("action_Win_DataSegment"));
+        action_Win_DataSegment->setCheckable(true);
         action_Win_Console = new QAction(SpimView);
         action_Win_Console->setObjectName(QString::fromUtf8("action_Win_Console"));
         action_Win_Console->setCheckable(true);
-        action_Win_Messages = new QAction(SpimView);
-        action_Win_Messages->setObjectName(QString::fromUtf8("action_Win_Messages"));
-        action_Win_Messages->setCheckable(true);
-        action_Win_ClearConsole = new QAction(SpimView);
-        action_Win_ClearConsole->setObjectName(QString::fromUtf8("action_Win_ClearConsole"));
-        action_Win_Toolbar = new QAction(SpimView);
-        action_Win_Toolbar->setObjectName(QString::fromUtf8("action_Win_Toolbar"));
-        action_Win_Toolbar->setCheckable(true);
+        action_Win_Tile = new QAction(SpimView);
+        action_Win_Tile->setObjectName(QString::fromUtf8("action_Win_Tile"));
         actionStatus_Bar = new QAction(SpimView);
         actionStatus_Bar->setObjectName(QString::fromUtf8("actionStatus_Bar"));
         action_Help_ViewHelp = new QAction(SpimView);
@@ -334,12 +326,10 @@ public:
         menu_Window->addAction(action_Win_IntRegisters);
         menu_Window->addAction(action_Win_FPRegisters);
         menu_Window->addAction(action_Win_TextSegment);
-        menu_Window->addAction(action_Win_Data_Segment);
+        menu_Window->addAction(action_Win_DataSegment);
         menu_Window->addAction(action_Win_Console);
-        menu_Window->addAction(action_Win_Messages);
         menu_Window->addSeparator();
-        menu_Window->addAction(action_Win_ClearConsole);
-        menu_Window->addAction(action_Win_Toolbar);
+        menu_Window->addAction(action_Win_Tile);
         menu_Help->addAction(action_Help_ViewHelp);
         menu_Help->addAction(action_Help_AboutSPIM);
 
@@ -386,11 +376,9 @@ public:
         action_Win_IntRegisters->setText(QApplication::translate("SpimView", "Integer Registers", 0, QApplication::UnicodeUTF8));
         action_Win_FPRegisters->setText(QApplication::translate("SpimView", "FP Registers", 0, QApplication::UnicodeUTF8));
         action_Win_TextSegment->setText(QApplication::translate("SpimView", "Text Segment", 0, QApplication::UnicodeUTF8));
-        action_Win_Data_Segment->setText(QApplication::translate("SpimView", "Data Segment", 0, QApplication::UnicodeUTF8));
+        action_Win_DataSegment->setText(QApplication::translate("SpimView", "Data Segment", 0, QApplication::UnicodeUTF8));
         action_Win_Console->setText(QApplication::translate("SpimView", "Console", 0, QApplication::UnicodeUTF8));
-        action_Win_Messages->setText(QApplication::translate("SpimView", "SPIM Messages", 0, QApplication::UnicodeUTF8));
-        action_Win_ClearConsole->setText(QApplication::translate("SpimView", "Clear Console", 0, QApplication::UnicodeUTF8));
-        action_Win_Toolbar->setText(QApplication::translate("SpimView", "Toolbar", 0, QApplication::UnicodeUTF8));
+        action_Win_Tile->setText(QApplication::translate("SpimView", "Tile", 0, QApplication::UnicodeUTF8));
         actionStatus_Bar->setText(QApplication::translate("SpimView", "Status Bar", 0, QApplication::UnicodeUTF8));
         action_Help_ViewHelp->setText(QApplication::translate("SpimView", "View Help", 0, QApplication::UnicodeUTF8));
         action_Help_AboutSPIM->setText(QApplication::translate("SpimView", "About SPIM", 0, QApplication::UnicodeUTF8));

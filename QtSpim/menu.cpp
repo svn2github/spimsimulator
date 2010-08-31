@@ -599,40 +599,68 @@ int SpimView::setCheckedDataSegmentBase(int base)
 // Window menu
 //
 
+void winUpDown(QObject* sender, QWidget* widget)
+{
+    QAction* act = (QAction*)sender;
+    if (act->isChecked())
+    {
+        widget->show();
+    }
+    else
+    {
+        widget->hide();
+    }
+}
+
+
 void SpimView::win_IntRegisters()
 {
+    winUpDown(sender(), ui->IntRegDockWidget);
 }
 
 
 void SpimView::win_FPRegisters()
 {
+    winUpDown(sender(), ui->FPRegDockWidget);
 }
 
 
 void SpimView::win_TextSegment()
 {
+    winUpDown(sender(), ui->TextSegDockWidget);
 }
 
 
 void SpimView::win_DataSegment()
 {
+    winUpDown(sender(), ui->DataSegDockWidget);
 }
 
 
 void SpimView::win_Console()
 {
+    winUpDown(sender(), SpimConsole);
 }
 
 
-void SpimView::win_Messages()
+void SpimView::win_Tile()
 {
+    ui->IntRegDockWidget->show();
+    ui->action_Win_IntRegisters->setChecked(true);
+    ui->FPRegDockWidget->show();
+    ui->action_Win_FPRegisters->setChecked(true);
+    ui->TextSegDockWidget->show();
+    ui->action_Win_TextSegment->setChecked(true);
+    ui->DataSegDockWidget->show();
+    ui->action_Win_DataSegment->setChecked(true);
+
+    ui->IntRegDockWidget->setFloating(false);
+    ui->FPRegDockWidget->setFloating(false);
+    tabifyDockWidget(ui->FPRegDockWidget, ui->IntRegDockWidget);
+    ui->TextSegDockWidget->setFloating(false);
+    ui->DataSegDockWidget->setFloating(false);
+    tabifyDockWidget(ui->DataSegDockWidget, ui->TextSegDockWidget);
 }
-
-
-void SpimView::win_ClearConsole()
-{
-}
-
 
 
 // Help menu

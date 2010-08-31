@@ -36,7 +36,11 @@ SpimView::SpimView(QWidget *parent) :
     //
     readSettings();
 
+
+    // Create a console
+    //
     SpimConsole->show();
+    ui->action_Win_Console->setChecked(true);
 }
 
 
@@ -88,10 +92,9 @@ void SpimView::wireCommands()
     QObject::connect(ui->action_Win_IntRegisters, SIGNAL(triggered(bool)), this, SLOT(win_IntRegisters()));
     QObject::connect(ui->action_Win_FPRegisters, SIGNAL(triggered(bool)), this, SLOT(win_FPRegisters()));
     QObject::connect(ui->action_Win_TextSegment, SIGNAL(triggered(bool)), this, SLOT(win_TextSegment()));
-    QObject::connect(ui->action_Win_Data_Segment, SIGNAL(triggered(bool)), this, SLOT(win_DataSegment()));
+    QObject::connect(ui->action_Win_DataSegment, SIGNAL(triggered(bool)), this, SLOT(win_DataSegment()));
     QObject::connect(ui->action_Win_Console, SIGNAL(triggered(bool)), this, SLOT(win_Console()));
-    QObject::connect(ui->action_Win_Messages, SIGNAL(triggered(bool)), this, SLOT(win_Messages()));
-    QObject::connect(ui->action_Win_ClearConsole, SIGNAL(triggered(bool)), this, SLOT(win_ClearConsole()));
+    QObject::connect(ui->action_Win_Tile, SIGNAL(triggered(bool)), this, SLOT(win_Tile()));
 
     QObject::connect(ui->action_Help_ViewHelp, SIGNAL(triggered(bool)), this, SLOT(help_ViewHelp()));
     QObject::connect(ui->action_Help_AboutSPIM, SIGNAL(triggered(bool)), this, SLOT(help_AboutSPIM()));

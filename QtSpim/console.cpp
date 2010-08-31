@@ -29,6 +29,10 @@ QString Console::ReadChar(int len)
             inputBuffer.remove(0, chars.length());
             return chars;
         }
+        // This is a bit tricky and I hope it works on all platforms. If there aren't any
+        // characters in the buffer, start a new event loop to wait for keystrokes and block on
+        // it. Cannot use semaphores or busy-wait since both actions are on the same thread.
+        //
         l.exec();
     }
 }
@@ -53,6 +57,9 @@ void Console::keyReleaseEvent(QKeyEvent* e)
     {
         inputBuffer.append(key);
         WriteOutput(key);
+
+        // Release the call on ReadChar (if any) that is blocked waiting for input.
+        //
         l.exit();
     }
 }

@@ -233,8 +233,7 @@ Q_OBJECT
     void win_TextSegment();
     void win_DataSegment();
     void win_Console();
-    void win_Messages();
-    void win_ClearConsole();
+    void win_Tile();
 
     void help_ViewHelp();
     void help_AboutSPIM();

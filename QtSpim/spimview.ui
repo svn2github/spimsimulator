@@ -110,12 +110,10 @@
     <addaction name="action_Win_IntRegisters"/>
     <addaction name="action_Win_FPRegisters"/>
     <addaction name="action_Win_TextSegment"/>
-    <addaction name="action_Win_Data_Segment"/>
+    <addaction name="action_Win_DataSegment"/>
     <addaction name="action_Win_Console"/>
-    <addaction name="action_Win_Messages"/>
     <addaction name="separator"/>
-    <addaction name="action_Win_ClearConsole"/>
-    <addaction name="action_Win_Toolbar"/>
+    <addaction name="action_Win_Tile"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -466,7 +464,7 @@
     <string>Text Segment</string>
    </property>
   </action>
-  <action name="action_Win_Data_Segment">
+  <action name="action_Win_DataSegment">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -482,25 +480,9 @@
     <string>Console</string>
    </property>
   </action>
-  <action name="action_Win_Messages">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
+  <action name="action_Win_Tile">
    <property name="text">
-    <string>SPIM Messages</string>
-   </property>
-  </action>
-  <action name="action_Win_ClearConsole">
-   <property name="text">
-    <string>Clear Console</string>
-   </property>
-  </action>
-  <action name="action_Win_Toolbar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Toolbar</string>
+    <string>Tile</string>
    </property>
   </action>
   <action name="actionStatus_Bar">
