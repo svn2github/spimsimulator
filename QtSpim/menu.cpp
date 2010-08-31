@@ -87,59 +87,72 @@ void SpimView::rebuildRecentFilesMenu()
 }
 
 
+static QDialog* saveLogFileDialog;
+static Ui::SaveLogFileDialog* slf;
+
 void SpimView::file_SaveLogFile()
 {
-    QDialog d;
-    Ui::SaveLogFileDialog slf;
-    slf.setupUi(&d);
-
-    QFileDialog browser(0, "Open Log File", "", "Text files (*.txt);; HTML files (*.html *.htm);;All (*)");
-    QObject::connect(slf.saveFileToolButton, SIGNAL(clicked()), &browser, SLOT(exec()));
-    QObject::connect(&browser, SIGNAL(fileSelected(QString)), slf.SaveLineEdit, SLOT(setText(QString)));
-
-    if (d.exec() == QDialog::Accepted)
+    if (saveLogFileDialog == NULL)
     {
-        if (!slf.SaveLineEdit->text().isNull())
+        saveLogFileDialog = new QDialog();
+        slf = new Ui::SaveLogFileDialog();
+        slf->setupUi(saveLogFileDialog);
+
+        QFileDialog* fb = new QFileDialog(0,
+                                          "Open Log File",
+                                          "",
+                                          "Text files (*.txt);; HTML files (*.html *.htm);;All (*)");
+        QObject::connect(slf->saveFileToolButton, SIGNAL(clicked()), fb, SLOT(exec()));
+        QObject::connect(fb, SIGNAL(fileSelected(QString)), slf->SaveLineEdit, SLOT(setText(QString)));
+    }
+
+    if (saveLogFileDialog->exec() == QDialog::Accepted)
+    {
+        if (!slf->SaveLineEdit->text().isNull())
         {
-            QFile file(slf.SaveLineEdit->text());
+            QFile file(slf->SaveLineEdit->text());
             file.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QTextStream outFile(&file);
 
-            bool toHtml = slf.HTMLRadioButton->isChecked();
+            bool toHtml = slf->HTMLRadioButton->isChecked();
 
-            if (slf.RegsCheckBox->isChecked())
+            if (slf->RegsCheckBox->isChecked())
             {
                 outFile << pickFormat(ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit"), toHtml);
                 outFile << "\n\n";
             }
-            if (slf.TextCheckBox->isChecked())
+            if (slf->TextCheckBox->isChecked())
             {
                 outFile << pickFormat(ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit"), toHtml);
                 outFile << "\n\n";
             }
-            if (slf.DataCheckBox->isChecked())
+            if (slf->DataCheckBox->isChecked())
             {
                 outFile << pickFormat(ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegmentTextEdit"), toHtml);
                 outFile << "\n\n";
             }
-#if 0                           // FIXME
-            if (slf.ConsoleCheckBox->isChecked())
+            if (slf->ConsoleCheckBox->isChecked())
             {
-                outFile << pickFormat(ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit"), toHtml);
+                outFile << pickFormat((QTextEdit*)SpimConsole, toHtml);
             }
-#endif
         }
     }
 }
 
 
+static QDialog* printFileDialog;
+static Ui::PrintWindowsDialog* pwd;
+
 void SpimView::file_Print()
 {
-    QDialog d;
-    Ui::PrintWindowsDialog pwd;
-    pwd.setupUi(&d);
+    if (printFileDialog == NULL)
+    {
+        printFileDialog = new QDialog();
+        pwd = new Ui::PrintWindowsDialog();
+        pwd->setupUi(printFileDialog);
+    }
 
-    if (d.exec() == QDialog::Accepted)
+    if (printFileDialog->exec() == QDialog::Accepted)
     {
         QPrinter printer;
         QPrintDialog printDialog(&printer, this);
@@ -148,24 +161,22 @@ void SpimView::file_Print()
         if (printDialog.exec() == QDialog::Accepted)
         {
 
-            if (pwd.RegsCheckBox->isChecked())
+            if (pwd->RegsCheckBox->isChecked())
             {
                 ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit")->print(&printer);
             }
-            if (pwd.TextCheckBox->isChecked())
+            if (pwd->TextCheckBox->isChecked())
             {
                 ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit")->print(&printer);
             }
-            if (pwd.DataCheckBox->isChecked())
+            if (pwd->DataCheckBox->isChecked())
             {
                 ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegmentTextEdit")->print(&printer);
             }
-#if 0                           // FIXME
-            if (pwd.ConsoleCheckBox->isChecked())
+            if (pwd->ConsoleCheckBox->isChecked())
             {
-                ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit")->print(&printer);
+                SpimConsole->print(&printer);
             }
-#endif
         }
     }
 }
