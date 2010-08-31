@@ -673,4 +673,15 @@ void SpimView::help_ViewHelp()
 
 void SpimView::help_AboutSPIM()
 {
+    QMessageBox box(QMessageBox::NoIcon,
+                    "About SPIM",
+                    "<span style='font-size: 12pt;'>"
+                    "<center><strong>QtSPIM</strong></center>"
+                    "<p>SPIM is a simulator of the MIPS R3000 processor.</p>"
+                    "<p>Copyright (c) 1990-2010, James R. Larus (larus@larusstone.org).</p>"
+                    "<p>SPIM is distributed under a BSD license.</p>"
+                    "<p>For more information, source code, and binaries: "
+                    "<a href='http://www.cs.wisc.edu/~larus/spim.html'>http://www.cs.wisc.edu/~larus/spim.html</a></p></span>",
+                    QMessageBox::Ok);
+    box.exec();
 }
