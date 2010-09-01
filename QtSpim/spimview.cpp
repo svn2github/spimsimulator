@@ -23,19 +23,18 @@ SpimView::SpimView(QWidget *parent) :
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
-    tabifyDockWidget(ui->FPRegDockWidget, ui->IntRegDockWidget);
-    tabifyDockWidget(ui->DataSegDockWidget, ui->TextSegDockWidget);
 
+    // Dock widgets
+    //
+    win_Tile();
 
     // Wire up the menu and context menu commands
     //
     wireCommands();
 
-
     // Restore program settings and window positions
     //
     readSettings();
-
 
     // Create a console
     //
@@ -76,14 +75,12 @@ void SpimView::wireCommands()
 
     QObject::connect(ui->action_Text_DisplayUserText, SIGNAL(triggered(bool)), this, SLOT(text_DisplayUserText()));
     QObject::connect(ui->action_Text_DisplayKernelText, SIGNAL(triggered(bool)), this, SLOT(text_DisplayKernelText()));
-    QObject::connect(ui->action_Text_NarrowRange, SIGNAL(triggered(bool)), this, SLOT(text_NarrowRange()));
     QObject::connect(ui->action_Text_DisplayComments, SIGNAL(triggered(bool)), this, SLOT(text_DisplayComments()));
     QObject::connect(ui->action_Text_DisplayInstructionValue, SIGNAL(triggered(bool)), this, SLOT(text_DisplayInstructionValue()));
 
     QObject::connect(ui->action_Data_DisplayUserData, SIGNAL(triggered(bool)), this, SLOT(data_DisplayUserData()));
     QObject::connect(ui->action_Data_DisplayUserStack, SIGNAL(triggered(bool)), this, SLOT(data_DisplayUserStack()));
     QObject::connect(ui->action_Data_DisplayKernelData, SIGNAL(triggered(bool)), this, SLOT(data_DisplayKernelData()));
-    QObject::connect(ui->action_Data_NarrowDisplay, SIGNAL(triggered(bool)), this, SLOT(data_NarrowDisplay()));
     QObject::connect(ui->action_Data_DisplayBinary, SIGNAL(triggered(bool)), this, SLOT(data_DisplayBinary()));
     QObject::connect(ui->action_Data_DisplayOctal, SIGNAL(triggered(bool)), this, SLOT(data_DisplayOctal()));
     QObject::connect(ui->action_Data_DisplayHex, SIGNAL(triggered(bool)), this, SLOT(data_DisplayHex()));

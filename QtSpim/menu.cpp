@@ -87,11 +87,11 @@ void SpimView::rebuildRecentFilesMenu()
 }
 
 
-static QDialog* saveLogFileDialog;
-static Ui::SaveLogFileDialog* slf;
-
 void SpimView::file_SaveLogFile()
 {
+    static QDialog* saveLogFileDialog;
+    static Ui::SaveLogFileDialog* slf;
+
     if (saveLogFileDialog == NULL)
     {
         saveLogFileDialog = new QDialog();
@@ -140,11 +140,11 @@ void SpimView::file_SaveLogFile()
 }
 
 
-static QDialog* printFileDialog;
-static Ui::PrintWindowsDialog* pwd;
-
 void SpimView::file_Print()
 {
+    static QDialog* printFileDialog;
+    static Ui::PrintWindowsDialog* pwd;
+
     if (printFileDialog == NULL)
     {
         printFileDialog = new QDialog();
@@ -514,12 +514,6 @@ void SpimView::text_DisplayKernelText()
 }
 
 
-void SpimView::text_NarrowRange()
-{
-    //FIXME!!
-}
-
-
 void SpimView::text_DisplayComments()
 {
     st_showTextComments = ui->action_Text_DisplayComments->isChecked();
@@ -556,12 +550,6 @@ void SpimView::data_DisplayKernelData()
 {
     st_showKernelDataSegment = ui->action_Data_DisplayKernelData->isChecked();
     DisplayDataSegments();
-}
-
-
-void SpimView::data_NarrowDisplay()
-{
-    //FIXME!!
 }
 
 

@@ -85,7 +85,6 @@
     <addaction name="action_Text_DisplayUserText"/>
     <addaction name="action_Text_DisplayKernelText"/>
     <addaction name="separator"/>
-    <addaction name="action_Text_NarrowRange"/>
     <addaction name="action_Text_DisplayComments"/>
     <addaction name="action_Text_DisplayInstructionValue"/>
    </widget>
@@ -350,11 +349,6 @@
     <string>Kernel Text</string>
    </property>
   </action>
-  <action name="action_Text_NarrowRange">
-   <property name="text">
-    <string>Narrow Display</string>
-   </property>
-  </action>
   <action name="action_Text_DisplayComments">
    <property name="checkable">
     <bool>true</bool>
@@ -393,11 +387,6 @@
    </property>
    <property name="text">
     <string>Kernel Data</string>
-   </property>
-  </action>
-  <action name="action_Data_NarrowDisplay">
-   <property name="text">
-    <string>Narrow Display</string>
    </property>
   </action>
   <action name="action_Data_DisplayBinary">

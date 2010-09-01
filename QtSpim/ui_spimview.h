@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Mon Aug 30 19:53:44 2010
+** Created: Tue Aug 31 06:28:37 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -48,13 +48,11 @@ public:
     QAction *action_Reg_DisplayChar;
     QAction *action_Text_DisplayUserText;
     QAction *action_Text_DisplayKernelText;
-    QAction *action_Text_NarrowRange;
     QAction *action_Text_DisplayComments;
     QAction *action_Text_DisplayInstructionValue;
     QAction *action_Data_DisplayUserData;
     QAction *action_Data_DisplayUserStack;
     QAction *action_Data_DisplayKernelData;
-    QAction *action_Data_NarrowDisplay;
     QAction *action_Data_DisplayBinary;
     QAction *action_Data_DisplayOctal;
     QAction *action_Data_DisplayHex;
@@ -141,8 +139,6 @@ public:
         action_Text_DisplayKernelText = new QAction(SpimView);
         action_Text_DisplayKernelText->setObjectName(QString::fromUtf8("action_Text_DisplayKernelText"));
         action_Text_DisplayKernelText->setCheckable(true);
-        action_Text_NarrowRange = new QAction(SpimView);
-        action_Text_NarrowRange->setObjectName(QString::fromUtf8("action_Text_NarrowRange"));
         action_Text_DisplayComments = new QAction(SpimView);
         action_Text_DisplayComments->setObjectName(QString::fromUtf8("action_Text_DisplayComments"));
         action_Text_DisplayComments->setCheckable(true);
@@ -158,8 +154,6 @@ public:
         action_Data_DisplayKernelData = new QAction(SpimView);
         action_Data_DisplayKernelData->setObjectName(QString::fromUtf8("action_Data_DisplayKernelData"));
         action_Data_DisplayKernelData->setCheckable(true);
-        action_Data_NarrowDisplay = new QAction(SpimView);
-        action_Data_NarrowDisplay->setObjectName(QString::fromUtf8("action_Data_NarrowDisplay"));
         action_Data_DisplayBinary = new QAction(SpimView);
         action_Data_DisplayBinary->setObjectName(QString::fromUtf8("action_Data_DisplayBinary"));
         action_Data_DisplayBinary->setCheckable(true);
@@ -311,7 +305,6 @@ public:
         menu_Text_Segment->addAction(action_Text_DisplayUserText);
         menu_Text_Segment->addAction(action_Text_DisplayKernelText);
         menu_Text_Segment->addSeparator();
-        menu_Text_Segment->addAction(action_Text_NarrowRange);
         menu_Text_Segment->addAction(action_Text_DisplayComments);
         menu_Text_Segment->addAction(action_Text_DisplayInstructionValue);
         menu_Data_Segment->addAction(action_Data_DisplayUserData);
@@ -361,13 +354,11 @@ public:
         action_Reg_DisplayChar->setText(QApplication::translate("SpimView", "Char", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayUserText->setText(QApplication::translate("SpimView", "User Text", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayKernelText->setText(QApplication::translate("SpimView", "Kernel Text", 0, QApplication::UnicodeUTF8));
-        action_Text_NarrowRange->setText(QApplication::translate("SpimView", "Narrow Display", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayComments->setText(QApplication::translate("SpimView", "Comments", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayInstructionValue->setText(QApplication::translate("SpimView", "Instruction Value", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayUserData->setText(QApplication::translate("SpimView", "User Data", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayUserStack->setText(QApplication::translate("SpimView", "User Stack", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayKernelData->setText(QApplication::translate("SpimView", "Kernel Data", 0, QApplication::UnicodeUTF8));
-        action_Data_NarrowDisplay->setText(QApplication::translate("SpimView", "Narrow Display", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayBinary->setText(QApplication::translate("SpimView", "Binary", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayOctal->setText(QApplication::translate("SpimView", "Octal", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayHex->setText(QApplication::translate("SpimView", "Hex", 0, QApplication::UnicodeUTF8));

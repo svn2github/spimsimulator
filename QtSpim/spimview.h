@@ -45,7 +45,6 @@ Q_OBJECT
     void DisplayTextSegments();
     void DisplayDataSegments();
 
-
  private:
     Ui::SpimView *ui;
 
@@ -53,10 +52,10 @@ Q_OBJECT
     //
     // Program state
     //
-    void writeSettings();
-    void readSettings();
-
     QSettings settings;
+    void readSettings();
+    void writeSettings();
+
 
     // File menu
     //
@@ -214,14 +213,12 @@ Q_OBJECT
 
     void text_DisplayUserText();
     void text_DisplayKernelText();
-    void text_NarrowRange();
     void text_DisplayComments();
     void text_DisplayInstructionValue();
 
     void data_DisplayUserData();
     void data_DisplayUserStack();
     void data_DisplayKernelData();
-    void data_NarrowDisplay();
     void data_DisplayBinary();
     void data_DisplayOctal();
     void data_DisplayHex();

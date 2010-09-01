@@ -7,9 +7,9 @@
 
 void SpimView::readSettings()
 {
-    settings.beginGroup("Main");
-    restoreGeometry(settings.value("Geometry").toByteArray());
-    restoreState(settings.value("WindowState").toByteArray());
+    settings.beginGroup("MainWin");
+    bool b1 = restoreGeometry(settings.value("Geometry").toByteArray());
+    bool b2 = restoreState(settings.value("WindowState").toByteArray(), 1);
     settings.endGroup();
 
     settings.beginGroup("RegWin");
@@ -18,12 +18,12 @@ void SpimView::readSettings()
     st_intRegBase = settings.value("IntRegisterBase", 16).toInt();
     st_intRegBase = setCheckedRegBase(st_intRegBase);
 
-    st_regWinFont = settings.value("Font", QFont("Courier")).value<QFont>();
+    st_regWinFont = settings.value("Font", QFont("Courier", 10)).value<QFont>();
     st_regWinFontColor = settings.value("FontColor", QColor("black")).value<QColor>();
     st_regWinBackgroundColor = settings.value("BackgroundColor", QColor("white")).value<QColor>();
 
-    ui->IntRegDockWidget->restoreGeometry(settings.value("Int Geometry").toByteArray());
-    ui->FPRegDockWidget->restoreGeometry(settings.value("FP Geometry").toByteArray());
+    //    ui->IntRegDockWidget->restoreGeometry(settings.value("Int Geometry").toByteArray());
+    //    ui->FPRegDockWidget->restoreGeometry(settings.value("FP Geometry").toByteArray());
 
     ui->action_Win_IntRegisters->setChecked(!ui->IntRegDockWidget->isHidden());
     ui->action_Win_FPRegisters->setChecked(!ui->FPRegDockWidget->isHidden());
@@ -40,11 +40,11 @@ void SpimView::readSettings()
     st_showTextDisassembly =  settings.value("ShowInstDisassembly", true).toBool();
     ui->action_Text_DisplayInstructionValue->setChecked(st_showTextDisassembly);
 
-    st_textWinFont = settings.value("Font", QFont("Courier")).value<QFont>();
+    st_textWinFont = settings.value("Font", QFont("Courier", 10)).value<QFont>();
     st_textWinFontColor = settings.value("FontColor", QColor("black")).value<QColor>();
     st_textWinBackgroundColor = settings.value("BackgroundColor", QColor("white")).value<QColor>();
 
-    ui->TextSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
+    //    ui->TextSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     ui->action_Win_TextSegment->setChecked(!ui->TextSegDockWidget->isHidden());
     settings.endGroup();
 
@@ -59,7 +59,7 @@ void SpimView::readSettings()
     st_dataSegmentBase = settings.value("DataSegmentBase", 16).toInt();
     st_dataSegmentBase = setCheckedDataSegmentBase(st_dataSegmentBase);
 
-    ui->DataSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
+    //    ui->DataSegDockWidget->restoreGeometry(settings.value("Geometry").toByteArray());
     ui->action_Win_DataSegment->setChecked(!ui->DataSegDockWidget->isHidden());
     settings.endGroup();
 
@@ -96,7 +96,7 @@ void SpimView::writeSettings()
 {
     settings.beginGroup("MainWin");
     settings.setValue("Geometry", saveGeometry());
-    settings.setValue("WindowState", saveState());
+    settings.setValue("WindowState", saveState(1));
     settings.endGroup();
 
 
