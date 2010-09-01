@@ -105,7 +105,7 @@ ENDIAN=`cat configuration`
 DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\""
 
 CC = gcc
-CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall -x c++
+CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall -pedantic -Wextra -Wunused -x c++
 YFLAGS = -d --file-prefix=y
 YCFLAGS =
 LDFLAGS = -lm
