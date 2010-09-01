@@ -617,7 +617,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 		word = read_mem_word (addr & 0xfffffffc);
 		if (!exception_occurred)
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		  switch (byte)
 		    {
 		    case 0:
@@ -669,7 +669,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 		word = read_mem_word (addr & 0xfffffffc);
 		if (!exception_occurred)
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		  switch (byte)
 		    {
 		    case 0:
@@ -1016,7 +1016,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		int byte = addr & 0x3;
 
 		data = read_mem_word (addr & 0xfffffffc);
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		switch (byte)
 		  {
 		  case 0:
@@ -1067,7 +1067,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		int byte = addr & 0x3;
 
 		data = read_mem_word (addr & 0xfffffffc);
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		switch (byte)
 		  {
 		  case 0:

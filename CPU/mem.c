@@ -459,7 +459,7 @@ bad_mem_read (mem_addr addr, int mask)
       {
       case 0x0:
 	tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 	tmp = (unsigned)tmp >> (8 * (3 - (addr & 0x3)));
 #else
 	tmp = (unsigned)tmp >> (8 * (addr & 0x3));
@@ -468,7 +468,7 @@ bad_mem_read (mem_addr addr, int mask)
 
       case 0x1:
 	tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 	tmp = (unsigned)tmp >> (8 * (2 - (addr & 0x2)));
 #else
 	tmp = (unsigned)tmp >> (8 * (addr & 0x2));
@@ -519,7 +519,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
     {
     case 0x0:
       tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
       tmp = ((tmp & ~(0xff << (8 * (3 - (addr & 0x3)))))
 	       | (value & 0xff) << (8 * (3 - (addr & 0x3))));
 #else
@@ -530,7 +530,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
 
     case 0x1:
       tmp = ENCODING (text_seg [(addr - TEXT_BOT) >> 2]);
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
       tmp = ((tmp & ~(0xffff << (8 * (2 - (addr & 0x2)))))
 	       | (value & 0xffff) << (8 * (2 - (addr & 0x2))));
 #else

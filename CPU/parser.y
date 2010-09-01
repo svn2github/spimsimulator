@@ -653,7 +653,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	Y_ULW_POP	DEST	ADDRESS
 		{
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		  i_type_inst (Y_LWL_OP, $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
 			       addr_expr_imm ((addr_expr *)$3.p));
@@ -677,7 +677,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	ULOADH_POPS	DEST	ADDRESS
 		{
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		  i_type_inst (($1.i == Y_ULH_POP ? Y_LB_OP : Y_LBU_OP),
 			       $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
@@ -738,7 +738,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	Y_USW_POP	SRC1	ADDRESS
 		{
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
 		  i_type_inst (Y_SWL_OP, $2.i,
 			       addr_expr_reg ((addr_expr *)$3.p),
 			       addr_expr_imm ((addr_expr *)$3.p));

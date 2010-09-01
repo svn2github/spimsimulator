@@ -60,13 +60,13 @@ if ./endian; then
   # Big endian
   rm -f $TEST_DIR/tt.s ./configuration
   ln -s $TEST_DIR/tt.be.s $TEST_DIR/tt.endian.s
-  echo "-DBIGENDIAN" > ./configuration
+  echo "-DSPIM_BIGENDIAN" > ./configuration
   echo I believe this is a big-endian machine.
 else
   # Little endian
   rm -f $TEST_DIR/tt.s ./configuration
   ln -s $TEST_DIR/tt.le.s $TEST_DIR/tt.endian.s
-  echo "-DLITTLEENDIAN" > ./configuration
+  echo "-DSPIM_LITTLEENDIAN" > ./configuration
   echo I believe this is a little-endian machine.
 fi;
 rm -f endian

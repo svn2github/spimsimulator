@@ -176,7 +176,7 @@ initialize_registers ()
   CP0_Status = (CP0_Status_CU & 0x30000000) | CP0_Status_IM | CP0_Status_UM;
   CP0_Cause = 0;
   CP0_EPC = 0;
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
   CP0_Config =  CP0_Config_BE;
 #else
   CP0_Config = 0;

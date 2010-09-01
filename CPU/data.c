@@ -263,7 +263,7 @@ store_half (int value)
 {
   if ((DATA_PC & 0x1) != 0)
     {
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
       store_byte ((value >> 8) & 0xff);
       store_byte (value & 0xff);
 #else
@@ -286,7 +286,7 @@ store_word (int value)
 {
   if ((DATA_PC & 0x3) != 0)
     {
-#ifdef BIGENDIAN
+#ifdef SPIM_BIGENDIAN
       store_half ((value >> 16) & 0xffff);
       store_half (value & 0xffff);
 #else
