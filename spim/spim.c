@@ -346,7 +346,7 @@ top_level ()
 
 
 void
-control_c_seen (int arg)
+control_c_seen (int /*arg*/)
 {
   console_to_spim ();
   write_output (message_out, "\nExecution interrupted\n");

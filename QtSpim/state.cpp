@@ -8,8 +8,8 @@
 void SpimView::readSettings()
 {
     settings.beginGroup("MainWin");
-    bool b1 = restoreGeometry(settings.value("Geometry").toByteArray());
-    bool b2 = restoreState(settings.value("WindowState").toByteArray(), 1);
+    restoreGeometry(settings.value("Geometry").toByteArray());
+    restoreState(settings.value("WindowState").toByteArray(), 1);
     settings.endGroup();
 
     settings.beginGroup("RegWin");

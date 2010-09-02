@@ -69,7 +69,10 @@ extern int errno;
 long atol (const char *);
 #endif
 
-
+#ifdef WIN32
+/* Disable MS VS warning about constant predicate in conditional. */
+#pragma warning(disable: 4127)
+#endif
 
 
 /* Local functions: */
@@ -1662,9 +1665,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 
 #ifdef WIN32
-static void CALLBACK
+void CALLBACK
 timer_completion_routine(LPVOID lpArgToCompletionRoutine, DWORD dwTimerLowValue, DWORD dwTimerHighValue)
 {
+  lpArgToCompletionRoutine = lpArgToCompletionRoutine;
+  dwTimerLowValue = dwTimerLowValue;
+  dwTimerHighValue = dwTimerHighValue;
   bump_CP0_timer ();
 }
 #endif

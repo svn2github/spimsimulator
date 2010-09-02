@@ -179,7 +179,7 @@ CPCSpimDoc* CPCSpimView::GetDocument() // non-debug version is inline
 
 
 static void
-InitSpimWins(CEdit& Win, RECT& r, int nMinMax, BOOL ScrollVert, BOOL ScrollHorz)
+InitSpimWins(CEdit& Win, RECT& /*r*/, int nMinMax, BOOL ScrollVert, BOOL ScrollHorz)
 {
   Win.ShowWindow(nMinMax);
 
@@ -268,7 +268,7 @@ int CPCSpimView::OnCreate(LPCREATESTRUCT pcs)
   strcpy(lf.lfFaceName, (char*)pApp->GetSetting(SPIM_REG_FONTFACE, "Courier"));	/* Default: Courier 16pt, normal weight */
   lf.lfHeight = pApp->GetSetting(SPIM_REG_FONTHEIGHT, 16);
   lf.lfWeight = pApp->GetSetting(SPIM_REG_FONTWEIGHT, 400);
-  lf.lfItalic = pApp->GetSetting(SPIM_REG_FONTITALIC, 0);
+  lf.lfItalic = (BYTE)pApp->GetSetting(SPIM_REG_FONTITALIC, 0);
 
   SetSpimFont(&lf);
 
@@ -392,7 +392,6 @@ void CPCSpimView::InitializeSimulator()
       write_startup_message();
 
       initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL);
-      initialize_stack(g_strCmdLine);	// Stack starts with argc, argv, environ
 
       m_fSimulatorInitialized = TRUE;
 
@@ -459,7 +458,7 @@ void CPCSpimView::OnSimulatorRun()
       addr = starting_address ();
     }
 
-	initialize_stack(g_strCmdLine);	// Stack starts with argc, argv, environ
+	initialize_stack((const char*)g_strCmdLine);	// Stack starts with argc, argv, environ
 
     ExecuteProgram(addr, DEFAULT_RUN_STEPS, 0, 0);
 }

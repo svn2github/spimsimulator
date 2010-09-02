@@ -55,7 +55,7 @@
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
-				PreprocessorDefinitions="_DEBUG;SPIM_LITTLEENDIAN;WIN32;_WINDOWS;"
+				PreprocessorDefinitions="_DEBUG;SPIM_LITTLEENDIAN;WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/pcspim.pch"

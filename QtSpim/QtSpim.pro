@@ -44,6 +44,11 @@ FORMS    += spimview.ui\
         runparams.ui\
         settings.ui
 
+YACCSOURCES = ../CPU/parser.y
+
 INCLUDEPATH = ../CPU ../spim
 
+DEFINES += _CRT_SECURE_NO_WARNINGS
+
 QMAKE_CFLAGS_DEBUG	 += -TP
+QMAKE_CFLAGS_RELEASE	 += -TP

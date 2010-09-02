@@ -544,6 +544,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
       break;
 
     default:
+	  tmp = 0;
       run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);
     }
 

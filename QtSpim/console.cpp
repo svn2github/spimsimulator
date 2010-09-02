@@ -44,7 +44,7 @@ void Console::Clear()
 }
 
 
-void Console::keyPressEvent(QKeyEvent* e)
+void Console::keyPressEvent(QKeyEvent* /*e*/)
 {
     // Ignore
 }
@@ -64,12 +64,12 @@ void Console::keyReleaseEvent(QKeyEvent* e)
     }
 }
 
-void Console::mouseMoveEvent(QMouseEvent* e)
+void Console::mouseMoveEvent(QMouseEvent* /*e*/)
 {
     // Ignore
 }
 
-void Console::mousePressEvent(QMouseEvent* e)
+void Console::mousePressEvent(QMouseEvent* /*e*/)
 {
     // Ignore
 }

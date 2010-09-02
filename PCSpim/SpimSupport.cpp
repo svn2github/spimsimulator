@@ -65,7 +65,7 @@ int console_input_available()
 }
 
 
-void control_c_seen(int arg)
+void control_c_seen(int /*arg*/)
 {
   g_pView->SendMessage(WM_COMMAND, MAKEWPARAM(ID_SIMULATOR_BREAK, 0), 0);
 }

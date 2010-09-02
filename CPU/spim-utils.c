@@ -239,12 +239,12 @@ starting_address ()
 /* Initialize the SPIM stack from a string containing the command line. */
 
 void
-initialize_stack(char *command_line)
+initialize_stack(const char *command_line)
 {
     int argc = 0;
     char *argv[MAX_ARGS];
     char *a;
-    char *args = str_copy(command_line); /* Destructively modify string */
+    char *args = str_copy((char*)command_line); /* Destructively modify string */
     char *orig_args = args;
 
     while (*args != '\0')
