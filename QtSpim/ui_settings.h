@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settings.ui'
 **
-** Created: Wed Sep 1 21:39:39 2010
+** Created: Thu Sep 2 21:43:51 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -79,9 +79,9 @@ public:
     QLabel *label_7;
     QToolButton *regWinFontColorToolButton;
     QSpacerItem *horizontalSpacer;
-    QGroupBox *groupBox_41;
-    QWidget *gridLayoutWidget_41;
-    QGridLayout *gridLayout_41;
+    QGroupBox *groupBox_5;
+    QWidget *gridLayoutWidget_5;
+    QGridLayout *gridLayout_5;
     QToolButton *textWinFontToolButton;
     QToolButton *textWinBackgroundToolButton;
     QLineEdit *textWinFontLineEdit;
@@ -292,69 +292,69 @@ public:
 
         verticalLayout->addWidget(groupBox_4);
 
-        groupBox_41 = new QGroupBox(verticalLayoutWidget);
-        groupBox_41->setObjectName(QString::fromUtf8("groupBox_41"));
-        gridLayoutWidget_41 = new QWidget(groupBox_41);
-        gridLayoutWidget_41->setObjectName(QString::fromUtf8("gridLayoutWidget_41"));
-        gridLayoutWidget_41->setGeometry(QRect(20, 20, 503, 91));
-        gridLayout_41 = new QGridLayout(gridLayoutWidget_41);
-        gridLayout_41->setObjectName(QString::fromUtf8("gridLayout_41"));
-        gridLayout_41->setContentsMargins(0, 0, 0, 0);
-        textWinFontToolButton = new QToolButton(gridLayoutWidget_41);
+        groupBox_5 = new QGroupBox(verticalLayoutWidget);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        gridLayoutWidget_5 = new QWidget(groupBox_5);
+        gridLayoutWidget_5->setObjectName(QString::fromUtf8("gridLayoutWidget_5"));
+        gridLayoutWidget_5->setGeometry(QRect(20, 20, 503, 91));
+        gridLayout_5 = new QGridLayout(gridLayoutWidget_5);
+        gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
+        gridLayout_5->setContentsMargins(0, 0, 0, 0);
+        textWinFontToolButton = new QToolButton(gridLayoutWidget_5);
         textWinFontToolButton->setObjectName(QString::fromUtf8("textWinFontToolButton"));
 
-        gridLayout_41->addWidget(textWinFontToolButton, 0, 2, 1, 1);
+        gridLayout_5->addWidget(textWinFontToolButton, 0, 2, 1, 1);
 
-        textWinBackgroundToolButton = new QToolButton(gridLayoutWidget_41);
+        textWinBackgroundToolButton = new QToolButton(gridLayoutWidget_5);
         textWinBackgroundToolButton->setObjectName(QString::fromUtf8("textWinBackgroundToolButton"));
 
-        gridLayout_41->addWidget(textWinBackgroundToolButton, 1, 2, 1, 1);
+        gridLayout_5->addWidget(textWinBackgroundToolButton, 1, 2, 1, 1);
 
-        textWinFontLineEdit = new QLineEdit(gridLayoutWidget_41);
+        textWinFontLineEdit = new QLineEdit(gridLayoutWidget_5);
         textWinFontLineEdit->setObjectName(QString::fromUtf8("textWinFontLineEdit"));
         sizePolicy.setHeightForWidth(textWinFontLineEdit->sizePolicy().hasHeightForWidth());
         textWinFontLineEdit->setSizePolicy(sizePolicy);
 
-        gridLayout_41->addWidget(textWinFontLineEdit, 0, 1, 1, 1);
+        gridLayout_5->addWidget(textWinFontLineEdit, 0, 1, 1, 1);
 
-        textWinBackgroundLineEdit = new QLineEdit(gridLayoutWidget_41);
+        textWinBackgroundLineEdit = new QLineEdit(gridLayoutWidget_5);
         textWinBackgroundLineEdit->setObjectName(QString::fromUtf8("textWinBackgroundLineEdit"));
         sizePolicy.setHeightForWidth(textWinBackgroundLineEdit->sizePolicy().hasHeightForWidth());
         textWinBackgroundLineEdit->setSizePolicy(sizePolicy);
 
-        gridLayout_41->addWidget(textWinBackgroundLineEdit, 1, 1, 1, 1);
+        gridLayout_5->addWidget(textWinBackgroundLineEdit, 1, 1, 1, 1);
 
-        label_5 = new QLabel(gridLayoutWidget_41);
+        label_5 = new QLabel(gridLayoutWidget_5);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
-        gridLayout_41->addWidget(label_5, 0, 0, 1, 1);
+        gridLayout_5->addWidget(label_5, 0, 0, 1, 1);
 
-        label_6 = new QLabel(gridLayoutWidget_41);
+        label_6 = new QLabel(gridLayoutWidget_5);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
-        gridLayout_41->addWidget(label_6, 1, 0, 1, 1);
+        gridLayout_5->addWidget(label_6, 1, 0, 1, 1);
 
-        label_8 = new QLabel(gridLayoutWidget_41);
+        label_8 = new QLabel(gridLayoutWidget_5);
         label_8->setObjectName(QString::fromUtf8("label_8"));
 
-        gridLayout_41->addWidget(label_8, 0, 4, 1, 1);
+        gridLayout_5->addWidget(label_8, 0, 4, 1, 1);
 
-        textWinFontColorLineEdit = new QLineEdit(gridLayoutWidget_41);
+        textWinFontColorLineEdit = new QLineEdit(gridLayoutWidget_5);
         textWinFontColorLineEdit->setObjectName(QString::fromUtf8("textWinFontColorLineEdit"));
 
-        gridLayout_41->addWidget(textWinFontColorLineEdit, 0, 5, 1, 1);
+        gridLayout_5->addWidget(textWinFontColorLineEdit, 0, 5, 1, 1);
 
-        textWinFontColorToolButton = new QToolButton(gridLayoutWidget_41);
+        textWinFontColorToolButton = new QToolButton(gridLayoutWidget_5);
         textWinFontColorToolButton->setObjectName(QString::fromUtf8("textWinFontColorToolButton"));
 
-        gridLayout_41->addWidget(textWinFontColorToolButton, 0, 6, 1, 1);
+        gridLayout_5->addWidget(textWinFontColorToolButton, 0, 6, 1, 1);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_41->addItem(horizontalSpacer_2, 0, 3, 1, 1);
+        gridLayout_5->addItem(horizontalSpacer_2, 0, 3, 1, 1);
 
 
-        verticalLayout->addWidget(groupBox_41);
+        verticalLayout->addWidget(groupBox_5);
 
         tabWidget->addTab(tab_2, QString());
         buttonBox = new QDialogButtonBox(SettingDialog);
@@ -422,7 +422,7 @@ public:
         label_4->setText(QApplication::translate("SettingDialog", "Background Color", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("SettingDialog", "Color", 0, QApplication::UnicodeUTF8));
         regWinFontColorToolButton->setText(QApplication::translate("SettingDialog", "...", 0, QApplication::UnicodeUTF8));
-        groupBox_41->setTitle(QApplication::translate("SettingDialog", "Text and Data Windows", 0, QApplication::UnicodeUTF8));
+        groupBox_5->setTitle(QApplication::translate("SettingDialog", "Text and Data Windows", 0, QApplication::UnicodeUTF8));
         textWinFontToolButton->setText(QApplication::translate("SettingDialog", "...", 0, QApplication::UnicodeUTF8));
         textWinBackgroundToolButton->setText(QApplication::translate("SettingDialog", "...", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("SettingDialog", "Font", 0, QApplication::UnicodeUTF8));

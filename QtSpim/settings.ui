@@ -345,11 +345,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_4">
+       <widget class="QGroupBox" name="groupBox_5">
         <property name="title">
          <string>Text and Data Windows</string>
         </property>
-        <widget class="QWidget" name="gridLayoutWidget_4">
+        <widget class="QWidget" name="gridLayoutWidget_5">
          <property name="geometry">
           <rect>
            <x>20</x>
@@ -358,7 +358,7 @@
            <height>91</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_4">
+         <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="2">
            <widget class="QToolButton" name="textWinFontToolButton">
             <property name="text">

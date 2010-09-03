@@ -89,6 +89,14 @@ LEXFLAGS = -I -8
 #LEXFLAGS =
 
 
+# SPIM works with either byacc or bison
+#YACC=byacc
+#YACCFLAGS = -d
+
+YACC=bison
+YACCFLAGS = -d --file-prefix=y
+
+
 # Size of the segments when spim starts up (data segment must be >= 64K).
 # (These sizes are fine for most users since SPIM dynamically expands
 # the memory as necessary.)
@@ -106,7 +114,6 @@ DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)
 
 CC = gcc
 CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall -pedantic -Wextra -Wunused -x c++
-YFLAGS = -d --file-prefix=y
 YCFLAGS =
 LDFLAGS = -lm
 CSH = bash
@@ -211,7 +218,7 @@ splint: spim
 y.tab.h: y.tab.c
 
 y.tab.c: $(CPU_DIR)/parser.y
-	bison $(YFLAGS) $(CPU_DIR)/parser.y
+	$(YACC) $(YACCFLAGS) $(CPU_DIR)/parser.y
 
 y.tab.o: y.tab.c
 	$(CC) $(CFLAGS) $(YCFLAGS) -c y.tab.c

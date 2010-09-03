@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Wed Sep 1 21:39:39 2010
+** Created: Thu Sep 2 21:43:50 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -293,7 +293,6 @@ public:
         menu_Simulator->addAction(action_Sim_SetRunParameters);
         menu_Simulator->addAction(action_Sim_Run);
         menu_Simulator->addAction(action_Sim_SingleStep);
-        menu_Simulator->addSeparator();
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_DisplaySymbols);
         menu_Simulator->addSeparator();

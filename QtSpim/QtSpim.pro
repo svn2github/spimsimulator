@@ -27,9 +27,11 @@ SOURCES += main.cpp\
         ../CPU/string-stream.c\
         ../CPU/sym-tbl.c\
         ../CPU/syscall.c\
-        y_tab.c\
-        lex_yy.c\
         spim_support.c
+
+YACCSOURCES = ../CPU/parser.y
+LEXSOURCES = ../CPU/scanner.l
+
 
 HEADERS  += spimview.h\
 	texttextedit.h\
@@ -38,17 +40,40 @@ HEADERS  += spimview.h\
         settablecheckbox.h\
         console.h
 
+
 FORMS    += spimview.ui\
 	savelogfile.ui\
 	printwindows.ui\
         runparams.ui\
         settings.ui
 
-YACCSOURCES = ../CPU/parser.y
 
 INCLUDEPATH = ../CPU ../spim
 
+
+# Default Qt/Qmake conventions for naming yacc and lex files are different from
+# SPIM. These rules produce output that do not require source changes.
+#
+QMAKE_YACC		= bison
+QMAKE_YACCFLAGS_MANGLE	= -d --file-prefix=y
+QMAKE_YACC_HEADER	= y.tab.h
+QMAKE_YACC_SOURCE	= y.tab.c
+
+QMAKE_LEX		= flex
+QMAKE_LEXFLAGS_MANGLE	= -o lex.scanner.c
+QMAKE_LEXFLAGS		= -I -8
+
+
+
+# Microsoft Visual C compiler flags
+
+# Compile all files as C++
+#
+QMAKE_CFLAGS_DEBUG	+= -TP
+QMAKE_CFLAGS_RELEASE	+= -TP
+
+# Disable security warnings
+#
 DEFINES += _CRT_SECURE_NO_WARNINGS
 
-QMAKE_CFLAGS_DEBUG	 += -TP
-QMAKE_CFLAGS_RELEASE	 += -TP
+

@@ -63,8 +63,6 @@
     <addaction name="action_Sim_Run"/>
     <addaction name="action_Sim_SingleStep"/>
     <addaction name="separator"/>
-    <addaction name="action_Sim_SetMemoryLocation"/>
-    <addaction name="separator"/>
     <addaction name="action_Sim_DisplaySymbols"/>
     <addaction name="separator"/>
     <addaction name="action_Sim_Settings"/>
