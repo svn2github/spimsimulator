@@ -84,7 +84,7 @@ VPATH = src:$(CPU_DIR)
 DOC_DIR = ../Documentation
 
 
-BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o syscall.o display-utils.o string-stream.o
+BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex.yy.o syscall.o display-utils.o string-stream.o
 
 BASE_XOBJS = xspim.o windows.o buttons.o
 
@@ -93,7 +93,9 @@ XOBJS = $(BASE_OBJS) $(BASE_XOBJS)
 # lex.yy.c is usually compiled with -O to speed it up.
 LEXCFLAGS = -O
 
-YFLAGS = -d
+# SPIM works with either byacc or bison
+YACC = bison
+YFLAGS = -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
 
 
 DEPLIBS = XawClientDepLibs
@@ -121,13 +123,13 @@ InstallNonExec($(CPU_DIR)/exceptions.s,$(EXCEPTION_DIR)/exceptions.s)
 #InstallManPage($(DOC_DIR)/xspim,$(MAN_DIR))
 
 
-y.tab.h: y.tab.c
+parser_yacc.h: parser_yacc.c
 
-y.tab.c: $(CPU_DIR)/parser.y
+parser_yacc.c: $(CPU_DIR)/parser.y
 	$(YACC) $(YFLAGS) $(CPU_DIR)/parser.y
 
-y.tab.o: y.tab.c
-	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c y.tab.c
+parser_yacc.o: parser_yacc.c
+	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c parser_yacc.c
 
 
 lex.yy.o:	$(CPU_DIR)/scanner.l
@@ -145,9 +147,9 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean::
-	rm -f xspim *.o core a.out TAGS y.output y.tab.h y.tab.c lex.yy.c
+	rm -f xspim *.o core a.out TAGS y.output parser_yacc.h parser_yacc.c lex.yy.c
 
-makedepend: y.tab.c
+makedepend: parser_yacc.c
 	makedepend -w10 -I. -I$(CPU_DIR) $(CPU_DIR)\*.c *.c
 
 #
@@ -179,7 +181,7 @@ inst.o: $(CPU_DIR)/inst.h
 inst.o: $(CPU_DIR)/reg.h
 inst.o: $(CPU_DIR)/mem.h
 inst.o: $(CPU_DIR)/sym-tbl.h
-inst.o: y.tab.h
+inst.o: parser_yacc.h
 inst.o: $(CPU_DIR)/parser.h
 inst.o: $(CPU_DIR)/scanner.h
 inst.o: $(CPU_DIR)/data.h
@@ -197,7 +199,7 @@ run.o: $(CPU_DIR)/inst.h
 run.o: $(CPU_DIR)/reg.h
 run.o: $(CPU_DIR)/mem.h
 run.o: $(CPU_DIR)/sym-tbl.h
-run.o: y.tab.h
+run.o: parser_yacc.h
 run.o: $(CPU_DIR)/syscall.h
 run.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/spim.h
@@ -209,7 +211,7 @@ spim-utils.o: $(CPU_DIR)/reg.h
 spim-utils.o: $(CPU_DIR)/mem.h
 spim-utils.o: $(CPU_DIR)/scanner.h
 spim-utils.o: $(CPU_DIR)/parser.h
-spim-utils.o: y.tab.h
+spim-utils.o: parser_yacc.h
 spim-utils.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/sym-tbl.h
 string-stream.o: $(CPU_DIR)/spim.h
@@ -256,20 +258,20 @@ xspim.o: buttons.h
 xspim.o: windows.h
 xspim.o: xspim.h
 xspim.o: $(CPU_DIR)/sym-tbl.h
-y.tab.o: $(CPU_DIR)/spim.h
-y.tab.o: $(CPU_DIR)/spim-utils.h
-y.tab.o: $(CPU_DIR)/inst.h
-y.tab.o: $(CPU_DIR)/mem.h
-y.tab.o: $(CPU_DIR)/reg.h
-y.tab.o: $(CPU_DIR)/sym-tbl.h
-y.tab.o: $(CPU_DIR)/data.h
-y.tab.o: $(CPU_DIR)/scanner.h
-y.tab.o: $(CPU_DIR)/parser.h
+parser_yacc.o: $(CPU_DIR)/spim.h
+parser_yacc.o: $(CPU_DIR)/spim-utils.h
+parser_yacc.o: $(CPU_DIR)/inst.h
+parser_yacc.o: $(CPU_DIR)/mem.h
+parser_yacc.o: $(CPU_DIR)/reg.h
+parser_yacc.o: $(CPU_DIR)/sym-tbl.h
+parser_yacc.o: $(CPU_DIR)/data.h
+parser_yacc.o: $(CPU_DIR)/scanner.h
+parser_yacc.o: $(CPU_DIR)/parser.h
 lex.yy.o: $(CPU_DIR)/spim.h
 lex.yy.o: $(CPU_DIR)/spim-utils.h
 lex.yy.o: $(CPU_DIR)/inst.h
 lex.yy.o: $(CPU_DIR)/sym-tbl.h
-lex.yy.o: y.tab.h
+lex.yy.o: parser_yacc.h
 lex.yy.o: $(CPU_DIR)/parser.h
 lex.yy.o: $(CPU_DIR)/scanner.h
 lex.yy.o: $(CPU_DIR)/op.h

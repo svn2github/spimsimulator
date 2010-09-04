@@ -40,7 +40,7 @@
 #include "sym-tbl.h"
 #include "parser.h"
 #include "scanner.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 
 #ifdef WIN32
 #include <io.h>

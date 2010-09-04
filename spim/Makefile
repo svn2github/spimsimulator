@@ -94,7 +94,7 @@ LEXFLAGS = -I -8
 #YACCFLAGS = -d
 
 YACC=bison
-YACCFLAGS = -d --file-prefix=y
+YFLAGS = -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
 
 
 # Size of the segments when spim starts up (data segment must be >= 64K).
@@ -123,7 +123,7 @@ LEXCFLAGS = -O $(CFLAGS)
 
 
 
-OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
+OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex.yy.o \
        syscall.o display-utils.o string-stream.o
 
 
@@ -155,7 +155,7 @@ test:	spim
 
 	@echo
 	@echo "Testing tt.le.s:"
-	$(CSH) -c "./spim -ef $(CPU_DIR)/exceptions.s -file $(TEST_DIR)/tt.endian.s  >& test.out"
+	$(CSH) -c "./spim -ef $(CPU_DIR)/exceptions.s -file $(TEST_DIR)/tt.le.s  >& test.out"
 	@tail -2 test.out
 	@echo
 	@echo
@@ -184,7 +184,7 @@ TAGS:	*.c *.h *.l *.y
 
 
 clean:
-	rm -f spim spim.exe *.o TAGS test.out lex.yy.c y.tab.c y.tab.h y.output
+	rm -f spim spim.exe *.o TAGS test.out lex.yy.c parser_yacc.c parser_yacc.h y.output
 
 install: spim
 	install -d $(BIN_DIR)
@@ -197,7 +197,7 @@ install-man:
 	install -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
 
 splint: spim
-	splint -weak -preproc -warnposix +matchanyintegral spim.c y.tab.c lex.yy.c
+	splint -weak -preproc -warnposix +matchanyintegral spim.c parser_yacc.c lex.yy.c
 
 
 
@@ -206,13 +206,13 @@ splint: spim
 #
 
 
-y.tab.h: y.tab.c
+parser_yacc.h: parser_yacc.c
 
-y.tab.c: $(CPU_DIR)/parser.y
-	$(YACC) $(YACCFLAGS) $(CPU_DIR)/parser.y
+parser_yacc.c: $(CPU_DIR)/parser.y
+	$(YACC) $(YFLAGS) $(CPU_DIR)/parser.y
 
-y.tab.o: y.tab.c
-	$(CC) $(CFLAGS) $(YCFLAGS) -c y.tab.c
+parser_yacc.o: parser_yacc.c
+	$(CC) $(CFLAGS) $(YCFLAGS) -c parser_yacc.c
 
 
 lex.yy.c: $(CPU_DIR)/scanner.l
@@ -254,7 +254,7 @@ inst.o: $(CPU_DIR)/mem.h
 inst.o: $(CPU_DIR)/sym-tbl.h
 inst.o: $(CPU_DIR)/parser.h
 inst.o: $(CPU_DIR)/scanner.h
-inst.o: y.tab.h
+inst.o: parser_yacc.h
 inst.o: $(CPU_DIR)/data.h
 inst.o: $(CPU_DIR)/op.h
 mem.o: $(CPU_DIR)/spim.h
@@ -270,7 +270,7 @@ run.o: $(CPU_DIR)/inst.h
 run.o: $(CPU_DIR)/reg.h
 run.o: $(CPU_DIR)/mem.h
 run.o: $(CPU_DIR)/sym-tbl.h
-run.o: y.tab.h
+run.o: parser_yacc.h
 run.o: $(CPU_DIR)/syscall.h
 run.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/spim.h
@@ -282,7 +282,7 @@ spim-utils.o: $(CPU_DIR)/reg.h
 spim-utils.o: $(CPU_DIR)/mem.h
 spim-utils.o: $(CPU_DIR)/scanner.h
 spim-utils.o: $(CPU_DIR)/parser.h
-spim-utils.o: y.tab.h
+spim-utils.o: parser_yacc.h
 spim-utils.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/sym-tbl.h
 string-stream.o: $(CPU_DIR)/spim.h
@@ -296,7 +296,7 @@ sym-tbl.o: $(CPU_DIR)/mem.h
 sym-tbl.o: $(CPU_DIR)/data.h
 sym-tbl.o: $(CPU_DIR)/parser.h
 sym-tbl.o: $(CPU_DIR)/sym-tbl.h
-sym-tbl.o: y.tab.h
+sym-tbl.o: parser_yacc.h
 syscall.o: $(CPU_DIR)/spim.h
 syscall.o: $(CPU_DIR)/string-stream.h
 syscall.o: $(CPU_DIR)/inst.h
@@ -312,7 +312,7 @@ lex.yy.o: $(CPU_DIR)/reg.h
 lex.yy.o: $(CPU_DIR)/sym-tbl.h
 lex.yy.o: $(CPU_DIR)/parser.h
 lex.yy.o: $(CPU_DIR)/scanner.h
-lex.yy.o: y.tab.h
+lex.yy.o: parser_yacc.h
 lex.yy.o: $(CPU_DIR)/op.h
 spim.o: $(CPU_DIR)/spim.h
 spim.o: $(CPU_DIR)/string-stream.h
@@ -323,14 +323,14 @@ spim.o: $(CPU_DIR)/mem.h
 spim.o: $(CPU_DIR)/parser.h
 spim.o: $(CPU_DIR)/sym-tbl.h
 spim.o: $(CPU_DIR)/scanner.h
-spim.o: y.tab.h
-y.tab.o: $(CPU_DIR)/spim.h
-y.tab.o: $(CPU_DIR)/string-stream.h
-y.tab.o: $(CPU_DIR)/spim-utils.h
-y.tab.o: $(CPU_DIR)/inst.h
-y.tab.o: $(CPU_DIR)/reg.h
-y.tab.o: $(CPU_DIR)/mem.h
-y.tab.o: $(CPU_DIR)/sym-tbl.h
-y.tab.o: $(CPU_DIR)/data.h
-y.tab.o: $(CPU_DIR)/scanner.h
-y.tab.o: $(CPU_DIR)/parser.h
+spim.o: parser_yacc.h
+parser_yacc.o: $(CPU_DIR)/spim.h
+parser_yacc.o: $(CPU_DIR)/string-stream.h
+parser_yacc.o: $(CPU_DIR)/spim-utils.h
+parser_yacc.o: $(CPU_DIR)/inst.h
+parser_yacc.o: $(CPU_DIR)/reg.h
+parser_yacc.o: $(CPU_DIR)/mem.h
+parser_yacc.o: $(CPU_DIR)/sym-tbl.h
+parser_yacc.o: $(CPU_DIR)/data.h
+parser_yacc.o: $(CPU_DIR)/scanner.h
+parser_yacc.o: $(CPU_DIR)/parser.h

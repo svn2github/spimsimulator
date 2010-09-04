@@ -40,7 +40,7 @@
 #include "data.h"
 #include "parser.h"
 #include "sym-tbl.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 
 
 /* Local functions: */

@@ -10,6 +10,10 @@ TARGET = QtSpim
 TEMPLATE = app
 
 
+YACCSOURCES = ../CPU/parser.y
+LEXSOURCES = ../CPU/scanner.l
+
+
 SOURCES += main.cpp\
         spimview.cpp\
         menu.cpp\
@@ -28,9 +32,6 @@ SOURCES += main.cpp\
         ../CPU/sym-tbl.c\
         ../CPU/syscall.c\
         spim_support.c
-
-YACCSOURCES = ../CPU/parser.y
-LEXSOURCES = ../CPU/scanner.l
 
 
 HEADERS  += spimview.h\
@@ -51,13 +52,11 @@ FORMS    += spimview.ui\
 INCLUDEPATH = ../CPU ../spim
 
 
-# Default Qt/Qmake conventions for naming yacc and lex files are different from
-# SPIM. These rules produce output that do not require source changes.
-#
 QMAKE_YACC		= bison
-QMAKE_YACCFLAGS_MANGLE	= -d --file-prefix=y
-QMAKE_YACC_HEADER	= y.tab.h
-QMAKE_YACC_SOURCE	= y.tab.c
+QMAKE_YACCFLAGS		= -d --defines=parser.tab.h --output=parser.tab.c
+QMAKE_YACCFLAGS_MANGLE	= -p yy
+QMAKE_YACC_HEADER	= parser.tab.h
+QMAKE_YACC_SOURCE	= parser.tab.c
 
 QMAKE_LEX		= flex
 QMAKE_LEXFLAGS_MANGLE	= -o lex.scanner.c
@@ -66,14 +65,28 @@ QMAKE_LEXFLAGS		= -I -8
 
 
 # Microsoft Visual C compiler flags
-
-# Compile all files as C++
 #
-QMAKE_CFLAGS_DEBUG	+= -TP
-QMAKE_CFLAGS_RELEASE	+= -TP
+win32-msvc2008 {
+  # Compile all files as C++
+  #
+  QMAKE_CFLAGS_DEBUG	+= -TP
+  QMAKE_CFLAGS_RELEASE	+= -TP
 
-# Disable security warnings
+  # Disable security warnings
+  #
+  DEFINES += _CRT_SECURE_NO_WARNINGS
+}
+
+
+# gcc flags
 #
-DEFINES += _CRT_SECURE_NO_WARNINGS
-
+win32-g++ {
+  # Compile all files as C++
+  # Surpress gcc warning about deprecated conversion from string constant to char*
+  #
+  QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
+  QMAKE_CXXFLAGS_RELEASE	+= -Wno-write-strings
+}
 

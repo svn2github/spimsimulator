@@ -46,7 +46,7 @@
 #include "mem.h"
 #include "scanner.h"
 #include "parser.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 #include "run.h"
 #include "sym-tbl.h"
 

@@ -43,7 +43,7 @@
 #include "sym-tbl.h"
 #include "parser.h"
 #include "scanner.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 #include "data.h"
 
 

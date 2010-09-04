@@ -58,7 +58,7 @@
 #include "reg.h"
 #include "mem.h"
 #include "sym-tbl.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 #include "syscall.h"
 #include "run.h"
 
