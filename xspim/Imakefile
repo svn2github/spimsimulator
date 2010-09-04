@@ -84,8 +84,6 @@ VPATH = src:$(CPU_DIR)
 DOC_DIR = ../Documentation
 
 
-ENDIAN=`cat configuration`
-
 BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o syscall.o display-utils.o string-stream.o
 
 BASE_XOBJS = xspim.o windows.o buttons.o
@@ -117,10 +115,6 @@ SYS_LIBRARIES = -lm
 AllTarget(ProgramTargetName(xspim))
 NormalProgramTarget(xspim,$(XOBJS),$(DEPLIBS),$(LOCALLIBS),$(SYSLIBS))
 
-force:  configuration
-
-configuration:
-	./Configure
 
 InstallProgram(xspim,$(BIN_DIR))
 InstallNonExec($(CPU_DIR)/exceptions.s,$(EXCEPTION_DIR)/exceptions.s)
@@ -152,9 +146,6 @@ TAGS:	*.c *.h *.l *.y
 
 clean::
 	rm -f xspim *.o core a.out TAGS y.output y.tab.h y.tab.c lex.yy.c
-
-very-clean: clean
-	rm -f configuration
 
 makedepend: y.tab.c
 	makedepend -w10 -I. -I$(CPU_DIR) $(CPU_DIR)\*.c *.c

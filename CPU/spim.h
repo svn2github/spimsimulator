@@ -35,6 +35,15 @@
 #define NULL 0
 #endif
 
+/* This declaration must match the endianness of the machine SPIM is running on. You CANNOT
+   set SPIM to simulate a different endianness than the machine that executes it. Almost
+   every processor (notably the x86) is little endian today. If your machine is big endian,
+   define -DSPIM_BIGENDIAN in the Makefile. */
+
+#ifndef SPIM_BIGENDIAN
+#define SPIM_LITTLENDIAN
+#endif
+
 
 /* Type declarations for portability.  They work for DEC's Alpha (64 bits)
    and 32 bit machines */
@@ -67,7 +76,7 @@ typedef union {int i; void* p;} intptr_union;
 
 /* Useful and pervasive declarations: */
 
-#ifdef NO_MEM_FUNCTIONS
+#ifdef NEED_MEM_FUNCTIONS
 #define memcpy(T, F, S) bcopy((void*)F, (void*)T, S)
 #define memclr(B, S) bzero(B, S)
 #define memcmp(S1, S2, N) bcmp(S1, S2, N)

@@ -58,11 +58,11 @@
 
 #ifndef WIN32
 #include <sys/time.h>
-#ifdef USE_TERMIOS
-#include <termios.h>
-#else
+#ifdef NEED_TERMIOS
 #include <sys/ioctl.h>
 #include <sgtty.h>
+#else
+#include <termios.h>
 #endif
 #endif
 
@@ -119,10 +119,10 @@ int spim_return_value;		/* Value returned when spim exits */
 /* Non-zero => load standard exception handler */
 static int load_exception_handler = 1;
 static int console_state_saved;
-#ifdef USE_TERMIOS
-static struct termios saved_console_state;
-#else
+#ifdef NEED_TERMIOS
 static struct sgttyb saved_console_state;
+#else
+static struct termios saved_console_state;
 #endif
 static int program_argc;
 static char** program_argv;
@@ -877,7 +877,7 @@ error (char *fmt, ...)
 
   va_start (args, fmt);
 
-#ifdef NO_VFPRINTF
+#ifdef NEED_VFPRINTF
   _doprnt (fmt, args, stderr);
 #else
   vfprintf (stderr, fmt, args);
@@ -895,7 +895,7 @@ fatal_error (char *fmt, ...)
   va_start (args, fmt);
   fmt = va_arg (args, char *);
 
-#ifdef NO_VFPRINTF
+#ifdef NEED_VFPRINTF
   _doprnt (fmt, args, stderr);
 #else
   vfprintf (stderr, fmt, args);
@@ -915,7 +915,7 @@ run_error (char *fmt, ...)
 
   console_to_spim ();
 
-#ifdef NO_VFPRINTF
+#ifdef NEED_VFPRINTF
   _doprnt (fmt, args, stderr);
 #else
   vfprintf (stderr, fmt, args);
@@ -946,7 +946,7 @@ write_output (port fp, char *fmt, ...)
 
   if (f != 0)
     {
-#ifdef NO_VFPRINTF
+#ifdef NEED_VFPRINTF
       _doprnt (fmt, args, f);
 #else
       vfprintf (f, fmt, args);
@@ -955,7 +955,7 @@ write_output (port fp, char *fmt, ...)
     }
   else
     {
-#ifdef NO_VFPRINTF
+#ifdef NEED_VFPRINTF
       _doprnt (fmt, args, stdout);
 #else
       vfprintf (stdout, fmt, args);
@@ -1013,7 +1013,14 @@ console_to_program ()
 {
   if (mapped_io && !console_state_saved)
     {
-#ifdef USE_TERMIOS
+#ifdef NEED_TERMIOS
+      int flags;
+      ioctl ((int) console_in.i, TIOCGETP, (char *) &saved_console_state);
+      flags = saved_console_state.sg_flags;
+      saved_console_state.sg_flags = (flags | RAW) & ~(CRMOD|ECHO);
+      ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);
+      saved_console_state.sg_flags = flags;
+#else
       struct termios params;
 
       tcgetattr (console_in.i, &saved_console_state);
@@ -1030,13 +1037,6 @@ console_to_program ()
       params.c_cc[VTIME] = 1;
 
       tcsetattr (console_in.i, TCSANOW, &params);
-#else
-      int flags;
-      ioctl ((int) console_in.i, TIOCGETP, (char *) &saved_console_state);
-      flags = saved_console_state.sg_flags;
-      saved_console_state.sg_flags = (flags | RAW) & ~(CRMOD|ECHO);
-      ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);
-      saved_console_state.sg_flags = flags;
 #endif
       console_state_saved = 1;
     }
@@ -1049,10 +1049,10 @@ static void
 console_to_spim ()
 {
   if (mapped_io && console_state_saved)
-#ifdef USE_TERMIOS
-    tcsetattr (console_in.i, TCSANOW, &saved_console_state);
-#else
+#ifdef NEED_TERMIOS
     ioctl ((int) console_in.i, TIOCSETP, (char *) &saved_console_state);
+#else
+    tcsetattr (console_in.i, TCSANOW, &saved_console_state);
 #endif
   console_state_saved = 0;
 }

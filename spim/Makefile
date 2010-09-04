@@ -108,9 +108,8 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 #
 
 
-ENDIAN=`cat configuration`
 
-DEFINES = $(ENDIAN) $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\""
+DEFINES = $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\""
 
 CC = gcc
 CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall -pedantic -Wextra -Wunused -x c++
@@ -128,17 +127,12 @@ OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o \
        syscall.o display-utils.o string-stream.o
 
 
-spim:   force
+spim:   
 	make -f Makefile spim2
 
 spim2:	$(OBJS) spim.o
 	$(CC) -g $(OBJS) spim.o $(LDFLAGS) -o spim -lm
 
-
-force:	configuration
-
-configuration:
-	./Configure
 
 #
 
@@ -160,7 +154,7 @@ test:	spim
 	@echo
 
 	@echo
-	@echo "Testing tt.endian.s:"
+	@echo "Testing tt.le.s:"
 	$(CSH) -c "./spim -ef $(CPU_DIR)/exceptions.s -file $(TEST_DIR)/tt.endian.s  >& test.out"
 	@tail -2 test.out
 	@echo
@@ -201,9 +195,6 @@ install: spim
 install-man:
 	install -d $(MAN_DIR)
 	install -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
-
-very-clean: clean
-	rm -f configuration
 
 splint: spim
 	splint -weak -preproc -warnposix +matchanyintegral spim.c y.tab.c lex.yy.c

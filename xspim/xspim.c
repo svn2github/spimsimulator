@@ -949,7 +949,7 @@ fatal_error (char *fmt, ...)
   va_start (args, fmt);
   fmt = va_arg (args, char *);
 
-#ifdef NO_VFPRINTF
+#ifdef NEED_VFPRINTF
   _doprnt (fmt, args, stderr);
 #else
   vfprintf (stderr, fmt, args);

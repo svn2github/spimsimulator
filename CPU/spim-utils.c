@@ -584,6 +584,7 @@ strtol (const char* str, const char** eptr, int base)
 }
 #endif
 
+
 #ifdef NEED_STRTOUL
 unsigned long
 strtoul (const char* str, char** eptr, int base)

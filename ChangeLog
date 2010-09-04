@@ -1,3 +1,10 @@
+2010-09-03    <Jim@LS-RED>
+
+	* spim/, xspim/, CPU:
+	Eliminated the Configure / configuration file. Defaults work for
+	most systems these days, so ports to other systems can set the
+	defines manually.
+
 2010-08-31    <Jim@LS-RED>
 
 	* 
