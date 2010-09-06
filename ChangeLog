@@ -1,13 +1,18 @@
+2010-09-06    <Jim@X64PC>
+
+	* spim/Makefile:
+	Supress coercion chatter when compiling with gcc v4.
+
 2010-09-03    <Jim@LS-RED>
 
 	* spim/, xspim/, CPU:
 	Eliminated the Configure / configuration file. Defaults work for
-	most systems these days, so ports to other systems can set the
-	defines manually.
+	most systems these days, so ports to "unusual" systems can change
+	the parameters by setting the cpp defines manually in Makefiles.
 
 2010-08-31    <Jim@LS-RED>
 
-	* 
+	* pervasive:
 	Renamed defines LITTLENDIAN -> SPIM_LITTLENDIAN, BIGENDIAN ->
 	SPIM_BIGENDIAN to avoid name classes with system .h files.
 
@@ -19,7 +24,8 @@
 
 2010-07-21    <Jim@LS-RED>
 
-	* CPU/version.h, CPU/spim-utils.c, spim/Makefile, xspim/Makefile, xspim/IMakefile, PCSpim/pcspim.vcproj:
+	* CPU/version.h, CPU/spim-utils.c, spim/Makefile, xspim/Makefile,
+	xspim/IMakefile, PCSpim/pcspim.vcproj:
 	Move spim version information from file to CPU/version.h.
 
 2010-01-23    <Jim@LS-RED>
