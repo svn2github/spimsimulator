@@ -111,7 +111,7 @@ get_hash (char *name, int *slot_no, label **entry)
   int len;
 
   /* Compute length of name in len.  */
-  for (len = 0; name[len]; len++);
+  for (len = 0; name[len]; len++) ;
 
   /* Compute hash code */
   hi = len;

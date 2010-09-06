@@ -77,7 +77,7 @@
 #include "parser.h"
 #include "sym-tbl.h"
 #include "scanner.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 
 
 /* Internal functions: */
