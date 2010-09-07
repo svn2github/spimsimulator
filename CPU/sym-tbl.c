@@ -494,7 +494,7 @@ undefined_symbol_string ()
     for (l = label_hash_table[i]; l != NULL; l = l->next)
       if (l->addr == 0)
       {
-	int name_length = strlen(l->name);
+	int name_length = (int)strlen(l->name);
 	int after_length = string_length + name_length + 2;
 	if (buffer_length < after_length)
 	{

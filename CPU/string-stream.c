@@ -114,7 +114,7 @@ ss_printf (str_stream* ss, char* fmt, ...)
   if (0 == ss->initialized) ss_init (ss);
 
   free_space = ss->max_length - ss->empty_pos;
-#ifdef WIN32
+#ifdef _WIN32
   /* Returns -1 when buffer is too small */
   while ((n = _vsnprintf (ss->buf + ss->empty_pos, free_space, fmt, args)) < 0)
 #else

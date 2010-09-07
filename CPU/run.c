@@ -41,8 +41,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#ifdef WIN32
-#define _WIN32_WINDOWS 0x0500
+#ifdef _WIN32
 #define VC_EXTRALEAN
 #include <Windows.h>
 #else
@@ -69,7 +68,7 @@ extern int errno;
 long atol (const char *);
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 /* Disable MS VS warning about constant predicate in conditional. */
 #pragma warning(disable: 4127)
 #endif
@@ -81,7 +80,7 @@ static void bump_CP0_timer ();
 static void set_fpu_cc (int cond, int cc, int less, int equal, int unordered);
 static void signed_multiply (reg_word v1, reg_word v2);
 static void start_CP0_timer ();
-#ifdef WIN32
+#ifdef _WIN32
 void CALLBACK timer_completion_routine(LPVOID lpArgToCompletionRoutine,
 				       DWORD dwTimerLowValue, DWORD dwTimerHighValue);
 #endif
@@ -240,7 +239,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	  R[0] = 0;		/* Maintain invariant value */
 
-#ifdef WIN32
+#ifdef _WIN32
 	  SleepEx(0, TRUE);	      /* Put thread in awaitable state for WaitableTimer */
 #else
 	  {
@@ -1664,7 +1663,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 }
 
 
-#ifdef WIN32
+#ifdef _WIN32
 void CALLBACK
 timer_completion_routine(LPVOID lpArgToCompletionRoutine, DWORD dwTimerLowValue, DWORD dwTimerHighValue)
 {
@@ -1693,7 +1692,7 @@ bump_CP0_timer ()
 static void
 start_CP0_timer ()
 {
-#ifdef WIN32
+#ifdef _WIN32
   HANDLE timer = CreateWaitableTimer(NULL, TRUE, TEXT("SPIMTimer"));
   if (NULL == timer)
     {

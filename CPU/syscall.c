@@ -31,7 +31,7 @@
 */
 
 
-#ifndef WIN32
+#ifndef _WIN32
 #include <unistd.h>
 #endif
 #include <sys/types.h>
@@ -40,7 +40,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <io.h>
 #endif
 
@@ -153,7 +153,7 @@ do_syscall ()
 
     case OPEN_SYSCALL:
       {
-#ifdef WIN32
+#ifdef _WIN32
         R[REG_RES] = _open((char*)mem_reference (R[REG_A0]), R[REG_A1], R[REG_A2]);
 #else
 	R[REG_RES] = open((char*)mem_reference (R[REG_A0]), R[REG_A1], R[REG_A2]);
@@ -165,7 +165,7 @@ do_syscall ()
       {
 	/* Test if address is valid */
 	(void)mem_reference (R[REG_A1] + R[REG_A2] - 1);
-#ifdef WIN32
+#ifdef _WIN32
 	R[REG_RES] = _read(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
 #else
 	R[REG_RES] = read(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
@@ -178,7 +178,7 @@ do_syscall ()
       {
 	/* Test if address is valid */
 	(void)mem_reference (R[REG_A1] + R[REG_A2] - 1);
-#ifdef WIN32
+#ifdef _WIN32
 	R[REG_RES] = _write(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
 #else
 	R[REG_RES] = write(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
@@ -188,7 +188,7 @@ do_syscall ()
 
     case CLOSE_SYSCALL:
       {
-#ifdef WIN32
+#ifdef _WIN32
 	R[REG_RES] = _close(R[REG_A0]);
 #else
 	R[REG_RES] = close(R[REG_A0]);

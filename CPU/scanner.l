@@ -42,7 +42,7 @@
 #include "scanner.h"
 #include "parser_yacc.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <io.h>
 #else
 #include <unistd.h>

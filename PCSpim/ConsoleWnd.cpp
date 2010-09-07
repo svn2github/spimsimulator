@@ -210,7 +210,7 @@ static LRESULT CALLBACK ConsoleRichEditProc(HWND hwnd,
       break;
     }
 
-  return CallWindowProc((WNDPROC)GetWindowLong(hwnd, GWL_USERDATA),
+  return CallWindowProc((WNDPROC)GetWindowLongPtr(hwnd, GWLP_USERDATA),
 			hwnd,
 			uMsg,
 			wParam,
@@ -252,10 +252,10 @@ int CConsoleWnd::OnCreate(LPCREATESTRUCT pcs)
   m_reText.SetOptions(ECOOP_OR, ECO_NOHIDESEL | ECO_SAVESEL);
 
   // We want to intercept keystrokes for getting input.
-  SetWindowLong(m_reText.m_hWnd,
-		GWL_USERDATA,
-		(LONG)SetWindowLong(m_reText.m_hWnd,
-				    GWL_WNDPROC,
+  SetWindowLongPtr(m_reText.m_hWnd,
+		GWLP_USERDATA,
+		(LONG)SetWindowLongPtr(m_reText.m_hWnd,
+				    GWLP_WNDPROC,
 				    (LONG)ConsoleRichEditProc));
 
   return 0;

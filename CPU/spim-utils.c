@@ -149,7 +149,7 @@ write_startup_message ()
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out, "Copyright 1990-2010, James R. Larus.\n");
   write_output (message_out, "All Rights Reserved.\n");
-#ifdef WIN32
+#ifdef _WIN32
   write_output (message_out, "DOS and Windows ports by David A. Carley.\n");
   write_output (message_out, "Copyright 1997, Morgan Kaufmann Publishers, Inc.\n");
 #endif
@@ -330,7 +330,7 @@ initialize_run_stack (int argc, char **argv)
 static mem_addr
 copy_str_to_stack (char *s)
 {
-  int i = strlen (s);
+  int i = (int)strlen (s);
   while (i >= 0)
     {
       set_mem_byte (R[REG_SP], s[i]);
@@ -614,7 +614,7 @@ strtoul (const char* str, char** eptr, int base)
 char *
 str_copy (char *str)
 {
-  return (strcpy ((char*)xmalloc (strlen (str) + 1), str));
+  return (strcpy ((char*)xmalloc ((int)strlen (str) + 1), str));
 }
 
 

@@ -1,8 +1,11 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCSpim", "pcspim.vcproj", "{56488352-0EC0-4FA0-B5CE-FD6746615E15}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pcspim", "pcspim.vcxproj", "{56488352-0EC0-4FA0-B5CE-FD6746615E15}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{B482E8AE-045E-4930-BA4F-DC9D81292FB6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56488352-0EC0-4FA0-B5CE-FD6746615E15} = {56488352-0EC0-4FA0-B5CE-FD6746615E15}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
