@@ -199,7 +199,7 @@ int CPCSpimView::OnCreate(LPCREATESTRUCT pcs)
   g_pView = this;
 
   // Don't draw over the top of the children.
-  DWORD dwStyle = GetWindowLong(m_hWnd, GWL_STYLE);
+  LONG dwStyle = GetWindowLong(m_hWnd, GWL_STYLE);
   dwStyle |= WS_CLIPCHILDREN;
   SetWindowLong(m_hWnd, GWL_STYLE, dwStyle);
 

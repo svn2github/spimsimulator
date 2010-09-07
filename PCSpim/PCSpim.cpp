@@ -227,7 +227,7 @@ void CPCSpimApp::RunMessageLoop()
 
 int CPCSpimApp::GetSetting(LPCTSTR strName, int nDefVal)
 {
-  return GetProfileInt("Settings", strName, nDefVal);
+  return (int)GetProfileInt("Settings", strName, nDefVal);
 }
 
 

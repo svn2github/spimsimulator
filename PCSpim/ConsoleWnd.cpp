@@ -147,7 +147,8 @@ void CConsoleWnd::OnSize(UINT nType, int cx, int cy)
 {
   CWnd::OnSize(nType, cx, cy);
 
-  m_reText.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOREPOSITION | SWP_NOZORDER);
+  //m_reText.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOREPOSITION | SWP_NOZORDER);
+  m_reText.MoveWindow(0, 0, cx, cy);
 }
 
 
@@ -254,9 +255,9 @@ int CConsoleWnd::OnCreate(LPCREATESTRUCT pcs)
   // We want to intercept keystrokes for getting input.
   SetWindowLongPtr(m_reText.m_hWnd,
 		GWLP_USERDATA,
-		(LONG)SetWindowLongPtr(m_reText.m_hWnd,
+		(LONG_PTR)SetWindowLongPtr(m_reText.m_hWnd,
 				    GWLP_WNDPROC,
-				    (LONG)ConsoleRichEditProc));
+				    (LONG_PTR)ConsoleRichEditProc));
 
   return 0;
 }
