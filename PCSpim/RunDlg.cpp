@@ -82,7 +82,7 @@ END_MESSAGE_MAP()
 void CRunDlg::OnOK()
 {
   char * eptr = NULL;
-  long addr = 0;
+  mem_addr addr = 0;
 
   // Make sure they've specified a valid address.
   UpdateData();
@@ -90,7 +90,7 @@ void CRunDlg::OnOK()
   if (!m_strAddress.IsEmpty())
     {
       if (isdigit(m_strAddress[0]))
-	addr = strtoul(m_strAddress, &eptr, 0);
+	addr = (mem_addr)strtoul(m_strAddress, &eptr, 0);
       else
 	{
 	  char *szAddress = m_strAddress.GetBuffer(0);

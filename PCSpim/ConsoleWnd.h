@@ -50,7 +50,7 @@ public:
 	BOOL m_fActAsConsole;
 	CRichEditCtrl & GetRichEdit();
 	void Clear();
-	char GetKeyPress();
+	BYTE GetKeyPress();
 	BOOL AreKeysAvailable();
 	void WriteText(LPCTSTR strText);
 	CConsoleWnd();

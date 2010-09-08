@@ -92,7 +92,7 @@ void CBreakpointDlg::OnAdd()
       return;
     }
 
-  int nAddr;
+  mem_addr nAddr;
   if (isdigit(strAddress[0]))
     {
       nAddr = strtoul(strAddress, NULL, 0);
@@ -135,7 +135,7 @@ void CBreakpointDlg::OnAdd()
 
 void CBreakpointDlg::OnRemove()
 {
-  int nCurSel = m_lbBreakpoints.GetCurSel();
+  UINT nCurSel = m_lbBreakpoints.GetCurSel();
 
   // Make sure an item is selected.
   if (nCurSel == LB_ERR)
@@ -149,7 +149,7 @@ void CBreakpointDlg::OnRemove()
   m_lbBreakpoints.GetText(nCurSel, strAddress);
   m_lbBreakpoints.DeleteString(nCurSel);
 
-  int nAddr;
+  mem_addr nAddr;
   sscanf(strAddress, "%x", &nAddr);
 
   // Capture messages -- we set the breakpoint, it _should_ work... 8)

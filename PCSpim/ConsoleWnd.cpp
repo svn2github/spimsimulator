@@ -269,9 +269,9 @@ BOOL CConsoleWnd::AreKeysAvailable()
 }
 
 
-char CConsoleWnd::GetKeyPress()
+BYTE CConsoleWnd::GetKeyPress()
 {
-  char chRet = NULL;
+  BYTE chRet = NULL;
 
   if (m_blKeys.GetCount() > 0)
     {

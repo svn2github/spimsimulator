@@ -39,6 +39,5 @@
 #define APPENDCHAR(d, ch) *(d) = ch, ++d
 
 LPTSTR MakeCRLFValid(LPCTSTR strBuf);
-int UTIL_GetOSType();
 
 #endif

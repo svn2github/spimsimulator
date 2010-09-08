@@ -42,7 +42,7 @@ LPTSTR MakeCRLFValid(LPCTSTR strBuf)
     return NULL;
 
   // Allocate our new buffer twice as large as the old
-  LPTSTR strNew = new TCHAR[lstrlen(strBuf) * 2 + 1];
+  LPTSTR strNew = new TCHAR[(size_t)lstrlen(strBuf) * 2 + 1];
   LPTSTR strRet = strNew;
 
   ASSERT(strBuf);
@@ -75,13 +75,4 @@ LPTSTR MakeCRLFValid(LPCTSTR strBuf)
   return strRet;
 }
 
-
-int UTIL_GetOSType()
-{
-  OSVERSIONINFO osvi;
-  osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO); // Win32 API says so
-  GetVersionEx(&osvi);
-
-  return osvi.dwPlatformId;
-}
 

@@ -90,59 +90,57 @@ CPCSpimApp theApp;
 
 BOOL CPCSpimApp::InitInstance()
 {
-	// SPIM is bad about cleaning up after itself...
-	AfxEnableMemoryTracking(FALSE);
+    // SPIM is bad about cleaning up after itself...
+    AfxEnableMemoryTracking(FALSE);
 
-	// Standard initialization
+    // Standard initialization
 
-	// Turn on registry (vs. INI) support, and set the "company" tag.
-	SetRegistryKey("LarusStone");
+    // Turn on registry (vs. INI) support, and set the "company" tag.
+    SetRegistryKey("LarusStone");
 
-	if (VER_PLATFORM_WIN32s != UTIL_GetOSType())
-	{
-		// If registry settings for this user do not exist, copy them from
-		// the "Default Settings" tree in HKLM.
-		HKEY hKeySrc, hKeySettings;
-		HKEY hKeyDest = GetAppRegistryKey();
-		if (S_OK != RegMan_OpenKey(hKeyDest, "Settings", &hKeySettings))
-		{
-			if (S_OK == RegMan_OpenKey(HKEY_LOCAL_MACHINE,
-				SPIM_REG_DEFAULTSETTINGS,
-				&hKeySrc))
-			{
-				RegMan_CopyTree(hKeySrc, hKeyDest);
-				RegMan_CloseKey(hKeySrc);
-			}
-		}
-		else
-		{
-			RegMan_CloseKey(hKeySettings);
-		}
-		RegMan_CloseKey(hKeyDest);
-	}
-
-	LoadStdProfileSettings(0);  // Load standard INI file options (including MRU)
-
-	// Register the application's document templates.  Document templates
-	// serve as the connection between documents, frame windows and views.
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(IDR_MAINFRAME,
-		RUNTIME_CLASS(CPCSpimDoc),
-		// main SDI frame window
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CPCSpimView));
-	AddDocTemplate(pDocTemplate);
+    // If registry settings for this user do not exist, copy them from
+    // the "Default Settings" tree in HKLM.
+    HKEY hKeySrc, hKeySettings;
+    HKEY hKeyDest = GetAppRegistryKey();
+    if (S_OK != RegMan_OpenKey(hKeyDest, "Settings", &hKeySettings))
+    {
+        if (S_OK == RegMan_OpenKey(HKEY_LOCAL_MACHINE,
+            SPIM_REG_DEFAULTSETTINGS,
+            &hKeySrc))
+        {
+            RegMan_CopyTree(hKeySrc, hKeyDest);
+            RegMan_CloseKey(hKeySrc);
+        }
+    }
+    else
+    {
+        RegMan_CloseKey(hKeySettings);
+    }
+    RegMan_CloseKey(hKeyDest);
 
 
-	// We do our own cmdline processing later.  Even though we aren't using
-	// MFC's standard cmdline processing (we aren't calling ParseCommandLine),
-	// we _must_ call ProcessShellCommand...
-	CCommandLineInfo cmdInfo;
-	if (!ProcessShellCommand(cmdInfo))
-	{
-		return FALSE;
-	}
-	return TRUE;
+    LoadStdProfileSettings(0);  // Load standard INI file options (including MRU)
+
+    // Register the application's document templates.  Document templates
+    // serve as the connection between documents, frame windows and views.
+    CSingleDocTemplate* pDocTemplate;
+    pDocTemplate = new CSingleDocTemplate(IDR_MAINFRAME,
+        RUNTIME_CLASS(CPCSpimDoc),
+        // main SDI frame window
+        RUNTIME_CLASS(CMainFrame),
+        RUNTIME_CLASS(CPCSpimView));
+    AddDocTemplate(pDocTemplate);
+
+
+    // We do our own cmdline processing later.  Even though we aren't using
+    // MFC's standard cmdline processing (we aren't calling ParseCommandLine),
+    // we _must_ call ProcessShellCommand...
+    CCommandLineInfo cmdInfo;
+    if (!ProcessShellCommand(cmdInfo))
+    {
+        return FALSE;
+    }
+    return TRUE;
 }
 
 

@@ -113,7 +113,7 @@ void CSetValueDlg::OnOK()
   else if (streq(m_strAddress, "status"))
     CP0_Status = nValue;
   else if (streq(m_strAddress, "pc"))
-    PC = nValue;
+    PC = (mem_addr)nValue;
   else if (streq (m_strAddress, "epc"))
     CP0_EPC = nValue;
   else

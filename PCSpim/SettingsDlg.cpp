@@ -153,7 +153,7 @@ void CSettingsDlg::OnOK()
   if (m_fLoadException)
     {
       delete [] exception_file_name;
-      exception_file_name = new TCHAR[m_strExceptionFile.GetLength() + 1];
+      exception_file_name = new TCHAR[(size_t)m_strExceptionFile.GetLength() + 1];
       lstrcpy(exception_file_name, m_strExceptionFile);
       pApp->WriteSetting(SPIM_REG_EXCEPTIONFILE, exception_file_name);
     }
@@ -227,6 +227,6 @@ BOOL CSettingsDlg::CheckValid()
 
 void CSettingsDlg::OnLoadException()
 {
-  GetDlgItem(IDC_EXCEPTIONFILE)->EnableWindow(IsDlgButtonChecked(IDC_LOADEXCEPTION));
+  GetDlgItem(IDC_EXCEPTIONFILE)->EnableWindow((BOOL)IsDlgButtonChecked(IDC_LOADEXCEPTION));
 }
 

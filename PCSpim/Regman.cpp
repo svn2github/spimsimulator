@@ -91,7 +91,7 @@ LONG RegMan_SetSZValue(HKEY hKey, LPCTSTR lpstrValueName, LPCTSTR lpstrSrc)
 		       0,
 		       REG_SZ,
 		       (LPBYTE)lpstrSrc,
-		       lstrlen(lpstrSrc) + 1);
+		       (DWORD)lstrlen(lpstrSrc) + 1);
 }
 
 

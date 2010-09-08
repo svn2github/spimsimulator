@@ -331,7 +331,7 @@ void CPCSpimView::Initialize()
 
   LPCTSTR szBuf = pApp->GetSetting(SPIM_REG_EXCEPTIONFILE, EXCEPTION_FILE_PATH);
   delete [] exception_file_name;
-  exception_file_name = new TCHAR[lstrlen(szBuf) + 1];
+  exception_file_name = new TCHAR[(size_t)lstrlen(szBuf) + 1];
   lstrcpy(exception_file_name, szBuf);
 
   if (lstrlen(exception_file_name) == 0)
@@ -839,7 +839,7 @@ void CPCSpimView::OnSimulatorMultistep()
   if (IDCANCEL == dlg.DoModal())
     return;
 
-  ExecuteProgram(starting_address(), dlg.m_cSteps, 1, 1);
+  ExecuteProgram(starting_address(), (int)dlg.m_cSteps, 1, 1);
 }
 
 
@@ -1196,13 +1196,13 @@ void CPCSpimView::ProcessCommandLine()
     { initial_data_size = atoi (argv[++i]); }
     else if (streq (argv [i], "-ldata")
       || streq (argv [i], "-ld"))
-    { initial_data_limit = atoi (argv[++i]); }
+    { initial_data_limit = (mem_addr)atoi (argv[++i]); }
     else if (streq (argv [i], "-sstack")
       || streq (argv [i], "-ss"))
     { initial_stack_size = atoi (argv[++i]); }
     else if (streq (argv [i], "-lstack")
       || streq (argv [i], "-ls"))
-    { initial_stack_limit = atoi (argv[++i]); }
+    { initial_stack_limit = (mem_addr)atoi (argv[++i]); }
     else if (streq (argv [i], "-sktext")
       || streq (argv [i], "-skt"))
     { initial_k_text_size = atoi (argv[++i]); }
@@ -1211,7 +1211,7 @@ void CPCSpimView::ProcessCommandLine()
     { initial_k_data_size = atoi (argv[++i]); }
     else if (streq (argv [i], "-lkdata")
       || streq (argv [i], "-lkd"))
-    { initial_k_data_limit = atoi (argv[++i]); }
+    { initial_k_data_limit = (mem_addr)atoi (argv[++i]); }
     else if ((streq (argv [i], "-file")
       || streq (argv [i], "-f"))
       && (i + 1 < argc))
@@ -1293,19 +1293,19 @@ void CPCSpimView::OnDestroy()
 
       m_wndDataSeg.GetWindowPlacement(&wp);
       pApp->WriteSetting(SPIM_REG_DATASEGPOS, &wp.rcNormalPosition);
-      pApp->WriteSetting(SPIM_REG_DATASEGMINMAX, wp.showCmd);
+      pApp->WriteSetting(SPIM_REG_DATASEGMINMAX, (int)wp.showCmd);
 
       m_wndMessages.GetWindowPlacement(&wp);
       pApp->WriteSetting(SPIM_REG_MESSAGESPOS, &wp.rcNormalPosition);
-      pApp->WriteSetting(SPIM_REG_MESSAGESMINMAX, wp.showCmd);
+      pApp->WriteSetting(SPIM_REG_MESSAGESMINMAX, (int)wp.showCmd);
 
       m_wndRegisters.GetWindowPlacement(&wp);
       pApp->WriteSetting(SPIM_REG_REGISTERSPOS, &wp.rcNormalPosition);
-      pApp->WriteSetting(SPIM_REG_REGISTERSMINMAX, wp.showCmd);
+      pApp->WriteSetting(SPIM_REG_REGISTERSMINMAX, (int)wp.showCmd);
 
       m_wndTextSeg.GetWindowPlacement(&wp);
       pApp->WriteSetting(SPIM_REG_TEXTSEGPOS, &wp.rcNormalPosition);
-      pApp->WriteSetting(SPIM_REG_TEXTSEGMINMAX, wp.showCmd);
+      pApp->WriteSetting(SPIM_REG_TEXTSEGMINMAX, (int)wp.showCmd);
     }
 
   pApp->WriteSetting(SPIM_REG_CHECK_UNDEF, g_checkUndefinedSymbols);

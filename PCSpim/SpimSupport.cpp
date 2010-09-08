@@ -125,7 +125,7 @@ char get_console_char()
     {
       pApp->RunMessageLoop();
       if (g_pView->GetConsole()->AreKeysAvailable())
-	return g_pView->GetConsole()->GetKeyPress();
+	return (char)g_pView->GetConsole()->GetKeyPress();
     }
 
   return 0;
