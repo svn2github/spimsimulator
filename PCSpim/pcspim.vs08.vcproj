@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="PCSpim"
 	ProjectGUID="{56488352-0EC0-4FA0-B5CE-FD6746615E15}"
+	RootNamespace="PCSpim"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -55,7 +56,7 @@
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
-				PreprocessorDefinitions="_DEBUG;SPIM_LITTLEENDIAN;WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WINVER=0x600;_WIN32_WINNT=0x600;_CRT_SECURE_NO_WARNINGS;SPIM_LITTLEENDIAN"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/pcspim.pch"
@@ -149,7 +150,7 @@
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
-				PreprocessorDefinitions="_DEBUG;SPIM_LITTLEENDIAN;WIN32;_WINDOWS;"
+				PreprocessorDefinitions="WINVER=0x600;_WIN32_WINNT=0x600;_CRT_SECURE_NO_WARNINGS;SPIM_LITTLEENDIAN"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/pcspim.pch"
@@ -242,7 +243,7 @@
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
-				PreprocessorDefinitions="SPIM_LITTLEENDIAN;WIN32;_WINDOWS"
+				PreprocessorDefinitions="WINVER=0x600;_WIN32_WINNT=0x600;_CRT_SECURE_NO_WARNINGS;SPIM_LITTLEENDIAN"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/pcspim.pch"
@@ -335,7 +336,7 @@
 				Optimization="4"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../CPU;../PCSpim"
-				PreprocessorDefinitions="SPIM_LITTLEENDIAN;WIN32;_WINDOWS"
+				PreprocessorDefinitions="WINVER=0x600;_WIN32_WINNT=0x600;_CRT_SECURE_NO_WARNINGS;SPIM_LITTLEENDIAN"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/pcspim.pch"
@@ -748,6 +749,50 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\CPU\parser.y"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running yacc"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						Outputs="parser_yacc.c;parser_yacc.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running yacc"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						Outputs="parser_yacc.c;parser_yacc.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running yacc"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						Outputs="parser_yacc.c;parser_yacc.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running yacc"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						Outputs="parser_yacc.c;parser_yacc.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="PCSpim.cpp"
 				>
 				<FileConfiguration
@@ -792,6 +837,7 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -802,6 +848,7 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -812,6 +859,7 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -822,6 +870,7 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -1029,6 +1078,50 @@
 						Name="VCCLCompilerTool"
 						PreprocessorDefinitions=""
 						BrowseInformation="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\CPU\scanner.l"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running lex"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						Outputs="lex.yy.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running lex"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						Outputs="lex.yy.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running lex"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						Outputs="lex.yy.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running lex"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						Outputs="lex.yy.c"
 					/>
 				</FileConfiguration>
 			</File>
@@ -1575,50 +1668,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\CPU\parser.y"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d -y &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					Outputs="y.tab.c;y.tab.h"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug|x64"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d -y &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					Outputs="y.tab.c;y.tab.h"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\CPU\scanner.l"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					Outputs="lex.yy.c"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug|x64"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-					Outputs="lex.yy.c"
-				/>
-			</FileConfiguration>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
