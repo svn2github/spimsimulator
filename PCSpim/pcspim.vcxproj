@@ -507,10 +507,10 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">parser_yacc.c;parser_yacc.h;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Program Files\cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">parser_yacc.c;parser_yacc.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">parser.y -&gt; parser_yacc.{c,h}</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">parser.y -&gt; parser_yacc.{c,h}</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">parser.y to parser_yacc.c</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">parser.y -&gt; parser_yacc.{c,h}</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">parse.y to parser_yacc.c, parser_yacc.h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">parse.y to parser_yacc.c, parser_yacc.h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">parse.y to parser_yacc.c, parser_yacc.h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">parse.y to parser_yacc.c, parser_yacc.h</Message>
     </CustomBuild>
     <CustomBuild Include="..\CPU\scanner.l">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Program Files\cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
