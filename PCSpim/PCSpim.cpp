@@ -56,16 +56,16 @@ static char THIS_FILE[] = __FILE__;
 // CPCSpimApp
 
 BEGIN_MESSAGE_MAP(CPCSpimApp, CWinApp)
-	//{{AFX_MSG_MAP(CPCSpimApp)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG_MAP
-	// Standard file based document commands
-	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
-	// Standard print setup command
-	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
+    //{{AFX_MSG_MAP(CPCSpimApp)
+    ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+    // NOTE - the ClassWizard will add and remove mapping macros here.
+    //    DO NOT EDIT what you see in these blocks of generated code!
+    //}}AFX_MSG_MAP
+    // Standard file based document commands
+    ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
+    ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
+    // Standard print setup command
+    ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
 
@@ -74,8 +74,8 @@ END_MESSAGE_MAP()
 
 CPCSpimApp::CPCSpimApp()
 {
-  // TODO: add construction code here,
-  // Place all significant initialization in InitInstance
+    // TODO: add construction code here,
+    // Place all significant initialization in InitInstance
 }
 
 
@@ -150,54 +150,54 @@ BOOL CPCSpimApp::InitInstance()
 class CAboutDlg : public CDialog
 {
 public:
-	CAboutDlg();
+    CAboutDlg();
 
-// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
+    // Dialog Data
+    //{{AFX_DATA(CAboutDlg)
+    enum { IDD = IDD_ABOUTBOX };
+    //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CAboutDlg)
 protected:
-	//{{AFX_MSG(CAboutDlg)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+    // Implementation
+protected:
+    //{{AFX_MSG(CAboutDlg)
+    virtual BOOL OnInitDialog();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
 
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
+    //{{AFX_DATA_INIT(CAboutDlg)
+    //}}AFX_DATA_INIT
 }
 
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CAboutDlg)
+    //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(CAboutDlg)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 // App command to run the dialog
 void CPCSpimApp::OnAppAbout()
 {
-  CAboutDlg aboutDlg;
-  aboutDlg.DoModal();
+    CAboutDlg aboutDlg;
+    aboutDlg.DoModal();
 }
 
 
@@ -206,62 +206,62 @@ void CPCSpimApp::OnAppAbout()
 
 void CPCSpimApp::RunMessageLoop()
 {
-  MSG msg;
-  while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+    MSG msg;
+    while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
     {
-      if (!PumpMessage())
+        if (!PumpMessage())
         {
-	  force_break = 1;
-	  ::PostQuitMessage(0);
-	  break;
+            force_break = 1;
+            ::PostQuitMessage(0);
+            break;
         }
     }
 
-  // let MFC do its idle processing
-  LONG lIdle = 0;
-  while (OnIdle(lIdle++));
+    // let MFC do its idle processing
+    LONG lIdle = 0;
+    while (OnIdle(lIdle++));
 }
 
 
 int CPCSpimApp::GetSetting(LPCTSTR strName, int nDefVal)
 {
-  return (int)GetProfileInt("Settings", strName, nDefVal);
+    return (int)GetProfileInt("Settings", strName, nDefVal);
 }
 
 
 LPCTSTR CPCSpimApp::GetSetting(LPCTSTR strName, LPCTSTR strDefVal)
 {
-  static CString strRet;
+    static CString strRet;
 
-  strRet = GetProfileString("Settings", strName, strDefVal);
+    strRet = GetProfileString("Settings", strName, strDefVal);
 
-  return strRet;
+    return strRet;
 }
 
 
 void CPCSpimApp::WriteSetting(LPCTSTR strName, int nValue)
 {
-  WriteProfileInt("Settings", strName, nValue);
+    WriteProfileInt("Settings", strName, nValue);
 }
 
 
 void CPCSpimApp::WriteSetting(LPCTSTR strName, LPCTSTR strValue)
 {
-  WriteProfileString("Settings", strName, strValue);
+    WriteProfileString("Settings", strName, strValue);
 }
 
 
 BOOL CAboutDlg::OnInitDialog()
 {
-  CDialog::OnInitDialog();
+    CDialog::OnInitDialog();
 
-  g_pView->SetMessageCapture(TRUE);
-  write_startup_message();
-  GetDlgItem(IDC_COPYRIGHT)->SetWindowText(g_pView->GetMessageCaptureBuf());
-  g_pView->SetMessageCapture(FALSE);
+    g_pView->SetMessageCapture(TRUE);
+    write_startup_message();
+    GetDlgItem(IDC_COPYRIGHT)->SetWindowText(g_pView->GetMessageCaptureBuf());
+    g_pView->SetMessageCapture(FALSE);
 
-  return TRUE;  // return TRUE unless you set the focus to a control
-  // EXCEPTION: OCX Property Pages should return FALSE
+    return TRUE;  // return TRUE unless you set the focus to a control
+    // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 
@@ -270,18 +270,18 @@ BOOL CAboutDlg::OnInitDialog()
 
 BOOL CPCSpimApp::GetSetting(LPCTSTR strName, LPRECT pr)
 {
-  CString strRect = GetProfileString("Settings", strName);
+    CString strRect = GetProfileString("Settings", strName);
 
-  return (4 == _stscanf(strRect,
-			UTIL_RECTPRINTFFORMAT,
-			&pr->left, &pr->top, &pr->right, &pr->bottom));
+    return (4 == _stscanf(strRect,
+        UTIL_RECTPRINTFFORMAT,
+        &pr->left, &pr->top, &pr->right, &pr->bottom));
 }
 
 
 void CPCSpimApp::WriteSetting(LPCTSTR strName, LPRECT pr)
 {
-  CString strRect;
-  strRect.Format(UTIL_RECTPRINTFFORMAT, pr->left, pr->top, pr->right, pr->bottom);
-  WriteProfileString("Settings", strName, strRect);
+    CString strRect;
+    strRect.Format(UTIL_RECTPRINTFFORMAT, pr->left, pr->top, pr->right, pr->bottom);
+    WriteProfileString("Settings", strName, strRect);
 }
 

@@ -50,26 +50,26 @@ static char THIS_FILE[] = __FILE__;
 
 
 CMultiStepDlg::CMultiStepDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CMultiStepDlg::IDD, pParent)
+    : CDialog(CMultiStepDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CMultiStepDlg)
-	m_cSteps = 0;
-	//}}AFX_DATA_INIT
+    //{{AFX_DATA_INIT(CMultiStepDlg)
+    m_cSteps = 0;
+    //}}AFX_DATA_INIT
 }
 
 
 void CMultiStepDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CMultiStepDlg)
-	DDX_Text(pDX, IDC_STEPS, m_cSteps);
-	//}}AFX_DATA_MAP
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CMultiStepDlg)
+    DDX_Text(pDX, IDC_STEPS, m_cSteps);
+    //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CMultiStepDlg, CDialog)
-	//{{AFX_MSG_MAP(CMultiStepDlg)
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(CMultiStepDlg)
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

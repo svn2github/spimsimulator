@@ -27,9 +27,6 @@
     <ClCompile Include="..\Cpu\display-utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Cpu\endian.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Cpu\inst.c">
       <Filter>Source Files</Filter>
     </ClCompile>

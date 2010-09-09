@@ -51,19 +51,19 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CPCSpimDoc, CDocument)
 
-BEGIN_MESSAGE_MAP(CPCSpimDoc, CDocument)
-	//{{AFX_MSG_MAP(CPCSpimDoc)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+    BEGIN_MESSAGE_MAP(CPCSpimDoc, CDocument)
+        //{{AFX_MSG_MAP(CPCSpimDoc)
+        // NOTE - the ClassWizard will add and remove mapping macros here.
+        //    DO NOT EDIT what you see in these blocks of generated code!
+        //}}AFX_MSG_MAP
+    END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPCSpimDoc construction/destruction
 
 CPCSpimDoc::CPCSpimDoc()
 {
-	// TODO: add one-time construction code here
+    // TODO: add one-time construction code here
 
 }
 
@@ -75,13 +75,13 @@ CPCSpimDoc::~CPCSpimDoc()
 
 BOOL CPCSpimDoc::OnNewDocument()
 {
-  if (!CDocument::OnNewDocument())
-    return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-  // TODO: add reinitialization code here
-  // (SDI documents will reuse this document)
+    // TODO: add reinitialization code here
+    // (SDI documents will reuse this document)
 
-  return TRUE;
+    return TRUE;
 }
 
 
@@ -90,13 +90,13 @@ BOOL CPCSpimDoc::OnNewDocument()
 
 void CPCSpimDoc::Serialize(CArchive& ar)
 {
-  if (ar.IsStoring())
+    if (ar.IsStoring())
     {
-      // TODO: add storing code here
+        // TODO: add storing code here
     }
-  else
+    else
     {
-      // TODO: add loading code here
+        // TODO: add loading code here
     }
 }
 
@@ -107,13 +107,13 @@ void CPCSpimDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void CPCSpimDoc::AssertValid() const
 {
-  CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 
 void CPCSpimDoc::Dump(CDumpContext& dc) const
 {
-  CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
