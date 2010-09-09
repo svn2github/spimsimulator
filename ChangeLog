@@ -1,3 +1,11 @@
+2010-09-09    <Jim@X64PC>
+
+	* PCSpim/
+	Ported PCSpim to Visual Studio 2010.
+	Renamed VS configuration files to reflect version of VS (vs6,
+	vs08, vs10).
+	Compiled PCSpim for x64 processor on Windows.
+
 2010-09-06    <Jim@X64PC>
 
 	* spim/Makefile:
