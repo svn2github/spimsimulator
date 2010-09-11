@@ -2,9 +2,9 @@
 # $Xorg: imake.c,v 1.6 2001/02/09 02:03:15 xorgcvs Exp $
 
 # ----------------------------------------------------------------------
-# Makefile generated from "Imake.tmpl" and </tmp/IIf.raT6we>
+# Makefile generated from "Imake.tmpl" and </tmp/IIf.9afleM>
 # $Xorg: Imake.tmpl,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
-# $XdotOrg: util/cf/Imake.tmpl,v 1.17 2006/04/15 15:55:25 herrb Exp $
+# $XdotOrg: xc/config/cf/Imake.tmpl,v 1.9 2005/01/24 06:37:31 daniels Exp $
 #
 #
 #
@@ -16,7 +16,7 @@ all::
 
 .SUFFIXES: .i
 
-# $XdotOrg: util/cf/Imake.cf,v 1.12 2005/11/08 06:33:24 jkj Exp $
+# $XdotOrg: xc/config/cf/Imake.cf,v 1.7 2005/03/02 11:20:29 gisburn Exp $
 # $Xorg: Imake.cf,v 1.4 2000/08/17 19:41:45 cpqbld Exp $
 
 # $XFree86: xc/config/cf/Imake.cf,v 3.88 2003/12/16 21:30:21 herrb Exp $
@@ -36,19 +36,19 @@ all::
 # ----------------------------------------------------------------------
 # platform-specific configuration parameters - edit linux.cf to change
 
-# $XdotOrg: util/cf/linux.cf,v 1.31 2005/10/21 19:10:27 ajax Exp $
+# $XdotOrg: xc/config/cf/linux.cf,v 1.24 2005/03/06 01:05:00 branden Exp $
 # platform:  $Xorg: linux.cf,v 1.3 2000/08/17 19:41:47 cpqbld Exp $
 
 # platform:  $XFree86: xc/config/cf/linux.cf,v 3.220 2003/12/30 22:38:33 tsi Exp $
 
-# operating system:  Linux 2.6.24-22-generic i686 [ELF] (2.6.24)
-# libc:	(6.7.0)
-# binutils:	(218)
+# operating system:  Linux 2.6.32-24-generic i686 [ELF] (2.6.32)
+# libc:	(6.11.1)
+# binutils:	(220)
 
 # $Xorg: lnxLib.rules,v 1.3 2000/08/17 19:41:47 cpqbld Exp $
 # $XFree86: xc/config/cf/lnxLib.rules,v 3.52 2003/10/31 20:49:03 herrb Exp $
 
-# $XdotOrg: util/cf/xorg.cf,v 1.53 2005/10/03 16:08:44 alanc Exp $
+# $XdotOrg: xc/config/cf/xorg.cf,v 1.44 2005/01/27 03:50:46 ajax Exp $
 
 # $Xorg: xfree86.cf,v 1.4 2000/08/17 19:41:49 cpqbld Exp $
 
@@ -97,7 +97,7 @@ XFREE86JAPANESEDOCDIR = $(DOCDIR)/Japanese
 # ---------------------------------------------------------------------
 # Imake rules for building libraries, programs, scripts, and data files
 # rules:  $Xorg: Imake.rules,v 1.3 2000/08/17 19:41:46 cpqbld Exp $
-# rules:  $XdotOrg: util/cf/Imake.rules,v 1.11 2005/11/08 06:33:24 jkj Exp $
+# rules:  $XdotOrg: xc/config/cf/Imake.rules,v 1.8 2005/02/01 22:27:00 ajax Exp $
 #
 #
 #
@@ -375,7 +375,7 @@ MODLDCOMBINEFLAGS = -r
 
 # ----------------------------------------------------------------------
 # X Window System Build Parameters and Rules
-# $XdotOrg: util/cf/X11.tmpl,v 1.54 2006/04/15 15:55:25 herrb Exp $
+# $XdotOrg: xc/config/cf/X11.tmpl,v 1.52 2005/09/22 23:54:18 alanc Exp $
 # $Xorg: X11.tmpl,v 1.6 2000/08/17 19:41:46 cpqbld Exp $
 #
 #
@@ -1045,22 +1045,33 @@ CXXPROJECT_DEFINES =
 # SPIM S20 MIPS Simulator.
 # Imakefile for SPIM.
 #
-# Copyright (C) 1992-2005 by James Larus (larus@cs.wisc.edu).
-# ALL RIGHTS RESERVED.
+# Copyright (c) 1990-2010, James R. Larus.
+# All rights reserved.
 #
-# SPIM is distributed under the following conditions:
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
 #
-#   You may make copies of SPIM for your own use and modify those copies.
+# Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
 #
-#   All copies of SPIM must retain my name and copyright notice.
+# Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation and/or
+# other materials provided with the distribution.
 #
-#   You may not sell SPIM or distributed SPIM in conjunction with a commerical
-#   product or service without the expressed written consent of James Larus.
+# Neither the name of the James R. Larus nor the names of its contributors may be
+# used to endorse or promote products derived from this software without specific
+# prior written permission.
 #
-# THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
-# IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-# PURPOSE.
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN 0 EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
 #
@@ -1075,13 +1086,13 @@ CXXPROJECT_DEFINES =
 #
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /usr/bin
+BIN_DIR = /usr/local/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /usr/lib/spim
+EXCEPTION_DIR = /usr/local/lib/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/share/man/en
+MAN_DIR = /usr/local/man/en
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -1111,9 +1122,7 @@ VPATH = src:$(CPU_DIR)
 # Path of directory that contains documentation:
 DOC_DIR = ../Documentation
 
-ENDIAN=`cat configuration`
-
-BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o y.tab.o lex.yy.o syscall.o display-utils.o string-stream.o
+BASE_OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex.yy.o syscall.o display-utils.o string-stream.o
 
 BASE_XOBJS = xspim.o windows.o buttons.o
 
@@ -1122,7 +1131,9 @@ XOBJS = $(BASE_OBJS) $(BASE_XOBJS)
 # lex.yy.c is usually compiled with -O to speed it up.
 LEXCFLAGS = -O
 
-YFLAGS = -d
+# SPIM works with either byacc or bison
+YACC = bison
+YFLAGS = -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
 
 DEPLIBS = $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXPMLIB) $(EXTRAXAWCLIENTDEPLIBS) $(DEPXLIB)
 LOCALLIBS = $(XAWLIB) $(XMULIBONLY) $(XTOOLLIB) $(XPMLIB) $(EXTRAXAWCLIENTLIBS) $(XLIB)
@@ -1149,13 +1160,6 @@ xspim: $(XOBJS) $(DEPLIBS)
 
 cleandir::
 	$(RM) xspim
-
-force:  configuration
-
-configuration:
-	./Configure
-
-INSTALLFLAGS = -D
 
 install:: xspim
 	@if [ -d $(DESTDIR)$(BIN_DIR) ]; then \
@@ -1198,13 +1202,13 @@ install.man:: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
 	fi
 	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) $(DOC_DIR)/xspim.$(MANNEWSUFFIX) $(DESTDIR)$(MAN_DIR)/$(DOC_DIR)/xspim.$(MANSUFFIX)
 
-y.tab.h: y.tab.c
+parser_yacc.h: parser_yacc.c
 
-y.tab.c: $(CPU_DIR)/parser.y
+parser_yacc.c: $(CPU_DIR)/parser.y
 	$(YACC) $(YFLAGS) $(CPU_DIR)/parser.y
 
-y.tab.o: y.tab.c
-	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c y.tab.c
+parser_yacc.o: parser_yacc.c
+	$(CC) $(IFLAGS) $(CFLAGS) $(YCFLAGS) -c parser_yacc.c
 
 lex.yy.o:	$(CPU_DIR)/scanner.l
 
@@ -1220,12 +1224,9 @@ TAGS:	*.c *.h *.l *.y
 	etags *.l *.y *.c *.h
 
 cleandir::
-	rm -f xspim *.o core a.out TAGS y.output y.tab.h y.tab.c lex.yy.c
+	rm -f xspim *.o core a.out TAGS y.output parser_yacc.h parser_yacc.c lex.yy.c
 
-very-cleandir: cleandir
-	rm -f configuration
-
-makedepend: y.tab.c
+makedepend: parser_yacc.c
 	makedepend -w10 -I. -I$(CPU_DIR) $(CPU_DIR)\*.c *.c
 
 # 
@@ -1257,7 +1258,7 @@ inst.o: $(CPU_DIR)/inst.h
 inst.o: $(CPU_DIR)/reg.h
 inst.o: $(CPU_DIR)/mem.h
 inst.o: $(CPU_DIR)/sym-tbl.h
-inst.o: y.tab.h
+inst.o: parser_yacc.h
 inst.o: $(CPU_DIR)/parser.h
 inst.o: $(CPU_DIR)/scanner.h
 inst.o: $(CPU_DIR)/data.h
@@ -1275,7 +1276,7 @@ run.o: $(CPU_DIR)/inst.h
 run.o: $(CPU_DIR)/reg.h
 run.o: $(CPU_DIR)/mem.h
 run.o: $(CPU_DIR)/sym-tbl.h
-run.o: y.tab.h
+run.o: parser_yacc.h
 run.o: $(CPU_DIR)/syscall.h
 run.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/spim.h
@@ -1287,7 +1288,7 @@ spim-utils.o: $(CPU_DIR)/reg.h
 spim-utils.o: $(CPU_DIR)/mem.h
 spim-utils.o: $(CPU_DIR)/scanner.h
 spim-utils.o: $(CPU_DIR)/parser.h
-spim-utils.o: y.tab.h
+spim-utils.o: parser_yacc.h
 spim-utils.o: $(CPU_DIR)/run.h
 spim-utils.o: $(CPU_DIR)/sym-tbl.h
 string-stream.o: $(CPU_DIR)/spim.h
@@ -1334,20 +1335,20 @@ xspim.o: buttons.h
 xspim.o: windows.h
 xspim.o: xspim.h
 xspim.o: $(CPU_DIR)/sym-tbl.h
-y.tab.o: $(CPU_DIR)/spim.h
-y.tab.o: $(CPU_DIR)/spim-utils.h
-y.tab.o: $(CPU_DIR)/inst.h
-y.tab.o: $(CPU_DIR)/mem.h
-y.tab.o: $(CPU_DIR)/reg.h
-y.tab.o: $(CPU_DIR)/sym-tbl.h
-y.tab.o: $(CPU_DIR)/data.h
-y.tab.o: $(CPU_DIR)/scanner.h
-y.tab.o: $(CPU_DIR)/parser.h
+parser_yacc.o: $(CPU_DIR)/spim.h
+parser_yacc.o: $(CPU_DIR)/spim-utils.h
+parser_yacc.o: $(CPU_DIR)/inst.h
+parser_yacc.o: $(CPU_DIR)/mem.h
+parser_yacc.o: $(CPU_DIR)/reg.h
+parser_yacc.o: $(CPU_DIR)/sym-tbl.h
+parser_yacc.o: $(CPU_DIR)/data.h
+parser_yacc.o: $(CPU_DIR)/scanner.h
+parser_yacc.o: $(CPU_DIR)/parser.h
 lex.yy.o: $(CPU_DIR)/spim.h
 lex.yy.o: $(CPU_DIR)/spim-utils.h
 lex.yy.o: $(CPU_DIR)/inst.h
 lex.yy.o: $(CPU_DIR)/sym-tbl.h
-lex.yy.o: y.tab.h
+lex.yy.o: parser_yacc.h
 lex.yy.o: $(CPU_DIR)/parser.h
 lex.yy.o: $(CPU_DIR)/scanner.h
 lex.yy.o: $(CPU_DIR)/op.h

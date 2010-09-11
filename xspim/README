@@ -34,7 +34,7 @@ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
+
 
 The files in this directory are:
 
@@ -50,3 +50,19 @@ Makefile
 
 buttons.{c,h} windows.{c,h} xspim.{c,h}
 	X-windows interface to spim.
+
+
+xspim compiles and runs on Linux systems (I tried it on Ubuntu 10.04,
+Lucid Lynx), but you may need to load additional packages beyond those
+delivered as part of the basic distribution. On Ubuntu, I needed to
+download and install:
+
+     bison
+     flex
+     g++-4.4 (any version of g++ should be fine)
+     xutils-dev
+     libsm-dev
+     libxaw7-dev
+
+All are available through Ubuntu's Software Center, and installation
+only takes a few minutes.

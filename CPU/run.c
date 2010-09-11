@@ -46,6 +46,7 @@
 #include <Windows.h>
 #else
 #include <errno.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <sys/time.h>
 #endif
@@ -62,11 +63,6 @@
 #include "run.h"
 
 int force_break = 0;	/* For the execution env. to force an execution break */
-
-#ifndef _MSC_VER
-extern int errno;
-long atol (const char *);
-#endif
 
 #ifdef _WIN32
 /* Disable MS VS warning about constant predicate in conditional. */
