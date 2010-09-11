@@ -52,7 +52,7 @@ FORMS    += spimview.ui\
 INCLUDEPATH = ../CPU ../spim
 
 
-RESOURCES = windows_images.qrc
+win32:RESOURCES = windows_images.qrc
 
 
 QMAKE_YACC		= bison
