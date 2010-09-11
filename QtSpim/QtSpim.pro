@@ -90,3 +90,13 @@ win32-g++ {
   QMAKE_CXXFLAGS_RELEASE	+= -Wno-write-strings
 }
 
+linux-g++ {
+  # Compile all files as C++
+  # Surpress gcc warning about deprecated conversion from string constant to char*
+  #
+  QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
+  QMAKE_CXXFLAGS_RELEASE	+= -Wno-write-strings
+}
+

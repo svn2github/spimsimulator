@@ -1,12 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'savelogfile.ui'
 **
-<<<<<<< .mine
-** Created: Sun Sep 5 21:25:06 2010
-=======
-** Created: Thu Sep 9 15:19:26 2010
->>>>>>> .r431
-**      by: Qt User Interface Compiler version 4.6.3
+** Created: Thu Sep 9 21:31:39 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
