@@ -2,10 +2,12 @@
 #include "spimview.h"
 
 SpimView* Window;
+QApplication* App;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    App = &a;
     SpimView win;
     Window = &win;
 

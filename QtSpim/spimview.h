@@ -200,6 +200,7 @@ Q_OBJECT
     void sim_ReinitializeSimulator();
     void sim_SetRunParameters();
     void sim_Run();
+    void sim_Stop();
     void sim_SingleStep();
     void sim_DisplaySymbols();
     void sim_Settings();
@@ -237,6 +238,7 @@ Q_OBJECT
 };
 
 extern SpimView* Window;
+extern QApplication* App;
 
 
 // Format SPIM abstractions for display

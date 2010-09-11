@@ -64,6 +64,7 @@ void SpimView::wireCommands()
     QObject::connect(ui->action_Sim_Reinitialize, SIGNAL(triggered(bool)), this, SLOT(sim_ReinitializeSimulator()));
     QObject::connect(ui->action_Sim_SetRunParameters, SIGNAL(triggered(bool)), this, SLOT(sim_SetRunParameters()));
     QObject::connect(ui->action_Sim_Run, SIGNAL(triggered(bool)), this, SLOT(sim_Run()));
+    QObject::connect(ui->action_Sim_Stop, SIGNAL(triggered(bool)), this, SLOT(sim_Stop()));
     QObject::connect(ui->action_Sim_SingleStep, SIGNAL(triggered(bool)), this, SLOT(sim_SingleStep()));
     QObject::connect(ui->action_Sim_DisplaySymbols, SIGNAL(triggered(bool)), this, SLOT(sim_DisplaySymbols()));
     QObject::connect(ui->action_Sim_Settings, SIGNAL(triggered(bool)), this, SLOT(sim_Settings()));

@@ -1,11 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-<<<<<<< .mine
-** Created: Sun Sep 5 21:25:06 2010
-=======
-** Created: Thu Sep 9 15:19:26 2010
->>>>>>> .r431
+** Created: Sat Sep 11 16:22:26 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -26,8 +22,8 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTextEdit>
 #include <QtGui/QToolBar>
-#include <datatextedit.h>
-#include <texttextedit.h>
+#include "datatextedit.h"
+#include "texttextedit.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -42,6 +38,7 @@ public:
     QAction *action_File_Reload;
     QAction *action_Sim_SetRunParameters;
     QAction *action_Sim_Run;
+    QAction *action_Sim_Stop;
     QAction *action_Sim_SingleStep;
     QAction *action_Sim_DisplaySymbols;
     QAction *action_Sim_Settings;
@@ -49,7 +46,6 @@ public:
     QAction *action_Reg_DisplayOctal;
     QAction *action_Reg_DisplayHex;
     QAction *action_Reg_DisplayDecimal;
-    QAction *action_Reg_DisplayChar;
     QAction *action_Text_DisplayUserText;
     QAction *action_Text_DisplayKernelText;
     QAction *action_Text_DisplayComments;
@@ -61,7 +57,6 @@ public:
     QAction *action_Data_DisplayOctal;
     QAction *action_Data_DisplayHex;
     QAction *action_Data_DisplayDecimal;
-    QAction *actionString;
     QAction *action_Win_IntRegisters;
     QAction *action_Win_FPRegisters;
     QAction *action_Win_TextSegment;
@@ -72,7 +67,6 @@ public:
     QAction *action_Help_ViewHelp;
     QAction *action_Help_AboutSPIM;
     QAction *action_File_Print;
-    QAction *actionFile_1;
     QTextEdit *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu_File;
@@ -93,35 +87,65 @@ public:
     textTextEdit *TextSegmentTextEdit;
     QDockWidget *DataSegDockWidget;
     dataTextEdit *DataSegmentTextEdit;
+    QToolBar *toolBar;
 
     void setupUi(QMainWindow *SpimView)
     {
         if (SpimView->objectName().isEmpty())
             SpimView->setObjectName(QString::fromUtf8("SpimView"));
-        SpimView->resize(1024, 768);
+        SpimView->resize(1172, 770);
         SpimView->setDockOptions(QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks|QMainWindow::VerticalTabs);
         action_File_Load = new QAction(SpimView);
         action_File_Load->setObjectName(QString::fromUtf8("action_File_Load"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/icons/LoadFile.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_File_Load->setIcon(icon);
         action_File_SaveLog = new QAction(SpimView);
         action_File_SaveLog->setObjectName(QString::fromUtf8("action_File_SaveLog"));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/icons/SaveLog.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_File_SaveLog->setIcon(icon1);
         action_File_Exit = new QAction(SpimView);
         action_File_Exit->setObjectName(QString::fromUtf8("action_File_Exit"));
         action_Sim_ClearRegisters = new QAction(SpimView);
         action_Sim_ClearRegisters->setObjectName(QString::fromUtf8("action_Sim_ClearRegisters"));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/icons/ClearRegs.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_ClearRegisters->setIcon(icon2);
         action_Sim_Reinitialize = new QAction(SpimView);
         action_Sim_Reinitialize->setObjectName(QString::fromUtf8("action_Sim_Reinitialize"));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/icons/Reinit.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Reinitialize->setIcon(icon3);
         action_File_Reload = new QAction(SpimView);
         action_File_Reload->setObjectName(QString::fromUtf8("action_File_Reload"));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/icons/ReloadFile.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_File_Reload->setIcon(icon4);
         action_Sim_SetRunParameters = new QAction(SpimView);
         action_Sim_SetRunParameters->setObjectName(QString::fromUtf8("action_Sim_SetRunParameters"));
         action_Sim_Run = new QAction(SpimView);
         action_Sim_Run->setObjectName(QString::fromUtf8("action_Sim_Run"));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/icons/Run.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Run->setIcon(icon5);
+        action_Sim_Stop = new QAction(SpimView);
+        action_Sim_Stop->setObjectName(QString::fromUtf8("action_Sim_Stop"));
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/icons/Stop.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Stop->setIcon(icon6);
         action_Sim_SingleStep = new QAction(SpimView);
         action_Sim_SingleStep->setObjectName(QString::fromUtf8("action_Sim_SingleStep"));
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/icons/SingleStep.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_SingleStep->setIcon(icon7);
         action_Sim_DisplaySymbols = new QAction(SpimView);
         action_Sim_DisplaySymbols->setObjectName(QString::fromUtf8("action_Sim_DisplaySymbols"));
         action_Sim_Settings = new QAction(SpimView);
         action_Sim_Settings->setObjectName(QString::fromUtf8("action_Sim_Settings"));
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/icons/Settings.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Settings->setIcon(icon8);
         action_Reg_DisplayBinary = new QAction(SpimView);
         action_Reg_DisplayBinary->setObjectName(QString::fromUtf8("action_Reg_DisplayBinary"));
         action_Reg_DisplayBinary->setCheckable(true);
@@ -134,9 +158,6 @@ public:
         action_Reg_DisplayDecimal = new QAction(SpimView);
         action_Reg_DisplayDecimal->setObjectName(QString::fromUtf8("action_Reg_DisplayDecimal"));
         action_Reg_DisplayDecimal->setCheckable(true);
-        action_Reg_DisplayChar = new QAction(SpimView);
-        action_Reg_DisplayChar->setObjectName(QString::fromUtf8("action_Reg_DisplayChar"));
-        action_Reg_DisplayChar->setCheckable(true);
         action_Text_DisplayUserText = new QAction(SpimView);
         action_Text_DisplayUserText->setObjectName(QString::fromUtf8("action_Text_DisplayUserText"));
         action_Text_DisplayUserText->setCheckable(true);
@@ -170,9 +191,6 @@ public:
         action_Data_DisplayDecimal = new QAction(SpimView);
         action_Data_DisplayDecimal->setObjectName(QString::fromUtf8("action_Data_DisplayDecimal"));
         action_Data_DisplayDecimal->setCheckable(true);
-        actionString = new QAction(SpimView);
-        actionString->setObjectName(QString::fromUtf8("actionString"));
-        actionString->setCheckable(true);
         action_Win_IntRegisters = new QAction(SpimView);
         action_Win_IntRegisters->setObjectName(QString::fromUtf8("action_Win_IntRegisters"));
         action_Win_IntRegisters->setCheckable(true);
@@ -194,12 +212,16 @@ public:
         actionStatus_Bar->setObjectName(QString::fromUtf8("actionStatus_Bar"));
         action_Help_ViewHelp = new QAction(SpimView);
         action_Help_ViewHelp->setObjectName(QString::fromUtf8("action_Help_ViewHelp"));
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/icons/Help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Help_ViewHelp->setIcon(icon9);
         action_Help_AboutSPIM = new QAction(SpimView);
         action_Help_AboutSPIM->setObjectName(QString::fromUtf8("action_Help_AboutSPIM"));
         action_File_Print = new QAction(SpimView);
         action_File_Print->setObjectName(QString::fromUtf8("action_File_Print"));
-        actionFile_1 = new QAction(SpimView);
-        actionFile_1->setObjectName(QString::fromUtf8("actionFile_1"));
+        QIcon icon10;
+        icon10.addFile(QString::fromUtf8(":/icons/Print.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_File_Print->setIcon(icon10);
         centralWidget = new QTextEdit(SpimView);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setUndoRedoEnabled(false);
@@ -207,7 +229,7 @@ public:
         SpimView->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SpimView);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1024, 21));
+        menuBar->setGeometry(QRect(0, 0, 1172, 21));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menuRecent_Files = new QMenu(menu_File);
@@ -261,8 +283,8 @@ public:
         TextSegmentTextEdit = new textTextEdit();
         TextSegmentTextEdit->setObjectName(QString::fromUtf8("TextSegmentTextEdit"));
         TextSegmentTextEdit->setMinimumSize(QSize(800, 600));
-        TextSegmentTextEdit->setUndoRedoEnabled(false);
-        TextSegmentTextEdit->setReadOnly(true);
+        TextSegmentTextEdit->setProperty("undoRedoEnabled", QVariant(false));
+        TextSegmentTextEdit->setProperty("readOnly", QVariant(true));
         TextSegDockWidget->setWidget(TextSegmentTextEdit);
         SpimView->addDockWidget(static_cast<Qt::DockWidgetArea>(4), TextSegDockWidget);
         DataSegDockWidget = new QDockWidget(SpimView);
@@ -270,10 +292,13 @@ public:
         DataSegDockWidget->setAllowedAreas(Qt::TopDockWidgetArea);
         DataSegmentTextEdit = new dataTextEdit();
         DataSegmentTextEdit->setObjectName(QString::fromUtf8("DataSegmentTextEdit"));
-        DataSegmentTextEdit->setUndoRedoEnabled(false);
-        DataSegmentTextEdit->setReadOnly(true);
+        DataSegmentTextEdit->setProperty("undoRedoEnabled", QVariant(false));
+        DataSegmentTextEdit->setProperty("readOnly", QVariant(true));
         DataSegDockWidget->setWidget(DataSegmentTextEdit);
         SpimView->addDockWidget(static_cast<Qt::DockWidgetArea>(4), DataSegDockWidget);
+        toolBar = new QToolBar(SpimView);
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        SpimView->addToolBar(Qt::TopToolBarArea, toolBar);
 
         menuBar->addAction(menu_File->menuAction());
         menuBar->addAction(menu_Simulator->menuAction());
@@ -296,6 +321,7 @@ public:
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_SetRunParameters);
         menu_Simulator->addAction(action_Sim_Run);
+        menu_Simulator->addAction(action_Sim_Stop);
         menu_Simulator->addAction(action_Sim_SingleStep);
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_DisplaySymbols);
@@ -328,6 +354,16 @@ public:
         menu_Window->addAction(action_Win_Tile);
         menu_Help->addAction(action_Help_ViewHelp);
         menu_Help->addAction(action_Help_AboutSPIM);
+        toolBar->addAction(action_File_Load);
+        toolBar->addAction(action_File_Reload);
+        toolBar->addAction(action_File_SaveLog);
+        toolBar->addAction(action_File_Print);
+        toolBar->addAction(action_Sim_ClearRegisters);
+        toolBar->addAction(action_Sim_Reinitialize);
+        toolBar->addAction(action_Sim_Run);
+        toolBar->addAction(action_Sim_Stop);
+        toolBar->addAction(action_Sim_SingleStep);
+        toolBar->addAction(action_Help_ViewHelp);
 
         retranslateUi(SpimView);
 
@@ -346,6 +382,8 @@ public:
         action_Sim_SetRunParameters->setText(QApplication::translate("SpimView", "Run &Parmeters", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setText(QApplication::translate("SpimView", "&Run", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setShortcut(QApplication::translate("SpimView", "F5", 0, QApplication::UnicodeUTF8));
+        action_Sim_Stop->setText(QApplication::translate("SpimView", "&Stop", 0, QApplication::UnicodeUTF8));
+        action_Sim_Stop->setShortcut(QApplication::translate("SpimView", "Shift-F5", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setText(QApplication::translate("SpimView", "&Single Step", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setShortcut(QApplication::translate("SpimView", "F10", 0, QApplication::UnicodeUTF8));
         action_Sim_DisplaySymbols->setText(QApplication::translate("SpimView", "&Display Symbols", 0, QApplication::UnicodeUTF8));
@@ -354,7 +392,6 @@ public:
         action_Reg_DisplayOctal->setText(QApplication::translate("SpimView", "Octal", 0, QApplication::UnicodeUTF8));
         action_Reg_DisplayHex->setText(QApplication::translate("SpimView", "Hex", 0, QApplication::UnicodeUTF8));
         action_Reg_DisplayDecimal->setText(QApplication::translate("SpimView", "Decimal", 0, QApplication::UnicodeUTF8));
-        action_Reg_DisplayChar->setText(QApplication::translate("SpimView", "Char", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayUserText->setText(QApplication::translate("SpimView", "User Text", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayKernelText->setText(QApplication::translate("SpimView", "Kernel Text", 0, QApplication::UnicodeUTF8));
         action_Text_DisplayComments->setText(QApplication::translate("SpimView", "Comments", 0, QApplication::UnicodeUTF8));
@@ -366,7 +403,6 @@ public:
         action_Data_DisplayOctal->setText(QApplication::translate("SpimView", "Octal", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayHex->setText(QApplication::translate("SpimView", "Hex", 0, QApplication::UnicodeUTF8));
         action_Data_DisplayDecimal->setText(QApplication::translate("SpimView", "Decimal", 0, QApplication::UnicodeUTF8));
-        actionString->setText(QApplication::translate("SpimView", "String", 0, QApplication::UnicodeUTF8));
         action_Win_IntRegisters->setText(QApplication::translate("SpimView", "Integer Registers", 0, QApplication::UnicodeUTF8));
         action_Win_FPRegisters->setText(QApplication::translate("SpimView", "FP Registers", 0, QApplication::UnicodeUTF8));
         action_Win_TextSegment->setText(QApplication::translate("SpimView", "Text Segment", 0, QApplication::UnicodeUTF8));
@@ -377,7 +413,6 @@ public:
         action_Help_ViewHelp->setText(QApplication::translate("SpimView", "View Help", 0, QApplication::UnicodeUTF8));
         action_Help_AboutSPIM->setText(QApplication::translate("SpimView", "About SPIM", 0, QApplication::UnicodeUTF8));
         action_File_Print->setText(QApplication::translate("SpimView", "Print", 0, QApplication::UnicodeUTF8));
-        actionFile_1->setText(QApplication::translate("SpimView", "File 1", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("SpimView", "&File", 0, QApplication::UnicodeUTF8));
         menuRecent_Files->setTitle(QApplication::translate("SpimView", "Recent Files", 0, QApplication::UnicodeUTF8));
         menu_Simulator->setTitle(QApplication::translate("SpimView", "&Simulator", 0, QApplication::UnicodeUTF8));
@@ -390,6 +425,7 @@ public:
         FPRegDockWidget->setWindowTitle(QApplication::translate("SpimView", "FP Registers", 0, QApplication::UnicodeUTF8));
         TextSegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Text Segment", 0, QApplication::UnicodeUTF8));
         DataSegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Data Segment", 0, QApplication::UnicodeUTF8));
+        toolBar->setWindowTitle(QApplication::translate("SpimView", "toolBar", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

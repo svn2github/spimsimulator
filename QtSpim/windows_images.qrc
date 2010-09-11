@@ -1,0 +1,15 @@
+ <!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/icons">
+     <file alias="ClearRegs.png">windows_images/ClearRegs.png</file>
+     <file alias="Help.png">windows_images/Help.png</file>
+     <file alias="LoadFile.png">windows_images/LoadFile.png</file>
+     <file alias="Print.png">windows_images/Print.png</file>
+     <file alias="Reinit.png">windows_images/Reinit.png</file>
+     <file alias="ReloadFile.png">windows_images/ReloadFile.png</file>
+     <file alias="Run.png">windows_images/Run.png</file>
+     <file alias="SaveLog.png">windows_images/SaveLog.png</file>
+     <file alias="Settings.png">windows_images/Settings.png</file>
+     <file alias="SingleStep.png">windows_images/SingleStep.png</file>
+     <file alias="Stop.png">windows_images/Stop.png</file>
+ </qresource>
+ </RCC>

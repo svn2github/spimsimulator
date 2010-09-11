@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>768</height>
+    <width>1172</width>
+    <height>770</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
+     <width>1172</width>
      <height>21</height>
     </rect>
    </property>
@@ -61,6 +61,7 @@
     <addaction name="separator"/>
     <addaction name="action_Sim_SetRunParameters"/>
     <addaction name="action_Sim_Run"/>
+    <addaction name="action_Sim_Stop"/>
     <addaction name="action_Sim_SingleStep"/>
     <addaction name="separator"/>
     <addaction name="action_Sim_DisplaySymbols"/>
@@ -203,10 +204,10 @@
       <height>600</height>
      </size>
     </property>
-    <property name="undoRedoEnabled">
+    <property name="undoRedoEnabled" stdset="0">
      <bool>false</bool>
     </property>
-    <property name="readOnly">
+    <property name="readOnly" stdset="0">
      <bool>true</bool>
     </property>
    </widget>
@@ -222,20 +223,49 @@
     <number>4</number>
    </attribute>
    <widget class="dataTextEdit" name="DataSegmentTextEdit">
-    <property name="undoRedoEnabled">
+    <property name="undoRedoEnabled" stdset="0">
      <bool>false</bool>
     </property>
-    <property name="readOnly">
+    <property name="readOnly" stdset="0">
      <bool>true</bool>
     </property>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_File_Load"/>
+   <addaction name="action_File_Reload"/>
+   <addaction name="action_File_SaveLog"/>
+   <addaction name="action_File_Print"/>
+   <addaction name="action_Sim_ClearRegisters"/>
+   <addaction name="action_Sim_Reinitialize"/>
+   <addaction name="action_Sim_Run"/>
+   <addaction name="action_Sim_Stop"/>
+   <addaction name="action_Sim_SingleStep"/>
+   <addaction name="action_Help_ViewHelp"/>
+  </widget>
   <action name="action_File_Load">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/LoadFile.png</normaloff>:/icons/LoadFile.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Load File</string>
    </property>
   </action>
   <action name="action_File_SaveLog">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/SaveLog.png</normaloff>:/icons/SaveLog.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save Log File</string>
    </property>
@@ -246,16 +276,28 @@
    </property>
   </action>
   <action name="action_Sim_ClearRegisters">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/ClearRegs.png</normaloff>:/icons/ClearRegs.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Clear Registers</string>
    </property>
   </action>
   <action name="action_Sim_Reinitialize">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/Reinit.png</normaloff>:/icons/Reinit.png</iconset>
+   </property>
    <property name="text">
     <string>Re&amp;initialize Simulator</string>
    </property>
   </action>
   <action name="action_File_Reload">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/ReloadFile.png</normaloff>:/icons/ReloadFile.png</iconset>
+   </property>
    <property name="text">
     <string>Re&amp;intialize and Load File</string>
    </property>
@@ -266,6 +308,10 @@
    </property>
   </action>
   <action name="action_Sim_Run">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/Run.png</normaloff>:/icons/Run.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Run</string>
    </property>
@@ -273,7 +319,23 @@
     <string>F5</string>
    </property>
   </action>
+  <action name="action_Sim_Stop">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/Stop.png</normaloff>:/icons/Pause.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift-F5</string>
+   </property>
+  </action>
   <action name="action_Sim_SingleStep">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/SingleStep.png</normaloff>:/icons/SingleStep.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Single Step</string>
    </property>
@@ -287,6 +349,10 @@
    </property>
   </action>
   <action name="action_Sim_Settings">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/Settings.png</normaloff>:/icons/Settings.png</iconset>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>
@@ -321,14 +387,6 @@
    </property>
    <property name="text">
     <string>Decimal</string>
-   </property>
-  </action>
-  <action name="action_Reg_DisplayChar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Char</string>
    </property>
   </action>
   <action name="action_Text_DisplayUserText">
@@ -419,14 +477,6 @@
     <string>Decimal</string>
    </property>
   </action>
-  <action name="actionString">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>String</string>
-   </property>
-  </action>
   <action name="action_Win_IntRegisters">
    <property name="checkable">
     <bool>true</bool>
@@ -478,6 +528,10 @@
    </property>
   </action>
   <action name="action_Help_ViewHelp">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/Help.png</normaloff>:/icons/Help.png</iconset>
+   </property>
    <property name="text">
     <string>View Help</string>
    </property>
@@ -488,17 +542,30 @@
    </property>
   </action>
   <action name="action_File_Print">
+   <property name="icon">
+    <iconset resource="windows_images.qrc">
+     <normaloff>:/icons/Print.png</normaloff>:/icons/Print.png</iconset>
+   </property>
    <property name="text">
     <string>Print</string>
    </property>
   </action>
-  <action name="actionFile_1">
-   <property name="text">
-    <string>File 1</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>textTextEdit</class>
+   <extends>QWidget</extends>
+   <header>texttextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>dataTextEdit</class>
+   <extends>QWidget</extends>
+   <header>datatextedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="windows_images.qrc"/>
+ </resources>
  <connections/>
 </ui>

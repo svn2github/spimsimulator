@@ -254,12 +254,22 @@ void SpimView::sim_SetRunParameters()
 
 void SpimView::sim_Run()
 {
-  if (st_startAddress == 0)
+    if (st_startAddress == 0)
     {
-      st_startAddress = starting_address ();
+        st_startAddress = starting_address ();
     }
     initStack();
-    executeProgram(st_startAddress, DEFAULT_RUN_STEPS, false, false);
+    while (1)
+    {
+        executeProgram(st_startAddress, 100000, false, false);
+        App->processEvents();   // In case of long computation or loop
+    }
+}
+
+
+void SpimView::sim_Stop()
+{
+    force_break = 1;
 }
 
 
