@@ -259,7 +259,8 @@ void SpimView::sim_Run()
         st_startAddress = starting_address ();
     }
     initStack();
-    while (1)
+    force_break = 0;
+    while (!force_break)
     {
         executeProgram(st_startAddress, 100000, false, false);
         App->processEvents();   // In case of long computation or loop
@@ -270,11 +271,13 @@ void SpimView::sim_Run()
 void SpimView::sim_Stop()
 {
     force_break = 1;
+    Window->statusBar()->showMessage("Stopped");
 }
 
 
 void SpimView::sim_SingleStep()
 {
+    force_break = 0;
     executeProgram(starting_address(), 1, false, false);
 }
 
@@ -291,7 +294,9 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
 {
     if (pc != 0)
     {
+        Window->statusBar()->showMessage("Running");
         bool breakpointEncountered = run_program(pc, steps, display, contBkpt);
+        Window->statusBar()->clearMessage();
         highlightInstruction(PC);
         DisplayIntRegisters();
         DisplayFPRegisters();

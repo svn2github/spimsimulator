@@ -522,11 +522,6 @@
     <string>Tile</string>
    </property>
   </action>
-  <action name="actionStatus_Bar">
-   <property name="text">
-    <string>Status Bar</string>
-   </property>
-  </action>
   <action name="action_Help_ViewHelp">
    <property name="icon">
     <iconset resource="windows_images.qrc">

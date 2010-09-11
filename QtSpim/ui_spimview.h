@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sat Sep 11 16:31:25 2010
+** Created: Sat Sep 11 16:49:59 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -63,7 +63,6 @@ public:
     QAction *action_Win_DataSegment;
     QAction *action_Win_Console;
     QAction *action_Win_Tile;
-    QAction *actionStatus_Bar;
     QAction *action_Help_ViewHelp;
     QAction *action_Help_AboutSPIM;
     QAction *action_File_Print;
@@ -208,8 +207,6 @@ public:
         action_Win_Console->setCheckable(true);
         action_Win_Tile = new QAction(SpimView);
         action_Win_Tile->setObjectName(QString::fromUtf8("action_Win_Tile"));
-        actionStatus_Bar = new QAction(SpimView);
-        actionStatus_Bar->setObjectName(QString::fromUtf8("actionStatus_Bar"));
         action_Help_ViewHelp = new QAction(SpimView);
         action_Help_ViewHelp->setObjectName(QString::fromUtf8("action_Help_ViewHelp"));
         QIcon icon9;
@@ -409,7 +406,6 @@ public:
         action_Win_DataSegment->setText(QApplication::translate("SpimView", "Data Segment", 0, QApplication::UnicodeUTF8));
         action_Win_Console->setText(QApplication::translate("SpimView", "Console", 0, QApplication::UnicodeUTF8));
         action_Win_Tile->setText(QApplication::translate("SpimView", "Tile", 0, QApplication::UnicodeUTF8));
-        actionStatus_Bar->setText(QApplication::translate("SpimView", "Status Bar", 0, QApplication::UnicodeUTF8));
         action_Help_ViewHelp->setText(QApplication::translate("SpimView", "View Help", 0, QApplication::UnicodeUTF8));
         action_Help_AboutSPIM->setText(QApplication::translate("SpimView", "About SPIM", 0, QApplication::UnicodeUTF8));
         action_File_Print->setText(QApplication::translate("SpimView", "Print", 0, QApplication::UnicodeUTF8));
