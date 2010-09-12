@@ -52,7 +52,7 @@ FORMS    += spimview.ui\
 INCLUDEPATH = ../CPU ../spim
 
 
-win32:RESOURCES = windows_images.qrc
+RESOURCES = windows_images.qrc
 
 
 QMAKE_YACC		= bison
@@ -89,8 +89,8 @@ win32-g++ {
   #
   QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
   QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE	+= -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
+  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
 }
 
 linux-g++ {
@@ -99,7 +99,7 @@ linux-g++ {
   #
   QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
   QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE	+= -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
+  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
 }
 

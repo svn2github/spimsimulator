@@ -66,13 +66,13 @@ DOC_DIR = ../Documentation
 
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /usr/local/bin
+BIN_DIR = /opt/spim/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /usr/local/lib/spim
+EXCEPTION_DIR = /opt/spim/lib
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/local/man/en
+MAN_DIR = /opt/spim/man/en
 
 
 # If you have flex, use it instead of lex.  If you use flex, define this
