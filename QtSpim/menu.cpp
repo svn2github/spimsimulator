@@ -242,7 +242,7 @@ void SpimView::sim_ClearRegisters()
 void SpimView::sim_ReinitializeSimulator()
 {
     write_output(message_out, "<hr>Memory and registers cleared");
-    initialize_world(ExceptionFileOrNull());
+    InitializeWorld();
     SpimConsole->clear();
     initStack();
     write_startup_message();

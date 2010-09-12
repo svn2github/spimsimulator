@@ -118,7 +118,8 @@ void SpimView::readSettings()
     mapped_io = settings.value("MappedIO", 0).toInt();
 
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
-    st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", "../CPU/exceptions.s").toString();
+    st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", 
+                                                 stdExceptionHandler).toString();
     st_startAddress = settings.value("StartingAddress", starting_address()).toInt();
     st_commandLine = settings.value("CommandLineArguments", "").toString();
     settings.endGroup();

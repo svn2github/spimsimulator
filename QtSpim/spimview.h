@@ -67,7 +67,7 @@ Q_OBJECT
 
     void SaveStateAndExit(int val);
 
-    char* ExceptionFileOrNull();
+    void InitializeWorld();
 
     void CaptureIntRegisters();
     void CaptureSFPRegisters();
@@ -88,7 +88,7 @@ Q_OBJECT
     QSettings settings;
     void readSettings();
     void writeSettings();
-
+    QString stdExceptionHandler;
 
     // File menu
     //

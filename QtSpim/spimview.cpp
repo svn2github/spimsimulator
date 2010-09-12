@@ -37,6 +37,8 @@
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
 #include <QMessageBox>
+#include <QResource>
+#include <QTemporaryFile>
 
 
 SpimView::SpimView(QWidget *parent) :
@@ -49,6 +51,7 @@ SpimView::SpimView(QWidget *parent) :
     ui->setupUi(this);
     SpimConsole = new Console(0);
 
+    stdExceptionHandler = QString("<<SPIM Exception Handler>>");
 
     // Set style parameters for docking widgets
     //
@@ -157,15 +160,35 @@ QString SpimView::windowFormattingEnd()
 }
 
 
-char* SpimView::ExceptionFileOrNull()
+void SpimView::InitializeWorld()
 {
-    QByteArray ba = st_ExceptionHandlerFileName.toLocal8Bit(); // char* is deallocated when QByteArray is
-    char* ef = ba.data();                                      // So, make a copy of string while BA is
-    int len = strlen(ef) + 1;                                  // still alive -- tricky
-    char* nef = new char[len];
-    strncpy(nef, ef, len);
-
-    return st_loadExceptionHandler ? nef : NULL;
+    if (st_loadExceptionHandler)
+    {
+        if (st_ExceptionHandlerFileName == stdExceptionHandler)
+        {
+            // Standard exception handler is a resource in this executable. Write it to a
+            // temporary file and use that for initialization.
+            //
+            QResource exRes(":exceptions.s");
+            QTemporaryFile tmpFile;
+            tmpFile.open();
+            tmpFile.write((char*)exRes.data());
+            tmpFile.close();
+            initialize_world(tmpFile.fileName().toLocal8Bit().data());
+        }
+        else
+        {
+            // Use the file name supplied by the user.
+            //
+            initialize_world(st_ExceptionHandlerFileName.toLocal8Bit().data());
+        }
+    }
+    else
+    {
+        // No exception handler.
+        //
+        initialize_world(NULL);
+    }
 }
 
 

@@ -84,7 +84,8 @@ FORMS    += spimview.ui\
 INCLUDEPATH = ../CPU ../spim
 
 
-RESOURCES = windows_images.qrc
+RESOURCES = windows_images.qrc\
+	    exception.qrc
 
 
 win32:RC_FILE = qtspim.rc
