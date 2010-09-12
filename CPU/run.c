@@ -64,7 +64,7 @@
 
 int force_break = 0;	/* For the execution env. to force an execution break */
 
-#ifdef _WIN32
+#ifdef _MSC_BUILD
 /* Disable MS VS warning about constant predicate in conditional. */
 #pragma warning(disable: 4127)
 #endif

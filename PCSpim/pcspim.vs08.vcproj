@@ -553,10 +553,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\Cpu\endian.c"
-				>
-			</File>
-			<File
 				RelativePath="..\Cpu\inst.c"
 				>
 				<FileConfiguration
@@ -757,7 +753,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running yacc"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)&#x0D;&#x0A;"
 						Outputs="parser_yacc.c;parser_yacc.h"
 					/>
 				</FileConfiguration>
@@ -767,7 +763,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running yacc"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)&#x0D;&#x0A;"
 						Outputs="parser_yacc.c;parser_yacc.h"
 					/>
 				</FileConfiguration>
@@ -777,7 +773,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running yacc"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)&#x0D;&#x0A;"
 						Outputs="parser_yacc.c;parser_yacc.h"
 					/>
 				</FileConfiguration>
@@ -787,7 +783,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running yacc"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\bison&quot;  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy &quot;$(InputPath)&#x0D;&#x0A;"
 						Outputs="parser_yacc.c;parser_yacc.h"
 					/>
 				</FileConfiguration>
@@ -1090,7 +1086,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running lex"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						Outputs="lex.yy.c"
 					/>
 				</FileConfiguration>
@@ -1100,7 +1096,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running lex"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						Outputs="lex.yy.c"
 					/>
 				</FileConfiguration>
@@ -1110,7 +1106,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running lex"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						Outputs="lex.yy.c"
 					/>
 				</FileConfiguration>
@@ -1120,7 +1116,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running lex"
-						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;"
+						CommandLine="&quot;C:\Program Files\cygwin\bin\flex&quot; -I -8 &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						Outputs="lex.yy.c"
 					/>
 				</FileConfiguration>

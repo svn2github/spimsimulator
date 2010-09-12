@@ -123,6 +123,10 @@ win32-g++ {
   QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
   QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
   QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+
+  # Surpress error when deleting non-existent file.
+  #
+  QMAKE_DEL_FILE = rm -f
 }
 
 linux-g++ {
@@ -133,5 +137,9 @@ linux-g++ {
   QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
   QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
   QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+
+  # Surpress error when deleting non-existent file.
+  #
+  QMAKE_DEL_FILE = rm -f
 }
 
