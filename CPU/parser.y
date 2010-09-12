@@ -30,6 +30,7 @@
    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+%expect 25           /* Supress warning about 25 shift-reduce conflicts */
 
 %start LINE
 
