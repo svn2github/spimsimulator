@@ -33,7 +33,7 @@ void SpimView::DisplayIntRegisters()
 
     te->clear();
     te->setHtml(windowContents);
-    ui->IntRegDockWidget->setWindowTitle(QString("Integer Registers [")
+    ui->IntRegDockWidget->setWindowTitle(QString("Int Regs [")
                                          + QString::number(st_intRegBase)
                                          + QString("]"));
     CaptureIntRegisters();

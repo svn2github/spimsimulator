@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sat Sep 11 16:49:59 2010
+** Created: Sat Sep 11 17:35:42 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -417,10 +417,10 @@ public:
         menu_Data_Segment->setTitle(QApplication::translate("SpimView", "&Data Segment", 0, QApplication::UnicodeUTF8));
         menu_Window->setTitle(QApplication::translate("SpimView", "&Window", 0, QApplication::UnicodeUTF8));
         menu_Help->setTitle(QApplication::translate("SpimView", "&Help", 0, QApplication::UnicodeUTF8));
-        IntRegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Integer Registers", 0, QApplication::UnicodeUTF8));
-        FPRegDockWidget->setWindowTitle(QApplication::translate("SpimView", "FP Registers", 0, QApplication::UnicodeUTF8));
-        TextSegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Text Segment", 0, QApplication::UnicodeUTF8));
-        DataSegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Data Segment", 0, QApplication::UnicodeUTF8));
+        IntRegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Int Regs", 0, QApplication::UnicodeUTF8));
+        FPRegDockWidget->setWindowTitle(QApplication::translate("SpimView", "FP Regs", 0, QApplication::UnicodeUTF8));
+        TextSegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Text", 0, QApplication::UnicodeUTF8));
+        DataSegDockWidget->setWindowTitle(QApplication::translate("SpimView", "Data", 0, QApplication::UnicodeUTF8));
         toolBar->setWindowTitle(QApplication::translate("SpimView", "toolBar", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

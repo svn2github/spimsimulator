@@ -142,7 +142,7 @@
     <set>Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Integer Registers</string>
+    <string>Int Regs</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>4</number>
@@ -167,7 +167,7 @@
     <set>Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>FP Registers</string>
+    <string>FP Regs</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>4</number>
@@ -192,7 +192,7 @@
     <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Text Segment</string>
+    <string>Text</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>4</number>
@@ -217,7 +217,7 @@
     <set>Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Data Segment</string>
+    <string>Data</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>4</number>
