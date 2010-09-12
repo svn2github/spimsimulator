@@ -87,6 +87,9 @@ INCLUDEPATH = ../CPU ../spim
 RESOURCES = windows_images.qrc
 
 
+win32:RC_FILE = qtspim.rc
+
+
 QMAKE_YACC		= bison
 QMAKE_YACCFLAGS		= -d --defines=parser.tab.h --output=parser.tab.c
 QMAKE_YACCFLAGS_MANGLE	= -p yy
