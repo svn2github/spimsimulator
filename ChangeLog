@@ -1,6 +1,11 @@
+2010-09-12    <Jim@LS-RED>
+
+	* QtSpim/:
+	Released QtSpim.0.9
+
 2010-09-09    <Jim@X64PC>
 
-	* PCSpim/
+	* PCSpim/:
 	Ported PCSpim to Visual Studio 2010.
 	Renamed VS configuration files to reflect version of VS (vs6,
 	vs08, vs10).
