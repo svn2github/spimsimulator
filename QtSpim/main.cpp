@@ -39,8 +39,13 @@ int main(int argc, char *argv[])
 "         border-bottom-color: #C2C7CB; /* same as the pane color */"
 "         border-top-left-radius: 4px;"
 "         border-top-right-radius: 4px;"
+#ifdef _WIN32
+"         min-width: 32ex;"
+"         padding: 2px;"
+#else
 "         min-width: 8ex;"
 "         padding: 2px; padding-left:10px; padding-right:10px;"
+#endif
 "         font: bold 12px"
 "     }"
 ""
