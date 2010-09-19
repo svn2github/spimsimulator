@@ -1,3 +1,8 @@
+2010-09-18    <Jim@LS-RED>
+
+	* CPU/display-utils.c J.P. Mellor <jpmellor@rose-hulman.edu>:
+	Did not display full stack (artificially dropped first 4K).
+	
 2010-09-12    <Jim@LS-RED>
 
 	* QtSpim/:

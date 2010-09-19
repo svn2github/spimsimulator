@@ -75,7 +75,7 @@ QString SpimView::formatUserStack()
 {
     if (st_showUserStackSegment)
     {
-        return formatSegLabel("<br>User Stack", ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP - 4096)
+        return formatSegLabel("<br>User Stack", ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP)
             % formatMemoryContents(ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP - 4096);
     }
     else
