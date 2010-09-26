@@ -47,3 +47,10 @@ Linux:
 
 Mac:
         ???
+
+
+Notes:
+        If you are porting to a new system, and see a large number of compiler errors in
+        QtCreator, changes are good that you need to change QtSpim.pro to define the compiler
+        flag that says "treat all files, including .c files, as C++ code. This flag is "-X C++"
+        for gcc and "-TP" for the Microsoft compiler.
