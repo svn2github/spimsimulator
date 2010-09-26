@@ -1,9 +1,0 @@
-SCC = This is a Source Code Control file
-
-[setup32.mak]
-SCC_Aux_Path = "D:\Jim\Software\VSS\Data"
-SCC_Project_Name = "$/Software/SPIM/SPIM/Old/spiminst/windows/setup32", KSBAAAAA
-
-[setup32.mdp]
-SCC_Aux_Path = "D:\Jim\Software\VSS\Data"
-SCC_Project_Name = "$/Software/SPIM/SPIM/Old/spiminst/windows/setup32", KSBAAAAA

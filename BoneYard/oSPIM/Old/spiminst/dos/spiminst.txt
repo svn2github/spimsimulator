@@ -1,7 +1,0 @@
-This is the source for building the PC SPIM for DOS redistributable.
-In order to build, you'll need DJGPP, djp, and lha.
-
-Place the necessary files in the build directory, and run 'make',
-and if all goes well, you'll have a PCSPIM.EXE when you're done.
-
-

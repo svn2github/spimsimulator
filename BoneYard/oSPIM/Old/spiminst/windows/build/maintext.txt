@@ -1,4 +1,0 @@
-Welcome to the PCSpim for Windows Setup!
-
-Just click the Setup button to the right
-to start the setup process.
