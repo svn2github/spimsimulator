@@ -1,3 +1,8 @@
+2010-10-02    <Jim@LS-RED>
+
+	* QtSpim/menu.cpp (executeProgram) Alexander Williams <proflogic@gmail.com>: 
+	Single step go hung up at breakpoint.
+
 2010-09-18    <Jim@LS-RED>
 
 	* CPU/display-utils.c J.P. Mellor <jpmellor@rose-hulman.edu>:

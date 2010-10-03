@@ -325,7 +325,7 @@ void SpimView::initStack()
 
 void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkpt)
 {
-    if (pc != 0)
+    while (pc != 0)
     {
         Window->statusBar()->showMessage("Running");
         bool breakpointEncountered = run_program(pc, steps, display, contBkpt);
@@ -339,10 +339,23 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
         {
             QMessageBox msgBox(QMessageBox::Information,
                                "Execution Stopped",
-                               "Execution stopped due to breakpoint",
-                       QMessageBox::Close);
-            msgBox.exec();
+                               "Execution stopped due to breakpoint. Continue executing?",
+                               QMessageBox::Yes | QMessageBox::No | QMessageBox::Close);
+            if (msgBox.exec() == QMessageBox::Yes)
+            {
+                run_program(PC, 1, false, true); // Step over breakpoint
+                pc = PC;
+                highlightInstruction(PC);
+                DisplayIntRegisters();
+                DisplayFPRegisters();
+                DisplayDataSegments();
+                if (steps > 1)
+                {
+                    continue;   // Not single-steping, so continue even though steps has not been updated
+                }
+            }
         }
+        return;
     }
 }
 
