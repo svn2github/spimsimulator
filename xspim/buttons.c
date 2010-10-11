@@ -468,7 +468,7 @@ step_program_action (Widget w, XtPointer client_data, XtPointer call_data)
   free (step_size);
   step_size = str_copy (st);
 
-  addr = starting_address ();
+  addr = PC == 0 ? starting_address () : PC;
   if (steps > 0 && addr > 0)
     execute_program (addr, steps, 1, 1);
   else

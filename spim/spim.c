@@ -301,6 +301,7 @@ main (int argc, char **argv)
     }
   else /* assembly_file_loaded */
     {
+        int continuable;
       console_to_program ();
       initialize_run_stack (program_argc, program_argv);
       if (!setjmp (spim_top_level_env))
@@ -313,8 +314,7 @@ main (int argc, char **argv)
 	      write_output (message_out, "\n");
 	      free (undefs);
 	    }
-	  run_program (find_symbol_address (DEFAULT_RUN_LOCATION),
-		       DEFAULT_RUN_STEPS, 0, 0);
+	  run_program (find_symbol_address (DEFAULT_RUN_LOCATION), DEFAULT_RUN_STEPS, 0, 0, &continuable);
 	}
       console_to_spim ();
     }
@@ -416,6 +416,7 @@ parse_spim_command (FILE *file, int redo)
     case RUN_CMD:
       {
 	static mem_addr addr;
+        int continuable;
 
 	addr = (redo ? addr : get_opt_int ());
 	if (addr == 0)
@@ -434,7 +435,7 @@ parse_spim_command (FILE *file, int redo)
 	      free (undefs);
 	    }
 
-	  if (run_program (addr, DEFAULT_RUN_STEPS, 0, 0))
+	  if (run_program (addr, DEFAULT_RUN_STEPS, 0, 0, &continuable))
 	    write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	}
 	console_to_spim ();
@@ -447,10 +448,10 @@ parse_spim_command (FILE *file, int redo)
       {
 	if (PC != 0)
 	  {
+            int continuable;
 	    console_to_program ();
-	    if (run_program (PC, DEFAULT_RUN_STEPS, 0, 1))
-	      write_output (message_out, "Breakpoint encountered at 0x%08x\n",
-			    PC);
+	    if (run_program (PC, DEFAULT_RUN_STEPS, 0, 1, &continuable))
+	      write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	    console_to_spim ();
 	  }
 	prev_cmd = CONTINUE_CMD;
@@ -463,16 +464,16 @@ parse_spim_command (FILE *file, int redo)
 	mem_addr addr;
 
 	steps = (redo ? steps : get_opt_int ());
-	addr = starting_address ();
+	addr = PC == 0 ? starting_address () : PC;
 
 	if (steps == 0)
 	  steps = 1;
 	if (addr != 0)
 	  {
+            int continuable;
 	    console_to_program ();
-	    if (run_program (addr, steps, 1, 1))
-	      write_output (message_out, "Breakpoint encountered at 0x%08x\n",
-			    PC);
+	    if (run_program (addr, steps, 1, 1, &continuable))
+	      write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	    console_to_spim ();
 	  }
 

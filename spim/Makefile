@@ -123,15 +123,12 @@ LEXCFLAGS = -O $(CFLAGS)
 
 
 
-OBJS = spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex.yy.o \
+OBJS = spim.o spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex.yy.o \
        syscall.o display-utils.o string-stream.o
 
 
-spim:   
-	make -f Makefile spim2
-
-spim2:	$(OBJS) spim.o
-	$(CC) -g $(OBJS) spim.o $(LDFLAGS) -o spim -lm
+spim:   $(OBJS)
+	$(CC) -g $(OBJS) $(LDFLAGS) -o spim -lm
 
 
 #

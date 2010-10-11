@@ -1,9 +1,18 @@
 2010-10-10    <Jim@LS-RED>
 
+	* xspim/xspim.c, xspim/buttons.c:
+	New internal interface.
+
+	* PCSpim/PCSpimView.cpp:
+	New internal interface.
+
+	* spim/spim.c:
+	New internal interface.
+
 	* QtSpim/menu.cpp, QtSpim/spimview.ui:
 	Improved handling of run/stop/single-step.
 
-	* CPU/spim-utils.c,h (starting_address), spim.c:
+	* CPU/spim-utils.c,h (starting_address), CPU/spim.h:
 	Simplify code for running a program.
 
 2010-10-02    <Jim@LS-RED>

@@ -590,6 +590,7 @@ start_program (mem_addr addr)
 void
 execute_program (mem_addr pc, int steps, int display, int cont_bkpt)
 {
+  int continuable;
   if (!setjmp (spim_top_level_env))
     {
       char *undefs = undefined_symbol_string ();
@@ -604,7 +605,7 @@ execute_program (mem_addr pc, int steps, int display, int cont_bkpt)
       spim_is_running = 1;
       show_running ();
 
-      if (run_program (pc, steps, display, cont_bkpt))
+      if (run_program (pc, steps, display, cont_bkpt, &continuable))
 	continue_prompt (0);
     }
   redisplay_text ();

@@ -477,7 +477,9 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
 
         while (1)
         {
-            if (0 != run_program(pc, steps, display, cont_bkpt))
+			int continuable;
+
+            if (0 != run_program(pc, steps, display, cont_bkpt, &continuable))
             {
                 UpdateStatusDisplay(TRUE);
                 HighlightCurrentInstruction();
@@ -490,7 +492,7 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
                 }
 
                 // Step over breakpoint
-                run_program(PC, 1, 0, 1);
+                run_program(PC, 1, 0, 1, &continuable);
                 pc = PC;
             }
             else
@@ -827,7 +829,7 @@ void CPCSpimView::ShowRunning()
 
 void CPCSpimView::OnSimulatorStep()
 {
-    ExecuteProgram(starting_address(), 1, 1, 1);
+	ExecuteProgram(PC == 0 ? starting_address() : PC , 1, 1, 1);
 }
 
 
@@ -839,7 +841,7 @@ void CPCSpimView::OnSimulatorMultistep()
     if (IDCANCEL == dlg.DoModal())
         return;
 
-    ExecuteProgram(starting_address(), (int)dlg.m_cSteps, 1, 1);
+	ExecuteProgram(PC == 0 ? starting_address() : PC, (int)dlg.m_cSteps, 1, 1);
 }
 
 
