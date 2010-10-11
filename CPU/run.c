@@ -1712,7 +1712,7 @@ start_CP0_timer ()
      since signals interrupt I/O calls, such as read, and make user
      interaction with SPIM work very poorly. Since speed isn't an important
      aspect of SPIM, polling isn't a big deal. */
-  if (-1 == (int)signal (SIGALRM, SIG_IGN))
+  if (SIG_ERR == signal (SIGALRM, SIG_IGN))
     {
       perror ("signal failed");
     }

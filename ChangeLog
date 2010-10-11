@@ -1,5 +1,9 @@
 2010-10-10    <Jim@LS-RED>
 
+	* CPU/run.c, QtSpim/QtSpim.pro, QtSpim/README, QtSpim/spim_support.c, QtSpim/textwin.cpp
+	Chris Van Horne <cwvh@email.arizona.edu>:
+	Changes for Mac.
+
 	* xspim/xspim.c, xspim/buttons.c:
 	New internal interface.
 
@@ -12,7 +16,7 @@
 	* QtSpim/menu.cpp, QtSpim/spimview.ui:
 	Improved handling of run/stop/single-step.
 
-	* CPU/spim-utils.c,h (starting_address), CPU/spim.h:
+	* CPU/spim-utils.c, CPU/spim-utils.h CPU/spim.h:
 	Simplify code for running a program.
 
 2010-10-02    <Jim@LS-RED>

@@ -37,7 +37,7 @@ All:
 
 
 Windows:
-        The Open Source version of Qt Creator for Windows, which uses migw works fine, as does
+        The Open Source version of Qt Creator for Windows, which uses mingw works fine, as does
         the version (which you need to build yourself) that uses Microsoft Visual Studio's C++
         compiler.
 
@@ -46,7 +46,8 @@ Linux:
         Download a recent version from http://qt.nokia.com/downloads/.
 
 Mac:
-        ???
+        Download the Mac Qt SDK at http://qt.nokia.com/downloads/sdk-mac-os-cpp open
+        $(SRCDIR)/QtSpim/QtSpim.pro with Qt Creator.
 
 
 Notes:

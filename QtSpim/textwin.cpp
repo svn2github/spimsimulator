@@ -119,7 +119,8 @@ QString SpimView::formatInstructions(mem_addr from, mem_addr to)
             if (comment != NULL)
             {
                 char* s;
-                for (s = comment - 1; *s == ' '; s--);
+                for (s = comment - 1; *s == ' '; s--) 
+                    ;
                 *(s + 1) = '\0';
             }
             if (inst_is_breakpoint(a))
