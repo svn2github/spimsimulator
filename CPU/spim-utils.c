@@ -60,8 +60,6 @@ static void delete_all_breakpoints ();
 
 int exception_occurred;
 
-mem_addr program_starting_address = 0;
-
 int initial_text_size = TEXT_SIZE;
 
 int initial_data_size = DATA_SIZE;
@@ -95,7 +93,6 @@ initialize_world (char* exception_file_names)
 	       initial_k_text_size,
 	       initial_k_data_size, initial_k_data_limit);
   initialize_registers ();
-  program_starting_address = 0;
   initialize_inst_tables ();
   initialize_symbol_table ();
   k_text_begins_at_point (K_TEXT_BOT);
@@ -221,16 +218,7 @@ read_assembly_file (char *name)
 mem_addr
 starting_address ()
 {
-  if (PC == 0)
-    {
-      if (program_starting_address != 0)
-	return (program_starting_address);
-      else
-	return (program_starting_address
-		= find_symbol_address (DEFAULT_RUN_LOCATION));
-    }
-  else
-    return (PC);
+  return (find_symbol_address (DEFAULT_RUN_LOCATION));
 }
 
 
@@ -350,13 +338,13 @@ copy_int_to_stack (int n)
 }
 
 
-/* Run a program starting at PC for N steps and display each
-   instruction before executing if FLAG is non-zero.  If CONTINUE is
-   non-zero, then step through a breakpoint.  Return non-zero if
-   breakpoint is encountered. */
+/* Run the program, starting at PC, for STEPS instructions. Display each
+   instruction before executing if DISPLAY is non-zero.  If CONT_BKPT is
+   non-zero, then step through a breakpoint. CONTINUABLE is non-zero if
+   execution can continue. Return non-zero if breakpoint is encountered. */
 
 int
-run_program (mem_addr pc, int steps, int display, int cont_bkpt)
+run_program (mem_addr pc, int steps, int display, int cont_bkpt, int* continuable)
 {
   if (cont_bkpt && inst_is_breakpoint (pc))
     {
@@ -364,16 +352,14 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt)
 
       delete_breakpoint (addr);
       exception_occurred = 0;
-      run_spim (addr, 1, display);
+      *continuable = run_spim (addr, 1, display);
       add_breakpoint (addr);
       steps -= 1;
       pc = PC;
     }
 
   exception_occurred = 0;
-  if (!run_spim (pc, steps, display))
-      /* Can't restart program */
-      PC = 0;
+  *continuable = run_spim (pc, steps, display);
   if (exception_occurred && CP0_ExCode == ExcCode_Bp)
   {
       /* Turn off EXL bit, so subsequent interrupts set EPC since the break is

@@ -251,7 +251,6 @@ extern int spim_return_value;	/* Value returned when spim exits */
 /* Actual type of structure pointed to depends on X/terminal interface */
 extern port message_out, console_out, console_in;
 extern int mapped_io;		/* Non-zero => activate memory-mapped IO */
-extern mem_addr program_starting_address;
 extern int initial_text_size;
 extern int initial_data_size;
 extern mem_addr initial_data_limit;

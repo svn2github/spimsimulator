@@ -212,8 +212,8 @@ Q_OBJECT
     //
     void wireCommands();
     void initStack();
-    void executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
-
+    bool executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
+    void initializePCAndStack();
 
     //
     // Console

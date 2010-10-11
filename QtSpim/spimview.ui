@@ -348,7 +348,7 @@
      <normaloff>:/icons/Run.png</normaloff>:/icons/Run.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Run</string>
+    <string>&amp;Run/Continue</string>
    </property>
    <property name="shortcut">
     <string>F5</string>

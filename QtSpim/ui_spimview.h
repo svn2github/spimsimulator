@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sun Sep 12 07:16:47 2010
-**      by: Qt User Interface Compiler version 4.6.3
+** Created: Sun Oct 10 17:49:33 2010
+**      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -377,7 +377,7 @@ public:
         action_Sim_Reinitialize->setText(QApplication::translate("SpimView", "Re&initialize Simulator", 0, QApplication::UnicodeUTF8));
         action_File_Reload->setText(QApplication::translate("SpimView", "Re&intialize and Load File", 0, QApplication::UnicodeUTF8));
         action_Sim_SetRunParameters->setText(QApplication::translate("SpimView", "Run &Parmeters", 0, QApplication::UnicodeUTF8));
-        action_Sim_Run->setText(QApplication::translate("SpimView", "&Run", 0, QApplication::UnicodeUTF8));
+        action_Sim_Run->setText(QApplication::translate("SpimView", "&Run/Continue", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setShortcut(QApplication::translate("SpimView", "F5", 0, QApplication::UnicodeUTF8));
         action_Sim_Stop->setText(QApplication::translate("SpimView", "&Stop", 0, QApplication::UnicodeUTF8));
         action_Sim_Stop->setShortcut(QApplication::translate("SpimView", "Shift-F5", 0, QApplication::UnicodeUTF8));

@@ -1,13 +1,21 @@
+2010-10-10    <Jim@LS-RED>
+
+	* QtSpim/menu.cpp, QtSpim/spimview.ui:
+	Improved handling of run/stop/single-step.
+
+	* CPU/spim-utils.c,h (starting_address), spim.c:
+	Simplify code for running a program.
+
 2010-10-02    <Jim@LS-RED>
 
-	* QtSpim/menu.cpp (executeProgram) Alexander Williams <proflogic@gmail.com>: 
+	* QtSpim/menu.cpp (executeProgram) Alexander Williams <proflogic@gmail.com>:
 	Single step go hung up at breakpoint.
 
 2010-09-18    <Jim@LS-RED>
 
 	* CPU/display-utils.c J.P. Mellor <jpmellor@rose-hulman.edu>:
 	Did not display full stack (artificially dropped first 4K).
-	
+
 2010-09-12    <Jim@LS-RED>
 
 	* QtSpim/:
