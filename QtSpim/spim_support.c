@@ -99,6 +99,7 @@ int console_input_available()
 
 void control_c_seen(int arg)
 {
+    (void)arg;
 }
 
 

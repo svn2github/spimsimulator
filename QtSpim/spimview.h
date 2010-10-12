@@ -214,6 +214,8 @@ Q_OBJECT
     void initStack();
     bool executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
     void initializePCAndStack();
+    bool programRunning;
+
 
     //
     // Console

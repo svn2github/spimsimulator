@@ -288,9 +288,6 @@ void SpimView::sim_SetRunParameters()
 }
 
 
-bool programRunning = false;
-
-
 void SpimView::sim_Run()
 {
     initializePCAndStack();

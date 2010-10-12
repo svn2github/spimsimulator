@@ -76,6 +76,8 @@ SpimView::SpimView(QWidget *parent) :
     //
     SpimConsole->show();
     ui->action_Win_Console->setChecked(true);
+
+    programRunning = false;
 }
 
 
