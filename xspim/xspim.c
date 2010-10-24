@@ -53,7 +53,7 @@
 #include "inst.h"
 #include "reg.h"
 #include "mem.h"
-#include "y.tab.h"
+#include "parser_yacc.h"
 #include "buttons.h"
 #include "windows.h"
 #include "xspim.h"

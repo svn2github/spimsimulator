@@ -2,7 +2,7 @@
 # $Xorg: imake.c,v 1.6 2001/02/09 02:03:15 xorgcvs Exp $
 
 # ----------------------------------------------------------------------
-# Makefile generated from "Imake.tmpl" and </tmp/IIf.PXcp9k>
+# Makefile generated from "Imake.tmpl" and </tmp/IIf.vjfEg1>
 # $Xorg: Imake.tmpl,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
 # $XdotOrg: xc/config/cf/Imake.tmpl,v 1.9 2005/01/24 06:37:31 daniels Exp $
 #
@@ -41,7 +41,7 @@ all::
 
 # platform:  $XFree86: xc/config/cf/linux.cf,v 3.220 2003/12/30 22:38:33 tsi Exp $
 
-# operating system:  Linux 2.6.32-24-generic i686 [ELF] (2.6.32)
+# operating system:  Linux 2.6.32-25-generic i686 [ELF] (2.6.32)
 # libc:	(6.11.1)
 # binutils:	(220)
 
@@ -1174,32 +1174,6 @@ install:: xspim
 
 install:: $(CPU_DIR)/exceptions.s
 	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $(CPU_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_DIR)
-
-all:: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
-
-$(DOC_DIR)/xspim.$(MANNEWSUFFIX): $(DOC_DIR)/xspim.$(MANSRCSUFFIX)
-	$(RM) $@
-	if test -z "$(PREPROCESSMANPAGES)" ; then \
-	   cd `dirname $(DOC_DIR)/xspim` && \
-	   $(LN) `basename $(DOC_DIR)/xspim.$(MANSRCSUFFIX)` `basename $@`; \
-	else \
-	      	     $(RAWCPP)  $(MANDEFS) $(EXTRAMANDEFS) \
-	     < $(DOC_DIR)/xspim.$(MANSRCSUFFIX) | sed -e '/^#  *[0-9][0-9]*  *.*$$/d' 			-e '/^#line  *[0-9][0-9]*  *.*$$/d' 			-e '/^[ 	]*XCOMM$$/s/XCOMM/#/' 			-e '/^[ 	]*XCOMM[^a-zA-Z0-9_]/s/XCOMM/#/' 			-e '/^[ 	]*XHASH/s/XHASH/#/' 			-e '/\@\@$$/s/\@\@$$/\\/' >$@; \
-	fi
-
-cleandir::
-	$(RM) $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
-
-install.man:: $(DOC_DIR)/xspim.$(MANNEWSUFFIX)
-	@if [ -d $(DESTDIR)$(MAN_DIR) ]; then \
-		set +x; \
-	else \
-		if [ -h $(DESTDIR)$(MAN_DIR) ]; then \
-			(set -x; rm -f $(DESTDIR)$(MAN_DIR)); \
-		fi; \
-		(set -x; $(MKDIRHIER) $(DESTDIR)$(MAN_DIR)); \
-	fi
-	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) $(DOC_DIR)/xspim.$(MANNEWSUFFIX) $(DESTDIR)$(MAN_DIR)/$(DOC_DIR)/xspim.$(MANSUFFIX)
 
 parser_yacc.h: parser_yacc.c
 
