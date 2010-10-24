@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Mon Oct 11 21:10:51 2010
+** Created: Sat Oct 23 18:10:14 2010
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,6 +38,7 @@ public:
     QAction *action_File_Reload;
     QAction *action_Sim_SetRunParameters;
     QAction *action_Sim_Run;
+    QAction *action_Sim_Pause;
     QAction *action_Sim_Stop;
     QAction *action_Sim_SingleStep;
     QAction *action_Sim_DisplaySymbols;
@@ -128,23 +129,28 @@ public:
         QIcon icon5;
         icon5.addFile(QString::fromUtf8(":/icons/Run.png"), QSize(), QIcon::Normal, QIcon::Off);
         action_Sim_Run->setIcon(icon5);
+        action_Sim_Pause = new QAction(SpimView);
+        action_Sim_Pause->setObjectName(QString::fromUtf8("action_Sim_Pause"));
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/icons/Pause.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Pause->setIcon(icon6);
         action_Sim_Stop = new QAction(SpimView);
         action_Sim_Stop->setObjectName(QString::fromUtf8("action_Sim_Stop"));
-        QIcon icon6;
-        icon6.addFile(QString::fromUtf8(":/icons/Stop.png"), QSize(), QIcon::Normal, QIcon::Off);
-        action_Sim_Stop->setIcon(icon6);
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/icons/Stop.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Stop->setIcon(icon7);
         action_Sim_SingleStep = new QAction(SpimView);
         action_Sim_SingleStep->setObjectName(QString::fromUtf8("action_Sim_SingleStep"));
-        QIcon icon7;
-        icon7.addFile(QString::fromUtf8(":/icons/SingleStep.png"), QSize(), QIcon::Normal, QIcon::Off);
-        action_Sim_SingleStep->setIcon(icon7);
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/icons/SingleStep.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_SingleStep->setIcon(icon8);
         action_Sim_DisplaySymbols = new QAction(SpimView);
         action_Sim_DisplaySymbols->setObjectName(QString::fromUtf8("action_Sim_DisplaySymbols"));
         action_Sim_Settings = new QAction(SpimView);
         action_Sim_Settings->setObjectName(QString::fromUtf8("action_Sim_Settings"));
-        QIcon icon8;
-        icon8.addFile(QString::fromUtf8(":/icons/Settings.png"), QSize(), QIcon::Normal, QIcon::Off);
-        action_Sim_Settings->setIcon(icon8);
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/icons/Settings.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Sim_Settings->setIcon(icon9);
         action_Reg_DisplayBinary = new QAction(SpimView);
         action_Reg_DisplayBinary->setObjectName(QString::fromUtf8("action_Reg_DisplayBinary"));
         action_Reg_DisplayBinary->setCheckable(true);
@@ -209,16 +215,16 @@ public:
         action_Win_Tile->setObjectName(QString::fromUtf8("action_Win_Tile"));
         action_Help_ViewHelp = new QAction(SpimView);
         action_Help_ViewHelp->setObjectName(QString::fromUtf8("action_Help_ViewHelp"));
-        QIcon icon9;
-        icon9.addFile(QString::fromUtf8(":/icons/Help.png"), QSize(), QIcon::Normal, QIcon::Off);
-        action_Help_ViewHelp->setIcon(icon9);
+        QIcon icon10;
+        icon10.addFile(QString::fromUtf8(":/icons/Help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Help_ViewHelp->setIcon(icon10);
         action_Help_AboutSPIM = new QAction(SpimView);
         action_Help_AboutSPIM->setObjectName(QString::fromUtf8("action_Help_AboutSPIM"));
         action_File_Print = new QAction(SpimView);
         action_File_Print->setObjectName(QString::fromUtf8("action_File_Print"));
-        QIcon icon10;
-        icon10.addFile(QString::fromUtf8(":/icons/Print.png"), QSize(), QIcon::Normal, QIcon::Off);
-        action_File_Print->setIcon(icon10);
+        QIcon icon11;
+        icon11.addFile(QString::fromUtf8(":/icons/Print.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_File_Print->setIcon(icon11);
         centralWidget = new QTextEdit(SpimView);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setUndoRedoEnabled(false);
@@ -318,6 +324,7 @@ public:
         menu_Simulator->addSeparator();
         menu_Simulator->addAction(action_Sim_SetRunParameters);
         menu_Simulator->addAction(action_Sim_Run);
+        menu_Simulator->addAction(action_Sim_Pause);
         menu_Simulator->addAction(action_Sim_Stop);
         menu_Simulator->addAction(action_Sim_SingleStep);
         menu_Simulator->addSeparator();
@@ -353,13 +360,18 @@ public:
         menu_Help->addAction(action_Help_AboutSPIM);
         toolBar->addAction(action_File_Load);
         toolBar->addAction(action_File_Reload);
+        toolBar->addSeparator();
         toolBar->addAction(action_File_SaveLog);
         toolBar->addAction(action_File_Print);
+        toolBar->addSeparator();
         toolBar->addAction(action_Sim_ClearRegisters);
         toolBar->addAction(action_Sim_Reinitialize);
+        toolBar->addSeparator();
         toolBar->addAction(action_Sim_Run);
+        toolBar->addAction(action_Sim_Pause);
         toolBar->addAction(action_Sim_Stop);
         toolBar->addAction(action_Sim_SingleStep);
+        toolBar->addSeparator();
         toolBar->addAction(action_Help_ViewHelp);
 
         retranslateUi(SpimView);
@@ -379,6 +391,7 @@ public:
         action_Sim_SetRunParameters->setText(QApplication::translate("SpimView", "Run &Parmeters", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setText(QApplication::translate("SpimView", "&Run/Continue", 0, QApplication::UnicodeUTF8));
         action_Sim_Run->setShortcut(QApplication::translate("SpimView", "F5", 0, QApplication::UnicodeUTF8));
+        action_Sim_Pause->setText(QApplication::translate("SpimView", "&Pause", 0, QApplication::UnicodeUTF8));
         action_Sim_Stop->setText(QApplication::translate("SpimView", "&Stop", 0, QApplication::UnicodeUTF8));
         action_Sim_Stop->setShortcut(QApplication::translate("SpimView", "Shift-F5", 0, QApplication::UnicodeUTF8));
         action_Sim_SingleStep->setText(QApplication::translate("SpimView", "&Single Step", 0, QApplication::UnicodeUTF8));

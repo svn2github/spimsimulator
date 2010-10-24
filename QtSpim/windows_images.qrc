@@ -37,6 +37,7 @@
      <file alias="ClearRegs.png">windows_images/ClearRegs.png</file>
      <file alias="Help.png">windows_images/Help.png</file>
      <file alias="LoadFile.png">windows_images/LoadFile.png</file>
+     <file alias="Pause.png">windows_images/Pause.png</file>
      <file alias="Print.png">windows_images/Print.png</file>
      <file alias="Reinit.png">windows_images/Reinit.png</file>
      <file alias="ReloadFile.png">windows_images/ReloadFile.png</file>

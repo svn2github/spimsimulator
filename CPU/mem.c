@@ -242,17 +242,16 @@ expand_stack (int addl_bytes)
 
   if ((addl_bytes < 0) || (new_size > stack_size_limit))
     {
-      error ("Can't expand stack segment by %d bytes to %d bytes\n",
-	     addl_bytes, new_size);
-      run_error ("Use -lstack # with # > %d\n", new_size);
+      run_error ("Can't expand stack segment by %d bytes to %d bytes.\nUse -lstack # with # > %d\n",
+                 addl_bytes, new_size, new_size);
     }
 
   new_seg = (mem_word *) xmalloc (new_size);
+  memset(new_seg, 0, new_size);
+
   po = stack_seg + (old_size / BYTES_PER_WORD - 1);
   pn = new_seg + (new_size / BYTES_PER_WORD - 1);
-
   for ( ; po >= stack_seg ; ) *pn -- = *po --;
-  for ( ; pn >= new_seg ; ) *pn -- = 0;
 
   free (stack_seg);
   stack_seg = new_seg;
@@ -274,9 +273,8 @@ expand_k_data (int addl_bytes)
 
   if ((addl_bytes < 0) || (new_size > k_data_size_limit))
     {
-      error ("Can't expand kernel data segment by %d bytes to %d bytes\n",
-	     addl_bytes, new_size);
-      run_error ("Use -lkdata # with # > %d\n", new_size);
+      run_error ("Can't expand kernel data segment by %d bytes to %d bytes.\nUse -lkdata # with # > %d\n",
+                 addl_bytes, new_size, new_size);
     }
   k_data_seg = (mem_word *) realloc (k_data_seg, new_size);
   if (k_data_seg == NULL)
@@ -544,7 +542,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
       break;
 
     default:
-	  tmp = 0;
+      tmp = 0;
       run_error ("Bad mask (0x%x) in bad_mem_read\n", mask);
     }
 

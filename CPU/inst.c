@@ -641,8 +641,15 @@ compare_pair_value (name_val_val *p1, name_val_val *p2)
 void
 print_inst (mem_addr addr)
 {
+  write_output (message_out, inst_to_string (addr));
+}
+
+
+char*
+inst_to_string(mem_addr addr)
+{
+  str_stream ss;
   instruction *inst;
-  static str_stream ss;
 
   exception_occurred = 0;
   inst = read_mem_inst (addr);
@@ -650,12 +657,12 @@ print_inst (mem_addr addr)
   if (exception_occurred)
     {
       error ("Can't print instruction not in text segment (0x%08x)\n", addr);
-      return;
+      return "";
     }
 
-  ss_clear (&ss);
+  ss_init (&ss);
   format_an_inst (&ss, inst, addr);
-  write_output (message_out, ss_to_string (&ss));
+  return ss_to_string (&ss);
 }
 
 

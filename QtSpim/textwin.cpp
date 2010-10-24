@@ -47,14 +47,18 @@
 
 void SpimView::DisplayTextSegments()
 {
-    QTextEdit* te = ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit");
+    if (text_modified)
+    {
+        textTextEdit* te = ui->TextSegDockWidget->findChild<textTextEdit *>("TextSegmentTextEdit");
 
-    te->clear();
-    te->setHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
-                % formatUserTextSeg()
-                % formatKernelTextSeg()
-                % windowFormattingEnd());
-    highlightInstruction(PC);
+        te->clear();
+        te->insertHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
+                       % formatUserTextSeg()
+                       % formatKernelTextSeg()
+                       % windowFormattingEnd());
+        highlightInstruction(PC);
+    }
+    text_modified = 0;
 }
 
 

@@ -250,15 +250,12 @@ void SpimView::sim_ReinitializeSimulator()
     initStack();
     write_startup_message();
 
-    DisplayTextSegments();
-    DisplayDataSegments();
-
     CaptureIntRegisters();
     CaptureSFPRegisters();
     CaptureDFPRegisters();
 
-    DisplayIntRegisters();
-    DisplayFPRegisters();
+    DisplayTextSegments();
+    UpdateDataDisplay();
 }
 
 
@@ -293,25 +290,34 @@ void SpimView::sim_Run()
     initializePCAndStack();
 
     force_break = 0;
-    programRunning = true;
+    programState = running;
     while (!force_break)
     {
         Window->statusBar()->showMessage("Running");
-        if (!executeProgram(PC, 100000, false, false))
+        if (!executeProgram(PC, 1000, false, false))
         {
-            programRunning = false;
-            Window->statusBar()->showMessage("");
             break;
         }
         App->processEvents();   // Check for events in midst of long computation
     }
+    programState = stopped;
+    Window->statusBar()->showMessage("");
+    UpdateDataDisplay();
+}
+
+
+void SpimView::sim_Pause()
+{
+    force_break = 1;
+    programState = paused;
+    Window->statusBar()->showMessage("Paused");
 }
 
 
 void SpimView::sim_Stop()
 {
     force_break = 1;
-    programRunning = false;
+    programState = stopped;
     Window->statusBar()->showMessage("Stopped");
 }
 
@@ -322,13 +328,13 @@ void SpimView::sim_SingleStep()
 
     force_break = 0;
     Window->statusBar()->showMessage("Single Stepping");
-    programRunning = executeProgram(PC, 1, false, false);
+    programState = executeProgram(PC, 1, false, false) ? running : stopped;
 }
 
 
 void SpimView::initializePCAndStack()
 {
-    if (!programRunning || PC == 0)
+    if (programState == stopped || PC == 0)
     {
         if (st_startAddress == 0)
         {
@@ -355,13 +361,12 @@ bool SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
     while (true)
     {
         bool breakpointEncountered = run_program(pc, steps, display, contBkpt, &continuable);
-        highlightInstruction(PC);
-        DisplayIntRegisters();
-        DisplayFPRegisters();
-        DisplayDataSegments();
 
         if (breakpointEncountered)
         {
+            highlightInstruction(PC);
+            UpdateDataDisplay();
+
             QMessageBox msgBox(QMessageBox::Information,
                                "Execution Stopped",
                                "Execution stopped due to breakpoint. Continue executing?",
@@ -371,9 +376,7 @@ bool SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
             run_program(PC, 1, false, true, &continuable); // Execute instruction replaced by breakpoint
             pc = PC;
             highlightInstruction(PC);
-            DisplayIntRegisters();
-            DisplayFPRegisters();
-            DisplayDataSegments();
+            UpdateDataDisplay();
 
             if (steps == 1 || continueExecution != QMessageBox::Yes)
             {
@@ -502,10 +505,8 @@ void SpimView::sim_Settings()
             st_textWinBackgroundColor = *sd.textWinBackground;
         }
 
-        DisplayIntRegisters();
-        DisplayFPRegisters();
+        UpdateDataDisplay();
         DisplayTextSegments();
-        DisplayDataSegments();
     }
 }
 

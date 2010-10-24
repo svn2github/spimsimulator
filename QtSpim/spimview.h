@@ -77,6 +77,7 @@ Q_OBJECT
     void DisplayFPRegisters();
     void DisplayTextSegments();
     void DisplayDataSegments();
+    void UpdateDataDisplay();
 
  private:
     Ui::SpimView *ui;
@@ -214,7 +215,7 @@ Q_OBJECT
     void initStack();
     bool executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
     void initializePCAndStack();
-    bool programRunning;
+    enum PROGSTATE {stopped, paused, running} programState;
 
 
     //
@@ -235,6 +236,7 @@ Q_OBJECT
     void sim_ReinitializeSimulator();
     void sim_SetRunParameters();
     void sim_Run();
+    void sim_Pause();
     void sim_Stop();
     void sim_SingleStep();
     void sim_DisplaySymbols();

@@ -47,13 +47,17 @@
 
 void SpimView::DisplayDataSegments()
 {
-    dataTextEdit* te = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
-    te->clear();
-    te->setHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
-                % formatUserDataSeg()
-                % formatUserStack()
-                % formatKernelDataSeg()
-                % windowFormattingEnd());
+    if (data_modified)
+    {
+        dataTextEdit* te = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
+        te->clear();
+        te->appendHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
+                       % formatUserDataSeg()
+                       % formatUserStack()
+                       % formatKernelDataSeg()
+                       % windowFormattingEnd());
+    }
+    data_modified = 0;
 }
 
 
@@ -76,7 +80,7 @@ QString SpimView::formatUserStack()
     if (st_showUserStackSegment)
     {
         return formatSegLabel("<br>User Stack", ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP)
-            % formatMemoryContents(ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP - 4096);
+            % formatMemoryContents(ROUND_DOWN(R[29], BYTES_PER_WORD), STACK_TOP);
     }
     else
     {
@@ -101,10 +105,11 @@ QString SpimView::formatKernelDataSeg()
 
 #define BYTES_PER_LINE (4*BYTES_PER_WORD)
 
+
 QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
 {
-    mem_addr i = ROUND_UP (from, BYTES_PER_WORD);
-    QString windowContents = formatPartialQuadWord (i);
+    mem_addr i = ROUND_UP(from, BYTES_PER_WORD);
+    QString windowContents = formatPartialQuadWord(i);
     i = ROUND_UP(i, BYTES_PER_LINE); // Next quadword
 
     for ( ; i < to; )
@@ -115,7 +120,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
         int j;
         for (j = 0; (i + (uint32) j * BYTES_PER_WORD) < to; j += 1)
 	{
-            val = read_mem_word (i + (uint32) j * BYTES_PER_WORD);
+            val = read_mem_word(i + (uint32) j * BYTES_PER_WORD);
             if (val != 0)
 	    {
                 break;
@@ -130,7 +135,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
                 % QString("]") % nnbsp(2) % QString("00000000<\br>");
 
             i = i + (uint32) j * BYTES_PER_WORD;
-            windowContents += formatPartialQuadWord (i);
+            windowContents += formatPartialQuadWord(i);
             i = ROUND_UP(i, BYTES_PER_LINE); // Next quadword
 	}
         else
@@ -159,9 +164,9 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
 }
 
 
-QString SpimView::formatPartialQuadWord (mem_addr addr)
+QString SpimView::formatPartialQuadWord(mem_addr addr)
 {
-    QString windowContents = "";
+    QString windowContents = QString("");
 
     if ((addr % BYTES_PER_LINE) != 0)
     {

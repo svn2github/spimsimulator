@@ -146,10 +146,7 @@ write_startup_message ()
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
   write_output (message_out, "Copyright 1990-2010, James R. Larus.\n");
   write_output (message_out, "All Rights Reserved.\n");
-#ifdef _WIN32
-  write_output (message_out, "DOS and Windows ports by David A. Carley.\n");
-  write_output (message_out, "Copyright 1997, Morgan Kaufmann Publishers, Inc.\n");
-#endif
+  write_output (message_out, "SPIM is distributed under a BSD license.\n");
   write_output (message_out, "See the file README for a full copyright notice.\n");
 }
 

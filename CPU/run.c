@@ -225,11 +225,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	  handle_exception ();
 	}
 
+      force_break = 0;
       for (step = 0; step < step_size; step += 1)
 	{
 	  if (force_break)
 	    {
-	      force_break = 0;
 	      return (1);
 	    }
 
@@ -280,9 +280,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 		   && EXPR (inst)->symbol != NULL
 		   && EXPR (inst)->symbol->addr == 0)
 	    {
-	      error ("Instruction references undefined symbol at 0x%08x\n", PC);
-	      print_inst (PC);
-	      run_error ("");
+              run_error ("Instruction references undefined symbol at 0x%08x\n  %s", PC, inst_to_string(PC));
 	      return (0);
 	    }
 

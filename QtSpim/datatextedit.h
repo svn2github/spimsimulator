@@ -32,9 +32,9 @@
 
 
 #include <QObject>
-#include <QTextEdit>
+#include <QPlainTextEdit>
 
-class dataTextEdit : public QTextEdit
+class dataTextEdit : public QPlainTextEdit
 {
  Q_OBJECT
 

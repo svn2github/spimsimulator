@@ -259,6 +259,7 @@ int opcode_is_true_branch (int opcode);
 int opcode_is_jump (int opcode);
 int opcode_is_load_store (int opcode);
 void print_inst (mem_addr addr);
+char* inst_to_string (mem_addr addr);
 void r_co_type_inst (int opcode, int fd, int fs, int ft);
 void r_cond_type_inst (int opcode, int fs, int ft, int cc);
 void r_sh_type_inst (int opcode, int rd, int rt, int shamt);
