@@ -641,7 +641,9 @@ compare_pair_value (name_val_val *p1, name_val_val *p2)
 void
 print_inst (mem_addr addr)
 {
-  write_output (message_out, inst_to_string (addr));
+  char* inst_str = inst_to_string (addr);
+  write_output (message_out, inst_str);
+  free (inst_str);
 }
 
 
