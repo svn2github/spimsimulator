@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sat Oct 23 18:10:14 2010
+** Created: Sun Oct 31 16:38:15 2010
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
