@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spimview.ui'
 **
-** Created: Sun Oct 31 16:38:15 2010
+** Created: Fri Nov 5 21:07:30 2010
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTextEdit>
 #include <QtGui/QToolBar>
+#include <regtextedit.h>
 #include "datatextedit.h"
 #include "texttextedit.h"
 
@@ -80,9 +81,9 @@ public:
     QToolBar *main_Win_ToolBar;
     QStatusBar *statusBar;
     QDockWidget *IntRegDockWidget;
-    QTextEdit *IntRegTextEdit;
+    regTextEdit *IntRegTextEdit;
     QDockWidget *FPRegDockWidget;
-    QTextEdit *FPRegTextEdit;
+    regTextEdit *FPRegTextEdit;
     QDockWidget *TextSegDockWidget;
     textTextEdit *TextSegmentTextEdit;
     QDockWidget *DataSegDockWidget;
@@ -259,7 +260,7 @@ public:
         IntRegDockWidget = new QDockWidget(SpimView);
         IntRegDockWidget->setObjectName(QString::fromUtf8("IntRegDockWidget"));
         IntRegDockWidget->setAllowedAreas(Qt::TopDockWidgetArea);
-        IntRegTextEdit = new QTextEdit();
+        IntRegTextEdit = new regTextEdit();
         IntRegTextEdit->setObjectName(QString::fromUtf8("IntRegTextEdit"));
         IntRegTextEdit->setMinimumSize(QSize(200, 600));
         IntRegTextEdit->setUndoRedoEnabled(false);
@@ -269,7 +270,7 @@ public:
         FPRegDockWidget = new QDockWidget(SpimView);
         FPRegDockWidget->setObjectName(QString::fromUtf8("FPRegDockWidget"));
         FPRegDockWidget->setAllowedAreas(Qt::TopDockWidgetArea);
-        FPRegTextEdit = new QTextEdit();
+        FPRegTextEdit = new regTextEdit();
         FPRegTextEdit->setObjectName(QString::fromUtf8("FPRegTextEdit"));
         FPRegTextEdit->setUndoRedoEnabled(false);
         FPRegTextEdit->setReadOnly(true);

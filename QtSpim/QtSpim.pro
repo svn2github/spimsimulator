@@ -67,6 +67,7 @@ SOURCES += main.cpp\
 
 
 HEADERS  += spimview.h\
+	regtextedit.h\
 	texttextedit.h\
 	datatextedit.h\
         spim_settings.h\
@@ -157,15 +158,15 @@ linux-g++ {
   QMAKE_DEL_FILE = rm -f
 }
 
-linux-g++-64 { 
-  QMAKE_CFLAGS_DEBUG   += -x c++ -Wno-write-strings 
-  QMAKE_CFLAGS_RELEASE += -x c++ -Wno-write-strings 
-  QMAKE_CXXFLAGS_DEBUG += -x c++ -Wno-write-strings 
-  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings 
- 
+linux-g++-64 {
+  QMAKE_CFLAGS_DEBUG   += -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE += -x c++ -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG += -x c++ -Wno-write-strings
+  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+
   # Surpress error when deleting non-existent file.
   #
-  QMAKE_DEL_FILE = rm -f 
+  QMAKE_DEL_FILE = rm -f
 }
 
 macx-g++ {

@@ -34,8 +34,10 @@
 #include "spimview.h"
 #include "ui_spimview.h"
 
+#include <QRegExp>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
+#include <QInputDialog>
 
 
 //
@@ -44,7 +46,7 @@
 
 void SpimView::DisplayIntRegisters()
 {
-    QTextEdit* te = ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit");
+    regTextEdit* te = ui->IntRegDockWidget->findChild<regTextEdit *>("IntRegTextEdit");
     QString windowContents = windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor);
 
     windowContents += formatSpecialIntRegister(PC, "PC", PC != oldPC);
@@ -65,7 +67,7 @@ void SpimView::DisplayIntRegisters()
     windowContents += windowFormattingEnd();
 
     te->clear();
-    te->setHtml(windowContents);
+    te->appendHtml(windowContents);
     ui->IntRegDockWidget->setWindowTitle(QString("Int Regs [")
                                          + QString::number(st_intRegBase)
                                          + QString("] "));
@@ -113,12 +115,12 @@ void SpimView::CaptureIntRegisters()
 //
 void SpimView::DisplayFPRegisters()
 {
-    QTextEdit* te = ui->FPRegDockWidget->findChild<QTextEdit *>("FPRegTextEdit");
+    regTextEdit* te = ui->FPRegDockWidget->findChild<regTextEdit *>("FPRegTextEdit");
     te->clear();
-    te->setHtml(windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor)
-                % formatSFPRegisters()
-                % formatDFPRegisters()
-                % windowFormattingEnd());
+    te->appendHtml(windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor)
+                   % formatSFPRegisters()
+                   % formatDFPRegisters()
+                   % windowFormattingEnd());
 }
 
 
@@ -172,8 +174,8 @@ QString SpimView::formatSpecialSFPRegister(int value, char* name, bool changed)
 
 QString SpimView::formatSFPRegister(int regNum, float value, bool changed)
 {
-    return formatReg(QString("<b>FP") % QString::number(regNum, 10) % (regNum < 10 ? "&nbsp;</b>" : "</b>"),
-                     QString::number(value, 'g', 6).leftJustified(10, '0'),
+    return formatReg(QString("<b>FG") % QString::number(regNum, 10) % (regNum < 10 ? "&nbsp;</b>" : "</b>"),
+                     QString::number(value, 'f', 6),
                      changed);
 }
 
@@ -210,7 +212,7 @@ void SpimView::CaptureDFPRegisters()
 QString SpimView::formatDFPRegister(int regNum, double value, bool changed)
 {
     return formatReg(QString("<b>FP") % QString::number(regNum, 10) % (regNum < 10 ? "&nbsp;</b>" : "</b>"),
-                     QString::number(value, 'g', 6),
+                     QString::number(value, 'f', 6),
                      changed);
 }
 
@@ -231,7 +233,7 @@ QString SpimView::formatReg(QString name, QString value, bool changed)
         % name
         % QString("&nbsp;=&nbsp;")
         % value
-        % QString("&nbsp;&nbsp; ")
+        % QString("<br>")
         % registerAfter(changed);
 }
 
@@ -262,3 +264,167 @@ QString SpimView::nnbsp(int n)
 }
 
 
+//
+// Change register value
+//
+
+regTextEdit::regTextEdit()
+{
+    action_Context_ChangeValue = new QAction(this);
+    action_Context_ChangeValue->setObjectName("action_ChangeValue");
+    action_Context_ChangeValue->setText("Change Register Contents");
+}
+
+
+void regTextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+    QMenu *menu = createStandardContextMenu();
+    menu->addSeparator();
+    menu->addAction(action_Context_ChangeValue);
+    contextGlobalPos = event->globalPos();
+
+    menu->exec(event->globalPos());
+}
+
+
+void regTextEdit::changeValue()
+{
+    int reg = regAtPos("R");
+    if (reg != -1)
+    {
+        bool ok;
+        int value = QInputDialog::getInt(this,
+                                         "Change Register Contents",
+                                         "New Contents for R" + QString::number(reg, 10),
+                                         0, -2147483647, 2147483647, 1, &ok);
+        if (ok)
+        {
+            R[reg] = value;
+        }
+    }
+    else
+    {
+        int reg = regAtPos("FG");
+        if (reg != -1)
+        {
+            bool ok;
+            double value = QInputDialog::getDouble(this,
+                                                   "Change Register Contents",
+                                                   "New Contents for FG" + QString::number(reg, 10),
+                                                   0, -2147483647, 2147483647, 1, &ok);
+            if (ok)
+            {
+                FGR[reg] = (float)value;
+            }
+        }
+        else
+        {
+            int reg = regAtPos("FP");
+            if (reg != -1)
+            {
+                bool ok;
+                double value = QInputDialog::getDouble(this,
+                                                       "Change Register Contents",
+                                                       "New Contents for FP" + QString::number(reg, 10),
+                                                       0, -2147483647, 2147483647, 1, &ok);
+                if (ok)
+                {
+                    FGR[reg] = value;
+                }
+            }
+            else
+            {
+                QString reg = strAtPos("([A-Za-z]+)");
+                if (reg != "")
+                {
+                    bool ok;
+                    int value = QInputDialog::getInt(this,
+                                                     "Change Register Contents",
+                                                     "New Contents for " + reg,
+                                                     0, -2147483647, 2147483647, 1, &ok);
+                    if (ok)
+                    {
+                        if (reg == "PC")
+                        {
+                            PC = value;
+                        }
+                        else if (reg == "EPC")
+                        {
+                            CP0_EPC = value;
+                        }
+                        else if (reg == "Cause")
+                        {
+                            CP0_Cause = value;
+                        }
+                        else if (reg == "BadVAddr")
+                        {
+                            CP0_BadVAddr = value;
+                        }
+                        else if (reg == "Status")
+                        {
+                            CP0_Status = value;
+                        }
+                        else if (reg == "HI")
+                        {
+                            HI = value;
+                        }
+                        else if (reg == "LO")
+                        {
+                            LO = value;
+                        }
+                        else if (reg == "FIR")
+                        {
+                            FIR = value;
+                        }
+                        else if (reg == "FCSR")
+                        {
+                            FCSR = value;
+                        }
+                        else if (reg == "FCCR")
+                        {
+                            FCCR = value;
+                        }
+                        else if (reg == "FEXR")
+                        {
+                            FEXR = value;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Window->DisplayIntRegisters();
+    Window->DisplayFPRegisters();
+}
+
+
+int regTextEdit::regAtPos(QString prefix)
+{
+    QString regStr = strAtPos(prefix + "([0-9]+)");    // Register name
+    if (regStr != "")
+    {
+        return regStr.toInt();
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+
+QString regTextEdit::strAtPos(QString pattern)
+{
+    // Position of context menu is location user right-click. Find the line at this point
+    // and compute the address of the memory location the user clicked on.
+    //
+    QPoint mouseViewportPos = this->viewport()->mapFromGlobal(contextGlobalPos);
+    QTextCursor mouseCursor = this->cursorForPosition(mouseViewportPos);
+
+    mouseCursor.select(QTextCursor::LineUnderCursor);
+    QString line = mouseCursor.selectedText();
+
+    QRegExp rx(pattern);
+
+    rx.indexIn(line);
+    return rx.cap(1);
+}

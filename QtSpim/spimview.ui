@@ -183,7 +183,7 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QTextEdit" name="IntRegTextEdit">
+   <widget class="regTextEdit" name="IntRegTextEdit">
     <property name="minimumSize">
      <size>
       <width>200</width>
@@ -208,7 +208,7 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QTextEdit" name="FPRegTextEdit">
+   <widget class="regTextEdit" name="FPRegTextEdit">
     <property name="undoRedoEnabled">
      <bool>false</bool>
     </property>

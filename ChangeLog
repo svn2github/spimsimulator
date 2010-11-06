@@ -1,3 +1,9 @@
+2010-11-05    <Jim@LS-RED>
+
+	* QtSpim/regwin.cpp, QtSpim/QtSpim.pro, QtSpim/regtextedit.h,
+	QtSpim/spimview.cpp, QtSpim/spimview.ui Mitko <asdfgga12@gmail.com>:
+	Add right click to set register values.
+
 2010-10-23    <Jim@LS-RED>
 
 	* CPU/inst.c, CPU/inst.h, CPU/mem.c, CPU/run.c,

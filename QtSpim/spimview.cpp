@@ -142,6 +142,10 @@ void SpimView::wireCommands()
                      ui->TextSegmentTextEdit, SLOT(clearBreakpoint()));
 
 
+    QObject::connect(ui->IntRegTextEdit->action_Context_ChangeValue, SIGNAL(triggered(bool)),
+                     ui->IntRegTextEdit, SLOT(changeValue()));
+    QObject::connect(ui->FPRegTextEdit->action_Context_ChangeValue, SIGNAL(triggered(bool)),
+                     ui->FPRegTextEdit, SLOT(changeValue()));
     QObject::connect(ui->DataSegmentTextEdit->action_Context_ChangeValue, SIGNAL(triggered(bool)),
                      ui->DataSegmentTextEdit, SLOT(changeValue()));
 }
