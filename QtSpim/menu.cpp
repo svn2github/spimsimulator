@@ -48,6 +48,7 @@
 #include <QPrintDialog>
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QProcess>
 
 
 //
@@ -758,6 +759,16 @@ void SpimView::win_Tile()
 
 void SpimView::help_ViewHelp()
 {
+    QProcess *process = new QProcess;
+    QStringList args;
+    args << QLatin1String("-collectionFile")
+         << QLatin1String((App->applicationDirPath() + QString("/qtspim.qhc")).toLocal8Bit())
+         << QLatin1String("-enableRemoteControl");
+    process->start(QLatin1String("assistant"), args);
+    if (!process->waitForStarted())
+    {
+        return;
+    }
 }
 
 
