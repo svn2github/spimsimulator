@@ -1,3 +1,8 @@
+2010-11-21    <Jim@LS-RED>
+
+	* QtSpim/menu.cpp, QtSpim/help:
+	Added help file.
+
 2010-11-05    <Jim@LS-RED>
 
 	* QtSpim/regwin.cpp, QtSpim/QtSpim.pro, QtSpim/regtextedit.h,
