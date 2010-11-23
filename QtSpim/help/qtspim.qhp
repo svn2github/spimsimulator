@@ -4,9 +4,14 @@
      <virtualFolder>doc</virtualFolder>
      <filterSection>
          <filterAttribute>qtspim</filterAttribute>
-         <filterAttribute>1.0</filterAttribute>
          <toc>
              <section title="QtSpim Manual" ref="qtspim_help.html">
+               <section title="Getting Started with QtSpim" ref="qtspim_help.html#getting" />
+               <section title="Loading a Program" ref="qtspim_help.html#loading" />
+               <section title="Running a Program" ref="qtspim_help.html#running" />
+               <section title="Display Options" ref="qtspim_help.html#display" />
+               <section title="Changing Registers and Memory" ref="qtspim_help.html#changing" />
+               <section title="Settings" ref="qtspim_help.html#settings" />
              </section>
          </toc>
          <keywords>
