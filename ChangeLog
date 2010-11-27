@@ -1,3 +1,8 @@
+2010-11-26    <Jim@LS-RED>
+
+	* QtSpim/help:
+	Added Appendix A of Patterson & Hennessey as help file.
+
 2010-11-21    <Jim@LS-RED>
 
 	* QtSpim/menu.cpp, QtSpim/help:
