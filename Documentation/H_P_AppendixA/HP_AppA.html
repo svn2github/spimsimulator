@@ -119,7 +119,7 @@
       <li><a href="#concluding"><b>Concluding Remarks</b></a></li>
       <li><a href="#exercises"><b>Exercises</b></a></li>
     </ul>
-    <h2><a name="#intro">Introduction</a></h2>
+    <h2><a name="intro">Introduction</a></h2>
         <p>Encoding instructions as binary numbers is natural and efficient for computers.
         Humans, however, have a great deal of difficulty understanding and manipulating
         these numbers. People read and write symbols (words) much better than long sequences
@@ -315,7 +315,7 @@ str:
         symbol that should be visible to code stored in other files. Finally, .asciiz stores a
         null-terminated string in memory.
         </p>
-        <h3><a name="#when">When to Use Assembly Language</a></h3>
+        <h3><a name="when">When to Use Assembly Language</a></h3>
         <p>The primary reason to program in assembly language, as opposed to an available
         high-level language, is that the speed or size of a program is critically important.
         For example, consider a computer that controls a piece of machinery, such as
@@ -374,7 +374,7 @@ str:
         is available on a particular computer. Many older or specialized computers do
         not have a compiler, so a programmer’s only alternative is assembly language.
         </p>
-        <h3><a name="#drawbacks">Drawbacks of Assembly Language</a></h3>
+        <h3><a name="drawbacks">Drawbacks of Assembly Language</a></h3>
         <p>Assembly language has many disadvantages that strongly argue against its
         widespread use. Perhaps its major disadvantage is that programs written in assembly
         language are inherently machine-specific and must be totally rewritten to run
@@ -429,7 +429,7 @@ str:
         for writing embedded systems.</p>
 </div>
 <div class="body">
-        <h2><a name="#assemblers">Assemblers</a></h2>
+        <h2><a name="assemblers">Assemblers</a></h2>
         <p>An assembler translates a file of assembly language statements into a file
         of binary machine instructions and binary data. The translation process has
         two major parts. The first step is to find memory locations with labels so the
@@ -543,7 +543,7 @@ str:
         </p>
 </div>
 <div class="body">
-        <h3><a name="#object">Object File Format</a></h3>
+        <h3><a name="object">Object File Format</a></h3>
         <p>Assemblers produce object files. An object file on UNIX contains six distinct
         sections (see Figure 2.1):</p>
         <ul type="square">
@@ -608,7 +608,7 @@ str:
         use PC-relative addressing, such as branches, need not be relocated.</p>
 </div>
 <div class="body">
-        <h3><a name="#additional">Additional Facilities</a></h3>
+        <h3><a name="additional">Additional Facilities</a></h3>
         <p>Assemblers provide a variety of convenience features that help make assembler
         programs short and easier to write, but do not fundamentally change assembly
         language. For example, <i>data layout directives</i> allow a programmer to describe
@@ -753,7 +753,7 @@ int_str: .asciiz“%d”
         in the other files.</p>
 </div>
 <div class="body">
-        <h2><a name="#linkers">Linkers</a></h2>
+        <h2><a name="linkers">Linkers</a></h2>
         <p><dfn class="define">Separate compilation</dfn> permits a program
         to be split into pieces that are stored in different files. Each file contains
         a logically related collection of subroutines and data structures that form
@@ -804,7 +804,7 @@ int_str: .asciiz“%d”
         <p>The linker produces an executable file that can run on a computer. Typically,
         this file has the same format as an object file, except that it contains no
         unresolved references or relocation information.</p>
-        <h2><a name="#loading">Loading</a></h2>
+        <h2><a name="loading">Loading</a></h2>
 </div>
 <div class="sidebar">
         <p><dfn class="define">static data</dfn> The portion of memory that
@@ -832,7 +832,7 @@ int_str: .asciiz“%d”
                 routine returns, the start-up routine terminates the program with the exit
                 system call.</li>
         </ol>
-        <h2><a name="#memory">Memory Usage</a></h2>
+        <h2><a name="memory">Memory Usage</a></h2>
         <p>The next few sections elaborate the description of the MIPS architecture
         presented earlier in the book. Earlier chapters focused primarily on hardware
         and its relationship with low-level software. These sections focus primarily
@@ -904,7 +904,7 @@ int_str: .asciiz“%d”
         it has two important characteristics: the two dynamically expandable segments
         are as far apart as possible, and they can grow to use a program’s entire address
         space.</p>
-        <h2><a name="#procedure">Procedure Call Conventions</a></h2>
+        <h2><a name="procedure">Procedure Call Conventions</a></h2>
         <p>Conventions governing the use of registers are necessary when procedures
         in a program are compiled separately. To compile a particular procedure, a compiler
         must know which registers it may use and which registers are reserved for other
@@ -956,7 +956,7 @@ int_str: .asciiz“%d”
         call convention. In describing this convention, we will use the names instead
         of register numbers. Figure 6.1 lists the registers and describes their intended
         uses.</p>
-        <h3><a name="#procedure">Procedure Calls</a></h3>
+        <h3><a name="procedure">Procedure Calls</a></h3>
         <p>This section describes the steps that occur when one procedure (the <i>caller
         </i> ) invokes another procedure (the <i>callee</i> ). Programmers who write in
         a high-level language (like C or Pascal) never see the details of how one procedure
@@ -1253,7 +1253,7 @@ int_str: .asciiz“%d”
         <p>the active stack frame, which permits a single load or store instruction
         to access values in the frame. In addition, recursion is a valuable programming
         technique.</p>
-        <h3><a name="#procedure">Procedure Call Example</a></h3>
+        <h3><a name="procedure">Procedure Call Example</a></h3>
         <pre>
         main () {
           printf (&quot;The factorial of 10 is %d\n&quot;, fact (10));
@@ -1365,7 +1365,7 @@ $L2:
         execution if values are pushed on the stack.</p>
 </div>
 <div class="body">
-        <h3><a name="#another">Another Procedure Call Example</a></h3>
+        <h3><a name="another">Another Procedure Call Example</a></h3>
         <p>As another example, consider the following routine that computes the tak
         function, which is a widely used benchmark created by Ikuo Takeuchi. This function
         does not compute anything useful, but is a heavily recursive program that illustrates
@@ -1485,7 +1485,7 @@ main:
         addiu $sp, $sp, 24
         jr $ra
         </pre>
-        <h2><a name="#exceptions">Exceptions and Interrupts</a></h2>
+        <h2><a name="exceptions">Exceptions and Interrupts</a></h2>
         <p>The MIPS exception facility, which responds both to exceptions caused by errors
         during an instruction’s execution and to external interrupts caused by I/O
         devices. This section describes exception and <dfn class="define">interrupt
@@ -1678,7 +1678,7 @@ main:
         a routine to print a message at each exception (but not interrupts). This code
         is similar to the exception handler (exceptions.s) used by the SPIM simulator.
         </p>
-        <h3><a name="#exception">Exception Handler</a></h3>
+        <h3><a name="exception">Exception Handler</a></h3>
         <p>The exception handler first saves register $at, which is used in pseudo-instructions
         in the handler code, then saves $a0 and $a1, which it later uses to pass arguments.
         The exception handler cannot store the old values from these registers on the
@@ -1752,7 +1752,7 @@ save1:  .word 0
         memory.</p>
 </div>
 <div class="body">
-        <h2><a name="#input">Input and Output</a></h2>
+        <h2><a name="input">Input and Output</a></h2>
         <p>SPIM simulates one I/O device: a memory-mapped console on which a program
         can read and write characters. When a program is running, SPIM connects its
         own terminal (or a separate console window in the X-window version xspim or
@@ -1828,7 +1828,7 @@ save1:  .word 0
         number of instructions. If you stop the machine and look at the ready bit, it
         will not change. However, if you let the machine run, the bit eventually changes
         back to 1.</p>
-        <h2><a name="#spim">SPIM</a></h2>
+        <h2><a name="spim">SPIM</a></h2>
         <p>SPIM is a software simulator that runs assembly language programs written
         for processors that implement the MIPS32 architecture, specifically Release
         1 of this architecture with a fixed memory mapping, no caches, and only coprocessors
@@ -1858,7 +1858,7 @@ save1:  .word 0
         that run on them. Because they are implemented in software, not silicon, simulators
         can be examined and easily modified to add new instructions, build new systems
         such as multiprocessors, or simply to collect data.</p>
-        <h3><a name="#simulation">Simulation of a Virtual Machine</a></h3>
+        <h3><a name="simulation">Simulation of a Virtual Machine</a></h3>
         <p>The basic MIPS architecture is difficult to program directly because of delayed
         branches, delayed loads, and restricted address modes. This difficulty is tolerable
         since these computers were designed to be programmed in high-level languages
@@ -1897,7 +1897,7 @@ save1:  .word 0
         actual hardware. In doing so, we follow the convention of MIPS assembly language
         programmers (and compilers), who routinely use the extended machine as if it
         was implemented in silicon.</p>
-        <h3><a name="#getting">Getting Started with SPIM</a></h3>
+        <h3><a name="getting">Getting Started with SPIM</a></h3>
         <p>The rest of this appendix introduces SPIM and the MIPS R2000 Assembly language.
         Many details should never concern you; however, the sheer volume of information
         can sometimes obscure the fact that SPIM is a simple, easy-to-use program. This
@@ -1914,7 +1914,7 @@ save1:  .word 0
         <p>There are two older cousins to spim. The version that runs in the X-windows
         environment of a UNIX or Linux system is called xspim. PCspim is a windowing
         version of spim that runs on Microsoft Windows.</p>
-        <h3><a name="#surprising">Surprising Features</a></h3>
+        <h3><a name="surprising">Surprising Features</a></h3>
         <p>Although SPIM faithfully simulates the MIPS computer, SPIM is a simulator
         and certain things are not identical to an actual computer. The most obvious
         differences are that instruction timing and the memory system are not identical.
@@ -1927,7 +1927,7 @@ save1:  .word 0
         the instructions that you see are different from the source program. The correspondence
         between the two sets of instructions is fairly simple since SPIM does not reorganize
         instructions to fill delay slots.</p>
-        <h3><a name="#byte">Byte Order</a></h3>
+        <h3><a name="byte">Byte Order</a></h3>
         <p>Processors can number bytes within a word so the byte with the lowest number
         is either the leftmost or rightmost one. The convention used by a machine is
         called its <i>byte order</i>. MIPS processors can operate with either <i>big-endian
@@ -1960,7 +1960,7 @@ save1:  .word 0
         byte order of the underlying machine that runs the simulator. For example, on
         a Intel 80x86, SPIM is little-endian, while on a Macintosh or Sun SPARC, SPIM
         is bigendian.</p>
-        <h3><a name="#system">System Calls</a></h3>
+        <h3><a name="system">System Calls</a></h3>
         <p>SPIM provides a small set of operating-system-like services through the system
         call (syscall) instruction. To request a service, a program loads the system
         call code (see Figure 9.1) into register $v0 and arguments into registers
@@ -2113,13 +2113,13 @@ str:
         itself terminates.</p>
         <p>print_char and read_char write and read a single character. open, read, write,
         and close are the standard UNIX library calls.</p>
-        <h2><a name="#mips">MIPS R2000 Assembly Language</a></h2>
+        <h2><a name="mips">MIPS R2000 Assembly Language</a></h2>
         <p>A MIPS processor consists of an integer processing unit (the CPU) and a collection
         of coprocessors that perform ancillary tasks or operate on other types of data
         such as floating-point numbers (see Figure 10.1). SPIM simulates two coprocessors.
         Coprocessor 0 handles exceptions and interrupts. Coprocessor 1 is the float-ing-point
         unit. SPIM simulates most aspects of this unit.</p>
-        <h3><a name="#addressing">Addressing Modes</a></h3>
+        <h3><a name="addressing">Addressing Modes</a></h3>
         <p>MIPS is a load-store architecture, which means that only load and store instructions
         access memory. Computation instructions operate only on values in registers.
         The bare machine provides only one memory-addressing mode: c(rx), which uses
@@ -2188,7 +2188,7 @@ str:
         instruction to the value in register $at.</p>
 </div>
 <div class="body">
-        <h3><a name="#assembler">Assembler Syntax</a></h3>
+        <h3><a name="assembler">Assembler Syntax</a></h3>
         <p>Comments in assembler files begin with a sharp sign (#). Everything from the sharp
         sign to the end of the line is ignored.</p>
         <p>Identifiers are a sequence of alphanumeric characters, underbars (_), and dots (.)
@@ -2306,7 +2306,7 @@ str:
         </table>
         <p>SPIM does not distinguish various parts of the data segment (.data, .rdata, and
         .sdata).</p>
-        <h3><a name="#encoding">Encoding MIPS Instructions</a></h3>
+        <h3><a name="encoding">Encoding MIPS Instructions</a></h3>
         <p><b>Figure 10.2 explains how a MIPS instruction is encoded in a binary number.</b>
         Each column contains instruction encodings for a field (a contiguous group of
         bits) from an instruction. The numbers at the left margin are values for a field.
@@ -2317,7 +2317,7 @@ str:
         additional fields to distinguish related instructions. For example, the different
         floating-point instructions are specified by bits 0–5. The arrows from the first
         column show which opcodes use these additional fields.</p>
-        <h3><a name="#instruction">Instruction Format</a></h3>
+        <h3><a name="instruction">Instruction Format</a></h3>
         <p>The rest of this appendix describes both the instructions implemented by
         actual MIPS hardware and the pseudoinstructions provided by the MIPS assembler.
         The two types of instructions are easily distinguished. Actual instructions
@@ -2378,7 +2378,7 @@ str:
         register or an immediate value. In general, the assembler and SPIM translate
         a more general form of an instruction (e.g., add $v1, $a0, 0x55) to a specialized
         form (e.g., addi $v1, $a0, 0x55).</p>
-        <h3><a name="#arithmetic">Arithmetic and Logical Instructions</a></h3>
+        <h3><a name="arithmetic">Arithmetic and Logical Instructions</a></h3>
         <h4>Absolute value</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -3190,7 +3190,7 @@ str:
         </table>
         <p>Put the logical XOR of register rs and the zero-extended immediate into register
         rt.</p>
-        <h3><a name="#constant">Constant-Manipulating Instructions</a></h3>
+        <h3><a name="constant">Constant-Manipulating Instructions</a></h3>
         <h4>Load upper immediate</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -3220,7 +3220,7 @@ str:
                 </tr>
         </table>
         <p>Move the immediate imm into register rdest.</p>
-        <h3><a name="#comparison">Comparison Instructions</a></h3>
+        <h3><a name="comparison">Comparison Instructions</a></h3>
         <h4>Set less than</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -3366,7 +3366,7 @@ str:
                 </tr>
         </table>
         <p>Set register rdestto 1 if register rsrc1is not equal to rsrc2, and to 0 otherwise.</p>
-        <h3><a name="#branch">Branch Instructions</a></h3>
+        <h3><a name="branch">Branch Instructions</a></h3>
         <p>Branch instructions use a signed 16-bit instruction <i>offset</i> field; hence
         they can jump 2 <sup>15</sup> - <i>instructions</i> (not bytes) forward or
         215 instructions backwards. The <i>jump</i> instruction contains a 26-bit address
@@ -3689,7 +3689,7 @@ str:
         </table>
         <p>Conditionally branch to the instruction at the label if register rsrcis not
         equal to 0.</p>
-        <h3><a name="#jump">Jump Instructions</a></h3>
+        <h3><a name="jump">Jump Instructions</a></h3>
         <h4>Jump</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -3776,7 +3776,7 @@ str:
                 </tr>
         </table>
         <p>Unconditionally jump to the instruction whose address is in register rs.</p>
-        <h3><a name="#trap">Trap Instructions</a></h3>
+        <h3><a name="trap">Trap Instructions</a></h3>
         <h4>Trap if equal</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -4039,7 +4039,7 @@ str:
                 </tr>
         </table>
         <p>If register rs is less than the sign extended value imm, raise a Trap exception.</p>
-        <h3><a name="#load">Load Instructions</a></h3>
+        <h3><a name="load">Load Instructions</a></h3>
         <h4>Load address</h4>
         <table class="inst" align="center" border="p1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -4270,7 +4270,7 @@ str:
         conditional (sc) instruction, which will fail if another processor writes into
         the block containing the loaded word. Since SPIM does not simulate multiple
         processors, the store conditional operation always succeeds.</p>
-        <h3><a name="#store">Store Instructions</a></h3>
+        <h3><a name="store">Store Instructions</a></h3>
         <h4>Store byte</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -4469,7 +4469,7 @@ str:
         block containing the addressed word, this instruction does not modify memory
         and writes 0 into register rt. Since SPIM does not simulate multiple processors,
         the instruction always succeeds.</p>
-        <h3><a name="#data">Data Movement Instructions</a></h3>
+        <h3><a name="data">Data Movement Instructions</a></h3>
         <h4>Move</h4>
         <table class="inst" align="center" border="p1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -4797,7 +4797,7 @@ str:
         <p>Move CPU register rs to register rd if FPU condition code flag number <i>
         cc</i> is 1. If <i>cc</i> is omitted from the instruction, condition code bit
         0 is assumed.</p>
-        <h3><a name="#floating">Floating-Point Instructions</a></h3>
+        <h3><a name="floating">Floating-Point Instructions</a></h3>
         <p>The MIPS has a floating-point coprocessor (numbered 1) that operates on single
         precision (32-bit) and double precision (64-bit) floating-point numbers. This
         coprocessor has its own registers, which are numbered $f0–$f31. Because these
@@ -5977,7 +5977,7 @@ str:
         </table>
         <p>Truncate the floating-point double (single) value in register fs, convert
         to a 32bit fixed-point value, and put the resulting word in register fd.</p>
-        <h3><a name="#exception">Exception and Interrupt Instructions</a></h3>
+        <h3><a name="exception">Exception and Interrupt Instructions</a></h3>
         <h4>Exception return</h4>
         <h4>Floating-point truncate to word double</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
@@ -6064,7 +6064,7 @@ str:
                 </tr>
         </table>
         <p>Do nothing.</p>
-        <h2><a name="#concluding">Concluding Remarks</a></h2>
+        <h2><a name="concluding">Concluding Remarks</a></h2>
         <p>Programming in assembly language requires a programmer to trade off helpful
         features of high-level languages—such as data structures, type checking, and
         control constructs—for complete control over the instructions that a computer
@@ -6119,7 +6119,7 @@ str:
                 Resource Architecture (.pdf)</a> </p>
                 </li>
         </ul>
-        <h2><a name="#exercises">Exercises</a></h2>
+        <h2><a name="exercises">Exercises</a></h2>
         <ol type="1">
           <li>[5] &lt;§A.5&gt; Section A.5 described how memory is partitioned on
             most MIPS systems. Propose another way of dividing memory that meets the
