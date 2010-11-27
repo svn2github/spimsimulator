@@ -3,26 +3,31 @@
 <!-- Mapping table version: 28-February-2003 -->
 <html>
 <head>
+<title>Assemblers, Linkers, and the SPIM Simulator</title>
 <meta content="Petterson_Hennessy.book" name="DC.Title">
 <meta content="Reuben Kantor" name="DC.Contributor">
 <meta content="FrameMaker 7.0: LaserWriter 8 8.7.1" name="DC.Creator">
 <meta content="2004-06-23T22:13:20Z" name="DC.Date">
 <meta content="2004-06-23T22:13:20Z" name="DC.Date.Modified">
 <style type="text/css">
-.body {
+.body{
 	width:700px;
+}
+.elaboration {
+	padding: 20px;
+	width:700px;
+	background-color:#FFFFCC
 }
 .define {
 	color: #00599C;
 	font-weight: bold;
 }
 .sidebar {
-	border: 1px solid #00FF00;
 	background-color: #d4e8ee;
 	width: 200px;
 	float: right;
 	margin: 0px 0px 0px 20px;
-	padding: 10px 10px 10px 10px;
+	padding: 10px;
 }
 .inst {
 	font-family:"Courier New", Courier, monospace;
@@ -33,73 +38,88 @@
 .instfields {
 	background-color:#CCCCCC;
 }
+.hpfig {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.listing th {
+	background-color: blue;
+	color: #FFFFFF;
+	text-align: center;
+}
+.centered {
+	text-align: center;
+}
+.xxsmall {
+	font-size: xx-small;
+}
 </style>
 </head>
 
 <body alink="fushia" bgcolor="white" link="blue" text="black" vlink="purple">
 
-<p><b>Appendix A from Patterson and Hennessey, <i>Computer Organization
-and Design: The Hardware/Software Interface</i>, Third Edition. Copyright Morgan
-Kaufmann Publishers. Used by permission.</b></p>
-<div class="body">
-        <h1>Assemblers, Linkers, and the SPIM Simulator</h1>
-        <p><i>James R. Larus<br></i> Microsoft Research Microsoft</p>
-<ul>
-  <li><a href="#intro"><b>Introduction</b></a></li>
-  <ul>
-    <li><a href="#when"><b>When to Use Assembly Language</b></a></li>
-    <li><a href="#drawbacks"><b>Drawbacks of Assembly Language</b></a></li>
-  </ul>
-  <li><a href="#assemblers"><b>Assemblers</b></a></li>
-  <ul>
-    <li><a href="#object"><b>Object File Format</b></a></li>
-    <li><a href="#additional"><b>Additional Facilities</b></a></li>
-  </ul>
-  <li><a href="#linkers"><b>Linkers</b></a></li>
-  <li><a href="#loading"><b>Loading</b></a></li>
-  <li><a href="#memory"><b>Memory Usage</b></a></li>
-  <li><a href="#procedure"><b>Procedure Call Conventions</b></a></li>
-  <ul>
-    <li><a href="#procedure"><b>Procedure Calls</b></a></li>
-    <li><a href="#procedure"><b>Procedure Call Example</b></a></li>
-    <li><a href="#another"><b>Another Procedure Call Example</b></a></li>
-  </ul>
-  <li><a href="#exceptions"><b>Exceptions and Interrupts</b></a></li>
-  <ul>
-    <li><a href="#exception"><b>Exception Handler</b></a></li>
-  </ul>
-  <li><a href="#input"><b>Input and Output</b></a></li>
-  <li><a href="#spim"><b>SPIM</b></a></li>
-  <ul>
-    <li><a href="#simulation"><b>Simulation of a Virtual Machine</b></a></li>
-    <li><a href="#getting"><b>Getting Started with SPIM</b></a></li>
-    <li><a href="#surprising"><b>Surprising Features</b></a></li>
-    <li><a href="#byte"><b>Byte Order</b></a></li>
-    <li><a href="#system"><b>System Calls</b></a></li>
-  </ul>
-  <li><a href="#mips"><b>MIPS R2000 Assembly Language</b></a></li>
-  <ul>
-    <li><a href="#addressing"><b>Addressing Modes</b></a></li>
-    <li><a href="#assembler"><b>Assembler Syntax</b></a></li>
-    <li><a href="#encoding"><b>Encoding MIPS Instructions</b></a></li>
-    <li><a href="#instruction"><b>Instruction Format</b></a></li>
-    <li><a href="#arithmetic"><b>Arithmetic and Logical Instructions</b></a></li>
-    <li><a href="#constant"><b>Constant-Manipulating Instructions</b></a></li>
-    <li><a href="#comparison"><b>Comparison Instructions</b></a></li>
-    <li><a href="#branch"><b>Branch Instructions</b></a></li>
-    <li><a href="#jump"><b>Jump Instructions</b></a></li>
-    <li><a href="#trap"><b>Trap Instructions</b></a></li>
-    <li><a href="#load"><b>Load Instructions</b></a></li>
-    <li><a href="#store"><b>Store Instructions</b></a></li>
-    <li><a href="#data"><b>Data Movement Instructions</b></a></li>
-    <li><a href="#floating"><b>Floating-Point Instructions</b></a></li>
-    <li><a href="#exception"><b>Exception and Interrupt Instructions</b></a></li>
-  </ul>
-  <li><a href="#concluding"><b>Concluding Remarks</b></a></li>
-  <li><a href="#exercises"><b>Exercises</b></a></li>
-</ul>
-        <h2>&nbsp;</h2>
-		<h2><a name="#intro">Introduction</a></h2>
+  <p><b>Appendix A from Patterson and Hennessey, <i>Computer Organization
+        and Design: The Hardware/Software Interface</i>, Third Edition. Copyright Morgan
+      Kaufmann Publishers. Used by permission.</b></p>
+  <div class="body">
+    <h1 class="centered ">Assemblers, Linkers, and the SPIM Simulator</h1>
+    <p class="centered "><i>James R. Larus<br></i> Microsoft Research<br>spim@larusstone.org</p>
+    <ul>
+      <li><a href="#intro"><b>Introduction</b></a></li>
+      <ul>
+        <li><a href="#when"><b>When to Use Assembly Language</b></a></li>
+        <li><a href="#drawbacks"><b>Drawbacks of Assembly Language</b></a></li>
+      </ul>
+      <li><a href="#assemblers"><b>Assemblers</b></a></li>
+      <ul>
+        <li><a href="#object"><b>Object File Format</b></a></li>
+        <li><a href="#additional"><b>Additional Facilities</b></a></li>
+      </ul>
+      <li><a href="#linkers"><b>Linkers</b></a></li>
+      <li><a href="#loading"><b>Loading</b></a></li>
+      <li><a href="#memory"><b>Memory Usage</b></a></li>
+      <li><a href="#procedure"><b>Procedure Call Conventions</b></a></li>
+      <ul>
+        <li><a href="#procedure"><b>Procedure Calls</b></a></li>
+        <li><a href="#procedure"><b>Procedure Call Example</b></a></li>
+        <li><a href="#another"><b>Another Procedure Call Example</b></a></li>
+      </ul>
+      <li><a href="#exceptions"><b>Exceptions and Interrupts</b></a></li>
+      <ul>
+        <li><a href="#exception"><b>Exception Handler</b></a></li>
+      </ul>
+      <li><a href="#input"><b>Input and Output</b></a></li>
+      <li><a href="#spim"><b>SPIM</b></a></li>
+      <ul>
+        <li><a href="#simulation"><b>Simulation of a Virtual Machine</b></a></li>
+        <li><a href="#getting"><b>Getting Started with SPIM</b></a></li>
+        <li><a href="#surprising"><b>Surprising Features</b></a></li>
+        <li><a href="#byte"><b>Byte Order</b></a></li>
+        <li><a href="#system"><b>System Calls</b></a></li>
+      </ul>
+      <li><a href="#mips"><b>MIPS R2000 Assembly Language</b></a></li>
+      <ul>
+        <li><a href="#addressing"><b>Addressing Modes</b></a></li>
+        <li><a href="#assembler"><b>Assembler Syntax</b></a></li>
+        <li><a href="#encoding"><b>Encoding MIPS Instructions</b></a></li>
+        <li><a href="#instruction"><b>Instruction Format</b></a></li>
+        <li><a href="#arithmetic"><b>Arithmetic and Logical Instructions</b></a></li>
+        <li><a href="#constant"><b>Constant-Manipulating Instructions</b></a></li>
+        <li><a href="#comparison"><b>Comparison Instructions</b></a></li>
+        <li><a href="#branch"><b>Branch Instructions</b></a></li>
+        <li><a href="#jump"><b>Jump Instructions</b></a></li>
+        <li><a href="#trap"><b>Trap Instructions</b></a></li>
+        <li><a href="#load"><b>Load Instructions</b></a></li>
+        <li><a href="#store"><b>Store Instructions</b></a></li>
+        <li><a href="#data"><b>Data Movement Instructions</b></a></li>
+        <li><a href="#floating"><b>Floating-Point Instructions</b></a></li>
+        <li><a href="#exception"><b>Exception and Interrupt Instructions</b></a></li>
+      </ul>
+      <li><a href="#concluding"><b>Concluding Remarks</b></a></li>
+      <li><a href="#exercises"><b>Exercises</b></a></li>
+    </ul>
+    <h2><a name="#intro">Introduction</a></h2>
         <p>Encoding instructions as binary numbers is natural and efficient for computers.
         Humans, however, have a great deal of difficulty understanding and manipulating
         these numbers. People read and write symbols (words) much better than long sequences
@@ -111,7 +131,7 @@ Kaufmann Publishers. Used by permission.</b></p>
         assembly programs, and explains how to run these programs on SPIM, a simulator
         that executes MIPS programs. UNIX, Windows, and Mac OS X versions of the SPIM
         simulator are available on the CD.</p>
-</div>	
+</div>
 <div class="sidebar">
         <p><dfn class="define">machine language</dfn> Binary representation
         used for communication within a computer system.</p>
@@ -135,7 +155,7 @@ Kaufmann Publishers. Used by permission.</b></p>
         as opcodes and register specifiers, so people can read and remember them. In
         addition, assembly language permits programmers to use <i>labels</i> to identify
         and name particular memory words that hold instructions or data.</p>
-        <img src="Fig1_1.jpg" height="250"><p><b>Figure 1.1 The process that produces
+        <img class="hpfig" src="Fig1_1.jpg" height="250"><p><b>Figure 1.1 The process that produces
         an executable file.</b> An assembler translates a file of assembly language into
         an object file, which is linked with other files and libraries into an executable
         file.</p>
@@ -169,14 +189,14 @@ Kaufmann Publishers. Used by permission.</b></p>
         to follow because memory locations are named by their address, rather than by
         a symbolic label.</p>
         <pre>
-        00100111101111011111111111100000 10101111101111110000000000010100 10101111101001000000000000100000
-        10101111101001010000000000100100 10101111101000000000000000011000 10101111101000000000000000011100
-        10001111101011100000000000011100 10001111101110000000000000011000 00000001110011100000000000011001
-        00100101110010000000000000000001 00101001000000010000000001100101 10101111101010000000000000011100
-        00000000000000000111100000010010 00000011000011111100100000100001 00010100001000001111111111110111
-        10101111101110010000000000011000 00111100000001000001000000000000 10001111101001010000000000011000
-        00001100000100000000000011101100 00100100100001000000010000110000 10001111101111110000000000010100
-        00100111101111010000000000100000 00000011111000000000000000001000 00000000000000000001000000100001
+       <span class="xxsmall">00100111101111011111111111100000 10101111101111110000000000010100 10101111101001000000000000100000</span>
+       <span class="xxsmall">10101111101001010000000000100100 10101111101000000000000000011000 10101111101000000000000000011100</span>
+       <span class="xxsmall">10001111101011100000000000011100 10001111101110000000000000011000 00000001110011100000000000011001</span>
+       <span class="xxsmall">00100101110010000000000000000001 00101001000000010000000001100101 10101111101010000000000000011100</span>
+       <span class="xxsmall">00000000000000000111100000010010 00000011000011111100100000100001 00010100001000001111111111110111</span>
+       <span class="xxsmall">10101111101110010000000000011000 00111100000001000001000000000000 10001111101001010000000000011000</span>
+       <span class="xxsmall">00001100000100000000000011101100 00100100100001000000010000110000 10001111101111110000000000010100</span>
+       <span class="xxsmall">00100111101111010000000000100000 00000011111000000000000000001000 00000000000000000001000000100001</span>
         </pre>
         <p><b>Figure 1.2 MIPS machine language code for a routine to compute and print
         the sum of the squares of integers between 0 and 100.</b></p>
@@ -320,7 +340,7 @@ str:
         }
         </pre>
         <p><b>Figure 1.5 The routine written in the C programming language.</b></p>
-        <img src="Fig1_6.jpg" height="200" ><p><b>Figure 1.6 Assembly language
+        <img class="hpfig" src="Fig1_6.jpg" height="200" ><p><b>Figure 1.6 Assembly language
         either is written by a programmer or is the output of a compiler.</b></p>
         <p>A hybrid approach, in which most of a program is written in a high-level language and
         time-critical sections are written in assembly language, builds on the strengths of both
@@ -392,16 +412,14 @@ str:
 </div>
 <div class="elaboration">
         <h4>Elaboration:</h4>
-	<p>Compilers can produce machine language directly instead of relying on an
+		<p>Compilers can produce machine language directly instead of relying on an
         assembler. These compilers typically execute much faster than those that invoke an
         assembler as part of compilation. However, a compiler that generates machine language
         must perform many tasks that an assembler normally handles, such as resolving addresses
         and encoding instructions as binary numbers. The trade-off is between compilation speed
         and compiler simplicity.</p>
-</div>
-<div class="elaboration">
         <h4>Elaboration:</h4>
-	<p>Despite these considerations, some embedded applications are written in a high-level
+		<p>Despite these considerations, some embedded applications are written in a high-level
         language. Many of these applications are large and complex programs that must be
         extremely reliable. Assembly language programs are longer and more difficult to write
         and read than high-level language programs. This greatly increases the cost of writing
@@ -494,8 +512,6 @@ str:
         symbol’s address is not in the symbol table. An assembler does not complain about
         unresolved references since the corresponding label is likely to be defined in another
         file </p>
-</div>
-<div class="bigpicture">
         <p>Assembly language is a programming language. Its principal difference from
         high-level languages such as BASIC, Java, and C is that assembly language provides
         only a few, simple types of data and control flow. Assembly language programs
@@ -578,7 +594,7 @@ str:
         actual address in memory.</p>
 </div>
 <div class="body">
-        <img src="Fig2_1.jpg" height="90"><p><b>Figure 2.1 Object file.</b> A UNIX
+        <img class="hpfig" src="Fig2_1.jpg" height="90"><p><b>Figure 2.1 Object file.</b> A UNIX
         assembler produces an object file with six distinct sections.</p>
 </div>
 <div class="elaboration">
@@ -700,8 +716,6 @@ int_str: .asciiz“%d”
         <p>This example illustrates a drawback of macros. A programmer who uses this
         macro must be aware that print_int uses register $a0 and so cannot correctly
         print the value in that register.</p>
-</div>
-<div class="hwswif">
         <b>Hardware-Software Interface:</b>
         <p>Some assemblers also implement <i>pseudoinstructions</i>, which are instructions
         provided by an assembler but not implemented in hardware. Chapter 2 contains many
@@ -713,7 +727,8 @@ int_str: .asciiz“%d”
         but the MIPS assembler can generate better code for these instructions because it can
         use a dedicated register ($at) and is able to optimize the generated code.
         </p>
-        <div class="elaboration">
+</div>
+<div class="elaboration">
                 <h4>Elaboration</h4>
                 Assemblers <i>conditionally assemble</i> pieces of code, which permits a
                 programmer to include or exclude groups of instructions when a program is
@@ -731,7 +746,6 @@ int_str: .asciiz“%d”
                 on UNIX—such as cpp, the C preprocessor, or m4, a general macro processor—can
                 provide macros and conditional assembly for assembly language programs.
                 </p>
-        </div>
 </div>
 <div class="sidebar">
         <p><dfn class="define">separate compilation</dfn> Splitting a program
@@ -783,7 +797,7 @@ int_str: .asciiz“%d”
         references must be <i>relocated</i> to reflect its true location.  Since the linker has
         relocation information that identifies all relocatable references, it can efficiently
         find and backpatch these references.</p>
-        <img src="Fig3_1.jpg" height="400"  ><p><b>Figure 3.1 The linker searches a
+        <img class="hpfig" src="Fig3_1.jpg" height="400"  ><p><b>Figure 3.1 The linker searches a
         collection of object files and program libraries to find nonlocal routines used in a
         program, combines them into a single executable file, and resolves references between
         routines in different files.</b></p>
@@ -839,9 +853,7 @@ int_str: .asciiz“%d”
         global variables are statically allocated since they can be referenced anytime during a
         program’s execution. The linker both assigns static objects to locations in the data
         segment and resolves references to these objects.</p>
-        <img src="Fig5_1.jpg" height="300" ><p><b>Figure 5.1 Layout of memory.</b></p>
-</div>
-<div class="hwswif">
+        <img class="hpfig" src="Fig5_1.jpg" height="300" ><p><b>Figure 5.1 Layout of memory.</b></p>
         <h4>Hardware-Software Interface</h4>
         Because the data segment begins far above the program at address 10000000
         <sub>hex </sub>, load and store instructions cannot directly reference data objects with
@@ -876,7 +888,6 @@ int_str: .asciiz“%d”
         governing the use of registers by procedures.</p>
 </div>
 <div class="body">
->
         <p>Immediately above static data is <i>dynamic data</i>. This data, as its name implies,
         is allocated by the program as it executes. In C programs, the malloc library routine
         finds and returns a new block of memory. Since a compiler cannot predict how much memory
@@ -1164,7 +1175,7 @@ int_str: .asciiz“%d”
         <pre>
         lw $v0, 0($fp)
         </pre>
-        <img src="Fig6_2.jpg" height="350" ><p><b>Figure 6.2 Layout of a stack
+        <img class="hpfig" src="Fig6_2.jpg" height="350" ><p><b>Figure 6.2 Layout of a stack
         frame.</b> The frame pointer ($fp) points to the first word in the currently
         executing procedure’s stack frame. The stack pointer ($sp) points to the last
         word of frame. The first four arguments are passed in registers, so the fifth
@@ -1201,8 +1212,6 @@ int_str: .asciiz“%d”
                 <li>Establish the frame pointer by adding the stack frame’s size minus 4
                 to $sp and storing the sum in register $fp.</li>
         </ol>
-</div>
-<div class="hwswif">
         <h4>Hardware-Software Interface</h4>
         <p>The MIPS register use convention provides callee- and caller-saved registers because
         both types of registers are advantageous in different circumstances. Callee-saved
@@ -1222,10 +1231,11 @@ int_str: .asciiz“%d”
                 <li>Pop the stack frame by adding the frame size to $sp.</li>
                 <li>Return by jumping to the address in register $ra.</li>
         </ol>
-        <div class="elaboration">
-          <h4>Elaboration:</h4>
-	  <p>A programming language that does not permit <dfn class="define">recursive
-                procedures</dfn>— procedures that call themselves either directly or
+</div>
+<div class="elaboration">
+      	<h4>Elaboration:</h4>
+	  	<p>A programming language that does not permit <dfn class="define">recursive
+      	   procedures</dfn>— procedures that call themselves either directly or
                 indirectly through a chain of calls—need not allocate frames on a stack. In a
                 nonrecursive language, each procedure’s frame may be statically allocated
                 since only one invocation of a procedure can be active at a time. Older versions
@@ -1234,7 +1244,6 @@ int_str: .asciiz“%d”
                 MIPS, stack frames may be just as fast because a frame pointer register points
                 directly to
                 </p>
-        </div>
 </div>
 <div class="sidebar">
         <p><dfn class="define">recursive procedures</dfn> Procedures that
@@ -1342,71 +1351,9 @@ $L2:
         frame is deepest on the stack. main calls fact(10), whose stack frame is next
         on the stack. Each invocation recursively invokes fact to compute the next-lowest
         factorial. The stack frames parallel the LIFO order of these calls.</p>
-        <table class="picture" align="center" border="1" cellpadding="2" cellspacing="0" frame="border" rules="all">
-                <tr>
-                        <th align="center" colspan="2" style="width: 125px">Stack</th>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $ra</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $fp </td>
-                        <td>fact(10)</td>
-                </tr>
-                <tr>
-                        <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $a0</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $ra</td>
-                        <td>fact(9)</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $fp </td>
-                </tr>
-                <tr>
-                        <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $a0</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $ra</td>
-                        <td>fact(8)</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $fp </td>
-                </tr>
-                <tr>
-                        <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $a0</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $ra</td>
-                        <td>fact(7)</td>
-                </tr>
-                <tr>
-                        <td style="width: 50px">Old $fp </td>
-                </tr>
-        </table>
-        <p><b>Figure 6.3 Stack frames during the call of fact(7).</b></p>
+        <img class="hpfig" src="Fig6_3.jpg" height="400" ><p><b>Figure 6.3 Stack frames during the call of fact(7).</b></p>
         <p>What does the stack look like when the call to fact(10) returns? </p>
-        <table class ="picture" align="center" border="1" cellpadding="2" cellspacing="0" frame="border" rules="all">
-                <tr>
-                        <th align="center" colspan="2" style="width: 125px">Stack</th>
-                </tr>
-                <tr>
-                        <td>Old $ra</td>
-                </tr>
-                <tr>
-                        <td>Old $fp </td>
-                        <td>main()</td>
-                </tr>
-        </table>
+		<img class="hpfig" src="Fig6_3a.jpg" height="130" >
 </div>
 <div class="elaboration">
         <h4>Elaboration:</h4>
@@ -1637,9 +1584,9 @@ main:
         if another exception occurs. This bit prevents an exception handler from being disturbed
         by an interrupt or exception, but it should be reset when the handler finishes. If the
         interrupt enable bit is 1, interrupts are allowed. If it is 0, they are disabled.</p>
-        <img src="Fig7_1.jpg" height="200" ><p><b>Figure 7.1 The Status register.
+        <img class="hpfig" src="Fig7_1.jpg" height="200" ><p><b>Figure 7.1 The Status register.
         </b></p>
-        <img src="Fig7_2.jpg" height="135" ><p><b>Figure 7.2 The Cause register.
+        <img class="hpfig" src="Fig7_2.jpg" height="135" ><p><b>Figure 7.2 The Cause register.
         </b></p>
         <p>Figure 7.2 shows the subset of Cause register fields that SPIM implements.
         The branch delay bit is 1 if the last exception occurred in an instruction executed
@@ -1731,8 +1678,6 @@ main:
         a routine to print a message at each exception (but not interrupts). This code
         is similar to the exception handler (exceptions.s) used by the SPIM simulator.
         </p>
-</div>
-<div class="example">
         <h3><a name="#exception">Exception Handler</a></h3>
         <p>The exception handler first saves register $at, which is used in pseudo-instructions
         in the handler code, then saves $a0 and $a1, which it later uses to pass arguments.
@@ -1838,7 +1783,7 @@ save1:  .word 0
         read-only: writes to it are ignored. The ready bit changes from 0 to 1 when
         a character is typed at the keyboard, and it changes from 1 to 0 when the character
         is read from the Receiver Data register.</p>
-        <img src="Fig8_1.jpg" height="500" ><p><b>Figure 8.1 The terminal is controlled
+        <img class="hpfig" src="Fig8_1.jpg" height="500" ><p><b>Figure 8.1 The terminal is controlled
         by four device registers, each of which appears as a memory location at the
         given address.</b> Only a few bits of these registers are actually used. The
         others always read as 0s and are ignored on writes.</p>
@@ -2045,48 +1990,48 @@ str:
                         <td align="left">print_int </td>
                         <td align="center">1 </td>
                         <td align="left">$a0 = integer </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">print_float </td>
                         <td align="center">2 </td>
                         <td align="left">$f12 = float </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">print_double </td>
                         <td align="center">3 </td>
                         <td align="left">$f12 = double </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">print_string </td>
                         <td align="center">4 </td>
                         <td align="left">$a0 = string </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">read_int </td>
                         <td align="center">5 </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                         <td align="left">integer (in $v0) </td>
                 </tr>
                 <tr>
                         <td align="left">read_float </td>
                         <td align="center">6 </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                         <td align="left">float (in $f0) </td>
                 </tr>
                 <tr>
                         <td align="left">read_double </td>
                         <td align="center">7 </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                         <td align="left">double (in $f0) </td>
                 </tr>
                 <tr>
                         <td align="left">read_string </td>
                         <td align="center">8 </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                         <td align="left">$a0 = buffer, $a1 = length </td>
                 </tr>
                 <tr>
@@ -2098,19 +2043,19 @@ str:
                 <tr>
                         <td align="left">exit </td>
                         <td align="center">10 </td>
-                        <td></td>
-                        <td></td>
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">print_char </td>
                         <td align="center">11 </td>
                         <td align="left">$a0 = char </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">read_char </td>
                         <td align="center">12 </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                         <td align="left">char (in $a0) </td>
                 </tr>
                 <tr>
@@ -2139,13 +2084,13 @@ str:
                         <td align="left">close </td>
                         <td align="center">16 </td>
                         <td align="left">$a0 = file descriptor </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
                 <tr>
                         <td align="left">exit2 </td>
                         <td align="center">17 </td>
                         <td align="left">$a0 = result </td>
-                        <td></td>
+                        <td> &nbsp; </td>
                 </tr>
         </table>
         <p><b>Figure 9.1 System services.</b></p>
@@ -2214,7 +2159,7 @@ str:
         <p>Most load and store instructions operate only on aligned data. A quantity
         is <i>aligned</i> if its memory address is a multiple of its size in bytes. Therefore,
         a half </p>
-        <img src="Fig10_1.jpg" height="500" ><p><b>Figure 10.1 MIPS R2000 CPU and
+        <img class="hpfig" src="Fig10_1.jpg" height="500" ><p><b>Figure 10.1 MIPS R2000 CPU and
         FPU.</b></p>
         <p>word object must be stored at even addresses and a full word object must
         be stored at addresses that are a multiple of four. However, MIPS provides some
@@ -2408,7 +2353,7 @@ str:
         specifier called rs. This is the same register that is the second argument in
         the symbolic assembly at the left of this line. Another common field is imm
         <sub>16 </sub>, which is a 16-bit immediate number.</p>
-        <b><img src="Fig10_2.jpg" height="800" ></b> <p><b>Figure 10.2 MIPS opcode
+        <b><img class="hpfig" src="Fig10_2.jpg" height="800" ></b> <p><b>Figure 10.2 MIPS opcode
         map.</b> The values of each field are shown to its left. The first column shows
         the values in base 10 and the second shows base 16 for the op field (bits 31
         to 26) in the third column. This op field completely specifies the MIPS operation
@@ -6140,7 +6085,7 @@ str:
         and many more features than their predecessors. Large applications are written
         by teams of programmers and require the modularity and semantic checking features
         provided by high-level languages.</p>
-        <p>Reading Further </p>
+        <h3>Further Reading</h3>
         <p>Aho, A., R. Sethi, and J. Ullman [1985].<i>Compilers: Principles, Techniques,
         and Tools</i>, Reading, MA: Addison-Wesley.</p>
         <p><i>Slightly dated and lacking in coverage of modern architectures, but still
@@ -6154,7 +6099,7 @@ str:
         <a href="http://www.mips.com/products/product-materials/processor/mips-architecture/">
         http://www.mips.com/products/product-materials/processor/mips-architecture/</a>:
         </p>
-        <ul style="MARGIN-TOP: 12px">
+        <ul>
                 <li>
                 <p>
                 <a href="http://www.mips.com/secure-download/index.cfm?filename=mips-architecture/MD00082-2B-MIPS32INT-AFP-02_60.pdf">
@@ -6176,64 +6121,64 @@ str:
         </ul>
         <h2><a name="#exercises">Exercises</a></h2>
         <ol type="1">
-                <li>[5] &lt;§A.5&gt; Section A.5 described how memory is partitioned on
-                most MIPS systems. Propose another way of dividing memory that meets the
-                same goals.</li>
-                <li>[20] &lt;§A.6&gt; Rewrite the code for fact to use fewer instructions.
-                </li>
-                <li>[5] &lt;§A.7&gt; Is it ever safe for a user program to use registers
-                $k0 or $k1? </li>
-                <li>[25] &lt;§A.7&gt; Section A.7 contains code for a very simple exception
-                handler. One serious problem with this handler is that it disables interrupts
-                for a long time. This means that interrupts from a fast I/O device may be
-                lost. Write a better exception handler that is interruptable and enables
-                interrupts as quickly as possible.</li>
-                <li>[15] &lt;§A.7&gt; The simple exception handler always jumps back to
-                the instruction following the exception. This works fine unless the instruction
-                that causes the exception is in the delay slot of a branch. In that case,
-                the next instruction is the target of the branch. Write a better handler
-                that uses the EPC register to determine which instruction should be executed
-                after the exception.</li>
-                <li>[5] &lt;§A.9&gt; Using SPIM, write and test an adding machine program
-                that repeatedly reads in integers and adds them into a running sum. The
-                program should stop when it gets an input that is 0, printing out the sum
-                at that point.
-                </li>
-                <li>[5] &lt;§A.9&gt; Using SPIM , write and test a program that reads in
-                three integers and prints out the sum of the largest two of the three. You can
-                break ties arbitrarily.</li>
-                <li>[5] &lt;§A.9&gt; Using SPIM, write and test a program that reads in
-                a positive integer using the SPIM system calls. If the integer is not positive,
-                the program should terminate with the message “Invalid Entry”; otherwise
-                the program should print out the names of the digits of the integers, delimited
-                by exactly one space. For example, if the user entered “728,” the output
-                would be “Seven Two Eight.” </li>
-                <li>[25] &lt;§A.9&gt; Write and test a MIPS assembly language program to
-                compute and print the first 100 prime numbers. A number <i>n</i> is prime
-                if no numbers except 1 and <i>n</i> divide it evenly. You should implement
-                two routines:
-                <ul type="square">
-                        <li>test_prime (n) Return 1 if <i>n</i> is prime and 0 if <i>n </i> is
-                        not prime.</li>
-                        <li>main () Iterate over the integers, testing if each is prime. Print
-                        the first 100 numbers that are prime.</li>
-                </ul>
-                </li>
-        <p>Test your programs by running them on SPIM.</p>
-        <li><p>A.10 [10] &lt;§§A.6, A.9&gt;  Using SPIM, write and test a recursive program
-        for solving the classic mathematical recreation, the Towers of Hanoi puzzle.
-        (This will require the use of stack frames to support recursion.) The puzzle
-        consists of three pegs (1, 2, and 3) and <i>n</i> disks (the number <i>n</i>
-        can vary; typical values might be in the range from 1 to 8). Disk 1 is smaller
-        than disk 2, which is in turn smaller than disk 3, and so forth, with disk
-        <i>n</i> being the largest. Initially, all the disks are on peg 1, starting with
-        disk <i>n</i> on the bottom, disk <i>n</i> – 1 on top of that, and so forth, up to
-        disk 1 on the top. The goal is to move all the disks to peg 2. You may only move one
-        disk at a time, that is, the top disk from any of the three pegs onto the top of either
-        of the other two pegs. Moreover, there is a constraint: You must not place a larger disk
-        on top of a smaller disk.</p>
-        <p>The C program below can be used to help write your assembly language program.
-        </p>
+          <li>[5] &lt;§A.5&gt; Section A.5 described how memory is partitioned on
+            most MIPS systems. Propose another way of dividing memory that meets the
+            same goals.</li>
+          <li>[20] &lt;§A.6&gt; Rewrite the code for fact to use fewer instructions.
+          </li>
+          <li>[5] &lt;§A.7&gt; Is it ever safe for a user program to use registers
+            $k0 or $k1? </li>
+          <li>[25] &lt;§A.7&gt; Section A.7 contains code for a very simple exception
+            handler. One serious problem with this handler is that it disables interrupts
+            for a long time. This means that interrupts from a fast I/O device may be
+            lost. Write a better exception handler that is interruptable and enables
+            interrupts as quickly as possible.</li>
+          <li>[15] &lt;§A.7&gt; The simple exception handler always jumps back to
+            the instruction following the exception. This works fine unless the instruction
+            that causes the exception is in the delay slot of a branch. In that case,
+            the next instruction is the target of the branch. Write a better handler
+            that uses the EPC register to determine which instruction should be executed
+            after the exception.</li>
+          <li>[5] &lt;§A.9&gt; Using SPIM, write and test an adding machine program
+            that repeatedly reads in integers and adds them into a running sum. The
+            program should stop when it gets an input that is 0, printing out the sum
+            at that point.
+          </li>
+          <li>[5] &lt;§A.9&gt; Using SPIM , write and test a program that reads in
+            three integers and prints out the sum of the largest two of the three. You can
+            break ties arbitrarily.</li>
+          <li>[5] &lt;§A.9&gt; Using SPIM, write and test a program that reads in
+            a positive integer using the SPIM system calls. If the integer is not positive,
+            the program should terminate with the message “Invalid Entry”; otherwise
+            the program should print out the names of the digits of the integers, delimited
+            by exactly one space. For example, if the user entered “728,” the output
+            would be “Seven Two Eight.” </li>
+          <li>[25] &lt;§A.9&gt; Write and test a MIPS assembly language program to
+            compute and print the first 100 prime numbers. A number <i>n</i> is prime
+            if no numbers except 1 and <i>n</i> divide it evenly. You should implement
+            two routines:
+            <ul type="square">
+              <li>test_prime (n) Return 1 if <i>n</i> is prime and 0 if <i>n </i> is
+                not prime.</li>
+              <li>main () Iterate over the integers, testing if each is prime. Print
+                the first 100 numbers that are prime.</li>
+            </ul>
+          </li>
+          <p>Test your programs by running them on SPIM.</p>
+          <li><p>A.10 [10] &lt;§§A.6, A.9&gt;  Using SPIM, write and test a recursive program
+              for solving the classic mathematical recreation, the Towers of Hanoi puzzle.
+              (This will require the use of stack frames to support recursion.) The puzzle
+              consists of three pegs (1, 2, and 3) and <i>n</i> disks (the number <i>n</i>
+              can vary; typical values might be in the range from 1 to 8). Disk 1 is smaller
+              than disk 2, which is in turn smaller than disk 3, and so forth, with disk
+              <i>n</i> being the largest. Initially, all the disks are on peg 1, starting with
+              disk <i>n</i> on the bottom, disk <i>n</i> – 1 on top of that, and so forth, up to
+              disk 1 on the top. The goal is to move all the disks to peg 2. You may only move one
+              disk at a time, that is, the top disk from any of the three pegs onto the top of either
+              of the other two pegs. Moreover, there is a constraint: You must not place a larger disk
+              on top of a smaller disk.</p>
+            <p>The C program below can be used to help write your assembly language program.
+            </p>
         <pre>
         /* move n smallest disks from start to finish using extra */
         void hanoi(int n, int start, int finish, int extra) {

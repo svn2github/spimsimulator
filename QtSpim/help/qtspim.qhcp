@@ -2,7 +2,7 @@
  <QHelpCollectionProject version="1.0">
      <assistant>
          <title>QtSpm Help</title>
-         <startPage>qtspim_help.html</startPage>
+         <startPage>>qthelp://larusstone.org.qtspim.1.0/doc/qtspim_help.html</startPage>
          <applicationIcon>../windows_images/NewIcon.ico</applicationIcon>
          <enableFilterFunctionality>false</enableFilterFunctionality>
          <enableDocumentationManager>false</enableDocumentationManager>
