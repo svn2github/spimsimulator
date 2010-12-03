@@ -103,6 +103,26 @@ QMAKE_LEXFLAGS_MANGLE	= -o lex.scanner.c
 QMAKE_LEXFLAGS		= -I -8
 
 
+# Help file
+#
+HELP_FILES 		= help/qtspim.qhp
+buildhelp.name		= Building help files
+buildhelp.input		= HELP_FILES
+buildhelp.output	= ${QMAKE_FILE_BASE}.qch
+buildhelp.commands	= qhelpgenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_BASE}.qch
+buildhelp.CONFIG	+= no_link recursive
+
+HELP_COL_FILE 		= help/qtspim.qhcp
+buildhelpcol.name	= Building help collection
+buildhelpcol.input	= HELP_COL_FILE
+buildhelpcol.output	= ${QMAKE_FILE_BASE}.qhc
+buildhelpcol.commands	= qcollectiongenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_BASE}.qhc
+buildhelpcol.CONFIG	+= no_link recursive
+buildhelpcol.depends	= compiler_buildhelp_make_all
+
+QMAKE_EXTRA_COMPILERS	+= buildhelp buildhelpcol
+POST_TARGETDEPS		+= compiler_buildhelpcol_make_all
+
 
 # Microsoft Visual C compiler flags
 #
