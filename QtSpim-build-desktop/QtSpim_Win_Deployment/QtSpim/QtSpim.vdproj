@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6CC5826E41534FA3A10BCDAD29874E93"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_78822A6A2B114BC5823FEA20BA7C4297"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,6 +40,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C2931CE97E9F4D8EB15F995902A03885"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CD6117342DCD447FAB3D7B6ECC785FB7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -160,6 +172,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6CC5826E41534FA3A10BCDAD29874E93"
+            {
+            "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\bin\\assistant.exe"
+            "TargetName" = "8:assistant.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_9B58D1237F78462ABFB5721AA4CCB3A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_78822A6A2B114BC5823FEA20BA7C4297"
             {
             "SourcePath" = "8:C:\\QtVS\\qt\\bin\\QtGui4.dll"
@@ -184,6 +216,26 @@
             {
             "SourcePath" = "8:..\\..\\release\\QtSpim.exe"
             "TargetName" = "8:QtSpim.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_9B58D1237F78462ABFB5721AA4CCB3A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CD6117342DCD447FAB3D7B6ECC785FB7"
+            {
+            "SourcePath" = "8:..\\..\\qtspim.qhc"
+            "TargetName" = "8:qtspim.qhc"
             "Tag" = "8:"
             "Folder" = "8:_9B58D1237F78462ABFB5721AA4CCB3A7"
             "Condition" = "8:"
