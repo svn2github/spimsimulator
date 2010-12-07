@@ -762,8 +762,7 @@ void SpimView::help_ViewHelp()
     QProcess *process = new QProcess;
     QStringList args;
     args << QLatin1String("-collectionFile")
-         << QLatin1String((App->applicationDirPath() + QString("/qtspim.qhc")).toLocal8Bit())
-         << QLatin1String("-enableRemoteControl");
+         << QLatin1String((App->applicationDirPath() + QString("/qtspim.qhc")).toLocal8Bit());
     process->start(QLatin1String("assistant"), args);
     if (!process->waitForStarted())
     {
