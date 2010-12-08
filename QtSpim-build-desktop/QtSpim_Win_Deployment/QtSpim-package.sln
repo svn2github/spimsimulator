@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QtSpim-msvc", "QtSpim\QtSpim.vdproj", "{1DCB53AA-A215-48C0-A09C-7BD9FC122B37}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QtSpim-msvc", "QtSpim-msvc\QtSpim.vdproj", "{1DCB53AA-A215-48C0-A09C-7BD9FC122B37}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QtSpim-mingw", "QtSpim-mingw\QtSpim-mingw.vdproj", "{B2CCAD5D-FFEE-4469-AC28-F39C8AF8D8C1}"
 EndProject
