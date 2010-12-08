@@ -58,7 +58,7 @@ void SpimView::DisplayIntRegisters()
     windowContents += formatSpecialIntRegister(HI, "HI", HI != oldHI);
     windowContents += formatSpecialIntRegister(LO, "LO", LO != oldLO);
 
-    windowContents += "<br /><br />";
+    windowContents += "<br />";
 
     int i;
     for (i = 0; i < 32; i++) {
