@@ -761,12 +761,18 @@ void SpimView::help_ViewHelp()
 {
     QProcess *process = new QProcess;
     QStringList args;
-    args << QLatin1String("-collectionFile")
-         << QLatin1String((App->applicationDirPath() + QString("/qtspim.qhc")).toLocal8Bit());
-    process->start(QLatin1String("assistant"), args);
+    args << QLatin1String("-collectionFile") << QLatin1String("help/qtspim.qhc");
+
+    process->start(QLatin1String("help/assistant"), args); // Version installed on bare machine
     if (!process->waitForStarted())
     {
-        return;
+        process->start(QLatin1String("assistant"), args); // Version installed with Qt
+        if (!process->waitForStarted())
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Cannot start help browser (Qt assistant). Check installation. ");
+            msgBox.exec();
+        }
     }
 }
 
