@@ -2,11 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pcspim", "pcspim.vcxproj", "{56488352-0EC0-4FA0-B5CE-FD6746615E15}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{B482E8AE-045E-4930-BA4F-DC9D81292FB6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{56488352-0EC0-4FA0-B5CE-FD6746615E15} = {56488352-0EC0-4FA0-B5CE-FD6746615E15}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -23,12 +18,6 @@ Global
 		{56488352-0EC0-4FA0-B5CE-FD6746615E15}.Release|Win32.Build.0 = Release|Win32
 		{56488352-0EC0-4FA0-B5CE-FD6746615E15}.Release|x64.ActiveCfg = Release|x64
 		{56488352-0EC0-4FA0-B5CE-FD6746615E15}.Release|x64.Build.0 = Release|x64
-		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Debug|Win32.ActiveCfg = Debug
-		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Debug|x64.ActiveCfg = Debug
-		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Debug|x64.Build.0 = Debug
-		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Release|Win32.ActiveCfg = Release
-		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Release|x64.ActiveCfg = Release
-		{B482E8AE-045E-4930-BA4F-DC9D81292FB6}.Release|x64.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
