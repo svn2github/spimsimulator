@@ -128,6 +128,7 @@ protected:
 private:
 
 	BOOL m_fSimulatorInitialized;
+	CString m_cmdLineFilename;
 	CString m_strCurFilename;
 	CString m_strMsgCaptureBuf;
 	BOOL m_fCapture;

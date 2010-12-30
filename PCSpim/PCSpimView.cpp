@@ -113,6 +113,7 @@ CPCSpimView::CPCSpimView()
     m_fSimulatorInitialized = FALSE;
 
     m_strCurFilename.Empty();
+	m_cmdLineFilename.Empty();
 }
 
 
@@ -354,9 +355,9 @@ void CPCSpimView::Initialize()
 
     InitializeSimulator();
 
-    if (!m_strCurFilename.IsEmpty())
+    if (!m_cmdLineFilename.IsEmpty())
     {
-        LoadFile(m_strCurFilename);	// From command line
+        LoadFile(m_cmdLineFilename);	// From command line
     }
 }
 
@@ -1114,134 +1115,90 @@ void CPCSpimView::OnWindowDataseg()
 #define WHITESPACE	" \t\n\r"
 void CPCSpimView::ProcessCommandLine()
 {
-    LPTSTR argv[256];
+    LPWSTR *argv;
     int argc;
     int i;
 
     // Initialize argc & argv variables.
-    LPTSTR szCmdLine = GetCommandLine();
-    if (szCmdLine[0] == '"')
-        argv[0] = strtok(szCmdLine, "\"");
-    else
-        argv[0] = strtok(GetCommandLine(), WHITESPACE);
-
-    for (argc = 1; ; argc += 1)
-    {
-        LPTSTR szParam = strtok(NULL, WHITESPACE);
-        if (szParam == NULL)
-            break;
-
-        argv[argc] = szParam;
-    }
+    LPWSTR cmdLine = GetCommandLineW();
+	argv = CommandLineToArgvW(cmdLine, &argc);
+	g_strCmdLine = cmdLine;
 
     for (i = 1; i < argc; i++)
     {
         if (argv[i][0] == '/')
             argv[i][0] = '-';     /* Canonicalize commands */
 
-        if (streq (argv [i], "-asm")
-            || streq (argv [i], "-a"))
+        if (!wcscmp (argv[i], L"-asm") || !wcscmp (argv[i], L"-a"))
         {
             bare_machine = 0;
             delayed_branches = 0;
             delayed_loads = 0;
         }
-        else if (streq (argv [i], "-bare")
-            || streq (argv [i], "-b"))
+        else if (!wcscmp (argv[i], L"-bare") || !wcscmp (argv[i], L"-b"))
         {
             bare_machine = 1;
             delayed_branches = 1;
             delayed_loads = 1;
             quiet = 1;
         }
-        else if (streq (argv [i], "-delayed_branches")
-            || streq (argv [i], "-db"))
+        else if (!wcscmp (argv[i], L"-delayed_branches") || !wcscmp (argv[i], L"-db"))
         { delayed_branches = 1; }
-        else if (streq (argv [i], "-delayed_loads")
-            || streq (argv [i], "-dl"))
+        else if (!wcscmp (argv[i], L"-delayed_loads") || !wcscmp (argv[i], L"-dl"))
         { delayed_loads = 1; }
-        else if (streq (argv [i], "-exception")
-            || streq (argv [i], "-e"))
+        else if (!wcscmp (argv[i], L"-exception") || !wcscmp (argv[i], L"-e"))
         { g_fLoadExceptionHandler = 1; }
-        else if (streq (argv [i], "-noexception")
-            || streq (argv [i], "-ne"))
+        else if (!wcscmp (argv[i], L"-noexception") || !wcscmp (argv[i], L"-ne"))
         { g_fLoadExceptionHandler = 0; }
-        else if (streq (argv [i], "-exception_file")
-            || streq (argv [i], "-ef"))
-        {
-            exception_file_name = argv[++i];
+        else if (!wcscmp (argv[i], L"-exception_file") || !wcscmp (argv[i], L"-ef"))
+		{
+			LPWSTR arg = argv[++i];
+			size_t origsize = wcslen(arg) + 1;
+			size_t convertedChars = 0;
+			char* nstring = (char*)malloc(origsize);
+			wcstombs_s(&convertedChars, nstring, origsize, arg, _TRUNCATE);
+
+            exception_file_name = nstring;
             g_fLoadExceptionHandler = 1;
         }
-        else if (streq (argv [i], "-mapped_io")
-            || streq (argv [i], "-mio"))
+        else if (!wcscmp (argv[i], L"-mapped_io") || !wcscmp (argv[i], L"-mio"))
         { mapped_io = 1; }
-        else if (streq (argv [i], "-nomapped_io")
-            || streq (argv [i], "-nmio"))
+        else if (!wcscmp (argv[i], L"-nomapped_io") || !wcscmp (argv[i], L"-nmio"))
         { mapped_io = 0; }
-        else if (streq (argv [i], "-pseudo")
-            || streq (argv [i], "-p"))
+        else if (!wcscmp (argv[i], L"-pseudo") || !wcscmp (argv[i], L"-p"))
         { accept_pseudo_insts = 1; }
-        else if (streq (argv [i], "-nopseudo")
-            || streq (argv [i], "-np"))
+        else if (!wcscmp (argv[i], L"-nopseudo") || !wcscmp (argv[i], L"-np"))
         { accept_pseudo_insts = 0; }
-        else if (streq (argv [i], "-quiet")
-            || streq (argv [i], "-q"))
+        else if (!wcscmp (argv[i], L"-quiet") || !wcscmp (argv[i], L"-q"))
         { quiet = 1; }
-        else if (streq (argv [i], "-noquiet")
-            || streq (argv [i], "-nq"))
+        else if (!wcscmp (argv[i], L"-noquiet") || !wcscmp (argv[i], L"-nq"))
         { quiet = 0; }
-        else if (streq (argv [i], "-stext")
-            || streq (argv [i], "-st"))
-        { initial_text_size = atoi (argv[++i]); }
-        else if (streq (argv [i], "-sdata")
-            || streq (argv [i], "-sd"))
-        { initial_data_size = atoi (argv[++i]); }
-        else if (streq (argv [i], "-ldata")
-            || streq (argv [i], "-ld"))
-        { initial_data_limit = (mem_addr)atoi (argv[++i]); }
-        else if (streq (argv [i], "-sstack")
-            || streq (argv [i], "-ss"))
-        { initial_stack_size = atoi (argv[++i]); }
-        else if (streq (argv [i], "-lstack")
-            || streq (argv [i], "-ls"))
-        { initial_stack_limit = (mem_addr)atoi (argv[++i]); }
-        else if (streq (argv [i], "-sktext")
-            || streq (argv [i], "-skt"))
-        { initial_k_text_size = atoi (argv[++i]); }
-        else if (streq (argv [i], "-skdata")
-            || streq (argv [i], "-skd"))
-        { initial_k_data_size = atoi (argv[++i]); }
-        else if (streq (argv [i], "-lkdata")
-            || streq (argv [i], "-lkd"))
-        { initial_k_data_limit = (mem_addr)atoi (argv[++i]); }
-        else if ((streq (argv [i], "-file")
-            || streq (argv [i], "-f"))
+        else if (!wcscmp (argv[i], L"-stext") || !wcscmp (argv[i], L"-st"))
+        { initial_text_size = _wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-sdata") || !wcscmp (argv[i], L"-sd"))
+        { initial_data_size = _wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-ldata") || !wcscmp (argv[i], L"-ld"))
+        { initial_data_limit = (mem_addr)_wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-sstack") || !wcscmp (argv[i], L"-ss"))
+        { initial_stack_size = _wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-lstack") || !wcscmp (argv[i], L"-ls"))
+        { initial_stack_limit = (mem_addr)_wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-sktext") || !wcscmp (argv[i], L"-skt"))
+        { initial_k_text_size = _wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-skdata") || !wcscmp (argv[i], L"-skd"))
+        { initial_k_data_size = _wtoi (argv[++i]); }
+        else if (!wcscmp (argv[i], L"-lkdata") || !wcscmp (argv[i], L"-lkd"))
+        { initial_k_data_limit = (mem_addr)_wtoi (argv[++i]); }
+        else if ((!wcscmp (argv[i], L"-file") || !wcscmp (argv[i], L"-f"))
             && (i + 1 < argc))
         {
-            m_strCurFilename = argv[++i];
-
-            g_strCmdLine = "";
-            for (int j = i; j < argc; j++)
-            {
-                g_strCmdLine += argv[j];
-                g_strCmdLine += " ";
-            }
-            g_strCmdLine.TrimRight();
+            m_cmdLineFilename = argv[++i];
             break;
         }
-        else if (argv [i][0] != '-')
+        else if (argv[i][0] != '-')
         {
-            /* Assume this is a file name and everything else are arguments
-            to program */
-            m_strCurFilename = argv[i];
-
-            g_strCmdLine = "";
-            for (int j = i + 1; j < argc; j++)
-            {
-                g_strCmdLine += argv[j];
-                g_strCmdLine += " ";
-            }
-            g_strCmdLine.TrimRight();
+            /* Assume this is a file name and everything else are arguments to program */
+            m_cmdLineFilename = argv[i];
             break;
         }
         else
