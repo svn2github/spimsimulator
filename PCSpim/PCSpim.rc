@@ -180,13 +180,11 @@ BEGIN
     VK_F11,         ID_SIMULATOR_MULTISTEP, VIRTKEY, NOINVERT
     VK_F5,          ID_SIMULATOR_GO,        VIRTKEY, NOINVERT
     VK_F6,          ID_WINDOW_NEXT,         VIRTKEY, CONTROL, NOINVERT
-    VK_F6,          ID_WINDOW_PREVIOUS,     VIRTKEY, SHIFT, CONTROL, 
-                                                    NOINVERT
+    VK_F6,          ID_WINDOW_PREVIOUS,     VIRTKEY, SHIFT, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     VK_TAB,         ID_WINDOW_NEXT,         VIRTKEY, CONTROL, NOINVERT
-    VK_TAB,         ID_WINDOW_PREVIOUS,     VIRTKEY, SHIFT, CONTROL, 
-                                                    NOINVERT
+    VK_TAB,         ID_WINDOW_PREVIOUS,     VIRTKEY, SHIFT, CONTROL, NOINVERT
     "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
     "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
 END
@@ -204,8 +202,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "PCSpim Version 8.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
-    LTEXT           "Copyright © 1990-2010 by James R. Larus. Portions © Morgan Kaufmann Publishers.",
-                    IDC_COPYRIGHT,40,27,204,55
+    LTEXT           "Copyright © 1990-2010 by James R. Larus. Portions © Morgan Kaufmann Publishers.",IDC_COPYRIGHT,40,27,204,55
     DEFPUSHBUTTON   "OK",IDOK,212,7,32,14,WS_GROUP
 END
 
@@ -219,8 +216,7 @@ BEGIN
     DEFPUSHBUTTON   "&Add",IDC_ADD,185,7,50,14
     PUSHBUTTON      "&Remove",IDC_REMOVE,185,24,50,14
     PUSHBUTTON      "Close",IDCLOSE,185,42,50,14
-    LISTBOX         IDC_BREAKPOINTS,7,42,166,108,LBS_SORT | LBS_USETABSTOPS | 
-                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_BREAKPOINTS,7,42,166,108,LBS_SORT | LBS_USETABSTOPS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_RUN DIALOGEX 0, 0, 229, 84
@@ -234,42 +230,32 @@ BEGIN
     EDITTEXT        IDC_COMMANDLINE,7,46,146,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,172,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,172,24,50,14
-    CONTROL         "Check for undefined symbols",IDC_CHECK1,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,67,102,10,0,HIDC_CHECK1
+    CONTROL         "Check for undefined symbols",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,67,102,10,0,HIDC_CHECK1
 END
 
-IDD_SETTINGS DIALOG  0, 0, 255, 175
+IDD_SETTINGS DIALOGEX 0, 0, 255, 158
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Settings"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    CONTROL         "&Bare machine",IDC_BARE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,18,87,59,10
-    CONTROL         "Allow &pseudo instructions",IDC_PSEUDO,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,18,101,85,10
-    CONTROL         "&Load exception file",IDC_LOADEXCEPTION,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,18,117,102,10
-    LTEXT           "&Exception file:",IDC_STATIC,30,131,28,8
-    EDITTEXT        IDC_EXCEPTIONFILE,30,142,146,14,ES_AUTOHSCROLL
-    CONTROL         "&Mapped I/O",IDC_MAPPED,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,187,87,55,10
-    CONTROL         "&Quiet",IDC_QUIET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    187,101,33,10
+    CONTROL         "&Bare machine",IDC_BARE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,87,59,10
+    CONTROL         "Allow &pseudo instructions",IDC_PSEUDO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,101,85,10
+    CONTROL         "&Load exception file",IDC_LOADEXCEPTION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,117,102,10
+    EDITTEXT        IDC_EXCEPTIONFILE,30,133,146,14,ES_AUTOHSCROLL
+    CONTROL         "&Mapped I/O",IDC_MAPPED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,187,87,55,10
+    CONTROL         "&Quiet",IDC_QUIET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,187,101,33,10
     DEFPUSHBUTTON   "OK",IDOK,198,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,198,24,50,14
-    PUSHBUTTON      "&Browse...",IDC_BROWSE,185,142,50,14
+    PUSHBUTTON      "&Browse...",IDC_BROWSE,185,133,50,14
     CONTROL         "&General registers in hexadecimal",IDC_GENREG_HEX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,34,117,10
     CONTROL         "&Floating point registers in hexadecimal",IDC_FPREG_HEX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,49,135,10
     GROUPBOX        "Display",IDC_STATIC,7,7,162,61
-    GROUPBOX        "Execution",IDC_STATIC,7,76,241,92
-    CONTROL         "&Save window positions",IDC_SAVEWINPOS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,18,19,117,10
-    CONTROL         "&Delayed Branches",IDC_DELAYEDBRANCHES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,110,87,71,10
-    CONTROL         "&Delayed Loads",IDC_DELAYEDLOADS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,110,101,56,10
+    GROUPBOX        "Execution",IDC_STATIC,7,59,241,92
+    CONTROL         "&Save window positions",IDC_SAVEWINPOS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,19,117,10
+    CONTROL         "&Delayed Branches",IDC_DELAYEDBRANCHES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,110,87,71,10
+    CONTROL         "&Delayed Loads",IDC_DELAYEDLOADS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,110,101,56,10
 END
 
 IDD_SETVALUE DIALOG  0, 0, 184, 76
@@ -383,7 +369,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 248
         TOPMARGIN, 7
-        BOTTOMMARGIN, 168
+        BOTTOMMARGIN, 151
     END
 
     IDD_SETVALUE, DIALOG
