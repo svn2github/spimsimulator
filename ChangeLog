@@ -1,3 +1,8 @@
+2010-12-30    <Jim@LS-RED>
+
+	* PCSpim/PCSpimView.cpp [Lyosha Blinnikov <nookkin@gmail.com>]
+	Incorrectly parse file names containing spaces.
+
 2010-12-29    <Jim@LS-RED>
 
 	* PCSpim/pcspim.rc [Hauerwas, Adam <HAUERWAS@providence.edu>]
