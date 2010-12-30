@@ -1,3 +1,8 @@
+2010-12-29    <Jim@LS-RED>
+
+	* PCSpim/pcspim.rc [Hauerwas, Adam <HAUERWAS@providence.edu>]
+	Field label did not fit string.
+
 2010-11-26    <Jim@LS-RED>
 
 	* QtSpim/help:
