@@ -107,19 +107,19 @@ QMAKE_LEXFLAGS		= -I -8
 HELP_COL_PROJ 		= help/qtspim.qhcp
 buildhelpcol.name	= Build help collection
 buildhelpcol.input	= HELP_COL_PROJ
-buildhelpcol.output	= ${QMAKE_FILE_BASE}.qhc
+buildhelpcol.output	= help/${QMAKE_FILE_BASE}.qhc
 buildhelpcol.commands	= qcollectiongenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
 buildhelpcol.CONFIG	= no_link recursive
 
 HELP_COL		= help/qtspim.qch
 copyhelpcol.name	= Copying help collection
 copyhelpcol.input	= HELP_COL
-copyhelpcol.output	= ${QMAKE_FILE_BASE}.qch
+copyhelpcol.output	= help/${QMAKE_FILE_BASE}.qch
 copyhelpcol.commands	= $(COPY_FILE) ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}
 copyhelpcol.CONFIG	= no_link recursive
 
 QMAKE_EXTRA_COMPILERS	+= buildhelpcol copyhelpcol
-POST_TARGETDEPS		+= qtspim.qhc qtspim.qch
+POST_TARGETDEPS		+= help/qtspim.qhc help/qtspim.qch
 
 
 # Microsoft Visual C compiler flags
