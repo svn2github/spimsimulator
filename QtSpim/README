@@ -46,8 +46,7 @@ Linux:
         Download a recent version from http://qt.nokia.com/downloads/.
 
 Mac:
-        Download the Mac Qt SDK at http://qt.nokia.com/downloads/sdk-mac-os-cpp open
-        $(SRCDIR)/QtSpim/QtSpim.pro with Qt Creator.
+        Download the Mac Qt SDK at http://qt.nokia.com/downloads/sdk-mac-os-cpp.
 
 
 Notes:
