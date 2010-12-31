@@ -322,7 +322,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_31D380550D0F48369E1AE20669286839"
             {
-            "SourcePath" = "8:..\\..\\..\\QtSpim-build-desktop\\qtspim.qch"
+            "SourcePath" = "8:..\\..\\..\\QtSpim-build-desktop\\help\\qtspim.qch"
             "TargetName" = "8:qtspim.qch"
             "Tag" = "8:"
             "Folder" = "8:_65BFB300BF204673A2B80920872E4D7F"
@@ -682,7 +682,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D63BE6F55DFB412992C4444D404A2725"
             {
-            "SourcePath" = "8:..\\..\\..\\QtSpim-build-desktop\\qtspim.qhc"
+            "SourcePath" = "8:..\\..\\..\\QtSpim-build-desktop\\help\\qtspim.qhc"
             "TargetName" = "8:qtspim.qhc"
             "Tag" = "8:"
             "Folder" = "8:_65BFB300BF204673A2B80920872E4D7F"
