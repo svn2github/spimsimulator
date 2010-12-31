@@ -34,6 +34,13 @@ SPIM is distributed under a BSD license:
      SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+                                      GETTING SPIM SOURCE
+                                      ===================
+
+Spim is hosted on SourceForge and its source code is available through SVN:
+https://sourceforge.net/projects/spimsimulator/
+
+
                                           DIRECTORIES
                                           ===========
 
@@ -52,6 +59,8 @@ The subdirectories can be divided into two categories.
 
     Tests -- Contains regression test for the simulator.
 
+    Boneyard -- Copies of the recent releases of Spim.
+
 
 2. Front-ends for different versions of Spim:
 
@@ -67,6 +76,9 @@ The subdirectories can be divided into two categories.
 
                                         BUILDING QTSPIM
                                         ===============
+
+It is generally not necessary to build QtSpim as the Spim website contains an installable
+version for most systems.
 
 Install the bison parser generator and flex lexer generator, either using Cygwin on Windows or
 native on Linux.
@@ -95,6 +107,8 @@ native on Linux.
 
                                     BUILDING SPIM and XSPIM
                                     =======================
+
+It is necessary to build spim and xspim, as they are only distributed as source.
 
 To build spim (the terminal version) or xspim (the X-windows and Mac version):
 
@@ -152,11 +166,11 @@ running the test.)
                                         BUILDING PCSPIM
                                         ===============
 
-It is not necessary to compile PCSpim (the Microsoft Windows version), as the spim web site
-(www.cs.wisc.edu/~larus/spim.html) contains a precompiled version.
+It is not necessary to compile PCSpim (the Microsoft Windows version), as the Spim web site
+contains a precompiled version.
 
-The Microsoft Windows version of spim is called PCSpim and is built using Microsoft Visual
-Studio. You can get the files separately from www.cs.wisc.edu/~larus/spim.html
+The Microsoft Windows version of Spim is called PCSpim and is built using Microsoft Visual
+Studio.
 
 spim (the terminal version) works well on Microsoft Windows.  You can easily build it using the
 Cygwin port of the GNU tools (see www.cygwin.com).
