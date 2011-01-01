@@ -15,6 +15,7 @@ mkdir -p Setup/debian/usr/share/man/man1
 mkdir -p Setup/debian/DEBIAN
 mkdir -p Setup/debian/usr/share/doc/qtspim
 mkdir -p Setup/debian/usr/share/qtspim/help
+mkdir -p Setup/debian/usr/share/applications
 find Setup/debian -type d | xargs chmod 755   # this is necessary on Debian Woody, don't ask me why
 
 install -s QtSpim-build-desktop/QtSpim Setup/debian/usr/bin/qtspim
@@ -31,6 +32,9 @@ cp -f Setup/qtspim_debian_deployment/changelog Setup/debian/usr/share/doc/qtspim
 gzip -f --best Setup/debian/usr/share/doc/qtspim/changelog
 
 cp -f QtSpim-build-desktop/help/* Setup/debian/usr/share/qtspim/help
+
+cp -f Setup/qtspim_debian_deployment/qtspim.desktop Setup/debian/usr/share/applications
+cp -f Setup/NewIcon48x48.png Setup/debian/usr/share/qtspim/qtspim.png
 
 fakeroot dpkg-deb --build Setup/debian
 mv Setup/debian.deb qtspim.deb

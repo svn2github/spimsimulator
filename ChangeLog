@@ -1,5 +1,8 @@
 2011-01-01  Jim Larus  <jim@linuxPC>
 
+	* Setup/qtspim_debian/depolyment/qtspim.desktop, bin/release-debain:
+	Added Linux desktop entry and icon.
+
 	* QtSpim/regwin.cpp, QtSpim/datawin.cpp, QtSpim/textwin.cpp,
 	QtSpim/state.cpp:
 	Leave windows scrolled to top as much as possible.
