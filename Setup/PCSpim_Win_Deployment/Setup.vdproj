@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0F8A662903234CACB19F6927AF27C125"
+        "MsmKey" = "8:_30A48478E3C04913898F7E23D97819C2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -27,25 +27,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3D1B83BD195A4DB4A91FD8143A81A31B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4DC7D6CA32654FDF9DB9D6B6BAF85CB8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_76B48576597C492889CECC140067CF77"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_983E882820AE4E1D8C45F2E7F3B91C89"
+        "MsmKey" = "8:_832213DBBB19478499F244063C83450D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -57,13 +45,25 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BC68B7D1DAAE4CC0B1E500E0BDF31F9C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D792DDD10B8D47C59AAD01EFE9064E23"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F69A2A7FFDF2452B933929885CF7FF94"
+        "MsmKey" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -172,10 +172,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0F8A662903234CACB19F6927AF27C125"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30A48478E3C04913898F7E23D97819C2"
             {
-            "SourcePath" = "8:..\\CPU\\exceptions.s"
-            "TargetName" = "8:exceptions.s"
+            "SourcePath" = "8:..\\..\\PCSpim\\hlp\\PCSPIM.HLP"
+            "TargetName" = "8:PCSPIM.HLP"
             "Tag" = "8:"
             "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
             "Condition" = "8:"
@@ -212,26 +212,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3D1B83BD195A4DB4A91FD8143A81A31B"
-            {
-            "SourcePath" = "8:..\\PCSpim\\Release\\pcspim.exe"
-            "TargetName" = "8:pcspim.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DC7D6CA32654FDF9DB9D6B6BAF85CB8"
             {
             "SourcePath" = "8:C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\redist\\x86\\Microsoft.VC90.CRT\\msvcr90.dll"
@@ -252,30 +232,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_76B48576597C492889CECC140067CF77"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_832213DBBB19478499F244063C83450D"
             {
-            "SourcePath" = "8:..\\PCSpim\\res\\PCSpim.ico"
-            "TargetName" = "8:PCSpim.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_983E882820AE4E1D8C45F2E7F3B91C89"
-            {
-            "SourcePath" = "8:..\\PCSpim\\Release\\PCSPIM.HLP"
-            "TargetName" = "8:PCSPIM.HLP"
+            "SourcePath" = "8:..\\InstallBitmapBanner.bmp"
+            "TargetName" = "8:InstallBitmapBanner.bmp"
             "Tag" = "8:"
             "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
             "Condition" = "8:"
@@ -312,6 +272,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BC68B7D1DAAE4CC0B1E500E0BDF31F9C"
+            {
+            "SourcePath" = "8:..\\..\\CPU\\exceptions.s"
+            "TargetName" = "8:exceptions.s"
+            "Tag" = "8:"
+            "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D792DDD10B8D47C59AAD01EFE9064E23"
             {
             "SourcePath" = "8:C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\redist\\x86\\Microsoft.VC90.CRT\\Microsoft.VC90.CRT.manifest"
@@ -332,10 +312,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F69A2A7FFDF2452B933929885CF7FF94"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF7E9D6B34544A73AD81756DEA092CA0"
             {
-            "SourcePath" = "8:BannerBitmap.bmp"
-            "TargetName" = "8:BannerBitmap.bmp"
+            "SourcePath" = "8:..\\..\\PCSpim\\Debug\\pcspim.exe"
+            "TargetName" = "8:pcspim.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FB67F7AAF09649EB93CC575EED91FF5B"
+            {
+            "SourcePath" = "8:..\\..\\PCSpim\\res\\PCSpim.ico"
+            "TargetName" = "8:PCSpim.ico"
             "Tag" = "8:"
             "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
             "Condition" = "8:"
@@ -361,11 +361,11 @@
             "Description" = "8:Assembly File"
             "Extensions" = "8:.s"
             "MIME" = "8:"
-            "Icon" = "8:_76B48576597C492889CECC140067CF77"
+            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_3D1B83BD195A4DB4A91FD8143A81A31B"
+                "Command" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
                 }
                 "Verbs"
                 {
@@ -465,7 +465,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PCSpim"
         "ProductCode" = "8:{D10227CA-792C-4517-872A-8AF5DB472D48}"
-        "PackageCode" = "8:{24979C5C-EB2B-47A1-8EF6-99142A16625C}"
+        "PackageCode" = "8:{3126CFFE-60AB-461B-96B7-CAAAA8467278}"
         "UpgradeCode" = "8:{49597A27-705B-46E2-B7F6-4C8781A4561F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -481,7 +481,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_76B48576597C492889CECC140067CF77"
+        "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -620,10 +620,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_3D1B83BD195A4DB4A91FD8143A81A31B"
+            "Target" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
             "Folder" = "8:_2F8CD7B34D724A5FAE17A49E5A8C99EC"
             "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Icon" = "8:_76B48576597C492889CECC140067CF77"
+            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9563752E0ACA4B28B33EFF25EB577878"
@@ -634,10 +634,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_3D1B83BD195A4DB4A91FD8143A81A31B"
+            "Target" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
             "Folder" = "8:_0A9D45F5FEF14B45A41610018DDB0ADE"
             "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Icon" = "8:_76B48576597C492889CECC140067CF77"
+            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
             "Feature" = "8:"
             }
         }
@@ -806,7 +806,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_F69A2A7FFDF2452B933929885CF7FF94"
+                            "Value" = "8:_832213DBBB19478499F244063C83450D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -855,7 +855,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_F69A2A7FFDF2452B933929885CF7FF94"
+                            "Value" = "8:_832213DBBB19478499F244063C83450D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -891,7 +891,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_F69A2A7FFDF2452B933929885CF7FF94"
+                            "Value" = "8:_832213DBBB19478499F244063C83450D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -923,7 +923,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_F69A2A7FFDF2452B933929885CF7FF94"
+                            "Value" = "8:_832213DBBB19478499F244063C83450D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -1018,7 +1018,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_F69A2A7FFDF2452B933929885CF7FF94"
+                            "Value" = "8:_832213DBBB19478499F244063C83450D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
