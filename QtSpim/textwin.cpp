@@ -52,11 +52,13 @@ void SpimView::DisplayTextSegments()
         textTextEdit* te = ui->TextSegDockWidget->findChild<textTextEdit *>("TextSegmentTextEdit");
 
         te->clear();
-        te->insertHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
-                       % formatUserTextSeg()
-                       % formatKernelTextSeg()
-                       % windowFormattingEnd());
+        QString windowContents = windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
+            % formatUserTextSeg()
+            % formatKernelTextSeg()
+            % windowFormattingEnd();
+        te->insertHtml(windowContents);
         highlightInstruction(PC);
+        te->scrollToAnchor(windowContents);
     }
     text_modified = 0;
 }

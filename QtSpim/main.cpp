@@ -49,9 +49,9 @@ int main(int argc, char *argv[])
     message_out.i = 1;
     console_out.i = 2;
 
-    win.sim_ReinitializeSimulator();
-
     win.show();
+
+    win.sim_ReinitializeSimulator();
 
     a.setStyleSheet(
 "  QTabWidget::pane { /* The tab widget frame */"

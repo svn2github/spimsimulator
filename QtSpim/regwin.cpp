@@ -35,6 +35,7 @@
 #include "ui_spimview.h"
 
 #include <QRegExp>
+#include <QScrollBar>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
 #include <QInputDialog>
@@ -68,6 +69,7 @@ void SpimView::DisplayIntRegisters()
 
     te->clear();
     te->appendHtml(windowContents);
+    te->verticalScrollBar()->setValue(te->verticalScrollBar()->minimum());
     ui->IntRegDockWidget->setWindowTitle(QString("Int Regs [")
                                          + QString::number(st_intRegBase)
                                          + QString("] "));
@@ -121,6 +123,7 @@ void SpimView::DisplayFPRegisters()
                    % formatSFPRegisters()
                    % formatDFPRegisters()
                    % windowFormattingEnd());
+    te->verticalScrollBar()->setValue(te->verticalScrollBar()->minimum());
 }
 
 

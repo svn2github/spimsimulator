@@ -1,5 +1,9 @@
 2011-01-01  Jim Larus  <jim@linuxPC>
 
+	* QtSpim/regwin.cpp, QtSpim/datawin.cpp, QtSpim/textwin.cpp,
+	QtSpim/state.cpp:
+	Leave windows scrolled to top as much as possible.
+
 	* spim/Makefile, xspim/IMakefile:
 	Changed directories to install spim and xspim in /usr/bin.
 

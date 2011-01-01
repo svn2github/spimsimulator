@@ -35,6 +35,7 @@
 #include "ui_spimview.h"
 
 #include <QRegExp>
+#include <QScrollBar>
 #include <QContextMenuEvent>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
@@ -56,6 +57,7 @@ void SpimView::DisplayDataSegments()
                        % formatUserStack()
                        % formatKernelDataSeg()
                        % windowFormattingEnd());
+        te->verticalScrollBar()->setValue(te->verticalScrollBar()->minimum());
     }
     data_modified = 0;
 }
