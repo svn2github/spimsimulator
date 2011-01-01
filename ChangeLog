@@ -1,5 +1,8 @@
 2011-01-01  Jim Larus  <jim@linuxPC>
 
+	* spim/Makefile, xspim/IMakefile:
+	Changed directories to install spim and xspim in /usr/bin.
+
 	* Setup/qtspim_debian_deployment, bin/release-debian, QtSpim/menu.cpp:
 	Create debian package.
 

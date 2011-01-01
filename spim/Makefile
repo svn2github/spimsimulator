@@ -66,13 +66,13 @@ DOC_DIR = ../Documentation
 
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /opt/spim/bin
+BIN_DIR = /usr/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /opt/spim/lib
+EXCEPTION_DIR = /usr/share/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /opt/spim/man/en
+MAN_DIR = /usr/share/man/man1
 
 
 # If you have flex, use it instead of lex.  If you use flex, define this
@@ -184,13 +184,11 @@ clean:
 	rm -f spim spim.exe *.o TAGS test.out lex.yy.c parser_yacc.c parser_yacc.h y.output
 
 install: spim
-	install -d $(BIN_DIR)
 	install spim $(BIN_DIR)/spim
 	install -d $(EXCEPTION_DIR)
 	install -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)/exceptions.s
 
 install-man:
-	install -d $(MAN_DIR)
 	install -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
 
 splint: spim

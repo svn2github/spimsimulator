@@ -2,7 +2,7 @@
 # $Xorg: imake.c,v 1.6 2001/02/09 02:03:15 xorgcvs Exp $
 
 # ----------------------------------------------------------------------
-# Makefile generated from "Imake.tmpl" and </tmp/IIf.vjfEg1>
+# Makefile generated from "Imake.tmpl" and </tmp/IIf.bJu2AJ>
 # $Xorg: Imake.tmpl,v 1.4 2000/08/17 19:41:46 cpqbld Exp $
 # $XdotOrg: xc/config/cf/Imake.tmpl,v 1.9 2005/01/24 06:37:31 daniels Exp $
 #
@@ -1086,13 +1086,13 @@ CXXPROJECT_DEFINES =
 #
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /opt/spim/bin
+BIN_DIR = /usr/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /opt/spim/lib
+EXCEPTION_DIR = /usr/share/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /opt/spim/man/en
+MAN_DIR = /usr/share/man/man1
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
