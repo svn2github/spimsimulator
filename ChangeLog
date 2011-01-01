@@ -1,3 +1,8 @@
+2011-01-01  Jim Larus  <jim@linuxPC>
+
+	* Setup/qtspim_debian_deployment, bin/release-debian, QtSpim/menu.cpp:
+	Create debian package.
+
 2010-12-30    <Jim@X64PC>
 
 	* Moved SVN repository to SourceForge in preperation for hosting
@@ -5,12 +10,12 @@
 
 2010-12-30    <Jim@LS-RED>
 
-	* PCSpim/PCSpimView.cpp [Lyosha Blinnikov <nookkin@gmail.com>]
+	* PCSpim/PCSpimView.cpp [Lyosha Blinnikov <nookkin@gmail.com>]:
 	Incorrectly parse file names containing spaces.
 
 2010-12-29    <Jim@LS-RED>
 
-	* PCSpim/pcspim.rc [Hauerwas, Adam <HAUERWAS@providence.edu>]
+	* PCSpim/pcspim.rc [Hauerwas, Adam <HAUERWAS@providence.edu>]:
 	Field label did not fit string.
 
 2010-11-26    <Jim@LS-RED>

@@ -1,0 +1,38 @@
+#!/bin/bash -v
+#
+# Shell script to create debian binary package for QtSpim.
+#
+# Steps copied from: http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
+#
+# Usage: release-debian
+#
+
+rm -fr Setup/debian
+
+mkdir -p Setup/debian
+mkdir -p Setup/debian/usr/bin
+mkdir -p Setup/debian/usr/share/man/man1
+mkdir -p Setup/debian/DEBIAN
+mkdir -p Setup/debian/usr/share/doc/qtspim
+mkdir -p Setup/debian/usr/share/qtspim/help
+find Setup/debian -type d | xargs chmod 755   # this is necessary on Debian Woody, don't ask me why
+
+install -s QtSpim-build-desktop/QtSpim Setup/debian/usr/bin/qtspim
+chrpath -d Setup/debian/usr/bin/qtspim
+
+cp -f Documentation/qtspim.man Setup/debian/usr/share/man/man1/qtspim.1
+gzip -f --best Setup/debian/usr/share/man/man1/qtspim.1
+
+cp -f Setup/qtspim_debian_deployment/control Setup/debian/DEBIAN
+
+cp -f Setup/qtspim_debian_deployment/copyright Setup/debian/usr/share/doc/qtspim
+
+cp -f Setup/qtspim_debian_deployment/changelog Setup/debian/usr/share/doc/qtspim/
+gzip -f --best Setup/debian/usr/share/doc/qtspim/changelog
+
+cp -f QtSpim-build-desktop/help/* Setup/debian/usr/share/qtspim/help
+
+fakeroot dpkg-deb --build Setup/debian
+mv Setup/debian.deb qtspim.deb
+lintian qtspim.deb
+
