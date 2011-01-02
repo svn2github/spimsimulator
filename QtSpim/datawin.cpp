@@ -35,11 +35,11 @@
 #include "ui_spimview.h"
 
 #include <QRegExp>
-#include <QScrollBar>
 #include <QContextMenuEvent>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
 #include <QInputDialog>
+#include <QScrollBar>
 
 
 //
@@ -51,13 +51,15 @@ void SpimView::DisplayDataSegments()
     if (data_modified)
     {
         dataTextEdit* te = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
+        QString windowContents = windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor);
+        int scrollPosition = te->verticalScrollBar()->value();
+
+        windowContents += formatUserDataSeg() % formatUserStack() % formatKernelDataSeg() % windowFormattingEnd();
+
         te->clear();
-        te->appendHtml(windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor)
-                       % formatUserDataSeg()
-                       % formatUserStack()
-                       % formatKernelDataSeg()
-                       % windowFormattingEnd());
-        te->verticalScrollBar()->setValue(te->verticalScrollBar()->minimum());
+        te->appendHtml(windowContents);
+
+        te->verticalScrollBar()->setValue(scrollPosition);
     }
     data_modified = 0;
 }

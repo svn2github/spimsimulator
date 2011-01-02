@@ -58,7 +58,6 @@ void SpimView::DisplayTextSegments()
             % windowFormattingEnd();
         te->insertHtml(windowContents);
         highlightInstruction(PC);
-        te->scrollToAnchor(windowContents);
     }
     text_modified = 0;
 }

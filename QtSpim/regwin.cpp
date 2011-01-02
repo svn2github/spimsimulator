@@ -35,10 +35,10 @@
 #include "ui_spimview.h"
 
 #include <QRegExp>
-#include <QScrollBar>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
 #include <QInputDialog>
+#include <QScrollBar>
 
 
 //
@@ -49,6 +49,7 @@ void SpimView::DisplayIntRegisters()
 {
     regTextEdit* te = ui->IntRegDockWidget->findChild<regTextEdit *>("IntRegTextEdit");
     QString windowContents = windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor);
+    int scrollPosition = te->verticalScrollBar()->value();
 
     windowContents += formatSpecialIntRegister(PC, "PC", PC != oldPC);
     windowContents += formatSpecialIntRegister(CP0_EPC, "EPC", CP0_EPC != oldEPC);
@@ -69,10 +70,11 @@ void SpimView::DisplayIntRegisters()
 
     te->clear();
     te->appendHtml(windowContents);
-    te->verticalScrollBar()->setValue(te->verticalScrollBar()->minimum());
     ui->IntRegDockWidget->setWindowTitle(QString("Int Regs [")
                                          + QString::number(st_intRegBase)
                                          + QString("] "));
+
+    te->verticalScrollBar()->setValue(scrollPosition);
     CaptureIntRegisters();
 }
 
@@ -118,12 +120,16 @@ void SpimView::CaptureIntRegisters()
 void SpimView::DisplayFPRegisters()
 {
     regTextEdit* te = ui->FPRegDockWidget->findChild<regTextEdit *>("FPRegTextEdit");
+    QString windowContents = windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor);
+    int scrollPosition = te->verticalScrollBar()->value();
+
+    windowContents += formatSFPRegisters() % formatDFPRegisters() % windowFormattingEnd();
+
     te->clear();
-    te->appendHtml(windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor)
-                   % formatSFPRegisters()
-                   % formatDFPRegisters()
-                   % windowFormattingEnd());
-    te->verticalScrollBar()->setValue(te->verticalScrollBar()->minimum());
+    te->appendHtml(windowContents);
+
+    te->verticalScrollBar()->setValue(scrollPosition);
+    CaptureSFPRegisters();
 }
 
 
@@ -146,8 +152,6 @@ QString SpimView::formatSFPRegisters()
     for (i = 0; i < FGR_LENGTH; i++) {
         windowContents += formatSFPRegister(i, FPR_S(i), FPR_S(i) != oldFPR_S[i]);
     }
-
-    CaptureSFPRegisters();
 
     return windowContents;
 }

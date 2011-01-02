@@ -49,7 +49,7 @@
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QProcess>
-
+#include <QScrollBar>
 
 //
 // Menu functions
@@ -257,6 +257,17 @@ void SpimView::sim_ReinitializeSimulator()
 
     DisplayTextSegments();
     UpdateDataDisplay();
+
+    // Scroll to top of windows
+    //
+    regTextEdit* rte = ui->IntRegDockWidget->findChild<regTextEdit *>("IntRegTextEdit");
+    rte->verticalScrollBar()->setValue(rte->verticalScrollBar()->minimum());
+    rte = ui->FPRegDockWidget->findChild<regTextEdit *>("FPRegTextEdit");
+    rte->verticalScrollBar()->setValue(rte->verticalScrollBar()->minimum());
+    textTextEdit* tte = ui->TextSegDockWidget->findChild<textTextEdit *>("TextSegmentTextEdit");
+    tte->verticalScrollBar()->setValue(tte->verticalScrollBar()->minimum());
+    dataTextEdit* dte = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
+    dte->verticalScrollBar()->setValue(dte->verticalScrollBar()->minimum());
 }
 
 
@@ -363,11 +374,11 @@ bool SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
     {
         bool breakpointEncountered = run_program(pc, steps, display, contBkpt, &continuable);
 
+        highlightInstruction(PC);
+        UpdateDataDisplay();
+
         if (breakpointEncountered)
         {
-            highlightInstruction(PC);
-            UpdateDataDisplay();
-
             QMessageBox msgBox(QMessageBox::Information,
                                "Execution Stopped",
                                "Execution stopped due to breakpoint. Continue executing?",

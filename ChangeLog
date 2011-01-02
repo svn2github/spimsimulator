@@ -1,4 +1,16 @@
+2011-01-02    <Jim@X64PC>
+
+	* Version 9.0.1 released:
+
+	* QtSpim/menu.cpp:
+	Update register display when single stepping.
+
+	* QtSpim/datawin.cpp, QtSpim/menu.cpp, QtSpim/regwin.cpp, QtSpim/textwin.cpp:
+	Scroll windows to top when reinitialized; otherwise leave at same place.
+
 2011-01-01  Jim Larus  <jim@linuxPC>
+
+	* Version 9.0 released:
 
 	* Setup/qtspim_debian/depolyment/qtspim.desktop, bin/release-debain:
 	Added Linux desktop entry and icon.
@@ -130,7 +142,7 @@
 
 2010-01-23    <Jim@LS-RED>
 
-	* CPU/endian.c: 
+	* CPU/endian.c:
 	Added copyright notice.
 
 2010-01-08    <Jim@LS-RED>
