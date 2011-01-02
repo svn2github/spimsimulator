@@ -12,9 +12,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1DCB53AA-A215-48C0-A09C-7BD9FC122B37}.Debug|Default.ActiveCfg = Debug
-		{1DCB53AA-A215-48C0-A09C-7BD9FC122B37}.Debug|Default.Build.0 = Debug
 		{1DCB53AA-A215-48C0-A09C-7BD9FC122B37}.Release|Default.ActiveCfg = Release
 		{B2CCAD5D-FFEE-4469-AC28-F39C8AF8D8C1}.Debug|Default.ActiveCfg = Debug
+		{B2CCAD5D-FFEE-4469-AC28-F39C8AF8D8C1}.Debug|Default.Build.0 = Debug
 		{B2CCAD5D-FFEE-4469-AC28-F39C8AF8D8C1}.Release|Default.ActiveCfg = Release
 		{B2CCAD5D-FFEE-4469-AC28-F39C8AF8D8C1}.Release|Default.Build.0 = Release
 	EndGlobalSection
