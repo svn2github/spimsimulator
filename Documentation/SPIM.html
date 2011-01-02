@@ -14,10 +14,10 @@
 	height: 550px;
 }
 .leftNav ul {
-	margin-left:0px;
-	padding-left:20px;
-	list-style-type:square;
-	line-height:150%;
+	margin-left: 0px;
+	padding-left: 20px;
+	list-style-type: square;
+	line-height: 150%;
 }
 .rightNav {
 	border: 1px solid #00FF00;
@@ -62,64 +62,76 @@ University of Wisconsin-Madison</p>
 	the same user iterface and same code will run on Windows, Linux, and Mac OS 
 	X (yeah!). Moreover, the interface is clean and up-to-date (unlike the archaic 
 	X windows interface).</p>
+	<p><em>Spim</em> has moved to
+	<a href="https://sourceforge.net/projects/spimsimulator/">SourceForge</a>! The 
+	source code for all version of <em>spim</em> are in an SVN repository and compiled 
+	version are available for download. There is also a bug tracker and discussion 
+	forum.</p>
+	<p>&nbsp;</p>
 </div>
-<p><i>spim</i> is a self-contained simulator that will run MIPS32 assembly language 
-programs. It reads and executes assembly language programs written for this processor.
-<i>spim</i> also provides a simple debugger and minimal set of operating system 
-services. <i>spim</i> does <u>not</u> execute binary (compiled) programs.</p>
+<p><i>spim</i> is a self-contained simulator that runs MIPS32 programs. It reads 
+and executes assembly language programs written for this processor. <i>spim</i> 
+also provides a simple debugger and minimal set of operating system services. <i>
+spim</i> does <u>not</u> execute binary (compiled) programs.</p>
 <p><i>spim</i> implements almost the entire MIPS32 assembler-extended instruction 
 set. (It omits most floating point comparisons and rounding modes and the memory 
 system page tables.) The MIPS architecture has several variants that differ in various 
 ways (e.g., the MIPS64 architecture supports 64-bit integers and addresses), which 
-means that <i>spim</i> will not run programs compiled for all MIPS processors. 
-MIPS compilers also generate a number of assembler directives that <i>spim</i> cannot 
+means that <i>spim</i> will not run programs compiled for all MIPS processors. MIPS 
+compilers also generate a number of assembler directives that <i>spim</i> cannot 
 process. These directives usually can be safely ignored.</p>
 <p>Earlier versions of <i>spim</i> (before 7.0) implemented the MIPS-I instruction 
 set used on the MIPS R2000/R3000 computers. This architecture is obsolete (though, 
-never surpassed for its simplicity and elegance). <i>spim</i> now supports 
-the more modern MIPS32 architecture, which is the MIPS-I instruction set augmented 
-with a large number of occasionally useful instructions. MIPS code from earlier 
-versions of SPIM should run without changes, <u>except</u> code that handles exceptions 
-and interrupts. This part of the architecture changed over time (and was poorly 
-implemented in earlier versions of <i>spim</i>). This type of code will need to be updated. 
+never surpassed for its simplicity and elegance). <i>spim</i> now supports the more 
+modern MIPS32 architecture, which is the MIPS-I instruction set augmented with a 
+large number of occasionally useful instructions. MIPS code from earlier versions 
+of SPIM should run without changes, <u>except</u> code that handles exceptions and 
+interrupts. This part of the architecture changed over time (and was poorly implemented 
+in earlier versions of <i>spim</i>). This type of code will need to be updated. 
 Examples of new exception handling are in the files: exceptions.s and Tests/tt.io.s.</p>
 <p><i>spim</i> comes with complete source code and documentation. It also include 
 a torture test to verify a port to a new machine.</p>
-<p><i>spim</i> implements both a simple, terminal-style interface and a window interface. 
-On Microsoft Windows, Linux, and Mac OS X, the <i>spim</i> program provides a simple terminal 
-interface and the <i>QtSpim</i> program provides the windowing interface.</p>
+<p><i>spim</i> implements both a terminal and a window interface. On Microsoft Windows, 
+Linux, and Mac OS X, the <i>spim</i> program provides the simple terminal interface 
+and the <i>QtSpim</i> program provides the windowing interface.</p>
 <hr width="100%">
 <h2 align="center"><a name="birthday">Happy Birthday SPIM!</a></h2>
-<p><i>spim</i> is 20 years old this January (2010). I wrote the original version 
-of <i>spim</i> as the target machine for my first compiler class at University of 
-Wisconsin, Madison in the spring semester 1990. <i>spim</i> is likely older than 
-most of the students currently using it!</p>
-<p>As a birthday present, the latest version of <i>spim</i> (8.0) has a simpler, less 
-restrictive license, namely the standard BSD license.</p>
+<p><i>spim</i> turned 20 years old January 2010. I wrote the original version of
+<i>spim</i> as the target machine for my first compiler class at University of Wisconsin, 
+Madison in the spring semester 1990. <i>spim</i> is likely older than most of the 
+students currently using it!</p>
+<p>As a birthday present, the 8.0 version of <i>spim</i> has a simpler, less restrictive 
+license, namely the standard BSD license.</p>
 <hr width="100%">
-<h2 align="center"><a name="qtspim">Downloading and Installing QtSpim</a></h2>
+<h2 align="center"><a name="qtspim">QtSpim</a></h2>
 <p>The newest version of <i>spim</i> is called <i>QtSpim</i>, and unlike all of 
-the other version, it runs on Microsoft Windows, Mac OS X,
-<span class="style1">and</span> Linux&#8212;the same source code and the same user interface 
-on all three platforms! <i>QtSpim</i> is the version of <i>spim</i> that 
-currently being 
-actively maintaned. The other versions are still available, but please stop 
-using them and move to <i>QtSpim</i>. It has a modern user interface, extensive 
-help, and is consistent across all three platforms. It makes my life far 
-easier, and will likely improve yours and your students' experience as well.</p>
-<p>A compiled, immediately installable version of <i>QtSpim</i> is available for Microsoft 
-Windows, Mac OS X, and Linux. The full source code is also available.&nbsp; 
-However, to build <i>QtSpim</i>, 
-you need a copy of <a href="http://qt.nokia.com/downloads/">Nokia&#39;s Qt framework</a>, 
-a very nice cross-platform UI framework that can be downloaded from
+the other version, it runs on Microsoft Windows, Mac OS X, <span class="style1">
+and</span> Linux&#8212;the same source code and the same user interface on all three platforms!
+<i>QtSpim</i> is the version of <i>spim</i> that currently being actively maintaned. 
+The other versions are still available, but please stop using them and move to
+<i>QtSpim</i>. It has a modern user interface, extensive help, and is consistent 
+across all three platforms. <i>QtSpim </i>makes my life far easier, and will likely 
+improve yours and your students&#39; experience as well.</p>
+<p>A compiled, immediately installable version of <i>QtSpim</i> is available for
+<a href="http://sourceforge.net/projects/spimsimulator/files/QtSpim_9.0.zip/download">
+Microsoft Window</a>s, Mac OS X (not yet!), and
+<a href="http://sourceforge.net/projects/spimsimulator/files/qtspim_9.0.deb/download">
+Linux</a>. The
+<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">full source 
+code</a> is also available.&nbsp; However, to build <i>QtSpim</i>, you need a copy 
+of <a href="http://qt.nokia.com/downloads/">Nokia&#39;s Qt framework</a>, a very nice 
+cross-platform UI framework that can be downloaded from
 <a href="http://qt.nokia.com/downloads/">here</a>.</p>
 <hr>
 <div style="background: #F3F3F3">
-<h2 align="center"><a name="older">Older Versions of SPIM</a></h2>
-	<strong>The information in this shaded box describes the older versions of SPIM. These 
-version are not actively maintained. Please use 
-	</strong> <i><strong>QtSpim</strong></i><strong> instead.</strong>
+	<h2 align="center"><a name="older">Older Versions of SPIM</a></h2>
+	<strong>The information in this shaded box describes the older versions of SPIM. 
+	Please use </strong><i><strong>QtSpim</strong></i><strong> 
+	instead.</strong><br>
 	<table align="center" border="1" width="732">
+		<tr>
+			<td align="middle" colspan="4"><strong>Most Recent Versions of SPIM</strong></td>
+		</tr>
 		<tr>
 			<td align="middle" width="451"><b>Platform</b></td>
 			<td align="middle" width="96"><b>Program</b></td>
@@ -131,63 +143,49 @@ version are not actively maintained. Please use
 			<td align="center" width="96"><i>spim<br>xspim</i></td>
 			<td align="center" width="128">Source code</td>
 			<td width="382">
-			<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</a> 
-			or<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z"><br></a>
-			<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</a></td>
+			<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">
+			http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/</a></td>
 		</tr>
 		<tr>
-			<td width="451">Linux</td>
-			<td align="center" width="96"><i>spim<br>xspim</i></td>
-			<td align="center" width="128">Binary RPM for Fedora</td>
-			<td width="382"><a href="http://www.cs.wisc.edu/cbi/downloads/">http://www.cs.wisc.edu/cbi/downloads/</a>&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td rowspan="2" width="451">Microsoft Windows<br>(Windows NT, 2000, 
-			XP)<p>(spim 7.0 and later versions no longer run on Windows 95/98. Use 
-			version 6.5 or earlier.)</p>
+			<td rowspan="2" width="451">Microsoft Windows<p>(spim 7.0 and later 
+			versions no longer run on Windows 95/98. Use version 6.5 or earlier.)</p>
 			</td>
 			<td align="center" rowspan="2" width="96"><i>PCSpim</i></td>
 			<td align="center" width="128">Executable</td>
 			<td width="382">
-			<a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>
-			</td>
+			<a href="http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download">
+			<span jquery1293925232087="85">http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download</span>
+			</a></td>
 		</tr>
 		<tr>
 			<td align="center" width="128">Source code</td>
 			<td width="382">
-			<a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</a></td>
+			<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">
+			http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/</a></td>
 		</tr>
 	</table>
 	<ul>
 		<li>
 		<p>To run <i>spim</i> or <i>xspim</i> on a Unix, Linux, or Mac OS X system, 
-		copy either the compressed tar file (<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</a>) 
-		or the gzip&#39;ed tar file (<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</a>).&nbsp; 
-		Both files contains source code and must be compiled for your system.</p>
-		</li>
-		<li>
-		<p>Ben Liblit of the <i>Cooperative Bug Isolation Project</i> (<a href="http://www.cs.wisc.edu/cbi/">http://www.cs.wisc.edu/cbi/</a>) 
-		produced a compiled version of <i>spim</i> for Fedora. It contains the project&#39;s 
-		low-overhead monitoring code, which can help find bugs in <i>spim</i>. If 
-		you are running Linux, this package can: save you the time and trouble of 
-		compiling and installing <i>spim</i>, help find bugs, and aid an interesting 
-		research project.</p>
+		get the source code from the
+		<a href="https://sourceforge.net/scm/?type=svn&amp;group_id=388698">SourceForge 
+		repository</a> and compile it for your system.</p>
 		</li>
 		<li>
 		<p>To run <i>PCspim</i> under Microsoft Windows, download the file
-		<a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a>, 
-		unzip it, and click on <i>setup.exe</i>.</p>
+		<a href="http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download">
+		<span jquery1293925232087="85">http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download</span>
+		</a>, unzip it, and click on <i>setup.exe</i>.</p>
 		</li>
 		<li>
-		<p>Source for the Microsoft Windows version (both <i>PCspim</i>) is available 
-		separately in the file
-		<a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim_src.zip</a>.
-		</p>
+		<p>Source for the Microsoft Windows version (<i>PCspim</i>) is available
+		<a href="https://sourceforge.net/scm/?type=svn&amp;group_id=388698">SourceForge 
+		repository</a>. </p>
 		</li>
 		<li>
-		<p>There is no native Macintosh version of <i>spim</i>. However, the <i>
-		xspim</i> will compiles and runs on Mac OS X. </p>
+		<p>There is no native Macintosh version of <i>spim</i> (but there is a
+		<em>QtSpim</em> version). However, <i>xspim</i> compiles and runs on Mac 
+		OS X, if you can find a way to install the Xaw library.</p>
 		</li>
 	</ul>
 	<hr width="100%">
@@ -195,9 +193,9 @@ version are not actively maintained. Please use
 	<h3>Microsoft Windows</h3>
 	<ol>
 		<li>
-		<p>Download the file
-		<a href="http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip">http://www.cs.wisc.edu/~larus/SPIM/pcspim.zip</a> 
-		and save it on your machine.</p>
+		<p>To run <i>PCspim</i> under Microsoft Windows, download the file
+		<a href="http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download">
+		<span jquery1293925232087="85">http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download</span></a>.</p>
 		</li>
 		<li>
 		<p>Unzip the file.</p>
@@ -207,28 +205,16 @@ version are not actively maintained. Please use
 		</li>
 	</ol>
 	<h3>Unix, Linux, or Mac OS X</h3>
-	<p>(Note: the directions changed slightly for version 
-	7.2, to reflect a new directory structure. Please read carefully.)</p>
+	<p>(Note: the directions changed slightly for version 7.2, to reflect a new 
+	directory structure. Please read carefully.)</p>
 	<p>Installation is a bit more complex for a Unix or Linux system, as you need 
 	to compile the program for your particular computer and operating system.</p>
 	<ol>
 		<li>
-		<p>Download either the file
-		<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z</a> 
-		or<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z"> </a>
-		<a href="http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz">http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz</a>.</p>
-		</li>
-		<li>
-		<p>Decompress the file, using either the program <i>uncompress</i> for the 
-		first file or <i>gzip</i> for the second file:<br><br>&nbsp;&nbsp;&nbsp;
-		<i>% uncompress spim.tar.Z<br><br></i>or<br><br>&nbsp;&nbsp;&nbsp; <i>% 
-		gzip -d spim.tar.gz<br>&nbsp;</i></p>
-		</li>
-		<li>
-		<p>Move the file <i>spim.tar</i> to the directory in which you want to build
-		<i>spim</i> and untar it:<br><br>&nbsp;&nbsp;&nbsp; <i>% tar xf spim.tar<br>
-		<br></i>It will create a directory named <i>spim-8.0</i> (or the most recent 
-		version number).<br>&nbsp;</p>
+		<p>Download the files from the
+		<a href="https://sourceforge.net/scm/?type=svn&amp;group_id=388698">SourceForge 
+		repository</a>. You don&#39;t need the Boneyard directory, which contains old 
+		versions, but the other directories are useful.<br>&nbsp;</p>
 		</li>
 		<li>
 		<p>The simple terminal interface is contained in the <i>spim-8.0/spim</i> 
@@ -390,14 +376,46 @@ version are not actively maintained. Please use
 	</li>
 	<li>
 	<p>Andrea Grandi ported SPIM to the <a href="http://www.nokiausa.com/770">Nokia 
-	770/800 Internet Tablet</a>, so you never need to be without the ability to run 
-	MIPS programs. The port of SPIM is available at: 
+	770/800 Internet Tablet</a>, so you never need to be without the ability to 
+	run MIPS programs. The port of SPIM is available at:
 	<a href="http://www.ptlug.org/wiki/SPIM_N770">http://www.ptlug.org/wiki/SPIM_N770</a>.
 	</p>
 	</li>
 </ul>
 <hr width="100%">
 <h2 align="center"><a name="changes">Changes in Latest Version</a></h2>
+<p>The current version of <em>spim</em> is 9.0 (January 2011), which is a major 
+release that introduces <em>QtSpim</em> and fixes some bugs in all versions:</p>
+<ul>
+	<li>
+	<p>Add Debian package and Linux desktop metadata.</p>
+	</li>
+	<li>
+	<p>Moved SVN repository to SourceForge.</p>
+	</li>
+	<li>
+	<p>Fit and finish bugs in PCSpim and error parsing quoted command line arguments.</p>
+	</li>
+	<li>
+	<p>QtSpim!!!</p>
+	</li>
+	<li>
+	<p>Single stepping hung at breakpoint.</p>
+	</li>
+	<li>
+	<p>Did not display first 4K of the stack.</p>
+	</li>
+	<li>
+	<p>Ported PCSpim to VisualStudio 2010.</p>
+	</li>
+	<li>
+	<p>Fixed type errors so code compiles under Linux and on x64 systems.</p>
+	</li>
+	<li>
+	<p>Moved version information into CPU/version.h and eliminated old, ad-hoc Configure 
+	file for spim and xpsim.</p>
+	</li>
+</ul>
 <p>The current version of <i>spim</i> is 8.0 (January 2010), which is a minor release 
 that cleans up bugs in 7.5 and moves to a BSD license:</p>
 <ul>
