@@ -1,3 +1,9 @@
+2011-01-04    <Jim@LS-RED>
+
+	* PCSpim_9.0.1.zip:
+	New release to correct a bug in the deployment that included the
+	debug rather than release binary, which conflicted with libraries.
+
 2011-01-02    <Jim@X64PC>
 
 	* Version 9.0.1 released:

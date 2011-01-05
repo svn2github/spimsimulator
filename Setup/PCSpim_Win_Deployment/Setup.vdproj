@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_299DDA9E50B94D4D8EB386ABA0AE908C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_30A48478E3C04913898F7E23D97819C2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -52,12 +58,6 @@
         "Entry"
         {
         "MsmKey" = "8:_D792DDD10B8D47C59AAD01EFE9064E23"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -172,6 +172,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_299DDA9E50B94D4D8EB386ABA0AE908C"
+            {
+            "SourcePath" = "8:..\\..\\PCSpim\\Release\\pcspim.exe"
+            "TargetName" = "8:pcspim.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30A48478E3C04913898F7E23D97819C2"
             {
             "SourcePath" = "8:..\\..\\PCSpim\\hlp\\PCSPIM.HLP"
@@ -312,26 +332,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF7E9D6B34544A73AD81756DEA092CA0"
-            {
-            "SourcePath" = "8:..\\..\\PCSpim\\Debug\\pcspim.exe"
-            "TargetName" = "8:pcspim.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FB67F7AAF09649EB93CC575EED91FF5B"
             {
             "SourcePath" = "8:..\\..\\PCSpim\\res\\PCSpim.ico"
@@ -365,7 +365,7 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
+                "Command" = "8:_299DDA9E50B94D4D8EB386ABA0AE908C"
                 }
                 "Verbs"
                 {
@@ -612,32 +612,32 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_57C71CCC73D64A108540D2BC193606E3"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_685B6D29936B42488D24C067831F89E1"
             {
-            "Name" = "8:pcspim.exe"
+            "Name" = "8:PCSpim"
             "Arguments" = "8:"
-            "Description" = "8:Run PCSpim"
+            "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
-            "Folder" = "8:_2F8CD7B34D724A5FAE17A49E5A8C99EC"
-            "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9563752E0ACA4B28B33EFF25EB577878"
-            {
-            "Name" = "8:pcspim.exe"
-            "Arguments" = "8:"
-            "Description" = "8:Run PCSpim"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_DF7E9D6B34544A73AD81756DEA092CA0"
+            "Target" = "8:_299DDA9E50B94D4D8EB386ABA0AE908C"
             "Folder" = "8:_0A9D45F5FEF14B45A41610018DDB0ADE"
             "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_704C6ABE4D1342A189232E9DF9A8FD65"
+            {
+            "Name" = "8:Shortcut to pcspim.exe"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_299DDA9E50B94D4D8EB386ABA0AE908C"
+            "Folder" = "8:_2F8CD7B34D724A5FAE17A49E5A8C99EC"
+            "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
