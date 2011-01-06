@@ -39,7 +39,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_832213DBBB19478499F244063C83450D"
+        "MsmKey" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -252,10 +252,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_832213DBBB19478499F244063C83450D"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6ECCCBE4DE464B929CB71EEAAB53A09C"
             {
-            "SourcePath" = "8:..\\InstallBitmapBanner.bmp"
-            "TargetName" = "8:InstallBitmapBanner.bmp"
+            "SourcePath" = "8:..\\BannerBitmap.bmp"
+            "TargetName" = "8:BannerBitmap.bmp"
             "Tag" = "8:"
             "Folder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
             "Condition" = "8:"
@@ -465,7 +465,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PCSpim"
         "ProductCode" = "8:{D10227CA-792C-4517-872A-8AF5DB472D48}"
-        "PackageCode" = "8:{3126CFFE-60AB-461B-96B7-CAAAA8467278}"
+        "PackageCode" = "8:{791D3967-C4C1-4077-B1B9-09673C03882D}"
         "UpgradeCode" = "8:{49597A27-705B-46E2-B7F6-4C8781A4561F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -623,7 +623,7 @@
             "Target" = "8:_299DDA9E50B94D4D8EB386ABA0AE908C"
             "Folder" = "8:_0A9D45F5FEF14B45A41610018DDB0ADE"
             "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Icon" = "8:"
+            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_704C6ABE4D1342A189232E9DF9A8FD65"
@@ -637,7 +637,7 @@
             "Target" = "8:_299DDA9E50B94D4D8EB386ABA0AE908C"
             "Folder" = "8:_2F8CD7B34D724A5FAE17A49E5A8C99EC"
             "WorkingFolder" = "8:_97328DA46AFE44FD876C464E7ECD81B3"
-            "Icon" = "8:"
+            "Icon" = "8:_FB67F7AAF09649EB93CC575EED91FF5B"
             "Feature" = "8:"
             }
         }
@@ -774,7 +774,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -806,7 +807,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_832213DBBB19478499F244063C83450D"
+                            "Value" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -855,7 +856,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_832213DBBB19478499F244063C83450D"
+                            "Value" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -891,7 +892,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_832213DBBB19478499F244063C83450D"
+                            "Value" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -923,7 +924,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_832213DBBB19478499F244063C83450D"
+                            "Value" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -1018,7 +1019,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_832213DBBB19478499F244063C83450D"
+                            "Value" = "8:_6ECCCBE4DE464B929CB71EEAAB53A09C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
