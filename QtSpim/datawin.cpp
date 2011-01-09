@@ -46,9 +46,9 @@
 // Data segment window
 //
 
-void SpimView::DisplayDataSegments()
+void SpimView::DisplayDataSegments(bool force)
 {
-    if (data_modified)
+    if (force || data_modified)
     {
         dataTextEdit* te = ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit");
         QString windowContents = windowFormattingStart(st_textWinFont, st_textWinFontColor, st_textWinBackgroundColor);
@@ -59,7 +59,7 @@ void SpimView::DisplayDataSegments()
         te->clear();
         te->appendHtml(windowContents);
 
-        te->verticalScrollBar()->setValue(scrollPosition);
+        te->verticalScrollBar()->setSliderPosition(scrollPosition);
     }
     data_modified = 0;
 }
@@ -150,7 +150,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
             do
 	    {
                 val = read_mem_word(i);
-                windowContents += nnbsp(2) % formatWord(val, st_dataSegmentBase);
+                windowContents += nnbsp(2) % formatWord(val, st_dataSegmentDisplayBase);
                 i += BYTES_PER_WORD;
 	    }
             while (i % BYTES_PER_LINE != 0);
@@ -179,7 +179,7 @@ QString SpimView::formatPartialQuadWord(mem_addr addr)
         for (; (addr % BYTES_PER_LINE) != 0; addr += BYTES_PER_WORD)
 	{
             mem_word val = read_mem_word (addr);
-            windowContents += nnbsp(2) % formatWord(val, st_dataSegmentBase);
+            windowContents += nnbsp(2) % formatWord(val, st_dataSegmentDisplayBase);
 	}
 
         windowContents += "<br>";
@@ -244,6 +244,11 @@ void dataTextEdit::contextMenuEvent(QContextMenuEvent* event)
 {
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
+
+    menu->addAction(Window->ui->action_Data_DisplayBinary);
+    menu->addAction(Window->ui->action_Data_DisplayDecimal);
+    menu->addAction(Window->ui->action_Data_DisplayHex);
+
     menu->addAction(action_Context_ChangeValue);
     contextGlobalPos = event->globalPos();
 
@@ -257,20 +262,16 @@ void dataTextEdit::changeValue()
     mem_addr addr = addrFromPos(&cursor);
     if (addr != 0)
     {
+        int base = Window->DataDisplayBase();
+        QString val = promptForNewValue("New Contents for " + formatAddress(addr), &base);
         bool ok;
-        int value = QInputDialog::getInt(this,
-                                         "Change Memory Contents",
-                                         "New Contents for " + formatAddress(addr),
-                                         0,
-                                         -2147483647,
-                                         2147483647,
-                                         1,
-                                         &ok);
+        int newMemVal = val.toInt(&ok, base);
         if (ok)
         {
-            set_mem_word(addr, value);
+            set_mem_word(addr, newMemVal);
         }
-        Window->DisplayDataSegments();
+
+        Window->DisplayDataSegments(true);
     }
 }
 

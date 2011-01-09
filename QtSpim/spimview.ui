@@ -109,7 +109,6 @@
      <string>&amp;Registers</string>
     </property>
     <addaction name="action_Reg_DisplayBinary"/>
-    <addaction name="action_Reg_DisplayOctal"/>
     <addaction name="action_Reg_DisplayHex"/>
     <addaction name="action_Reg_DisplayDecimal"/>
    </widget>
@@ -133,7 +132,6 @@
     <addaction name="separator"/>
     <addaction name="separator"/>
     <addaction name="action_Data_DisplayBinary"/>
-    <addaction name="action_Data_DisplayOctal"/>
     <addaction name="action_Data_DisplayHex"/>
     <addaction name="action_Data_DisplayDecimal"/>
    </widget>
@@ -412,14 +410,6 @@
     <string>Binary</string>
    </property>
   </action>
-  <action name="action_Reg_DisplayOctal">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Octal</string>
-   </property>
-  </action>
   <action name="action_Reg_DisplayHex">
    <property name="checkable">
     <bool>true</bool>
@@ -498,14 +488,6 @@
    </property>
    <property name="text">
     <string>Binary</string>
-   </property>
-  </action>
-  <action name="action_Data_DisplayOctal">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Octal</string>
    </property>
   </action>
   <action name="action_Data_DisplayHex">

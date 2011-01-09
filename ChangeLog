@@ -1,3 +1,19 @@
+2011-01-09    <Jim@X64PC>
+
+	* Version 9.0.5 released:
+
+	* QtSpim/README, QtSpim/datawin.cpp, QtSpim/menu.cpp,
+	QtSpim/regtextedit.h, QtSpim/regwin.cpp, QtSpim/settings.ui,
+	QtSpim/spimview.h, QtSpim/spimview.ui, QtSpim/state.cpp:
+	Renamed st_intRegBase -> st_regDisplayBase and used base setting
+	to display FP registers.
+	Changed inconsistent use of QtSPIM -> QtSpim.
+	Dropped octal display format for register and data.
+	FP registers can be displayed in hex or binary.
+	FP registers can be set.
+	Right click to set register display format.
+	Enhancement from setting registers also applied to data segment.
+
 2011-01-08    <Jim@LS-RED>
 
 	* Version 9.0.4 released:

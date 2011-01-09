@@ -48,8 +48,8 @@ void SpimView::readSettings()
     settings.beginGroup("RegWin");
     st_colorChangedRegisters = settings.value("ColorChangedRegs", true).toBool();
     st_changedRegisterColor = settings.value("ChangedRegColor", "red").toString();
-    st_intRegBase = settings.value("IntRegisterBase", 16).toInt();
-    st_intRegBase = setCheckedRegBase(st_intRegBase);
+    st_regDisplayBase = settings.value("RegisterDisplayBase", 16).toInt();
+    st_regDisplayBase = setCheckedRegBase(st_regDisplayBase);
 
     st_regWinFont = settings.value("Font", QFont("Courier", 10)).value<QFont>();
     st_regWinFontColor = settings.value("FontColor", QColor("black")).value<QColor>();
@@ -85,8 +85,8 @@ void SpimView::readSettings()
     ui->action_Data_DisplayUserStack->setChecked(st_showUserStackSegment);
     st_showKernelDataSegment = settings.value("ShowKernelDataSeg", true).toBool();
     ui->action_Data_DisplayKernelData->setChecked(st_showKernelDataSegment);
-    st_dataSegmentBase = settings.value("DataSegmentBase", 16).toInt();
-    st_dataSegmentBase = setCheckedDataSegmentBase(st_dataSegmentBase);
+    st_dataSegmentDisplayBase = settings.value("DataSegmentDisplayBase", 16).toInt();
+    st_dataSegmentDisplayBase = setCheckedDataSegmentDisplayBase(st_dataSegmentDisplayBase);
 
     ui->action_Win_DataSegment->setChecked(!ui->DataSegDockWidget->isHidden());
     settings.endGroup();
@@ -132,7 +132,7 @@ void SpimView::writeSettings()
     settings.beginGroup("RegWin");
     settings.setValue("ColorChangedRegs", st_colorChangedRegisters);
     settings.setValue("ChangedRegColor", st_changedRegisterColor);
-    settings.setValue("IntRegisterBase", st_intRegBase);
+    settings.setValue("RegisterDisplayBase", st_regDisplayBase);
 
     settings.setValue("Font", st_regWinFont);
     settings.setValue("FontColor", st_regWinFontColor);
@@ -156,7 +156,7 @@ void SpimView::writeSettings()
     settings.setValue("ShowUserDataSeg", st_showUserDataSegment);
     settings.setValue("ShowUserStackSeg", st_showUserStackSegment);
     settings.setValue("ShowKernelDataSeg", st_showKernelDataSegment);
-    settings.setValue("DataSegmentBase", st_dataSegmentBase);
+    settings.setValue("DataSegmentDisplayBase", st_dataSegmentDisplayBase);
     settings.endGroup();
 
     settings.beginGroup("FileMenu");

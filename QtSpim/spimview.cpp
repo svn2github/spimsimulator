@@ -109,7 +109,6 @@ void SpimView::wireCommands()
     QObject::connect(ui->action_Sim_Settings, SIGNAL(triggered(bool)), this, SLOT(sim_Settings()));
 
     QObject::connect(ui->action_Reg_DisplayBinary, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayBinary()));
-    QObject::connect(ui->action_Reg_DisplayOctal, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayOctal()));
     QObject::connect(ui->action_Reg_DisplayHex, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayHex()));
     QObject::connect(ui->action_Reg_DisplayDecimal, SIGNAL(triggered(bool)), this, SLOT(reg_DisplayDecimal()));
 
@@ -122,7 +121,6 @@ void SpimView::wireCommands()
     QObject::connect(ui->action_Data_DisplayUserStack, SIGNAL(triggered(bool)), this, SLOT(data_DisplayUserStack()));
     QObject::connect(ui->action_Data_DisplayKernelData, SIGNAL(triggered(bool)), this, SLOT(data_DisplayKernelData()));
     QObject::connect(ui->action_Data_DisplayBinary, SIGNAL(triggered(bool)), this, SLOT(data_DisplayBinary()));
-    QObject::connect(ui->action_Data_DisplayOctal, SIGNAL(triggered(bool)), this, SLOT(data_DisplayOctal()));
     QObject::connect(ui->action_Data_DisplayHex, SIGNAL(triggered(bool)), this, SLOT(data_DisplayHex()));
     QObject::connect(ui->action_Data_DisplayDecimal, SIGNAL(triggered(bool)), this, SLOT(data_DisplayDecimal()));
 
@@ -205,7 +203,7 @@ void SpimView::UpdateDataDisplay()
     //
     DisplayIntRegisters();
     DisplayFPRegisters();
-    DisplayDataSegments();
+    DisplayDataSegments(false);
 }
 
 

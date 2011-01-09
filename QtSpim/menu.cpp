@@ -83,7 +83,7 @@ void SpimView::file_LoadFile()
         rebuildRecentFilesMenu();
 
         DisplayTextSegments();
-        DisplayDataSegments();
+        DisplayDataSegments(false);
     }
 }
 
@@ -528,33 +528,28 @@ void SpimView::sim_Settings()
 
 void SpimView::reg_DisplayBinary()
 {
-    st_intRegBase = 2;
-    setCheckedRegBase(st_intRegBase);
+    st_regDisplayBase = 2;
+    setCheckedRegBase(st_regDisplayBase);
     DisplayIntRegisters();
-}
-
-
-void SpimView::reg_DisplayOctal()
-{
-    st_intRegBase = 8;
-    setCheckedRegBase(st_intRegBase);
-    DisplayIntRegisters();
+    DisplayFPRegisters();
 }
 
 
 void SpimView::reg_DisplayDecimal()
 {
-    st_intRegBase = 10;
-    setCheckedRegBase(st_intRegBase);
+    st_regDisplayBase = 10;
+    setCheckedRegBase(st_regDisplayBase);
     DisplayIntRegisters();
+    DisplayFPRegisters();
 }
 
 
 void SpimView::reg_DisplayHex()
 {
-    st_intRegBase = 16;
-    setCheckedRegBase(st_intRegBase);
+    st_regDisplayBase = 16;
+    setCheckedRegBase(st_regDisplayBase);
     DisplayIntRegisters();
+    DisplayFPRegisters();
 }
 
 
@@ -562,16 +557,14 @@ int SpimView::setCheckedRegBase(int base)
 {
     return setBaseInternal(base,
                            ui->action_Reg_DisplayBinary,
-                           ui->action_Reg_DisplayOctal,
                            ui->action_Reg_DisplayDecimal,
                            ui->action_Reg_DisplayHex);
 }
 
 
-int SpimView::setBaseInternal(int base, QAction* actionBinary, QAction* actionOctal, QAction* actionDecimal, QAction* actionHex)
+int SpimView::setBaseInternal(int base, QAction* actionBinary, QAction* actionDecimal, QAction* actionHex)
 {
     actionBinary->setChecked(false);
-    actionOctal->setChecked(false);
     actionDecimal->setChecked(false);
     actionHex->setChecked(false);
 
@@ -579,10 +572,6 @@ int SpimView::setBaseInternal(int base, QAction* actionBinary, QAction* actionOc
     {
     case 2:
         actionBinary->setChecked(true);
-        return base;
-
-    case 8:
-        actionOctal->setChecked(true);
         return base;
 
     case 10:
@@ -638,61 +627,52 @@ void SpimView::text_DisplayInstructionValue()
 void SpimView::data_DisplayUserData()
 {
     st_showUserDataSegment = ui->action_Data_DisplayUserData->isChecked();
-    DisplayDataSegments();
+    DisplayDataSegments(true);
 }
 
 
 void SpimView::data_DisplayUserStack()
 {
     st_showUserStackSegment = ui->action_Data_DisplayUserStack->isChecked();
-    DisplayDataSegments();
+    DisplayDataSegments(true);
 }
 
 
 void SpimView::data_DisplayKernelData()
 {
     st_showKernelDataSegment = ui->action_Data_DisplayKernelData->isChecked();
-    DisplayDataSegments();
+    DisplayDataSegments(true);
 }
 
 
 void SpimView::data_DisplayBinary()
 {
-    st_dataSegmentBase = 2;
-    setCheckedDataSegmentBase(st_dataSegmentBase);
-    DisplayDataSegments();
-}
-
-
-void SpimView::data_DisplayOctal()
-{
-    st_dataSegmentBase = 8;
-    setCheckedDataSegmentBase(st_dataSegmentBase);
-    DisplayDataSegments();
+    st_dataSegmentDisplayBase = 2;
+    setCheckedDataSegmentDisplayBase(st_dataSegmentDisplayBase);
+    DisplayDataSegments(true);
 }
 
 
 void SpimView::data_DisplayDecimal()
 {
-    st_dataSegmentBase = 10;
-    setCheckedDataSegmentBase(st_dataSegmentBase);
-    DisplayDataSegments();
+    st_dataSegmentDisplayBase = 10;
+    setCheckedDataSegmentDisplayBase(st_dataSegmentDisplayBase);
+    DisplayDataSegments(true);
 }
 
 
 void SpimView::data_DisplayHex()
 {
-    st_dataSegmentBase = 16;
-    setCheckedDataSegmentBase(st_dataSegmentBase);
-    DisplayDataSegments();
+    st_dataSegmentDisplayBase = 16;
+    setCheckedDataSegmentDisplayBase(st_dataSegmentDisplayBase);
+    DisplayDataSegments(true);
 }
 
 
-int SpimView::setCheckedDataSegmentBase(int base)
+int SpimView::setCheckedDataSegmentDisplayBase(int base)
 {
     return setBaseInternal(base,
                            ui->action_Data_DisplayBinary,
-                           ui->action_Data_DisplayOctal,
                            ui->action_Data_DisplayDecimal,
                            ui->action_Data_DisplayHex);
 }
@@ -813,7 +793,7 @@ void SpimView::help_AboutSPIM()
     QMessageBox box(QMessageBox::NoIcon,
                     "About SPIM",
                     "<span style='font-size: 12pt;'>"
-                    "<center><strong>QtSPIM</strong></center>"
+                    "<center><strong>QtSpim</strong></center>"
                     "<p>SPIM is a simulator of the MIPS R3000 processor.</p>"
                     "<p>Copyright (c) 1990-2010, James R. Larus (larus@larusstone.org).</p>"
                     "<p>SPIM is distributed under a BSD license.</p>"

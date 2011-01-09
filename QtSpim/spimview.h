@@ -76,14 +76,15 @@ Q_OBJECT
     void DisplayIntRegisters();
     void DisplayFPRegisters();
     void DisplayTextSegments();
-    void DisplayDataSegments();
+    void DisplayDataSegments(bool force);
     void UpdateDataDisplay();
 
-    int IntRegBase() { return st_intRegBase;}
+    int RegDisplayBase() { return st_regDisplayBase;}
+    int DataDisplayBase() { return st_dataSegmentDisplayBase;}
 
- private:
     Ui::SpimView *ui;
 
+ private:
 
     //
     // Program state
@@ -110,7 +111,7 @@ Q_OBJECT
     //
     bool st_colorChangedRegisters;
     QString st_changedRegisterColor;
-    int st_intRegBase;
+    int st_regDisplayBase;
     QFont st_regWinFont;
     QColor st_regWinFontColor;
     QColor st_regWinBackgroundColor;
@@ -130,7 +131,7 @@ Q_OBJECT
     bool st_showUserDataSegment;
     bool st_showUserStackSegment;
     bool st_showKernelDataSegment;
-    int st_dataSegmentBase;
+    int st_dataSegmentDisplayBase;
 
     //
     // End of state
@@ -187,6 +188,8 @@ Q_OBJECT
     // Common register methods
     //
     QString formatInt(int value);
+    QString formatFloat(float value);
+    QString formatDouble(double value);
     QString formatReg(QString reg, QString value, bool changed);
     QString registerBefore(bool changed);
     QString registerAfter(bool changed);
@@ -245,11 +248,10 @@ Q_OBJECT
     void sim_Settings();
 
     void reg_DisplayBinary();
-    void reg_DisplayOctal();
     void reg_DisplayHex();
     void reg_DisplayDecimal();
     int setCheckedRegBase(int base);
-    int setBaseInternal(int base, QAction* actionBinary, QAction* actionOctal, QAction* actionDecimal, QAction* actionHex);
+    int setBaseInternal(int base, QAction* actionBinary, QAction* actionDecimal, QAction* actionHex);
 
     void text_DisplayUserText();
     void text_DisplayKernelText();
@@ -260,10 +262,9 @@ Q_OBJECT
     void data_DisplayUserStack();
     void data_DisplayKernelData();
     void data_DisplayBinary();
-    void data_DisplayOctal();
     void data_DisplayHex();
     void data_DisplayDecimal();
-    int setCheckedDataSegmentBase(int base);
+    int setCheckedDataSegmentDisplayBase(int base);
 
     void win_IntRegisters();
     void win_FPRegisters();
@@ -286,6 +287,8 @@ QString formatAddress(mem_addr addr);
 QString formatWord(mem_word word, int base);
 QString formatChar(int chr);
 QString formatSegLabel(QString segName, mem_addr low, mem_addr high);
+
+QString promptForNewValue(QString text, int* base);
 
 
 #endif // SPIMVIEW_H

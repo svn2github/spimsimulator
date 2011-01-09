@@ -71,7 +71,7 @@ void SpimView::DisplayIntRegisters()
     te->clear();
     te->appendHtml(windowContents);
     ui->IntRegDockWidget->setWindowTitle(QString("Int Regs [")
-                                         + QString::number(st_intRegBase)
+                                         + QString::number(st_regDisplayBase)
                                          + QString("] "));
 
     te->verticalScrollBar()->setValue(scrollPosition);
@@ -182,7 +182,7 @@ QString SpimView::formatSpecialSFPRegister(int value, char* name, bool changed)
 QString SpimView::formatSFPRegister(int regNum, float value, bool changed)
 {
     return formatReg(QString("<b>FG") % QString::number(regNum, 10) % (regNum < 10 ? "&nbsp;</b>" : "</b>"),
-                     QString::number(value, 'f', 6),
+                     formatFloat(value),
                      changed);
 }
 
@@ -219,7 +219,7 @@ void SpimView::CaptureDFPRegisters()
 QString SpimView::formatDFPRegister(int regNum, double value, bool changed)
 {
     return formatReg(QString("<b>FP") % QString::number(regNum, 10) % (regNum < 10 ? "&nbsp;</b>" : "</b>"),
-                     QString::number(value, 'f', 6),
+                     formatDouble(value),
                      changed);
 }
 
@@ -230,7 +230,35 @@ QString SpimView::formatDFPRegister(int regNum, double value, bool changed)
 
 QString SpimView::formatInt(int value)
 {
-    return formatWord(value, st_intRegBase);
+    return QString::number(value, st_regDisplayBase);
+}
+
+
+QString SpimView::formatFloat(float value)
+{
+    if (st_regDisplayBase == 16 || st_regDisplayBase == 2)
+    {
+        int* ival = (int*)&value;
+        return QString::number(*ival, st_regDisplayBase);
+    }
+    else
+    {
+        return QString::number(value, 'f', 6);
+    }
+}
+
+
+QString SpimView::formatDouble(double value)
+{
+    if (st_regDisplayBase == 16 || st_regDisplayBase == 2)
+    {
+        qlonglong* ival = (qlonglong*)&value;
+        return QString::number(*ival, st_regDisplayBase);
+    }
+    else
+    {
+        return QString::number(value, 'f', 6);
+    }
 }
 
 
@@ -287,6 +315,11 @@ void regTextEdit::contextMenuEvent(QContextMenuEvent* event)
 {
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
+
+    menu->addAction(Window->ui->action_Reg_DisplayBinary);
+    menu->addAction(Window->ui->action_Reg_DisplayDecimal);
+    menu->addAction(Window->ui->action_Reg_DisplayHex);
+
     menu->addAction(action_Context_ChangeValue);
     contextGlobalPos = event->globalPos();
 
@@ -299,7 +332,7 @@ void regTextEdit::changeValue()
     int reg = regAtPos("R");
     if (reg != -1)
     {
-        int base = Window->IntRegBase();
+        int base = Window->RegDisplayBase();
         QString val = promptForNewValue("New Contents for R" + QString::number(reg, 10), &base);
         bool ok;
         int newRegVal = val.toInt(&ok, base);
@@ -313,10 +346,19 @@ void regTextEdit::changeValue()
         int reg = regAtPos("FG");
         if (reg != -1)
         {
-            int base = -1;
+            int base = Window->RegDisplayBase();
             QString val = promptForNewValue("New Contents for FG" + QString::number(reg, 10), &base);
             bool ok;
-            float newRegVal = val.toFloat(&ok);
+            float newRegVal;
+            if (base == 10)
+            {
+                newRegVal = val.toFloat(&ok);
+            }
+            else
+            {
+                int newIntRegVal = val.toInt(&ok, base); // Read integer (hex); treat as float
+                newRegVal = *(float*)&newIntRegVal;
+            }
 
             if (ok)
             {
@@ -328,10 +370,19 @@ void regTextEdit::changeValue()
             int reg = regAtPos("FP");
             if (reg != -1)
             {
-                int base = -1;
+                int base = Window->RegDisplayBase();
                 QString val = promptForNewValue("New Contents for FP" + QString::number(reg, 10), &base);
                 bool ok;
-                double newRegVal = val.toDouble(&ok);
+                float newRegVal;
+                if (base == 10)
+                {
+                    newRegVal = val.toDouble(&ok);
+                }
+                else
+                {
+                    qlonglong newIntRegVal = val.toLongLong(&ok, base); // Read integer (hex); treat as double
+                    newRegVal = *(double*)&newIntRegVal;
+                }
 
                 if (ok)
                 {
@@ -343,7 +394,7 @@ void regTextEdit::changeValue()
                 QString reg = strAtPos("([A-Za-z]+)");
                 if (reg != "")
                 {
-                    int base = Window->IntRegBase();
+                    int base = Window->RegDisplayBase();
                     QString val = promptForNewValue("New Contents for " + reg, &base);
                     bool ok;
                     int newRegVal = val.toInt(&ok, base);
@@ -436,7 +487,7 @@ QString regTextEdit::strAtPos(QString pattern)
 }
 
 
-QString regTextEdit::promptForNewValue(QString text, int* base)
+QString promptForNewValue(QString text, int* base)
 {
     QDialog d;
     Ui::ChangeValueDialog cvd;
