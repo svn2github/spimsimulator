@@ -220,6 +220,7 @@ QString formatChar(int chr)
     return QString(QChar(chr));
 }
 
+
 QString formatSegLabel(QString segName, mem_addr low, mem_addr high)
 {
     return QString("<center><b>") % segName
