@@ -39,7 +39,7 @@
 #define QT_USE_FAST_CONCATENATION
 #include <QInputDialog>
 #include <QScrollBar>
-
+#include "ui_changevalue.h"
 
 //
 // Integer registers window
@@ -299,14 +299,13 @@ void regTextEdit::changeValue()
     int reg = regAtPos("R");
     if (reg != -1)
     {
+        int base = Window->IntRegBase();
+        QString val = promptForNewValue("New Contents for R" + QString::number(reg, 10), &base);
         bool ok;
-        int value = QInputDialog::getInt(this,
-                                         "Change Register Contents",
-                                         "New Contents for R" + QString::number(reg, 10),
-                                         0, -2147483647, 2147483647, 1, &ok);
+        int newRegVal = val.toInt(&ok, base);
         if (ok)
         {
-            R[reg] = value;
+            R[reg] = newRegVal;
         }
     }
     else
@@ -314,14 +313,14 @@ void regTextEdit::changeValue()
         int reg = regAtPos("FG");
         if (reg != -1)
         {
+            int base = -1;
+            QString val = promptForNewValue("New Contents for FG" + QString::number(reg, 10), &base);
             bool ok;
-            double value = QInputDialog::getDouble(this,
-                                                   "Change Register Contents",
-                                                   "New Contents for FG" + QString::number(reg, 10),
-                                                   0, -2147483647, 2147483647, 1, &ok);
+            float newRegVal = val.toFloat(&ok);
+
             if (ok)
             {
-                FGR[reg] = (float)value;
+                FGR[reg] = newRegVal;
             }
         }
         else
@@ -329,14 +328,14 @@ void regTextEdit::changeValue()
             int reg = regAtPos("FP");
             if (reg != -1)
             {
+                int base = -1;
+                QString val = promptForNewValue("New Contents for FP" + QString::number(reg, 10), &base);
                 bool ok;
-                double value = QInputDialog::getDouble(this,
-                                                       "Change Register Contents",
-                                                       "New Contents for FP" + QString::number(reg, 10),
-                                                       0, -2147483647, 2147483647, 1, &ok);
+                double newRegVal = val.toDouble(&ok);
+
                 if (ok)
                 {
-                    FGR[reg] = value;
+                    FPR[reg] = newRegVal;
                 }
             }
             else
@@ -344,56 +343,56 @@ void regTextEdit::changeValue()
                 QString reg = strAtPos("([A-Za-z]+)");
                 if (reg != "")
                 {
+                    int base = Window->IntRegBase();
+                    QString val = promptForNewValue("New Contents for " + reg, &base);
                     bool ok;
-                    int value = QInputDialog::getInt(this,
-                                                     "Change Register Contents",
-                                                     "New Contents for " + reg,
-                                                     0, -2147483647, 2147483647, 1, &ok);
+                    int newRegVal = val.toInt(&ok, base);
+
                     if (ok)
                     {
                         if (reg == "PC")
                         {
-                            PC = value;
+                            PC = newRegVal;
                         }
                         else if (reg == "EPC")
                         {
-                            CP0_EPC = value;
+                            CP0_EPC = newRegVal;
                         }
                         else if (reg == "Cause")
                         {
-                            CP0_Cause = value;
+                            CP0_Cause = newRegVal;
                         }
                         else if (reg == "BadVAddr")
                         {
-                            CP0_BadVAddr = value;
+                            CP0_BadVAddr = newRegVal;
                         }
                         else if (reg == "Status")
                         {
-                            CP0_Status = value;
+                            CP0_Status = newRegVal;
                         }
                         else if (reg == "HI")
                         {
-                            HI = value;
+                            HI = newRegVal;
                         }
                         else if (reg == "LO")
                         {
-                            LO = value;
+                            LO = newRegVal;
                         }
                         else if (reg == "FIR")
                         {
-                            FIR = value;
+                            FIR = newRegVal;
                         }
                         else if (reg == "FCSR")
                         {
-                            FCSR = value;
+                            FCSR = newRegVal;
                         }
                         else if (reg == "FCCR")
                         {
-                            FCCR = value;
+                            FCCR = newRegVal;
                         }
                         else if (reg == "FEXR")
                         {
-                            FEXR = value;
+                            FEXR = newRegVal;
                         }
                     }
                 }
@@ -434,4 +433,44 @@ QString regTextEdit::strAtPos(QString pattern)
 
     rx.indexIn(line);
     return rx.cap(1);
+}
+
+
+QString regTextEdit::promptForNewValue(QString text, int* base)
+{
+    QDialog d;
+    Ui::ChangeValueDialog cvd;
+    cvd.setupUi(&d);
+
+    cvd.label->setText(text);
+    if (*base == -1)
+    {
+        cvd.hexRadioButton->setVisible(false);
+        cvd.decimalRadioButton->setVisible(false);
+    }
+    else
+    {
+        cvd.hexRadioButton->setVisible(true);
+        cvd.decimalRadioButton->setVisible(true);
+
+        cvd.hexRadioButton->setChecked(*base == 16);
+        cvd.decimalRadioButton->setChecked(*base == 10);
+    }
+
+    if (d.exec() == QDialog::Accepted)
+    {
+        if (cvd.hexRadioButton->isChecked())
+        {
+            *base = 16;
+        }
+        else if (cvd.decimalRadioButton->isChecked())
+        {
+            *base = 10;
+        }
+        return cvd.answerLineEdit->text();
+    }
+    else
+    {
+        return QString("");
+    }
 }

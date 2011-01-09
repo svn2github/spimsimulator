@@ -79,7 +79,8 @@ FORMS    += spimview.ui\
 	savelogfile.ui\
 	printwindows.ui\
         runparams.ui\
-        settings.ui
+        settings.ui\
+        changevalue.ui
 
 
 INCLUDEPATH = ../CPU ../spim
@@ -114,6 +115,9 @@ buildhelpcol.CONFIG	= no_link recursive
 HELP_COL		= help/qtspim.qch
 copyhelpcol.name	= Copying help collection
 copyhelpcol.input	= HELP_COL
+win32 {
+copyhelpcol.depends	= help/qtspim.qhc
+}
 copyhelpcol.output	= help/${QMAKE_FILE_BASE}.qch
 copyhelpcol.commands	= $(COPY_FILE) ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}
 copyhelpcol.CONFIG	= no_link recursive

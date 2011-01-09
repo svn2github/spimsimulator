@@ -79,6 +79,8 @@ Q_OBJECT
     void DisplayDataSegments();
     void UpdateDataDisplay();
 
+    int IntRegBase() { return st_intRegBase;}
+
  private:
     Ui::SpimView *ui;
 

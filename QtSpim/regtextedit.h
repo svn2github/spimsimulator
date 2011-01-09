@@ -47,6 +47,7 @@ private:
     QPoint contextGlobalPos;
     int regAtPos(QString prefix);
     QString strAtPos(QString pattern);
+    QString promptForNewValue(QString text, int* base);
 
 public slots:
     void changeValue();

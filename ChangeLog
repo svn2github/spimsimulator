@@ -1,3 +1,12 @@
+2011-01-08    <Jim@LS-RED>
+
+	* Version 9.0.4 released:
+
+	* QtSpim/QtSpim.pro, QtSpim/regtextedit.h, QtSpim/regwin.cpp,
+	QtSpim/spimview.h, QtSpim/changevalue.ui [Mitko <asdfgga12@gmail.com>]:
+	Set value of register as either a decimal or hexadecimal value.
+	Fixed help file build for Windows.
+
 2011-01-05    <Jim@LS-RED>
 
 	* PCSpim_9.0.2.zip, PCSpim_9.0.3.zip:
