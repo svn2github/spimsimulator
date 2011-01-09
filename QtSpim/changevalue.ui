@@ -55,10 +55,10 @@
   <widget class="QRadioButton" name="hexRadioButton">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>21</x>
      <y>80</y>
-     <width>82</width>
-     <height>17</height>
+     <width>111</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
