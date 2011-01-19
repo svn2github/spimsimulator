@@ -6,7 +6,9 @@ This directory contains compiled, installable copies of the latest versions of s
 
     QtSpim_*_Windows.zip -- Windows (32 or 64 bit)
 
-    Mac and Linux 64 bit versions are not yet available.
+    QtSpim_*_mac.dmg -- Mac OS X
+
+  Linux 64 bit versions are not yet available.
 
 
   PCSpim:
