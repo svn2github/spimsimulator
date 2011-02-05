@@ -1,5 +1,9 @@
 2011-02-05    <Jim@LS-RED>
 
+	* CPU/scanner.l, CPU/parser.y [David Hemmendinger
+	<hemmendd@union.edu>]:
+	Allow full arithmetic expressions in constant definitions.
+
 	* QtSpim/menu.cpp [Dave Reed <dreed@capital.edu>]:
 	Single stepping after hitting a breakpoint started at the
 	beginning of the program.

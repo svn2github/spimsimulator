@@ -528,7 +528,7 @@ OPT_LBL: ID ':' {
 		  free ((char*)$1.p);
 		}
 
-	|	ID '=' Y_INT
+	|	ID '=' EXPR
 		{
 		  label *l = record_label ((char*)$1.p, (mem_addr)$3.i, 1);
 		  free ((char*)$1.p);
@@ -2574,19 +2574,41 @@ STR:		Y_STR
 
 EXPRESSION:	{only_id = 1;} EXPR {only_id = 0; $$ = $2;}
 
-EXPR:		Y_INT
+EXPR:
+                TRM
+        |
+                EXPR '+' TRM
+                { $$.i =  $1.i + $3.i; }
+        |
+                EXPR '-' TRM
+                { $$.i =  $1.i - $3.i; }
+        ;
+
+TRM:
+                FACTOR
+        |
+                TRM '*' FACTOR
+                { $$.i = $1.i * $3.i; }
+        |
+                TRM '/' FACTOR
+                { $$.i = $1.i / $3.i; }
+        ;
+
+FACTOR:         Y_INT
+
+        |       '(' EXPR ')'
+                { $$.i = $2.i; }
 
 	|	ID
 		{
 		  label *l = lookup_label ((char*)$1.p);
-
-		  if (l->addr == 0)
-		    {
-		      record_data_uses_symbol (current_data_pc (), l);
-		      $$.p = NULL;
-		    }
-		  else
-		    $$.i = l->addr;
+  		  if (l->addr == 0)
+                    {
+                      record_data_uses_symbol (current_data_pc (), l);
+                      $$.p = NULL;
+                    }
+                  else
+                    $$.i = l->addr;
 		}
 
 
@@ -2598,7 +2620,7 @@ EXPR_LST:	EXPR_LST	EXPRESSION
 		{
 		  store_op ($1.p);
 		}
-	|	EXPRESSION ':' Y_INT
+	|	EXPRESSION ':' EXPR
 		{
 		  int i;
 

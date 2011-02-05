@@ -242,7 +242,7 @@ static YY_CHAR scan_escape (YY_CHAR **str);
 			}
 
 
-[:()+-]|">"|"="		{
+[\*\/:()+-]|">"|"="		{
 			  if (current_line == NULL)
 			    {
 			      current_line_no = line_no;
