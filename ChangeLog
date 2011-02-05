@@ -1,3 +1,9 @@
+2011-02-05    <Jim@LS-RED>
+
+	* QtSpim/menu.cpp [Dave Reed <dreed@capital.edu>]:
+	Single stepping after hitting a breakpoint started at the
+	beginning of the program.
+
 2011-01-18    <Jim@LS-RED>
 
 	* Documentation/SourceForge/readme.txt [Sergio Barrachina Mir <barrachi@icc.uji.es>]:

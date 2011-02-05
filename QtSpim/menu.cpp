@@ -346,7 +346,7 @@ void SpimView::sim_SingleStep()
 
 void SpimView::initializePCAndStack()
 {
-    if (programState == stopped || PC == 0)
+    if ((programState == stopped && !force_break) || PC == 0)
     {
         if (st_startAddress == 0)
         {
