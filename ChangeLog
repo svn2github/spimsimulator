@@ -1,5 +1,8 @@
 2011-06-19    <Jim@X64PC>
 
+	* QtSpim/Documentation/SourceForge [kevin.vermeer (kevin.vermeer)]:
+	PDF files not uploaded to SourceForge.
+
 	* QtSpim/datawin.cpp (formatMemoryContents) [Robert K. Moniot ( moniot )]:
 	Incorrect html dropped line break after run of zeros.
 
