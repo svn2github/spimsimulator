@@ -95,20 +95,6 @@ void SpimView::file_ReloadFile()
 }
 
 
-static QString
-pickFormat(QTextEdit* te, bool toHTML)
-{
-    if (toHTML)
-    {
-        return te->toHtml();
-    }
-    else
-    {
-        return te->toPlainText();
-    }
-}
-
-
 void SpimView::rebuildRecentFilesMenu()
 {
     ui->menuRecent_Files->clear();
@@ -133,9 +119,9 @@ void SpimView::file_SaveLogFile()
         slf->setupUi(saveLogFileDialog);
 
         QFileDialog* fb = new QFileDialog(0,
-                                          "Open Log File",
+                                          "Save To Log File",
                                           "",
-                                          "Text files (*.txt);; HTML files (*.html *.htm);;All (*)");
+                                          "Text files (*.txt);; All (*)");
         QObject::connect(slf->saveFileToolButton, SIGNAL(clicked()), fb, SLOT(exec()));
         QObject::connect(fb, SIGNAL(fileSelected(QString)), slf->SaveLineEdit, SLOT(setText(QString)));
     }
@@ -148,27 +134,27 @@ void SpimView::file_SaveLogFile()
             file.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QTextStream outFile(&file);
 
-            bool toHtml = slf->HTMLRadioButton->isChecked();
-
             if (slf->RegsCheckBox->isChecked())
             {
-                outFile << pickFormat(ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit"), toHtml);
+                outFile << ui->IntRegDockWidget->findChild<regTextEdit *>("IntRegTextEdit")->toPlainText();
                 outFile << "\n\n";
             }
             if (slf->TextCheckBox->isChecked())
             {
-                outFile << pickFormat(ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit"), toHtml);
+                outFile << ui->TextSegDockWidget->findChild<textTextEdit *>("TextSegmentTextEdit")->toPlainText();
                 outFile << "\n\n";
             }
             if (slf->DataCheckBox->isChecked())
             {
-                outFile << pickFormat(ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegmentTextEdit"), toHtml);
+                outFile << ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit")->toPlainText();
                 outFile << "\n\n";
             }
             if (slf->ConsoleCheckBox->isChecked())
             {
-                outFile << pickFormat((QTextEdit*)SpimConsole, toHtml);
+                outFile << SpimConsole->toPlainText();
             }
+
+            file.close();
         }
     }
 }
@@ -197,15 +183,15 @@ void SpimView::file_Print()
 
             if (pwd->RegsCheckBox->isChecked())
             {
-                ui->IntRegDockWidget->findChild<QTextEdit *>("IntRegTextEdit")->print(&printer);
+                ui->IntRegDockWidget->findChild<regTextEdit *>("IntRegTextEdit")->print(&printer);
             }
             if (pwd->TextCheckBox->isChecked())
             {
-                ui->TextSegDockWidget->findChild<QTextEdit *>("TextSegmentTextEdit")->print(&printer);
+                ui->TextSegDockWidget->findChild<textTextEdit *>("TextSegmentTextEdit")->print(&printer);
             }
             if (pwd->DataCheckBox->isChecked())
             {
-                ui->DataSegDockWidget->findChild<QTextEdit *>("DataSegmentTextEdit")->print(&printer);
+                ui->DataSegDockWidget->findChild<dataTextEdit *>("DataSegmentTextEdit")->print(&printer);
             }
             if (pwd->ConsoleCheckBox->isChecked())
             {

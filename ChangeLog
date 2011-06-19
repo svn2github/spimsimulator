@@ -1,7 +1,12 @@
+2011-06-19    <Jim@LS-RED>
+
+	* QtSpim/savelogfile.ui: QtSpim/menu.cpp  [Kenneth Lodge klodge@csu.edu.au]:
+	Writing log file failed because of change to class of underlying
+	windows. Eliminated HTML mode and cleaned up dialog box.
+
 2011-02-05    <Jim@LS-RED>
 
-	* CPU/scanner.l, CPU/parser.y [David Hemmendinger
-	<hemmendd@union.edu>]:
+	* CPU/scanner.l, CPU/parser.y [David Hemmendinger hemmendd@union.edu]:
 	Allow full arithmetic expressions in constant definitions.
 
 	* QtSpim/menu.cpp [Dave Reed <dreed@capital.edu>]:
