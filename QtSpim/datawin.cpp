@@ -136,7 +136,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
             /* Block of 4 or more zero memory words: */
             windowContents += QString("[") % formatAddress(i)
                 % QString("]..[") % formatAddress(i + (uint32) j * BYTES_PER_WORD)
-                % QString("]") % nnbsp(2) % QString("00000000<\br>");
+                % QString("]") % nnbsp(2) % QString("00000000<br>");
 
             i = i + (uint32) j * BYTES_PER_WORD;
             windowContents += formatPartialQuadWord(i);

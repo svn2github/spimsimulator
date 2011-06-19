@@ -1,5 +1,8 @@
 2011-06-19    <Jim@X64PC>
 
+	* QtSpim/datawin.cpp (formatMemoryContents) [Robert K. Moniot ( moniot )]:
+	Incorrect html dropped line break after run of zeros.
+
 	* QtSpim/help/Fig7.1.jpg [William Barrett wbarrett1076@comcast.net]:
 	Missing figure in help file: rename file from FIg7.1.jpg to
 	Fig7.1.jpg since help tools are case sensitive.
