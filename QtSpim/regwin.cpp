@@ -196,8 +196,9 @@ QString SpimView::formatDFPRegisters()
     QString windowContents = QString("<br /><center><b>Double Precision</b></center>");
 
     int i;
-    for (i = 0; i < FPR_LENGTH; i += 2) {
-        windowContents += formatDFPRegister(2 * i, FPR_D(i), FPR_D(i) != oldFPR_D[i]);
+    for (i = 0; i < FPR_LENGTH; i += 1)
+    {
+        windowContents += formatDFPRegister(2 * i, FPR_D(2 * i), FPR_D(2 * i) != oldFPR_D[i]);
     }
 
     CaptureDFPRegisters();
@@ -209,9 +210,9 @@ QString SpimView::formatDFPRegisters()
 void SpimView::CaptureDFPRegisters()
 {
     int i;
-    for (i = 0; i < FPR_LENGTH; i += 2)
+    for (i = 0; i < FPR_LENGTH; i += 1)
     {
-        oldFPR_D[i] = FPR_D(i);
+        oldFPR_D[i] = FPR_D(2 * i);
     }
 }
 

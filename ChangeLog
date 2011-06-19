@@ -1,7 +1,9 @@
 2011-06-19    <Jim@X64PC>
 
-	* QtSpim/spimview.ui [William Barrett wbarrett1076@comcast.net]
+	* QtSpim/regwin.cpp [William Barrett wbarrett1076@comcast.net]:
+	Only printed out half of double precision FP registers.
 
+	* QtSpim/spimview.ui [William Barrett wbarrett1076@comcast.net]
 	Corrected misspelling in File menu item.
 
 2011-06-19    <Jim@LS-RED>
