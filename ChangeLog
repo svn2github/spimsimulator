@@ -1,3 +1,9 @@
+2011-06-19    <Jim@X64PC>
+
+	* QtSpim/spimview.ui [William Barrett wbarrett1076@comcast.net]
+
+	Corrected misspelling in File menu item.
+
 2011-06-19    <Jim@LS-RED>
 
 	* QtSpim/savelogfile.ui: QtSpim/menu.cpp  [Kenneth Lodge klodge@csu.edu.au]:

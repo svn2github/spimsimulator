@@ -335,7 +335,7 @@
      <normaloff>:/icons/ReloadFile.png</normaloff>:/icons/ReloadFile.png</iconset>
    </property>
    <property name="text">
-    <string>Re&amp;intialize and Load File</string>
+    <string>Re&amp;initialize and Load File</string>
    </property>
   </action>
   <action name="action_Sim_SetRunParameters">
