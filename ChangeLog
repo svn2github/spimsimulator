@@ -1,5 +1,9 @@
 2011-06-19    <Jim@X64PC>
 
+	* QtSpim/help/Fig7.1.jpg [William Barrett wbarrett1076@comcast.net]:
+	Missing figure in help file: rename file from FIg7.1.jpg to
+	Fig7.1.jpg since help tools are case sensitive.
+
 	* QtSpim/regwin.cpp [William Barrett wbarrett1076@comcast.net]:
 	Only printed out half of double precision FP registers.
 
