@@ -59,7 +59,8 @@ port console_out;
 
 int console_input_available()
 {
-  return 0;
+  return Window->SpimConsole->InputAvailable();
+
 }
 
 
@@ -110,7 +111,7 @@ void fatal_error(char *fmt, ...)
 
 char get_console_char()
 {
-    QString c = Window->SpimConsole->ReadChar();;
+    QString c = Window->SpimConsole->ReadChar();
     if (c != "")
     {
         char ac = c[0].toAscii();

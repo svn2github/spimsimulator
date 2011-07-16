@@ -1,5 +1,8 @@
 2011-07-16    <Jim@X64PC>
 
+	* QtSpim/console.cpp, QtSpim/console.h, QtStpim/spim_support.c [Merlin Hansen ( wasteofammo )]:
+	Memory mapped IO was not fully implemented.
+
 	* QtSpim/menu.cpp (sim_Run) [Merlin Hansen ( wasteofammo )]:
 	Reduced frequency of updating screen 100-fold to reduce the ~100
 	slowdown relative to the console version.

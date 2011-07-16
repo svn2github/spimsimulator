@@ -56,7 +56,7 @@ QString Console::ReadChar(int len)
     raise();
     while (1)
     {
-        if (inputBuffer.length() > 0)
+        if (InputAvailable())
         {
             QString chars = inputBuffer.left(len);
             inputBuffer.remove(0, chars.length());
@@ -68,6 +68,12 @@ QString Console::ReadChar(int len)
         //
         l.exec();
     }
+}
+
+
+bool Console::InputAvailable()
+{
+    return inputBuffer.length() > 0;
 }
 
 
@@ -89,7 +95,10 @@ void Console::keyReleaseEvent(QKeyEvent* e)
     if (key != "")
     {
         inputBuffer.append(key);
-        WriteOutput(key);
+        if (!mapped_io)
+        {
+            WriteOutput(key);   // Do not echo input when using mem mapped IO
+        }
 
         // Release the call on ReadChar (if any) that is blocked waiting for input.
         //
