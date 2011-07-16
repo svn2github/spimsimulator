@@ -247,18 +247,11 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	      }
 	    if (time.it_value.tv_usec == 0 && time.it_value.tv_sec == 0)
 	      {
-		/* Timer expired.*/
+		/* Timer expired */
 		bump_CP0_timer ();
 
-		/* Restart timer for next interval. */
-		time.it_interval.tv_sec = 0;
-		time.it_interval.tv_usec = 0;
-		time.it_value.tv_sec = 0;
-		time.it_value.tv_usec = TIMER_TICK_MS * 1000;
-		if (-1 == setitimer (ITIMER_REAL, &time, NULL))
-		  {
-		    perror ("setitmer failed");
-		  }
+		/* Restart timer for next interval */
+                start_CP0_timer ();
 	      }
 	  }
 #endif
@@ -1704,9 +1697,10 @@ start_CP0_timer ()
     }
 #else
   /* Should use ITIMER_VIRTUAL delivering SIGVTALRM, but that does not seem
-     to work under Cygwin, so we'll adopt the lowest common denominator.
+     to work under Cygwin, so we'll adopt the lowest common denominator and
+     use real time.
 
-     We ignore these signals, however, and read the timer with getitimer,
+     We ignore the resulting signal, however, and read the timer with getitimer,
      since signals interrupt I/O calls, such as read, and make user
      interaction with SPIM work very poorly. Since speed isn't an important
      aspect of SPIM, polling isn't a big deal. */
@@ -1716,16 +1710,24 @@ start_CP0_timer ()
     }
   else
     {
-      /* Start a non-periodic timer for TIMER_TICK_MS microseconds. */
-      struct itimerval time;
-      time.it_interval.tv_sec = 0;
-      time.it_interval.tv_usec = 0;
-      time.it_value.tv_sec = 0;
-      time.it_value.tv_usec = TIMER_TICK_MS * 1000;
-      if (-1 == setitimer (ITIMER_REAL, &time, NULL))
-	{
-	  perror ("setitmer failed");
-	}
+        struct itimerval time;
+        if (-1 == getitimer (ITIMER_REAL, &time))
+        {
+            perror ("getitmer failed");
+        }
+        if (time.it_value.tv_usec == 0 && time.it_value.tv_sec == 0)
+        {
+            /* Timer is expired or has not been started.
+               Start a non-periodic timer for TIMER_TICK_MS microseconds. */
+            time.it_interval.tv_sec = 0;
+            time.it_interval.tv_usec = 0;
+            time.it_value.tv_sec = 0;
+            time.it_value.tv_usec = TIMER_TICK_MS * 1000;
+            if (-1 == setitimer (ITIMER_REAL, &time, NULL))
+            {
+                perror ("setitmer failed");
+            }
+        }
     }
 #endif
 }
