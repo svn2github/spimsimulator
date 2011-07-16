@@ -1,3 +1,9 @@
+2011-07-16    <Jim@X64PC>
+
+	* QtSpim/menu.cpp (sim_Run) [Merlin Hansen ( wasteofammo )]:
+	Reduced frequency of updating screen 100-fold to reduce the ~100
+	slowdown relative to the console version.
+
 2011-06-19    <Jim@X64PC>
 
 	* QtSpim/Documentation/SourceForge [kevin.vermeer (kevin.vermeer)]:

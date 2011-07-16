@@ -292,7 +292,7 @@ void SpimView::sim_Run()
     while (!force_break)
     {
         Window->statusBar()->showMessage("Running");
-        if (!executeProgram(PC, 1000, false, false))
+        if (!executeProgram(PC, 100000, false, false))
         {
             break;
         }
