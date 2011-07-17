@@ -1,5 +1,10 @@
 2011-07-17    <Jim@X64PC>
 
+	* Setup/QtSpim_Win_Deployment/QtSpim-package.sln:
+	Fixed VS deployment package to register/unregister help file when
+	installing on new machine.
+	Added image rendering plugins for jpegs.
+
 	* main.cpp, menu.cpp, spimview.cpp, spimview.h, state.cpp:
 	Added command line parsing to QtSpim.
 
