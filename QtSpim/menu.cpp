@@ -419,10 +419,10 @@ void SpimView::sim_Settings()
     QObject::connect(sd.barePushButton, SIGNAL(clicked()), sd.delayedLoadCheckBox, SLOT(set()));
 
     sd.loadExceptionHandlerCheckBox->setChecked(st_loadExceptionHandler);
-    sd.exceptionHandlerLineEdit->setText(st_ExceptionHandlerFileName);
+    sd.exceptionHandlerLineEdit->setText(st_exceptionHandlerFileName);
     QFileDialog exceptionFileDialog(0,
                                     "Open Exception File",
-                                    st_ExceptionHandlerFileName,
+                                    st_exceptionHandlerFileName,
                                     "Assembly (*.s *.asm);;Text files (*.txt)");
     QObject::connect(sd.exceptionHandlerToolButton, SIGNAL(clicked()), &exceptionFileDialog, SLOT(exec()));
     QObject::connect(&exceptionFileDialog, SIGNAL(fileSelected(QString)),
@@ -469,7 +469,7 @@ void SpimView::sim_Settings()
         mapped_io = sd.mappedIOCheckBox->isChecked();
 
         st_loadExceptionHandler = sd.loadExceptionHandlerCheckBox->isChecked();
-        st_ExceptionHandlerFileName = sd.exceptionHandlerLineEdit->text();
+        st_exceptionHandlerFileName = sd.exceptionHandlerLineEdit->text();
 
         st_recentFilesLength = sd.recentFilesLineEdit->text().toInt();
         if (st_recentFilesLength <= 0 || st_recentFilesLength > 20)

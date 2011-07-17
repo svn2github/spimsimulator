@@ -69,6 +69,7 @@ Q_OBJECT
     void SaveStateAndExit(int val);
 
     void InitializeWorld();
+    void SetExceptionHandler(QString fileName, bool loadHandler);
 
     void CaptureIntRegisters();
     void CaptureSFPRegisters();
@@ -104,7 +105,7 @@ Q_OBJECT
     // Simulator menu
     //
     bool st_loadExceptionHandler;
-    QString st_ExceptionHandlerFileName;
+    QString st_exceptionHandlerFileName;
     int st_startAddress;
     QString st_commandLine;
 

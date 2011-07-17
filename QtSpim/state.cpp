@@ -35,6 +35,7 @@
 #include "spimview.h"
 #include "ui_spimview.h"
 
+
 //
 // Restore program settings and window positions
 //
@@ -123,7 +124,7 @@ void SpimView::readSettings()
     mapped_io = settings.value("MappedIO", 0).toInt();
 
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
-    st_ExceptionHandlerFileName = settings.value("ExceptionHandlerFileName", 
+    st_exceptionHandlerFileName = settings.value("ExceptionHandlerFileName", 
                                                  stdExceptionHandler).toString();
     st_startAddress = settings.value("StartingAddress", starting_address()).toInt();
     st_commandLine = settings.value("CommandLineArguments", "").toString();
@@ -194,7 +195,7 @@ void SpimView::writeSettings()
     settings.setValue("MappedIO", mapped_io);
 
     settings.setValue("LoadExceptionHandler", st_loadExceptionHandler);
-    settings.setValue("ExceptionHandlerFileName", st_ExceptionHandlerFileName);
+    settings.setValue("ExceptionHandlerFileName", st_exceptionHandlerFileName);
     settings.setValue("StartingAddress", st_startAddress);
     settings.setValue("CommandLine", st_commandLine);
     settings.endGroup();

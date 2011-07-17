@@ -34,8 +34,12 @@
 #include <QtGui/QApplication>
 #include "spimview.h"
 
+static void parseCommandLine(QStringList args);
+
+
 SpimView* Window;
 QApplication* App;
+
 
 int main(int argc, char *argv[])
 {
@@ -50,6 +54,8 @@ int main(int argc, char *argv[])
     console_out.i = 2;
 
     win.show();
+
+    parseCommandLine(a.arguments());
 
     win.sim_ReinitializeSimulator();
 
@@ -99,4 +105,145 @@ int main(int argc, char *argv[])
                     );
 
     return a.exec();
+}
+
+
+static void parseCommandLine(QStringList args)
+{
+    for (int i = 1; i < args.length(); i++)
+    {
+#ifdef WIN32
+        if (args[i][0] == '/')
+        {
+            args[i][0] = '-';
+        }
+#endif
+        if ((args[i] == "-asm") || (args[i] == "-a"))
+	{
+            bare_machine = 0;
+            delayed_branches = 0;
+            delayed_loads = 0;
+	}
+        else if ((args[i] == "-bare") || (args[i] == "-b"))
+	{
+            bare_machine = 1;
+            delayed_branches = 1;
+            delayed_loads = 1;
+            quiet = 1;
+	}
+        else if ((args[i] == "-delayed_branches") || (args[i] == "-db"))
+	{
+            delayed_branches = 1;
+	}
+        else if ((args[i] == "-delayed_loads") || (args[i] == "-dl"))
+	{
+            delayed_loads = 1;
+	}
+        else if ((args[i] == "-exception") || (args[i] == "-e"))
+	{
+            Window->SetExceptionHandler("", true);
+        }
+        else if ((args[i] == "-noexception") || (args[i] == "-ne"))
+	{
+            Window->SetExceptionHandler("", false);
+        }
+        else if ((args[i] == "-exception_file") || (args[i] == "-ef"))
+	{
+            Window->SetExceptionHandler(args[++i], true);
+	}
+        else if ((args[i] == "-mapped_io") || (args[i] == "-mio"))
+	{
+            mapped_io = 1;
+        }
+        else if ((args[i] == "-nomapped_io") || (args[i] == "-nmio"))
+	{
+            mapped_io = 0;
+        }
+        else if ((args[i] == "-pseudo") || (args[i] == "-p"))
+	{
+            accept_pseudo_insts = 1;
+        }
+        else if ((args[i] == "-nopseudo") || (args[i] == "-np"))
+	{
+            accept_pseudo_insts = 0;
+        }
+        else if ((args[i] == "-quiet") || (args[i] == "-q"))
+	{
+            quiet = 1;
+        }
+        else if ((args[i] == "-noquiet") || (args[i] == "-nq"))
+	{
+            quiet = 0;
+        }
+        else if ((args[i] == "-trap") || (args[i] == "-t"))
+	{
+            Window->SetExceptionHandler("", true);
+        }
+        else if ((args[i] == "-notrap") || (args[i] == "-nt"))
+	{
+            Window->SetExceptionHandler("", false);
+        }
+        else if ((args[i] == "-trap_file") || (args[i] == "-tf"))
+	{
+            Window->SetExceptionHandler(args[++i], true);
+	}
+        else if ((args[i] == "-stext") || (args[i] == "-st"))
+	{
+            initial_text_size = args[++i].toInt();
+        }
+        else if ((args[i] == "-sdata") || (args[i] == "-sd"))
+	{
+            initial_data_size = args[++i].toInt();
+        }
+        else if ((args[i] == "-ldata") || (args[i] == "-ld"))
+	{
+            initial_data_limit = args[++i].toInt();
+        }
+        else if ((args[i] == "-sstack") || (args[i] == "-ss"))
+	{
+            initial_stack_size = args[++i].toInt();
+        }
+        else if ((args[i] == "-lstack") || (args[i] == "-ls"))
+	{
+            initial_stack_limit = args[++i].toInt();
+        }
+        else if ((args[i] == "-sktext") || (args[i] == "-skt"))
+	{
+            initial_k_text_size = args[++i].toInt();
+        }
+        else if ((args[i] == "-skdata") || (args[i] == "-skd"))
+	{
+            initial_k_data_size = args[++i].toInt();
+        }
+        else if ((args[i] == "-lkdata") || (args[i] == "-lkd"))
+	{
+            initial_k_data_limit = args[++i].toInt();
+        }
+        else if (((args[i] == "-file") || (args[i] == "-f"))
+                 && (i + 1 < args.length()))
+	{
+            read_assembly_file(args[++i].toLocal8Bit().data());
+	}
+        else if (args[i][0] != '-' && i == args.length())
+	{
+            read_assembly_file(args[i].toLocal8Bit().data());
+	}
+        else
+	{
+            error ("\nUnknown argument: %s (ignored)\n", args[i].toLocal8Bit().data());
+            error ("Usage: spim\n\
+	-bare			Bare machine (no pseudo-ops, delayed branches and loads)\n\
+	-asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n\
+	-delayed_branches	Execute delayed branches\n\
+	-delayed_loads		Execute delayed loads\n\
+	-exception		Load exception handler (default)\n\
+	-noexception		Do not load exception handler\n\
+	-exception_file <file>	Specify exception handler in place of default\n\
+	-quiet			Do not print warnings\n\
+	-noquiet		Print warnings (default)\n\
+	-mapped_io		Enable memory-mapped IO\n\
+	-nomapped_io		Do not enable memory-mapped IO (default)\n\
+	-file <file> <args>	Assembly code file and arguments to program\n");
+	}
+    }
 }

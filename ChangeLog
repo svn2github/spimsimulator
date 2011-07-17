@@ -1,5 +1,8 @@
 2011-07-17    <Jim@X64PC>
 
+	* main.cpp, menu.cpp, spimview.cpp, spimview.h, state.cpp:
+	Added command line parsing to QtSpim.
+
 	* CPU/spim.h, PCSpim/ConsoleWnd.cpp, PCSpim/SpimSupport.cpp,
 	QtSpim/console.cpp, QtSpim/console.h, QtSpim/spim_support.c,
 	Tests/read.s, spim/spim.c, xspim/xspim.c,

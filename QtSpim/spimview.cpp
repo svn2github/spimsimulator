@@ -167,7 +167,7 @@ void SpimView::InitializeWorld()
 {
     if (st_loadExceptionHandler)
     {
-        if (st_ExceptionHandlerFileName == stdExceptionHandler)
+        if (st_exceptionHandlerFileName == stdExceptionHandler)
         {
             // Standard exception handler is a resource in this executable. Write it to a
             // temporary file and use that for initialization.
@@ -183,7 +183,7 @@ void SpimView::InitializeWorld()
         {
             // Use the file name supplied by the user.
             //
-            initialize_world(st_ExceptionHandlerFileName.toLocal8Bit().data());
+            initialize_world(st_exceptionHandlerFileName.toLocal8Bit().data());
         }
     }
     else
@@ -192,6 +192,16 @@ void SpimView::InitializeWorld()
         //
         initialize_world(NULL);
     }
+}
+
+
+void SpimView::SetExceptionHandler(QString fileName, bool loadHandler)
+{
+    if (fileName != "")
+    {
+        st_exceptionHandlerFileName = fileName;
+    }
+    st_loadExceptionHandler = loadHandler;
 }
 
 
