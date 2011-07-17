@@ -182,21 +182,12 @@ static LRESULT CALLBACK ConsoleRichEditProc(HWND hwnd,
                     wParam -= 'A';
                 }
 
-                if ((wParam == 3) ||	// Ctrl-C
-                    (wParam == VK_CANCEL))
+                if (wParam == '\r')
                 {
-                    control_c_seen(0);
-                    SetFocus(hwnd);
+                    wParam = '\n';
                 }
-                else
-                {
-                    if (wParam == '\r')
-                    {
-                        wParam = '\n';
-                    }
 
-                    g_pView->GetConsole()->m_blKeys.AddTail((BYTE)wParam);
-                }
+                g_pView->GetConsole()->m_blKeys.AddTail((BYTE)wParam);
             }
         }
         return 0;

@@ -50,7 +50,7 @@ public:
 
     void Clear();
     bool InputAvailable();
-    QString ReadChar(int len = 1);
+    QString ReadChar();
     void WriteOutput(QString out);
 
 private:

@@ -227,7 +227,6 @@ typedef union {int i; FILE* f;} port;
 /* Exported functions (from spim.c or xspim.c): */
 
 int console_input_available ();
-void control_c_seen (int);
 void error (char *fmt, ...);
 void fatal_error (char *fmt, ...);
 char get_console_char ();

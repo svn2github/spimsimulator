@@ -137,7 +137,6 @@ static String fallback_resources[] =
   "*panel*font:		*-adobe-helvetica-medium-r-*-*-12-*-75-*",
   "*ShapeStyle:		Oval",
   "*dialog*value.translations: #override \\n <Key>Return: confirm()",
-  "*.translations: #override \\n <Ctrl>C: control_c_seen()",
   "*Form*left:		ChainLeft",
   "*Form*right:		ChainLeft",
   "*Form*top:		ChainTop",
@@ -151,7 +150,6 @@ static String fallback_resources[] =
 static XtActionsRec actionTable[2] =
 {
   {"confirm", (XtActionProc) confirm},
-  {"control_c_seen", (XtActionProc) control_c_seen},
 };
 
 
@@ -526,17 +524,6 @@ syntax (char *program_name)
   fprintf (stderr, "-nomapped_io		Do not enable memory-mapped IO (default)\n");
   fprintf (stderr, "-file <file> <args>	Assembly code file and arguments to program\n");
   exit (1);
-}
-
-
-void
-control_c_seen (int arg)
-{
-  write_output (message_out, "\nExecution interrupted\n");
-  redisplay_data ();
-  continue_prompt (1);
-  if (spim_is_running)
-    longjmp (spim_top_level_env, 1);
 }
 
 

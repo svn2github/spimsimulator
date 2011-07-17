@@ -84,6 +84,7 @@
 
 static void console_to_program ();
 static void console_to_spim ();
+static void control_c_seen (int /*arg*/);
 static void flush_to_newline ();
 static int get_opt_int ();
 static int parse_spim_command (FILE *file, int redo);
@@ -345,7 +346,7 @@ top_level ()
 }
 
 
-void
+static void
 control_c_seen (int /*arg*/)
 {
   console_to_spim ();

@@ -856,9 +856,9 @@ int_str: .asciiz“%d”
         <img class="hpfig" src="Fig5_1.jpg" height="300" ><p><b>Figure 5.1 Layout of memory.</b></p>
         <h4>Hardware-Software Interface</h4>
         Because the data segment begins far above the program at address 10000000
-        <sub>hex </sub>, load and store instructions cannot directly reference data objects with
+        <sub>hex</sub>, load and store instructions cannot directly reference data objects with
         their16-bit offset fields. For example, to load the word in the data segment at address
-        10010020 <sub>hex </sub>into register $v0 requires two instructions:
+        10010020 <sub>hex</sub>into register $v0 requires two instructions:
         <pre>
         lui $s0, 0x1001 # 0x1001 means 1001 base 16
         lw $v0, 0x0020($s0) # 0x10010000 + 0x0020 = 0x10010020
@@ -875,7 +875,7 @@ int_str: .asciiz“%d”
         lw $v0, 0x8020($gp)
         </pre>
         <p>Of course, a global pointer register makes addressing locations 10000000
-        <sub>hex </sub>– 10010000 <sub>hex </sub>faster than other heap locations. The
+        <sub>hex</sub>– 10010000 <sub>hex</sub>faster than other heap locations. The
         MIPS compiler usually stores <i>global variables</i> in this area because these
         variables have fixed locations and fit better than other global data, such as
         arrays.</p>
@@ -897,7 +897,7 @@ int_str: .asciiz“%d”
         program’s virtual address space immediately above the dynamic data segment.</p>
         <p>The third part, the program <dfn class="define">stack segment</dfn>,
         resides at the top of the virtual address space (starting at address 7fffffff
-        <sub>hex </sub>). Like dynamic data, the maximum size of a pro-gram’s stack
+        <sub>hex</sub>). Like dynamic data, the maximum size of a pro-gram’s stack
         is not known in advance. As the program pushes values on the stack, the operating
         system expands the stack segment down, toward the data segment.</p>
         <p>This three-part division of memory is not the only possible one. However,
@@ -1662,7 +1662,7 @@ main:
                 </tr>
         </table>
         <p>Exceptions and interrupts cause a MIPS processor to jump to a piece of code,
-        at address 80000180 <sub>hex </sub>(in the kernel, not user address space),
+        at address 80000180 <sub>hex</sub>(in the kernel, not user address space),
         called an <i>exception handler</i>. This code examines the exception’s cause
         and jumps to an appropriate point in the operating system. The operating system
         responds to an exception either by terminating the process that caused the exception
@@ -1753,73 +1753,68 @@ save1:  .word 0
 </div>
 <div class="body">
         <h2><a name="input">Input and Output</a></h2>
-        <p>SPIM simulates one I/O device: a memory-mapped console on which a program
-        can read and write characters. When a program is running, SPIM connects its
-        own terminal (or a separate console window in the X-window version xspim or
-        the Windows version PCSpim) to the processor. A MIPS program running on SPIM
-        can read the characters that you type. In addition, if the MIPS program writes
-        characters to the terminal, they appear on SPIM’s terminal or console window.
-        One exception to this rule is control-C: this character is not passed to the
-        program, but instead causes SPIM to stop and return to command mode. When the
-        program stops running (for example, because you typed control-C or because the
-        program hit a breakpoint), the terminal is reconnected to SPIM so you can type
-        SPIM commands.</p>
-        <p>To use memory-mapped I/O (see below), spim or xspim must be started with
-        the -mapped_io flag. PCSpim can enable memory-mapped I/O through a command line
+        <p>SPIM simulates one I/O device: a memory-mapped console on which a program can read
+        and write characters. When a program is running, SPIM connects its own terminal (or a
+        separate console window in xspim, PCSpim, or QtSpim) to the processor.  A MIPS program
+        running on SPIM can read the characters that you type. In addition, if the MIPS program
+        writes characters to the terminal, they appear on the terminal or in console window.</p>
+        <p>One exception to this rule is control-C in the basic spim simulator. This character
+        is not passed to the program, but instead causes spim to stop and return to command
+        mode. This functionality is not necessary in the other version of spim, whose window
+        interfaces provide other ways to stop a program.</p>
+        <p>To use memory-mapped I/O (see below), spim or xspim must be started with the
+        -mapped_io flag. PCSpim and QtSpim can enable memory-mapped I/O through a command line
         flag or the &quot;Settings&quot; dialog.</p>
-        <p>The terminal device consists of two independent units: a <i>receiver</i>
-        and a <i>trans</i> <i></i> <i>mitter</i>. The receiver reads characters typed
-        on the keyboard. The transmitter display characters on the console. The two
-        units are completely independent. This means, for example, that characters typed
-        at the keyboard are not automatically echoed on the display. Instead, a program
-        echoes a character by reading it from the receiver and writing it to the transmitter.
-        </p>
-        <p>A program controls the terminal with four memory-mapped device registers,
-        as shown in Figure 8.1. “Memory-mapped’’ means that each register appears
-        as a special memory location. The <i>Receiver Control register</i> is at location
-        ffff0000 <sub>hex </sub>. Only two of its bits are actually used. Bit 0 is called
-        “ready’’: if it is 1, it means that a character has arrived from the keyboard
-        but has not yet been read from the Receiver Data register. The ready bit is
-        read-only: writes to it are ignored. The ready bit changes from 0 to 1 when
-        a character is typed at the keyboard, and it changes from 1 to 0 when the character
-        is read from the Receiver Data register.</p>
-        <img class="hpfig" src="Fig8_1.jpg" height="500" ><p><b>Figure 8.1 The terminal is controlled
+        <p>The console consists of two independent units: a <i>receiver</i> and
+        a <i>transmitter</i>. The receiver reads characters typed on the keyboard. The
+        transmitter display characters on the console. The two units are completely
+        independent. This means, for example, that characters typed at the keyboard are not
+        automatically echoed on the display. Instead, a program echoes a character by reading it
+        from the receiver and writing it to the transmitter. It also means that editing
+        commands, such as backspace, are just characters and the run program must interpret them
+        and implement its own editing functionality.</p>
+        <p>A program controls the console with four memory-mapped device registers, as shown in
+        Figure 8.1. “Memory-mapped” means that each register appears as a special memory
+        location. The <i>Receiver Control Register</i> is at location
+        ffff0000<sub>hex</sub>. Only two of its bits are actually used. Bit 0 is called
+        “ready”: if it is 1, it means that a character has arrived from the keyboard but
+        has not yet been read from the Receiver Data Register. The ready bit is read-only:
+        writes to it are ignored. The ready bit changes from 0 to 1 when a character is typed at
+        the keyboard, and it changes from 1 to 0 when the character is read from the Receiver
+        Data Register.</p>
+        <img class="hpfig" src="Fig8_1.jpg" height="500" ><p><b>Figure 8.1 The console is controlled
         by four device registers, each of which appears as a memory location at the
-        given address.</b> Only a few bits of these registers are actually used. The
-        others always read as 0s and are ignored on writes.</p>
-        <p>Bit 1 of the Receiver Control register is the keyboard “interrupt enable.” This
+        given address.</b></p>
+        <p>Bit 1 of the Receiver Control Register is the keyboard “interrupt enable.” This
         bit may be both read and written by a program. The interrupt enable is initially 0. If
-        it is set to 1 by a program, the terminal requests an interrupt at hardware level 1
+        it is set to 1 by a program, the console causes an interrupt at hardware level 1
         whenever a character is typed and the ready bit becomes 1. However, for the interrupt to
         affect the processor, interrupts must also be enabled in the Status register. All other
-        bits of the Receiver Control register are unused.</p>
-        <p>The second terminal device register is the <i>Receiver Data register</i>
-        (at address ffff0004hex). The low-order 8 bits of this register contain the
-        last character typed at the keyboard. All other bits contain 0s. This register
-        is read-only and changes only when a new character is typed at the keyboard.
-        Reading the Receiver Data register resets the ready bit in the Receiver Control
-        register to 0. The value in this register is undefined if the Receiver Control
-        register is 0.</p>
-        <p>The third terminal device register is the <i>Transmitter Control register
-        </i> (at address ffff0008 <sub>hex </sub>). Only the low-order 2 bits of this
-        register are used. They behave much like the corresponding bits of the Receiver
-        Control register. Bit 0 is called “ready’’ and is read-only. If this bit is
-        1, the transmitter is ready to accept a new character for output. If it is 0,
-        the transmitter is still busy writing the previous character. Bit 1 is “interrupt
-        enable’’ and is readable and writable. If this bit is set to 1, then the terminal
-        requests an interrupt at hardware level 0 whenever the transmitter is ready
-        for a new character and the ready bit becomes 1.</p>
-        <p>The final device register is the <i>Transmitter Data register</i> (at address
-        ffff000c <sub>hex </sub>). When a value is written into this location, its low-order
-        8 bits (i.e., an ASCII character as in Figure 2.21 in Chapter 2) are sent to
-        the console. When the Transmitter Data register is written, the ready bit in
-        the Transmitter Control register is reset to </p>
-        <p>0. This bit stays 0 until enough time has elapsed to transmit the character
-        to the terminal; then the ready bit becomes 1 again. The Transmitter Data register
-        should only be written when the ready bit of the Transmitter Control register
-        is 1. If the transmitter is not ready, writes to the Transmitter Data register
-        are ignored (the write appears to succeed but the character is not output).
-        </p>
+        bits of the Receiver Control Register are unused.</p>
+        <p>The second console device register is the <i>Receiver Data Register</i> (at address
+        ffff0004<sub>hex</sub>). The low-order 8 bits of this register contain the last
+        character typed at the keyboard. All other bits contain 0s. This register is read-only
+        and changes only when a new character is typed at the keyboard.  Reading the Receiver
+        Data register resets the ready bit in the Receiver Control Register to 0. The value in
+        this register is undefined if the Receiver Control Register is 0.</p>
+        <p>The third console device register is the <i>Transmitter Control Register
+        </i> (at address ffff0008<sub>hex</sub>). Only the low-order 2 bits of this register are
+        used. They behave much like the corresponding bits of the Receiver Control register. Bit
+        0 is called “ready” and is read-only. If this bit is 1, the transmitter is ready
+        to accept a new character for output. If it is 0, the transmitter is still busy writing
+        the previous character. Bit 1 is “interrupt enable” and is readable and
+        writable. If this bit is set to 1, then the console requests an interrupt at hardware
+        level 0 whenever the transmitter is ready for a new character and the ready bit becomes
+        1.</p>
+        <p>The final device register is the <i>Transmitter Data Register</i> (at address
+        ffff000c <sub>hex</sub>). When a value is written into this location, its low-order 8
+        bits (i.e., an ASCII character) are sent to the console. When the Transmitter Data
+        register is written, the ready bit in the Transmitter Control register is reset to
+        0. This bit stays 0 until enough time has elapsed to transmit the character to the
+        console; then the ready bit becomes 1 again. The Transmitter Data Register should only
+        be written when the ready bit of the Transmitter Control register is 1. If the
+        transmitter is not ready, writes to the Transmitter Data Register are ignored (the write
+        appears to succeed but the character is not output).</p>
         <p>Real computers require time to send characters to a console or terminal.
         These time lags are simulated by SPIM. For example, after the transmitter starts
         to write a character, the transmitter’s ready bit becomes 0 for a while. SPIM
@@ -1905,7 +1900,7 @@ save1:  .word 0
         to load, debug, and run simple MIPS programs.</p>
         <p>SPIM comes in different versions for different types of computer systems.
         The one constant is the simplest version, called spim, which is a command-line-driven
-        program that runs in a console window. It operates like most programs of this
+        program that runs in a terminal window. It operates like most programs of this
         type: you type a line of text, hit the return key, and spim executes your command.
         Despite its lack of a fancy interface, spim can do everything that its fancy
         cousins can do.</p>
@@ -1966,7 +1961,7 @@ save1:  .word 0
         call code (see Figure 9.1) into register $v0 and arguments into registers
         $a0–$a3 (or $f12 for floating-point values). System calls that return values
         put their results in register $v0 (or $f0 for floating-point results). For example,
-        the following code prints “the answer = 5’’:</p>
+        the following code prints “the answer = 5”:</p>
         <pre>
         .data
 str:
@@ -2096,7 +2091,7 @@ str:
         <p><b>Figure 9.1 System services.</b></p>
         <p>The print_int system call is passed an integer and prints it on the console.
         print_float prints a single floating-point number; print_double prints a double
-        precision number; and print_string is passed a pointer to a null-ter-minated
+        precision number; and print_string is passed a pointer to a null-terminated
         string, which it writes to the console.</p>
         <p>The system calls read_int, read_float, and read_double read an entire line
         of input up to and including the newline. Characters following the number are
@@ -2105,8 +2100,12 @@ str:
         with a null byte. If fewer than <i>n</i> – 1 characters are on the current line,
         read_string reads up to and including the newline and again null-terminates
         the string.</p>
-        <p><i>Warning:</i> Programs that use these syscalls to read from the terminal should not
-        use memory-mapped I/O.</p>
+        <p>The console operates in &quote;raw mode&quot; and passes all keyboad input to the program.
+        This means that it does not provide editing operations, such as backspace, which are the
+        responsibility of the program running on spim. Arguably, it should provide at least backspace
+        for read_int and the like.</p>
+        <p><i>Warning:</i> Programs using memory-mapped I/O should not also use these syscalls
+        to read from the console, since their interaction is undefined.</p>
         <p>sbrk returns a pointer to a block of memory containing <i>n</i> additional
         bytes. exit stops the program SPIM is running. exit2 terminates the SPIM program,
         and the argument to exit2 becomes the value returned when the SPIM simulator

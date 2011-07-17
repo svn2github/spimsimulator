@@ -51,16 +51,16 @@ void Console::WriteOutput(QString out)
 }
 
 
-QString Console::ReadChar(int len)
+QString Console::ReadChar()
 {
     raise();
     while (1)
     {
         if (InputAvailable())
         {
-            QString chars = inputBuffer.left(len);
-            inputBuffer.remove(0, chars.length());
-            return chars;
+            QString firstChar = inputBuffer.left(1);
+            inputBuffer.remove(0, 1);
+            return firstChar;
         }
         // This is a bit tricky and I hope it works on all platforms. If there aren't any
         // characters in the buffer, start a new event loop to wait for keystrokes and block on

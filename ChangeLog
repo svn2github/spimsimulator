@@ -1,5 +1,14 @@
 2011-07-17    <Jim@X64PC>
 
+	* CPU/spim.h, PCSpim/ConsoleWnd.cpp, PCSpim/SpimSupport.cpp,
+	QtSpim/console.cpp, QtSpim/console.h, QtSpim/spim_support.c,
+	Tests/read.s, spim/spim.c, xspim/xspim.c,
+	QtSpim/help/HP_AppA.html:
+	Better document the behavior of the console window in both
+	memory_mapped and regular mode. None of the simulators, beyond
+	spim, yet allows editing in either mode. Eliminate inconsistently
+	implemented control-c processing, except in spim simulator.
+
 	* QtSpim/spimview.cpp (closeEvent) [Mario H. Voorsluys m.h.voorsluys@student.tudelft.nl]:
 	Close console window when main QtSpim window closes.
 
