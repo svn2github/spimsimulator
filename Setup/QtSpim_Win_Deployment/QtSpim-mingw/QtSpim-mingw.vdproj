@@ -245,6 +245,34 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_800A392501D1415AB7D3BEC945AAF49D"
+            {
+            "Name" = "8:assistant.exe"
+            "Condition" = "8:"
+            "Object" = "8:_BA4A4C4C71244316987A8ED0E54A1F71"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:-unregister \"[TARGETDIR]\\help\\qtspim.qch\" -quiet"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_C9DDC99B_2D62_48CC_AF25_201518F30A45"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_AA72435A911C40A6B487BB2760233A9F"
+            {
+            "Name" = "8:assistant.exe"
+            "Condition" = "8:"
+            "Object" = "8:_BA4A4C4C71244316987A8ED0E54A1F71"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:-register \"[TARGETDIR]\\help\\qtspim.qch\" -quiet"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_B989A2F9_5762_4265_A50E_45DFF8FA1D32"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -839,7 +867,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QtSpim"
         "ProductCode" = "8:{184A26D9-6561-49A9-A571-4D9BD93394C8}"
-        "PackageCode" = "8:{AE933F0A-3B15-40A2-8A0C-7311E1BE4120}"
+        "PackageCode" = "8:{21E89E89-5DB7-4EC4-92E8-DA6E50BA5474}"
         "UpgradeCode" = "8:{EFFC4949-C8BC-4F7C-82F1-C2F2B2ABC654}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
