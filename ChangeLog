@@ -1,3 +1,8 @@
+2011-07-17    <Jim@X64PC>
+
+	* QtSpim/spimview.cpp (closeEvent) [Mario H. Voorsluys m.h.voorsluys@student.tudelft.nl]:
+	Close console window when main QtSpim window closes.
+
 2011-07-16    <Jim@X64PC>
 
 	* QtSpim/state.cpp (readSettings):
@@ -8,10 +13,10 @@
 	Clean up non-Windows timer code to not reset timer until it has
 	expired. This behavior may have caused problems on Linux x64.
 
-	* QtSpim/console.cpp, QtSpim/console.h, QtStpim/spim_support.c [Merlin Hansen ( wasteofammo )]:
+	* QtSpim/console.cpp, QtSpim/console.h, QtStpim/spim_support.c [Merlin Hansen (wasteofammo)]:
 	Memory mapped IO was not fully implemented.
 
-	* QtSpim/menu.cpp (sim_Run) [Merlin Hansen ( wasteofammo )]:
+	* QtSpim/menu.cpp (sim_Run) [Merlin Hansen (wasteofammo)]:
 	Reduced frequency of updating screen 100-fold to reduce the ~100
 	slowdown relative to the console version.
 
@@ -20,7 +25,7 @@
 	* QtSpim/Documentation/SourceForge [kevin.vermeer (kevin.vermeer)]:
 	PDF files not uploaded to SourceForge.
 
-	* QtSpim/datawin.cpp (formatMemoryContents) [Robert K. Moniot ( moniot )]:
+	* QtSpim/datawin.cpp (formatMemoryContents) [Robert K. Moniot (moniot)]:
 	Incorrect html dropped line break after run of zeros.
 
 	* QtSpim/help/Fig7.1.jpg [William Barrett wbarrett1076@comcast.net]:

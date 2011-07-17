@@ -60,7 +60,8 @@ Q_OBJECT
 
  public:
     explicit SpimView(QWidget *parent = 0);
-    ~SpimView();
+
+    virtual void closeEvent(QCloseEvent *);
 
     QString WriteOutput(QString message);
     void Error(QString message, bool fatal);

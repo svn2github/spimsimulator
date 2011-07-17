@@ -81,12 +81,10 @@ SpimView::SpimView(QWidget *parent) :
 }
 
 
-SpimView::~SpimView()
+void SpimView::closeEvent(QCloseEvent *)
 {
     writeSettings();
-    SpimConsole->close();
-    delete SpimConsole;
-    delete ui;
+    qApp->exit(0);
 }
 
 
