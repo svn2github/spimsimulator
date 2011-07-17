@@ -30,6 +30,7 @@
    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <QDesktopWidget>
 
 #include "spimview.h"
 #include "ui_spimview.h"
@@ -44,6 +45,15 @@ void SpimView::readSettings()
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("WindowState").toByteArray(), 1);
     settings.endGroup();
+
+    // If the size of the restored window exceeds the current screen size, resize the window.
+    //
+    const QRect availGeo = App->desktop()->availableGeometry(this);
+    const QRect& curFGeo = this->frameGeometry();
+    if (!availGeo.contains(curFGeo))
+    {
+        this->adjustSize();
+    }
 
     settings.beginGroup("RegWin");
     st_colorChangedRegisters = settings.value("ColorChangedRegs", true).toBool();

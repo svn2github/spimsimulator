@@ -1,5 +1,9 @@
 2011-07-16    <Jim@X64PC>
 
+	* QtSpim/state.cpp (readSettings):
+	If the size of the restored window exceeds the current screen
+	size, resize the window.
+
 	* CPU/run.c (start_CP0_timer) [Ed Harcourt (edharcourt1)]:
 	Clean up non-Windows timer code to not reset timer until it has
 	expired. This behavior may have caused problems on Linux x64.
