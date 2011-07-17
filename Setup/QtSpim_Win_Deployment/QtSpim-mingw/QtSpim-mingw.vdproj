@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0F4D8F3DD4664E269CBA923CD4C32FC0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_174990893E40491DB3F57DDBC86E6D80"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2A7C587CF64541479D5F4D8E4AC75D5E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -75,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5B3AB21DFEC045EAA7F2A9337952B782"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5EF972BE826C42E5B2950A99F058B9F7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -82,6 +100,12 @@
         "Entry"
         {
         "MsmKey" = "8:_67EB9219E9574D198A3BD973C78B0ABA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7DCEC41ED05A47DDB19F680C47E8836C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -288,6 +312,46 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0F4D8F3DD4664E269CBA923CD4C32FC0"
+            {
+            "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\plugins\\imageformats\\libqsvg4.a"
+            "TargetName" = "8:libqsvg4.a"
+            "Tag" = "8:"
+            "Folder" = "8:_46B238EB70E645F2B9022622AD04B034"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_174990893E40491DB3F57DDBC86E6D80"
+            {
+            "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\plugins\\imageformats\\qjpeg4.dll"
+            "TargetName" = "8:qjpeg4.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_46B238EB70E645F2B9022622AD04B034"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2A7C587CF64541479D5F4D8E4AC75D5E"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\bin\\libgcc_s_dw2-1.dll"
@@ -488,6 +552,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B3AB21DFEC045EAA7F2A9337952B782"
+            {
+            "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\plugins\\imageformats\\qsvgd4.dll"
+            "TargetName" = "8:qsvgd4.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_46B238EB70E645F2B9022622AD04B034"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5EF972BE826C42E5B2950A99F058B9F7"
             {
             "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\bin\\mingwm10.dll"
@@ -514,6 +598,26 @@
             "TargetName" = "8:libgcc_s_dw2-1.dll"
             "Tag" = "8:"
             "Folder" = "8:_B04CDDF51FC64BA89EBBC7EDE3E3429F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DCEC41ED05A47DDB19F680C47E8836C"
+            {
+            "SourcePath" = "8:C:\\Program Files (x86)\\Qt\\qt\\plugins\\imageformats\\libqjpeg4.a"
+            "TargetName" = "8:libqjpeg4.a"
+            "Tag" = "8:"
+            "Folder" = "8:_46B238EB70E645F2B9022622AD04B034"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -835,6 +939,17 @@
                     "Property" = "8:_CF2E9D69E7A04292B67D3DC357A223E6"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_46B238EB70E645F2B9022622AD04B034"
+                            {
+                            "Name" = "8:imageformats"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_7C8CE7F1CDB9431A9AD8D2CBC1E25E58"
+                                "Folders"
+                                {
+                                }
+                            }
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_6369726B88D74A55876C05BBF6270CEA"
                             {
                             "Name" = "8:sqldrivers"
