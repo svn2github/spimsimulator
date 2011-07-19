@@ -5,7 +5,7 @@ Section: devel
 Priority: extra
 Homepage: http://www.cs.wisc.edu/~larus/SPIM.html
 Maintainer: James Larus <spim@larusstone.org>
-Depends: libqtcore4 (>= 4.6), libqtgui4 (>= 4.6), qt4-dev-tools
+Depends: libqtcore4 (>= 4.6), libqtgui4 (>= 4.6), qt4-dev-tools, libc6
 Description: The QtSpim program is a self-contained simulator
  that runs MIPS32 programs. It reads and executes
  assembly language programs written for this processor.

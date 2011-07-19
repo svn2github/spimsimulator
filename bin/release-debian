@@ -25,6 +25,7 @@ cp -f Documentation/qtspim.man Setup/debian/usr/share/man/man1/qtspim.1
 gzip -f --best Setup/debian/usr/share/man/man1/qtspim.1
 
 cp -f Setup/qtspim_debian_deployment/control Setup/debian/DEBIAN
+cp -f Setup/qtspim_debian_deployment/postinst Setup/debian/DEBIAN
 
 cp -f Setup/qtspim_debian_deployment/copyright Setup/debian/usr/share/doc/qtspim
 

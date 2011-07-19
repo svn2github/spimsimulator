@@ -1,3 +1,8 @@
+2011-07-18  Jim Larus  <jim@linuxPC>
+
+	* Setup/qtspim_debian_deployment/postinst:
+	Register QtSpim help file after installation.
+
 2011-07-17    <Jim@X64PC>
 
 	* Setup/QtSpim_Win_Deployment/QtSpim-package.sln:
