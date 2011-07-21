@@ -220,9 +220,10 @@ Q_OBJECT
     //
     void wireCommands();
     void initStack();
-    bool executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
+    void executeProgram(mem_addr pc, int steps, bool display, bool contBkpt);
     void initializePCAndStack();
-    enum PROGSTATE {stopped, paused, running} programState;
+    enum PROGSTATE {IDLE, STOPPED, PAUSED, RUNNING, SINGLESTEP} programStatus;
+    void updateStatus(PROGSTATE status);
 
 
     //
@@ -277,6 +278,10 @@ Q_OBJECT
 
     void help_ViewHelp();
     void help_AboutSPIM();
+
+    void continueBreakpoint();
+    void singleStepBreakpoint();
+    void abortBreakpoint();
 };
 
 extern SpimView* Window;

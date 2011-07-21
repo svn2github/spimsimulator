@@ -1,3 +1,8 @@
+2011-07-20    <Jim@X64PC>
+
+	* QtSpim/breakpoint.ui QtSpim/menu.cpp, QtSpim/spimview.h, QtSpim/spimview.cpp [William Barrett wbarrett1076@comcast.net]:
+	Provide more usable set of options at a breakpoint.	
+
 2011-07-18    <Jim@X64PC>
 
 	* Version 9.1

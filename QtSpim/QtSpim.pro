@@ -80,7 +80,8 @@ FORMS    += spimview.ui\
 	printwindows.ui\
         runparams.ui\
         settings.ui\
-        changevalue.ui
+        changevalue.ui \
+        breakpoint.ui
 
 
 INCLUDEPATH = ../CPU ../spim

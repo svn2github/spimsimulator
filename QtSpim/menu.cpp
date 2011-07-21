@@ -36,7 +36,9 @@
 #include "ui_printwindows.h"
 #include "ui_runparams.h"
 #include "ui_settings.h"
+#include "ui_breakpoint.h"
 #include "spim_settings.h"
+
 
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
@@ -288,35 +290,60 @@ void SpimView::sim_Run()
     initializePCAndStack();
 
     force_break = 0;
-    programState = running;
-    while (!force_break)
+    updateStatus(RUNNING);
+    while (!force_break && programStatus == RUNNING)
     {
-        Window->statusBar()->showMessage("Running");
-        if (!executeProgram(PC, 100000, false, false))
-        {
-            break;
-        }
+        executeProgram(PC, 100000, false, false);
         App->processEvents();   // Check for events in midst of long computation
     }
-    programState = stopped;
-    Window->statusBar()->showMessage("");
+    updateStatus(IDLE);
     UpdateDataDisplay();
+}
+
+
+void  SpimView::updateStatus(PROGSTATE status)
+{
+    programStatus = status;
+    switch (programStatus)
+    {
+    case IDLE:
+        Window->statusBar()->showMessage("");
+        break;
+
+    case STOPPED:
+        Window->statusBar()->showMessage("Stopped");
+        break;
+
+    case PAUSED:
+        Window->statusBar()->showMessage("Paused");
+        break;
+
+    case RUNNING:
+        Window->statusBar()->showMessage("Running");
+        break;
+
+    case SINGLESTEP:
+        Window->statusBar()->showMessage("Single Step");
+        break;
+
+    default:
+        Window->statusBar()->showMessage("?");
+        break;
+    }
 }
 
 
 void SpimView::sim_Pause()
 {
     force_break = 1;
-    programState = paused;
-    Window->statusBar()->showMessage("Paused");
+    updateStatus(PAUSED);
 }
 
 
 void SpimView::sim_Stop()
 {
     force_break = 1;
-    programState = stopped;
-    Window->statusBar()->showMessage("Stopped");
+    updateStatus(STOPPED);
 }
 
 
@@ -325,14 +352,14 @@ void SpimView::sim_SingleStep()
     initializePCAndStack();
 
     force_break = 0;
-    Window->statusBar()->showMessage("Single Stepping");
-    programState = executeProgram(PC, 1, false, false) ? running : stopped;
+    updateStatus(SINGLESTEP);
+    executeProgram(PC, 1, false, false);
 }
 
 
 void SpimView::initializePCAndStack()
 {
-    if ((programState == stopped && !force_break) || PC == 0)
+    if ((programStatus == STOPPED && !force_break) || PC == 0)
     {
         if (st_startAddress == 0)
         {
@@ -352,41 +379,63 @@ void SpimView::initStack()
 }
 
 
-bool SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkpt)
+void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkpt)
 {
     int continuable = 0;
 
-    while (true)
+    bool breakpointEncountered = run_program(pc, steps, display, contBkpt, &continuable);
+
+    highlightInstruction(PC);
+    UpdateDataDisplay();
+
+    if (breakpointEncountered)
     {
-        bool breakpointEncountered = run_program(pc, steps, display, contBkpt, &continuable);
+        static QDialog* breakpointDialog;
+        static Ui::BreakpointDialog* bpd;
 
-        highlightInstruction(PC);
-        UpdateDataDisplay();
-
-        if (breakpointEncountered)
+        if (bpd == NULL)
         {
-            QMessageBox msgBox(QMessageBox::Information,
-                               "Execution Stopped",
-                               "Execution stopped due to breakpoint. Continue executing?",
-                               QMessageBox::Yes | QMessageBox::No);
-            int continueExecution = msgBox.exec();
+            breakpointDialog = new QDialog();
+            bpd = new Ui::BreakpointDialog();
+            bpd->setupUi(breakpointDialog);
 
-            run_program(PC, 1, false, true, &continuable); // Execute instruction replaced by breakpoint
-            pc = PC;
-            highlightInstruction(PC);
-            UpdateDataDisplay();
-
-            if (steps == 1 || continueExecution != QMessageBox::Yes)
-            {
-                force_break = 1;
-                return continuable == 1; // Stop execution if user clicked "no" or single stepping
-            }
+            connect(bpd->continuePushButton, SIGNAL(clicked()), this, SLOT(continueBreakpoint()));
+            connect(bpd->singleStepPushButton, SIGNAL(clicked()), this, SLOT(singleStepBreakpoint()));
+            connect(bpd->abortPushButton, SIGNAL(clicked()), this, SLOT(abortBreakpoint()));
         }
-        else
-        {
-            return continuable == 1;
-        }
+        bpd->label->setText("Execution stopped at breakpoint at " + QString("0x") + formatAddress(PC));
+        breakpointDialog->show();
     }
+    else if (!continuable)
+    {
+        updateStatus(STOPPED);
+    }
+}
+
+
+void SpimView::continueBreakpoint()
+{
+    int continuable;
+    run_program(PC, 1, false, true, &continuable); // Execute instruction replaced by breakpoint
+    highlightInstruction(PC);
+    UpdateDataDisplay();
+    updateStatus((continuable == 1) ? RUNNING : STOPPED);
+}
+
+
+void SpimView::singleStepBreakpoint()
+{
+    int continuable;
+    run_program(PC, 1, false, true, &continuable); // Execute instruction replaced by breakpoint
+    highlightInstruction(PC);
+    UpdateDataDisplay();
+    updateStatus((continuable == 1) ? SINGLESTEP : STOPPED);
+}
+
+
+void SpimView::abortBreakpoint()
+{
+    updateStatus(STOPPED);
 }
 
 
