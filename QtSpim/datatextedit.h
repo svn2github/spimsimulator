@@ -43,6 +43,10 @@ public:
     void contextMenuEvent(QContextMenuEvent* event);
     QAction* action_Context_ChangeValue;
 
+protected:
+    virtual void closeEvent(QCloseEvent* event);
+    virtual void hideEvent(QHideEvent* event);
+
 private:
     QPoint contextGlobalPos;
 

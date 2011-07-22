@@ -316,3 +316,17 @@ int dataTextEdit::addrFromPos(QTextCursor* cursor)
     }
     return 0;
 }
+
+
+void dataTextEdit::closeEvent(QCloseEvent* event)
+{
+    Window->ui->action_Win_DataSegment->setChecked(false);
+    event->accept();
+}
+
+
+void dataTextEdit::hideEvent(QHideEvent* event)
+{
+    Window->ui->action_Win_DataSegment->setChecked(false);
+    event->accept();
+}

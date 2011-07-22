@@ -162,14 +162,6 @@
    <addaction name="menu_Window"/>
    <addaction name="menu_Help"/>
   </widget>
-  <widget class="QToolBar" name="main_Win_ToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="IntRegDockWidget">
    <property name="allowedAreas">

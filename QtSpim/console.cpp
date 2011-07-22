@@ -116,3 +116,16 @@ void Console::mousePressEvent(QMouseEvent* /*e*/)
     // Ignore
 }
 
+
+void Console::closeEvent(QCloseEvent* event)
+{
+    Window->ui->action_Win_Console->setChecked(false);
+    event->accept();
+}
+
+
+void Console::hideEvent(QHideEvent* event)
+{
+    Window->ui->action_Win_Console->setChecked(false);
+    event->accept();
+}

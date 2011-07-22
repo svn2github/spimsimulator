@@ -43,6 +43,12 @@ public:
     void contextMenuEvent(QContextMenuEvent* event);
     QAction* action_Context_ChangeValue;
 
+    bool isIntRegs;
+
+protected:
+    virtual void closeEvent(QCloseEvent* event);
+    virtual void hideEvent(QHideEvent* event);
+
 private:
     QPoint contextGlobalPos;
     int regAtPos(QString prefix);

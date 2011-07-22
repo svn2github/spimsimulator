@@ -44,6 +44,10 @@ public:
     QAction* action_Context_SetBreakpoint;
     QAction* action_Context_ClearBreakpoint;
 
+protected:
+    virtual void closeEvent(QCloseEvent* event);
+    virtual void hideEvent(QHideEvent* event);
+
 private:
     QPoint contextGlobalPos;
 

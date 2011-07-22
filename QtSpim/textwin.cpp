@@ -258,3 +258,17 @@ int textTextEdit::pcFromPos(QTextCursor* cursor)
     }
     return 0;
 }
+
+
+void textTextEdit::closeEvent(QCloseEvent* event)
+{
+    Window->ui->action_Win_TextSegment->setChecked(false);
+    event->accept();
+}
+
+
+void textTextEdit::hideEvent(QHideEvent* event)
+{
+    Window->ui->action_Win_TextSegment->setChecked(false);
+    event->accept();
+}

@@ -53,6 +53,10 @@ public:
     QString ReadChar();
     void WriteOutput(QString out);
 
+protected:
+    virtual void closeEvent(QCloseEvent* event);
+    virtual void hideEvent(QHideEvent* event);
+
 private:
     QString inputBuffer;
     QEventLoop l;

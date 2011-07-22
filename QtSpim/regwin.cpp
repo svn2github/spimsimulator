@@ -48,6 +48,7 @@
 void SpimView::DisplayIntRegisters()
 {
     regTextEdit* te = ui->IntRegDockWidget->findChild<regTextEdit *>("IntRegTextEdit");
+    te->isIntRegs = true;
     QString windowContents = windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor);
     int scrollPosition = te->verticalScrollBar()->value();
 
@@ -120,6 +121,7 @@ void SpimView::CaptureIntRegisters()
 void SpimView::DisplayFPRegisters()
 {
     regTextEdit* te = ui->FPRegDockWidget->findChild<regTextEdit *>("FPRegTextEdit");
+    te->isIntRegs = false;
     QString windowContents = windowFormattingStart(st_regWinFont, st_regWinFontColor, st_regWinBackgroundColor);
     int scrollPosition = te->verticalScrollBar()->value();
 
@@ -525,4 +527,32 @@ QString promptForNewValue(QString text, int* base)
     {
         return QString("");
     }
+}
+
+
+void regTextEdit::closeEvent(QCloseEvent* event)
+{
+    if (isIntRegs)
+    {
+        Window->ui->action_Win_IntRegisters->setChecked(false);
+    }
+    else
+    {
+        Window->ui->action_Win_FPRegisters->setChecked(false);
+    }
+    event->accept();
+}
+
+
+void regTextEdit::hideEvent(QHideEvent* event)
+{
+    if (isIntRegs)
+    {
+        Window->ui->action_Win_IntRegisters->setChecked(false);
+    }
+    else
+    {
+        Window->ui->action_Win_FPRegisters->setChecked(false);
+    }
+    event->accept();
 }

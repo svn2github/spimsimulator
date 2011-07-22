@@ -1,7 +1,18 @@
+2011-07-21    <Jim@X64PC>
+
+	* Version 9.1.1
+
+	* QtSpim/console.cpp, 	QtSpim/console.h, QtSpim/datatextedit.h,
+	QtSpim/datawin.cpp, QtSpim/regtextedit.h, 	QtSpim/regwin.cpp,
+	QtSpim/spimview.cpp, QtSpim/spimview.ui, QtSpim/texttextedit.h,
+	QtSpim/textwin.cpp [Mario H. Voorsluys m.h.voorsluys@student.tudelft.nl]:
+	Closing a window did not uncheck item on Windows menu.
+	Eliminated empty toolbar.
+
 2011-07-20    <Jim@X64PC>
 
 	* QtSpim/breakpoint.ui QtSpim/menu.cpp, QtSpim/spimview.h, QtSpim/spimview.cpp [William Barrett wbarrett1076@comcast.net]:
-	Provide more usable set of options at a breakpoint.	
+	Provide more usable set of options at a breakpoint.
 
 2011-07-18    <Jim@X64PC>
 
