@@ -1,5 +1,8 @@
 2011-07-23    <Jim@X64PC>
 
+	* QtSpim/menu.cpp (help_AboutSPIM) [Sergio Barrachina Mir <barrachi@icc.uji.es>]:
+	Improve the About QtSpim dialog.
+
 	* QtSpim/regwin.cpp (changeValue):
 	Suppress compiler warning.
 

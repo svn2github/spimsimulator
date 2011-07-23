@@ -38,6 +38,7 @@
 #include "ui_settings.h"
 #include "ui_breakpoint.h"
 #include "spim_settings.h"
+#include "version.h"
 
 
 #include <QStringBuilder>
@@ -825,14 +826,17 @@ void SpimView::help_ViewHelp()
 void SpimView::help_AboutSPIM()
 {
     QMessageBox box(QMessageBox::NoIcon,
-                    "About SPIM",
-                    "<span style='font-size: 12pt;'>"
-                    "<center><strong>QtSpim</strong></center>"
-                    "<p>SPIM is a simulator of the MIPS R3000 processor.</p>"
-                    "<p>Copyright (c) 1990-2010, James R. Larus (larus@larusstone.org).</p>"
-                    "<p>SPIM is distributed under a BSD license.</p>"
-                    "<p>For more information, source code, and binaries: "
-                    "<a href='http://www.cs.wisc.edu/~larus/spim.html'>http://www.cs.wisc.edu/~larus/spim.html</a></p></span>",
+                    "About QtSpim",
+                    QString("<span style='font-size: 16pt;'>"
+                            "<center><strong>QtSpim</strong></center>"
+                            "<center><img src=':/icons/qtspim.png'>"
+                            "<span style='font-size: 10pt;'>")
+                    + QString("<p>") + QString(SPIM_VERSION) + QString("</p>")
+                    + QString ("<p>SPIM is a simulator of the MIPS R3000 processor.</p>"
+                               "<p>Copyright (c) 1990-2011, James R. Larus (larus@larusstone.org).</p>"
+                               "<p>SPIM is distributed under a BSD license.</p>"
+                               "<p>For more information, source code, and binaries: "
+                               "<a href='https://sourceforge.net/projects/spimsimulator/'>https://sourceforge.net/projects/spimsimulator/</a></p></span>"),
                     QMessageBox::Ok);
     box.exec();
 }

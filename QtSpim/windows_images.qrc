@@ -46,5 +46,6 @@
      <file alias="Settings.png">windows_images/Settings.png</file>
      <file alias="SingleStep.png">windows_images/SingleStep.png</file>
      <file alias="Stop.png">windows_images/Stop.png</file>
+     <file alias="qtspim.png">windows_images/qtspim.png</file>
  </qresource>
  </RCC>
