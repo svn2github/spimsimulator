@@ -1,3 +1,9 @@
+2011-07-23    <Jim@X64PC>
+
+	* QtSpim/QtSpim.pro:
+	Generate compressed helpfile and help collection separately to
+	work around bug in buildhelpcollection's -o argument.
+
 2011-07-22    <Jim@X64PC>
 
 	* Version 9.1.2

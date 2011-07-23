@@ -106,25 +106,22 @@ QMAKE_LEXFLAGS		= -I -8
 
 # Help file
 #
+HELP_PROJ 		= help/qtspim.qhp
+buildcompressedhelp.name	= Build compressed help
+buildcompressedhelp.input	= HELP_PROJ
+buildcompressedhelp.output	= help/${QMAKE_FILE_BASE}.qch
+buildcompressedhelp.commands	= qhelpgenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
+buildcompressedhelp.CONFIG	= no_link recursive
+
 HELP_COL_PROJ 		= help/qtspim.qhcp
-buildhelpcol.name	= Build help collection
-buildhelpcol.input	= HELP_COL_PROJ
-buildhelpcol.output	= help/${QMAKE_FILE_BASE}.qhc
-buildhelpcol.commands	= qcollectiongenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
-buildhelpcol.CONFIG	= no_link recursive
+buildhelpcollection.name	= Build help collection
+buildhelpcollection.input	= HELP_COL_PROJ
+buildhelpcollection.output	= help/${QMAKE_FILE_BASE}.qhc
+buildhelpcollection.commands	= qcollectiongenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
+buildhelpcollection.CONFIG	= no_link recursive
 
-HELP_COL		= help/qtspim.qch
-copyhelpcol.name	= Copying help collection
-copyhelpcol.input	= HELP_COL
-win32 {
-copyhelpcol.depends	= help/qtspim.qhc
-}
-copyhelpcol.output	= help/${QMAKE_FILE_BASE}.qch
-copyhelpcol.commands	= $(COPY_FILE) ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}
-copyhelpcol.CONFIG	= no_link recursive
-
-QMAKE_EXTRA_COMPILERS	+= buildhelpcol copyhelpcol
-POST_TARGETDEPS		+= help/qtspim.qhc help/qtspim.qch
+QMAKE_EXTRA_COMPILERS	+= buildcompressedhelp buildhelpcollection
+POST_TARGETDEPS		+= help/qtspim.qch help/qtspim.qhc
 
 
 # Microsoft Visual C compiler flags
