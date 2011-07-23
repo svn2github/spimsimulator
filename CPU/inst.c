@@ -66,9 +66,9 @@ static void sort_name_table ();
 
 /* Local variables: */
 
-/* Non-zero means store instructions in kernel, not user, text segment */
+/* True means store instructions in kernel, not user, text segment */
 
-static int in_kernel = 0;
+static bool in_kernel = 0;
 
 /* Instruction used as breakpoint by SPIM: */
 
@@ -135,11 +135,11 @@ increment_text_pc (int delta)
 }
 
 
-/* If FLAG is non-zero, next instruction goes to kernel text segment,
+/* If FLAG is true, next instruction goes to kernel text segment,
    otherwise it goes to user segment. */
 
 void
-user_kernel_text_segment (int to_kernel)
+user_kernel_text_segment (bool to_kernel)
 {
   in_kernel = to_kernel;
 }
@@ -254,7 +254,7 @@ i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 	  && (int32)IMM_MIN <= (offset = expr->symbol->addr + expr->offset)
 	  && offset <= (int32)IMM_MAX)
 	{
-	  i_type_inst_free (opcode, rt, REG_GP, make_imm_expr (offset, NULL, 0));
+	  i_type_inst_free (opcode, rt, REG_GP, make_imm_expr (offset, NULL, false));
 	}
       else if (value_known)
 	{
@@ -314,7 +314,7 @@ i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 	  && offset <= (int32)IMM_MAX)
 	{
 	i_type_inst_free ((opcode == Y_LUI_OP ? Y_ADDIU_OP : opcode),
-			  rt, REG_GP, make_imm_expr (offset, NULL, 0));
+			  rt, REG_GP, make_imm_expr (offset, NULL, false));
 	}
       else
 	{
@@ -367,7 +367,7 @@ j_type_inst (int opcode, imm_expr *target)
 
   SET_OPCODE(inst, opcode);
   target->offset = 0;		/* Not PC relative */
-  target->pc_relative = 0;
+  target->pc_relative = false;
   SET_EXPR (inst, copy_imm_expr (target));
   if (target->symbol == NULL || SYMBOL_IS_DEFINED (target->symbol))
     resolve_a_label (target->symbol, inst);
@@ -834,10 +834,10 @@ format_an_inst (str_stream *ss, instruction *inst, mem_addr addr)
 
 
 
-/* Return non-zero if SPIM OPCODE (e.g. Y_...) represents a conditional
+/* Return true if SPIM OPCODE (e.g. Y_...) represents a conditional
    branch. */
 
-int
+bool
 opcode_is_branch (int opcode)
 {
   switch (opcode)
@@ -876,18 +876,18 @@ opcode_is_branch (int opcode)
     case Y_BNE_OP:
     case Y_BNEL_OP:
     case Y_BNEZ_POP:
-      return (1);
+      return true;
 
     default:
-      return (0);
+      return false;
     }
 }
 
 
-/* Return non-zero if SPIM OPCODE represents a nullified (e.g., Y_...L_OP)
+/* Return true if SPIM OPCODE represents a nullified (e.g., Y_...L_OP)
    conditional branch. */
 
-int
+bool
 opcode_is_nullified_branch (int opcode)
 {
   switch (opcode)
@@ -904,18 +904,18 @@ opcode_is_nullified_branch (int opcode)
     case Y_BLTZALL_OP:
     case Y_BLTZL_OP:
     case Y_BNEL_OP:
-      return (1);
+      return true;
 
     default:
-      return (0);
+      return false;
     }
 }
 
 
-/* Return non-zero if SPIM OPCODE (e.g. Y_...) represents a conditional
+/* Return true if SPIM OPCODE (e.g. Y_...) represents a conditional
    branch on a true condition. */
 
-int
+bool
 opcode_is_true_branch (int opcode)
 {
   switch (opcode)
@@ -924,34 +924,34 @@ opcode_is_true_branch (int opcode)
     case Y_BC1TL_OP:
     case Y_BC2T_OP:
     case Y_BC2TL_OP:
-      return (1);
+      return true;
 
     default:
-      return (0);
+      return false;
     }
 }
 
 
-/* Return non-zero if SPIM OPCODE (e.g. Y_...) is a direct unconditional
+/* Return true if SPIM OPCODE (e.g. Y_...) is a direct unconditional
    branch (jump). */
 
-int
+bool
 opcode_is_jump (int opcode)
 {
   switch (opcode)
     {
     case Y_J_OP:
     case Y_JAL_OP:
-      return (1);
+      return true;
 
     default:
-      return (0);
+      return false;
     }
 }
 
-/* Return non-zero if SPIM OPCODE (e.g. Y_...) is a load or store. */
+/* Return true if SPIM OPCODE (e.g. Y_...) is a load or store. */
 
-int
+bool
 opcode_is_load_store (int opcode)
 {
   switch (opcode)
@@ -978,17 +978,17 @@ opcode_is_load_store (int opcode)
     case Y_SWC2_OP:
     case Y_SWL_OP:
     case Y_SWR_OP:
-      return (1);
+      return true;
 
     default:
-      return (0);
+      return false;
     }
 }
 
 
-/* Return non-zero if a breakpoint is set at ADDR. */
+/* Return true if a breakpoint is set at ADDR. */
 
-int
+bool
 inst_is_breakpoint (mem_addr addr)
 {
   if (break_inst == NULL)
@@ -1029,13 +1029,13 @@ set_breakpoint (mem_addr addr)
 /* Make and return a new immediate expression */
 
 imm_expr *
-make_imm_expr (int offs, char *sym, int pc_rel)
+make_imm_expr (int offs, char *sym, bool is_pc_relative)
 {
   imm_expr *expr = (imm_expr *) xmalloc (sizeof (imm_expr));
 
   expr->offset = offs;
   expr->bits = 0;
-  expr->pc_relative = (short)pc_rel;
+  expr->pc_relative = is_pc_relative;
   if (sym != NULL)
     expr->symbol = lookup_label (sym);
   else
@@ -1088,7 +1088,7 @@ lower_bits_of_expr (imm_expr *old_expr)
 imm_expr *
 const_imm_expr (int32 value)
 {
-  return (make_imm_expr (value, NULL, 0));
+  return (make_imm_expr (value, NULL, false));
 }
 
 
@@ -1163,10 +1163,10 @@ format_imm_expr (str_stream *ss, imm_expr *expr, int base_reg)
 }
 
 
-/* Return non-zero if the EXPRESSION is a constant 0. */
+/* Return true if the EXPRESSION is a constant 0. */
 
-int
-zero_imm (imm_expr *expr)
+bool
+is_zero_imm (imm_expr *expr)
 {
   return (expr->offset == 0 && expr->symbol == NULL);
 }
@@ -1185,12 +1185,12 @@ make_addr_expr (int offs, char *sym, int reg_no)
   if (reg_no == 0 && sym != NULL && (lab = lookup_label (sym))->gp_flag)
     {
       expr->reg_no = REG_GP;
-      expr->imm = make_imm_expr (offs + lab->addr - gp_midpoint, NULL, 0);
+      expr->imm = make_imm_expr (offs + lab->addr - gp_midpoint, NULL, false);
     }
   else
     {
       expr->reg_no = (unsigned char)reg_no;
-      expr->imm = make_imm_expr (offs, (sym ? str_copy (sym) : sym), 0);
+      expr->imm = make_imm_expr (offs, (sym ? str_copy (sym) : sym), false);
     }
   return (expr);
 }

@@ -49,6 +49,6 @@ void store_byte (int value);
 void store_double (double *value);
 void store_float (double *value);
 void store_half (int value);
-void store_string (char *string, int length, int null_terminate);
+void store_string (char *string, int length, bool null_terminate);
 void store_word (int value);
-void user_kernel_data_segment (int to_kernel);
+void user_kernel_data_segment (bool to_kernel);

@@ -39,7 +39,7 @@ typedef struct immexpr
   int offset;			/* Offset from symbol */
   struct lab *symbol;		/* Symbolic label */
   short bits;			/* > 0 => 31..16, < 0 => 15..0 */
-  short pc_relative;		/* Non-zero => offset from label in code */
+  bool pc_relative;		/* => offset from label in code */
 } imm_expr;
 
 
@@ -247,17 +247,17 @@ imm_expr *incr_expr_offset (imm_expr *expr, int32 value);
 void initialize_inst_tables ();
 instruction *inst_decode (int32 value);
 int32 inst_encode (instruction *inst);
-int inst_is_breakpoint (mem_addr addr);
+bool inst_is_breakpoint (mem_addr addr);
 void j_type_inst (int opcode, imm_expr *target);
 void k_text_begins_at_point (mem_addr addr);
 imm_expr *lower_bits_of_expr (imm_expr *old_expr);
 addr_expr *make_addr_expr (int offs, char *sym, int reg_no);
-imm_expr *make_imm_expr (int offs, char *sym, int pc_rel);
-int opcode_is_branch (int opcode);
-int opcode_is_nullified_branch (int opcode);
-int opcode_is_true_branch (int opcode);
-int opcode_is_jump (int opcode);
-int opcode_is_load_store (int opcode);
+imm_expr *make_imm_expr (int offs, char *sym, bool is_pc_relative);
+bool opcode_is_branch (int opcode);
+bool opcode_is_nullified_branch (int opcode);
+bool opcode_is_true_branch (int opcode);
+bool opcode_is_jump (int opcode);
+bool opcode_is_load_store (int opcode);
 void print_inst (mem_addr addr);
 char* inst_to_string (mem_addr addr);
 void r_co_type_inst (int opcode, int fd, int fs, int ft);
@@ -269,5 +269,5 @@ instruction *set_breakpoint (mem_addr addr);
 void store_instruction (instruction *inst);
 void text_begins_at_point (mem_addr addr);
 imm_expr *upper_bits_of_expr (imm_expr *old_expr);
-void user_kernel_text_segment (int to_kernel);
-int zero_imm (imm_expr *expr);
+void user_kernel_text_segment (bool to_kernel);
+bool is_zero_imm (imm_expr *expr);

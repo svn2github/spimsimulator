@@ -87,8 +87,8 @@ static void console_to_spim ();
 static void control_c_seen (int /*arg*/);
 static void flush_to_newline ();
 static int get_opt_int ();
-static int parse_spim_command (FILE *file, int redo);
-static int print_reg (int reg_no);
+static bool parse_spim_command (FILE *file, bool redo);
+static void print_reg (int reg_no);
 static int print_fp_reg (int reg_no);
 static int print_reg_from_string (char *reg);
 static void print_all_regs (int hex_flag);
@@ -103,22 +103,22 @@ static int read_token ();
 /* Not local, but not export so all files don't need setjmp.h */
 jmp_buf spim_top_level_env;	/* For ^C */
 
-int bare_machine;		/* Non-Zero => simulate bare machine */
-int delayed_branches;		/* Non-Zero => simulate delayed branches */
-int delayed_loads;		/* Non-Zero => simulate delayed loads */
-int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
-int quiet;			/* Non-Zero => no warning messages */
+bool bare_machine;		/* => simulate bare machine */
+bool delayed_branches;		/* => simulate delayed branches */
+bool delayed_loads;		/* => simulate delayed loads */
+bool accept_pseudo_insts;	/* => parse pseudo instructions  */
+bool quiet;			/* => no warning messages */
 char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 port message_out, console_out, console_in;
-int mapped_io;			/* Non-zero => activate memory-mapped IO */
+bool mapped_io;			/* => activate memory-mapped IO */
 int pipe_out;
 int spim_return_value;		/* Value returned when spim exits */
 
 
 /* Local variables: */
 
-/* Non-zero => load standard exception handler */
-static int load_exception_handler = 1;
+/* => load standard exception handler */
+static bool load_exception_handler = true;
 static int console_state_saved;
 #ifdef NEED_TERMIOS
 static struct sgttyb saved_console_state;
@@ -134,22 +134,22 @@ int
 main (int argc, char **argv)
 {
   int i;
-  int assembly_file_loaded = 0;
+  bool assembly_file_loaded = false;
   int print_usage_msg = 0;
 
   console_out.f = stdout;
   message_out.f = stdout;
 
-  bare_machine = 0;
-  delayed_branches = 0;
-  delayed_loads = 0;
-  accept_pseudo_insts = 1;
-  quiet = 0;
+  bare_machine = false;
+  delayed_branches = false;
+  delayed_loads = false;
+  accept_pseudo_insts = true;
+  quiet = false;
   spim_return_value = 0;
 
   /* Input comes directly (not through stdio): */
   console_in.i = 0;
-  mapped_io = 0;
+  mapped_io = false;
 
   write_startup_message ();
 
@@ -164,69 +164,69 @@ main (int argc, char **argv)
       if (streq (argv [i], "-asm")
 	  || streq (argv [i], "-a"))
 	{
-	  bare_machine = 0;
-	  delayed_branches = 0;
-	  delayed_loads = 0;
+	  bare_machine = false;
+	  delayed_branches = false;
+	  delayed_loads = false;
 	}
       else if (streq (argv [i], "-bare")
 	       || streq (argv [i], "-b"))
 	{
-	  bare_machine = 1;
-	  delayed_branches = 1;
-	  delayed_loads = 1;
-	  quiet = 1;
+	  bare_machine = true;
+	  delayed_branches = true;
+	  delayed_loads = true;
+	  quiet = true;
 	}
       else if (streq (argv [i], "-delayed_branches")
 	       || streq (argv [i], "-db"))
 	{
-	  delayed_branches = 1;
+	  delayed_branches = true;
 	}
       else if (streq (argv [i], "-delayed_loads")
 	       || streq (argv [i], "-dl"))
 	{
-	  delayed_loads = 1;
+	  delayed_loads = true;
 	}
       else if (streq (argv [i], "-exception")
 	       || streq (argv [i], "-e"))
-	{ load_exception_handler = 1; }
+	{ load_exception_handler = true; }
       else if (streq (argv [i], "-noexception")
 	       || streq (argv [i], "-ne"))
-	{ load_exception_handler = 0; }
+	{ load_exception_handler = false; }
       else if (streq (argv [i], "-exception_file")
 	       || streq (argv [i], "-ef"))
 	{
 	  exception_file_name = argv[++i];
-	  load_exception_handler = 1;
+	  load_exception_handler = true;
 	}
       else if (streq (argv [i], "-mapped_io")
 	       || streq (argv [i], "-mio"))
-	{ mapped_io = 1; }
+	{ mapped_io = true; }
       else if (streq (argv [i], "-nomapped_io")
 	       || streq (argv [i], "-nmio"))
-	{ mapped_io = 0; }
+	{ mapped_io = false; }
       else if (streq (argv [i], "-pseudo")
 	       || streq (argv [i], "-p"))
-	{ accept_pseudo_insts = 1; }
+	{ accept_pseudo_insts = true; }
       else if (streq (argv [i], "-nopseudo")
 	       || streq (argv [i], "-np"))
-	{ accept_pseudo_insts = 0; }
+	{ accept_pseudo_insts = false; }
       else if (streq (argv [i], "-quiet")
 	       || streq (argv [i], "-q"))
-	{ quiet = 1; }
+	{ quiet = true; }
       else if (streq (argv [i], "-noquiet")
 	       || streq (argv [i], "-nq"))
-	{ quiet = 0; }
+	{ quiet = false; }
       else if (streq (argv [i], "-trap")
 	       || streq (argv [i], "-t"))
-	{ load_exception_handler = 1; }
+	{ load_exception_handler = true; }
       else if (streq (argv [i], "-notrap")
 	       || streq (argv [i], "-nt"))
-	{ load_exception_handler = 0; }
+	{ load_exception_handler = false; }
       else if (streq (argv [i], "-trap_file")
 	       || streq (argv [i], "-tf"))
 	{
 	  exception_file_name = argv[++i];
-	  load_exception_handler = 1;
+	  load_exception_handler = true;
 	}
       else if (streq (argv [i], "-stext")
 	       || streq (argv [i], "-st"))
@@ -267,7 +267,7 @@ main (int argc, char **argv)
 	      initialize_world (load_exception_handler ? exception_file_name : NULL);
               initialize_run_stack (program_argc, program_argv);
 	    }
-	  assembly_file_loaded |= !read_assembly_file (argv[++i]);
+	  assembly_file_loaded = read_assembly_file (argv[++i]) || assembly_file_loaded;
 	  break;
 	}
       else
@@ -302,7 +302,7 @@ main (int argc, char **argv)
     }
   else /* assembly_file_loaded */
     {
-        int continuable;
+      bool continuable;
       console_to_program ();
       initialize_run_stack (program_argc, program_argv);
       if (!setjmp (spim_top_level_env))
@@ -315,7 +315,7 @@ main (int argc, char **argv)
 	      write_output (message_out, "\n");
 	      free (undefs);
 	    }
-	  run_program (find_symbol_address (DEFAULT_RUN_LOCATION), DEFAULT_RUN_STEPS, 0, 0, &continuable);
+	  run_program (find_symbol_address (DEFAULT_RUN_LOCATION), DEFAULT_RUN_STEPS, false, false, &continuable);
 	}
       console_to_spim ();
     }
@@ -329,7 +329,7 @@ main (int argc, char **argv)
 static void
 top_level ()
 {
-  int redo = 0;			/* Non-zero means reexecute last command */
+  bool redo = false;            /* => reexecute last command */
 
   (void)signal (SIGINT, control_c_seen);
   while (1)
@@ -339,7 +339,7 @@ top_level ()
       if (!setjmp (spim_top_level_env))
 	redo = parse_spim_command (stdin, redo);
       else
-	redo = 0;
+	redo = false;
       fflush (stdout);
       fflush (stderr);
     }
@@ -379,12 +379,12 @@ enum {
   DUMP_TEXT_CMD
 };
 
-/* Parse a SPIM command from the FILE and execute it.  If REDO is non-zero,
+/* Parse a SPIM command from the FILE and execute it.  If REDO is true,
    don't read a new command; just rexecute the previous one.
-   Return non-zero if the command was to redo the previous command. */
+   Return true if the command was to redo the previous command. */
 
-static int
-parse_spim_command (FILE *file, int redo)
+static bool
+parse_spim_command (FILE *file, bool redo)
 {
   static int prev_cmd = NOP_CMD; /* Default redo */
   static int prev_token;
@@ -417,7 +417,7 @@ parse_spim_command (FILE *file, int redo)
     case RUN_CMD:
       {
 	static mem_addr addr;
-        int continuable;
+        bool continuable;
 
 	addr = (redo ? addr : get_opt_int ());
 	if (addr == 0)
@@ -436,7 +436,7 @@ parse_spim_command (FILE *file, int redo)
 	      free (undefs);
 	    }
 
-	  if (run_program (addr, DEFAULT_RUN_STEPS, 0, 0, &continuable))
+	  if (run_program (addr, DEFAULT_RUN_STEPS, false, false, &continuable))
 	    write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	}
 	console_to_spim ();
@@ -449,9 +449,9 @@ parse_spim_command (FILE *file, int redo)
       {
 	if (PC != 0)
 	  {
-            int continuable;
+            bool continuable;
 	    console_to_program ();
-	    if (run_program (PC, DEFAULT_RUN_STEPS, 0, 1, &continuable))
+	    if (run_program (PC, DEFAULT_RUN_STEPS, false, true, &continuable))
 	      write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	    console_to_spim ();
 	  }
@@ -471,9 +471,9 @@ parse_spim_command (FILE *file, int redo)
 	  steps = 1;
 	if (addr != 0)
 	  {
-            int continuable;
+            bool continuable;
 	    console_to_program ();
-	    if (run_program (addr, steps, 1, 1, &continuable))
+	    if (run_program (addr, steps, true, true, &continuable))
 	      write_output (message_out, "Breakpoint encountered at 0x%08x\n", PC);
 	    console_to_spim ();
 	  }
@@ -798,14 +798,12 @@ flush_to_newline ()
 }
 
 
-/* Print register number N.
-   Return non-zero if register N was valid register string. */
+/* Print register number N. */
 
-static int
+static void
 print_reg (int reg_no)
 {
   write_output (message_out, "Reg %d = 0x%08x (%d)\n", reg_no, R[reg_no], R[reg_no]);
-  return (1);
 }
 
 

@@ -66,7 +66,7 @@ void SpimView::DisplayDataSegments(bool force)
 
         te->verticalScrollBar()->setSliderPosition(scrollPosition);
     }
-    data_modified = 0;
+    data_modified = false;
 }
 
 

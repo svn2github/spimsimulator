@@ -147,7 +147,7 @@ private:
 	void LoadFile(LPCTSTR strFilename);
 	void DisplayTextSegment(BOOL forceDisplay);
 	void DisplayDataSegment(BOOL forceDisplay);
-	void ExecuteProgram(mem_addr pc, int steps, int display, int cont_bkpt);
+	void ExecuteProgram(mem_addr pc, int steps, bool display, bool cont_bkpt);
 	void InitializeSimulator();
 	void Initialize();
 	void ReinitializeSimulator();

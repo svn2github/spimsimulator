@@ -470,7 +470,7 @@ step_program_action (Widget w, XtPointer client_data, XtPointer call_data)
 
   addr = PC == 0 ? starting_address () : PC;
   if (steps > 0 && addr > 0)
-    execute_program (addr, steps, 1, 1);
+    execute_program (addr, steps, true, true);
   else
     error ("Cannot step %d steps from 0x%x\n", steps, addr);
 }
@@ -484,7 +484,7 @@ step_continue_action (Widget w, XtPointer client_data, XtPointer call_data)
   XtPopdown (XtParent (dialog));
   destroy_popup_prompt (NULL, (XtPointer) dialog, (XtPointer) NULL);
   step_popup = NULL;
-  execute_program (PC, DEFAULT_RUN_STEPS, 0, 0);
+  execute_program (PC, DEFAULT_RUN_STEPS, false, false);
 }
 
 
@@ -1045,8 +1045,8 @@ continue_action (Widget w, XtPointer client_data, XtPointer call_data)
   XtPopdown (XtParent (dialog));
   destroy_popup_prompt (NULL, (XtPointer) dialog, (XtPointer) NULL);
   continue_popup = NULL;
-  execute_program (PC, 1, 0, 1); /* Step over breakpoint */
-  execute_program (PC, DEFAULT_RUN_STEPS - 1, 0, 0);
+  execute_program (PC, 1, false, true); /* Step over breakpoint */
+  execute_program (PC, DEFAULT_RUN_STEPS - 1, false, false);
 }
 
 

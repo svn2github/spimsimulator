@@ -256,7 +256,7 @@ void SpimView::Error(QString message, bool fatal)
                                                                  QMessageBox::Ok);
         if (b == QMessageBox::Abort)
         {
-            force_break = 1;
+            force_break = true;
         }
     }
 }

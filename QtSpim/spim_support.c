@@ -41,15 +41,14 @@
 
 // SPIM globals
 //
-int bare_machine;              /* Non-zero => simulate bare machine */
-int accept_pseudo_insts;       /* Non-Zero => parse pseudo instructions  */
-int delayed_branches;          /* Non-zero => simulate delayed branches */
-int delayed_loads;             /* Non-zero => simulate delayed loads */
-int quiet;                     /* Non-zero => no warning messages */
-int source_file;               /* Non-zero => program is source, not binary */
+bool bare_machine;             /* => simulate bare machine */
+bool accept_pseudo_insts;      /* => parse pseudo instructions  */
+bool delayed_branches;         /* => simulate delayed branches */
+bool delayed_loads;            /* => simulate delayed loads */
+bool quiet;                    /* => no warning messages */
 char* exception_file_name = 0; /* The path from which to load the exception handler, if desired */
-int mapped_io;                  /* Non-zero => activate memory-mapped IO */
-int spim_return_value;          /* Value returned when spim exits */
+bool mapped_io;                /* => activate memory-mapped IO */
+int spim_return_value;         /* Value returned when spim exits */
 
 port message_out;
 port console_out;

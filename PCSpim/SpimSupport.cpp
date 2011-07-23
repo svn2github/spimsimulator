@@ -40,15 +40,14 @@
 #include "ConsoleWnd.h"
 
 // Necessary SPIM globals
-int bare_machine;                /* Non-zero => simulate bare machine */
-int accept_pseudo_insts;	 /* Non-Zero => parse pseudo instructions  */
-int delayed_branches;		 /* Non-zero => simulate delayed branches */
-int delayed_loads;		 /* Non-zero => simulate delayed loads */
-int quiet;			 /* Non-zero => no warning messages */
-int source_file;		 /* Non-zero => program is source, not binary */
+bool bare_machine;                 /* => simulate bare machine */
+bool accept_pseudo_insts;          /* => parse pseudo instructions  */
+bool delayed_branches;             /* => simulate delayed branches */
+bool delayed_loads;                /* => simulate delayed loads */
+bool quiet;                        /* => no warning messages */
 char * exception_file_name = NULL; /* The path from which to load the exception handler, if desired */
 port message_out, console_out;
-int mapped_io;			 /* Non-zero => activate memory-mapped IO */
+bool mapped_io;                  /* => activate memory-mapped IO */
 int spim_return_value;		/* Value returned when spim exits */
 
 
@@ -184,7 +183,7 @@ void run_error (char *fmt, ...)
     write_output(message_out, io_buffer);
 
     // Force a break;
-    force_break = 1;
+    force_break = true;
 }
 
 

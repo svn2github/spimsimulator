@@ -1,5 +1,9 @@
 2011-07-22    <Jim@X64PC>
 
+	* pervasive:
+	Changed C code to use bool instead of int to make things clear,
+	although no longer vanilla C code.
+
 	* QtSpim/datawin.cpp [William A. Barrett wbarrett1076@comcast.net]:
 	Fix data segment display to show ASCII chars on a partial line.
 	Only display printable ASCII chars.

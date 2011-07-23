@@ -44,7 +44,7 @@ typedef int32 /*@alt unsigned int @*/ mem_word;
 
 extern instruction **text_seg;
 
-extern int text_modified;	/* Non-zero means text segment was written */
+extern bool text_modified;	/* => text segment was written */
 
 #define TEXT_BOT ((mem_addr) 0x400000)
 
@@ -60,7 +60,7 @@ extern mem_addr text_top;
 
 extern mem_word *data_seg;
 
-extern int data_modified;	/* Non-zero means a data segment was written */
+extern bool data_modified;	/* => a data segment was written */
 
 extern short *data_seg_h;	/* Points to same vector as DATA_SEG */
 

@@ -52,7 +52,7 @@ static mem_addr next_data_pc;	/* Location for next datum in user process */
 
 static mem_addr next_k_data_pc;	/* Location for next datum in kernel */
 
-static int in_kernel = 0;	/* Non-zero => data goes to kdata, not data */
+static bool in_kernel = 0;	/* => data goes to kdata, not data */
 
 #define DATA_PC (in_kernel ? next_k_data_pc : next_data_pc)
 
@@ -62,16 +62,16 @@ static int in_kernel = 0;	/* Non-zero => data goes to kdata, not data */
 
 static mem_addr next_gp_item_addr; /* Address of next item accessed off $gp */
 
-static int auto_alignment = 1;	/* Non-zero => align literal to natural bound*/
+static bool auto_alignment = true; /* => align literal to natural bound*/
 
 
 
-/* If TO_KERNEL is non-zero, subsequent data will be placed in the
-   kernel data segment.  If it is zero, data will go to the user's data
+/* If TO_KERNEL is true, subsequent data will be placed in the
+   kernel data segment.  If false, data will go to the user's data
    segment.*/
 
 void
-user_kernel_data_segment (int to_kernel)
+user_kernel_data_segment (bool to_kernel)
 {
     in_kernel = to_kernel;
 }
@@ -80,8 +80,8 @@ user_kernel_data_segment (int to_kernel)
 void
 end_of_assembly_file ()
 {
-  in_kernel = 0;
-  auto_alignment = 1;
+  in_kernel = false;
+  auto_alignment = true;
 }
 
 
@@ -122,7 +122,7 @@ void
 align_data (int alignment)
 {
   if (alignment == 0)
-    auto_alignment = 0;
+    auto_alignment = false;
   else if (in_kernel)
     {
       next_k_data_pc =
@@ -148,7 +148,7 @@ set_data_alignment (int alignment)
 void
 enable_data_alignment ()
 {
-  auto_alignment = 1;
+  auto_alignment = true;
 }
 
 
@@ -232,7 +232,7 @@ lcomm_directive (char *name, int size)
 /* Process a .ascii STRING or .asciiz STRING directive. */
 
 void
-store_string (char *string, int length, int null_terminate)
+store_string (char *string, int length, bool null_terminate)
 {
   for ( ; length > 0; string ++, length --) {
     set_mem_byte (DATA_PC, *string);

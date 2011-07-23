@@ -102,14 +102,14 @@ initialize_world (char* exception_file_names)
 
   if (exception_file_names != NULL)
     {
-      int old_bare = bare_machine;
-      int old_accept = accept_pseudo_insts;
+      bool old_bare = bare_machine;
+      bool old_accept = accept_pseudo_insts;
       char *filename;
       char *files;
 
       /* Save machine state */
-      bare_machine = 0;	       /* Exception handler uses extended machine */
-      accept_pseudo_insts = 1;
+      bare_machine = false;     /* Exception handler uses extended machine */
+      accept_pseudo_insts = true;
 
       /* strtok modifies the string, so we must back up the string prior to use. */
       if ((files = strdup (exception_file_names)) == NULL)
@@ -117,7 +117,7 @@ initialize_world (char* exception_file_names)
 
       for (filename = strtok (files, ";"); filename != NULL; filename = strtok (NULL, ";"))
          {
-            if (read_assembly_file (filename))
+            if (!read_assembly_file (filename))
                fatal_error ("Cannot read exception handler: %s\n", filename);
 
             write_output (message_out, "Loaded: %s\n", filename);
@@ -184,10 +184,10 @@ initialize_registers ()
 }
 
 
-/* Read file NAME, which should contain assembly code. Return zero if
-   successful and non-zero otherwise. */
+/* Read file NAME, which should contain assembly code. Return true if
+   successful and false otherwise. */
 
-int
+bool
 read_assembly_file (char *name)
 {
   FILE *file = fopen (name, "rt");
@@ -195,7 +195,7 @@ read_assembly_file (char *name)
   if (file == NULL)
     {
       error ("Cannot open file: `%s'\n", name);
-      return (1);
+      return false;
     }
   else
     {
@@ -207,7 +207,7 @@ read_assembly_file (char *name)
       fclose (file);
       flush_local_labels (!parse_error_occurred);
       end_of_assembly_file ();
-      return (0);
+      return true;
     }
 }
 
@@ -336,12 +336,12 @@ copy_int_to_stack (int n)
 
 
 /* Run the program, starting at PC, for STEPS instructions. Display each
-   instruction before executing if DISPLAY is non-zero.  If CONT_BKPT is
-   non-zero, then step through a breakpoint. CONTINUABLE is non-zero if
-   execution can continue. Return non-zero if breakpoint is encountered. */
+   instruction before executing if DISPLAY is true.  If CONT_BKPT is
+   true, then step through a breakpoint. CONTINUABLE is true if
+   execution can continue. Return true if breakpoint is encountered. */
 
-int
-run_program (mem_addr pc, int steps, int display, int cont_bkpt, int* continuable)
+bool
+run_program (mem_addr pc, int steps, bool display, bool cont_bkpt, bool* continuable)
 {
   if (cont_bkpt && inst_is_breakpoint (pc))
     {
@@ -362,10 +362,10 @@ run_program (mem_addr pc, int steps, int display, int cont_bkpt, int* continuabl
       /* Turn off EXL bit, so subsequent interrupts set EPC since the break is
       handled by SPIM code, not MIPS code. */
       CP0_Status &= ~CP0_Status_EXL;
-      return (1);
+      return true;
   }
   else
-    return (0);
+    return false;
 }
 
 

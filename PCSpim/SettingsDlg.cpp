@@ -129,7 +129,7 @@ void CSettingsDlg::OnOK()
         return;
 
     // Place them in their proper global locations, and write them to the registry.
-    bare_machine = m_fBare;
+    bare_machine = m_fBare != 0;
     pApp->WriteSetting(SPIM_REG_BARE, bare_machine);
 
     if (m_fBare)
@@ -138,13 +138,13 @@ void CSettingsDlg::OnOK()
         m_fDelayedLoads = 1;
     }
 
-    accept_pseudo_insts = m_fAllowPseudo;
+    accept_pseudo_insts = m_fAllowPseudo != 0;
     pApp->WriteSetting(SPIM_REG_PSEUDO, accept_pseudo_insts);
 
-    delayed_branches = m_fDelayedBranches;
+    delayed_branches = m_fDelayedBranches != 0;
     pApp->WriteSetting(SPIM_REG_DELAYEDBRANCHES, delayed_branches);
 
-    delayed_loads = m_fDelayedLoads;
+    delayed_loads = m_fDelayedLoads != 0;
     pApp->WriteSetting(SPIM_REG_DELAYEDLOADS, delayed_loads);
 
     g_fLoadExceptionHandler = m_fLoadException;
@@ -158,10 +158,10 @@ void CSettingsDlg::OnOK()
         pApp->WriteSetting(SPIM_REG_EXCEPTIONFILE, exception_file_name);
     }
 
-    mapped_io = m_fMappedIO;
+    mapped_io = m_fMappedIO != 0;
     pApp->WriteSetting(SPIM_REG_MAPPEDIO, mapped_io);
 
-    quiet = m_fQuiet;
+    quiet = m_fQuiet != 0;
     pApp->WriteSetting(SPIM_REG_QUIET, quiet);
 
     g_fGenRegHex = m_fGenRegHex;

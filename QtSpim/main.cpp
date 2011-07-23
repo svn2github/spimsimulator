@@ -120,24 +120,24 @@ static void parseCommandLine(QStringList args)
 #endif
         if ((args[i] == "-asm") || (args[i] == "-a"))
 	{
-            bare_machine = 0;
-            delayed_branches = 0;
-            delayed_loads = 0;
+            bare_machine = false;
+            delayed_branches = false;
+            delayed_loads = false;
 	}
         else if ((args[i] == "-bare") || (args[i] == "-b"))
 	{
-            bare_machine = 1;
-            delayed_branches = 1;
-            delayed_loads = 1;
-            quiet = 1;
+            bare_machine = true;
+            delayed_branches = true;
+            delayed_loads = true;
+            quiet = true;
 	}
         else if ((args[i] == "-delayed_branches") || (args[i] == "-db"))
 	{
-            delayed_branches = 1;
+            delayed_branches = true;
 	}
         else if ((args[i] == "-delayed_loads") || (args[i] == "-dl"))
 	{
-            delayed_loads = 1;
+            delayed_loads = true;
 	}
         else if ((args[i] == "-exception") || (args[i] == "-e"))
 	{
@@ -153,27 +153,27 @@ static void parseCommandLine(QStringList args)
 	}
         else if ((args[i] == "-mapped_io") || (args[i] == "-mio"))
 	{
-            mapped_io = 1;
+            mapped_io = true;
         }
         else if ((args[i] == "-nomapped_io") || (args[i] == "-nmio"))
 	{
-            mapped_io = 0;
+            mapped_io = false;
         }
         else if ((args[i] == "-pseudo") || (args[i] == "-p"))
 	{
-            accept_pseudo_insts = 1;
+            accept_pseudo_insts = true;
         }
         else if ((args[i] == "-nopseudo") || (args[i] == "-np"))
 	{
-            accept_pseudo_insts = 0;
+            accept_pseudo_insts = false;
         }
         else if ((args[i] == "-quiet") || (args[i] == "-q"))
 	{
-            quiet = 1;
+            quiet = true;
         }
         else if ((args[i] == "-noquiet") || (args[i] == "-nq"))
 	{
-            quiet = 0;
+            quiet = false;
         }
         else if ((args[i] == "-trap") || (args[i] == "-t"))
 	{

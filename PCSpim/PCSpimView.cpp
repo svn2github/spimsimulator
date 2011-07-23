@@ -44,7 +44,7 @@
 #include "ConsoleWnd.h"
 #include "util.h"
 #include "SpimReg.h"
-
+#include "parser.h"
 
 
 #ifndef EXCEPTION_FILE_PATH
@@ -319,12 +319,12 @@ void CPCSpimView::Initialize()
     CPCSpimApp *pApp = (CPCSpimApp *)AfxGetApp();
 
     // Load the settings from the registry.
-    bare_machine = pApp->GetSetting(SPIM_REG_BARE, FALSE);
-    delayed_branches = pApp->GetSetting(SPIM_REG_DELAYEDBRANCHES, FALSE);
-    delayed_loads = pApp->GetSetting(SPIM_REG_DELAYEDLOADS, FALSE);
-    accept_pseudo_insts = pApp->GetSetting(SPIM_REG_PSEUDO, TRUE);
-    quiet = pApp->GetSetting(SPIM_REG_QUIET, FALSE);
-    mapped_io = pApp->GetSetting(SPIM_REG_MAPPEDIO, TRUE);
+    bare_machine = pApp->GetSetting(SPIM_REG_BARE, FALSE) != 0;
+    delayed_branches = pApp->GetSetting(SPIM_REG_DELAYEDBRANCHES, FALSE) != 0;
+    delayed_loads = pApp->GetSetting(SPIM_REG_DELAYEDLOADS, FALSE) != 0;
+    accept_pseudo_insts = pApp->GetSetting(SPIM_REG_PSEUDO, TRUE) != 0;
+    quiet = pApp->GetSetting(SPIM_REG_QUIET, FALSE) != 0;
+    mapped_io = pApp->GetSetting(SPIM_REG_MAPPEDIO, TRUE) != 0;
     g_fLoadExceptionHandler = pApp->GetSetting(SPIM_REG_LOADEXCEPTION, TRUE);
     g_fGenRegHex = pApp->GetSetting(SPIM_REG_GENREG_HEX, TRUE);
     g_fFPRegHex = pApp->GetSetting(SPIM_REG_FPREG_HEX, FALSE);
@@ -342,8 +342,8 @@ void CPCSpimView::Initialize()
 
     if (bare_machine)
     {
-        delayed_branches = 1;
-        delayed_loads = 1;
+        delayed_branches = true;
+        delayed_loads = true;
     }
 
     // We're using these just as unique identifiers in the output code.
@@ -461,15 +461,15 @@ void CPCSpimView::OnSimulatorRun()
 
     initialize_stack((const char*)g_strCmdLine);	// Stack starts with argc, argv, environ
 
-    ExecuteProgram(addr, DEFAULT_RUN_STEPS, 0, 0);
+    ExecuteProgram(addr, DEFAULT_RUN_STEPS, false, false);
 }
 
 
 
 void CPCSpimView::ExecuteProgram(mem_addr pc,
     int steps,
-    int display,
-    int cont_bkpt)
+    bool display,
+    bool cont_bkpt)
 {
     if (pc != 0)
     {
@@ -478,9 +478,9 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
 
         while (1)
         {
-			int continuable;
+            bool continuable;
 
-            if (0 != run_program(pc, steps, display, cont_bkpt, &continuable))
+            if (run_program(pc, steps, display, cont_bkpt, &continuable))
             {
                 UpdateStatusDisplay(TRUE);
                 HighlightCurrentInstruction();
@@ -493,7 +493,7 @@ void CPCSpimView::ExecuteProgram(mem_addr pc,
                 }
 
                 // Step over breakpoint
-                run_program(PC, 1, 0, 1, &continuable);
+                run_program(PC, 1, false, true, &continuable);
                 pc = PC;
             }
             else
@@ -554,7 +554,7 @@ void CPCSpimView::DisplayDataSegment(BOOL forceDisplay)
     ss_clear (&ss);
     format_data_segs (&ss);
 
-    data_modified = 0;
+    data_modified = false;
     char* buf2 = MakeCRLFValid(ss_to_string (&ss));
     int top_line = m_wndDataSeg.GetFirstVisibleLine();	// Remember window's top line
     m_wndDataSeg.SetWindowText(buf2);
@@ -579,7 +579,7 @@ void CPCSpimView::DisplayTextSegment(BOOL forceDisplay)
     ss_printf (&ss, "\n\tKERNEL\n");
     format_insts (&ss, K_TEXT_BOT, k_text_top);
 
-    text_modified = 0;
+    text_modified = false;
 
     char* buf2 = MakeCRLFValid(ss_to_string (&ss));
     int top_line = m_wndTextSeg.GetFirstVisibleLine();	// Remember window's top line
@@ -657,7 +657,7 @@ void CPCSpimView::OnSimulatorBreak()
     }
     else	// "Continue" mode
     {
-        ExecuteProgram(PC, DEFAULT_RUN_STEPS, 0, 0);
+        ExecuteProgram(PC, DEFAULT_RUN_STEPS, false, false);
     }
 }
 
@@ -705,10 +705,10 @@ void CPCSpimView::OnSimulatorReload()
     LoadFile(m_strCurFilename);
 }
 
-extern "C" int parse_error_occurred;	// Import from parser
+
 void CPCSpimView::LoadFile(LPCTSTR strFilename)
 {
-    int nLoaded;
+    bool fLoaded;
     CString strLoadMsg;
     int result;
 
@@ -732,7 +732,7 @@ l_TryLoad:
     }
 
     g_pView->SetMessageCapture(TRUE);
-    nLoaded = read_assembly_file((char*)strFilename);
+    fLoaded = read_assembly_file((char*)strFilename);
     strLoadMsg = g_pView->GetMessageCaptureBuf();
     g_pView->SetMessageCapture(FALSE);
 
@@ -740,7 +740,7 @@ l_TryLoad:
     strLoadMsg.TrimLeft();
     strLoadMsg.TrimRight();
 
-    if (nLoaded != 0)
+    if (!fLoaded)
     {
         strLoadMsg.Format("Could not open %s for reading.", (char*)strFilename);
         MessageBox(strLoadMsg, NULL, MB_OK | MB_ICONEXCLAMATION);
@@ -830,7 +830,7 @@ void CPCSpimView::ShowRunning()
 
 void CPCSpimView::OnSimulatorStep()
 {
-	ExecuteProgram(PC == 0 ? starting_address() : PC , 1, 1, 1);
+	ExecuteProgram(PC == 0 ? starting_address() : PC , 1, true, true);
 }
 
 
@@ -842,7 +842,7 @@ void CPCSpimView::OnSimulatorMultistep()
     if (IDCANCEL == dlg.DoModal())
         return;
 
-	ExecuteProgram(PC == 0 ? starting_address() : PC, (int)dlg.m_cSteps, 1, 1);
+	ExecuteProgram(PC == 0 ? starting_address() : PC, (int)dlg.m_cSteps, true, true);
 }
 
 
@@ -1131,21 +1131,21 @@ void CPCSpimView::ProcessCommandLine()
 
         if (!wcscmp (argv[i], L"-asm") || !wcscmp (argv[i], L"-a"))
         {
-            bare_machine = 0;
-            delayed_branches = 0;
-            delayed_loads = 0;
+            bare_machine = false;
+            delayed_branches = false;
+            delayed_loads = false;
         }
         else if (!wcscmp (argv[i], L"-bare") || !wcscmp (argv[i], L"-b"))
         {
-            bare_machine = 1;
-            delayed_branches = 1;
-            delayed_loads = 1;
-            quiet = 1;
+            bare_machine = true;
+            delayed_branches = true;
+            delayed_loads = true;
+            quiet = true;
         }
         else if (!wcscmp (argv[i], L"-delayed_branches") || !wcscmp (argv[i], L"-db"))
-        { delayed_branches = 1; }
+        { delayed_branches = true; }
         else if (!wcscmp (argv[i], L"-delayed_loads") || !wcscmp (argv[i], L"-dl"))
-        { delayed_loads = 1; }
+        { delayed_loads = true; }
         else if (!wcscmp (argv[i], L"-exception") || !wcscmp (argv[i], L"-e"))
         { g_fLoadExceptionHandler = 1; }
         else if (!wcscmp (argv[i], L"-noexception") || !wcscmp (argv[i], L"-ne"))
@@ -1162,17 +1162,17 @@ void CPCSpimView::ProcessCommandLine()
             g_fLoadExceptionHandler = 1;
         }
         else if (!wcscmp (argv[i], L"-mapped_io") || !wcscmp (argv[i], L"-mio"))
-        { mapped_io = 1; }
+        { mapped_io = true; }
         else if (!wcscmp (argv[i], L"-nomapped_io") || !wcscmp (argv[i], L"-nmio"))
-        { mapped_io = 0; }
+        { mapped_io = false; }
         else if (!wcscmp (argv[i], L"-pseudo") || !wcscmp (argv[i], L"-p"))
-        { accept_pseudo_insts = 1; }
+        { accept_pseudo_insts = true; }
         else if (!wcscmp (argv[i], L"-nopseudo") || !wcscmp (argv[i], L"-np"))
-        { accept_pseudo_insts = 0; }
+        { accept_pseudo_insts = false; }
         else if (!wcscmp (argv[i], L"-quiet") || !wcscmp (argv[i], L"-q"))
-        { quiet = 1; }
+        { quiet = true; }
         else if (!wcscmp (argv[i], L"-noquiet") || !wcscmp (argv[i], L"-nq"))
-        { quiet = 0; }
+        { quiet = false; }
         else if (!wcscmp (argv[i], L"-stext") || !wcscmp (argv[i], L"-st"))
         { initial_text_size = _wtoi (argv[++i]); }
         else if (!wcscmp (argv[i], L"-sdata") || !wcscmp (argv[i], L"-sd"))

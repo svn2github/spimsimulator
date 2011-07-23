@@ -466,11 +466,11 @@ typedef struct ll
 
 /* Exported Variables: */
 
-int data_dir;		/* Non-zero means item in data segment */
+bool data_dir;                  /* => item in data segment */
 
-int text_dir;		/* Non-zero means item in text segment */
+bool text_dir;                  /* => item in text segment */
 
-int parse_error_occurred; /* Non-zero => parse resulted in error */
+bool parse_error_occurred;      /* => parse resulted in error */
 
 
 /* Local functions: */
@@ -496,13 +496,13 @@ static void yywarn (char*);
 
 /* Local variables: */
 
-static int null_term;		/* Non-zero means string terminate by \0 */
+static bool null_term;		/* => string terminate by \0 */
 
 static void (*store_op) (void*); /* Function to store items in an EXPR_LST */
 
 static label_list *this_line_labels = NULL; /* List of label for curent line */
 
-static int noat_flag = 0;	/* Non-zero means program can use $1 */
+static bool noat_flag = 0;	/* => program can use $1 */
 
 static char *input_file_name;	/* Name of file being parsed */
 
@@ -512,7 +512,7 @@ static char *input_file_name;	/* Name of file being parsed */
 
 %%
 
-LINE:		{parse_error_occurred = 0; scanner_start_line (); } LBL_CMD ;
+LINE:		{parse_error_occurred = false; scanner_start_line (); } LBL_CMD ;
 
 LBL_CMD:	OPT_LBL CMD
 	|	CMD
@@ -1008,13 +1008,13 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    {
-		      if (!zero_imm ((imm_expr *)$4.p))
+		      if (!is_zero_imm ((imm_expr *)$4.p))
 			/* Use $at */
 			i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$4.p);
 		      r_type_inst ($1.i,
 				   $2.i,
 				   $3.i,
-				   (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
+				   (is_zero_imm ((imm_expr *)$4.p) ? 0 : 1));
 		    }
 		  free ((imm_expr *)$4.p);
 		}
@@ -1026,13 +1026,13 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    {
-		      if (!zero_imm ((imm_expr *)$3.p))
+		      if (!is_zero_imm ((imm_expr *)$3.p))
 			/* Use $at */
 			i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$3.p);
 		      r_type_inst ($1.i,
 				   $2.i,
 				   $2.i,
-				   (zero_imm ((imm_expr *)$3.p) ? 0 : 1));
+				   (is_zero_imm ((imm_expr *)$3.p) ? 0 : 1));
 		    }
 		  free ((imm_expr *)$3.p);
 		}
@@ -1061,7 +1061,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 				 : (fatal_error ("Bad SUB_OP\n"), 0),
 				 $2.i,
 				 $3.i,
-				 make_imm_expr (-val, NULL, 0));
+				 make_imm_expr (-val, NULL, false));
 		  free ((imm_expr *)$4.p);
 		}
 
@@ -1077,7 +1077,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 				 : (fatal_error ("Bad SUB_OP\n"), 0),
 				 $2.i,
 				 $2.i,
-				 make_imm_expr (-val, NULL, 0));
+				 make_imm_expr (-val, NULL, false));
 		  free ((imm_expr *)$3.p);
 		}
 
@@ -1099,7 +1099,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	DIV_POPS	DEST	SRC1	IMM32
 		{
-		  if (zero_imm ((imm_expr *)$4.p))
+		  if (is_zero_imm ((imm_expr *)$4.p))
 		    yyerror ("Divide by zero");
 		  else
 		    {
@@ -1117,7 +1117,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	MUL_POPS	DEST	SRC1	IMM32
 		{
-		  if (zero_imm ((imm_expr *)$4.p))
+		  if (is_zero_imm ((imm_expr *)$4.p))
 		    /* Optimize: n * 0 == 0 */
 		    i_type_inst_free (Y_ORI_OP, $2.i, 0, (imm_expr *)$4.p);
 		  else
@@ -1204,11 +1204,11 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	SET_LE_POPS	DEST	SRC1	IMM32
 		{
-		  if (!zero_imm ((imm_expr *)$4.p))
+		  if (!is_zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
 		    i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$4.p);
 		  set_le_inst ($1.i, $2.i, $3.i,
-			       (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
+			       (is_zero_imm ((imm_expr *)$4.p) ? 0 : 1));
 		  free ((imm_expr *)$4.p);
 		}
 
@@ -1220,11 +1220,11 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	SET_GT_POPS	DEST	SRC1	IMM32
 		{
-		  if (!zero_imm ((imm_expr *)$4.p))
+		  if (!is_zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
 		    i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$4.p);
 		  set_gt_inst ($1.i, $2.i, $3.i,
-			       (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
+			       (is_zero_imm ((imm_expr *)$4.p) ? 0 : 1));
 		  free ((imm_expr *)$4.p);
 		}
 
@@ -1237,11 +1237,11 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	SET_GE_POPS	DEST	SRC1	IMM32
 		{
-		  if (!zero_imm ((imm_expr *)$4.p))
+		  if (!is_zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
 		    i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$4.p);
 		  set_ge_inst ($1.i, $2.i, $3.i,
-			       (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
+			       (is_zero_imm ((imm_expr *)$4.p) ? 0 : 1));
 		  free ((imm_expr *)$4.p);
 		}
 
@@ -1253,11 +1253,11 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 	|	SET_EQ_POPS	DEST	SRC1	IMM32
 		{
-		  if (!zero_imm ((imm_expr *)$4.p))
+		  if (!is_zero_imm ((imm_expr *)$4.p))
 		    /* Use $at */
 		    i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$4.p);
 		  set_eq_inst ($1.i, $2.i, $3.i,
-			       (zero_imm ((imm_expr *)$4.p) ? 0 : 1));
+			       (is_zero_imm ((imm_expr *)$4.p) ? 0 : 1));
 		  free ((imm_expr *)$4.p);
 		}
 
@@ -1265,8 +1265,8 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 	|	BR_COP_OPS	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = opcode_is_nullified_branch ($1.i);
-		  int tf = opcode_is_true_branch ($1.i);
+                  int nd = opcode_is_nullified_branch ($1.i) ? 1 : 0;
+                  int tf = opcode_is_true_branch ($1.i) ? 1 : 0;
 		  i_type_inst_free ($1.i,
 				    cc_to_rt (0, nd, tf),
 				    BIN_RS ($1.i),
@@ -1276,8 +1276,8 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 	|	BR_COP_OPS	CC_REG	LABEL
 		{
 		  /* RS and RT fields contain information on test */
-		  int nd = opcode_is_nullified_branch ($1.i);
-		  int tf = opcode_is_true_branch ($1.i);
+                  int nd = opcode_is_nullified_branch ($1.i) ? 1 : 0;
+                  int tf = opcode_is_true_branch ($1.i) ? 1 : 0;
 		  i_type_inst_free ($1.i,
 				    cc_to_rt ($2.i, nd, tf),
 				    BIN_RS ($1.i),
@@ -1309,16 +1309,16 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		    yyerror ("Immediate form not allowed in bare machine");
 		  else
 		    {
-		      if (zero_imm ((imm_expr *)$3.p))
+		      if (is_zero_imm ((imm_expr *)$3.p))
 			i_type_inst ($1.i, $2.i,
-				     (zero_imm ((imm_expr *)$3.p) ? 0 : 1),
+				     (is_zero_imm ((imm_expr *)$3.p) ? 0 : 1),
 				     (imm_expr *)$4.p);
 		      else
 			{
 			  /* Use $at */
 			  i_type_inst (Y_ORI_OP, 1, 0, (imm_expr *)$3.p);
 			  i_type_inst ($1.i, $2.i,
-				       (zero_imm ((imm_expr *)$3.p) ? 0 : 1),
+				       (is_zero_imm ((imm_expr *)$3.p) ? 0 : 1),
 				       (imm_expr *)$4.p);
 			}
 		    }
@@ -2096,13 +2096,13 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 		  align_data ($2.i);
 		}
 
-	|	Y_ASCII_DIR {null_term = 0;}	STR_LST
+	|	Y_ASCII_DIR {null_term = false;}	STR_LST
 		{
 		  if (text_dir)
 		    yyerror ("Can't put data in text segment");
 		}
 
-	|	Y_ASCIIZ_DIR {null_term = 1;}	STR_LST
+	|	Y_ASCIIZ_DIR {null_term = true;}	STR_LST
 		{
 		  if (text_dir)
 		    yyerror ("Can't put data in text segment");
@@ -2136,16 +2136,15 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 
 	|	Y_DATA_DIR
-		{
-		  user_kernel_data_segment (0);
-		  data_dir = 1; text_dir = 0;
+		{user_kernel_data_segment (false);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		}
 
 	|	Y_DATA_DIR	Y_INT
 		{
-		  user_kernel_data_segment (0);
-		  data_dir = 1; text_dir = 0;
+		  user_kernel_data_segment (false);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		  set_data_pc ($2.i);
 		}
@@ -2153,15 +2152,15 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_K_DATA_DIR
 		{
-		  user_kernel_data_segment (1);
-		  data_dir = 1; text_dir = 0;
+                    user_kernel_data_segment (true);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		}
 
 	|	Y_K_DATA_DIR	Y_INT
 		{
-		  user_kernel_data_segment (1);
-		  data_dir = 1; text_dir = 0;
+                    user_kernel_data_segment (true);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		  set_data_pc ($2.i);
 		}
@@ -2244,9 +2243,7 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 	|	Y_LABEL_DIR	ID
 		{
 		  (void)record_label ((char*)$2.p,
-				      text_dir
-				      ? current_text_pc ()
-				      : current_data_pc (),
+				      text_dir ? current_text_pc () : current_data_pc (),
 				      1);
 		  free ((char*)$2.p);
 		}
@@ -2278,15 +2275,15 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_RDATA_DIR
 		{
-		  user_kernel_data_segment (0);
-		  data_dir = 1; text_dir = 0;
+		  user_kernel_data_segment (false);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		}
 
 	|	Y_RDATA_DIR	Y_INT
 		{
-		  user_kernel_data_segment (0);
-		  data_dir = 1; text_dir = 0;
+		  user_kernel_data_segment (false);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		  set_data_pc ($2.i);
 		}
@@ -2294,15 +2291,15 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_SDATA_DIR
 		{
-		  user_kernel_data_segment (0);
-		  data_dir = 1; text_dir = 0;
+		  user_kernel_data_segment (false);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		}
 
 	|	Y_SDATA_DIR	Y_INT
 		{
-		  user_kernel_data_segment (0);
-		  data_dir = 1; text_dir = 0;
+		  user_kernel_data_segment (false);
+		  data_dir = true; text_dir = false;
 		  enable_data_alignment ();
 		  set_data_pc ($2.i);
 		}
@@ -2311,9 +2308,9 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 	|	Y_SET_DIR	ID
 		{
 		  if (streq ((char*)$2.p, "noat"))
-		    noat_flag = 1;
+		    noat_flag = true;
 		  else if (streq ((char*)$2.p, "at"))
-		    noat_flag = 0;
+		    noat_flag = false;
 		}
 
 
@@ -2334,15 +2331,15 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_TEXT_DIR
 		{
-		  user_kernel_text_segment (0);
-		  data_dir = 0; text_dir = 1;
+		  user_kernel_text_segment (false);
+		  data_dir = false; text_dir = true;
 		  enable_data_alignment ();
 		}
 
 	|	Y_TEXT_DIR	Y_INT
 		{
-		  user_kernel_text_segment (0);
-		  data_dir = 0; text_dir = 1;
+		  user_kernel_text_segment (false);
+		  data_dir = false; text_dir = true;
 		  enable_data_alignment ();
 		  set_text_pc ($2.i);
 		}
@@ -2350,15 +2347,15 @@ ASM_DIRECTIVE:	Y_ALIAS_DIR	Y_REG	Y_REG
 
 	|	Y_K_TEXT_DIR
 		{
-		  user_kernel_text_segment (1);
-		  data_dir = 0; text_dir = 1;
+		  user_kernel_text_segment (true);
+		  data_dir = false; text_dir = true;
 		  enable_data_alignment ();
 		}
 
 	|	Y_K_TEXT_DIR	Y_INT
 		{
-		  user_kernel_text_segment (1);
-		  data_dir = 0; text_dir = 1;
+		  user_kernel_text_segment (true);
+		  data_dir = false; text_dir = true;
 		  enable_data_alignment ();
 		  set_text_pc ($2.i);
 		}
@@ -2457,28 +2454,28 @@ UIMM16:	IMM32
 
 IMM32:		ABS_ADDR
 		{
-		  $$.p = make_imm_expr ($1.i, NULL, 0);
+		  $$.p = make_imm_expr ($1.i, NULL, false);
 		}
 
 	|	'(' ABS_ADDR ')' '>' '>' Y_INT
 		{
-		  $$.p = make_imm_expr ($2.i >> $6.i, NULL, 0);
+		  $$.p = make_imm_expr ($2.i >> $6.i, NULL, false);
 		}
 
 	|	ID
 		{
-		  $$.p = make_imm_expr (0, (char*)$1.p, 0);
+		  $$.p = make_imm_expr (0, (char*)$1.p, false);
 		}
 
 	|	Y_ID '+' ABS_ADDR
 		{
-		  $$.p = make_imm_expr ($3.i, (char*)$1.p, 0);
+		  $$.p = make_imm_expr ($3.i, (char*)$1.p, false);
 		  free ((char*)$1.p);
 		}
 
 	|	Y_ID '-' ABS_ADDR
 		{
-		  $$.p = make_imm_expr (- $3.i, (char*)$1.p, 0);
+		  $$.p = make_imm_expr (- $3.i, (char*)$1.p, false);
 		  free ((char*)$1.p);
 		}
 	;
@@ -2547,7 +2544,7 @@ COP_REG:	Y_REG
 
 LABEL:		ID
 		{
-		  $$.p = make_imm_expr (-(int)current_text_pc (), (char*)$1.p, 1);
+		  $$.p = make_imm_expr (-(int)current_text_pc (), (char*)$1.p, true);
 		}
 
 
@@ -2875,8 +2872,8 @@ initialize_parser (char *file_name)
 {
   input_file_name = file_name;
   only_id = 0;
-  data_dir = 0;
-  text_dir = 1;
+  data_dir = false;
+  text_dir = true;
 }
 
 
@@ -2922,7 +2919,7 @@ check_uimm_range (imm_expr* expr, uint32 min, uint32 max)
 void
 yyerror (char *s)
 {
-  parse_error_occurred = 1;
+  parse_error_occurred = true;
   clear_labels ();
   yywarn (s);
 }

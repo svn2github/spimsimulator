@@ -47,8 +47,6 @@
 
 #include <afxtempl.h>		// MFC template classes
 
-extern "C"
-{
 #include "..\CPU\spim.h"
 #include "..\CPU\string-stream.h"
 #include "..\CPU\spim-utils.h"
@@ -57,7 +55,6 @@ extern "C"
 #include "..\CPU\reg.h"
 #include "..\CPU\mem.h"
 #include "..\CPU\scanner.h"
-}
 
 
 #ifdef STDAFX_CPP

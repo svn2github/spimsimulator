@@ -50,10 +50,10 @@ int *FWR;			/* is possible */
 reg_word CCR[4][32], CPR[4][32];
 
 instruction **text_seg;
-int text_modified;		/* Non-zero means text segment was written */
+bool text_modified;		/* => text segment was written */
 mem_addr text_top;
 mem_word *data_seg;
-int data_modified;		/* Non-zero means a data segment was written */
+bool data_modified;		/* => a data segment was written */
 short *data_seg_h;		/* Points to same vector as DATA_SEG */
 BYTE_TYPE *data_seg_b;		/* Ditto */
 mem_addr data_top;
@@ -181,8 +181,8 @@ make_memory (int text_size, int data_size, int data_limit,
   k_data_top = K_DATA_BOT + k_data_size;
   k_data_size_limit = k_data_limit;
 
-  text_modified = 1;
-  data_modified = 1;
+  text_modified = true;
+  data_modified = true;
 }
 
 
@@ -372,7 +372,7 @@ read_mem_word(mem_addr addr)
 void
 set_mem_inst(mem_addr addr, instruction* inst)
 {
-  text_modified = 1;
+  text_modified = true;
   if ((addr >= TEXT_BOT) && (addr < text_top) && !(addr & 0x3))
     text_seg [(addr - TEXT_BOT) >> 2] = inst;
   else if ((addr >= K_TEXT_BOT) && (addr < k_text_top) && !(addr & 0x3))
@@ -385,7 +385,7 @@ set_mem_inst(mem_addr addr, instruction* inst)
 void
 set_mem_byte(mem_addr addr, reg_word value)
 {
-  data_modified = 1;
+  data_modified = true;
   if ((addr >= DATA_BOT) && (addr < data_top))
     data_seg_b [addr - DATA_BOT] = (BYTE_TYPE) value;
   else if ((addr >= stack_bot) && (addr < STACK_TOP))
@@ -400,7 +400,7 @@ set_mem_byte(mem_addr addr, reg_word value)
 void
 set_mem_half(mem_addr addr, reg_word value)
 {
-  data_modified = 1;
+  data_modified = true;
   if ((addr >= DATA_BOT) && (addr < data_top) && !(addr & 0x1))
     data_seg_h [(addr - DATA_BOT) >> 1] = (short) value;
   else if ((addr >= stack_bot) && (addr < STACK_TOP) && !(addr & 0x1))
@@ -415,7 +415,7 @@ set_mem_half(mem_addr addr, reg_word value)
 void
 set_mem_word(mem_addr addr, reg_word value)
 {
-  data_modified = 1;
+  data_modified = true;
   if ((addr >= DATA_BOT) && (addr < data_top) && !(addr & 0x3))
     data_seg [(addr - DATA_BOT) >> 2] = (mem_word) value;
   else if ((addr >= stack_bot) && (addr < STACK_TOP) && !(addr & 0x3))
@@ -552,7 +552,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
     }
     text_seg [(addr - TEXT_BOT) >> 2] = inst_decode (tmp);
 
-    text_modified = 1;
+    text_modified = true;
   }
   else if (addr > data_top
 	   && addr < stack_bot
@@ -573,7 +573,7 @@ bad_mem_write (mem_addr addr, mem_word value, int mask)
     else
       RAISE_EXCEPTION (ExcCode_DBE, CP0_BadVAddr = addr)
 
-    data_modified = 1;
+    data_modified = true;
   }
   else if (MM_IO_BOT <= addr && addr <= MM_IO_TOP)
     write_memory_mapped_IO (addr, value);

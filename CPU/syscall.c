@@ -116,7 +116,7 @@ do_syscall ()
     case READ_STRING_SYSCALL:
       {
 	read_input ( (char *) mem_reference (R[REG_A0]), R[REG_A1]);
-	data_modified = 1;
+	data_modified = true;
 	break;
       }
 
@@ -125,7 +125,7 @@ do_syscall ()
 	mem_addr x = data_top;
 	expand_data (R[REG_A0]);
 	R[REG_RES] = x;
-	data_modified = 1;
+	data_modified = true;
 	break;
       }
 
@@ -170,7 +170,7 @@ do_syscall ()
 #else
 	R[REG_RES] = read(R[REG_A0], mem_reference (R[REG_A1]), R[REG_A2]);
 #endif
-	data_modified = 1;
+	data_modified = true;
 	break;
       }
 

@@ -238,18 +238,18 @@ void write_output (port, char *fmt, ...);
 
 /* Exported variables: */
 
-extern int bare_machine;	/* Non-zero => simulate bare machine */
-extern int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
-extern int delayed_branches;	/* Non-zero => simulate delayed branches */
-extern int delayed_loads;	/* Non-zero => simulate delayed loads */
-extern int quiet;		/* Non-zero => no warning messages */
-extern char *exception_file_name;/* File containing exception handler */
-extern int force_break;		/* Non-zero => stop interpreter loop  */
-extern int parser_error_occurred; /* Non-zero => parse resulted in error */
-extern int spim_return_value;	/* Value returned when spim exits */
+extern bool bare_machine;         /* => simulate bare machine */
+extern bool accept_pseudo_insts;  /* => parse pseudo instructions  */
+extern bool delayed_branches;     /* => simulate delayed branches */
+extern bool delayed_loads;        /* => simulate delayed loads */
+extern bool quiet;                /* => no warning messages */
+extern char *exception_file_name; /* File containing exception handler */
+extern bool force_break;          /* => stop interpreter loop  */
+extern bool parser_error_occurred; /* => parse resulted in error */
+extern int spim_return_value;     /* Value returned when spim exits */
 /* Actual type of structure pointed to depends on X/terminal interface */
 extern port message_out, console_out, console_in;
-extern int mapped_io;		/* Non-zero => activate memory-mapped IO */
+extern bool mapped_io;		/* => activate memory-mapped IO */
 extern int initial_text_size;
 extern int initial_data_size;
 extern mem_addr initial_data_limit;

@@ -62,7 +62,7 @@
 #include "syscall.h"
 #include "run.h"
 
-int force_break = 0;	/* For the execution env. to force an execution break */
+bool force_break = false;	/* For the execution env. to force an execution break */
 
 #ifdef _MSC_BUILD
 /* Disable MS VS warning about constant predicate in conditional. */
@@ -181,12 +181,12 @@ static int running_in_delay_slot = 0;
 
 
 /* Run the program stored in memory, starting at address PC for
-   STEPS_TO_RUN instruction executions.  If flag DISPLAY is non-zero, print
-   each instruction before it executes. Return non-zero if program's
+   STEPS_TO_RUN instruction executions.  If flag DISPLAY is true, print
+   each instruction before it executes. Return true if program's
    execution can continue. */
 
-int
-run_spim (mem_addr initial_PC, int steps_to_run, int display)
+bool
+run_spim (mem_addr initial_PC, int steps_to_run, bool display)
 {
   instruction *inst;
   static reg_word *delayed_load_addr1 = NULL, delayed_load_value1;
@@ -225,12 +225,12 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	  handle_exception ();
 	}
 
-      force_break = 0;
+      force_break = false;
       for (step = 0; step < step_size; step += 1)
 	{
 	  if (force_break)
 	    {
-	      return (1);
+              return true;
 	    }
 
 	  R[0] = 0;		/* Maintain invariant value */
@@ -267,14 +267,14 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	  else if (inst == NULL)
 	    {
 	      run_error ("Attempt to execute non-instruction at 0x%08x\n", PC);
-	      return (0);
+	      return false;
 	    }
 	  else if (EXPR (inst) != NULL
 		   && EXPR (inst)->symbol != NULL
 		   && EXPR (inst)->symbol->addr == 0)
 	    {
               run_error ("Instruction references undefined symbol at 0x%08x\n  %s", PC, inst_to_string(PC));
-	      return (0);
+	      return false;
 	    }
 
 	  if (display)
@@ -436,7 +436,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 	    case Y_BREAK_OP:
 	      if (RD (inst) == 1)
 		/* Debugger breakpoint */
-		RAISE_EXCEPTION (ExcCode_Bp, return (1))
+		RAISE_EXCEPTION (ExcCode_Bp, return true)
 	      else
 		RAISE_EXCEPTION (ExcCode_Bp, break);
 
@@ -1104,7 +1104,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
 
 	    case Y_SYSCALL_OP:
 	      if (!do_syscall ())
-		return (0);
+		return false;
 	      break;
 
 	    case Y_TEQ_OP:
@@ -1646,7 +1646,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, int display)
     }				/* End: for ( ; steps_to_run > 0 ... */
 
   /* Executed enought steps, return, but are able to continue. */
-  return (1);
+  return true;
 }
 
 

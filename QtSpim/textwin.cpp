@@ -59,7 +59,7 @@ void SpimView::DisplayTextSegments()
         te->insertHtml(windowContents);
         highlightInstruction(PC);
     }
-    text_modified = 0;
+    text_modified = false;
 }
 
 

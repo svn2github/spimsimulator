@@ -211,7 +211,7 @@ void CPCSpimApp::RunMessageLoop()
     {
         if (!PumpMessage())
         {
-            force_break = 1;
+            force_break = true;
             ::PostQuitMessage(0);
             break;
         }

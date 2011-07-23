@@ -117,11 +117,11 @@ void SpimView::readSettings()
 
 
     settings.beginGroup("Spim");
-    bare_machine = settings.value("BareMachine", 0).toInt();
-    accept_pseudo_insts = settings.value("AcceptPseudoInsts", 1).toInt();
-    delayed_branches = settings.value("DelayedBranches", 0).toInt();
-    delayed_loads = settings.value("DelayedLoads", 0).toInt();
-    mapped_io = settings.value("MappedIO", 0).toInt();
+    bare_machine = settings.value("BareMachine", 0).toBool();
+    accept_pseudo_insts = settings.value("AcceptPseudoInsts", 1).toBool();
+    delayed_branches = settings.value("DelayedBranches", 0).toBool();
+    delayed_loads = settings.value("DelayedLoads", 0).toBool();
+    mapped_io = settings.value("MappedIO", 0).toBool();
 
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
     st_exceptionHandlerFileName = settings.value("ExceptionHandlerFileName", 

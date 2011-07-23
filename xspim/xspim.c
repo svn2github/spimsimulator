@@ -92,13 +92,13 @@ typedef struct _AppResources
 /* Not local, but not export so all files don't need setjmp.h */
 jmp_buf spim_top_level_env; /* For ^C */
 
-int bare_machine;		/* Non-Zero => simulate bare machine */
-int delayed_branches;		/* Non-Zero => simulate delayed branches */
-int delayed_loads;		/* Non-Zero => simulate delayed loads */
-int accept_pseudo_insts;	/* Non-Zero => parse pseudo instructions  */
-int quiet;			/* Non-Zero => no warning messages */
+bool bare_machine;		/* => simulate bare machine */
+bool delayed_branches;		/* => simulate delayed branches */
+bool delayed_loads;		/* => simulate delayed loads */
+bool accept_pseudo_insts;	/* => parse pseudo instructions  */
+bool quiet;			/* => no warning messages */
 port message_out, console_out, console_in;
-int mapped_io;			/* Non-zero => activate memory-mapped IO */
+bool mapped_io;			/* => activate memory-mapped IO */
 int pipe_out;
 int spim_return_value;		/* Value returned when spim exits */
 
@@ -302,36 +302,36 @@ static Widget pane1;
 static void
 initialize (AppResources app_res)
 {
-  bare_machine = 0;
-  delayed_branches = 0;
-  delayed_loads = 0;
-  accept_pseudo_insts = 1;
+  bare_machine = false;
+  delayed_branches = false;
+  delayed_loads = false;
+  accept_pseudo_insts = true;
   quiet = 0;
 
   if (app_res.bare)
     {
-      bare_machine = 1;
-      delayed_branches = 1;
-      delayed_loads = 1;
+      bare_machine = true;
+      delayed_branches = true;
+      delayed_loads = true;
     }
 
   if (app_res.asmm)
     {
-      bare_machine = 0;
-      delayed_branches = 0;
-      delayed_loads = 0;
+      bare_machine = false;
+      delayed_branches = false;
+      delayed_loads = false;
     }
 
   if (app_res.delayed_branches)
-    delayed_branches = 1;
+    delayed_branches = true;
 
   if (app_res.delayed_loads)
-    delayed_loads = 1;
+    delayed_loads = true;
 
   if (app_res.pseudo)
-    accept_pseudo_insts = 1;
+    accept_pseudo_insts = true;
   else
-    accept_pseudo_insts = 0;
+    accept_pseudo_insts = false;
 
   if (app_res.exception)
     load_exception_handler = 1;
@@ -350,9 +350,9 @@ initialize (AppResources app_res)
     quiet = 0;
 
   if (app_res.mapped_io)
-    mapped_io = 1;
+    mapped_io = true;
   else
-    mapped_io = 0;
+    mapped_io = false;
 
   if (app_res.filename)
     file_name = app_res.filename;
@@ -546,14 +546,12 @@ popup_console (Widget w, XtPointer client_data, XtPointer call_data)
 void
 read_file (char *name)
 {
-  int error_flag;
+  bool error_flag = false;
 
-  if (*name == '\0')
-    error_flag = 1;
-  else
+  if (*name != '\0')
     error_flag = read_assembly_file (name);
 
-  if (!error_flag)
+  if (error_flag)
     {
       PC = find_symbol_address (DEFAULT_RUN_LOCATION);
       redisplay_text ();
@@ -575,9 +573,9 @@ start_program (mem_addr addr)
 
 
 void
-execute_program (mem_addr pc, int steps, int display, int cont_bkpt)
+execute_program (mem_addr pc, int steps, bool display, bool cont_bkpt)
 {
-  int continuable;
+  bool continuable;
   if (!setjmp (spim_top_level_env))
     {
       char *undefs = undefined_symbol_string ();
@@ -662,7 +660,7 @@ redisplay_text ()
   XtSetArg (args[1], XtNlength, ss_length (&ss));
   XtSetValues (text_window, args, TWO);
 
-  text_modified = 0;
+  text_modified = false;
 }
 
 
@@ -739,7 +737,7 @@ display_data_seg ()
   XtSetArg (args[1], XtNlength, ss_length (&ss));
   XtSetValues (data_window, args, TWO);
 
-  data_modified = 0;
+  data_modified = false;
 }
 
 

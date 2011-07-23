@@ -289,7 +289,7 @@ void SpimView::sim_Run()
 {
     initializePCAndStack();
 
-    force_break = 0;
+    force_break = false;
     updateStatus(RUNNING);
     while (!force_break && programStatus == RUNNING)
     {
@@ -335,14 +335,14 @@ void  SpimView::updateStatus(PROGSTATE status)
 
 void SpimView::sim_Pause()
 {
-    force_break = 1;
+    force_break = true;
     updateStatus(PAUSED);
 }
 
 
 void SpimView::sim_Stop()
 {
-    force_break = 1;
+    force_break = true;
     updateStatus(STOPPED);
 }
 
@@ -351,7 +351,7 @@ void SpimView::sim_SingleStep()
 {
     initializePCAndStack();
 
-    force_break = 0;
+    force_break = false;
     updateStatus(SINGLESTEP);
     executeProgram(PC, 1, false, false);
 }
@@ -381,8 +381,7 @@ void SpimView::initStack()
 
 void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkpt)
 {
-    int continuable = 0;
-
+    bool continuable;
     bool breakpointEncountered = run_program(pc, steps, display, contBkpt, &continuable);
 
     highlightInstruction(PC);
@@ -415,7 +414,7 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
 
 void SpimView::continueBreakpoint()
 {
-    int continuable;
+    bool continuable;
     run_program(PC, 1, false, true, &continuable); // Execute instruction replaced by breakpoint
     highlightInstruction(PC);
     UpdateDataDisplay();
@@ -425,7 +424,7 @@ void SpimView::continueBreakpoint()
 
 void SpimView::singleStepBreakpoint()
 {
-    int continuable;
+    bool continuable;
     run_program(PC, 1, false, true, &continuable); // Execute instruction replaced by breakpoint
     highlightInstruction(PC);
     UpdateDataDisplay();

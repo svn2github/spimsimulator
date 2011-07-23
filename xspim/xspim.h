@@ -44,7 +44,7 @@
 /* Exported functions (also see spim.h): */
 
 void clear_console_display ();
-void execute_program (mem_addr pc, int steps, int display, int cont_bkpt);
+void execute_program (mem_addr pc, int steps, bool display, bool cont_bkpt);
 void popup_console (Widget w, XtPointer client_data, XtPointer call_data);
 void read_file (char *name);
 void redisplay_data ();

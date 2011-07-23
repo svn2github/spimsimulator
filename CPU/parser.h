@@ -43,8 +43,8 @@ int yyparse ();
 
 /* Exported Variables: */
 
-extern int data_dir;		/* Non-zero means item in data segment */
+extern bool data_dir;		/* => item in data segment */
 
-extern int text_dir;		/* Non-zero means item in text segment */
+extern bool text_dir;		/* => item in text segment */
 
-extern int parse_error_occurred;  /* Non-zero => parse resulted in error */
+extern bool parse_error_occurred; /* => parse resulted in error */
