@@ -359,8 +359,9 @@ void regTextEdit::changeValue()
             }
             else
             {
-                int newIntRegVal = val.toInt(&ok, base); // Read integer (hex); treat as float
-                newRegVal = *(float*)&newIntRegVal;
+                int newIntRegVal = val.toInt(&ok, base); // Read integer; treat bits -- not value -- as float
+                void* ptr = &newIntRegVal;
+                newRegVal = *(float*)ptr;
             }
 
             if (ok)
@@ -383,8 +384,9 @@ void regTextEdit::changeValue()
                 }
                 else
                 {
-                    qlonglong newIntRegVal = val.toLongLong(&ok, base); // Read integer (hex); treat as double
-                    newRegVal = *(double*)&newIntRegVal;
+                    qlonglong newIntRegVal = val.toLongLong(&ok, base); // Read integer; treat bits -- not value -- as double
+                    void* ptr = &newIntRegVal;
+                    newRegVal = *(double*)ptr;
                 }
 
                 if (ok)

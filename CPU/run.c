@@ -1579,7 +1579,7 @@ run_spim (mem_addr initial_PC, int steps_to_run, bool display)
 	    case Y_SDC1_OP:
 	      {
 		double val = FPR_D (RT (inst));
-		reg_word *vp = (reg_word *) &val;
+		reg_word *vp = (reg_word*)&val;
 		mem_addr addr = R[BASE (inst)] + IOFFSET (inst);
 		if ((addr & 0x3) != 0)
 		  RAISE_EXCEPTION (ExcCode_AdEL, CP0_BadVAddr = addr);

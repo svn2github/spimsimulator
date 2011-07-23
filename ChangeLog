@@ -1,5 +1,8 @@
 2011-07-23    <Jim@X64PC>
 
+	* QtSpim/regwin.cpp (changeValue):
+	Suppress compiler warning.
+
 	* QtSpim/QtSpim.pro:
 	Generate compressed helpfile and help collection separately to
 	work around bug in buildhelpcollection's -o argument.
