@@ -212,7 +212,8 @@ Q_OBJECT
     QString formatUserStack();
     QString formatKernelDataSeg();
     QString formatMemoryContents(mem_addr from, mem_addr to);
-    QString formatPartialQuadWord (mem_addr addr);
+    QString formatPartialQuadWord(mem_addr addr);
+    QString formatAsChars(mem_addr from, mem_addr to);
 
 
     //

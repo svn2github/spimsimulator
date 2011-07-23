@@ -42,6 +42,11 @@
 #include <QScrollBar>
 
 
+#define WORD_WIDTH_10 10
+#define WORD_WIDTH_16 8
+#define WORD_WIDTH_DEFAULT 32
+
+
 //
 // Data segment window
 //
@@ -135,7 +140,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
 	{
             /* Block of 4 or more zero memory words: */
             windowContents += QString("[") % formatAddress(i)
-                % QString("]..[") % formatAddress(i + (uint32) j * BYTES_PER_WORD)
+                % QString("]..[") % formatAddress(i + (uint32) j * BYTES_PER_WORD - 1)
                 % QString("]") % nnbsp(2) % QString("00000000<br>");
 
             i = i + (uint32) j * BYTES_PER_WORD;
@@ -155,13 +160,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
 	    }
             while (i % BYTES_PER_LINE != 0);
 
-            windowContents += nnbsp(2);
-            for ( ; j < i; j+= 1)
-            {
-                val = read_mem_byte(j);
-                windowContents += formatChar(val) % " ";
-            }
-            windowContents += "<br>";
+            windowContents += nnbsp(2) % formatAsChars(j, i) % QString("<br>");
 	}
     }
     return windowContents;
@@ -176,13 +175,40 @@ QString SpimView::formatPartialQuadWord(mem_addr addr)
     {
         windowContents += QString("[") % formatAddress(addr) % QString("]") % nnbsp(2);
 
-        for (; (addr % BYTES_PER_LINE) != 0; addr += BYTES_PER_WORD)
+        mem_addr a;
+        for (a = addr; (a % BYTES_PER_LINE) != 0; a += BYTES_PER_WORD)
 	{
-            mem_word val = read_mem_word (addr);
+            mem_word val = read_mem_word(a);
             windowContents += nnbsp(2) % formatWord(val, st_dataSegmentDisplayBase);
 	}
 
-        windowContents += "<br>";
+        windowContents += formatAsChars(addr, a) % QString("<br>");
+    }
+
+    return windowContents;
+}
+
+
+QString SpimView::formatAsChars(mem_addr from, mem_addr to)
+{
+    QString windowContents = nnbsp(2);
+
+    if (to - from != BYTES_PER_LINE)
+    {
+        int missing = (BYTES_PER_LINE - (to - from)) / BYTES_PER_WORD;
+        windowContents += nnbsp(2);
+        switch (st_dataSegmentDisplayBase)
+        {
+        case 10: windowContents += nnbsp(missing * (WORD_WIDTH_10 + 2)); break;
+        case 16: windowContents += nnbsp(missing * (WORD_WIDTH_16 + 2)); break;
+        default: windowContents += nnbsp(missing * (WORD_WIDTH_DEFAULT + 2)); break;
+        }
+    }
+
+    for (mem_addr a = from; a < to; a += 1)
+    {
+        mem_word val = read_mem_byte(a);
+        windowContents += formatChar(val) % " ";
     }
 
     return windowContents;
@@ -204,10 +230,9 @@ QString formatWord(mem_word word, int base)
     int width = 0;
     switch (base)
     {
-    case 8: width = 11; break;
-    case 10: width = 10; break;
-    case 16: width = 8; break;
-    default: width = 32; break;
+    case 10: width = WORD_WIDTH_10; break;
+    case 16: width = WORD_WIDTH_16; break;
+    default: width = WORD_WIDTH_DEFAULT; break;
     }
     QString str = QString::number(word, base);
     str.remove(0, str.length() - width); // Negative hex number proceeded by 0xffffffff
@@ -217,7 +242,30 @@ QString formatWord(mem_word word, int base)
 
 QString formatChar(int chr)
 {
-    return QString(QChar(chr));
+    if (chr == ' ')
+    {
+        return QString("&nbsp;");
+    }
+    else if (chr == '<')
+    {
+        return QString("&lt;");
+    }
+    else if (chr == '>')
+    {
+        return QString("&gt;");
+    }
+    else if (chr == '&')
+    {
+        return QString("&amp;");
+    }
+    else if (chr > ' ' && chr <= '~') // Printable ascii chars
+    {
+        return QString(QChar(chr));
+    }
+    else
+    {
+        return QString(QChar('.'));
+    }
 }
 
 
