@@ -554,7 +554,7 @@
   </action>
   <action name="action_Help_AboutSPIM">
    <property name="text">
-    <string>About SPIM</string>
+    <string>About QtSpim</string>
    </property>
   </action>
   <action name="action_File_Print">
