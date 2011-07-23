@@ -272,3 +272,10 @@ void textTextEdit::hideEvent(QHideEvent* event)
     Window->ui->action_Win_TextSegment->setChecked(false);
     event->accept();
 }
+
+
+void textTextEdit::showEvent(QShowEvent* event)
+{
+    Window->ui->action_Win_TextSegment->setChecked(true);
+    event->accept();
+}

@@ -558,3 +558,17 @@ void regTextEdit::hideEvent(QHideEvent* event)
     }
     event->accept();
 }
+
+
+void regTextEdit::showEvent(QShowEvent* event)
+{
+    if (isIntRegs)
+    {
+        Window->ui->action_Win_IntRegisters->setChecked(true);
+    }
+    else
+    {
+        Window->ui->action_Win_FPRegisters->setChecked(true);
+    }
+    event->accept();
+}

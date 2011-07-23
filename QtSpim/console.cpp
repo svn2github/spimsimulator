@@ -129,3 +129,10 @@ void Console::hideEvent(QHideEvent* event)
     Window->ui->action_Win_Console->setChecked(false);
     event->accept();
 }
+
+
+void Console::showEvent(QShowEvent* event)
+{
+    Window->ui->action_Win_Console->setChecked(true);
+    event->accept();
+}

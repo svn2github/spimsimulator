@@ -74,7 +74,6 @@ SpimView::SpimView(QWidget *parent) :
 
     // Create a console
     //
-    SpimConsole->show();
     ui->action_Win_Console->setChecked(true);
 
     programStatus = IDLE;

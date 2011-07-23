@@ -378,3 +378,10 @@ void dataTextEdit::hideEvent(QHideEvent* event)
     Window->ui->action_Win_DataSegment->setChecked(false);
     event->accept();
 }
+
+
+void dataTextEdit::showEvent(QShowEvent* event)
+{
+    Window->ui->action_Win_DataSegment->setChecked(true);
+    event->accept();
+}
