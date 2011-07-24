@@ -1,6 +1,6 @@
 Package: qtspim
 Version: 9.1
-Architecture: i386
+Architecture: amd64
 Section: devel
 Priority: extra
 Homepage: http://spimsimulator.sourceforge.net/

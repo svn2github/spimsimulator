@@ -10,6 +10,7 @@
 ARCH=`arch`
 case $ARCH in
     i386 | i686) ARCH="i386";;
+    x86_64) ARCH=amd64;;
 esac
 
 rm -fr Setup/debian
