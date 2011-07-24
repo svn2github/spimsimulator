@@ -1,9 +1,9 @@
 Package: qtspim
-Version: 9.0
+Version: 9.1
 Architecture: i386
 Section: devel
 Priority: extra
-Homepage: http://www.cs.wisc.edu/~larus/SPIM.html
+Homepage: http://spimsimulator.sourceforge.net/
 Maintainer: James Larus <spim@larusstone.org>
 Depends: libqtcore4 (>= 4.6), libqtgui4 (>= 4.6), qt4-dev-tools, libc6
 Description: The QtSpim program is a self-contained simulator

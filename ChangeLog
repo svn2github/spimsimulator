@@ -1,3 +1,10 @@
+2011-07-24  Jim Larus  <jim@linuxPC>
+
+	* Version 9.1.3
+
+	* bin/release-debian:
+	Parameterize for x64 linux.
+
 2011-07-23  Jim Larus  <jim@linux64>
 
 	* xspim/buttons.c:
