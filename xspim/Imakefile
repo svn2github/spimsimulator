@@ -101,6 +101,7 @@ YFLAGS = -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
 DEPLIBS = XawClientDepLibs
 LOCALLIBS = XawClientLibs
 
+CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall -pedantic -Wextra -Wunused -Wno-write-strings -x c++
 CDEBUGFLAGS = -g
 
 INCLUDES = -I. -I$(CPU_DIR)

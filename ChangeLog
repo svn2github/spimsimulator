@@ -1,3 +1,8 @@
+2011-07-23  Jim Larus  <jim@linux64>
+
+	* xspim/buttons.c:
+	Changes to satisfy C++'s stricter typing rules.
+
 2011-07-23    <Jim@X64PC>
 
 	* QtSpim/menu.cpp (help_AboutSPIM) [Sergio Barrachina Mir <barrachi@icc.uji.es>]:

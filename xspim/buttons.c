@@ -156,7 +156,7 @@ static void warp_to_second_dialog (Widget widget, XEvent *event,
 /* Local variables: */
 
 static Widget breakpointButton;
-static void (*confirmAction) () = noop;
+static void (*confirmAction) (Widget w, XtPointer client_data, XtPointer call_data) = (void (*)(_WidgetRec*, void*, void*))noop;
 static char *program_file_name = NULL;	/* Retain last file's name. */
 static char *command_line = NULL;	/* argv */
 
@@ -340,7 +340,7 @@ load_prompt (Widget button, XtPointer client_data, XtPointer call_data)
 			  (XtPointer) dialog);
     }
 
-  confirmAction =  read_assm_file_action;
+  confirmAction = read_assm_file_action;
   XtPopup (load_popup, XtGrabNone);
 }
 
@@ -383,13 +383,13 @@ run_prompt (Widget button, XtPointer client_data, XtPointer call_data)
       run_popup = popup_two_field_dialog (button, "run program",
 					 "starting address:", sa,
 					 "args:", command_line,
-					 "ok", run_program_action,
+					 "ok", (void (*)()) run_program_action,
 					 NULL, NULL,
 					 &run_field1_text, &run_field2_text);
       XtAddCallback (run_popup, XtNdestroyCallback, run_prompt_destroyed,
                      (XtPointer) 0);
     }
-  confirmAction =  run_program_action;
+  confirmAction = run_program_action;
   XtPopup (run_popup, XtGrabNone);
 }
 
@@ -442,13 +442,13 @@ step_prompt (Widget button, XtPointer client_data, XtPointer call_data)
 	step_size = str_copy ("1");
       step_popup = popup_one_field_dialog (button, "step program",
 					  "number of steps:", step_size,
-					  "step", step_program_action,
-					  "continue", step_continue_action,
+					  "step", (void (*)())step_program_action,
+					  "continue", (void (*)())step_continue_action,
 					  &step_field1_text);
       XtAddCallback (step_popup, XtNdestroyCallback, step_prompt_destroyed,
                      (XtPointer) 0);
     }
-  confirmAction =  step_program_action;
+  confirmAction = step_program_action;
   XtPopup (step_popup, XtGrabNone);
 }
 
@@ -611,7 +611,7 @@ set_value_prompt (Widget button, XtPointer client_data, XtPointer call_data)
       set_value_popup = popup_two_field_dialog (button, "set value",
 					   "register/location:", "",
 					   "value:", "",
-					   "set", parse_set_value,
+					   "set", (void (*)())parse_set_value,
 					   NULL, NULL,
 					   &set_field1_text, &set_field2_text);
       XtAddCallback (set_value_popup, XtNdestroyCallback,
@@ -732,7 +732,7 @@ print_mem_prompt (Widget button, XtPointer client_data, XtPointer call_data)
       print_popup = popup_two_field_dialog (XtParent (button), "print memory",
 					"from", "",
 					"to", "",
-					"print", parse_print_value,
+					"print", (void (*)())parse_print_value,
 					NULL, NULL,
 					&print_field1_text,
 					&print_field2_text);
@@ -1073,7 +1073,7 @@ destroy_popup_prompt (Widget w, XtPointer client_data, XtPointer call_data)
 {
   Widget popup = XtParent ((Widget) client_data);
 
-  confirmAction = noop;
+  confirmAction = (void (*)(_WidgetRec*, void*, void*))noop;
   XtDestroyWidget (popup);
 }
 
@@ -1130,13 +1130,13 @@ popup_one_field_dialog (Widget button, String name,
   XtAppAddActions (app_context, action_table, XtNumber (action_table));
 
   button1 = XtCreateManagedWidget (action1_name, commandWidgetClass, form, args, ONE);
-  XtAddCallback (button1, XtNcallback, action1, (XtPointer) form);
+  XtAddCallback (button1, XtNcallback, (void (*)(_WidgetRec*, void*, void*))action1, (XtPointer) form);
 
   if (action2 != NULL)
     {
       XtSetArg (args[0], XtNfromHoriz, button1);
       button2 = XtCreateManagedWidget (action2_name, commandWidgetClass, form, args, ONE);
-      XtAddCallback (button2, XtNcallback, action2, (XtPointer) form);
+      XtAddCallback (button2, XtNcallback, (void (*)(_WidgetRec*, void*, void*))action2, (XtPointer) form);
     }
 
   XtSetArg (args[0], XtNfromHoriz, action2 == NULL ? button1 : button2);
@@ -1215,7 +1215,7 @@ popup_two_field_dialog (Widget button, String name,
   XtSetArg (args[0], XtNfromVert, *field2_text);
   button1 = XtCreateManagedWidget (action1_name, commandWidgetClass, form,
 				   args, ONE);
-  XtAddCallback (button1, XtNcallback, action1, (XtPointer) form);
+  XtAddCallback (button1, XtNcallback, (void (*)(_WidgetRec*, void*, void*))action1, (XtPointer) form);
 
   if (action2 != NULL)
     {
@@ -1223,7 +1223,7 @@ popup_two_field_dialog (Widget button, String name,
       XtSetArg (args[1], XtNfromVert, *field2_text);
       button2 = XtCreateManagedWidget (action2_name, commandWidgetClass, form,
 				       args, TWO);
-      XtAddCallback (button2, XtNcallback, action2, (XtPointer) form);
+      XtAddCallback (button2, XtNcallback, (void (*)(_WidgetRec*, void*, void*))action2, (XtPointer) form);
     }
 
   XtSetArg (args[0], XtNfromHoriz, action2 == NULL ? button1 : button2);
