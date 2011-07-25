@@ -109,8 +109,11 @@ native on Linux.
 
 It is necessary to build spim and xspim, as they are only distributed as source.
 
-   1. Download either the file http://www.cs.wisc.edu/~larus/SPIM/spim.tar.Z or
-   http://www.cs.wisc.edu/~larus/SPIM/spim.tar.gz.
+   1. Download the source for spimsimulator from sourceforge
+   (https://sourceforge.net/projects/spimsimulator/), either through Subversion from the
+   spimsimulator repository (http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/) or
+   by downloading a tarball
+   (http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/?view=tar).
 
    2. Decompress the file, using either the program uncompress for the first file or gzip for
       the second file:
@@ -199,4 +202,4 @@ Cygwin port of the GNU tools (see www.cygwin.com).
 I generally release new version of SPIM once a year, before a semester boundary (late August or
 early January).  The new version are available on:
 
-		www.cs.wisc.edu/~larus/spim.html
+		https://sourceforge.net/projects/spimsimulator/

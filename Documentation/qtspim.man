@@ -14,7 +14,7 @@ programs and contains a debugger and interface to a few operating system service
 QtSpim currently has no command-line options. All parameters are set in the program.
 
 .SH "SEE ALSO"
-http://www.cs.wisc.edu/~larus/SPIM.html
+http://spimsimulator.sourceforge.net/
 .br
 The help documentation include with the program includes a brief description of the user
 interface and an extensive description of the MIPS instruction set and assembly language

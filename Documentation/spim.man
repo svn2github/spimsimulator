@@ -102,7 +102,7 @@ on systems using a MIPS processors.
 .SH "SEE ALSO"
 xspim(1), qtspim(1)
 .br
-http://www.cs.wisc.edu/~larus/SPIM.html
+http://spimsimulator.sourceforge.net/
 
 .SH AUTHOR
 James R. Larus <spim@larusstone.org>
