@@ -12,70 +12,49 @@
 <body>
 
 <h2><a name="older">Older Versions of SPIM</a></h2>
-<strong>The information on this page is for the older versions of <em>Spim</em>. 
-Please move </strong><i><strong>QtSpim</strong></i><strong> instead.<br />
+<strong>The information is about older versions of <em>Spim</em>. 
+Don&#39;t use them! Switch to </strong><i><strong>QtSpim</strong></i><strong> instead.<br />
 </strong><br />
-<table>
-	<tr>
-		<th colspan="4"><strong>Most Recent Versions of SPIM</strong> </th>
-	</tr>
-	<tr>
-		<td><b>Platform</b></td>
-		<td><b>Program</b></td>
-		<td><b>Form</b></td>
-		<td><b>File</b></td>
-	</tr>
-	<tr>
-		<td>Unix, Linux,<br />
-		Mac OS X</td>
-		<td><i>spim<br />
-		xspim</i></td>
-		<td>Source code</td>
-		<td>
-		<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">
-		http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/</a></td>
-	</tr>
-	<tr>
-		<td rowspan="2">Microsoft Windows<p>(Spim 7.0 and later versions no longer 
-		run on Windows 95/98. Use version 6.5 or earlier.)</p>
-		</td>
-		<td rowspan="2"><i>PCSpim</i></td>
-		<td>Executable</td>
-		<td>
-		<a href="http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download">
-		http://sourceforge.net/projects/spimsimulator/files/PCSpim_9.0.zip/download
-		</a></td>
-	</tr>
-	<tr>
-		<td>Source code</td>
-		<td>
-		<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">
-		http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/</a></td>
-	</tr>
-</table>
+<br />
+Older versions of the various simulators are in the BoneYard directory of the 
+SourceForge repository:
+<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/BoneYard/">
+http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/BoneYard/</a>. 
+Some of the versions are ready to run, but many need to be compiled.
 <ul>
+	<li>
+	<p>To run <i>PCspim</i> for Microsoft Windows, download the PCSpim.zip file 
+	from the BoneYard directory, 
+	unzip it, and click on <i>setup.exe</i>. Source for the Microsoft Windows version (<i>PCspim</i>) is available in 
+	the <a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">SourceForge repository</a>. </p>
+	</li>
 	<li>
 	<p>To run <em>spim</em> or <i>xspim</i> on a Unix, Linux, or Mac OS X system, 
 	get the source code from the
 	<a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">SourceForge 
-	repository</a> and compile it for your system.</p>
-	</li>
-	<li>
-	<p>To run <i>PCspim</i> for Microsoft Windows, download the PCSpim.zip file 
-	from <a href="https://sourceforge.net/projects/spimsimulator/files/">https://sourceforge.net/projects/spimsimulator/files/</a>, 
-	unzip it, and click on <i>setup.exe</i>.</p>
-	</li>
-	<li>
-	<p>Source for the Microsoft Windows version (<i>PCspim</i>) is available in 
-	the <a href="http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/">
-	SourceForge repository</a>. </p>
+	repository</a> and compile it for your system.&nbsp;</p>
 	</li>
 	<li>
 	<p>There is no precompiled Mac version of <em>Spim</em> (but there is a <em>
-	QtSpim</em> version). However, <i>xspim</i> compiles and runs on Mac OS X, if 
+	QtSpim</em> version). However, <i>xspim</i> compiles and runs on Mac OS X if 
 	you can find a way to install the Xaw library.</p>
 	</li>
 </ul>
+<p>Versions of <em>Spim</em>
+
+ before 7.0 implemented the MIPS-I instruction 
+set used on the MIPS R2000/R3000 computers. This architecture is obsolete (though, 
+never surpassed for its simplicity and elegance). <em>Spim</em>
+
+ now supports the more 
+modern MIPS32 architecture, which is the MIPS-I instruction set augmented with a 
+large number of occasionally useful instructions. MIPS code from earlier versions 
+of SPIM should run without changes, <span class="style1">
+except</span>
+ code that handles exceptions and 
+interrupts. This part of the architecture changed over time (and was poorly implemented 
+in earlier versions of <em>Spim</em>). This type of code will need to be updated. 
+Examples of new exception handling are in the files: exceptions.s and Tests/tt.io.s.</p>
 <hr />
 <h2><a name="installing">Installing Older Versions of SPIM</a></h2>
 <h3>Microsoft Windows</h3>

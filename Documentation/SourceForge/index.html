@@ -5,6 +5,15 @@
 <title>SPIM MIPS Simulator</title>
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type"/>
 <link href="style.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+.style2 {
+	text-align: center;
+	font-size: x-large;
+	background-color: #00FF00;
+	color: #000000;
+	width: 65%;
+}
+</style>
 </head>
 
 <body>
@@ -62,30 +71,10 @@ system page tables.) The MIPS architecture has several variants that differ in v
 ways (e.g., the MIPS64 architecture supports 64-bit integers and addresses), which 
 means that <em>Spim</em>
 
- will not run programs compiled for all MIPS processors. MIPS 
-compilers also generate a number of assembler directives that <em>Spim</em>
+ will not run programs for all MIPS processors.</p>
+	<p><em>Spim</em>
 
- cannot 
-process. These directives usually can be safely ignored.</p>
-<p>Versions of <em>Spim</em>
-
- before 7.0 implemented the MIPS-I instruction 
-set used on the MIPS R2000/R3000 computers. This architecture is obsolete (though, 
-never surpassed for its simplicity and elegance). <em>Spim</em>
-
- now supports the more 
-modern MIPS32 architecture, which is the MIPS-I instruction set augmented with a 
-large number of occasionally useful instructions. MIPS code from earlier versions 
-of SPIM should run without changes, <span class="style1">
-except</span>
- code that handles exceptions and 
-interrupts. This part of the architecture changed over time (and was poorly implemented 
-in earlier versions of <em>Spim</em>). This type of code will need to be updated. 
-Examples of new exception handling are in the files: exceptions.s and Tests/tt.io.s.</p>
-<p><em>Spim</em>
-
- comes with complete source code and documentation. It also include 
-a test suite.</p>
+    comes with complete source code and documentation.</p>
 <p><em>Spim</em>
 
  implements both a terminal and windows interfaces. On Microsoft Windows, 
@@ -95,23 +84,12 @@ Linux, and Mac OS X, the s<em>pim</em>
 and the <i>QtSpim</i> program provides the windowing interface. The older 
 programs <em>xspim</em> and <em>PCSpim</em> provide window interfaces for these 
 systems as well.</p>
+	<p class="style2">
+	<a href="https://sourceforge.net/projects/spimsimulator/files/https://sourceforge.net/projects/spimsimulator/files/">
+	<strong>Download SPIM</strong></a></p>
 </div>
-<hr /><h2><a name="birthday">Happy Birthday SPIM!</a></h2>
-<p><em>Spim</em>
-
- turned 20 years old January 2010. I wrote the original version of
-<em>Spim</em>
-
- as the target machine for my first compiler class at University of Wisconsin, 
-Madison in the spring semester 1990. <em>Spim</em>
-
- is likely older than most of the 
-students currently using it!</p>
-<p>As a birthday present, the 8.0 version of <em>Spim</em>
-
- has a simpler, less restrictive 
-license, namely the standard BSD license.</p>
-<hr /><h2><a name="qtspim">QtSpim</a></h2>
+<hr />
+<h2><a name="qtspim">QtSpim</a></h2>
 <p>The newest version of <em>Spim</em>
 
  is called <i>QtSpim</i>, and unlike all of 
@@ -164,6 +142,22 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 <p>&nbsp;The DOS and Windows ports were done by David A. Carley and are copyrighted 
 in part by Morgan Kaufmann Publishers.</p>
+
+<hr /><h2><a name="birthday">Happy Birthday SPIM!</a></h2>
+<p><em>Spim</em>
+
+ turned 20 years old January 2010. I wrote the original version of
+<em>Spim</em>
+
+ as the target machine for my first compiler class at University of Wisconsin, 
+Madison in the spring semester 1990. <em>Spim</em>
+
+ is likely older than most of the 
+students currently using it!</p>
+<p>As a birthday present, the 8.0 version of <em>Spim</em>
+
+ has a simpler, less restrictive 
+license, namely the standard BSD license.</p>
 
 </body>
 
