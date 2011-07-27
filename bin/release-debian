@@ -30,7 +30,7 @@ chrpath -d Setup/debian/usr/bin/qtspim
 cp -f Documentation/qtspim.man Setup/debian/usr/share/man/man1/qtspim.1
 gzip -f --best Setup/debian/usr/share/man/man1/qtspim.1
 
-cp -f Setup/qtspim_debian_deployment/control.$ARCH Setup/debian/DEBIAN/control
+sed "s/<<ARCH>>/$ARCH/" < Setup/qtspim_debian_deployment/control.prototype > Setup/debian/DEBIAN/control
 cp -f Setup/qtspim_debian_deployment/postinst Setup/debian/DEBIAN
 
 cp -f Setup/qtspim_debian_deployment/copyright Setup/debian/usr/share/doc/qtspim
@@ -46,4 +46,3 @@ cp -f Setup/NewIcon48x48.png Setup/debian/usr/share/qtspim/qtspim.png
 fakeroot dpkg-deb --build Setup/debian
 mv Setup/debian.deb qtspim.deb
 lintian qtspim.deb
-
