@@ -4,11 +4,11 @@ This directory contains compiled, installable copies of various flavors of spim:
 
     qtspim_*_linux32.deb -- 32 bit Linux debian package
 
+    qtspim_*_linux64.deb -- 64 bit Linux debian package
+
     QtSpim_*_Windows.zip -- Windows (32 or 64 bit)
 
     QtSpim_*_mac.dmg     -- Mac OS X
-
-  Linux 64 bit versions are not yet available.
 
 
   PCSpim:

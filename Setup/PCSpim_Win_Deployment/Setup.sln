@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup.vdproj", "{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}"
 EndProject
 Global
@@ -9,8 +9,8 @@ Global
 		Release|Default = Release|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}.Debug|Default.ActiveCfg = Debug
-		{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}.Debug|Default.Build.0 = Debug
+		{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}.Debug|Default.ActiveCfg = Release
+		{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}.Debug|Default.Build.0 = Release
 		{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}.Release|Default.ActiveCfg = Release
 		{3526DBF1-75A1-4FBB-AAA2-4020AE26F47B}.Release|Default.Build.0 = Release
 	EndGlobalSection
