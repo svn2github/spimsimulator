@@ -1,3 +1,8 @@
+2011-07-26    <Jim@LS-RED>
+
+	* spim/Makefile [flyn]:
+	Added $(DESTDIR) to spim/xspim install targets.
+
 2011-07-24  Jim Larus  <jim@linuxPC>
 
 	* Version 9.1.3

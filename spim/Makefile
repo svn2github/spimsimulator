@@ -66,13 +66,13 @@ DOC_DIR = ../Documentation
 
 
 # Full path for the directory that will hold the executable files:
-BIN_DIR = /usr/bin
+BIN_DIR = $(DESTDIR)/usr/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = /usr/share/spim
+EXCEPTION_DIR = $(DESTDIR)/usr/share/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = /usr/share/man/man1
+MAN_DIR = $(DESTDIR)/usr/share/man/man1
 
 
 # If you have flex, use it instead of lex.  If you use flex, define this
