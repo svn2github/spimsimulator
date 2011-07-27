@@ -1,7 +1,7 @@
 ﻿body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	margin-right: auto;
-	margin-left: auto;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 .leftNav {
 	border: 1px solid #00FF00;
