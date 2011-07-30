@@ -1,3 +1,8 @@
+2011-07-30    <Jim@LS-RED>
+
+	* QtSpim/help/HP_AppA.html [Tatpong Katanyukul <tatpong@gmail.com>]:
+	Minor typos in instruction descriptions (bgezal, div.d, sub.d).
+
 2011-07-26    <Jim@LS-RED>
 
 	* spim/Makefile [flyn]:
