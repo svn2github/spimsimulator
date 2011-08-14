@@ -78,6 +78,7 @@
 #include "sym-tbl.h"
 #include "scanner.h"
 #include "parser_yacc.h"
+#include "data.h"
 
 
 /* Internal functions: */
@@ -96,6 +97,7 @@ static int read_assembly_command ();
 static int str_prefix (char *s1, char *s2, int min_match);
 static void top_level ();
 static int read_token ();
+static bool write_assembled_code(char* program_name);
 
 
 /* Exported Variables: */
@@ -108,6 +110,7 @@ bool delayed_branches;		/* => simulate delayed branches */
 bool delayed_loads;		/* => simulate delayed loads */
 bool accept_pseudo_insts;	/* => parse pseudo instructions  */
 bool quiet;			/* => no warning messages */
+bool assemble;			/* => assemble, write to stdout and exit */
 char *exception_file_name = DEFAULT_EXCEPTION_HANDLER;
 port message_out, console_out, console_in;
 bool mapped_io;			/* => activate memory-mapped IO */
@@ -145,13 +148,14 @@ main (int argc, char **argv)
   delayed_loads = false;
   accept_pseudo_insts = true;
   quiet = false;
+  assemble = false;
   spim_return_value = 0;
 
   /* Input comes directly (not through stdio): */
   console_in.i = 0;
   mapped_io = false;
 
-  write_startup_message ();
+  // write_startup_message ();
 
   if (getenv ("SPIM_EXCEPTION_HANDLER") != NULL)
     exception_file_name = getenv ("SPIM_EXCEPTION_HANDLER");
@@ -270,6 +274,8 @@ main (int argc, char **argv)
 	  assembly_file_loaded = read_assembly_file (argv[++i]) || assembly_file_loaded;
 	  break;
 	}
+      else if (streq (argv [i], "-assemble"))
+	{ assemble = true; }
       else
 	{
 	  error ("\nUnknown argument: %s (ignored)\n", argv[i]);
@@ -291,8 +297,10 @@ main (int argc, char **argv)
 	-noquiet		Print warnings (default)\n\
 	-mapped_io		Enable memory-mapped IO\n\
 	-nomapped_io		Do not enable memory-mapped IO (default)\n\
-	-file <file> <args>	Assembly code file and arguments to program\n");
+	-file <file> <args>	Assembly code file and arguments to program\n\
+	-assemble		Write assembled code to standard output\n");
     }
+
 
   if (!assembly_file_loaded)
     {
@@ -302,26 +310,34 @@ main (int argc, char **argv)
     }
   else /* assembly_file_loaded */
     {
-      bool continuable;
-      console_to_program ();
-      initialize_run_stack (program_argc, program_argv);
-      if (!setjmp (spim_top_level_env))
-	{
-	  char *undefs = undefined_symbol_string ();
-	  if (undefs != NULL)
-	    {
-	      write_output (message_out, "The following symbols are undefined:\n");
-	      write_output (message_out, undefs);
-	      write_output (message_out, "\n");
-	      free (undefs);
-	    }
-	  run_program (find_symbol_address (DEFAULT_RUN_LOCATION), DEFAULT_RUN_STEPS, false, false, &continuable);
-	}
-      console_to_spim ();
+     if (assemble)
+       {
+         return write_assembled_code (program_argv[0]);
+       }
+     else
+       {
+         bool continuable;
+         console_to_program ();
+         initialize_run_stack (program_argc, program_argv);
+         if (!setjmp (spim_top_level_env))
+           {
+             char *undefs = undefined_symbol_string ();
+             if (undefs != NULL)
+               {
+                 write_output (message_out, "The following symbols are undefined:\n");
+                 write_output (message_out, undefs);
+                 write_output (message_out, "\n");
+                 free (undefs);
+               }
+             run_program (find_symbol_address (DEFAULT_RUN_LOCATION), DEFAULT_RUN_STEPS, false, false, &continuable);
+           }
+         console_to_spim ();
+       }
     }
 
   return (spim_return_value);
 }
+
 
 
 /* Top-level read-eval-print loop for SPIM. */
@@ -378,6 +394,7 @@ enum {
   DUMPNATIVE_TEXT_CMD,
   DUMP_TEXT_CMD
 };
+
 
 /* Parse a SPIM command from the FILE and execute it.  If REDO is true,
    don't read a new command; just rexecute the previous one.
@@ -865,6 +882,73 @@ print_all_regs (int hex_flag)
   write_output (message_out, "%s\n", ss_to_string (&ss));
 }
 
+
+static bool
+write_assembled_code(char* program_name)
+{
+  if (parse_error_occurred)
+    {
+      return (parse_error_occurred);
+    }
+
+  FILE *fp = NULL;
+  char *filename = NULL;
+
+  mem_addr addr;
+  mem_addr dump_start;
+  mem_addr dump_end;
+
+  filename = (char*) xmalloc(strlen(program_name) + 5);
+  strcpy(filename, program_name);
+  strcat(filename, ".out");
+
+  fp = fopen (filename, "wt");
+  if (fp == NULL)
+    {
+      perror (filename);
+      return (true);
+    }
+
+  /* dump text segment */
+  user_kernel_text_segment (false);
+  dump_start = find_symbol_address (END_OF_TRAP_HANDLER_SYMBOL);
+  dump_end = current_text_pc ();
+
+  (void)fprintf (fp, ".text # 0x%x .. 0x%x\n.word ", dump_start, dump_end);
+  for (addr = dump_start; addr < dump_end; addr += BYTES_PER_WORD)
+    {
+      int32 code = inst_encode (read_mem_inst (addr));
+      (void)fprintf (fp, "0x%x%s", code, addr != (dump_end - BYTES_PER_WORD) ? ", " : "");
+    }
+  (void)fprintf (fp, "\n");
+
+  /* dump data segment */
+  user_kernel_data_segment (false);
+  if (bare_machine)
+    {
+      dump_start = 0;
+    }
+    else
+    {
+        dump_start = DATA_BOT;
+    }
+  dump_end = current_data_pc ();
+
+  if (dump_end > dump_start)
+    {
+      (void)fprintf (fp, ".data # 0x%x .. 0x%x\n.word ", dump_start, dump_end);
+      for (addr = dump_start; addr < dump_end; addr += BYTES_PER_WORD)
+        {
+          int32 code = read_mem_word (addr);
+          (void)fprintf (fp, "0x%x%s", code, addr != (dump_end - BYTES_PER_WORD) ? ", " : "");
+        }
+      (void)fprintf (fp, "\n");
+    }
+
+  fclose (fp);
+  return (false);
+}
+
 
 
 /* Print an error message. */
@@ -1095,6 +1179,7 @@ put_console_char (char c)
   putc (c, console_out.f);
   fflush (console_out.f);
 }
+
 
 static int
 read_token ()
