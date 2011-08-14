@@ -566,18 +566,18 @@ parse_spim_command (FILE *file, bool redo)
 
     case HELP_CMD:
       if (!redo) flush_to_newline ();
-      write_output (message_out, "\nSPIM is a MIPS R2000 simulator.\n");
+      write_output (message_out, "\nSPIM is a MIPS32 simulator.\n");
       write_output (message_out, "Its top-level commands are:\n");
       write_output (message_out, "exit  -- Exit the simulator\n");
       write_output (message_out, "quit  -- Exit the simulator\n");
       write_output (message_out,
-		    "read \"FILE\" -- Read FILE of assembly code into memory\n");
+		    "read \"FILE\" -- Read FILE containing assembly code into memory\n");
       write_output (message_out,
 		    "load \"FILE\" -- Same as read\n");
       write_output (message_out,
-		    "run <ADDR> -- Start the program at optional ADDRESS\n");
+		    "run <ADDR> -- Start the program at (optional) ADDRESS\n");
       write_output (message_out,
-		    "step <N> -- Step the program for N instructions\n");
+		    "step <N> -- Step the program for N instructions (default 1)\n");
       write_output (message_out,
 		    "continue -- Continue program execution without stepping\n");
       write_output (message_out, "print $N -- Print register N\n");
@@ -594,14 +594,14 @@ parse_spim_command (FILE *file, bool redo)
       write_output (message_out,
 		    "reinitialize -- Clear the memory and registers\n");
       write_output (message_out,
-		    "breakpoint <ADDR> -- Set a breakpoint at address\n");
+		    "breakpoint <ADDR> -- Set a breakpoint at address ADDR\n");
       write_output (message_out,
-		    "delete <ADDR> -- Delete all breakpoints at address\n");
+		    "delete <ADDR> -- Delete breakpoint at address ADDR\n");
       write_output (message_out, "list -- List all breakpoints\n");
       write_output (message_out, "dump [ \"FILE\" ] -- Dump binary code to spim.dump or FILE in network byte order\n");
       write_output (message_out, "dumpnative [ \"FILE\" ] -- Dump binary code to spim.dump or FILE in host byte order\n");
       write_output (message_out,
-		    ". -- Rest of line is assembly instruction to put in memory\n");
+		    ". -- Rest of line is assembly instruction to execute\n");
       write_output (message_out, "<cr> -- Newline reexecutes previous command\n");
       write_output (message_out, "? -- Print this message\n");
 
@@ -642,13 +642,15 @@ parse_spim_command (FILE *file, bool redo)
     case DUMPNATIVE_TEXT_CMD:
     case DUMP_TEXT_CMD:
       {
+	int token = (redo ? prev_token : read_token ());
+
         FILE *fp = NULL;
         char *filename = NULL;
-	int token = (redo ? prev_token : read_token ());
-        int i;
+
         int words = 0;
-	int dump_start;
-	int dump_limit;
+        mem_addr addr;
+	mem_addr dump_start;
+	mem_addr dump_end;
 
         if (token == Y_STR)
 	  filename = (char *) yylval.p;
@@ -661,36 +663,33 @@ parse_spim_command (FILE *file, bool redo)
             return (0);
           }
 
-        fp = fopen (filename, "wb");
+        fp = fopen (filename, "wbt");
         if (fp == NULL)
           {
             perror (filename);
             return (0);
           }
 
+	user_kernel_text_segment (false);
 	dump_start = find_symbol_address (END_OF_TRAP_HANDLER_SYMBOL);
-	if (dump_start != 0)
-	  dump_start -= TEXT_BOT;
-	dump_start = dump_start >> 2;
+	dump_end = current_text_pc ();
 
-	user_kernel_text_segment (0);
-	dump_limit = (current_text_pc() - TEXT_BOT) >> 2;
-
-        for (i = dump_start; i < dump_limit; i++)
+        for (addr = dump_start; addr < dump_end; addr += BYTES_PER_WORD)
           {
-            int32 code = inst_encode (text_seg[i]);
+            int32 code = inst_encode (read_mem_inst (addr));
             if (cmd == DUMP_TEXT_CMD)
 	      code = (int32)htonl ((unsigned long)code);    /* dump in network byte order */
             (void)fwrite (&code, 1, sizeof(code), fp);
-            words++;
+            words += 1;
           }
 
         fclose (fp);
         fprintf (stderr, "Dumped %d words starting at 0x%08x to file %s\n",
-                 words, (unsigned int)((dump_start << 2) + TEXT_BOT), filename);
+                 words, (unsigned int)dump_start, filename);
+
+        prev_cmd = cmd;
+        return (0);
       }
-      prev_cmd = cmd;
-      return (0);
 
     default:
       while (read_token () != Y_NL) ;
