@@ -534,13 +534,16 @@ QString promptForNewValue(QString text, int* base)
 
 void regTextEdit::closeEvent(QCloseEvent* event)
 {
-    if (isIntRegs)
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
     {
-        Window->ui->action_Win_IntRegisters->setChecked(false);
-    }
-    else
-    {
-        Window->ui->action_Win_FPRegisters->setChecked(false);
+        if (isIntRegs)
+        {
+            Window->ui->action_Win_IntRegisters->setChecked(false);
+        }
+        else
+        {
+            Window->ui->action_Win_FPRegisters->setChecked(false);
+        }
     }
     event->accept();
 }
@@ -548,13 +551,16 @@ void regTextEdit::closeEvent(QCloseEvent* event)
 
 void regTextEdit::hideEvent(QHideEvent* event)
 {
-    if (isIntRegs)
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
     {
-        Window->ui->action_Win_IntRegisters->setChecked(false);
-    }
-    else
-    {
-        Window->ui->action_Win_FPRegisters->setChecked(false);
+        if (isIntRegs)
+        {
+            Window->ui->action_Win_IntRegisters->setChecked(false);
+        }
+        else
+        {
+            Window->ui->action_Win_FPRegisters->setChecked(false);
+        }
     }
     event->accept();
 }
@@ -562,13 +568,16 @@ void regTextEdit::hideEvent(QHideEvent* event)
 
 void regTextEdit::showEvent(QShowEvent* event)
 {
-    if (isIntRegs)
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
     {
-        Window->ui->action_Win_IntRegisters->setChecked(true);
-    }
-    else
-    {
-        Window->ui->action_Win_FPRegisters->setChecked(true);
+        if (isIntRegs)
+        {
+            Window->ui->action_Win_IntRegisters->setChecked(true);
+        }
+        else
+        {
+            Window->ui->action_Win_FPRegisters->setChecked(true);
+        }
     }
     event->accept();
 }

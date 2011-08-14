@@ -262,20 +262,29 @@ int textTextEdit::pcFromPos(QTextCursor* cursor)
 
 void textTextEdit::closeEvent(QCloseEvent* event)
 {
-    Window->ui->action_Win_TextSegment->setChecked(false);
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
+    {
+        Window->ui->action_Win_TextSegment->setChecked(false);
+    }
     event->accept();
 }
 
 
 void textTextEdit::hideEvent(QHideEvent* event)
 {
-    Window->ui->action_Win_TextSegment->setChecked(false);
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
+    {
+        Window->ui->action_Win_TextSegment->setChecked(false);
+    }
     event->accept();
 }
 
 
 void textTextEdit::showEvent(QShowEvent* event)
 {
-    Window->ui->action_Win_TextSegment->setChecked(true);
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
+    {
+        Window->ui->action_Win_TextSegment->setChecked(true);
+    }
     event->accept();
 }

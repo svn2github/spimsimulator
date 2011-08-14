@@ -1,5 +1,9 @@
 2011-08-14    <Jim@LS-RED>
 
+	* QtSpim/console.cpp, QtSpim/datawin.cpp, QtSpim/regwin.cpp, QtSpim/textwin.cpp [Jordan Thoms (jords12)]:
+	Subwindows can receive events before main window is fully
+	construct if subwindows are undocked, which lead to a null-pointer reference.
+
 	* spim/spim.c (write_assembled_code) [George Prekas (prekgeo)]:
 	Added command line argument to dump contents of text and data segments.
 

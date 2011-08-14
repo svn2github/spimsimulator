@@ -368,20 +368,29 @@ int dataTextEdit::addrFromPos(QTextCursor* cursor)
 
 void dataTextEdit::closeEvent(QCloseEvent* event)
 {
-    Window->ui->action_Win_DataSegment->setChecked(false);
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
+    {
+        Window->ui->action_Win_DataSegment->setChecked(false);
+    }
     event->accept();
 }
 
 
 void dataTextEdit::hideEvent(QHideEvent* event)
 {
-    Window->ui->action_Win_DataSegment->setChecked(false);
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
+    {
+        Window->ui->action_Win_DataSegment->setChecked(false);
+    }
     event->accept();
 }
 
 
 void dataTextEdit::showEvent(QShowEvent* event)
 {
-    Window->ui->action_Win_DataSegment->setChecked(true);
+    if (Window != NULL)  // Event can occur while window is being constructed; ignore in that case
+    {
+        Window->ui->action_Win_DataSegment->setChecked(true);
+    }
     event->accept();
 }
