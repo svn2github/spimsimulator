@@ -81,7 +81,7 @@ MYLEX = flex
 
 # SPIM needs flex's -I flag since the scanner is used interactively.
 # You can set the -8 flag so that funny characters do not hang the scanner.
-LEXFLAGS = -I -8
+LEXFLAGS += -I -8
 
 
 # If you use lex, set the variables this way:
@@ -94,7 +94,7 @@ LEXFLAGS = -I -8
 #YACCFLAGS = -d
 
 YACC=bison
-YFLAGS = -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
+YFLAGS += -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
 
 
 # Size of the segments when spim starts up (data segment must be >= 64K).
@@ -112,14 +112,14 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 DEFINES = $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\""
 
 CC = g++
-CFLAGS = -I. -I$(CPU_DIR) $(DEFINES) -g -Wall -pedantic -Wextra -Wunused -Wno-write-strings -x c++
-YCFLAGS =
-LDFLAGS = -lm
+CFLAGS += -I. -I$(CPU_DIR) $(DEFINES) -O -g -Wall -pedantic -Wextra -Wunused -Wno-write-strings -x c++
+YCFLAGS +=
+LDFLAGS += -lm
 CSH = bash
 
 # lex.yy.c is usually compiled with -O to speed it up.
 
-LEXCFLAGS = -O $(CFLAGS)
+LEXCFLAGS += -O $(CFLAGS)
 
 
 

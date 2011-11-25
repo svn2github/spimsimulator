@@ -3,6 +3,11 @@
 	* CPU/version.h (SPIM_VERSION):
 	Version 9.1.4
 
+2011-11-25    <Jim@LS-RED>
+
+	* spim/Makefile [W. Michael Petullo ( flyn )]:
+	Inherit flags from environment.
+
 2011-08-14    <Jim@LS-RED>
 
 	* QtSpim/console.cpp, QtSpim/datawin.cpp, QtSpim/regwin.cpp, QtSpim/textwin.cpp [Jordan Thoms (jords12)]:
