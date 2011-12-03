@@ -1,5 +1,8 @@
 2011-12-03    <Jim@LS-RED>
 
+	* QtSpim/main.cpp (parseCommandLine): [Esteban Stafford (estebanstafford)]:
+	Did not correctly initialize memory with -file argument.
+
 	* QtSpim/menu.cpp, console.cpp, console.h [Esteban Stafford (estebanstafford)]:
 	Got in an infinite loop when single stepping or running
 	interpreter blocked waiting for input.

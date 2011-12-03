@@ -34,7 +34,7 @@
 #include <QtGui/QApplication>
 #include "spimview.h"
 
-static void parseCommandLine(QStringList args);
+static QString parseCommandLine(QStringList args);
 
 
 SpimView* Window;
@@ -56,9 +56,16 @@ int main(int argc, char *argv[])
     win.SpimConsole->show();
     win.show();
 
-    parseCommandLine(a.arguments());
+    QString fileName = parseCommandLine(a.arguments());
 
     win.sim_ReinitializeSimulator();
+
+    if (fileName != "")
+    {
+        read_assembly_file(fileName.toLocal8Bit().data());
+        win.DisplayTextSegments();
+        win.UpdateDataDisplay();
+    }
 
     a.setStyleSheet(
 "  QTabWidget::pane { /* The tab widget frame */"
@@ -109,7 +116,7 @@ int main(int argc, char *argv[])
 }
 
 
-static void parseCommandLine(QStringList args)
+static QString parseCommandLine(QStringList args)
 {
     for (int i = 1; i < args.length(); i++)
     {
@@ -223,11 +230,11 @@ static void parseCommandLine(QStringList args)
         else if (((args[i] == "-file") || (args[i] == "-f"))
                  && (i + 1 < args.length()))
 	{
-            read_assembly_file(args[++i].toLocal8Bit().data());
+            return args[i + 1]; // ToDo: <args>
 	}
         else if (args[i][0] != '-' && i == args.length())
 	{
-            read_assembly_file(args[i].toLocal8Bit().data());
+            return args[i + 1]; // ToDo: <args>
 	}
         else
 	{
@@ -247,4 +254,5 @@ static void parseCommandLine(QStringList args)
 	-file <file> <args>	Assembly code file and arguments to program\n");
 	}
     }
+    return QString("");
 }
