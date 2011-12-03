@@ -60,5 +60,5 @@ protected:
 
 private:
     QString inputBuffer;
-    QEventLoop l;
+    QEventLoop* l;
 };

@@ -1,3 +1,9 @@
+2011-12-03    <Jim@LS-RED>
+
+	* QtSpim/menu.cpp, console.cpp, console.h [Esteban Stafford (estebanstafford)]:
+	Got in an infinite loop when single stepping or running
+	interpreter blocked waiting for input.
+
 2011-09-04    <Jim@X64PC>
 
 	* CPU/version.h (SPIM_VERSION):

@@ -236,7 +236,7 @@ void SpimView::sim_ReinitializeSimulator()
 {
     write_output(message_out, "<hr>Memory and registers cleared");
     InitializeWorld();
-    SpimConsole->clear();
+    SpimConsole->Clear();
     initStack();
     write_startup_message();
 
@@ -302,7 +302,56 @@ void SpimView::sim_Run()
 }
 
 
-void  SpimView::updateStatus(PROGSTATE status)
+void SpimView::sim_Pause()
+{
+    force_break = true;
+    updateStatus(PAUSED);
+    UpdateDataDisplay();
+}
+
+
+void SpimView::sim_Stop()
+{
+    force_break = true;
+    updateStatus(STOPPED);
+    UpdateDataDisplay();
+}
+
+
+void SpimView::sim_SingleStep()
+{
+    initializePCAndStack();
+
+    force_break = false;
+    updateStatus(SINGLESTEP);
+    executeProgram(PC, 1, false, false);
+    UpdateDataDisplay();
+}
+
+
+void SpimView::initializePCAndStack()
+{
+    if ((programStatus == STOPPED && !force_break) || PC == 0)
+    {
+        if (st_startAddress == 0)
+        {
+            st_startAddress = starting_address();
+        }
+        PC = st_startAddress;
+        initStack();
+    }
+}
+
+
+void SpimView::initStack()
+{
+    // Prepend file name to arg list
+    //
+    initialize_stack((st_recentFiles[0] + " " + st_commandLine).toLocal8Bit().data());
+}
+
+
+void SpimView::updateStatus(PROGSTATE status)
 {
     programStatus = status;
     switch (programStatus)
@@ -331,52 +380,6 @@ void  SpimView::updateStatus(PROGSTATE status)
         Window->statusBar()->showMessage("?");
         break;
     }
-}
-
-
-void SpimView::sim_Pause()
-{
-    force_break = true;
-    updateStatus(PAUSED);
-}
-
-
-void SpimView::sim_Stop()
-{
-    force_break = true;
-    updateStatus(STOPPED);
-}
-
-
-void SpimView::sim_SingleStep()
-{
-    initializePCAndStack();
-
-    force_break = false;
-    updateStatus(SINGLESTEP);
-    executeProgram(PC, 1, false, false);
-}
-
-
-void SpimView::initializePCAndStack()
-{
-    if ((programStatus == STOPPED && !force_break) || PC == 0)
-    {
-        if (st_startAddress == 0)
-        {
-            st_startAddress = starting_address();
-        }
-        PC = st_startAddress;
-        initStack();
-    }
-}
-
-
-void SpimView::initStack()
-{
-    // Prepend file name to arg list
-    //
-    initialize_stack((st_recentFiles[0] + " " + st_commandLine).toLocal8Bit().data());
 }
 
 

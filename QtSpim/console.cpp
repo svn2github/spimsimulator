@@ -53,20 +53,27 @@ void Console::WriteOutput(QString out)
 
 QString Console::ReadChar()
 {
-    raise();
-    while (1)
+    if (l->isRunning())          // Not re-enterent
     {
-        if (InputAvailable())
+        return QString("\n");
+    }
+    else
+    {
+        raise();
+        while (1)
         {
-            QString firstChar = inputBuffer.left(1);
-            inputBuffer.remove(0, 1);
-            return firstChar;
+            if (InputAvailable())
+            {
+                QString firstChar = inputBuffer.left(1);
+                inputBuffer.remove(0, 1);
+                return firstChar;
+            }
+            // This is a bit tricky and I hope it works on all platforms. If there aren't any
+            // characters in the buffer, start a new event loop to wait for keystrokes and block on
+            // it. Cannot use semaphores or busy-wait since both actions are on the same thread.
+            //
+            l->exec();
         }
-        // This is a bit tricky and I hope it works on all platforms. If there aren't any
-        // characters in the buffer, start a new event loop to wait for keystrokes and block on
-        // it. Cannot use semaphores or busy-wait since both actions are on the same thread.
-        //
-        l.exec();
     }
 }
 
@@ -80,6 +87,8 @@ bool Console::InputAvailable()
 void Console::Clear()
 {
     setPlainText("");
+    inputBuffer = QString("");
+    l = new QEventLoop();
 }
 
 
@@ -102,7 +111,7 @@ void Console::keyReleaseEvent(QKeyEvent* e)
 
         // Release the call on ReadChar (if any) that is blocked waiting for input.
         //
-        l.exit();
+        l->exit();
     }
 }
 
