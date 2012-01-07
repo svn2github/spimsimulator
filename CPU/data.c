@@ -56,10 +56,6 @@ static bool in_kernel = 0;	/* => data goes to kdata, not data */
 
 #define DATA_PC (in_kernel ? next_k_data_pc : next_data_pc)
 
-#define BUMP_DATA_PC(DELTA) {if (in_kernel) \
-				next_k_data_pc += DELTA; \
-				else {next_data_pc += DELTA;}}
-
 static mem_addr next_gp_item_addr; /* Address of next item accessed off $gp */
 
 static bool auto_alignment = true; /* => align literal to natural bound*/
@@ -177,9 +173,20 @@ current_data_pc ()
    bytes. */
 
 void
-increment_data_pc (int value)
+increment_data_pc (int delta)
 {
-  BUMP_DATA_PC (value);
+  if (in_kernel)
+    {
+      next_k_data_pc += delta;
+      if (k_data_top <= next_k_data_pc)
+        expand_k_data(ROUND_UP(next_k_data_pc - k_data_top, 64*K));
+    }
+  else
+    {
+      next_data_pc += delta;
+      if (data_top <= next_data_pc)
+        expand_data(ROUND_UP(next_data_pc - data_top, 64*K));
+    }
 }
 
 
@@ -223,7 +230,7 @@ lcomm_directive (char *name, int size)
       for ( ; size > 0; size --)
 	{
 	  set_mem_byte (DATA_PC, 0);
-	  BUMP_DATA_PC(1);
+	  increment_data_pc (1);
 	}
     }
 }
@@ -236,12 +243,12 @@ store_string (char *string, int length, bool null_terminate)
 {
   for ( ; length > 0; string ++, length --) {
     set_mem_byte (DATA_PC, *string);
-    BUMP_DATA_PC(1);
+    increment_data_pc(1);
   }
   if (null_terminate)
     {
       set_mem_byte (DATA_PC, 0);
-      BUMP_DATA_PC(1);
+      increment_data_pc (1);
     }
 }
 
@@ -252,7 +259,7 @@ void
 store_byte (int value)
 {
   set_mem_byte (DATA_PC, value);
-  BUMP_DATA_PC (1);
+  increment_data_pc (1);
 }
 
 
@@ -274,7 +281,7 @@ store_half (int value)
   else
     {
       set_mem_half (DATA_PC, value);
-      BUMP_DATA_PC (BYTES_PER_WORD / 2);
+      increment_data_pc (BYTES_PER_WORD / 2);
     }
 }
 
@@ -297,7 +304,7 @@ store_word (int value)
   else
     {
       set_mem_word (DATA_PC, value);
-      BUMP_DATA_PC (BYTES_PER_WORD);
+      increment_data_pc (BYTES_PER_WORD);
     }
 }
 
@@ -315,9 +322,9 @@ store_double (double *value)
   else
     {
       set_mem_word (DATA_PC, *((mem_word *) value));
-      BUMP_DATA_PC (BYTES_PER_WORD);
+      increment_data_pc (BYTES_PER_WORD);
       set_mem_word (DATA_PC, *(((mem_word *) value) + 1));
-      BUMP_DATA_PC (BYTES_PER_WORD);
+      increment_data_pc (BYTES_PER_WORD);
     }
 }
 
@@ -338,6 +345,6 @@ store_float (double *value)
   else
     {
       set_mem_word (DATA_PC, *((mem_word *) vp));
-      BUMP_DATA_PC (BYTES_PER_WORD);
+      increment_data_pc (BYTES_PER_WORD);
     }
 }

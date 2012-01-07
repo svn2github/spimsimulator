@@ -1380,6 +1380,20 @@ ori_:	.asciiz "Testing ORI\n"
 # RFE tested previously
 
 
+	.data
+sp_:    .asciiz "Testing .space\n"
+spd_:   .space 100000
+spde_:  .word 0
+	.text
+	li $v0 4	# syscall 4 (print_str)
+	la $a0 sd_
+	syscall
+
+        la $2 spde_
+        sub $2 $2 4
+        lw $3 0($2)     # look for exception
+
+
 # SB is endian-specific
 
 

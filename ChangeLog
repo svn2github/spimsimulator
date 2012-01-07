@@ -1,3 +1,9 @@
+2012-01-07    <Jim@LS-RED>
+
+	* CPU/data.c (increment_data_pc), inst.c, tt.core.s [Artur Golisz <artur_waw@ymail.com>]:
+	Did not grow data segments properly when allocating memory with
+	the .space command.
+
 2012-01-02    <Jim@X64PC>
 
 	* CPU/spim-utils.c (write_startup_message):

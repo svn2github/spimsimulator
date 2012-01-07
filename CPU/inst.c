@@ -83,9 +83,6 @@ static mem_addr next_k_text_pc;
 
 
 #define INST_PC (in_kernel ? next_k_text_pc : next_text_pc)
-#define BUMP_INST_PC(DELTA) {if (in_kernel) \
-			       next_k_text_pc += DELTA; \
-			       else next_text_pc += DELTA;}
 
 
 
@@ -131,7 +128,18 @@ current_text_pc ()
 void
 increment_text_pc (int delta)
 {
-  BUMP_INST_PC (delta);
+  if (in_kernel)
+    {
+      next_k_text_pc += delta;
+      if (k_text_top <= next_k_text_pc)
+        run_error("Can't expand kernel text segment\n");
+    }
+  else
+    {
+      next_text_pc += delta;
+      if (text_top <= next_text_pc)
+        run_error("Can't expand text segment\n");
+    }
 }
 
 
@@ -162,7 +170,7 @@ store_instruction (instruction *inst)
       if (exception_occurred)
 	error ("Invalid address (0x%08x) for instruction\n", INST_PC);
       else
-	BUMP_INST_PC (BYTES_PER_WORD);
+	increment_text_pc (BYTES_PER_WORD);
       if (inst != NULL)
 	{
 	  SET_SOURCE (inst, source_line ());
