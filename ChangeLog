@@ -1,3 +1,8 @@
+2012-02-04    <Jim@LS-RED>
+
+	* QtSpim/regwin.cpp (formatInt) [Jeff Gitlin <jeff.gitlin@gmail.com>]:
+	Returned sign-extended 64bit formatted values for negative numbers.
+
 2012-01-07    <Jim@LS-RED>
 
 	* CPU/data.c (increment_data_pc), inst.c, tt.core.s [Artur Golisz <artur_waw@ymail.com>]:

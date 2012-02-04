@@ -233,7 +233,20 @@ QString SpimView::formatDFPRegister(int regNum, double value, bool changed)
 
 QString SpimView::formatInt(int value)
 {
-    return QString::number(value, st_regDisplayBase);
+    QString str = QString::number(value, st_regDisplayBase);
+
+    // Negative numbers are sign-extended to 64 bits in base 2 or 16; just return the non-sign
+    // extended 32 bit value.
+    if (st_regDisplayBase == 16)
+    {
+        str = str.right(8);
+    }
+    else if (st_regDisplayBase == 2)
+    {
+        str = str.right(32);
+    }
+
+    return str;
 }
 
 
