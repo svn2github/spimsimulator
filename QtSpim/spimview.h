@@ -49,6 +49,7 @@
 #include "../CPU/reg.h"
 #include "../CPU/mem.h"
 #include "../CPU/sym-tbl.h"
+#include "../CPU/version.h"
 
 namespace Ui {
     class SpimView;

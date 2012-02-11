@@ -1,3 +1,8 @@
+2012-02-11    <Jim@LS-RED>
+
+	* QtSpim/spimview.h:
+	Include version.h to catch dependence in menu.c on version number.
+
 2012-02-04    <Jim@LS-RED>
 
 	* CPU/version.:
