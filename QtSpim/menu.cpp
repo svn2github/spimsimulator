@@ -76,7 +76,7 @@ void SpimView::file_LoadFile()
         file = QFileDialog::getOpenFileName(this,
                                             "Open Assembly Code",
                                             st_recentFiles[0],
-                                            "Assembly (*.s *.asm);;Text files (*.txt)");
+                                            "Assembly (*.a *.s *.asm);;Text files (*.txt)");
     }
     if (!file.isNull())
     {
@@ -475,7 +475,7 @@ void SpimView::sim_Settings()
     QFileDialog exceptionFileDialog(0,
                                     "Open Exception File",
                                     st_exceptionHandlerFileName,
-                                    "Assembly (*.s *.asm);;Text files (*.txt)");
+                                    "Assembly (*.a *.s *.asm);;Text files (*.txt)");
     QObject::connect(sd.exceptionHandlerToolButton, SIGNAL(clicked()), &exceptionFileDialog, SLOT(exec()));
     QObject::connect(&exceptionFileDialog, SIGNAL(fileSelected(QString)),
                      sd.exceptionHandlerLineEdit, SLOT(setText(QString)));
