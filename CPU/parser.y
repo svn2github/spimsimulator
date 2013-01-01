@@ -1452,7 +1452,7 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		}
 
 
-	|	UNARY_TRAP_OPS	SRC1	IMM16
+	|	BINARYI_TRAP_OPS	SRC1	IMM16
 		{
 		  i_type_inst_free ($1.i, 0, $2.i, (imm_expr *)$3.p);
 		}
@@ -1868,7 +1868,7 @@ B_OPS:	Y_B_POP
 	;
 
 
-UNARY_TRAP_OPS:	Y_TEQI_OP
+BINARYI_TRAP_OPS:	Y_TEQI_OP
 	|	Y_TGEI_OP
 	|	Y_TGEIU_OP
 	|	Y_TLTI_OP

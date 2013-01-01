@@ -214,7 +214,13 @@ i_type_inst (int opcode, int rt, int rs, imm_expr *expr)
 	  && (((opcode == Y_ADDI_OP
 		|| opcode == Y_ADDIU_OP
 		|| opcode == Y_SLTI_OP
-		|| opcode == Y_SLTIU_OP)
+		|| opcode == Y_SLTIU_OP
+                || opcode == Y_TEQI_OP
+                || opcode == Y_TGEI_OP
+                || opcode == Y_TGEIU_OP
+                || opcode == Y_TLTI_OP
+                || opcode == Y_TLTIU_OP
+                || opcode == Y_TNEI_OP)
 	       ? ((value & 0xffff8000) != 0
 		  && (value & 0xffff8000) != 0xffff8000)
 	       : (value & 0xffff0000) != 0)))

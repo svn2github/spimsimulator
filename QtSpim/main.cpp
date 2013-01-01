@@ -34,7 +34,7 @@
 #include <QtGui/QApplication>
 #include "spimview.h"
 
-static QString parseCommandLine(QStringList args);
+static QStringList parseCommandLine(QStringList args);
 
 
 SpimView* Window;
@@ -56,16 +56,20 @@ int main(int argc, char *argv[])
     win.SpimConsole->show();
     win.show();
 
-    QString fileName = parseCommandLine(a.arguments());
+    QStringList fileNames = parseCommandLine(a.arguments());
 
     win.sim_ReinitializeSimulator();
 
-    if (fileName != "")
+    for (int i = 0; i < fileNames.length(); i++)
     {
-        read_assembly_file(fileName.toLocal8Bit().data());
-        win.DisplayTextSegments();
-        win.UpdateDataDisplay();
+        if (fileNames[i] != "")
+        {
+            read_assembly_file(fileNames[i].toLocal8Bit().data());
+        }
     }
+
+    win.DisplayTextSegments();
+    win.UpdateDataDisplay();
 
     a.setStyleSheet(
 "  QTabWidget::pane { /* The tab widget frame */"
@@ -116,7 +120,7 @@ int main(int argc, char *argv[])
 }
 
 
-static QString parseCommandLine(QStringList args)
+static QStringList parseCommandLine(QStringList args)
 {
     for (int i = 1; i < args.length(); i++)
     {
@@ -227,19 +231,18 @@ static QString parseCommandLine(QStringList args)
 	{
             initial_k_data_limit = args[++i].toInt();
         }
-        else if (((args[i] == "-file") || (args[i] == "-f"))
-                 && (i + 1 < args.length()))
+        else if ((args[i] == "-file") || (args[i] == "-f"))
 	{
-            return args[i + 1]; // ToDo: <args>
+            return args.mid(i+1);
 	}
-        else if (args[i][0] != '-' && i == args.length())
+        else if (args[i][0] != '-')
 	{
-            return args[i + 1]; // ToDo: <args>
+            return args.mid(i);
 	}
         else
 	{
-            error ("\nUnknown argument: %s (ignored)\n", args[i].toLocal8Bit().data());
-            error ("Usage: spim\n\
+            error ("Unknown argument: %s (ignored)\n\n\
+        Usage: QtSpim\n\
 	-bare			Bare machine (no pseudo-ops, delayed branches and loads)\n\
 	-asm			Extended machine (pseudo-ops, no delayed branches and loads) (default)\n\
 	-delayed_branches	Execute delayed branches\n\
@@ -251,8 +254,11 @@ static QString parseCommandLine(QStringList args)
 	-noquiet		Print warnings (default)\n\
 	-mapped_io		Enable memory-mapped IO\n\
 	-nomapped_io		Do not enable memory-mapped IO (default)\n\
-	-file <file> <args>	Assembly code file and arguments to program\n");
+	-file <file> ...	Assembly code file(s)\n\
+	\n\
+	If argument does not start with a '-', it and all subsequent arguments are file names.\n",
+                   args[i].toLocal8Bit().data());
 	}
     }
-    return QString("");
+    return QStringList();
 }

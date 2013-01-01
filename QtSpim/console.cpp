@@ -46,6 +46,7 @@ Console::Console(QWidget *parent)
 
 void Console::WriteOutput(QString out)
 {
+    activateWindow();
     moveCursor(QTextCursor::End);
     insertPlainText(out);
 }
@@ -59,7 +60,7 @@ QString Console::ReadChar()
     }
     else
     {
-        raise();
+        activateWindow();
         while (1)
         {
             if (InputAvailable())

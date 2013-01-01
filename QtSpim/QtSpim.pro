@@ -100,7 +100,7 @@ QMAKE_YACC_HEADER	= parser.tab.h
 QMAKE_YACC_SOURCE	= parser.tab.c
 
 QMAKE_LEX		= flex
-QMAKE_LEXFLAGS_MANGLE	= -o lex.scanner.c
+QMAKE_LEXFLAGS_MANGLE	= --outfile=lex.scanner.c
 QMAKE_LEXFLAGS		= -I -8
 
 
@@ -162,6 +162,8 @@ win32-g++ {
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f
+  #QMAKE_DEL_FILE = cmd /c del
+  #QMAKE_MOVE = cmd /c move
 }
 
 linux-g++ {

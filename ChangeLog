@@ -1,3 +1,34 @@
+2012-12-16    <JIM@LS-RED>
+
+	* QtSpim/QtSpim.pro [sourceforge #37: https://sourceforge.net/u/smeenai/]:
+	Fix flex output file argument specification.
+	Include optional defines for using Win move and del commands.
+
+2012-12-09    <Jim@X64PC>
+
+	* CPU/version.h (SPIM_VERSION):
+	Version 9.1.8
+
+	* CPU/scanner.l [Tom Murphy wolfmurphy@gmail.com]:
+	Overwrote first digit in \ooo escape sequence in string.
+
+	* CPU/inst.c (i_type_inst) [Tom Murphy wolfmurphy@gmail.com]:
+	Crashed at teqi instruction.
+
+2012-10-21    <Jim@X64PC>
+
+	* QtSpim/main.cpp (parseCommandLine): 
+	Allow multiple input files on the command line.
+
+	* QtSpim/console.cpp (WriteOutput):
+	Activate console window on input or output to raise it and give it focus.
+
+2012-10-13    <Jim@X64PC>
+
+	* CPU/sym-tbl.c (resolve_a_label_sub):
+	Error message indicates bare machine to explain why memory address
+	is too large.
+
 2012-02-25    <Jim@LS-RED>
 
 	* QtSpim/menu.cpp (file_LoadFile):

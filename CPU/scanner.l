@@ -467,7 +467,7 @@ copy_str (YY_CHAR *str, int chop)
 	    int b = (*(str + 1) - '0') << 3;
 
 	    if ('0' <= c2 && c2 <= '7')
-	      b = (c2 - '0') << 3;
+	      b += (c2 - '0') << 3;
 	    else
 	      yyerror ("Bad character in \\ooo construct in string");
 
