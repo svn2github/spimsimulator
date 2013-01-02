@@ -203,4 +203,5 @@ macx-g++ {
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f
+  QMAKE_INFO_PLIST = macinfo.plist
 }
