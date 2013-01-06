@@ -41,6 +41,9 @@ Console::Console(QWidget *parent)
 
     setUndoRedoEnabled(false);
     appendPlainText(QString(""));
+
+    QFont courier("Courier");
+    setFont(courier);
 }
 
 

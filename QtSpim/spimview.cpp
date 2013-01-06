@@ -230,7 +230,7 @@ QString SpimView::WriteOutput(QString message)
     message.replace("\n", "<br>");
     message.replace(" ", "&nbsp;");
 
-    Window->ui->centralWidget->append(QString("<span>") + message + QString("</span>"));
+    Window->ui->centralWidget->append(QString("<span style=\"font-family:Courier\">") + message + QString("</span>"));
     Window->ui->centralWidget->ensureCursorVisible();
 
     return message;
