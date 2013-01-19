@@ -1,5 +1,8 @@
 2013-01-19    <JIM@LS-RED>
 
+	* CPU/version.h: 
+	Version 9.1.9
+
 	* helloworld.s [https://sourceforge.net/p/spimsimulator/feature-requests/8/]:
 	Added hello world example
 
