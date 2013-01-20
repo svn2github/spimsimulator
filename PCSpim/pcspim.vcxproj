@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -502,13 +502,13 @@
     <None Include="res\PCSpim.rc2" />
     <None Include="res\Toolbar.bmp" />
     <CustomBuild Include="..\CPU\parser.y">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Program Files\cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Program Files (x86)\Cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">parser_yacc.c;parser_yacc.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Program Files\cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Program Files (x86)\Cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">parser_yacc.c;parser_yacc.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Program Files\cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Program Files (x86)\Cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">parser_yacc.c;parser_yacc.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Program Files\cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Program Files (x86)\Cygwin\bin\bison"  -d --defines=parser_yacc.h --output=parser_yacc.c -p yy "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">parser_yacc.c;parser_yacc.h;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running yacc</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running yacc</Message>
@@ -516,13 +516,13 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Running yacc</Message>
     </CustomBuild>
     <CustomBuild Include="..\CPU\scanner.l">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Program Files\cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Program Files (x86)\Cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lex.yy.c;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Program Files\cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"C:\Program Files (x86)\Cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lex.yy.c;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Program Files\cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Program Files (x86)\Cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">lex.yy.c;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Program Files\cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Program Files (x86)\Cygwin\bin\flex" -I -8 "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">lex.yy.c;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running lex</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running lex</Message>

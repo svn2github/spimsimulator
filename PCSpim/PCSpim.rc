@@ -202,7 +202,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "PCSpim Version 8.0",IDC_STATIC,40,13,119,8,SS_NOPREFIX
-    LTEXT           "Copyright © 1990-2010 by James R. Larus. Portions © Morgan Kaufmann Publishers.",IDC_COPYRIGHT,40,27,204,55
+    LTEXT           "Copyright © 1990-2013 by James R. Larus. Portions © Morgan Kaufmann Publishers.",IDC_COPYRIGHT,40,27,204,55
     DEFPUSHBUTTON   "OK",IDOK,212,7,32,14,WS_GROUP
 END
 
@@ -309,7 +309,7 @@ BEGIN
             VALUE "FileDescription", "pcspim"
             VALUE "FileVersion", "8, 0, 0, 0"
             VALUE "InternalName", "pcspim"
-            VALUE "LegalCopyright", "Copyright © 2010 by James R. Larus"
+            VALUE "LegalCopyright", "Copyright © 2013 by James R. Larus"
             VALUE "OriginalFilename", "pcspim.exe"
             VALUE "ProductName", "Larus-Stone pcspim"
             VALUE "ProductVersion", "8, 0, 0, 0"
@@ -319,7 +319,7 @@ BEGIN
             VALUE "FileDescription", "PCSPIM Application"
             VALUE "FileVersion", "8.0.0.0"
             VALUE "InternalName", "PCSPIM"
-            VALUE "LegalCopyright", "Copyright © 1990-2010 by James R. Larus"
+            VALUE "LegalCopyright", "Copyright © 1990-2013 by James R. Larus"
             VALUE "OriginalFilename", "PCSPIM.EXE"
             VALUE "ProductName", "PCSPIM Application"
             VALUE "ProductVersion", "8.0.0.0"
