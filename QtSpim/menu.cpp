@@ -836,7 +836,7 @@ void SpimView::help_AboutSPIM()
                             "<span style='font-size: 10pt;'>")
                     + QString("<p>") + QString(SPIM_VERSION) + QString("</p>")
                     + QString ("<p>SPIM is a simulator of the MIPS R3000 processor.</p>"
-                               "<p>Copyright (c) 1990-2011, James R. Larus (larus@larusstone.org).</p>"
+                               "<p>Copyright (c) 1990-2013, James R. Larus (larus@larusstone.org).</p>"
                                "<p>SPIM is distributed under a BSD license.</p>"
                                "<p>For more information, source code, and binaries: "
                                "<a href='https://sourceforge.net/projects/spimsimulator/'>https://sourceforge.net/projects/spimsimulator/</a></p></span>"),
