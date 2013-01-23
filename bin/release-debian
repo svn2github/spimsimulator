@@ -7,6 +7,8 @@
 # Usage: release-debian
 #
 
+RELEASE_DIR="QtSpim-build-desktop-Qt_in_PATH_Release"
+
 ARCH=`arch`
 case $ARCH in
     i386 | i686) ARCH="i386";;
@@ -24,7 +26,7 @@ mkdir -p Setup/debian/usr/share/qtspim/help
 mkdir -p Setup/debian/usr/share/applications
 find Setup/debian -type d | xargs chmod 755   # this is necessary on Debian Woody, don't ask me why
 
-install -s QtSpim-build-desktop/QtSpim Setup/debian/usr/bin/qtspim
+install -s $RELEASE_DIR/QtSpim Setup/debian/usr/bin/qtspim
 chrpath -d Setup/debian/usr/bin/qtspim
 
 cp -f Documentation/qtspim.man Setup/debian/usr/share/man/man1/qtspim.1
@@ -38,10 +40,13 @@ cp -f Setup/qtspim_debian_deployment/copyright Setup/debian/usr/share/doc/qtspim
 cp -f Setup/qtspim_debian_deployment/changelog Setup/debian/usr/share/doc/qtspim/
 gzip -f --best Setup/debian/usr/share/doc/qtspim/changelog
 
-cp -f QtSpim-build-desktop/help/* Setup/debian/usr/share/qtspim/help
+cp -f $RELEASE_DIR/help/qtspim.qch Setup/debian/usr/share/qtspim/help
+cp -f $RELEASE_DIR/help/qtspim.qhc Setup/debian/usr/share/qtspim/help
 
 cp -f Setup/qtspim_debian_deployment/qtspim.desktop Setup/debian/usr/share/applications
 cp -f Setup/NewIcon48x48.png Setup/debian/usr/share/qtspim/qtspim.png
+
+cp -f helloworld.s Setup/debian/usr/share/qtspim/helloworld.s
 
 fakeroot dpkg-deb --build Setup/debian
 mv Setup/debian.deb qtspim.deb

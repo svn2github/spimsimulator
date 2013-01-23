@@ -1,11 +1,11 @@
 Package: qtspim
-Version: 9.1
+Version: 9.1.9
 Architecture: <<ARCH>>
 Section: devel
 Priority: extra
 Homepage: http://spimsimulator.sourceforge.net/
 Maintainer: James Larus <spim@larusstone.org>
-Depends: qt4-dev-tools (>= 4.7), qt4-doc (>= 4.7), libc6
+Depends: libqtcore4 (>= 4.7), qt4-dev-tools (>= 4.7), libc6
 Description: Simulator for MIPS32 programs. It reads and executes
  assembly language programs written for the MIPS32 processor.
  QtSpim also provides a simple debugger and minimal
