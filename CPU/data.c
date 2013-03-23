@@ -198,6 +198,7 @@ extern_directive (char *name, int size)
   label *sym = make_label_global (name);
 
   if (!bare_machine
+      && !sym->gp_flag   // Not already a global symbol
       && size > 0 && size <= SMALL_DATA_SEG_MAX_SIZE
       && next_gp_item_addr + size < gp_midpoint + 32*K)
     {
