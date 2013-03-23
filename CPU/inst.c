@@ -220,11 +220,14 @@ i_type_inst (int opcode, int rt, int rs, imm_expr *expr)
                 || opcode == Y_TGEIU_OP
                 || opcode == Y_TLTI_OP
                 || opcode == Y_TLTIU_OP
-                || opcode == Y_TNEI_OP)
-	       ? ((value & 0xffff8000) != 0
-		  && (value & 0xffff8000) != 0xffff8000)
+                || opcode == Y_TNEI_OP
+                || (opcode_is_load_store (opcode) && expr->bits == 0))
+               // Sign-extended immediate values:
+	       ? ((value & 0xffff8000) != 0 && (value & 0xffff8000) != 0xffff8000)
+               // Not sign-extended:
 	       : (value & 0xffff0000) != 0)))
 	{
+         // Non-immediate value
 	  free_inst (inst);
 	  i_type_inst_full_word (opcode, rt, rs, expr, 1, value);
 	  return;
@@ -277,7 +280,7 @@ i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 	  high = (value >> 16) & 0xffff;
 	  low = value & 0xffff;
 
-	  if (high != 0 &&
+	  if (!(high == 0 && !(low & 0x8000)) &&
 	      !(high == 0xffff && (low & 0x8000)))
 	    {
 	      /* Some of high 16 bits are non-zero */
@@ -292,7 +295,7 @@ i_type_inst_full_word (int opcode, int rt, int rs, imm_expr *expr,
 		{
 		r_type_inst (Y_ADDU_OP, 1, 1, rs);
 		}
-	      i_type_inst_free (opcode, rt, 1, const_imm_expr (low));
+	      i_type_inst_free (opcode, rt, 1, lower_bits_of_expr (const_imm_expr (low)));
 	    }
 	  else
 	    {
