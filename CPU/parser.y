@@ -1476,15 +1476,26 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		}
 
 
-	|	MOVEC_OPS	DEST	SRC1	CC_REG
+	|	MOVEC_OPS	DEST	SRC1	REG
 		{
-		  r_type_inst ($1.i, $2.i, $3.i, cc_to_rt ($4.i, 0, 0));
+		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
-
 
 	|	FP_MOVEC_OPS	F_DEST	F_SRC1	REG
 		{
 		  r_co_type_inst ($1.i, $2.i, $3.i, $4.i);
+		}
+
+
+	|	FP_MOVEC_OPS_REV2 F_DEST	F_SRC1	REG
+		{
+		  mips32_r2_inst ();
+		}
+
+
+	|	FP_MOVECC_OPS	F_DEST	F_SRC1
+		{
+		  r_co_type_inst ($1.i, $2.i, $3.i, cc_to_rt (0, 0, 0));
 		}
 
 
@@ -1495,12 +1506,6 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 
 
 	|	FP_MOVECC_OPS_REV2 F_DEST	F_SRC1	CC_REG
-		{
-		  mips32_r2_inst ();
-		}
-
-
-	|	FP_MOVEC_OPS_REV2 F_DEST	F_SRC1	REG
 		{
 		  mips32_r2_inst ();
 		}
@@ -1517,11 +1522,6 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		  r_type_inst ($1.i, 0, $2.i, 0);
 		}
 
-
-	|	MOVEC_OPS	DEST	SRC1	SRC2
-		{
-		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
-		}
 
 
 	|	MOVE_COP_OPS	REG	COP_REG

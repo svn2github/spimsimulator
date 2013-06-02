@@ -798,7 +798,10 @@ format_an_inst (str_stream *ss, instruction *inst, mem_addr addr)
       break;
 
     case FP_CMP_TYPE_INST:
-      ss_printf (ss, " $f%d, $f%d", FS (inst), FT (inst));
+      if (FD (inst) == 0)
+        ss_printf (ss, " $f%d, $f%d", FS (inst), FT (inst));
+      else
+        ss_printf (ss, " %d, $f%d, $f%d", FD (inst) >> 2, FS (inst), FT (inst));
       break;
 
     case FP_R3_TYPE_INST:
@@ -1378,7 +1381,8 @@ inst_encode (instruction *inst)
       return (a_opcode
 	      | REGS (FT (inst), 16)
 	      | REGS (FS (inst), 11)
-	      | (COND (inst) & 0xf));
+              | REGS (FD (inst), 6)
+	      | COND (inst));
 
     case FP_R3_TYPE_INST:
       return (a_opcode
@@ -1530,7 +1534,7 @@ inst_decode (int32 val)
 
     case FP_CMP_TYPE_INST:
       {
-	instruction *inst = mk_r_inst (val, i_opcode, BIN_FS (val), BIN_FT (val), 0, 0);
+	instruction *inst = mk_r_inst (val, i_opcode, BIN_FS (val), BIN_FT (val), BIN_FD(val), 0);
 	SET_COND (inst, val & 0xf);
 	return (inst);
       }

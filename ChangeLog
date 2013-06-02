@@ -1,3 +1,10 @@
+2013-06-02    <JIM@LS-RED>
+
+	* CPU/inst.c (format_an_inst) [Daniel Chester <chester@mail.eecis.udel.edu>]:
+	FP compare (e.g. c.eq.s) instructions ignored condition flag
+	numbers. The FP move (e.g. movt.s) instructions did not default
+	condition flag.
+
 2013-03-23    <JIM@LS-RED>
 
 	* CPU/data.c (extern_directive) [ https://sourceforge.net/p/spimsimulator/bugs/44/]:
