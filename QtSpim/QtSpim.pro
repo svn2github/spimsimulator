@@ -36,7 +36,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core widgets printsupport
 
 TARGET = QtSpim
 TEMPLATE = app
@@ -84,7 +84,7 @@ FORMS    += spimview.ui\
         breakpoint.ui
 
 
-INCLUDEPATH = ../CPU ../spim
+INCLUDEPATH = ../CPU ../spim ../QtSpim
 
 
 RESOURCES = windows_images.qrc\
@@ -137,6 +137,16 @@ win32-msvc2008 {
   DEFINES += _CRT_SECURE_NO_WARNINGS
 }
 win32-msvc2010 {
+  # Compile all files as C++
+  #
+  QMAKE_CFLAGS_DEBUG	+= -TP
+  QMAKE_CFLAGS_RELEASE	+= -TP
+
+  # Disable security warnings
+  #
+  DEFINES += _CRT_SECURE_NO_WARNINGS
+}
+win32-msvc2012 {
   # Compile all files as C++
   #
   QMAKE_CFLAGS_DEBUG	+= -TP

@@ -31,7 +31,7 @@
 */
 
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include "spimview.h"
 
 static QStringList parseCommandLine(QStringList args);

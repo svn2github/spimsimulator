@@ -107,7 +107,7 @@ char get_console_char()
     QString c = Window->SpimConsole->ReadChar();
     if (c != "")
     {
-        char ac = c[0].toAscii();
+        char ac = c[0].toLatin1();
         if (ac == '\r')
         {
             return '\n';

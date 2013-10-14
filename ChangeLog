@@ -1,6 +1,9 @@
 2013-10-13    <larus@IC-LMC-ICDO-01>
 
-	* 
+	* QtSpim/main.cpp, QtSpim/QtSpim.pro, QtSpim/spim_support.c
+	[https://sourceforge.net/p/spimsimulator/bugs/47]
+	[https://sourceforge.net/p/spimsimulator/bugs/48]:
+	Port QtSpim to Qt 5.1.
 
 2013-07-20    <JIM@LS-RED>
 
@@ -16,7 +19,7 @@
 
 2013-03-23    <JIM@LS-RED>
 
-	* CPU/data.c (extern_directive) [ https://sourceforge.net/p/spimsimulator/bugs/44/]:
+	* CPU/data.c (extern_directive) [https://sourceforge.net/p/spimsimulator/bugs/44/]:
 	Multiple instance of extern directive resolved to distinct locations.
 
 	* CPU/inst.c (i_type_inst_full_word) [https://sourceforge.net/p/spimsimulator/feature-requests/11/]:
