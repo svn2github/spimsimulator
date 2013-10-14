@@ -290,16 +290,17 @@ static YY_CHAR scan_escape (YY_CHAR **str);
 			      current_line = yytext;
 			    }
 
-			    if (*(yytext + 1) == '\\')
-			      {
-				YY_CHAR *escape = yytext + 1;
-				yylval.i = (int) scan_escape (&escape);
-			      }
-			    else
-			      {
-				yylval.i = (int) *(yytext + 1);
-				return (Y_INT);
-			      }
+			  if (*(yytext + 1) == '\\')
+			    {
+			      YY_CHAR *escape = yytext + 2;
+			      yylval.i = (int) scan_escape (&escape);
+			    }
+			  else
+			    {
+			      yylval.i = (int) *(yytext + 1);
+			    }
+
+			  return (Y_INT);
 			}
 
 .			{

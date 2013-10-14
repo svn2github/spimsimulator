@@ -1,3 +1,8 @@
+2013-10-14    <larus@IC-LMC-ICDO-01>
+
+	* CPU/scanner.l [https://sourceforge.net/p/spimsimulator/bugs/49]:
+	Did not properly scan escaped characters (e.g. '\n').
+
 2013-10-13    <larus@IC-LMC-ICDO-01>
 
 	* QtSpim/main.cpp, QtSpim/QtSpim.pro, QtSpim/spim_support.c
