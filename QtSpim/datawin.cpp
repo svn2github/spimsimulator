@@ -118,7 +118,7 @@ QString SpimView::formatKernelDataSeg()
 QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
 {
     mem_addr i = ROUND_UP(from, BYTES_PER_WORD);
-    QString windowContents = formatPartialQuadWord(i);
+    QString windowContents = formatPartialQuadWord(i, to);
     i = ROUND_UP(i, BYTES_PER_LINE); // Next quadword
 
     for ( ; i < to; )
@@ -144,7 +144,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
                 % QString("]") % nnbsp(2) % QString("00000000<br>");
 
             i = i + (uint32) j * BYTES_PER_WORD;
-            windowContents += formatPartialQuadWord(i);
+            windowContents += formatPartialQuadWord(i, to);
             i = ROUND_UP(i, BYTES_PER_LINE); // Next quadword
 	}
         else
@@ -158,7 +158,7 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
                 windowContents += nnbsp(2) % formatWord(val, st_dataSegmentDisplayBase);
                 i += BYTES_PER_WORD;
 	    }
-            while (i % BYTES_PER_LINE != 0);
+            while ((i % BYTES_PER_LINE) != 0 && i < to);
 
             windowContents += nnbsp(2) % formatAsChars(j, i) % QString("<br>");
 	}
@@ -167,22 +167,22 @@ QString SpimView::formatMemoryContents(mem_addr from, mem_addr to)
 }
 
 
-QString SpimView::formatPartialQuadWord(mem_addr addr)
+QString SpimView::formatPartialQuadWord(mem_addr from, mem_addr to)
 {
     QString windowContents = QString("");
 
-    if ((addr % BYTES_PER_LINE) != 0)
+    if ((from % BYTES_PER_LINE) != 0 && from < to)
     {
-        windowContents += QString("[") % formatAddress(addr) % QString("]") % nnbsp(2);
+        windowContents += QString("[") % formatAddress(from) % QString("]") % nnbsp(2);
 
         mem_addr a;
-        for (a = addr; (a % BYTES_PER_LINE) != 0; a += BYTES_PER_WORD)
+        for (a = from; (a % BYTES_PER_LINE) != 0; a += BYTES_PER_WORD)
 	{
             mem_word val = read_mem_word(a);
             windowContents += nnbsp(2) % formatWord(val, st_dataSegmentDisplayBase);
 	}
 
-        windowContents += formatAsChars(addr, a) % QString("<br>");
+        windowContents += formatAsChars(from, a) % QString("<br>");
     }
 
     return windowContents;

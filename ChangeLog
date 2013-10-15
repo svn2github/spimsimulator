@@ -1,3 +1,10 @@
+2013-10-15    <larus@IC-LMC-ICDO-01>
+
+	* QtSpim/datawin.c QtSpim/spimview.h
+	[https://sourceforge.net/p/spimsimulator/bugs/50]:
+	Did not properly format and print data segments that were not a
+	multiple of 16 bytes.
+
 2013-10-14    <larus@IC-LMC-ICDO-01>
 
 	* CPU/scanner.l [https://sourceforge.net/p/spimsimulator/bugs/49]:
