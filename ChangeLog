@@ -1,3 +1,8 @@
+2013-10-27  Larus  <larus@ubuntu>
+
+	* Setup/qtspim_debian_deployment/control.prototype:n
+	Added Installed-Size field in DEBIAN/control file.
+
 2013-10-15    <larus@IC-LMC-ICDO-01>
 
 	* QtSpim/datawin.c QtSpim/spimview.h
