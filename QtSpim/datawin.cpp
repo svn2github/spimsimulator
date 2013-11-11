@@ -236,7 +236,11 @@ QString formatWord(mem_word word, int base)
     }
     QString str = QString::number(word, base);
     str.remove(0, str.length() - width); // Negative hex number proceeded by 0xffffffff
-    return str.QString::rightJustified(width, '0');
+
+    if (str[0] == '-')                   // decimal starting with a negative sign
+        return str.rightJustified(width, ' ').replace(QRegExp(" "), "&nbsp;"); // Don't zero pad
+    else
+        return str.rightJustified(width, '0');
 }
 
 
