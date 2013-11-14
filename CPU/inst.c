@@ -1137,8 +1137,6 @@ eval_imm_expr (imm_expr *expr)
   else if (SYMBOL_IS_DEFINED (expr->symbol))
     {
       value = expr->offset + expr->symbol->addr;
-      if (expr->symbol->gp_flag) /* Addr is offset from $gp */
-	value += gp_midpoint;
     }
   else
     {
