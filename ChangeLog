@@ -1,12 +1,22 @@
+2013-12-09    <larus@IC-LMC-ICDO-01>
+
+	* Switched to Visual Studio 2012, ported installer to
+	InstallShieldLE since VS installer no longer supported.
+
+2013-12-08    <larus@IC-LMC-ICDO-01>
+
+	* CPU/version.h:
+	Version 9.1.10
+
 2013-11-14    <larus@IC-LMC-ICDO-01>
 
-	* CPU/inst.c (eval_imm_expr): 
+	* CPU/inst.c (eval_imm_expr):
 	[https://sourceforge.net/p/spimsimulator/bugs/51]:
 	Incorrectly handled indexed offset of extern symbol.
 
 2013-11-10    <larus@IC-LMC-ICDO-01>
 
-	* QtSpim/datawin.cpp (formatWord): 
+	* QtSpim/datawin.cpp (formatWord):
 	[https://sourceforge.net/p/spimsimulator/bugs/52]:
 	Negative decimal should be preceeded by spaces, not zeros, when
 	printing data.
