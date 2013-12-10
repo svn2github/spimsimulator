@@ -169,7 +169,7 @@ current_data_pc ()
 }
 
 
-/* Bump the address at which the next data will be stored by VALUE
+/* Bump the address at which the next data will be stored by DELTA
    bytes. */
 
 void
@@ -179,13 +179,13 @@ increment_data_pc (int delta)
     {
       next_k_data_pc += delta;
       if (k_data_top <= next_k_data_pc)
-        expand_k_data(ROUND_UP(next_k_data_pc - k_data_top, 64*K));
+        expand_k_data(ROUND_UP(next_k_data_pc - k_data_top + 1, 64*K));
     }
   else
     {
       next_data_pc += delta;
       if (data_top <= next_data_pc)
-        expand_data(ROUND_UP(next_data_pc - data_top, 64*K));
+        expand_data(ROUND_UP(next_data_pc - data_top + 1, 64*K));
     }
 }
 
@@ -230,8 +230,7 @@ lcomm_directive (char *name, int size)
 
       for ( ; size > 0; size --)
 	{
-	  set_mem_byte (DATA_PC, 0);
-	  increment_data_pc (1);
+	  store_byte (0);
 	}
     }
 }
@@ -243,13 +242,11 @@ void
 store_string (char *string, int length, bool null_terminate)
 {
   for ( ; length > 0; string ++, length --) {
-    set_mem_byte (DATA_PC, *string);
-    increment_data_pc(1);
+    store_byte (*string);
   }
   if (null_terminate)
     {
-      set_mem_byte (DATA_PC, 0);
-      increment_data_pc (1);
+      store_byte (0);
     }
 }
 
