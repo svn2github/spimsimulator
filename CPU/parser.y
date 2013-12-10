@@ -1481,6 +1481,16 @@ ASM_CODE:	LOAD_OPS	DEST	ADDRESS
 		  r_type_inst ($1.i, $2.i, $3.i, $4.i);
 		}
 
+
+	|	MOVECC_OPS	DEST	SRC1	Y_INT
+		{
+                    r_type_inst ($1.i,
+                                 $2.i,
+                                 $3.i,
+                                 (($4.i & 0x7) << 2));
+		}
+
+
 	|	FP_MOVEC_OPS	F_DEST	F_SRC1	REG
 		{
 		  r_co_type_inst ($1.i, $2.i, $3.i, $4.i);
@@ -1931,7 +1941,7 @@ FP_MOVE_OPS_REV2:	Y_MOV_PS_OP
 	;
 
 
-MOVEC_OPS:	Y_MOVF_OP
+MOVECC_OPS:	Y_MOVF_OP
 	|	Y_MOVT_OP
 	;
 

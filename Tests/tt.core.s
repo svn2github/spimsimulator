@@ -1015,14 +1015,14 @@ movf_:	.asciiz "Testing MOVF\n"
 	la $a0 movf_
 	syscall
 
-	li $2 0xf0
+	li $2 0x70
 	ctc1 $2 $25
 	li $2 1
 	li $3 0
 	li $4 2
 	movf $3 $2 1
 	bne $3 1 fail
-	movf $3 $4 7
+	movf $3 $4 6
 	bne $3 1 fail
 
 
@@ -1049,15 +1049,15 @@ movt_:	.asciiz "Testing MOVT\n"
 	la $a0 movt_
 	syscall
 
-	li $2 0xf
+	li $2 0x70
 	ctc1 $2 $25
 	li $2 1
 	li $3 0
 	li $4 2
 	movt $3 $2 1
-	bne $3 1 fail
-	movt $3 $4 7
-	bne $3 1 fail
+	bne $3 0 fail
+	movt $3 $4 6
+	bne $3 2 fail
 
 
 	.data

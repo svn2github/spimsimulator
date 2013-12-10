@@ -1,3 +1,18 @@
+2013-12-10    <larus@IC-LMC-ICDO-01>
+
+	* CPU/version.h:
+	Version 9.1.11:
+
+	* CPU/inst.c, CPU/op.h, CPU/parser.y, Tests/tt.core.s:
+	MOVF and MOVT instructions were improperly parsed, stored, and unparsed.
+
+	* CPU/data.c (increment_data_pc):
+	[https://sourceforge.net/p/spimsimulator/bugs/53]:
+	Off-by-one error in computing space when growing data segment.
+
+	* QtSpim/regwin.cpp:
+	Display FP control register index values, not contents.
+
 2013-12-09    <larus@IC-LMC-ICDO-01>
 
 	* Switched to Visual Studio 2012, ported installer to

@@ -808,10 +808,11 @@ format_an_inst (str_stream *ss, instruction *inst, mem_addr addr)
       ss_printf (ss, " $f%d, $f%d, $f%d", FD (inst), FS (inst), FT (inst));
       break;
 
+    case MOVC_TYPE_INST:
+	ss_printf (ss, " $%d, $%d, %d", RD (inst), RS (inst), RT (inst) >> 2);
+      break;
+
     case FP_MOVC_TYPE_INST:
-      if (OPCODE (inst) == Y_MOVF_OP)
-	ss_printf (ss, " $%d, $%d, %d", FD (inst), FS (inst), CC (inst));
-      else
 	ss_printf (ss, " $f%d, $f%d, %d", FD (inst), FS (inst), CC (inst));
       break;
 
@@ -1388,6 +1389,12 @@ inst_encode (instruction *inst)
 	      | REGS (FS (inst), 11)
 	      | REGS (FD (inst), 6));
 
+    case MOVC_TYPE_INST:
+      return (a_opcode
+	      | REGS (RS (inst), 21)
+	      | REGS (RT (inst), 16)
+	      | REGS (RD (inst), 11));
+
     case FP_MOVC_TYPE_INST:
       return (a_opcode
 	      | REGS (CC (inst), 18)
@@ -1539,6 +1546,9 @@ inst_decode (int32 val)
 
     case FP_R3_TYPE_INST:
       return (mk_r_inst (val, i_opcode, BIN_FS(val), BIN_FT(val), BIN_FD(val), 0));
+
+    case MOVC_TYPE_INST:
+      return (mk_r_inst (val, i_opcode, BIN_RS(val), BIN_RT(val), BIN_RD(val), 0));
 
     case FP_MOVC_TYPE_INST:
       return (mk_r_inst (val, i_opcode, BIN_FS(val), BIN_RT(val), BIN_FD(val), 0));
