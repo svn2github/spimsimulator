@@ -143,10 +143,10 @@ QString SpimView::formatSFPRegisters()
 {
     QString windowContents = "";
 
-    windowContents += formatSpecialSFPRegister(FIR_REG, "FIR", FIR_REG != oldFIR);
-    windowContents += formatSpecialSFPRegister(FCSR_REG, "FCSR", FCSR_REG != oldFCSR);
-    windowContents += formatSpecialSFPRegister(FCCR_REG, "FCCR", FCCR_REG != oldFCCR);
-    windowContents += formatSpecialSFPRegister(FEXR_REG, "FEXR", FEXR_REG != oldFEXR);
+    windowContents += formatSpecialSFPRegister(FIR, "FIR", FIR != oldFIR);
+    windowContents += formatSpecialSFPRegister(FCSR, "FCSR", FCSR != oldFCSR);
+    windowContents += formatSpecialSFPRegister(FCCR, "FCCR", FCCR != oldFCCR);
+    windowContents += formatSpecialSFPRegister(FEXR, "FEXR", FEXR != oldFEXR);
 
     windowContents += "<br /><center><b>Single Precision</b></center>";
 
@@ -166,10 +166,10 @@ void SpimView::CaptureSFPRegisters()
     {
         oldFPR_S[i] = FPR_S(i);
     }
-    oldFIR = FIR_REG;
-    oldFCSR = FCSR_REG;
-    oldFCCR = FCCR_REG;
-    oldFEXR = FEXR_REG;
+    oldFIR = FIR;
+    oldFCSR = FCSR;
+    oldFCCR = FCCR;
+    oldFEXR = FEXR;
 }
 
 
