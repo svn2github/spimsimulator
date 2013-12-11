@@ -1,3 +1,11 @@
+2013-12-11  Larus  <larus@icdhcp-1-098.epfl.ch>
+
+	* QtSpim/QtSpim.pro:
+	Set flags for clang on Mac OS.
+
+	* CPU/run.c (run_spim):
+	Eliminate nop assignments caught by clang.
+
 2013-12-10    <larus@IC-LMC-ICDO-01>
 
 	* CPU/version.h:

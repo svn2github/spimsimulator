@@ -641,7 +641,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, bool display)
 		    break;
 
 		  case 3:
-		    word = word;
 		    break;
 		  }
 #endif
@@ -681,7 +680,6 @@ run_spim (mem_addr initial_PC, int steps_to_run, bool display)
 		switch (byte)
 		  {
 		  case 0:
-		    word = word;
 		    break;
 
 		  case 1:
