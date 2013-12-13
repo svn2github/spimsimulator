@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <QtHelpProject version="1.0">
-     <namespace>larusstone.org.qtspim.1.0</namespace>
+     <namespace>org.larusstone.qtspim.1.0</namespace>
      <virtualFolder>doc</virtualFolder>
      <filterSection>
          <filterAttribute>qtspim</filterAttribute>
          <toc>
-             <section title="QtSpim Manual" ref="qtspim_help.html/">
+             <section title="QtSpim Manual" ref="qtspim_help.html#qtspim/">
                <section title="Getting Started with QtSpim" ref="qtspim_help.html#getting/" />
                <section title="Loading a Program" ref="qtspim_help.html#loading/" />
                <section title="Running a Program" ref="qtspim_help.html#running/" />
@@ -13,7 +13,7 @@
                <section title="Changing Registers and Memory" ref="qtspim_help.html#changing/" />
                <section title="Settings" ref="qtspim_help.html#settings/" />
              </section>
-             <section title="Assemblers, Linkers, and the SPIM Simulator" ref="HP_AppA.html/">
+             <section title="Assemblers, Linkers, and the SPIM Simulator" ref="HP_AppA.html#book/">
                <section title="Introduction" ref="HP_AppA.html#intro/" >
                   <section title="When to Use Assembly Language" ref="HP_AppA.html#when/" />
                   <section title="Drawbacks of Assembly Language" ref="HP_AppA.html#drawbacks/" />

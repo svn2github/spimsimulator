@@ -1,3 +1,11 @@
+2013-12-13  Larus  <larus@Jim-MacBook-Air.local>
+
+	* QtSpim/help/qtspim.qhcp, QtSpim/help/qtspim.qhp:
+	Fix naming issues in QtSpim help. Open at top of page.
+
+	* QtSpim/menu.cpp (help_ViewHelp):
+	Properly launch Qt Assistant on Mac OS.
+
 2013-12-11  Larus  <larus@icdhcp-1-098.epfl.ch>
 
 	* QtSpim/QtSpim.pro:

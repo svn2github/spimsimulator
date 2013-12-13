@@ -791,37 +791,43 @@ void SpimView::help_ViewHelp()
     QProcess *process = new QProcess;
     QStringList args;
 
-    QFileInfo fi1("help/qtspim.qhc");
-    if (fi1.exists())
+    char* helpFile[] = {"help/qtspim.qhc",      // Windows
+                        "/Applications/Utilities/qtspim.qhc", // Mac
+                        "/usr/share/qtspim/help/qtspim.qhc", // Linux
+                        0};
+
+    int i;
+    for (i = 0; helpFile[i] != 0; i += 1)
     {
-        args << QLatin1String("-collectionFile") << QLatin1String("help/qtspim.qhc");
-    }
-    else
-    {
-        QFileInfo fi2("/usr/share/qtspim/help/qtspim.qhc");
-        if (fi2.exists())
+        QFileInfo fi1(helpFile[i]);
+        if (fi1.exists())
         {
-            args << QLatin1String("-collectionFile") << QLatin1String("/usr/share/qtspim/help/qtspim.qhc");
-        }
-        else
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Cannot find help files. Check installation.");
-            msgBox.exec();
-            return;
+            args << QLatin1String("-collectionFile") << QLatin1String(helpFile[i]);
+            break;
         }
     }
 
-    process->start(QLatin1String("help/assistant"), args); // Windows install
+    if (helpFile[i] == 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Cannot find QtSpim help file. Check installation.");
+        msgBox.exec();
+        return;
+    }
+
+    char* assistant[] = {"help/assistant",      // Windows
+                         // For Mac, use application not bundle (which requires open helper command
+                         // and does not work, at least for qt 5.1.1):
+                         "/Applications/Utilities/Assistant.app/Contents/MacOS/Assistant", // Mac
+                         "assistant",           // Linux
+                         0};
+
+    process->start(QLatin1String(assistant[i]), args);
     if (!process->waitForStarted())
     {
-        process->start(QLatin1String("assistant"), args); // Default install
-        if (!process->waitForStarted())
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Cannot start help browser (Qt assistant). Check installation.");
-            msgBox.exec();
-        }
+        QMessageBox msgBox;
+        msgBox.setText("Cannot start help browser (Qt assistant). Check installation.");
+        msgBox.exec();
     }
 }
 
