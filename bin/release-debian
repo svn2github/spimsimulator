@@ -7,7 +7,11 @@
 # Usage: release-debian
 #
 
-RELEASE_DIR="QtSpim-build-desktop-Qt_in_PATH_Release"
+#Qt v.5:
+#RELEASE_DIR="build-QtSpim-Desktop_Qt_*-Release"
+
+#Qt v.4:
+RELEASE_DIR="QtSpim-build-desktop-Qt_*_Release"
 
 ARCH=`arch`
 case $ARCH in
@@ -27,26 +31,36 @@ mkdir -p Setup/debian/usr/share/applications
 find Setup/debian -type d | xargs chmod 755   # this is necessary on Debian Woody, don't ask me why
 
 install -s $RELEASE_DIR/QtSpim Setup/debian/usr/bin/qtspim
+chmod 0755 Setup/debian/usr/bin/qtspim
 chrpath -d Setup/debian/usr/bin/qtspim
 
 cp -f Documentation/qtspim.man Setup/debian/usr/share/man/man1/qtspim.1
+chmod -R 0644 Setup/debian/usr/share/man/man1/qtspim.1
 gzip -f --best Setup/debian/usr/share/man/man1/qtspim.1
 
 sed "s/<<ARCH>>/$ARCH/" < Setup/qtspim_debian_deployment/control.prototype > Setup/debian/DEBIAN/control
 cp -f Setup/qtspim_debian_deployment/postinst Setup/debian/DEBIAN
+chmod -R 0755 Setup/debian/DEBIAN/postinst
 
 cp -f Setup/qtspim_debian_deployment/copyright Setup/debian/usr/share/doc/qtspim
+chmod -R 0644 Setup/debian/usr/share/doc/qtspim/copyright
 
 cp -f Setup/qtspim_debian_deployment/changelog Setup/debian/usr/share/doc/qtspim/
+chmod -R 0644 Setup/debian/usr/share/doc/qtspim/changelog
 gzip -f --best Setup/debian/usr/share/doc/qtspim/changelog
 
 cp -f $RELEASE_DIR/help/qtspim.qch Setup/debian/usr/share/qtspim/help
+chmod -R 0644 Setup/debian/usr/share/qtspim/help/qtspim.qch
 cp -f $RELEASE_DIR/help/qtspim.qhc Setup/debian/usr/share/qtspim/help
+chmod -R 0644 Setup/debian/usr/share/qtspim/help/qtspim.qhc
 
 cp -f Setup/qtspim_debian_deployment/qtspim.desktop Setup/debian/usr/share/applications
+chmod -R 0644 Setup/debian/usr/share/applications/qtspim.desktop
 cp -f Setup/NewIcon48x48.png Setup/debian/usr/share/qtspim/qtspim.png
+chmod -R 0644 Setup/debian/usr/share/qtspim/qtspim.png
 
 cp -f helloworld.s Setup/debian/usr/share/qtspim/helloworld.s
+chmod -R 0644 Setup/debian/usr/share/qtspim/helloworld.s
 
 fakeroot dpkg-deb --build Setup/debian
 mv Setup/debian.deb qtspim.deb
