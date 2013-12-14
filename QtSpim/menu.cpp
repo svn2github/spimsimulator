@@ -815,7 +815,7 @@ void SpimView::help_ViewHelp()
         return;
     }
 
-    char* assistant[] = {"help/assistant",      // Windows
+    char* assistant[] = {"assistant",      // Windows
                          // For Mac, use application not bundle (which requires open helper command
                          // and does not work, at least for qt 5.1.1):
                          "/Applications/Utilities/Assistant.app/Contents/MacOS/Assistant", // Mac

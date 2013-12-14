@@ -63,7 +63,7 @@
 		<createdtm>06/21/1999 14:00</createdtm>
 		<lastsavedtm>07/14/2000 17:50</lastsavedtm>
 		<pagecount>200</pagecount>
-		<wordcount>8</wordcount>
+		<wordcount>0</wordcount>
 		<charcount/>
 		<appname>InstallShield Express</appname>
 		<security>1</security>
@@ -342,28 +342,38 @@
 		<row><td>C__1B22E60E774B4BC386BFDEC1B3FC4450</td><td>{D5B92E9E-8D81-4384-82DC-7022B211B722}</td><td>INSTALLDIR</td><td>2</td><td/><td>_1B22E60E774B4BC386BFDEC1B3FC4450</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>C__4106290115B24D53A730622715051AE8</td><td>{379CD259-3877-477C-A72A-2F8EFF79FA2F}</td><td>INSTALLDIR</td><td>2</td><td/><td>_4106290115B24D53A730622715051AE8</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>C__A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>{CD4E392D-EF51-483D-97A1-695C5123D043}</td><td>INSTALLDIR</td><td>2</td><td/><td>_A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>C__A7E3F3768DBF4B68BAEDF69987062906</td><td>{492958DA-1F88-419B-AD58-ECD5B8DF06C7}</td><td>INSTALLDIR</td><td>2</td><td/><td>_A7E3F3768DBF4B68BAEDF69987062906</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{EACA1788-36C2-4146-8417-EDF362A86E43}</td><td>_398BF9A5D3F34A23B26AB42FF405A104</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{34EE1631-080A-495F-A3D0-858920925A10}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{68189D64-7066-4D01-8426-4A62BC76B76A}</td><td>PLATFORMS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5CLucene.dll</td><td>{9BF15E86-B5D6-4D5E-A79A-6318291B2F52}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5clucene.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Core.dll</td><td>{A3944B0D-CC55-4103-8EFE-0FA7BC49C9AF}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5core.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Gui.dll</td><td>{7AEE16E7-9B1B-4890-9117-E7CF3DD90C4E}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5gui.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Help.dll</td><td>{5B605A26-7FED-4D9D-916B-C189EA127451}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5help.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5Multimedia.dll</td><td>{2FBD5C0C-594A-4A94-8FA3-F63E4F0948A0}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5multimedia.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5MultimediaWidgets.dll</td><td>{B26D0A97-F003-46FF-8688-D3CD9BAB5890}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5multimediawidgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Network.dll</td><td>{9B8F2FC4-AB9D-40C1-AF17-9E8C9EBABC61}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5network.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5OpenGL.dll</td><td>{F38E52F4-E8B6-445D-B29B-02106E3A824E}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5opengl.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5PrintSupport.dll</td><td>{8A8D1C75-84F7-41BF-A984-DEE512C5A8DD}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5printsupport.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Qml.dll</td><td>{1F54B7A2-21DF-465A-A6C4-DE264614E8E9}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5qml.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Quick.dll</td><td>{4D6511D2-9356-4C3F-B7BD-1C9C91C69648}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5quick.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5Sensors.dll</td><td>{A5172B5D-3F65-4B74-9C3D-C268D9FB506A}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5sensors.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Sql.dll</td><td>{F9455031-A79D-46C9-A57D-97EDEA24BB38}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5sql.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5V8.dll</td><td>{143EEB21-BF3F-46F8-BDC9-A43005B0EB26}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5v8.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5WebKit.dll</td><td>{22352878-C2F5-4D33-A013-047ADAC4D6F7}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5webkit.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5WebKitWidgets.dll</td><td>{6405E587-BCA8-4590-B956-ADCA65691BFF}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5webkitwidgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Widgets.dll</td><td>{7DB6A2E5-506F-465B-A9A3-5D184CBFC635}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5widgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>QtSpim.exe</td><td>{501E0001-81B4-401A-9986-42A6B8E0E463}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtspim.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>assistant.exe</td><td>{D3B5D839-F66E-4F4C-9BC5-6512A4DF36C3}</td><td>INSTALLDIR</td><td>2</td><td/><td>assistant.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>icuin51.dll</td><td>{A0492161-22B1-4B99-9B51-CA8588FE2D19}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuin51.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>icuuc51.dll</td><td>{DEACBFA2-CE7F-4BB8-8E40-C77511645612}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuuc51.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>libEGL.dll</td><td>{1C9E8B6C-93ED-4293-8942-6C353C0D6C3F}</td><td>INSTALLDIR</td><td>2</td><td/><td>libegl.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>libGLESv2.dll</td><td>{111AB0EB-CFFF-4ABD-980D-EDE930380615}</td><td>INSTALLDIR</td><td>2</td><td/><td>libglesv2.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qjpeg.dll</td><td>{71DC5667-3B21-46AB-A327-E50A412A237D}</td><td>_58083AB70661412FBC208891D7438D80</td><td>2</td><td/><td>qjpeg.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qsqlite.dll</td><td>{5F303357-1EEB-435B-813B-BCD280460782}</td><td>_C456793993CA4B97A2546245FF484A3C</td><td>2</td><td/><td>qsqlite.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qsqlodbc.dll</td><td>{405EEA82-5285-4F03-BC2D-00E4EC8B7DCE}</td><td>_C456793993CA4B97A2546245FF484A3C</td><td>2</td><td/><td>qsqlodbc.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qsqlpsql.dll</td><td>{656CD5F8-BA56-415E-A47C-7448278F9C9D}</td><td>_C456793993CA4B97A2546245FF484A3C</td><td>2</td><td/><td>qsqlpsql.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qsvg.dll</td><td>{50C63EC9-9D83-4BA8-9CC7-F1E23DE1E1BB}</td><td>_58083AB70661412FBC208891D7438D80</td><td>2</td><td/><td>qsvg.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>qwindows.dll</td><td>{1C14FD73-A3E9-431A-A811-FE5D443AD4A9}</td><td>PLATFORMS</td><td>2</td><td/><td>qwindows.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -960,7 +970,7 @@
 		<row><td>InstallChangeFolder</td><td>Up</td><td>DirectoryListUp</td><td>0</td><td>1</td><td>0</td></row>
 		<row><td>InstallWelcome</td><td>Back</td><td>NewDialog</td><td>SplashBitmap</td><td>Display_IsBitmapDlg</td><td>0</td></row>
 		<row><td>InstallWelcome</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
-		<row><td>InstallWelcome</td><td>Next</td><td>NewDialog</td><td>LicenseAgreement</td><td>1</td><td>0</td></row>
+		<row><td>InstallWelcome</td><td>Next</td><td>NewDialog</td><td>ReadyToInstall</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>Back</td><td>NewDialog</td><td>InstallWelcome</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>ISPrintButton</td><td>DoAction</td><td>ISPrint</td><td>1</td><td>0</td></row>
@@ -995,7 +1005,7 @@
 		<row><td>ReadmeInformation</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>1</td></row>
 		<row><td>ReadmeInformation</td><td>Next</td><td>NewDialog</td><td>CustomerInformation</td><td>1</td><td>1</td></row>
 		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>CustomSetup</td><td>Installed OR _IsSetupTypeMin = "Custom"</td><td>2</td></row>
-		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>LicenseAgreement</td><td>NOT Installed</td><td>1</td></row>
+		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>InstallWelcome</td><td>NOT Installed</td><td>1</td></row>
 		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>MaintenanceType</td><td>Installed AND _IsMaintenance = "Reinstall"</td><td>3</td></row>
 		<row><td>ReadyToInstall</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>ReadyToInstall</td><td>InstallNow</td><td>EndDialog</td><td>Return</td><td>OutOfNoRbDiskSpace &lt;&gt; 1</td><td>0</td></row>
@@ -1073,6 +1083,7 @@
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>PLATFORMS</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1090,6 +1101,7 @@
 		<row><td>ISSelfRegisterFinalize</td><td>1</td><td>ISSELFREG.DLL</td><td>ISSelfRegisterFinalize</td><td/><td/></row>
 		<row><td>ISUnSelfRegisterFiles</td><td>3073</td><td>ISSELFREG.DLL</td><td>ISUnSelfRegisterFiles</td><td/><td/></row>
 		<row><td>SetARPINSTALLLOCATION</td><td>51</td><td>ARPINSTALLLOCATION</td><td>[INSTALLDIR]</td><td/><td/></row>
+		<row><td>SetARPReadme</td><td>51</td><td>ARPREADME</td><td>C:\Users\larus\Software\spimsimulator\README</td><td/><td/></row>
 		<row><td>SetAllUsersProfileNT</td><td>51</td><td>ALLUSERSPROFILE</td><td>[%SystemRoot]\Profiles\All Users</td><td/><td/></row>
 		<row><td>ShowMsiLog</td><td>226</td><td>SystemFolder</td><td>[SystemFolder]notepad.exe "[MsiLogFileLocation]"</td><td/><td>Shows Property-driven MSI Log</td></row>
 		<row><td>setAllUsersProfile2K</td><td>51</td><td>ALLUSERSPROFILE</td><td>[%ALLUSERSPROFILE]</td><td/><td/></row>
@@ -1163,7 +1175,6 @@
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
 		<row><td>INSTALLDIR</td><td>QTSPIM</td><td>.</td><td/><td>0</td><td/></row>
-		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
 		<row><td>ISMyProductDir</td><td>ISMyCompanyDir</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>ISYourDataBaseDir</td><td>INSTALLDIR</td><td>Database</td><td/><td>0</td><td/></row>
@@ -1172,6 +1183,7 @@
 		<row><td>MY_PRODUCT_NAME</td><td>LARUSSTONE</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
+		<row><td>PLATFORMS</td><td>INSTALLDIR</td><td>PLATFO~1|platforms</td><td/><td>0</td><td/></row>
 		<row><td>PersonalFolder</td><td>TARGETDIR</td><td>.:Personal</td><td/><td>0</td><td/></row>
 		<row><td>PrimaryVolumePath</td><td>TARGETDIR</td><td>.:Primar~1|PrimaryVolumePath</td><td/><td>0</td><td/></row>
 		<row><td>PrintHoodFolder</td><td>TARGETDIR</td><td>.:PRINTH~1|PrintHood</td><td/><td>0</td><td/></row>
@@ -1889,28 +1901,38 @@
 		<row><td>AlwaysInstall</td><td>C__1B22E60E774B4BC386BFDEC1B3FC4450</td></row>
 		<row><td>AlwaysInstall</td><td>C__4106290115B24D53A730622715051AE8</td></row>
 		<row><td>AlwaysInstall</td><td>C__A1F943D6FEF143A8A06E01B8DBAD69D8</td></row>
-		<row><td>AlwaysInstall</td><td>C__A7E3F3768DBF4B68BAEDF69987062906</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5CLucene.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Core.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Gui.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Help.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5Multimedia.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5MultimediaWidgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Network.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5OpenGL.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5PrintSupport.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Qml.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Quick.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5Sensors.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Sql.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5V8.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5WebKit.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5WebKitWidgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Widgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>QtSpim.exe</td></row>
 		<row><td>AlwaysInstall</td><td>assistant.exe</td></row>
+		<row><td>AlwaysInstall</td><td>icuin51.dll</td></row>
+		<row><td>AlwaysInstall</td><td>icuuc51.dll</td></row>
+		<row><td>AlwaysInstall</td><td>libEGL.dll</td></row>
+		<row><td>AlwaysInstall</td><td>libGLESv2.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qjpeg.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qsqlite.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qsqlodbc.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qsqlpsql.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qsvg.dll</td></row>
+		<row><td>AlwaysInstall</td><td>qwindows.dll</td></row>
 	</table>
 
 	<table name="File">
@@ -1928,8 +1950,11 @@
 		<row><td>_1B22E60E774B4BC386BFDEC1B3FC4450</td><td>C__1B22E60E774B4BC386BFDEC1B3FC4450</td><td>NewIcon.ico</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\QtSpim\windows_images\NewIcon.ico</td><td>5</td><td/></row>
 		<row><td>_4106290115B24D53A730622715051AE8</td><td>C__4106290115B24D53A730622715051AE8</td><td>HELLOW~1.S|helloworld.s</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\helloworld.s</td><td>5</td><td/></row>
 		<row><td>_A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>C__A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>NEWICO~1.PNG|NewIcon256x256.png</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\Setup\NewIcon256x256.png</td><td>5</td><td/></row>
-		<row><td>_A7E3F3768DBF4B68BAEDF69987062906</td><td>C__A7E3F3768DBF4B68BAEDF69987062906</td><td>INSTAL~1.BMP|InstallBitmapBanner.bmp</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\Setup\InstallBitmapBanner.bmp</td><td>5</td><td/></row>
 		<row><td>assistant.exe</td><td>assistant.exe</td><td>ASSIST~1.EXE|assistant.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\assistant.exe</td><td>1</td><td/></row>
+		<row><td>icuin51.dll</td><td>icuin51.dll</td><td>icuin51.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\icuin51.dll</td><td>1</td><td/></row>
+		<row><td>icuuc51.dll</td><td>icuuc51.dll</td><td>icuuc51.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\icuuc51.dll</td><td>1</td><td/></row>
+		<row><td>libegl.dll</td><td>libEGL.dll</td><td>libEGL.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\libEGL.dll</td><td>1</td><td/></row>
+		<row><td>libglesv2.dll</td><td>libGLESv2.dll</td><td>LIBGLE~1.DLL|libGLESv2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\libGLESv2.dll</td><td>1</td><td/></row>
 		<row><td>qjpeg.dll</td><td>qjpeg.dll</td><td>qjpeg.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\plugins\imageformats\qjpeg.dll</td><td>1</td><td/></row>
 		<row><td>qsqlite.dll</td><td>qsqlite.dll</td><td>qsqlite.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\plugins\sqldrivers\qsqlite.dll</td><td>1</td><td/></row>
 		<row><td>qsqlodbc.dll</td><td>qsqlodbc.dll</td><td>qsqlodbc.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\plugins\sqldrivers\qsqlodbc.dll</td><td>1</td><td/></row>
@@ -1939,17 +1964,23 @@
 		<row><td>qt5core.dll</td><td>Qt5Core.dll</td><td>Qt5Core.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Core.dll</td><td>1</td><td/></row>
 		<row><td>qt5gui.dll</td><td>Qt5Gui.dll</td><td>Qt5Gui.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Gui.dll</td><td>1</td><td/></row>
 		<row><td>qt5help.dll</td><td>Qt5Help.dll</td><td>Qt5Help.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Help.dll</td><td>1</td><td/></row>
+		<row><td>qt5multimedia.dll</td><td>Qt5Multimedia.dll</td><td>QT5MUL~1.DLL|Qt5Multimedia.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Multimedia.dll</td><td>1</td><td/></row>
+		<row><td>qt5multimediawidgets.dll</td><td>Qt5MultimediaWidgets.dll</td><td>QT5MUL~1.DLL|Qt5MultimediaWidgets.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5MultimediaWidgets.dll</td><td>1</td><td/></row>
 		<row><td>qt5network.dll</td><td>Qt5Network.dll</td><td>QT5NET~1.DLL|Qt5Network.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Network.dll</td><td>1</td><td/></row>
+		<row><td>qt5opengl.dll</td><td>Qt5OpenGL.dll</td><td>QT5OPE~1.DLL|Qt5OpenGL.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5OpenGL.dll</td><td>1</td><td/></row>
 		<row><td>qt5printsupport.dll</td><td>Qt5PrintSupport.dll</td><td>QT5PRI~1.DLL|Qt5PrintSupport.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5PrintSupport.dll</td><td>1</td><td/></row>
 		<row><td>qt5qml.dll</td><td>Qt5Qml.dll</td><td>Qt5Qml.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Qml.dll</td><td>1</td><td/></row>
 		<row><td>qt5quick.dll</td><td>Qt5Quick.dll</td><td>Qt5Quick.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Quick.dll</td><td>1</td><td/></row>
+		<row><td>qt5sensors.dll</td><td>Qt5Sensors.dll</td><td>QT5SEN~1.DLL|Qt5Sensors.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Sensors.dll</td><td>1</td><td/></row>
 		<row><td>qt5sql.dll</td><td>Qt5Sql.dll</td><td>Qt5Sql.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Sql.dll</td><td>1</td><td/></row>
+		<row><td>qt5v8.dll</td><td>Qt5V8.dll</td><td>Qt5V8.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5V8.dll</td><td>1</td><td/></row>
 		<row><td>qt5webkit.dll</td><td>Qt5WebKit.dll</td><td>QT5WEB~1.DLL|Qt5WebKit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5WebKit.dll</td><td>1</td><td/></row>
 		<row><td>qt5webkitwidgets.dll</td><td>Qt5WebKitWidgets.dll</td><td>QT5WEB~1.DLL|Qt5WebKitWidgets.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5WebKitWidgets.dll</td><td>1</td><td/></row>
 		<row><td>qt5widgets.dll</td><td>Qt5Widgets.dll</td><td>QT5WID~1.DLL|Qt5Widgets.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\Qt5Widgets.dll</td><td>1</td><td/></row>
 		<row><td>qtspim.exe</td><td>QtSpim.exe</td><td>QtSpim.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\larus\Software\spimsimulator\build-QtSpim-Desktop_Qt_5_1_1_MSVC2012_32bit-Release\release\QtSpim.exe</td><td>1</td><td/></row>
 		<row><td>qtspim.qch</td><td>ISX_DEFAULTCOMPONENT</td><td>qtspim.qch</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\larus\Software\spimsimulator\build-QtSpim-Desktop_Qt_5_1_1_MSVC2012_32bit-Release\help\qtspim.qch</td><td>1</td><td/></row>
 		<row><td>qtspim.qhc</td><td>ISX_DEFAULTCOMPONENT</td><td>qtspim.qhc</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\larus\Software\spimsimulator\build-QtSpim-Desktop_Qt_5_1_1_MSVC2012_32bit-Release\help\qtspim.qhc</td><td>1</td><td/></row>
+		<row><td>qwindows.dll</td><td>qwindows.dll</td><td>qwindows.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\plugins\platforms\qwindows.dll</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2094,28 +2125,38 @@
 		<row><td>C__1B22E60E774B4BC386BFDEC1B3FC4450</td><td/><td/><td>_7EAF6A02_A4E2_44DE_9575_DD518821DCBD_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>C__4106290115B24D53A730622715051AE8</td><td/><td/><td>_155610C4_9B75_4686_AAE3_93FDC636478B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>C__A1F943D6FEF143A8A06E01B8DBAD69D8</td><td/><td/><td>_C7CCB73B_6DC6_43C0_8F95_BB0BD8933000_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>C__A7E3F3768DBF4B68BAEDF69987062906</td><td/><td/><td>_CD2A3291_D727_4215_AD2C_C6460B1A9EBF_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_46FE60EB_86FF_4FDA_95B1_CE1F42D7C590_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_74CB8EC6_D41F_498B_B60C_162B94B74273_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_4CF20506_FF86_44FC_9962_A2C6A25D958A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5CLucene.dll</td><td/><td/><td>_C5DB1FD7_9C7E_480D_B305_C42EBB893264_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Core.dll</td><td/><td/><td>_A63C87B9_543B_423C_BB92_210E381DD583_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Gui.dll</td><td/><td/><td>_823BEDF9_9065_46F1_A33F_8DDC0C228690_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Help.dll</td><td/><td/><td>_205CBD7D_DF25_49E0_B410_493F190589B6_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5Multimedia.dll</td><td/><td/><td>_13790604_0757_49B7_9E93_121C2F62E0C6_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5MultimediaWidgets.dll</td><td/><td/><td>_4017B82B_0FA6_4E3D_9ECB_B9032924047E_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Network.dll</td><td/><td/><td>_C5E52233_8AD2_4AC3_93B6_EE8C08403925_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5OpenGL.dll</td><td/><td/><td>_7B19D30D_CABB_42AF_9B44_831049BAA6D6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5PrintSupport.dll</td><td/><td/><td>_037998AF_44D2_4DD8_A598_7DD3E0E71455_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Qml.dll</td><td/><td/><td>_64F0CAF0_5C7D_41D4_8965_D2393380C0B2_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Quick.dll</td><td/><td/><td>_1CD23ECF_A481_46B6_B04E_8920C348B25B_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5Sensors.dll</td><td/><td/><td>_3E165CF0_5551_4428_ACC7_284C43DD225B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Sql.dll</td><td/><td/><td>_BBA4CF04_7A25_441E_BC96_F006C3C98A7A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5V8.dll</td><td/><td/><td>_D3AF0BF9_F592_4A60_AE94_37BA4410C901_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5WebKit.dll</td><td/><td/><td>_1C005165_38AB_45D0_9BB3_EAF2679A0003_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5WebKitWidgets.dll</td><td/><td/><td>_CF4EFF16_E4EB_452F_8F6E_BF08AC120B89_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Widgets.dll</td><td/><td/><td>_E0118DE9_CE9D_4BAC_859F_D3D5D933142A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>QtSpim.exe</td><td/><td/><td>_CC0F435C_F454_4500_95F3_731CE2D518E9_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>assistant.exe</td><td/><td/><td>_E213D9BE_505A_4CEF_907E_C40631061484_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>icuin51.dll</td><td/><td/><td>_FFEA38E9_1EB6_4463_BDAF_6B8DFBA828F4_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>icuuc51.dll</td><td/><td/><td>_8C75EDD6_97B0_4E39_B117_8A38C89784FE_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>libEGL.dll</td><td/><td/><td>_115FFCB2_4D01_4B1F_9590_C879082755A0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>libGLESv2.dll</td><td/><td/><td>_74C8CFA5_E11A_4AA6_AD37_A06A0746277C_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qjpeg.dll</td><td/><td/><td>_0CBEB838_EA45_4C04_8A43_A07346105B61_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qsqlite.dll</td><td/><td/><td>_B7343C70_A5E5_40CF_A06D_B7BDA405C761_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qsqlodbc.dll</td><td/><td/><td>_9DE7D317_B5A8_4F7F_A75D_922921C691CE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qsqlpsql.dll</td><td/><td/><td>_0417DA0B_FF37_4C8D_B2F5_F5870512608A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qsvg.dll</td><td/><td/><td>_D12D8A0F_DDEA_42E9_B903_3ABA69D16898_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>qwindows.dll</td><td/><td/><td>_71724811_D08C_47C4_A8C7_714AD0C1DF7A_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2737,7 +2778,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Larus-Stone</td><td>0</td><td/><td>1176601203</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>LarusStone</td><td>0</td><td/><td>1981901641</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>1176617555</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1176617555</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>1176617555</td></row>
@@ -3841,7 +3882,7 @@
 		<row><td>ID_STRING2</td><td>1033</td><td>LarusStone</td><td>0</td><td/><td>1176619603</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>James Larus</td><td>0</td><td/><td>1176599315</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Install QtSpim</td><td>0</td><td/><td>1176601203</td></row>
-		<row><td>ID_STRING5</td><td>1033</td><td>JamesLarus</td><td>0</td><td/><td>1176580851</td></row>
+		<row><td>ID_STRING5</td><td>1033</td><td>James Larus</td><td>0</td><td/><td>1981885257</td></row>
 		<row><td>ID_STRING6</td><td>1033</td><td>https://sourceforge.net/projects/spimsimulator/</td><td>0</td><td/><td>1176605459</td></row>
 		<row><td>ID_STRING7</td><td>1033</td><td>https://sourceforge.net/projects/spimsimulator/</td><td>0</td><td/><td>1176619795</td></row>
 		<row><td>ID_STRING8</td><td>1033</td><td>QtSpim</td><td>0</td><td/><td>1176597875</td></row>
@@ -4046,6 +4087,7 @@
 		<row><td>SelfRegModules</td><td/><td>5600</td><td>SelfRegModules</td><td/></row>
 		<row><td>SelfUnregModules</td><td/><td>2200</td><td>SelfUnregModules</td><td/></row>
 		<row><td>SetARPINSTALLLOCATION</td><td/><td>1100</td><td>SetARPINSTALLLOCATION</td><td/></row>
+		<row><td>SetARPReadme</td><td/><td>1001</td><td/><td/></row>
 		<row><td>SetAllUsersProfileNT</td><td>VersionNT = 400</td><td>970</td><td/><td/></row>
 		<row><td>SetODBCFolders</td><td/><td>1200</td><td>SetODBCFolders</td><td/></row>
 		<row><td>StartServices</td><td>VersionNT</td><td>5900</td><td>StartServices</td><td/></row>
@@ -4090,7 +4132,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{31DF2F8D-E6E0-4E4F-AC54-633408785D51}</td></row>
 		<row><td>ISUSSignature</td><td>{BF3E7C49-6E28-4A38-B38C-10A1F42A9541}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppV,viewProject,viewRealSetupDesign,viewSetupDesign,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewDependencies,viewShortcuts,viewRegistry,viewFileExtensions,viewUI,viewBillboards,viewTextMessages,viewSystemSearch,viewInstallScriptStd,viewRelease,viewFeatureFiles</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppV,viewProject,viewRealSetupDesign,viewSetupDesign,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewDependencies,viewShortcuts,viewRegistry,viewFileExtensions,viewUI,viewBillboards,viewTextMessages,viewSystemSearch,viewInstallScriptStd,viewRelease,viewFeatureFiles,viewSetupTypes</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4128,6 +4170,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PatchWelcome</td><td>Installed And PATCH And Not IS_MAJOR_UPGRADE</td><td>1205</td><td>Patch Panel</td><td/></row>
 		<row><td>RMCCPSearch</td><td>Not CCP_SUCCESS And CCP_TEST</td><td>600</td><td>RMCCPSearch</td><td/></row>
 		<row><td>ResolveSource</td><td>Not Installed</td><td>990</td><td>ResolveSource</td><td/></row>
+		<row><td>SetARPReadme</td><td/><td>1001</td><td/><td/></row>
 		<row><td>SetAllUsersProfileNT</td><td>VersionNT = 400</td><td>970</td><td/><td/></row>
 		<row><td>SetupCompleteError</td><td/><td>-3</td><td>SetupCompleteError</td><td/></row>
 		<row><td>SetupCompleteSuccess</td><td/><td>-1</td><td>SetupCompleteSuccess</td><td/></row>
@@ -4399,8 +4442,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ARPCONTACT</td><td>##ID_STRING3##</td><td/></row>
 		<row><td>ARPHELPLINK</td><td>##ID_STRING6##</td><td/></row>
 		<row><td>ARPINSTALLLOCATION</td><td/><td/></row>
-		<row><td>ARPNOREMOVE</td><td>1</td><td/></row>
+		<row><td>ARPNOREPAIR</td><td>1</td><td/></row>
 		<row><td>ARPPRODUCTICON</td><td>ARPPRODUCTICON.exe</td><td/></row>
+		<row><td>ARPREADME</td><td>C:\Users\larus\Software\spimsimulator\README</td><td/></row>
 		<row><td>ARPSIZE</td><td/><td/></row>
 		<row><td>ARPURLINFOABOUT</td><td>##ID_STRING1##</td><td/></row>
 		<row><td>ARPURLUPDATEINFO</td><td>##ID_STRING7##</td><td/></row>
@@ -4470,7 +4514,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{D27DF00B-88A1-48ED-9343-15427D005C7B}</td><td/></row>
 		<row><td>ProductName</td><td>QtSpim</td><td/></row>
-		<row><td>ProductVersion</td><td>9.1.10</td><td/></row>
+		<row><td>ProductVersion</td><td>9.1.12</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4630,8 +4674,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>NewShortcut1</td><td>StartupFolder</td><td>##ID_STRING8##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut1_8520F91F68DB4124A43AB1DC2786FAF2.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING9##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut2_9F6D278CE6FA4FFEB8D8382FD1DF33DC.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut1</td><td>StartupFolder</td><td>##ID_STRING8##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut1_8520F91F68DB4124A43AB1DC2786FAF2.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING9##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut2_9F6D278CE6FA4FFEB8D8382FD1DF33DC.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
@@ -4658,7 +4702,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ArialBlueStrike10</td><td>Arial</td><td>10</td><td>16711680</td><td>8</td></row>
 		<row><td>CourierNew8</td><td>Courier New</td><td>8</td><td/><td/></row>
 		<row><td>CourierNew9</td><td>Courier New</td><td>9</td><td/><td/></row>
-		<row><td>ExpressDefault</td><td>Tahoma</td><td>8</td><td/><td/></row>
+		<row><td>ExpressDefault</td><td>Tahoma</td><td>10</td><td>0</td><td>0</td></row>
 		<row><td>MSGothic9</td><td>MS Gothic</td><td>9</td><td/><td/></row>
 		<row><td>MSSGreySerif8</td><td>MS Sans Serif</td><td>8</td><td>8421504</td><td/></row>
 		<row><td>MSSWhiteSerif8</td><td>Tahoma</td><td>8</td><td>16777215</td><td/></row>
