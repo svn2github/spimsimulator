@@ -4674,7 +4674,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>NewShortcut1</td><td>StartupFolder</td><td>##ID_STRING8##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut1_8520F91F68DB4124A43AB1DC2786FAF2.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut1</td><td>ProgramMenuFolder</td><td>##ID_STRING8##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut1_8520F91F68DB4124A43AB1DC2786FAF2.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING9##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut2_9F6D278CE6FA4FFEB8D8382FD1DF33DC.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
