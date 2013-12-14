@@ -1,3 +1,11 @@
+2013-12-14  Larus  <larus@Jim-MacBook-Air.local>
+
+	* CPU/version.h (SPIM_VERSION):
+	Version 9.1.12
+
+	* QtSpim/menu.cpp (help_ViewHelp):
+	Further adjustment of file positions on Mac OS.
+
 2013-12-13  Larus  <larus@Jim-MacBook-Air.local>
 
 	* QtSpim/help/qtspim.qhcp, QtSpim/help/qtspim.qhp:

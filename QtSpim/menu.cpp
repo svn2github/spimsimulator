@@ -792,7 +792,7 @@ void SpimView::help_ViewHelp()
     QStringList args;
 
     char* helpFile[] = {"help/qtspim.qhc",      // Windows
-                        "/Applications/Utilities/qtspim.qhc", // Mac
+                        "/Library/Application Support/QtSpim/help/qtspim.qhc", // Mac
                         "/usr/share/qtspim/help/qtspim.qhc", // Linux
                         0};
 
