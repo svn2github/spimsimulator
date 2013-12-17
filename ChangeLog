@@ -1,3 +1,7 @@
+2013-12-17    <larus@IC-LMC-ICDO-01>
+
+	* New release of QtSpim for Windows to include msvcp110.dll.
+
 2013-12-14  Larus  <larus@Jim-MacBook-Air.local>
 
 	* CPU/version.h (SPIM_VERSION):
