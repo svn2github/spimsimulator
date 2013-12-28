@@ -364,6 +364,7 @@
 		<row><td>Qt5Widgets.dll</td><td>{7DB6A2E5-506F-465B-A9A3-5D184CBFC635}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5widgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>QtSpim.exe</td><td>{501E0001-81B4-401A-9986-42A6B8E0E463}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtspim.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>assistant.exe</td><td>{D3B5D839-F66E-4F4C-9BC5-6512A4DF36C3}</td><td>INSTALLDIR</td><td>2</td><td/><td>assistant.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>icudt51.dll</td><td>{A28CE277-FFB7-40D0-81F6-78C490D97A31}</td><td>INSTALLDIR</td><td>2</td><td/><td>icudt51.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>icuin51.dll</td><td>{A0492161-22B1-4B99-9B51-CA8588FE2D19}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuin51.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>icuuc51.dll</td><td>{DEACBFA2-CE7F-4BB8-8E40-C77511645612}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuuc51.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>libEGL.dll</td><td>{1C9E8B6C-93ED-4293-8942-6C353C0D6C3F}</td><td>INSTALLDIR</td><td>2</td><td/><td>libegl.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1923,6 +1924,7 @@
 		<row><td>AlwaysInstall</td><td>Qt5Widgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>QtSpim.exe</td></row>
 		<row><td>AlwaysInstall</td><td>assistant.exe</td></row>
+		<row><td>AlwaysInstall</td><td>icudt51.dll</td></row>
 		<row><td>AlwaysInstall</td><td>icuin51.dll</td></row>
 		<row><td>AlwaysInstall</td><td>icuuc51.dll</td></row>
 		<row><td>AlwaysInstall</td><td>libEGL.dll</td></row>
@@ -1951,6 +1953,7 @@
 		<row><td>_4106290115B24D53A730622715051AE8</td><td>C__4106290115B24D53A730622715051AE8</td><td>HELLOW~1.S|helloworld.s</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\helloworld.s</td><td>5</td><td/></row>
 		<row><td>_A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>C__A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>NEWICO~1.PNG|NewIcon256x256.png</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\Setup\NewIcon256x256.png</td><td>5</td><td/></row>
 		<row><td>assistant.exe</td><td>assistant.exe</td><td>ASSIST~1.EXE|assistant.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\assistant.exe</td><td>1</td><td/></row>
+		<row><td>icudt51.dll</td><td>icudt51.dll</td><td>icudt51.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\icudt51.dll</td><td>1</td><td/></row>
 		<row><td>icuin51.dll</td><td>icuin51.dll</td><td>icuin51.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\icuin51.dll</td><td>1</td><td/></row>
 		<row><td>icuuc51.dll</td><td>icuuc51.dll</td><td>icuuc51.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\icuuc51.dll</td><td>1</td><td/></row>
 		<row><td>libegl.dll</td><td>libEGL.dll</td><td>libEGL.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.1.1\msvc2012\bin\libEGL.dll</td><td>1</td><td/></row>
@@ -2147,6 +2150,7 @@
 		<row><td>Qt5Widgets.dll</td><td/><td/><td>_E0118DE9_CE9D_4BAC_859F_D3D5D933142A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>QtSpim.exe</td><td/><td/><td>_CC0F435C_F454_4500_95F3_731CE2D518E9_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>assistant.exe</td><td/><td/><td>_E213D9BE_505A_4CEF_907E_C40631061484_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>icudt51.dll</td><td/><td/><td>_4ED6E451_4596_4E27_9EFF_ABBC4BB251B7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>icuin51.dll</td><td/><td/><td>_FFEA38E9_1EB6_4463_BDAF_6B8DFBA828F4_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>icuuc51.dll</td><td/><td/><td>_8C75EDD6_97B0_4E39_B117_8A38C89784FE_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>libEGL.dll</td><td/><td/><td>_115FFCB2_4D01_4B1F_9590_C879082755A0_FILTER</td><td/><td/><td/><td/></row>

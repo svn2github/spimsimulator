@@ -1,3 +1,8 @@
+2013-12-28    <larus@IC-LMC-ICDO-01>
+
+	* Documentation/SourceForge/index.html:
+	Bad path to files on SourceForge.
+
 2013-12-17    <larus@IC-LMC-ICDO-01>
 
 	* New release of QtSpim for Windows to include msvcp110.dll.
