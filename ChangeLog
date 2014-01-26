@@ -1,3 +1,21 @@
+2014-01-26  Larus  <larus@Jim-MacBook-Air.local>
+
+	* CPU/version.h (SPIM_VERSION):
+	Version 9.1.13
+
+	* QtSpim/macinfo.plist, QtSpim/QtSpim.pro, NewIcon.icns:
+	Added application icon for MacOS.
+
+	* bin/release-osx
+	[Philip James, https://sourceforge.net/p/spimsimulator/bugs/54]:
+	Need to package Frameworks and plugs with Mac release and change
+	file paths so they can be found.
+
+2014-01-22  Larus  <larus@Jim-MacBook-Air.local>
+
+	* CPU/op.h [Philip Machanick <p.machanick@ru.ac.za>]:
+	Break instruction does not take any arguments.
+
 2013-12-28    <larus@IC-LMC-ICDO-01>
 
 	* Documentation/SourceForge/index.html:

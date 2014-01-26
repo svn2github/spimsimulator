@@ -7,7 +7,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.larus.qtspim</string>
 	<key>CFBundleVersion</key>
-	<string>9.1.7</string>
+	<string>9.1.13</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleExecutable</key>
@@ -16,5 +16,7 @@
 	<string>NSApplication</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>????</string>
+	<key>CFBundleIconFile</key>
+	<string>NewIcon</string>
 </dict>
 </plist>

@@ -41,7 +41,7 @@
 											<key>GID</key>
 											<integer>80</integer>
 											<key>PATH</key>
-											<string>/Users/larus/Qt/5.1.1/clang_64/bin/Assistant.app</string>
+											<string>/Users/larus/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_1_1_clang_64bit-Release/Assistant.app</string>
 											<key>PATH_TYPE</key>
 											<integer>0</integer>
 											<key>PERMISSIONS</key>
@@ -557,8 +557,6 @@
 			<dict>
 				<key>POSTINSTALL_PATH</key>
 				<dict/>
-				<key>PREINSTALL_PATH</key>
-				<dict/>
 				<key>RESOURCES</key>
 				<array/>
 			</dict>
@@ -575,7 +573,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>9.1.12</string>
+				<string>9.1.13</string>
 			</dict>
 			<key>UUID</key>
 			<string>240BDC96-9531-4E8F-924E-BB44DCAC62D8</string>
@@ -607,9 +605,14 @@
 				<key>ALIGNMENT</key>
 				<integer>4</integer>
 				<key>BACKGROUND_PATH</key>
-				<dict/>
+				<dict>
+					<key>PATH</key>
+					<string>/Users/larus/Software/spim-simulator/Setup/NewIcon256x256.png</string>
+					<key>PATH_TYPE</key>
+					<integer>0</integer>
+				</dict>
 				<key>CUSTOM</key>
-				<false/>
+				<integer>1</integer>
 				<key>SCALING</key>
 				<integer>0</integer>
 			</dict>

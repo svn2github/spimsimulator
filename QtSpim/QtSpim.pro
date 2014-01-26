@@ -216,6 +216,8 @@ macx-g++ {
   #
   QMAKE_DEL_FILE = rm -f
   QMAKE_INFO_PLIST = macinfo.plist
+
+  ICON = NewIcon.icns
 }
 
 macx-clang {
@@ -231,4 +233,6 @@ macx-clang {
   #
   QMAKE_DEL_FILE = rm -f
   QMAKE_INFO_PLIST = macinfo.plist
+
+  ICON = NewIcon.icns
 }
