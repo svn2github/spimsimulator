@@ -1,3 +1,9 @@
+2014-02-02  Larus  <larus@Jim-MacBook-Air.local>
+
+	* Setup/QtSpim_Mac_Deployment/QtSpim_Mac_pkproj:
+	Fixed Mac install to include instructions how to work around
+	Gatekeeper rejection of unsigned apps.
+
 2014-01-26  Larus  <larus@Jim-MacBook-Air.local>
 
 	* CPU/version.h (SPIM_VERSION):
