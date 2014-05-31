@@ -98,6 +98,8 @@ static int str_prefix (char *s1, char *s2, int min_match);
 static void top_level ();
 static int read_token ();
 static bool write_assembled_code(char* program_name);
+static void dump_data_seg (bool kernel_also);
+static void dump_text_seg (bool kernel_also);
 
 
 /* Exported Variables: */
@@ -130,6 +132,8 @@ static struct termios saved_console_state;
 #endif
 static int program_argc;
 static char** program_argv;
+static bool dump_user_segments = false;
+static bool dump_all_segments = false;
 
 
 
@@ -276,6 +280,10 @@ main (int argc, char **argv)
 	}
       else if (streq (argv [i], "-assemble"))
 	{ assemble = true; }
+      else if (streq (argv [i], "-dump"))
+        { dump_user_segments = true; }
+      else if (streq (argv [i], "-full_dump"))
+        { dump_all_segments = true; }
       else
 	{
 	  error ("\nUnknown argument: %s (ignored)\n", argv[i]);
@@ -298,7 +306,9 @@ main (int argc, char **argv)
 	-mapped_io		Enable memory-mapped IO\n\
 	-nomapped_io		Do not enable memory-mapped IO (default)\n\
 	-file <file> <args>	Assembly code file and arguments to program\n\
-	-assemble		Write assembled code to standard output\n");
+	-assemble		Write assembled code to standard output\n\
+	-dump			Write user data and text segments into files\n\
+	-full_dump		Write user and kernel data and text into files.\n");
     }
 
 
@@ -313,6 +323,16 @@ main (int argc, char **argv)
      if (assemble)
        {
          return write_assembled_code (program_argv[0]);
+       }
+     else if (dump_user_segments)
+       {
+         dump_data_seg (false);
+         dump_text_seg (false);
+       }
+      else if (dump_all_segments)
+       {
+         dump_data_seg (true);
+         dump_text_seg (true);
        }
      else
        {
@@ -1195,4 +1215,62 @@ read_token ()
     {
       return (token);
     }
+}
+
+
+/* 
+ * Writes the contents of the (user and optionally kernel) data segment into data.asm file. 
+ * If data.asm already exists, it's replaced.
+ */
+
+static void
+dump_data_seg(bool kernel_also)
+{
+  static str_stream ss;
+  ss_clear (&ss);
+
+  if (kernel_also) 
+    {
+      format_data_segs (&ss);
+    }
+  else
+    {
+      ss_printf (&ss, "\tDATA\n");
+      format_mem (&ss, DATA_BOT, data_top);
+    }
+  
+  FILE *fp;
+  fp = fopen ("data.asm", "w");
+  fprintf (fp, "%s", ss_to_string (&ss));
+  fclose (fp);
+}
+
+
+/* 
+ * Writes the contents of the (user and optionally kernel) text segment in text.asm file. 
+ * If data.asm already exists, it's replaced.
+ */
+
+static void
+dump_text_seg(bool kernel_also)
+{
+  static str_stream ss;
+  ss_clear (&ss);
+
+  if (kernel_also)
+    {
+      format_insts (&ss, TEXT_BOT, text_top);
+      ss_printf (&ss, "\n\tKERNEL\n");
+      format_insts (&ss, K_TEXT_BOT, k_text_top);
+    }
+  else
+    {
+      ss_printf (&ss, "\n\tUSER TEXT SEGMENT\n");
+      format_insts (&ss, TEXT_BOT, text_top);
+    }
+  
+  FILE *fp;
+  fp = fopen ("text.asm", "w");
+  fprintf (fp, "%s", ss_to_string (&ss));
+  fclose (fp);
 }
