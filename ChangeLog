@@ -1,7 +1,12 @@
+2014-08-21  Larus  <larus@Jim-MacBook-Air.local>
+
+	* Documentation/SourceForge/index.html:
+	Update links to Qt source.
+
 2014-05-31  Larus  <larus@Jim-MacBook-Air.local>
 
 	* spim/spim.c [Jorge Garcia Aguilar <jorgegarag@gmail.com>]:
-	Add -dump and -dump_kernel flags to write data and text segments
+	Add -dump and -full_dump flags to write data and text segments
 	to a file.
 
 2014-02-02  Larus  <larus@Jim-MacBook-Air.local>
