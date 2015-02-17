@@ -1,3 +1,8 @@
+2015-02-17  Larus  <larus@icdhcp-1-196.epfl.ch>
+
+	* QtSpim/console.cpp (WriteOutput) [https://sourceforge.net/p/spimsimulator/patches/3/]:
+	Ensure console output stays visible.
+
 2015-02-17    <larus@IC-LMC-ICDO-01>
 
 	* CPU/syscall.c (myInvalidParameterHandler) [https://sourceforge.net/p/spimsimulator/bugs/46/]:

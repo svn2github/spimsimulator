@@ -52,6 +52,7 @@ void Console::WriteOutput(QString out)
     activateWindow();
     moveCursor(QTextCursor::End);
     insertPlainText(out);
+    ensureCursorVisible();
 }
 
 
