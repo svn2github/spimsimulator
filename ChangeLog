@@ -1,3 +1,9 @@
+2015-02-17    <larus@IC-LMC-ICDO-01>
+
+	* CPU/syscall.c (myInvalidParameterHandler) [https://sourceforge.net/p/spimsimulator/bugs/46/]:
+	Bad parameter to system call invoked Windows Error Reporting and
+	crashed spim. Instead, report error in spim. 
+
 2014-08-21  Larus  <larus@Jim-MacBook-Air.local>
 
 	* Documentation/SourceForge/index.html:

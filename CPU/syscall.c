@@ -52,7 +52,56 @@
 #include "sym-tbl.h"
 #include "syscall.h"
 
-
+
+#ifdef _WIN32
+/* Windows has an handler that is invoked when an invalid argument is passed to a system
+   call. https://msdn.microsoft.com/en-us/library/a9yf33zb(v=vs.110).aspx
+
+   All good, except that the handler tries to invoke Watson and then kill spim with an exception.
+
+   Override the handler to just report an error.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <crtdbg.h>
+
+void myInvalidParameterHandler(const wchar_t* expression,
+   const wchar_t* function, 
+   const wchar_t* file, 
+   unsigned int line, 
+   uintptr_t pReserved)
+{
+  if (function != NULL)
+    {
+      run_error ("Bad parameter to system call: %s\n", function);
+    }
+  else
+    {
+      run_error ("Bad parameter to system call\n");
+    }
+}
+
+static _invalid_parameter_handler oldHandler;
+
+void windowsParameterHandlingControl(int flag )
+{
+  static _invalid_parameter_handler oldHandler;
+  static _invalid_parameter_handler newHandler = myInvalidParameterHandler;
+
+  if (flag == 0)
+    {
+      oldHandler = _set_invalid_parameter_handler(newHandler);
+      _CrtSetReportMode(_CRT_ASSERT, 0); // Disable the message box for assertions.
+    }
+  else
+    {
+      newHandler = _set_invalid_parameter_handler(oldHandler);
+      _CrtSetReportMode(_CRT_ASSERT, 1);  // Enable the message box for assertions.
+    }
+}
+#endif
+
 
 /* Decides which syscall to execute or simulate.  Returns zero upon
    exit syscall and non-zero to continue execution. */
@@ -60,6 +109,10 @@
 int
 do_syscall ()
 {
+#ifdef _WIN32
+    windowsParameterHandlingControl(0);
+#endif
+
   /* Syscalls for the source-language version of SPIM.  These are easier to
      use than the real syscall and are portable to non-MIPS operating
      systems. */
@@ -201,10 +254,12 @@ do_syscall ()
       break;
     }
 
+#ifdef _WIN32
+    windowsParameterHandlingControl(1);
+#endif
   return (1);
 }
 
-
 
 void
 handle_exception ()
