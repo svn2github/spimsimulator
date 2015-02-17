@@ -78,7 +78,7 @@ Q_OBJECT
 
     void DisplayIntRegisters();
     void DisplayFPRegisters();
-    void DisplayTextSegments();
+    void DisplayTextSegments(bool force);
     void DisplayDataSegments(bool force);
     void UpdateDataDisplay();
 

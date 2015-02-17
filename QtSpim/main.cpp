@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    win.DisplayTextSegments();
+    win.DisplayTextSegments(true);
     win.UpdateDataDisplay();
 
     a.setStyleSheet(

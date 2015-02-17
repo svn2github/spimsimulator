@@ -85,7 +85,7 @@ void SpimView::file_LoadFile()
         st_recentFiles.prepend(file);
         rebuildRecentFilesMenu();
 
-        DisplayTextSegments();
+        DisplayTextSegments(true);
         DisplayDataSegments(false);
     }
 }
@@ -244,7 +244,7 @@ void SpimView::sim_ReinitializeSimulator()
     CaptureSFPRegisters();
     CaptureDFPRegisters();
 
-    DisplayTextSegments();
+    DisplayTextSegments(true);
     UpdateDataDisplay();
 
     // Scroll to top of windows
@@ -555,8 +555,8 @@ void SpimView::sim_Settings()
             st_textWinBackgroundColor = *sd.textWinBackground;
         }
 
+        DisplayTextSegments(true);
         UpdateDataDisplay();
-        DisplayTextSegments();
     }
 }
 
@@ -632,29 +632,34 @@ int SpimView::setBaseInternal(int base, QAction* actionBinary, QAction* actionDe
 
 void SpimView::text_DisplayUserText()
 {
+    bool changed = st_showUserTextSegment == ui->action_Text_DisplayUserText->isChecked();
     st_showUserTextSegment = ui->action_Text_DisplayUserText->isChecked();
-    DisplayTextSegments();
+    DisplayTextSegments(changed);
 }
 
 
 void SpimView::text_DisplayKernelText()
 {
+    bool changed = st_showKernelTextSegment == ui->action_Text_DisplayKernelText->isChecked();
     st_showKernelTextSegment = ui->action_Text_DisplayKernelText->isChecked();
-    DisplayTextSegments();
+    DisplayTextSegments(changed);
 }
 
 
 void SpimView::text_DisplayComments()
 {
+    bool changed = st_showTextComments == ui->action_Text_DisplayComments->isChecked();
     st_showTextComments = ui->action_Text_DisplayComments->isChecked();
-    DisplayTextSegments();
+    DisplayTextSegments(changed);
 }
 
 
 void SpimView::text_DisplayInstructionValue()
 {
+    bool changed = st_showTextDisassembly == ui->action_Text_DisplayInstructionValue->isChecked();
+
     st_showTextDisassembly = ui->action_Text_DisplayInstructionValue->isChecked();
-    DisplayTextSegments();
+    DisplayTextSegments(changed);
 }
 
 

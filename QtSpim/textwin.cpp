@@ -45,9 +45,9 @@
 // Text segment window
 //
 
-void SpimView::DisplayTextSegments()
+void SpimView::DisplayTextSegments(bool force)
 {
-    if (text_modified)
+    if (force || text_modified)
     {
         textTextEdit* te = ui->TextSegDockWidget->findChild<textTextEdit *>("TextSegmentTextEdit");
 

@@ -1,5 +1,8 @@
 2015-02-17  Larus  <larus@icdhcp-1-196.epfl.ch>
 
+	* QtSpim/textwin.cpp (DisplayTextSegments):
+	Force redisplay of text segment when font changes.
+
 	* QtSpim/console.cpp (WriteOutput) [https://sourceforge.net/p/spimsimulator/patches/3/]:
 	Ensure console output stays visible.
 
