@@ -1,3 +1,9 @@
+2015-02-18  Larus  <larus@ubuntu>
+
+	* QtSpim/regwin.cpp, QtSpim/datawin.cpp [https://sourceforge.net/p/spimsimulator/bugs/60/]
+	Setting register and memory contents in QtSpim did not allow
+	negative hex numbers (0xf....).
+
 2015-02-18  Larus  <larus@icdhcp-1-196.epfl.ch>
 
 	* spim/spim.c (top_level):

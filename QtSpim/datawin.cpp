@@ -34,6 +34,7 @@
 #include "spimview.h"
 #include "ui_spimview.h"
 
+#include <QMessageBox>
 #include <QRegExp>
 #include <QContextMenuEvent>
 #include <QStringBuilder>
@@ -318,10 +319,15 @@ void dataTextEdit::changeValue()
         int base = Window->DataDisplayBase();
         QString val = promptForNewValue("New Contents for " + formatAddress(addr), &base);
         bool ok;
-        int newMemVal = val.toInt(&ok, base);
+        int newMemVal = val.toLong(&ok, base);
         if (ok)
         {
             set_mem_word(addr, newMemVal);
+        } else
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Memory value invalid: " + val);
+            msgBox.exec();
         }
 
         Window->DisplayDataSegments(true);

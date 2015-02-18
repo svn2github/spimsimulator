@@ -34,6 +34,7 @@
 #include "spimview.h"
 #include "ui_spimview.h"
 
+#include <QMessageBox>
 #include <QRegExp>
 #include <QStringBuilder>
 #define QT_USE_FAST_CONCATENATION
@@ -351,10 +352,15 @@ void regTextEdit::changeValue()
         int base = Window->RegDisplayBase();
         QString val = promptForNewValue("New Contents for R" + QString::number(reg, 10), &base);
         bool ok;
-        int newRegVal = val.toInt(&ok, base);
+        int newRegVal = val.toLong(&ok, base);
         if (ok)
         {
             R[reg] = newRegVal;
+        } else
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Register value invalid: " + val);
+            msgBox.exec();
         }
     }
     else
@@ -372,7 +378,7 @@ void regTextEdit::changeValue()
             }
             else
             {
-                int newIntRegVal = val.toInt(&ok, base); // Read integer; treat bits -- not value -- as float
+                int newIntRegVal = val.toLong(&ok, base); // Read integer; treat bits -- not value -- as float
                 void* ptr = &newIntRegVal;
                 newRegVal = *(float*)ptr;
             }
@@ -380,6 +386,11 @@ void regTextEdit::changeValue()
             if (ok)
             {
                 FGR[reg] = newRegVal;
+            } else
+            {
+                QMessageBox msgBox;
+                msgBox.setText("Register value invalid: " + val);
+                msgBox.exec();
             }
         }
         else
@@ -405,6 +416,11 @@ void regTextEdit::changeValue()
                 if (ok)
                 {
                     FPR[reg] = newRegVal;
+                } else
+                {
+                    QMessageBox msgBox;
+                    msgBox.setText("Register value invalid: " + val);
+                    msgBox.exec();
                 }
             }
             else
@@ -463,6 +479,11 @@ void regTextEdit::changeValue()
                         {
                             FEXR = newRegVal;
                         }
+                    } else
+                    {
+                        QMessageBox msgBox;
+                        msgBox.setText("Register value invalid: " + val);
+                        msgBox.exec();
                     }
                 }
             }
