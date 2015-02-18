@@ -797,7 +797,7 @@ void SpimView::help_ViewHelp()
     QStringList args;
 
     char* helpFile[] = {"help/qtspim.qhc",      // Windows
-                        "/Library/Application Support/QtSpim/help/qtspim.qhc", // Mac
+                        "/Applications/QtSpim.app/Contents/Resources/doc/qtspim.qch", // Mac
                         "/usr/share/qtspim/help/qtspim.qhc", // Linux
                         0};
 
@@ -821,9 +821,7 @@ void SpimView::help_ViewHelp()
     }
 
     char* assistant[] = {"assistant",      // Windows
-                         // For Mac, use application not bundle (which requires open helper command
-                         // and does not work, at least for qt 5.1.1):
-                         "/Applications/Utilities/Assistant.app/Contents/MacOS/Assistant", // Mac
+                         "/Applications/QtSpim.app/Contents/MacOS/Assistant", // Mac
                          "assistant",           // Linux
                          0};
 

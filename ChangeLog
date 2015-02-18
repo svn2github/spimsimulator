@@ -1,3 +1,8 @@
+2015-02-18  Larus  <larus@icdhcp-1-196.epfl.ch>
+
+	* QtSpim/menu.cpp (help_ViewHelp):
+	Fix Mac help.
+
 2015-02-17  Larus  <larus@icdhcp-1-196.epfl.ch>
 
 	* QtSpim/textwin.cpp (DisplayTextSegments):
@@ -10,7 +15,7 @@
 
 	* CPU/syscall.c (myInvalidParameterHandler) [https://sourceforge.net/p/spimsimulator/bugs/46/]:
 	Bad parameter to system call invoked Windows Error Reporting and
-	crashed spim. Instead, report error in spim. 
+	crashed spim. Instead, report error in spim.
 
 2014-08-21  Larus  <larus@Jim-MacBook-Air.local>
 

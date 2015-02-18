@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
  <QHelpCollectionProject version="1.0">
      <assistant>
-         <title>QtSpm Help</title>
-         <startPage>>qthelp://org.larusstone.qtspim.1.0/doc/qtspim_help.html</startPage>
+         <title>QtSpim Help</title>
+         <startPage>qthelp://org.larusstone.qtspim.1.0/doc/qtspim_help.html</startPage>
          <applicationIcon>../windows_images/NewIcon.ico</applicationIcon>
          <enableFilterFunctionality>false</enableFilterFunctionality>
          <enableDocumentationManager>false</enableDocumentationManager>

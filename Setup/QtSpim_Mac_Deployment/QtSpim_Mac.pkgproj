@@ -8,7 +8,7 @@
 			<key>PACKAGE_FILES</key>
 			<dict>
 				<key>DEFAULT_INSTALL_LOCATION</key>
-				<string>/</string>
+				<string>/Applications</string>
 				<key>HIERARCHY</key>
 				<dict>
 					<key>CHILDREN</key>
@@ -18,13 +18,218 @@
 							<array>
 								<dict>
 									<key>CHILDREN</key>
-									<array/>
+									<array>
+										<dict>
+											<key>CHILDREN</key>
+											<array>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>80</integer>
+													<key>PATH</key>
+													<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Info.plist</string>
+													<key>PATH_TYPE</key>
+													<integer>3</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>80</integer>
+															<key>PATH</key>
+															<string>/Applications/Assistant.app/Contents/MacOS/Assistant</string>
+															<key>PATH_TYPE</key>
+															<integer>0</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>80</integer>
+															<key>PATH</key>
+															<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/MacOS/QtSpim</string>
+															<key>PATH_TYPE</key>
+															<integer>3</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+													</array>
+													<key>EXPANDED</key>
+													<true/>
+													<key>GID</key>
+													<integer>80</integer>
+													<key>PATH</key>
+													<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/MacOS</string>
+													<key>PATH_TYPE</key>
+													<integer>3</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>80</integer>
+													<key>PATH</key>
+													<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PkgInfo</string>
+													<key>PATH_TYPE</key>
+													<integer>3</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array>
+														<dict>
+															<key>CHILDREN</key>
+															<array>
+																<dict>
+																	<key>CHILDREN</key>
+																	<array/>
+																	<key>GID</key>
+																	<integer>80</integer>
+																	<key>PATH</key>
+																	<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/help/qtspim.qch</string>
+																	<key>PATH_TYPE</key>
+																	<integer>3</integer>
+																	<key>PERMISSIONS</key>
+																	<integer>420</integer>
+																	<key>TYPE</key>
+																	<integer>3</integer>
+																	<key>UID</key>
+																	<integer>0</integer>
+																</dict>
+																<dict>
+																	<key>CHILDREN</key>
+																	<array/>
+																	<key>GID</key>
+																	<integer>80</integer>
+																	<key>PATH</key>
+																	<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/help/qtspim.qhc</string>
+																	<key>PATH_TYPE</key>
+																	<integer>3</integer>
+																	<key>PERMISSIONS</key>
+																	<integer>420</integer>
+																	<key>TYPE</key>
+																	<integer>3</integer>
+																	<key>UID</key>
+																	<integer>0</integer>
+																</dict>
+															</array>
+															<key>GID</key>
+															<integer>80</integer>
+															<key>PATH</key>
+															<string>doc</string>
+															<key>PATH_TYPE</key>
+															<integer>0</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>2</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>80</integer>
+															<key>PATH</key>
+															<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources/empty.lproj</string>
+															<key>PATH_TYPE</key>
+															<integer>3</integer>
+															<key>PERMISSIONS</key>
+															<integer>420</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>80</integer>
+															<key>PATH</key>
+															<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources/NewIcon.icns</string>
+															<key>PATH_TYPE</key>
+															<integer>3</integer>
+															<key>PERMISSIONS</key>
+															<integer>420</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+													</array>
+													<key>EXPANDED</key>
+													<true/>
+													<key>GID</key>
+													<integer>80</integer>
+													<key>PATH</key>
+													<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources</string>
+													<key>PATH_TYPE</key>
+													<integer>3</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+											</array>
+											<key>EXPANDED</key>
+											<true/>
+											<key>GID</key>
+											<integer>80</integer>
+											<key>PATH</key>
+											<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents</string>
+											<key>PATH_TYPE</key>
+											<integer>3</integer>
+											<key>PERMISSIONS</key>
+											<integer>493</integer>
+											<key>TYPE</key>
+											<integer>3</integer>
+											<key>UID</key>
+											<integer>0</integer>
+										</dict>
+									</array>
+									<key>EXPANDED</key>
+									<true/>
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>/Users/larus/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_1_1_clang_64bit-Release/QtSpim.app</string>
+									<string>build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app</string>
 									<key>PATH_TYPE</key>
-									<integer>0</integer>
+									<integer>3</integer>
 									<key>PERMISSIONS</key>
 									<integer>493</integer>
 									<key>TYPE</key>
@@ -34,24 +239,7 @@
 								</dict>
 								<dict>
 									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array/>
-											<key>GID</key>
-											<integer>80</integer>
-											<key>PATH</key>
-											<string>/Users/larus/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_1_1_clang_64bit-Release/Assistant.app</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>3</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
+									<array/>
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
@@ -84,74 +272,7 @@
 							<array>
 								<dict>
 									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array>
-												<dict>
-													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_1_1_clang_64bit-Release/help/qtspim.qch</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_1_1_clang_64bit-Release/help/qtspim.qhc</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
-													<key>GID</key>
-													<integer>80</integer>
-													<key>PATH</key>
-													<string>help</string>
-													<key>PATH_TYPE</key>
-													<integer>0</integer>
-													<key>PERMISSIONS</key>
-													<integer>493</integer>
-													<key>TYPE</key>
-													<integer>2</integer>
-													<key>UID</key>
-													<integer>0</integer>
-												</dict>
-											</array>
-											<key>GID</key>
-											<integer>80</integer>
-											<key>PATH</key>
-											<string>QtSpim</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>2</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
+									<array/>
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
@@ -550,6 +671,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>SHOW_INVISIBLE</key>
+				<false/>
 				<key>VERSION</key>
 				<integer>2</integer>
 			</dict>
@@ -569,11 +692,11 @@
 				<key>IDENTIFIER</key>
 				<string>org.larusstone.pkg.QtSpim</string>
 				<key>NAME</key>
-				<string>QtSpim_Mac</string>
+				<string>QtSpim</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>9.1.13</string>
+				<string>9.1.14</string>
 			</dict>
 			<key>UUID</key>
 			<string>240BDC96-9531-4E8F-924E-BB44DCAC62D8</string>
@@ -984,7 +1107,9 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>QtSpim_Mac</string>
+			<string>QtSpim</string>
+			<key>REFERENCE_FOLDER_PATH</key>
+			<string>/Users/larus/OneDrive/Software/spim-simulator</string>
 		</dict>
 	</dict>
 	<key>TYPE</key>
