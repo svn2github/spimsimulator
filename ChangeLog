@@ -1,5 +1,9 @@
 2015-02-18  Larus  <larus@icdhcp-1-196.epfl.ch>
 
+	* CPU/scanner.l:
+	Allow comma (,) and apostraphe (') as decimal separator in
+	floating point numbers.
+
 	* QtSpim/menu.cpp (help_ViewHelp):
 	Fix Mac help.
 
