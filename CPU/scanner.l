@@ -320,7 +320,12 @@ static YY_CHAR scan_escape (YY_CHAR **str);
 void
 initialize_scanner (FILE *in_file)
 {
+  if (yyin != in_file)
+  {
+    push_scanner (in_file);
+  }
   yyin = in_file;
+
 #ifdef FLEX_SCANNER
   yyrestart(in_file);
 #if (YY_FLEX_MAJOR_VERSION==2 && YY_FLEX_MINOR_VERSION==5 && YY_FLEX_SUBMINOR_VERSION>=33)
@@ -330,12 +335,25 @@ initialize_scanner (FILE *in_file)
   yy_init = 1;
 #endif
 #endif
+
   line_no = 1;
   current_line = NULL;
   line_returned = 0;
   eof_returned = 0;
 }
 
+void
+push_scanner (FILE *in_file)
+{
+  YY_BUFFER_STATE buf = yy_create_buffer (in_file, YY_BUF_SIZE);
+  yypush_buffer_state (buf);
+}
+
+void
+pop_scanner ()
+{
+  yypop_buffer_state ();
+}
 
 void
 scanner_start_line ()

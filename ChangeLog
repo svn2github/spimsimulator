@@ -1,5 +1,9 @@
 2015-02-18  Larus  <larus@icdhcp-1-196.epfl.ch>
 
+	* spim/spim.c (top_level):
+	Fixed spim's handling of stdin to allow it to read commands from
+	redirected input.
+
 	* CPU/scanner.l:
 	Allow comma (,) and apostraphe (') as decimal separator in
 	floating point numbers.

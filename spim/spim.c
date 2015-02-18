@@ -88,7 +88,7 @@ static void console_to_spim ();
 static void control_c_seen (int /*arg*/);
 static void flush_to_newline ();
 static int get_opt_int ();
-static bool parse_spim_command (FILE *file, bool redo);
+static bool parse_spim_command (bool redo);
 static void print_reg (int reg_no);
 static int print_fp_reg (int reg_no);
 static int print_reg_from_string (char *reg);
@@ -368,12 +368,14 @@ top_level ()
   bool redo = false;            /* => reexecute last command */
 
   (void)signal (SIGINT, control_c_seen);
+  initialize_scanner (stdin);
+  initialize_parser ("<standard input>");
   while (1)
     {
       if (!redo)
 	write_output (message_out, "(spim) ");
       if (!setjmp (spim_top_level_env))
-	redo = parse_spim_command (stdin, redo);
+	redo = parse_spim_command (redo);
       else
 	redo = false;
       fflush (stdout);
@@ -416,19 +418,18 @@ enum {
 };
 
 
-/* Parse a SPIM command from the FILE and execute it.  If REDO is true,
-   don't read a new command; just rexecute the previous one.
-   Return true if the command was to redo the previous command. */
+/* Parse a SPIM command from the currently open file and execute it.
+   If REDO is true, don't read a new command; just rexecute the
+   previous one.  Return true if the command was to redo the previous
+   command. */
 
 static bool
-parse_spim_command (FILE *file, bool redo)
+parse_spim_command (bool redo)
 {
   static int prev_cmd = NOP_CMD; /* Default redo */
   static int prev_token;
   int cmd;
 
-  initialize_scanner (file);
-  initialize_parser ("<standard input>");
   switch (cmd = (redo ? prev_cmd : read_assembly_command ()))
     {
     case EXIT_CMD:
@@ -443,7 +444,7 @@ parse_spim_command (FILE *file, bool redo)
 	if (token == Y_STR)
 	  {
 	    read_assembly_file ((char *) yylval.p);
-	    initialize_scanner (file); /* Reinitialize! */
+        pop_scanner();
 	  }
 	else
 	  error ("Must supply a filename to read\n");
