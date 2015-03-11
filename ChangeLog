@@ -1,5 +1,8 @@
 2015-03-11  Larus  <larus@icdhcp-1-044.epfl.ch>
 
+	* QtSpim/datawin.cpp (formatPartialQuadWord) [https://sourceforge.net/p/spimsimulator/bugs/61/]:
+	Problem printing partial word at end of memory space.
+
 	* CPU/scanner.l:
 	Change of 2/18 made a number followed by a comma and space
 	ambiguous. Now FP numbers must have a digit following decimal

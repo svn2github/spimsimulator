@@ -177,7 +177,7 @@ QString SpimView::formatPartialQuadWord(mem_addr from, mem_addr to)
         windowContents += QString("[") % formatAddress(from) % QString("]") % nnbsp(2);
 
         mem_addr a;
-        for (a = from; (a % BYTES_PER_LINE) != 0; a += BYTES_PER_WORD)
+        for (a = from; (a % BYTES_PER_LINE) != 0 && from < to; a += BYTES_PER_WORD)
 	{
             mem_word val = read_mem_word(a);
             windowContents += nnbsp(2) % formatWord(val, st_dataSegmentDisplayBase);
