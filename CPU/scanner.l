@@ -148,7 +148,7 @@ static YY_CHAR scan_escape (YY_CHAR **str);
 			}
 
 
-(\+|\-)?[0-9]+[\.\,\'][0-9]*(e)?(\+|\-)?[0-9]* {
+(\+|\-)?[0-9]+[\.\,\'][0-9]+(e)?(\+|\-)?[0-9]* {
 			  if (current_line == NULL)
 			    {
 			      current_line_no = line_no;

@@ -1,3 +1,10 @@
+2015-03-11  Larus  <larus@icdhcp-1-044.epfl.ch>
+
+	* CPU/scanner.l:
+	Change of 2/18 made a number followed by a comma and space
+	ambiguous. Now FP numbers must have a digit following decimal
+	point (decimal comma).
+
 2015-02-18  Larus  <larus@ubuntu>
 
 	* QtSpim/regwin.cpp, QtSpim/datawin.cpp [https://sourceforge.net/p/spimsimulator/bugs/60/]
