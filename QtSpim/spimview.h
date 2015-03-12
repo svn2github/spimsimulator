@@ -277,6 +277,7 @@ Q_OBJECT
     void win_DataSegment();
     void win_Console();
     void win_Tile();
+    void win_Restore();
 
     void help_ViewHelp();
     void help_AboutSPIM();

@@ -42,6 +42,15 @@
 
 void SpimView::readSettings()
 {
+    settings.beginGroup("OriginalGeometry");
+    // The first time QtSpim is started on a machine, save the window geometry so it
+    // can be restored later.
+    if (settings.value("DefaultGeometry") == QVariant())
+    {
+        settings.setValue("DefaultGeometry", saveGeometry());
+    }
+    settings.endGroup();
+
     settings.beginGroup("MainWin");
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("WindowState").toByteArray(), 1);
@@ -201,4 +210,19 @@ void SpimView::writeSettings()
     settings.endGroup();
 
     settings.sync();
+}
+
+
+// Restore windows to initial, default configuration.
+//
+
+void SpimView::win_Restore()
+{
+    win_Tile();
+    settings.beginGroup("OriginalGeometry");
+    if (settings.value("DefaultGeometry") != QVariant())
+    {
+        restoreGeometry(settings.value("DefaultGeometry").toByteArray());
+    }
+    settings.endGroup();
 }

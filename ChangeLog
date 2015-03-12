@@ -1,3 +1,8 @@
+2015-03-12  Larus  <larus@icdhcp-1-044.epfl.ch>
+
+	* QtSpim/state.cpp (win_Restore):
+	Add command on Windows menu to restore windows to initial default configuration.
+
 2015-03-11  Larus  <larus@icdhcp-1-044.epfl.ch>
 
 	* QtSpim/datawin.cpp (formatPartialQuadWord) [https://sourceforge.net/p/spimsimulator/bugs/61/]:

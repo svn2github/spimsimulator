@@ -146,6 +146,7 @@
     <addaction name="action_Win_Console"/>
     <addaction name="separator"/>
     <addaction name="action_Win_Tile"/>
+    <addaction name="action_Win_Restore"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -541,6 +542,11 @@
   <action name="action_Win_Tile">
    <property name="text">
     <string>Tile</string>
+   </property>
+  </action>
+  <action name="action_Win_Restore">
+   <property name="text">
+    <string>Restore to default</string>
    </property>
   </action>
   <action name="action_Help_ViewHelp">

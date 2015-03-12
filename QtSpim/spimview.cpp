@@ -127,6 +127,7 @@ void SpimView::wireCommands()
     QObject::connect(ui->action_Win_DataSegment, SIGNAL(triggered(bool)), this, SLOT(win_DataSegment()));
     QObject::connect(ui->action_Win_Console, SIGNAL(triggered(bool)), this, SLOT(win_Console()));
     QObject::connect(ui->action_Win_Tile, SIGNAL(triggered(bool)), this, SLOT(win_Tile()));
+    QObject::connect(ui->action_Win_Restore, SIGNAL(triggered(bool)), this, SLOT(win_Restore()));
 
     QObject::connect(ui->action_Help_ViewHelp, SIGNAL(triggered(bool)), this, SLOT(help_ViewHelp()));
     QObject::connect(ui->action_Help_AboutSPIM, SIGNAL(triggered(bool)), this, SLOT(help_AboutSPIM()));
