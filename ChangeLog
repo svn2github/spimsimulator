@@ -1,3 +1,9 @@
+2015-04-26  Larus  <larus@Jim-MacBook-Air.local>
+
+	* CPU/version.h (SPIM_VERSION):
+	Fix installation on Mac to include all libraries.
+	Version 9.1.15.
+
 2015-03-12  Larus  <larus@icdhcp-1-044.epfl.ch>
 
 	* QtSpim/state.cpp (win_Restore):

@@ -7,7 +7,7 @@
 
 #Qt v.5:
 RELEASE_DIR="build-QtSpim-Desktop_Qt_*-Release"
-QT_BIN_DIR="/Users/larus/Qt/5.1.1/clang_64/bin"
+QT_BIN_DIR="/usr/local/Qt/5.4/clang_64/bin"
 
 #Fix QtSpim
 $QT_BIN_DIR/macdeployqt $RELEASE_DIR/QtSpim.app -verbose=2 -no-strip
