@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Terminal interface for SPIM simulator.
 
-   Copyright (c) 1990-2010, James R. Larus.
+   Copyright (c) 1990-2015, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -177,20 +177,20 @@ void SpimView::InitializeWorld()
             tmpFile.open();
             tmpFile.write((char*)exRes.data());
             tmpFile.close();
-            initialize_world(tmpFile.fileName().toLocal8Bit().data());
+            initialize_world(tmpFile.fileName().toLocal8Bit().data(), false);
         }
         else
         {
             // Use the file name supplied by the user.
             //
-            initialize_world(st_exceptionHandlerFileName.toLocal8Bit().data());
+            initialize_world(st_exceptionHandlerFileName.toLocal8Bit().data(), true);
         }
     }
     else
     {
         // No exception handler.
         //
-        initialize_world(NULL);
+        initialize_world(NULL, true);
     }
 }
 

@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Terminal interface for SPIM simulator.
 
-   Copyright (c) 1990-2010, James R. Larus.
+   Copyright (c) 1990-2015, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -272,8 +272,8 @@ main (int argc, char **argv)
 
 	  if (!assembly_file_loaded)
 	    {
-	      initialize_world (load_exception_handler ? exception_file_name : NULL);
-              initialize_run_stack (program_argc, program_argv);
+          initialize_world (load_exception_handler ? exception_file_name : NULL, true);
+          initialize_run_stack (program_argc, program_argv);
 	    }
 	  assembly_file_loaded = read_assembly_file (argv[++i]) || assembly_file_loaded;
 	  break;
@@ -314,7 +314,7 @@ main (int argc, char **argv)
 
   if (!assembly_file_loaded)
     {
-      initialize_world (load_exception_handler ? exception_file_name : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL, true);
       initialize_run_stack (program_argc, program_argv);
       top_level ();
     }
@@ -584,7 +584,7 @@ parse_spim_command (bool redo)
 
     case REINITIALIZE_CMD:
       flush_to_newline ();
-      initialize_world (load_exception_handler ? exception_file_name : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL, true);
       initialize_run_stack (program_argc, program_argv);
       write_startup_message ();
       prev_cmd = NOP_CMD;

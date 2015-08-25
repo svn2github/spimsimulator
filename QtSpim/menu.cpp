@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Terminal interface for SPIM simulator.
 
-   Copyright (c) 1990-2010, James R. Larus.
+   Copyright (c) 1990-2015, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -240,6 +240,8 @@ void SpimView::sim_ReinitializeSimulator()
     initStack();
     write_startup_message();
 
+    write_output(message_out, 
+                 "QtSPIM is linked to the Qt library, which is distributed under the GNU Lesser General Public License version 3 and GNU Lesser General Public License version 2.1.\n");
     CaptureIntRegisters();
     CaptureSFPRegisters();
     CaptureDFPRegisters();
@@ -845,10 +847,14 @@ void SpimView::help_AboutSPIM()
                             "<span style='font-size: 10pt;'>")
                     + QString("<p>") + QString(SPIM_VERSION) + QString("</p>")
                     + QString ("<p>SPIM is a simulator of the MIPS R3000 processor.</p>"
-                               "<p>Copyright (c) 1990-2013, James R. Larus (larus@larusstone.org).</p>"
+                               "<p>Copyright (c) 1990-2015, James R. Larus (larus@larusstone.org).</p>"
                                "<p>SPIM is distributed under a BSD license.</p>"
-                               "<p>For more information, source code, and binaries: "
-                               "<a href='https://sourceforge.net/projects/spimsimulator/'>https://sourceforge.net/projects/spimsimulator/</a></p></span>"),
+                               "<p>For more information, source code, and binaries:</p>"
+                               "<p><a href='https://sourceforge.net/projects/spimsimulator/'>https://sourceforge.net/projects/spimsimulator/</a></p>"
+                               "<p>QtSPIM is linked to the Qt library, which is distributed under the GNU Lesser General Public License version 3 and GNU Lesser General Public License version 2.1.</p>"
+"<p><a href='http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html'>GNU Lesser General Public License, version 2.1</a></p>"
+"<p><a href='http://www.gnu.org/licenses/lgpl-3.0.html'>GNU Lesser General Public License, version 3</a></p>"
+"</span>"),
                     QMessageBox::Ok);
     box.exec();
 }

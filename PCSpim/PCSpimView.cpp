@@ -1,7 +1,7 @@
 // SPIM S20 MIPS simulator.
 // Definitions for the SPIM S20.
 //
-// Copyright (c) 1990-2010, James R. Larus.
+// Copyright (c) 1990-2015, James R. Larus.
 // Changes for DOS and Windows versions by David A. Carley (dac@cs.wisc.edu)
 // All rights reserved.
 //
@@ -392,7 +392,7 @@ l_TestExceptionExists:
     {
         write_startup_message();
 
-        initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL);
+        initialize_world(g_fLoadExceptionHandler ? exception_file_name : NULL, TRUE);
 
         m_fSimulatorInitialized = TRUE;
 

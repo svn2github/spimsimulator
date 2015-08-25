@@ -2,7 +2,7 @@
    X interface to SPIM
    (Derived from an earlier work by Alan Siow.)
 
-   Copyright (c) 1990-2010, James R. Larus.
+   Copyright (c) 1990-2015, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -523,7 +523,7 @@ reload_action (Widget w, XtPointer client_data, XtPointer call_data)
     return;
 
   write_output (message_out, "Memory and registers cleared\n\n");
-  initialize_world (load_exception_handler ? exception_file_name : NULL);
+  initialize_world (load_exception_handler ? exception_file_name : NULL, true);
   write_startup_message ();
   read_file (program_file_name);
 }
@@ -580,7 +580,7 @@ clear_program_state_action (Widget w, XtPointer client_data,
 
     case CLEAR_MEM_REGS:
       write_output (message_out, "Memory and registers cleared\n\n");
-      initialize_world (load_exception_handler ? exception_file_name : NULL);
+      initialize_world (load_exception_handler ? exception_file_name : NULL, true);
       write_startup_message ();
       break;
 

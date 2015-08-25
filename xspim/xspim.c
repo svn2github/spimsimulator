@@ -2,7 +2,7 @@
    X interface to SPIM
    (Derived from an earlier work by Alan Siow.)
 
-   Copyright (c) 1990-2010, James R. Larus.
+   Copyright (c) 1990-2015, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -478,7 +478,7 @@ main (int argc, char **argv)
     initial_k_data_limit = atoi (app_res.initial_k_data_limit);
 
   write_startup_message ();
-  initialize_world (load_exception_handler ? exception_file_name : NULL);
+  initialize_world (load_exception_handler ? exception_file_name : NULL, true);
 
   if (file_name == NULL && argc > 1 && argv[argc - 1] != NULL)
     {

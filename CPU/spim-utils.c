@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Misc. routines for SPIM.
 
-   Copyright (c) 1990-2010, James R. Larus.
+   Copyright (c) 1990-2015, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -81,7 +81,7 @@ mem_addr initial_k_data_limit = K_DATA_LIMIT;
 /* Initialize or reinitialize the state of the machine. */
 
 void
-initialize_world (char* exception_file_names)
+initialize_world (char* exception_file_names, bool print_message)
 {
   /* Allocate the floating point registers */
   if (FGR == NULL)
@@ -120,7 +120,8 @@ initialize_world (char* exception_file_names)
             if (!read_assembly_file (filename))
                fatal_error ("Cannot read exception handler: %s\n", filename);
 
-            write_output (message_out, "Loaded: %s\n", filename);
+            if (print_message)
+                write_output (message_out, "Loaded: %s\n", filename);
          }
 
       free (files);
@@ -144,7 +145,7 @@ void
 write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
-  write_output (message_out, "Copyright 1990-2012, James R. Larus.\n");
+  write_output (message_out, "Copyright 1990-2015, James R. Larus.\n");
   write_output (message_out, "All Rights Reserved.\n");
   write_output (message_out, "SPIM is distributed under a BSD license.\n");
   write_output (message_out, "See the file README for a full copyright notice.\n");
