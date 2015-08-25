@@ -192,7 +192,7 @@ linux-g++-32 {
   QMAKE_DEL_FILE = rm -f
 }
 
-linux-g++-64 {
+linux-g++ {
   QMAKE_CFLAGS_DEBUG   += -x c++ -Wno-write-strings
   QMAKE_CFLAGS_RELEASE += -x c++ -Wno-write-strings
   QMAKE_CXXFLAGS_DEBUG += -x c++ -Wno-write-strings
