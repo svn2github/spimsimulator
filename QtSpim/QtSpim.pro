@@ -178,7 +178,7 @@ win32-g++ {
   #QMAKE_MOVE = cmd /c move
 }
 
-linux-g++ {
+linux-g++-32 {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #

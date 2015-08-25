@@ -1,3 +1,8 @@
+2015-08-25  Larus  <larus@ubuntu>
+
+	* QtSpim/QtSpim.pro: 
+	Configuration name changed from linux-g++ -> linux-g++-32
+
 2015-04-26  Larus  <larus@Jim-MacBook-Air.local>
 
 	* CPU/version.h (SPIM_VERSION):
