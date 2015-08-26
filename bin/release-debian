@@ -1,4 +1,4 @@
-#!/bin/bash -v
+#!/bin/bash
 #
 # Shell script to create debian binary package for QtSpim.
 #
@@ -8,10 +8,7 @@
 #
 
 #Qt v.5:
-#RELEASE_DIR="build-QtSpim-Desktop_Qt_*-Release"
-
-#Qt v.4:
-RELEASE_DIR="QtSpim-build-desktop-Qt_*_Release"
+RELEASE_DIR="build-QtSpim-Desktop_Qt_*-Release"
 
 ARCH=`arch`
 case $ARCH in
