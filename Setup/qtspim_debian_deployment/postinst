@@ -2,4 +2,4 @@
 # Register the QtSpim documentation with the help viewer
 #
 set -e
-assistant -register /usr/share/qtspim/help/qtspim.qch
+/usr/lib/qtspim/bin/assistant -register /usr/share/qtspim/help/qtspim.qch

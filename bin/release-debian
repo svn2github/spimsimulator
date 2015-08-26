@@ -8,7 +8,8 @@
 #
 
 #Qt v.5:
-RELEASE_DIR="build-QtSpim-Desktop_Qt_*-Release"
+RELEASE_DIR=build-QtSpim-Desktop_Qt_*-Release
+QT_DIR=~/Qt/5.*/gcc*
 
 ARCH=`arch`
 case $ARCH in
@@ -19,18 +20,51 @@ esac
 rm -fr Setup/debian
 
 mkdir -p Setup/debian
-mkdir -p Setup/debian/usr/bin
-mkdir -p Setup/debian/usr/share/man/man1
 mkdir -p Setup/debian/DEBIAN
+
+mkdir -p Setup/debian/usr/bin
+
+mkdir -p Setup/debian/usr/lib/qtspim
+mkdir -p Setup/debian/usr/lib/qtspim/bin
+mkdir -p Setup/debian/usr/lib/qtspim/lib
+mkdir -p Setup/debian/usr/lib/qtspim/plugins
+mkdir -p Setup/debian/usr/lib/qtspim/plugins/imageformats
+mkdir -p Setup/debian/usr/lib/qtspim/plugins/platforms
+mkdir -p Setup/debian/usr/lib/qtspim/plugins/printsupport
+
+mkdir -p Setup/debian/usr/share/man/man1
 mkdir -p Setup/debian/usr/share/doc/qtspim
 mkdir -p Setup/debian/usr/share/qtspim/help
 mkdir -p Setup/debian/usr/share/applications
+
 find Setup/debian -type d | xargs chmod 755   # this is necessary on Debian Woody, don't ask me why
 
+#qtspim
 install -s $RELEASE_DIR/QtSpim Setup/debian/usr/bin/qtspim
 chmod 0755 Setup/debian/usr/bin/qtspim
-chrpath -d Setup/debian/usr/bin/qtspim
+chrpath -r /usr/lib/qtspim/lib Setup/debian/usr/bin/qtspim
 
+#assistant (helper)
+install -s $QT_DIR/bin/assistant Setup/debian/usr/lib/qtspim/bin/assistant
+chmod 0755 Setup/debian/usr/lib/qtspim/bin/assistant
+chrpath -r /usr/lib/qtspim/lib Setup/debian/usr/lib/qtspim/bin/assistant
+
+
+#qtspim libraries
+install -s $QT_DIR/lib/{libQt5PrintSupport.so.5,libQt5Widgets.so.5,libQt5Gui.so.5,libQt5Core.so.5,libicui18n.so.54,libicuuc.so.54,libicudata.so.54} Setup/debian/usr/lib/qtspim/lib
+
+#assistant libraries
+install -s $QT_DIR/lib/{libQt5Help.so.5,libQt5WebKitWidgets.so.5,libQt5WebKit.so.5,libQt5Network.so.5,libQt5Sql.so.5,libQt5CLucene.so.5,libQt5Sensors.so.5,libQt5Positioning.so.5,libQt5OpenGL.so.5,libQt5Quick.so.5,libQt5Qml.so.5,libQt5WebChannel.so.5} Setup/debian/usr/lib/qtspim/lib
+chmod 0644 Setup/debian/usr/lib/qtspim/lib/*
+
+
+#plugins
+install $QT_DIR/plugins/imageformats/{libqdds.so,libqgif.so,libqicns.so,libqico.so,libqjp2.so,libqjpeg.so,libqmng.so,libqsvg.so,libqtga.so,libqtiff.so,libqwbmp.so,libqwebp.so} Setup/debian/usr/lib/qtspim/plugins/imageformats
+install $QT_DIR/plugins/platforms/libqxcb.so Setup/debian/usr/lib/qtspim/plugins/platforms
+install $QT_DIR/plugins/printsupport/libcupsprintersupport.so Setup/debian/usr/lib/qtspim/plugins/printsupport
+
+
+#documentation
 cp -f Documentation/qtspim.man Setup/debian/usr/share/man/man1/qtspim.1
 chmod -R 0644 Setup/debian/usr/share/man/man1/qtspim.1
 gzip -f --best Setup/debian/usr/share/man/man1/qtspim.1
