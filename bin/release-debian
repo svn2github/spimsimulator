@@ -54,7 +54,7 @@ chrpath -r /usr/lib/qtspim/lib Setup/debian/usr/lib/qtspim/bin/assistant
 install -s $QT_DIR/lib/{libQt5PrintSupport.so.5,libQt5Widgets.so.5,libQt5Gui.so.5,libQt5Core.so.5,libicui18n.so.54,libicuuc.so.54,libicudata.so.54} Setup/debian/usr/lib/qtspim/lib
 
 #assistant libraries
-install -s $QT_DIR/lib/{libQt5Help.so.5,libQt5WebKitWidgets.so.5,libQt5WebKit.so.5,libQt5Network.so.5,libQt5Sql.so.5,libQt5CLucene.so.5,libQt5Sensors.so.5,libQt5Positioning.so.5,libQt5OpenGL.so.5,libQt5Quick.so.5,libQt5Qml.so.5,libQt5WebChannel.so.5} Setup/debian/usr/lib/qtspim/lib
+install -s $QT_DIR/lib/{libQt5Help.so.5,libQt5WebKitWidgets.so.5,libQt5WebKit.so.5,libQt5Network.so.5,libQt5Sql.so.5,libQt5CLucene.so.5,libQt5Sensors.so.5,libQt5Positioning.so.5,libQt5OpenGL.so.5,libQt5Quick.so.5,libQt5Qml.so.5,libQt5WebChannel.so.5,libQt5MultimediaWidgets.so.5} Setup/debian/usr/lib/qtspim/lib
 chmod 0644 Setup/debian/usr/lib/qtspim/lib/*
 
 
