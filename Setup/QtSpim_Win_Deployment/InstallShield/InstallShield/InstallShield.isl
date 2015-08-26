@@ -353,16 +353,21 @@
 		<row><td>Qt5MultimediaWidgets.dll</td><td>{B26D0A97-F003-46FF-8688-D3CD9BAB5890}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5multimediawidgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Network.dll</td><td>{9B8F2FC4-AB9D-40C1-AF17-9E8C9EBABC61}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5network.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5OpenGL.dll</td><td>{F38E52F4-E8B6-445D-B29B-02106E3A824E}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5opengl.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5Positioning.dll</td><td>{6A5E5145-8CAB-451A-A1B4-9032CC12F31C}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5positioning.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5PrintSupport.dll</td><td>{8A8D1C75-84F7-41BF-A984-DEE512C5A8DD}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5printsupport.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Qml.dll</td><td>{1F54B7A2-21DF-465A-A6C4-DE264614E8E9}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5qml.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Quick.dll</td><td>{4D6511D2-9356-4C3F-B7BD-1C9C91C69648}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5quick.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Sensors.dll</td><td>{A5172B5D-3F65-4B74-9C3D-C268D9FB506A}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5sensors.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Sql.dll</td><td>{F9455031-A79D-46C9-A57D-97EDEA24BB38}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5sql.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Qt5WebChannel.dll</td><td>{F2FD9F11-25F9-4F71-A224-047414587EE5}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5webchannel.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5WebKit.dll</td><td>{22352878-C2F5-4D33-A013-047ADAC4D6F7}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5webkit.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5WebKitWidgets.dll</td><td>{6405E587-BCA8-4590-B956-ADCA65691BFF}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5webkitwidgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Qt5Widgets.dll</td><td>{7DB6A2E5-506F-465B-A9A3-5D184CBFC635}</td><td>INSTALLDIR</td><td>2</td><td/><td>qt5widgets.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>QtSpim.exe</td><td>{EE1B4551-97D5-4E32-A6C4-55A3C7F47C76}</td><td>INSTALLDIR</td><td>2</td><td/><td>qtspim.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>assistant.exe</td><td>{D3B5D839-F66E-4F4C-9BC5-6512A4DF36C3}</td><td>INSTALLDIR</td><td>2</td><td/><td>assistant.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>icudt54.dll</td><td>{ED89614E-A529-4EFB-96DD-DE5FABD7C8CF}</td><td>INSTALLDIR</td><td>2</td><td/><td>icudt54.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>icuin54.dll</td><td>{081B5CD9-6966-488F-8E24-5BA8C66E5C40}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuin54.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>icuuc54.dll</td><td>{591D61F5-DF15-4E31-853F-4C80FEAB5B5C}</td><td>INSTALLDIR</td><td>2</td><td/><td>icuuc54.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>libEGL.dll</td><td>{1C9E8B6C-93ED-4293-8942-6C353C0D6C3F}</td><td>INSTALLDIR</td><td>2</td><td/><td>libegl.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>libGLESv2.dll</td><td>{111AB0EB-CFFF-4ABD-980D-EDE930380615}</td><td>INSTALLDIR</td><td>2</td><td/><td>libglesv2.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>qjpeg.dll</td><td>{D69A147B-BB59-4D64-A44F-601C257CBE7A}</td><td>_58083AB70661412FBC208891D7438D80</td><td>2</td><td/><td>qjpeg.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1909,16 +1914,21 @@
 		<row><td>AlwaysInstall</td><td>Qt5MultimediaWidgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Network.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5OpenGL.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5Positioning.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5PrintSupport.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Qml.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Quick.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Sensors.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Sql.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Qt5WebChannel.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5WebKit.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5WebKitWidgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Qt5Widgets.dll</td></row>
 		<row><td>AlwaysInstall</td><td>QtSpim.exe</td></row>
 		<row><td>AlwaysInstall</td><td>assistant.exe</td></row>
+		<row><td>AlwaysInstall</td><td>icudt54.dll</td></row>
+		<row><td>AlwaysInstall</td><td>icuin54.dll</td></row>
+		<row><td>AlwaysInstall</td><td>icuuc54.dll</td></row>
 		<row><td>AlwaysInstall</td><td>libEGL.dll</td></row>
 		<row><td>AlwaysInstall</td><td>libGLESv2.dll</td></row>
 		<row><td>AlwaysInstall</td><td>qjpeg.dll</td></row>
@@ -1945,6 +1955,9 @@
 		<row><td>_4106290115B24D53A730622715051AE8</td><td>C__4106290115B24D53A730622715051AE8</td><td>HELLOW~1.S|helloworld.s</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\helloworld.s</td><td>5</td><td/></row>
 		<row><td>_A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>C__A1F943D6FEF143A8A06E01B8DBAD69D8</td><td>NEWICO~1.PNG|NewIcon256x256.png</td><td>0</td><td/><td/><td>512</td><td>1</td><td>C:\Users\larus\Software\spimsimulator\Setup\NewIcon256x256.png</td><td>5</td><td/></row>
 		<row><td>assistant.exe</td><td>assistant.exe</td><td>ASSIST~1.EXE|assistant.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\assistant.exe</td><td>1</td><td/></row>
+		<row><td>icudt54.dll</td><td>icudt54.dll</td><td>icudt54.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\icudt54.dll</td><td>1</td><td/></row>
+		<row><td>icuin54.dll</td><td>icuin54.dll</td><td>icuin54.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\icuin54.dll</td><td>1</td><td/></row>
+		<row><td>icuuc54.dll</td><td>icuuc54.dll</td><td>icuuc54.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\icuuc54.dll</td><td>1</td><td/></row>
 		<row><td>libegl.dll</td><td>libEGL.dll</td><td>libEGL.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\libEGL.dll</td><td>1</td><td/></row>
 		<row><td>libglesv2.dll</td><td>libGLESv2.dll</td><td>LIBGLE~1.DLL|libGLESv2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\libGLESv2.dll</td><td>1</td><td/></row>
 		<row><td>qjpeg.dll</td><td>qjpeg.dll</td><td>qjpeg.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\plugins\imageformats\qjpeg.dll</td><td>1</td><td/></row>
@@ -1960,11 +1973,13 @@
 		<row><td>qt5multimediawidgets.dll</td><td>Qt5MultimediaWidgets.dll</td><td>QT5MUL~1.DLL|Qt5MultimediaWidgets.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5MultimediaWidgets.dll</td><td>1</td><td/></row>
 		<row><td>qt5network.dll</td><td>Qt5Network.dll</td><td>QT5NET~1.DLL|Qt5Network.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Network.dll</td><td>1</td><td/></row>
 		<row><td>qt5opengl.dll</td><td>Qt5OpenGL.dll</td><td>QT5OPE~1.DLL|Qt5OpenGL.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5OpenGL.dll</td><td>1</td><td/></row>
+		<row><td>qt5positioning.dll</td><td>Qt5Positioning.dll</td><td>QT5POS~1.DLL|Qt5Positioning.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Positioning.dll</td><td>1</td><td/></row>
 		<row><td>qt5printsupport.dll</td><td>Qt5PrintSupport.dll</td><td>QT5PRI~1.DLL|Qt5PrintSupport.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5PrintSupport.dll</td><td>1</td><td/></row>
 		<row><td>qt5qml.dll</td><td>Qt5Qml.dll</td><td>Qt5Qml.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Qml.dll</td><td>1</td><td/></row>
 		<row><td>qt5quick.dll</td><td>Qt5Quick.dll</td><td>Qt5Quick.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Quick.dll</td><td>1</td><td/></row>
 		<row><td>qt5sensors.dll</td><td>Qt5Sensors.dll</td><td>QT5SEN~1.DLL|Qt5Sensors.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Sensors.dll</td><td>1</td><td/></row>
 		<row><td>qt5sql.dll</td><td>Qt5Sql.dll</td><td>Qt5Sql.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Sql.dll</td><td>1</td><td/></row>
+		<row><td>qt5webchannel.dll</td><td>Qt5WebChannel.dll</td><td>QT5WEB~1.DLL|Qt5WebChannel.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5WebChannel.dll</td><td>1</td><td/></row>
 		<row><td>qt5webkit.dll</td><td>Qt5WebKit.dll</td><td>QT5WEB~1.DLL|Qt5WebKit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5WebKit.dll</td><td>1</td><td/></row>
 		<row><td>qt5webkitwidgets.dll</td><td>Qt5WebKitWidgets.dll</td><td>QT5WEB~1.DLL|Qt5WebKitWidgets.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5WebKitWidgets.dll</td><td>1</td><td/></row>
 		<row><td>qt5widgets.dll</td><td>Qt5Widgets.dll</td><td>QT5WID~1.DLL|Qt5Widgets.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\OSS\Qt\5.5\msvc2012\bin\Qt5Widgets.dll</td><td>1</td><td/></row>
@@ -2127,16 +2142,21 @@
 		<row><td>Qt5MultimediaWidgets.dll</td><td/><td/><td>_4017B82B_0FA6_4E3D_9ECB_B9032924047E_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Network.dll</td><td/><td/><td>_C5E52233_8AD2_4AC3_93B6_EE8C08403925_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5OpenGL.dll</td><td/><td/><td>_7B19D30D_CABB_42AF_9B44_831049BAA6D6_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5Positioning.dll</td><td/><td/><td>_F5AE70AC_AD7D_4B8B_AD0B_F26BDA03ECD1_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5PrintSupport.dll</td><td/><td/><td>_037998AF_44D2_4DD8_A598_7DD3E0E71455_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Qml.dll</td><td/><td/><td>_64F0CAF0_5C7D_41D4_8965_D2393380C0B2_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Quick.dll</td><td/><td/><td>_1CD23ECF_A481_46B6_B04E_8920C348B25B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Sensors.dll</td><td/><td/><td>_3E165CF0_5551_4428_ACC7_284C43DD225B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Sql.dll</td><td/><td/><td>_BBA4CF04_7A25_441E_BC96_F006C3C98A7A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Qt5WebChannel.dll</td><td/><td/><td>_924A7783_7DAC_4684_A6E9_2FEED1770CFA_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5WebKit.dll</td><td/><td/><td>_1C005165_38AB_45D0_9BB3_EAF2679A0003_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5WebKitWidgets.dll</td><td/><td/><td>_CF4EFF16_E4EB_452F_8F6E_BF08AC120B89_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Qt5Widgets.dll</td><td/><td/><td>_E0118DE9_CE9D_4BAC_859F_D3D5D933142A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>QtSpim.exe</td><td/><td/><td>_197BE8C9_38C1_43D7_866B_CEC9109A2F57_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>assistant.exe</td><td/><td/><td>_E213D9BE_505A_4CEF_907E_C40631061484_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>icudt54.dll</td><td/><td/><td>_A53D0F53_6CE6_4B86_ACAD_A85EA6F16055_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>icuin54.dll</td><td/><td/><td>_3A36AFAA_0411_4FFB_BC95_79890A995B16_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>icuuc54.dll</td><td/><td/><td>_A48268B5_1A20_44DF_B575_E1E5CA8F250B_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>libEGL.dll</td><td/><td/><td>_115FFCB2_4D01_4B1F_9590_C879082755A0_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>libGLESv2.dll</td><td/><td/><td>_74C8CFA5_E11A_4AA6_AD37_A06A0746277C_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>qjpeg.dll</td><td/><td/><td>_07B43FA9_F381_42D7_AF31_5FF9AA2E28B1_FILTER</td><td/><td/><td/><td/></row>
@@ -3861,7 +3881,7 @@
 		<row><td>IDS__IsVerifyRemoveAllDlg_Remove</td><td>1033</td><td>&amp;Remove</td><td>0</td><td/><td>1176617555</td></row>
 		<row><td>IDS__IsVerifyRemoveAllDlg_RemoveProgram</td><td>1033</td><td>{&amp;MSSansBold8}Remove the Program</td><td>0</td><td/><td>1176617555</td></row>
 		<row><td>IDS__IsWelcomeDlg_InstallProductName</td><td>1033</td><td>The InstallShield(R) Wizard will install [ProductName] on your computer. To continue, click Next.</td><td>0</td><td/><td>1176617555</td></row>
-		<row><td>IDS__IsWelcomeDlg_WarningCopyright</td><td>1033</td><td>SPIM is Copyright (c) 1990-2013, by James R. Larus. All rights reserved. SPIM is distributed under a BSD license. See the README file for details.</td><td>0</td><td/><td>1310822869</td></row>
+		<row><td>IDS__IsWelcomeDlg_WarningCopyright</td><td>1033</td><td>SPIM is Copyright (c) 1990-2015, by James R. Larus. All rights reserved. SPIM is distributed under a BSD license. See the README file for details.</td><td>0</td><td/><td>-735872492</td></row>
 		<row><td>IDS__IsWelcomeDlg_WelcomeProductName</td><td>1033</td><td>{&amp;TahomaBold10}Welcome to the InstallShield Wizard for [ProductName]</td><td>0</td><td/><td>1176617555</td></row>
 		<row><td>IDS__TargetReq_DESC_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1176617555</td></row>
 		<row><td>IDS__TargetReq_DESC_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>1176617555</td></row>
@@ -4126,7 +4146,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{31DF2F8D-E6E0-4E4F-AC54-633408785D51}</td></row>
 		<row><td>ISUSSignature</td><td>{BF3E7C49-6E28-4A38-B38C-10A1F42A9541}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppV,viewProject,viewRealSetupDesign,viewSetupDesign,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewDependencies,viewShortcuts,viewRegistry,viewFileExtensions,viewUI,viewBillboards,viewTextMessages,viewSystemSearch,viewInstallScriptStd,viewRelease,viewFeatureFiles,viewSetupTypes</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppV,viewProject,viewRealSetupDesign,viewSetupDesign,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewDependencies,viewShortcuts,viewRegistry,viewFileExtensions,viewUI,viewBillboards,viewTextMessages,viewSystemSearch,viewInstallScriptStd,viewRelease,viewFeatureFiles,viewSetupTypes,viewSupportFiles,viewTextFiles,viewVRoots,viewEnvironmentVariables,viewComponentServices</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4668,8 +4688,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>NewShortcut1</td><td>StartupFolder</td><td>##ID_STRING10##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut1_B37354A9602A4AC8B4626626E498332D.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING11##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut2_F1456C99C51445098FB09EBB586D2AE4.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut1</td><td>StartupFolder</td><td>##ID_STRING10##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut1_B37354A9602A4AC8B4626626E498332D.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut2</td><td>DesktopFolder</td><td>##ID_STRING11##</td><td>QtSpim.exe</td><td>[INSTALLDIR]QtSpim.exe</td><td/><td/><td/><td>NewShortcut2_F1456C99C51445098FB09EBB586D2AE4.exe</td><td>1</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
