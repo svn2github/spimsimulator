@@ -1,8 +1,10 @@
-
 2015-08-25  Larus  <larus@ubuntu>
 
         * CPU/version.h (SPIM_VERSION):
         Version 9.1.16
+
+	* README, README.rtf:
+	Update build instructions.
 
         * QtSpim/spimview.cpp (initialize_world):
         Update copyright notice for QtSpim to notify that Qt uses LGPL.

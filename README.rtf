@@ -1,7 +1,7 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
 {\fonttbl\f0\fmodern\fcharset0 CourierNewPSMT;}
 {\colortbl;\red255\green255\blue255;}
-\paperw11900\paperh16840\vieww20460\viewh19480\viewkind0
+\paperw11900\paperh16840\vieww25840\viewh23900\viewkind0
 \deftab720
 \pard\pardeftab720
 
@@ -71,19 +71,17 @@ The subdirectories can be divided into two categories.\
 \
     Tests -- Contains regression test for the simulator.\
 \
-    Boneyard -- Copies of the recent releases of Spim.\
-\
 \
 2. Front-ends for different versions of Spim:\
 \
-    PCSpim -- Microsoft Windows front end for Spim.\
+    PCSpim -- Microsoft Windows front end for Spim. [Obsolete]\
 \
-    QtSpim -- Front end for Spim that works on Microsoft Windows, Linux, and Mac OS X.\
+    QtSpim -- Preferred front end for Spim that works on Microsoft Windows, Linux, and Mac OS X.\
 \
     spim -- Text-only (terminal or console) front end for Spim. Works on all platforms.\
 \
     xspim -- X-Windows front end for Spim. Works on Linux and Mac OS X. (Built on a very old\
-             X Windows library that is no longer supported by the Mac.)\
+             X Windows library that is no longer supported by the Mac.) [Obsolete]\
 \
 \
                                         BUILDING QTSPIM\
@@ -95,26 +93,28 @@ version for most systems.\
 Install the bison parser generator and flex lexer generator, either using Cygwin on Windows or\
 native on Linux.\
 \
-1. Download the free (open source) version of Qt Creator from\
-   {\field{\*\fldinst{HYPERLINK "http://qt.nokia.com/downloads/"}}{\fldrslt http://qt.nokia.com/downloads/}}. This is a large download that might take a while.\
+1. Download the free (open source) version of Qt Creator from {\field{\*\fldinst{HYPERLINK "http://qt.io"}}{\fldrslt http://qt.io}}. This is a large download that might take a while.\
+   I have been using version 5.5, though any of the version 5.x should work fine. The 4.x releases will cause problems because\
+   of incompatible changes to the libraries.\
 \
         The open source version of Qt Creator for Windows, which uses mingw, works fine, as does\
-        the version (which you need to build yourself) that uses Microsoft Visual Studio's C++\
-        compiler.\
+        the version that uses Microsoft Visual Studio's C++ compiler.\
 \
-        The Qt Creator package for Ubuntu is an old version, which has some problems with\
-        QtSPIM.  Download a recent version from {\field{\*\fldinst{HYPERLINK "http://qt.nokia.com/downloads/"}}{\fldrslt http://qt.nokia.com/downloads/}}.\
-\
-        The Mac Qt SDK is located at {\field{\*\fldinst{HYPERLINK "http://qt.nokia.com/downloads/sdk-mac-os-cpp"}}{\fldrslt http://qt.nokia.com/downloads/sdk-mac-os-cpp}}.\
+        The Qt Creator package for Ubuntu is typically several releases behind, which can cause some problems with\
+        QtSPIM.  Download a recent version from {\field{\*\fldinst{HYPERLINK "http://qt.io"}}{\fldrslt http://qt.io}}.\
 \
 2. Start QtCreator and open the file QtSpim/QtSpim.pro.\
 \
-3. Compile QtSpim.\
+3. Build QtSpim.\
 \
         If you are porting to a new system and see a large number of compiler errors in\
         QtCreator, changes are good that you need to change QtSpim.pro to define the compiler\
         flag that says "treat all files, including .c files, as C++ code. This flag is "-X C++"\
         for gcc and "-TP" for the Microsoft compiler.\
+\
+4. Packaging QtSpim for distribution is a complex, domain-specific operation. The Setup directory contains the files\
+for all platforms. On OS X, you also need the Packages tool and the script bin/release-ox. On Windows,\
+you also need a copy of Visual Studio and InstallShield. On Linux, the script bin/release-debian handles the entire process.\
 \
 \
                                     BUILDING SPIM and XSPIM\
