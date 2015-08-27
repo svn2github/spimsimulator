@@ -1,3 +1,8 @@
+2015-08-27  Larus  <larus@Jim-Macbook-Air>
+
+	* README, README.rtf;
+	Update build instructions further.
+
 2015-08-25  Larus  <larus@ubuntu>
 
         * CPU/version.h (SPIM_VERSION):
