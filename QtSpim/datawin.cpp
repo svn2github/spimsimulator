@@ -303,6 +303,7 @@ void dataTextEdit::contextMenuEvent(QContextMenuEvent* event)
     menu->addAction(Window->ui->action_Data_DisplayDecimal);
     menu->addAction(Window->ui->action_Data_DisplayHex);
 
+    menu->addSeparator();
     menu->addAction(action_Context_ChangeValue);
     contextGlobalPos = event->globalPos();
 
@@ -317,16 +318,24 @@ void dataTextEdit::changeValue()
     if (addr != 0)
     {
         int base = Window->DataDisplayBase();
-        QString val = promptForNewValue("New Contents for " + formatAddress(addr), &base);
+        QString val = promptForNewValue("New value for " + formatAddress(addr), &base);
+
         bool ok;
-        int newMemVal = val.toLong(&ok, base);
+        int newMemVal = 0;
+        if (base == 10) {
+            newMemVal = val.toLong(&ok, base);  // decimal is signed
+        } else
+        {
+            newMemVal = val.toULong(&ok, base); // hex is unsigned
+        }
+
         if (ok)
         {
             set_mem_word(addr, newMemVal);
         } else
         {
             QMessageBox msgBox;
-            msgBox.setText("Memory value invalid: " + val);
+            msgBox.setText(QString("Bad ") + (base == 16 ? "hex" : "decimal") + " memory value: " + val);
             msgBox.exec();
         }
 

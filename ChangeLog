@@ -1,15 +1,21 @@
+2015-09-17    <larus@IC-LMC-ICDO-01>
+
+        * QtSpim/regwin.cpp, QtSpim/datawin.cpp [https://sourceforge.net/p/spimsimulator/bugs/60/]
+        Fix of bug 60 did not work on Windows because of difference in
+        treatment of hex literals from Mac.
+
 2015-08-27  Larus  <larus@Jim-Macbook-Air>
 
-	* README, README.rtf;
-	Update build instructions further.
+        * README, README.rtf;
+        Update build instructions further.
 
 2015-08-25  Larus  <larus@ubuntu>
 
         * CPU/version.h (SPIM_VERSION):
         Version 9.1.16
 
-	* README, README.rtf:
-	Update build instructions.
+        * README, README.rtf:
+        Update build instructions.
 
         * QtSpim/spimview.cpp (initialize_world):
         Update copyright notice for QtSpim to notify that Qt uses LGPL.

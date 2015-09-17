@@ -26,7 +26,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Change contents to:</string>
+       <string>Change value to:</string>
       </property>
      </widget>
     </item>

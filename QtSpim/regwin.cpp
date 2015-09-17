@@ -337,6 +337,7 @@ void regTextEdit::contextMenuEvent(QContextMenuEvent* event)
     menu->addAction(Window->ui->action_Reg_DisplayDecimal);
     menu->addAction(Window->ui->action_Reg_DisplayHex);
 
+    menu->addSeparator();
     menu->addAction(action_Context_ChangeValue);
     contextGlobalPos = event->globalPos();
 
@@ -346,21 +347,17 @@ void regTextEdit::contextMenuEvent(QContextMenuEvent* event)
 
 void regTextEdit::changeValue()
 {
+    int base = Window->RegDisplayBase();
     int reg = regAtPos("R");
     if (reg != -1)
     {
-        int base = Window->RegDisplayBase();
-        QString val = promptForNewValue("New Contents for R" + QString::number(reg, 10), &base);
+        QString val = promptForNewValue("New value for R" + QString::number(reg, 10), &base);
         bool ok;
-        int newRegVal = val.toLong(&ok, base);
+        int newRegVal = convertIntLiteral(val, base, &ok);
+
         if (ok)
         {
             R[reg] = newRegVal;
-        } else
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Register value invalid: " + val);
-            msgBox.exec();
         }
     }
     else
@@ -368,8 +365,7 @@ void regTextEdit::changeValue()
         int reg = regAtPos("FG");
         if (reg != -1)
         {
-            int base = Window->RegDisplayBase();
-            QString val = promptForNewValue("New Contents for FG" + QString::number(reg, 10), &base);
+            QString val = promptForNewValue("New value for FG" + QString::number(reg, 10), &base);
             bool ok;
             float newRegVal;
             if (base == 10)
@@ -378,7 +374,7 @@ void regTextEdit::changeValue()
             }
             else
             {
-                int newIntRegVal = val.toLong(&ok, base); // Read integer; treat bits -- not value -- as float
+                int newIntRegVal = val.toULong(&ok, base); // Read as hex; treat bits -- not value -- as float
                 void* ptr = &newIntRegVal;
                 newRegVal = *(float*)ptr;
             }
@@ -389,7 +385,7 @@ void regTextEdit::changeValue()
             } else
             {
                 QMessageBox msgBox;
-                msgBox.setText("Register value invalid: " + val);
+                msgBox.setText("Bad FP value: " + val);
                 msgBox.exec();
             }
         }
@@ -398,8 +394,7 @@ void regTextEdit::changeValue()
             int reg = regAtPos("FP");
             if (reg != -1)
             {
-                int base = Window->RegDisplayBase();
-                QString val = promptForNewValue("New Contents for FP" + QString::number(reg, 10), &base);
+                QString val = promptForNewValue("New value for FP" + QString::number(reg, 10), &base);
                 bool ok;
                 float newRegVal;
                 if (base == 10)
@@ -408,7 +403,7 @@ void regTextEdit::changeValue()
                 }
                 else
                 {
-                    qlonglong newIntRegVal = val.toLongLong(&ok, base); // Read integer; treat bits -- not value -- as double
+                    qlonglong newIntRegVal = val.toULongLong(&ok, base); // Read as hex; treat bits -- not value -- as double
                     void* ptr = &newIntRegVal;
                     newRegVal = *(double*)ptr;
                 }
@@ -419,7 +414,7 @@ void regTextEdit::changeValue()
                 } else
                 {
                     QMessageBox msgBox;
-                    msgBox.setText("Register value invalid: " + val);
+                    msgBox.setText("Bad FP value: " + val);
                     msgBox.exec();
                 }
             }
@@ -428,10 +423,9 @@ void regTextEdit::changeValue()
                 QString reg = strAtPos("([A-Za-z]+)");
                 if (reg != "")
                 {
-                    int base = Window->RegDisplayBase();
-                    QString val = promptForNewValue("New Contents for " + reg, &base);
+                    QString val = promptForNewValue("New value for " + reg, &base);
                     bool ok;
-                    int newRegVal = val.toInt(&ok, base);
+                    int newRegVal = convertIntLiteral(val, base, &ok);
 
                     if (ok)
                     {
@@ -479,11 +473,6 @@ void regTextEdit::changeValue()
                         {
                             FEXR = newRegVal;
                         }
-                    } else
-                    {
-                        QMessageBox msgBox;
-                        msgBox.setText("Register value invalid: " + val);
-                        msgBox.exec();
                     }
                 }
             }
@@ -491,6 +480,28 @@ void regTextEdit::changeValue()
     }
     Window->DisplayIntRegisters();
     Window->DisplayFPRegisters();
+}
+
+
+int regTextEdit::convertIntLiteral(QString val, int base, bool *ok)
+{
+    int newRegVal = 0;
+
+    if (base == 10) {
+        newRegVal = val.toLong(ok, base);  // decimal is signed
+    } else
+    {
+        newRegVal = val.toULong(ok, base); // hex is unsigned
+    }
+
+    if (!*ok)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(QString("Bad ") + (base == 16 ? "hex" : "decimal") + " register value: " + val);
+        msgBox.exec();
+    }
+
+    return newRegVal;
 }
 
 
