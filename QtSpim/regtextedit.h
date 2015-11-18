@@ -52,7 +52,7 @@ protected:
 
 private:
     QPoint contextGlobalPos;
-    int regTextEdit::convertIntLiteral(QString val, int base, bool *ok);
+    int convertIntLiteral(QString val, int base, bool *ok);
     int regAtPos(QString prefix);
     QString strAtPos(QString pattern);
 
