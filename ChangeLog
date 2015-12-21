@@ -1,3 +1,8 @@
+2015-12-21  Larus  <larus@Jim-Macbook-Air>
+
+	* QtSpim/state.cpp (writeSettings):
+	Added check box for spim quiet mode.
+
 2015-09-17    <larus@IC-LMC-ICDO-01>
 
         * QtSpim/regwin.cpp, QtSpim/datawin.cpp [https://sourceforge.net/p/spimsimulator/bugs/60/]

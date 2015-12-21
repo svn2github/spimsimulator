@@ -121,6 +121,7 @@ void SpimView::readSettings()
         QString file = settings.value("RecentFile" + QString(i), "").toString();
         st_recentFiles.append(file);
     }
+    quiet = settings.value("Quiet", false).toBool();
     rebuildRecentFilesMenu();
     settings.endGroup();
 
@@ -193,6 +194,7 @@ void SpimView::writeSettings()
             settings.setValue("RecentFile" + QString(i), "");
         }
     }
+    settings.setValue("Quiet", quiet);
     settings.endGroup();
 
 

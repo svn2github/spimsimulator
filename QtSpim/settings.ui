@@ -1,39 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-   SPIM S20 MIPS simulator.
-   Terminal interface for SPIM simulator.
-
-   Copyright (c) 1990-2010, James R. Larus.
-   All rights reserved.
-
-   Redistribution and use in source and binary forms, with or without modification,
-   are permitted provided that the following conditions are met:
-
-   Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
-
-   Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation and/or
-   other materials provided with the distribution.
-
-   Neither the name of the James R. Larus nor the names of its contributors may be
-   used to endorse or promote products derived from this software without specific
-   prior written permission.
-
-   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-   GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-   HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-   LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-   OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
-
 <ui version="4.0">
  <class>SettingDialog</class>
  <widget class="QDialog" name="SettingDialog">
@@ -84,7 +49,7 @@
           <rect>
            <x>20</x>
            <y>20</y>
-           <width>491</width>
+           <width>481</width>
            <height>61</height>
           </rect>
          </property>
@@ -125,10 +90,13 @@
           <item row="0" column="3">
            <widget class="QLineEdit" name="exceptionHandlerLineEdit">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>1</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -139,7 +107,7 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
+              <width>20</width>
               <height>20</height>
              </size>
             </property>
@@ -154,78 +122,74 @@
         <property name="title">
          <string>MIPS Simulation Settings</string>
         </property>
-        <widget class="QWidget" name="gridLayoutWidget_2">
+        <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
            <x>20</x>
            <y>30</y>
-           <width>491</width>
-           <height>88</height>
+           <width>481</width>
+           <height>141</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="settableCheckBox" name="bareMachineCheckBox">
-            <property name="text">
-             <string>Bare Machine</string>
-            </property>
-           </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="settableCheckBox" name="bareMachineCheckBox">
+              <property name="text">
+               <string>Bare Machine</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="settableCheckBox" name="delayedBranchCheckBox">
+              <property name="text">
+               <string>Enable Delayed Branches</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="settableCheckBox" name="delayedLoadCheckBox">
+              <property name="text">
+               <string>Enable Delayed Loads</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="mappedIOCheckBox">
+              <property name="text">
+               <string>Enable Mapped IO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="settableCheckBox" name="pseudoInstCheckBox">
+              <property name="text">
+               <string>Accept Pseudo Instructions</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="1" column="0">
-           <widget class="settableCheckBox" name="delayedBranchCheckBox">
-            <property name="text">
-             <string>Enable Delayed Branches</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="settableCheckBox" name="delayedLoadCheckBox">
-            <property name="text">
-             <string>Enable Delayed Loads</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="mappedIOCheckBox">
-            <property name="text">
-             <string>Enable Mapped IO</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="settableCheckBox" name="pseudoInstCheckBox">
-            <property name="text">
-             <string>Accept Pseudo Instructions</string>
-            </property>
-           </widget>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="simplePushButton">
+              <property name="text">
+               <string>Simple Machine</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="barePushButton">
+              <property name="text">
+               <string>Bare Machine</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
-        </widget>
-        <widget class="QPushButton" name="simplePushButton">
-         <property name="geometry">
-          <rect>
-           <x>120</x>
-           <y>140</y>
-           <width>100</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Simple Machine</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="barePushButton">
-         <property name="geometry">
-          <rect>
-           <x>300</x>
-           <y>140</y>
-           <width>100</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Bare Machine</string>
-         </property>
         </widget>
        </widget>
       </item>
@@ -251,32 +215,60 @@
         <property name="title">
          <string>Simulator</string>
         </property>
-        <widget class="QWidget" name="horizontalLayoutWidget_2">
+        <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
            <x>20</x>
            <y>20</y>
-           <width>300</width>
-           <height>80</height>
+           <width>491</width>
+           <height>91</height>
           </rect>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Length of Recent File list</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Length of Recent File list</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="recentFilesLineEdit">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QLineEdit" name="recentFilesLineEdit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QCheckBox" name="quietCheckBox">
+              <property name="text">
+               <string>Quiet</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -292,7 +284,7 @@
           <rect>
            <x>20</x>
            <y>20</y>
-           <width>480</width>
+           <width>491</width>
            <height>91</height>
           </rect>
          </property>
@@ -343,6 +335,9 @@
             <property name="text">
              <string>Background Color</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
            </widget>
           </item>
           <item row="0" column="5">
@@ -389,7 +384,7 @@
           <rect>
            <x>20</x>
            <y>20</y>
-           <width>503</width>
+           <width>491</width>
            <height>91</height>
           </rect>
          </property>

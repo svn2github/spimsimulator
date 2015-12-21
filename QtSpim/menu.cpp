@@ -483,6 +483,7 @@ void SpimView::sim_Settings()
                      sd.exceptionHandlerLineEdit, SLOT(setText(QString)));
 
     sd.recentFilesLineEdit->setText(QString::number(st_recentFilesLength, 10));
+    sd.quietCheckBox->setChecked(quiet);
 
     sd.regWinFontLineEdit->setText(st_regWinFont.family());
     QFontDialog* regWinFontDialog = new QFontDialog(st_regWinFont);
@@ -526,6 +527,7 @@ void SpimView::sim_Settings()
         st_exceptionHandlerFileName = sd.exceptionHandlerLineEdit->text();
 
         st_recentFilesLength = sd.recentFilesLineEdit->text().toInt();
+        quiet = sd.quietCheckBox->isChecked();
         if (st_recentFilesLength <= 0 || st_recentFilesLength > 20)
         {
             st_recentFilesLength = 4;
