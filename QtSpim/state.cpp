@@ -43,13 +43,8 @@
 void SpimView::readSettings()
 {
     settings.beginGroup("OriginalGeometry");
-    // The first time QtSpim is started on a machine, save the window geometry so it
-    // can be restored later.
-    if (settings.value("DefaultGeometry") == QVariant())
-    {
-        settings.setValue("DefaultGeometry", saveGeometry());
-    }
-    settings.endGroup();
+    settings.remove("");    // Remove remnants of previous hack if earlier version
+    settings.endGroup();    // of QtSpim ran on this system
 
     settings.beginGroup("MainWin");
     restoreGeometry(settings.value("Geometry").toByteArray());
@@ -121,12 +116,13 @@ void SpimView::readSettings()
         QString file = settings.value("RecentFile" + QString(i), "").toString();
         st_recentFiles.append(file);
     }
-    quiet = settings.value("Quiet", false).toBool();
     rebuildRecentFilesMenu();
     settings.endGroup();
 
 
     settings.beginGroup("Spim");
+    quiet = settings.value("Quiet", false).toBool();
+
     bare_machine = settings.value("BareMachine", 0).toBool();
     accept_pseudo_insts = settings.value("AcceptPseudoInsts", 1).toBool();
     delayed_branches = settings.value("DelayedBranches", 0).toBool();
@@ -134,7 +130,7 @@ void SpimView::readSettings()
     mapped_io = settings.value("MappedIO", 0).toBool();
 
     st_loadExceptionHandler = settings.value("LoadExceptionHandler", true).toBool();
-    st_exceptionHandlerFileName = settings.value("ExceptionHandlerFileName", 
+    st_exceptionHandlerFileName = settings.value("ExceptionHandlerFileName",
                                                  stdExceptionHandler).toString();
     st_startAddress = settings.value("StartingAddress", starting_address()).toInt();
     st_commandLine = settings.value("CommandLineArguments", "").toString();
@@ -194,11 +190,12 @@ void SpimView::writeSettings()
             settings.setValue("RecentFile" + QString(i), "");
         }
     }
-    settings.setValue("Quiet", quiet);
     settings.endGroup();
 
 
     settings.beginGroup("Spim");
+    settings.setValue("Quiet", quiet);
+
     settings.setValue("BareMachine", bare_machine);
     settings.setValue("AcceptPseudoInsts", accept_pseudo_insts);
     settings.setValue("DelayedBranches", delayed_branches);
@@ -221,10 +218,7 @@ void SpimView::writeSettings()
 void SpimView::win_Restore()
 {
     win_Tile();
-    settings.beginGroup("OriginalGeometry");
-    if (settings.value("DefaultGeometry") != QVariant())
-    {
-        restoreGeometry(settings.value("DefaultGeometry").toByteArray());
-    }
+    settings.beginGroup("MainWin");
+    settings.remove("Geometry");  // Remove current window configuration
     settings.endGroup();
 }
