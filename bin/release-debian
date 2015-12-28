@@ -31,6 +31,7 @@ mkdir -p Setup/debian/usr/lib/qtspim/plugins
 mkdir -p Setup/debian/usr/lib/qtspim/plugins/imageformats
 mkdir -p Setup/debian/usr/lib/qtspim/plugins/platforms
 mkdir -p Setup/debian/usr/lib/qtspim/plugins/printsupport
+mkdir -p Setup/debian/usr/lib/qtspim/plugins/sqldrivers
 
 mkdir -p Setup/debian/usr/share/man/man1
 mkdir -p Setup/debian/usr/share/doc/qtspim
@@ -62,6 +63,7 @@ chmod 0644 Setup/debian/usr/lib/qtspim/lib/*
 install $QT_DIR/plugins/imageformats/{libqdds.so,libqgif.so,libqicns.so,libqico.so,libqjp2.so,libqjpeg.so,libqmng.so,libqsvg.so,libqtga.so,libqtiff.so,libqwbmp.so,libqwebp.so} Setup/debian/usr/lib/qtspim/plugins/imageformats
 install $QT_DIR/plugins/platforms/libqxcb.so Setup/debian/usr/lib/qtspim/plugins/platforms
 install $QT_DIR/plugins/printsupport/libcupsprintersupport.so Setup/debian/usr/lib/qtspim/plugins/printsupport
+install $QT_DIR/plugins/sqldrivers/libqsqlite.so Setup/debian/usr/lib/qtspim/sqldrivers
 
 
 #documentation
