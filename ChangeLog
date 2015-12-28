@@ -1,3 +1,8 @@
+2015-12-28  Larus  <larus@Jim-Macbook-Air>
+
+	* CPU/scanner.l	[https://sourceforge.net/p/spimsimulator/bugs/66/]:
+	Improvement to previous fix for flex version detection.
+
 2015-12-21  Larus  <larus@Jim-Macbook-Air>
 
 	* QtSpim/state.cpp (writeSettings):
