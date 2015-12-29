@@ -3,6 +3,12 @@
         * CPU/version.h (SPIM_VERSION):
         Version 9.1.17
 
+	* summary.rtf:
+	Update installation instructions for latest OS X.
+
+	* QtSpim/QtSpim.pro, menu.cpp:
+	Fix creation of qtspim.qhc file to eliminate embedded paths.
+
         *  menu.cpp, spimview.cpp, spimview.h:
         Highlight spim notice with color.
 

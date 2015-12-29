@@ -1,7 +1,7 @@
 #  SPIM S20 MIPS simulator.
 #  Qt interface for SPIM simulator.
 #
-#  Copyright (c) 1990-2015, James R. Larus.
+#  Copyright (c) 1990-2016, James R. Larus.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without modification,
@@ -115,11 +115,15 @@ buildcompressedhelp.output	= help/${QMAKE_FILE_BASE}.qch
 buildcompressedhelp.commands	= qhelpgenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
 buildcompressedhelp.CONFIG	= no_link recursive
 
+# qcollectiongenerator must be run in the directory containing the project file, otherwise it
+# puts partial paths in the .qhc file, which make it impossible to install the help files in
+# other directories.
+#
 HELP_COL_PROJ 		= help/qtspim.qhcp
 buildhelpcollection.name	= Build help collection
 buildhelpcollection.input	= HELP_COL_PROJ
 buildhelpcollection.output	= help/${QMAKE_FILE_BASE}.qhc
-buildhelpcollection.commands	= qcollectiongenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
+buildhelpcollection.commands	= pushd ${QMAKE_FILE_PATH}; qcollectiongenerator ${QMAKE_FILE_BASE}.qhcp; popd; $(MOVE) ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qhc ${QMAKE_FILE_OUT};
 buildhelpcollection.CONFIG	= no_link recursive
 
 QMAKE_EXTRA_COMPILERS	+= buildcompressedhelp buildhelpcollection
