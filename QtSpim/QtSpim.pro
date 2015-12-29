@@ -123,7 +123,7 @@ HELP_COL_PROJ 		= help/qtspim.qhcp
 buildhelpcollection.name	= Build help collection
 buildhelpcollection.input	= HELP_COL_PROJ
 buildhelpcollection.output	= help/${QMAKE_FILE_BASE}.qhc
-buildhelpcollection.commands	= pushd ${QMAKE_FILE_PATH}; qcollectiongenerator ${QMAKE_FILE_BASE}.qhcp; popd; $(MOVE) ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qhc ${QMAKE_FILE_OUT};
+buildhelpcollection.commands	= bash -c '\"pushd ${QMAKE_FILE_PATH}; qcollectiongenerator ${QMAKE_FILE_BASE}.qhcp; popd; $(MOVE) ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qhc ${QMAKE_FILE_OUT};\"'
 buildhelpcollection.CONFIG	= no_link recursive
 
 QMAKE_EXTRA_COMPILERS	+= buildcompressedhelp buildhelpcollection
