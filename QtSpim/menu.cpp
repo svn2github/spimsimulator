@@ -234,14 +234,17 @@ void SpimView::sim_ClearRegisters()
 
 void SpimView::sim_ReinitializeSimulator()
 {
-    write_output(message_out, "<hr>Memory and registers cleared");
+    write_output(message_out, "<hr>Memory and registers cleared\n\n");
     InitializeWorld();
     SpimConsole->Clear();
     initStack();
-    write_startup_message();
 
+    SetOutputColor("green");
+    write_startup_message();
     write_output(message_out, 
-                 "QtSPIM is linked to the Qt library, which is distributed under the GNU Lesser General Public License version 3 and GNU Lesser General Public License version 2.1.\n");
+                 "QtSPIM is linked to the Qt library, which is distributed under the GNU Lesser General Public License version 3 and version 2.1.\n");
+    SetOutputColor("black");
+
     CaptureIntRegisters();
     CaptureSFPRegisters();
     CaptureDFPRegisters();

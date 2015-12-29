@@ -1,17 +1,26 @@
+2015-12-29  Larus  <larus@Jim-Macbook-Air>
+
+        * CPU/version.h (SPIM_VERSION):
+        Version 9.1.17
+
+        *  menu.cpp, spimview.cpp, spimview.h:
+        Highlight spim notice with color.
+
 2015-12-28  Larus  <larus@ubuntu>
 
-	* bin/release-debian (release-debian) [https://sourceforge.net/p/spimsimulator/support-requests/9/]:
-	Forgot sqldriver on Linux.
+    * bin/release-debian (release-debian) [https://sourceforge.net/p/spimsimulator/support-requests/9/]:
+    Forgot sqldriver on Linux.
+
 
 2015-12-28  Larus  <larus@Jim-Macbook-Air>
 
-	* CPU/scanner.l	[https://sourceforge.net/p/spimsimulator/bugs/66/]:
-	Improvement to previous fix for flex version detection.
+        * CPU/scanner.l [https://sourceforge.net/p/spimsimulator/bugs/66/]:
+        Improvement to previous fix for flex version detection.
 
 2015-12-21  Larus  <larus@Jim-Macbook-Air>
 
-	* QtSpim/state.cpp (writeSettings):
-	Added check box for spim quiet mode.
+        * QtSpim/state.cpp (writeSettings):
+        Added check box for spim quiet mode.
 
 2015-09-17    <larus@IC-LMC-ICDO-01>
 

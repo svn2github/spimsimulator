@@ -145,7 +145,7 @@ void
 write_startup_message ()
 {
   write_output (message_out, "SPIM %s\n", SPIM_VERSION);
-  write_output (message_out, "Copyright 1990-2015, James R. Larus.\n");
+  write_output (message_out, "Copyright 1990-2016, James R. Larus.\n");
   write_output (message_out, "All Rights Reserved.\n");
   write_output (message_out, "SPIM is distributed under a BSD license.\n");
   write_output (message_out, "See the file README for a full copyright notice.\n");

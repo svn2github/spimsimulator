@@ -87,7 +87,11 @@ Q_OBJECT
 
     Ui::SpimView *ui;
 
+    void SetOutputColor(QString color);
+
  private:
+
+    QString outputColor;
 
     //
     // Program state
