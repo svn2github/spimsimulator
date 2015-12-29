@@ -31,7 +31,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtCLucene.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtCLucene.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -50,7 +50,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/QtCore</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/QtCore</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -66,7 +66,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Resources</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Resources</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -88,7 +88,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5/QtCore</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5/QtCore</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -107,7 +107,7 @@
 																							<key>GID</key>
 																							<integer>80</integer>
 																							<key>PATH</key>
-																							<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5/Resources/Info.plist</string>
+																							<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5/Resources/Info.plist</string>
 																							<key>PATH_TYPE</key>
 																							<integer>0</integer>
 																							<key>PERMISSIONS</key>
@@ -123,7 +123,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5/Resources</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5/Resources</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -139,7 +139,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/5</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -155,7 +155,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/Current</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions/Current</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -171,7 +171,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework/Versions</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -187,7 +187,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtCore.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtCore.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -206,7 +206,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/QtGui</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/QtGui</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -222,7 +222,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Resources</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Resources</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -244,7 +244,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5/QtGui</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5/QtGui</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -263,7 +263,7 @@
 																							<key>GID</key>
 																							<integer>80</integer>
 																							<key>PATH</key>
-																							<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5/Resources/Info.plist</string>
+																							<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5/Resources/Info.plist</string>
 																							<key>PATH_TYPE</key>
 																							<integer>0</integer>
 																							<key>PERMISSIONS</key>
@@ -279,7 +279,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5/Resources</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5/Resources</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -295,7 +295,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/5</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -311,7 +311,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/Current</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions/Current</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -327,7 +327,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework/Versions</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -343,7 +343,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtGui.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtGui.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -359,7 +359,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtHelp.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtHelp.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -375,7 +375,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtMultimedia.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtMultimedia.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -391,7 +391,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtMultimediaWidgets.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtMultimediaWidgets.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -407,7 +407,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtNetwork.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtNetwork.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -423,7 +423,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtOpenGL.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtOpenGL.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -439,7 +439,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtPositioning.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtPositioning.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -458,7 +458,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/QtPrintSupport</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/QtPrintSupport</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -474,7 +474,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Resources</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Resources</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -496,7 +496,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/QtPrintSupport</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/QtPrintSupport</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -515,7 +515,7 @@
 																							<key>GID</key>
 																							<integer>80</integer>
 																							<key>PATH</key>
-																							<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources/Info.plist</string>
+																							<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources/Info.plist</string>
 																							<key>PATH_TYPE</key>
 																							<integer>0</integer>
 																							<key>PERMISSIONS</key>
@@ -531,7 +531,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -547,7 +547,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -563,7 +563,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/Current</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions/Current</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -579,7 +579,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework/Versions</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -595,7 +595,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtPrintSupport.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -611,7 +611,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtQml.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtQml.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -627,7 +627,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtQuick.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtQuick.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -643,7 +643,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtSensors.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtSensors.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -659,7 +659,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtSql.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtSql.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -675,7 +675,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtWebChannel.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtWebChannel.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -691,7 +691,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtWebKit.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtWebKit.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -707,7 +707,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Frameworks/QtWebKitWidgets.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtWebKitWidgets.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -726,7 +726,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/QtWidgets</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/QtWidgets</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -742,7 +742,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Resources</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Resources</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -764,7 +764,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5/QtWidgets</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5/QtWidgets</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -783,7 +783,7 @@
 																							<key>GID</key>
 																							<integer>80</integer>
 																							<key>PATH</key>
-																							<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5/Resources/Info.plist</string>
+																							<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5/Resources/Info.plist</string>
 																							<key>PATH_TYPE</key>
 																							<integer>0</integer>
 																							<key>PERMISSIONS</key>
@@ -799,7 +799,7 @@
 																					<key>GID</key>
 																					<integer>80</integer>
 																					<key>PATH</key>
-																					<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5/Resources</string>
+																					<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5/Resources</string>
 																					<key>PATH_TYPE</key>
 																					<integer>0</integer>
 																					<key>PERMISSIONS</key>
@@ -815,7 +815,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/5</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -831,7 +831,7 @@
 																			<key>GID</key>
 																			<integer>80</integer>
 																			<key>PATH</key>
-																			<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/Current</string>
+																			<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions/Current</string>
 																			<key>PATH_TYPE</key>
 																			<integer>0</integer>
 																			<key>PERMISSIONS</key>
@@ -847,7 +847,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework/Versions</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -863,7 +863,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks/QtWidgets.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -879,7 +879,7 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Frameworks</string>
+													<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Frameworks</string>
 													<key>PATH_TYPE</key>
 													<integer>0</integer>
 													<key>PERMISSIONS</key>
@@ -895,7 +895,7 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Info.plist</string>
+													<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Info.plist</string>
 													<key>PATH_TYPE</key>
 													<integer>0</integer>
 													<key>PERMISSIONS</key>
@@ -914,7 +914,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/MacOS/Assistant</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/MacOS/Assistant</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -930,7 +930,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/MacOS/QtSpim</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/MacOS/QtSpim</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -946,7 +946,7 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/MacOS</string>
+													<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/MacOS</string>
 													<key>PATH_TYPE</key>
 													<integer>0</integer>
 													<key>PERMISSIONS</key>
@@ -962,7 +962,7 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PkgInfo</string>
+													<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PkgInfo</string>
 													<key>PATH_TYPE</key>
 													<integer>0</integer>
 													<key>PERMISSIONS</key>
@@ -981,7 +981,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/PlugIns/audio</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/audio</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -997,7 +997,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/PlugIns/bearer</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/bearer</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1016,7 +1016,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqdds.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqdds.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1032,7 +1032,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqgif.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqgif.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1048,7 +1048,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqicns.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqicns.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1064,7 +1064,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqico.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqico.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1080,7 +1080,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqjp2.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqjp2.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1096,7 +1096,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqjpeg.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqjpeg.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1112,7 +1112,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqmng.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqmng.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1128,7 +1128,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqtga.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqtga.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1144,7 +1144,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqtiff.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqtiff.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1160,7 +1160,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqwbmp.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqwbmp.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1176,7 +1176,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats/libqwebp.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqwebp.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1192,7 +1192,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/imageformats</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1208,7 +1208,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/PlugIns/mediaservice</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/mediaservice</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1227,7 +1227,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/platforms/libqcocoa.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/platforms/libqcocoa.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1243,7 +1243,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/platforms</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/platforms</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1262,7 +1262,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/printsupport/libcocoaprintersupport.dylib</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/printsupport/libcocoaprintersupport.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1278,7 +1278,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns/printsupport</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/printsupport</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1294,7 +1294,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/PlugIns/sqldrivers</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/sqldrivers</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1310,7 +1310,7 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/PlugIns</string>
+													<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns</string>
 													<key>PATH_TYPE</key>
 													<integer>0</integer>
 													<key>PERMISSIONS</key>
@@ -1329,7 +1329,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/Assistant.app/Contents/Resources/assistant.icns</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Resources/assistant.icns</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1348,7 +1348,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/help/qtspim.qch</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/help/qtspim.qch</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1364,7 +1364,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/help/qtspim.qhc</string>
+																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/help/qtspim.qhc</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1394,7 +1394,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources/empty.lproj</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Resources/empty.lproj</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1410,7 +1410,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources/NewIcon.icns</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Resources/NewIcon.icns</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1426,7 +1426,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources/qt.conf</string>
+															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Resources/qt.conf</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1442,7 +1442,7 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents/Resources</string>
+													<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/Resources</string>
 													<key>PATH_TYPE</key>
 													<integer>0</integer>
 													<key>PERMISSIONS</key>
@@ -1458,7 +1458,7 @@
 											<key>GID</key>
 											<integer>80</integer>
 											<key>PATH</key>
-											<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app/Contents</string>
+											<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents</string>
 											<key>PATH_TYPE</key>
 											<integer>0</integer>
 											<key>PERMISSIONS</key>
@@ -1474,7 +1474,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>/Users/larus/OneDrive/Software/spim-simulator/build-QtSpim-Desktop_Qt_5_4_0_clang_64bit-Release/QtSpim.app</string>
+									<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app</string>
 									<key>PATH_TYPE</key>
 									<integer>0</integer>
 									<key>PERMISSIONS</key>
