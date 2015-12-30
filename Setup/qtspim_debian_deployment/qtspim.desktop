@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Version=9.1.15
+Version=9.1.17
 Name=QtSpim
 Comment=Run QtSpim
-Icon=/usr/share/qtspim/qtspim.png
+Icon=/usr/lib/qtspim/qtspim.png
 Exec=/usr/bin/qtspim
 Terminal=false

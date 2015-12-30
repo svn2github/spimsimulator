@@ -1,5 +1,0 @@
-#!/bin/sh
-# Register the QtSpim documentation with the help viewer
-#
-set -e
-/usr/lib/qtspim/bin/assistant -register /usr/share/qtspim/help/qtspim.qch
