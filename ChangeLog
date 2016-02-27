@@ -1,20 +1,28 @@
+2016-02-27  Larus  <larus@Jim-Macbook-Air>
+
+        *  QtSpim/menu.cpp:
+        Unnecessary refresh of register display.
+
+	* QtSpim/spimview.h, regwin.cpp:
+        Did not highlight changes to double precision registers correctly.
+
 2015-12-29  Larus  <larus@Jim-Macbook-Air>
 
         * CPU/version.h (SPIM_VERSION):
         Version 9.1.17
 
-	* summary.rtf:
-	Update installation instructions for latest OS X.
+        * summary.rtf:
+        Update installation instructions for latest OS X.
 
-	* QtSpim/QtSpim.pro, menu.cpp:
-	Fix creation of qtspim.qhc file to eliminate embedded paths.
+        * QtSpim/QtSpim.pro, menu.cpp [https://sourceforge.net/p/spimsimulator/bugs/71/]:
+        Fix creation of qtspim.qhc file to eliminate embedded paths.
 
         *  menu.cpp, spimview.cpp, spimview.h:
         Highlight spim notice with color.
 
 2015-12-28  Larus  <larus@ubuntu>
 
-    * bin/release-debian (release-debian) [https://sourceforge.net/p/spimsimulator/support-requests/9/]:
+    * bin/release-debian [https://sourceforge.net/p/spimsimulator/support-requests/9/]:
     Forgot sqldriver on Linux.
 
 

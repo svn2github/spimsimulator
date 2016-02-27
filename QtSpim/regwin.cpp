@@ -132,7 +132,6 @@ void SpimView::DisplayFPRegisters()
     te->appendHtml(windowContents);
 
     te->verticalScrollBar()->setValue(scrollPosition);
-    CaptureSFPRegisters();
 }
 
 
@@ -155,6 +154,8 @@ QString SpimView::formatSFPRegisters()
     for (i = 0; i < FGR_LENGTH; i++) {
         windowContents += formatSFPRegister(i, FPR_S(i), FPR_S(i) != oldFPR_S[i]);
     }
+
+    CaptureSFPRegisters();
 
     return windowContents;
 }

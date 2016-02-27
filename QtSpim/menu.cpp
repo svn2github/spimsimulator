@@ -394,7 +394,6 @@ void SpimView::executeProgram(mem_addr pc, int steps, bool display, bool contBkp
     bool breakpointEncountered = run_program(pc, steps, display, contBkpt, &continuable);
 
     highlightInstruction(PC);
-    UpdateDataDisplay();
 
     if (breakpointEncountered)
     {

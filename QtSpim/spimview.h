@@ -189,7 +189,7 @@ Q_OBJECT
     QString formatDFPRegisters();
     QString formatDFPRegister(int regNum, double value, bool changed);
 
-    float oldFPR_D[FPR_LENGTH];
+    double oldFPR_D[FPR_LENGTH];
 
 
     // Common register methods
