@@ -82,7 +82,7 @@ SpimView::SpimView(QWidget *parent) :
 
 void SpimView::closeEvent(QCloseEvent *)
 {
-    writeSettings();
+    writeSettings(false);
     qApp->exit(0);
 }
 
@@ -217,7 +217,7 @@ void SpimView::UpdateDataDisplay()
 
 void SpimView::SaveStateAndExit(int val)
 {
-    writeSettings();
+    writeSettings(false);
     exit(val);
 }
 

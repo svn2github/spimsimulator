@@ -42,10 +42,6 @@
 
 void SpimView::readSettings()
 {
-    settings.beginGroup("OriginalGeometry");
-    settings.remove("");    // Remove remnants of previous hack if earlier version
-    settings.endGroup();    // of QtSpim ran on this system
-
     settings.beginGroup("MainWin");
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("WindowState").toByteArray(), 1);
@@ -138,12 +134,14 @@ void SpimView::readSettings()
 }
 
 
-void SpimView::writeSettings()
+void SpimView::writeSettings(bool omitWindowState)
 {
-    settings.beginGroup("MainWin");
-    settings.setValue("Geometry", saveGeometry());
-    settings.setValue("WindowState", saveState(1));
-    settings.endGroup();
+    if (!omitWindowState){
+        settings.beginGroup("MainWin");
+        settings.setValue("Geometry", saveGeometry());
+        settings.setValue("WindowState", saveState(1));
+        settings.endGroup();
+    }
 
 
     settings.beginGroup("RegWin");
@@ -217,8 +215,11 @@ void SpimView::writeSettings()
 
 void SpimView::win_Restore()
 {
-    win_Tile();
     settings.beginGroup("MainWin");
     settings.remove("Geometry");  // Remove current window configuration
+    settings.remove("WindowState");
     settings.endGroup();
+
+    writeSettings(true); // Write settings without window config, so next startup will revert to default configuration
+    exit(1);
 }

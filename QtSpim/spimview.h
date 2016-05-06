@@ -98,7 +98,7 @@ Q_OBJECT
     //
     QSettings settings;
     void readSettings();
-    void writeSettings();
+    void writeSettings(bool omitWindowState);
     QString stdExceptionHandler;
 
     // File menu
