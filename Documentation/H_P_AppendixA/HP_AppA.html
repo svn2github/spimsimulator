@@ -2063,7 +2063,7 @@ str:
                         <td align="center" valign="top">13 </td>
                         <td align="left" >$a0 = filename (string), $a1 = flags, $a2
                         = mode </td>
-                        <td align="left" valign="top">file descriptor (in $a0)
+                        <td align="left" valign="top">file descriptor (in $v0)
                         </td>
                 </tr>
                 <tr>
@@ -2071,14 +2071,14 @@ str:
                         <td align="center" valign="top">14 </td>
                         <td align="left" >$a0 = file descriptor, $a1 = buffer, $a2
                         = length </td>
-                        <td align="left" >num chars read (in $a0) </td>
+                        <td align="left" >num chars read (in $v0) </td>
                 </tr>
                 <tr>
                         <td align="left" valign="top">write </td>
                         <td align="center" valign="top">15 </td>
                         <td align="left" >$a0 = file descriptor, $a1 = buffer, $a2
                         = length </td>
-                        <td align="left" >num chars written (in $a0) </td>
+                        <td align="left" >num chars written (in $v0) </td>
                 </tr>
                 <tr>
                         <td align="left">close </td>
