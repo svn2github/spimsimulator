@@ -1,9 +1,17 @@
+2016-11-23  Larus  <larus@Jim-Macbook-Air>
+
+        * CPU/version.h
+        Version 9.1.18
+
+        * Documentation/H_P_AppendixA/HHP_AppA.html:
+        Fix register usage for syscalls in Table 9.1.
+
 2016-02-27  Larus  <larus@Jim-Macbook-Air>
 
         *  QtSpim/menu.cpp:
         Unnecessary refresh of register display.
 
-	* QtSpim/spimview.h, regwin.cpp:
+        * QtSpim/spimview.h, regwin.cpp:
         Did not highlight changes to double precision registers correctly.
 
 2015-12-29  Larus  <larus@Jim-Macbook-Air>
