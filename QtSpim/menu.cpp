@@ -53,6 +53,7 @@
 #include <QColorDialog>
 #include <QProcess>
 #include <QScrollBar>
+#include <QSignalMapper>
 
 //
 // Menu functions
@@ -241,7 +242,7 @@ void SpimView::sim_ReinitializeSimulator()
 
     SetOutputColor("green");
     write_startup_message();
-    write_output(message_out, 
+    write_output(message_out,
                  "QtSPIM is linked to the Qt library, which is distributed under the GNU Lesser General Public License version 3 and version 2.1.\n");
     SetOutputColor("black");
 
@@ -481,6 +482,16 @@ void SpimView::sim_Settings()
                                     st_exceptionHandlerFileName,
                                     "Assembly (*.a *.s *.asm);;Text files (*.txt)");
     QObject::connect(sd.exceptionHandlerToolButton, SIGNAL(clicked()), &exceptionFileDialog, SLOT(exec()));
+
+    // Mapper from exceptionHandlerResetButton clicked() SIGNAL to exceptionHandlerLineEdit setText() SLOT
+    QSignalMapper *exceptionHandlerResetButtonMapper = new QSignalMapper();
+    // Connect exceptionHandlerResetButtonMapper to exceptionHandlerLineEdit
+    QObject::connect(exceptionHandlerResetButtonMapper, SIGNAL(mapped(const QString&)), 
+                     sd.exceptionHandlerLineEdit, SLOT(setText(const QString&)));
+    // Connect exceptionHandlerResetButton to exceptionHandlerResetButtonMapper
+    QObject::connect(sd.exceptionHandlerResetButton, SIGNAL(clicked()), exceptionHandlerResetButtonMapper, SLOT(map()));
+    // Set QString signal to emit when exceptionHandlerResetButton clicked
+    exceptionHandlerResetButtonMapper->setMapping(sd.exceptionHandlerResetButton, stdExceptionHandler);
     QObject::connect(&exceptionFileDialog, SIGNAL(fileSelected(QString)),
                      sd.exceptionHandlerLineEdit, SLOT(setText(QString)));
 

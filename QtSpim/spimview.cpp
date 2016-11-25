@@ -167,6 +167,15 @@ void SpimView::InitializeWorld()
 {
     if (st_loadExceptionHandler)
     {
+        if ((st_exceptionHandlerFileName != stdExceptionHandler)
+            && !QFile::exists(st_exceptionHandlerFileName))
+        {
+            QMessageBox msgBox;
+            msgBox.setText(QString("%1: exception handler file not found.\n\nUsing default exception handler.")
+                           .arg(st_exceptionHandlerFileName));
+            msgBox.exec();
+            st_exceptionHandlerFileName = stdExceptionHandler;
+        }
         if (st_exceptionHandlerFileName == stdExceptionHandler)
         {
             // Standard exception handler is a resource in this executable. Write it to a

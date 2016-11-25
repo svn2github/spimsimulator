@@ -1,5 +1,8 @@
 2016-11-25  Larus  <larus@Jim-Macbook-Air>
 
+	* QtSpim/spimview.cpp, menu.cpp, settings.ui [Renaud PACALET pacalet@users.sf.ne]:
+	Add button to reset exception handler to default.
+
 	* QtSpim/QtSpim.pro, CPU/*.c, spim/Makefile:
 	Move over completely to c++ compilation since the new version of
 	Qt requires c++11.
