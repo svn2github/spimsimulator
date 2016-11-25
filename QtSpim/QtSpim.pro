@@ -56,16 +56,16 @@ SOURCES += main.cpp\
         datawin.cpp\
         state.cpp\
         console.cpp\
-        ../CPU/data.c\
-        ../CPU/display-utils.c\
-        ../CPU/inst.c\
-        ../CPU/mem.c\
-        ../CPU/run.c\
-        ../CPU/spim-utils.c\
-        ../CPU/string-stream.c\
-        ../CPU/sym-tbl.c\
-        ../CPU/syscall.c\
-        spim_support.c
+        ../CPU/data.cpp\
+        ../CPU/display-utils.cpp\
+        ../CPU/inst.cpp\
+        ../CPU/mem.cpp\
+        ../CPU/run.cpp\
+        ../CPU/spim-utils.cpp\
+        ../CPU/string-stream.cpp\
+        ../CPU/sym-tbl.cpp\
+        ../CPU/syscall.cpp\
+        spim_support.cpp
 
 
 HEADERS  += spimview.h\
@@ -96,13 +96,13 @@ win32:RC_FILE = qtspim.rc
 
 
 QMAKE_YACC		= bison
-QMAKE_YACCFLAGS		= -d --defines=parser.tab.h --output=parser.tab.c
+QMAKE_YACCFLAGS		= -d --defines=parser.tab.h --output=parser.tab.cpp
 QMAKE_YACCFLAGS_MANGLE	= -p yy
 QMAKE_YACC_HEADER	= parser.tab.h
-QMAKE_YACC_SOURCE	= parser.tab.c
+QMAKE_YACC_SOURCE	= parser.tab.cpp
 
 QMAKE_LEX		= flex
-QMAKE_LEXFLAGS_MANGLE	= --outfile=lex.scanner.c
+QMAKE_LEXFLAGS_MANGLE	= --outfile=lex.scanner.cpp
 QMAKE_LEXFLAGS		= -I -8
 
 
@@ -170,10 +170,10 @@ win32-g++ {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #
@@ -186,10 +186,10 @@ linux-g++-32 {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #
@@ -197,10 +197,10 @@ linux-g++-32 {
 }
 
 linux-g++ {
-  QMAKE_CFLAGS_DEBUG   += -x c++ -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE += -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG += -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG   += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #
@@ -211,10 +211,10 @@ macx-g++ {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #
@@ -228,10 +228,10 @@ macx-clang {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -x c++ -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -x c++ -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #

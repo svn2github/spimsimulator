@@ -46,7 +46,7 @@
 #
 
 .SUFFIXES:
-.SUFFIXES: .c .o
+.SUFFIXES: .cpp .o
 
 #
 # The following parameters must be set for the target machine:
@@ -75,26 +75,14 @@ EXCEPTION_DIR = $(DESTDIR)/usr/share/spim
 MAN_DIR = $(DESTDIR)/usr/share/man/man1
 
 
-# If you have flex, use it instead of lex.  If you use flex, define this
-# variable and set LEXFLAGS.
-MYLEX = flex
 
 # SPIM needs flex's -I flag since the scanner is used interactively.
 # You can set the -8 flag so that funny characters do not hang the scanner.
-LEXFLAGS += -I -8
-
-
-# If you use lex, set the variables this way:
-#MYLEX = lex
-#LEXFLAGS =
-
-
-# SPIM works with either byacc or bison
-#YACC=byacc
-#YACCFLAGS = -d
+MYLEX = flex
+LEXFLAGS += -I -8 -o lex.yy.cpp
 
 YACC=bison
-YFLAGS += -d --defines=parser_yacc.h --output=parser_yacc.c -p yy
+YFLAGS += -d --defines=parser_yacc.h --output=parser_yacc.cpp -p yy
 
 
 # Size of the segments when spim starts up (data segment must be >= 64K).
@@ -111,15 +99,15 @@ MEM_SIZES = -DTEXT_SIZE=65536 -DDATA_SIZE=131072 -DK_TEXT_SIZE=65536
 
 DEFINES = $(MEM_SIZES) -DDEFAULT_EXCEPTION_HANDLER="\"$(EXCEPTION_DIR)/exceptions.s\""
 
-CC = g++
-CFLAGS += -I. -I$(CPU_DIR) $(DEFINES) -O -g -Wall -pedantic -Wextra -Wunused -Wno-write-strings -x c++
+CXX = g++
+CXXFLAGS += -I. -I$(CPU_DIR) $(DEFINES) -O -g -Wall -pedantic -Wextra -Wunused -Wno-write-strings -x c++
 YCFLAGS +=
 LDFLAGS += -lm
 CSH = bash
 
-# lex.yy.c is usually compiled with -O to speed it up.
+# lex.yy.cpp is usually compiled with -O to speed it up.
 
-LEXCFLAGS += -O $(CFLAGS)
+LEXCFLAGS += -O $(CXXFLAGS)
 
 
 
@@ -128,7 +116,7 @@ OBJS = spim.o spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex
 
 
 spim:   $(OBJS)
-	$(CC) -g $(OBJS) $(LDFLAGS) -o spim -lm
+	$(CXX) -g $(OBJS) $(LDFLAGS) -o spim -lm
 
 
 #
@@ -176,12 +164,12 @@ test_bare: spim
 
 #
 
-TAGS:	*.c *.h *.l *.y
-	etags *.l *.y *.c *.h
+TAGS:	*.cpp *.h *.l *.y
+	etags *.l *.y *.cpp *.h
 
 
 clean:
-	rm -f spim spim.exe *.o TAGS test.out lex.yy.c parser_yacc.c parser_yacc.h y.output
+	rm -f spim spim.exe *.o TAGS test.out lex.yy.cpp parser_yacc.cpp parser_yacc.h y.output
 
 install: spim
 	install spim $(BIN_DIR)/spim
@@ -192,7 +180,7 @@ install-man:
 	install -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
 
 splint: spim
-	splint -weak -preproc -warnposix +matchanyintegral spim.c parser_yacc.c lex.yy.c
+	splint -weak -preproc -warnposix +matchanyintegral spim.cpp parser_yacc.cpp lex.yy.cpp
 
 
 
@@ -201,20 +189,20 @@ splint: spim
 #
 
 
-parser_yacc.h: parser_yacc.c
+parser_yacc.h: parser_yacc.cpp
 
-parser_yacc.c: $(CPU_DIR)/parser.y
+parser_yacc.cpp: $(CPU_DIR)/parser.y
 	$(YACC) $(YFLAGS) $(CPU_DIR)/parser.y
 
-parser_yacc.o: parser_yacc.c
-	$(CC) $(CFLAGS) $(YCFLAGS) -c parser_yacc.c
+parser_yacc.o: parser_yacc.cpp
+	$(CXX) $(CXXFLAGS) $(YCFLAGS) -c parser_yacc.cpp
 
 
-lex.yy.c: $(CPU_DIR)/scanner.l
+lex.yy.cpp: $(CPU_DIR)/scanner.l
 	$(MYLEX) $(LEXFLAGS) $(CPU_DIR)/scanner.l
 
-lex.yy.o: lex.yy.c
-	$(CC) $(LEXCFLAGS) -c lex.yy.c
+lex.yy.o: lex.yy.cpp
+	$(CXX) $(LEXCFLAGS) -c lex.yy.cpp
 
 
 #

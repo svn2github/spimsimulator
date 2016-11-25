@@ -1,3 +1,9 @@
+2016-11-25  Larus  <larus@Jim-Macbook-Air>
+
+	* QtSpim/QtSpim.pro, CPU/*.c, spim/Makefile:
+	Move over completely to c++ compilation since the new version of
+	Qt requires c++11.
+
 2016-11-23  Larus  <larus@Jim-Macbook-Air>
 
         * CPU/version.h
