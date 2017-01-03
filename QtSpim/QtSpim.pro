@@ -216,10 +216,10 @@ macx-g++ {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #
@@ -233,10 +233,10 @@ macx-clang {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings
-  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings -Wno-deprecated-register
+  QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
   # Surpress error when deleting non-existent file.
   #
