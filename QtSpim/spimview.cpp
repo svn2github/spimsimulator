@@ -44,7 +44,7 @@
 SpimView::SpimView(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SpimView),
-    settings("Larus-Stone", "QtSpim")
+    settings("LarusStone", "QtSpim")
 {
     // Open windows
     //

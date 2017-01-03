@@ -1,3 +1,14 @@
+2017-01-03  Larus  <larus@Jim-Macbook-Air>
+
+	* spimview.cpp:
+	Update organization name.
+
+	* macinfo.plist:
+	Update version number.
+
+	* spim-utils.cpp, version.h:
+	Update copyright date and release date.
+
 2016-11-25  Larus  <larus@Jim-Macbook-Air>
 
 	* QtSpim/spimview.cpp, menu.cpp, settings.ui [Renaud PACALET pacalet@users.sf.ne]:
