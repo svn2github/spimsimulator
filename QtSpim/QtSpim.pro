@@ -191,6 +191,9 @@ linux-g++-32 {
   QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings -Wno-deprecated-register
   QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
+  # Libraries will be installed in standard location
+  QMAKE_RPATHDIR = /usr/lib/qtspim/lib
+  
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f
@@ -202,6 +205,9 @@ linux-g++ {
   QMAKE_CXXFLAGS_DEBUG += -Wno-write-strings -Wno-deprecated-register
   QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings -Wno-deprecated-register
 
+  # Libraries will be installed in standard location
+  QMAKE_RPATHDIR = /usr/lib/qtspim/lib
+  
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f

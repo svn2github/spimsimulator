@@ -45,7 +45,6 @@ find Setup/debian -type d | xargs chmod 755   # this is necessary on Debian Wood
 #qtspim
 install -s $RELEASE_DIR/QtSpim Setup/debian/usr/lib/qtspim/bin/qtspim
 chmod 0755 Setup/debian/usr/lib/qtspim/bin/qtspim
-chrpath -r /usr/lib/qtspim/lib Setup/debian/usr/lib/qtspim/bin/qtspim > /dev/null
 
 ln -s ../lib/qtspim/bin/qtspim Setup/debian/usr/bin/qtspim
 chmod 0755 Setup/debian/usr/bin/qtspim
@@ -54,22 +53,21 @@ chmod 0755 Setup/debian/usr/bin/qtspim
 #assistant (helper)
 install -s $QT_DIR/bin/assistant Setup/debian/usr/lib/qtspim/bin/assistant
 chmod 0755 Setup/debian/usr/lib/qtspim/bin/assistant
-chrpath -r /usr/lib/qtspim/lib Setup/debian/usr/lib/qtspim/bin/assistant > /dev/null
 
 #qt.conf
 install Setup/qtspim_debian_deployment/qt.conf Setup/debian/usr/lib/qtspim/bin/qt.conf
 chmod 0644 Setup/debian/usr/lib/qtspim/bin/qt.conf
 
 #qtspim libraries
-install -s $QT_DIR/lib/{libQt5PrintSupport.so.5,libQt5Widgets.so.5,libQt5Gui.so.5,libQt5Core.so.5,libicui18n.so.54,libicuuc.so.54,libicudata.so.54} Setup/debian/usr/lib/qtspim/lib
+install -s $QT_DIR/lib/{libQt5PrintSupport.so.5,libQt5Widgets.so.5,libQt5Gui.so.5,libQt5Core.so.5,libicui18n.so.56,libicuuc.so.56,libicudata.so.56} Setup/debian/usr/lib/qtspim/lib
 
 #assistant libraries
-install -s $QT_DIR/lib/{libQt5Help.so.5,libQt5WebKitWidgets.so.5,libQt5WebKit.so.5,libQt5Network.so.5,libQt5Sql.so.5,libQt5CLucene.so.5,libQt5Sensors.so.5,libQt5Positioning.so.5,libQt5OpenGL.so.5,libQt5Quick.so.5,libQt5Qml.so.5,libQt5WebChannel.so.5,libQt5MultimediaWidgets.so.5,libQt5XcbQpa.so.5,libQt5Svg.so.5,libQt5DBus.so.5} Setup/debian/usr/lib/qtspim/lib
+install -s $QT_DIR/lib/{libQt5Help.so.5,libQt5Network.so.5,libQt5Sql.so.5,libQt5CLucene.so.5,libQt5Sensors.so.5,libQt5Positioning.so.5,libQt5OpenGL.so.5,libQt5Quick.so.5,libQt5Qml.so.5,libQt5WebChannel.so.5,libQt5MultimediaWidgets.so.5,libQt5XcbQpa.so.5,libQt5Svg.so.5,libQt5DBus.so.5} Setup/debian/usr/lib/qtspim/lib
 chmod 0644 Setup/debian/usr/lib/qtspim/lib/*
 
 
 #plugins
-install $QT_DIR/plugins/imageformats/{libqdds.so,libqgif.so,libqicns.so,libqico.so,libqjp2.so,libqjpeg.so,libqmng.so,libqsvg.so,libqtga.so,libqtiff.so,libqwbmp.so,libqwebp.so} Setup/debian/usr/lib/qtspim/plugins/imageformats
+install $QT_DIR/plugins/imageformats/{libqdds.so,libqgif.so,libqicns.so,libqico.so,libqjp2.so,libqjpeg.so,libqsvg.so,libqtga.so,libqtiff.so,libqwbmp.so,libqwebp.so} Setup/debian/usr/lib/qtspim/plugins/imageformats
 install $QT_DIR/plugins/platforms/libqxcb.so Setup/debian/usr/lib/qtspim/plugins/platforms
 install $QT_DIR/plugins/printsupport/libcupsprintersupport.so Setup/debian/usr/lib/qtspim/plugins/printsupport
 install $QT_DIR/plugins/sqldrivers/libqsqlite.so Setup/debian/usr/lib/qtspim/plugins/sqldrivers

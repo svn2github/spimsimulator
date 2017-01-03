@@ -1,3 +1,11 @@
+2017-01-03  James Larus  <larus@ubuntu>
+
+	* control.prototype, qtspim.desktop:
+	Update version number.
+
+	* QtSpim/QtSpim.pro, bin/release-debian:
+	Set RPATH in linker rather than using chrpath (which breaks in Ubuntu 16.04).
+
 2017-01-03  Larus  <larus@Jim-Macbook-Air>
 
 	* spimview.cpp:
