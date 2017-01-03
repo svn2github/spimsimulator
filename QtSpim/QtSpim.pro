@@ -45,8 +45,8 @@ TEMPLATE = app
 
 
 YACCSOURCES = ../CPU/parser.y
-LEXSOURCES = ../CPU/scanner.l
-
+LEXSOURCES  = ../CPU/scanner.l
+#CONFIG      += yacc_no_name_mangle
 
 SOURCES += main.cpp\
         spimview.cpp\
@@ -69,17 +69,17 @@ SOURCES += main.cpp\
 
 
 HEADERS  += spimview.h\
-	regtextedit.h\
-	texttextedit.h\
-	datatextedit.h\
+        regtextedit.h\
+        texttextedit.h\
+        datatextedit.h\
         spim_settings.h\
         settablecheckbox.h\
         console.h
 
 
 FORMS    += spimview.ui\
-	savelogfile.ui\
-	printwindows.ui\
+        savelogfile.ui\
+        printwindows.ui\
         runparams.ui\
         settings.ui\
         changevalue.ui \
@@ -89,45 +89,45 @@ FORMS    += spimview.ui\
 INCLUDEPATH = ../CPU ../spim ../QtSpim
 
 
-RESOURCES = windows_images.qrc\
-	    exception.qrc
+RESOURCES = windows_images.qrc exception.qrc
 
 win32:RC_FILE = qtspim.rc
 
 
-QMAKE_YACC		= bison
-QMAKE_YACCFLAGS		= -d --defines=parser.tab.h --output=parser.tab.cpp
-QMAKE_YACCFLAGS_MANGLE	= -p yy
-QMAKE_YACC_HEADER	= parser.tab.h
-QMAKE_YACC_SOURCE	= parser.tab.cpp
+QMAKE_YACC          = bison
+QMAKE_YACCFLAGS     = -d --defines=parser.tab.h --output=parser.tab.cpp
+QMAKE_YACCFLAGS_MANGLE = -p yy
+QMAKE_YACC_HEADER   = parser.tab.h
+QMAKE_YACC_SOURCE   = parser.tab.cpp
 
-QMAKE_LEX		= flex
-QMAKE_LEXFLAGS_MANGLE	= --outfile=lex.scanner.cpp
-QMAKE_LEXFLAGS		= -I -8
+QMAKE_LEX           = flex
+QMAKE_LEXFLAGS_MANGLE = -Pyy
+QMAKE_LEXFLAGS      = -I -8 --outfile=lex.scanner.c
 
 
 # Help file
 #
-HELP_PROJ 		= help/qtspim.qhp
-buildcompressedhelp.name	= Build compressed help
-buildcompressedhelp.input	= HELP_PROJ
-buildcompressedhelp.output	= help/${QMAKE_FILE_BASE}.qch
-buildcompressedhelp.commands	= qhelpgenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
-buildcompressedhelp.CONFIG	= no_link recursive
+HELP_PROJ           = help/qtspim.qhp
+buildcompressedhelp.name    = Build compressed help
+buildcompressedhelp.input   = HELP_PROJ
+buildcompressedhelp.output  = help/${QMAKE_FILE_BASE}.qch
+buildcompressedhelp.commands= qhelpgenerator ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
+buildcompressedhelp.CONFIG  = no_link recursive
 
 # qcollectiongenerator must be run in the directory containing the project file, otherwise it
 # puts partial paths in the .qhc file, which make it impossible to install the help files in
 # other directories.
 #
-HELP_COL_PROJ 		= help/qtspim.qhcp
-buildhelpcollection.name	= Build help collection
-buildhelpcollection.input	= HELP_COL_PROJ
-buildhelpcollection.output	= help/${QMAKE_FILE_BASE}.qhc
-buildhelpcollection.commands	= bash -c '\"pushd ${QMAKE_FILE_PATH}; qcollectiongenerator ${QMAKE_FILE_BASE}.qhcp; popd; $(MOVE) ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qhc ${QMAKE_FILE_OUT};\"'
-buildhelpcollection.CONFIG	= no_link recursive
+HELP_COL_PROJ       = help/qtspim.qhcp
+buildhelpcollection.name    = Build help collection
+buildhelpcollection.input   = HELP_COL_PROJ
+buildhelpcollection.output  = help/${QMAKE_FILE_BASE}.qhc
+linux|macx:buildhelpcollection.commands= bash -c '\"pushd ${QMAKE_FILE_PATH}; qcollectiongenerator ${QMAKE_FILE_BASE}.qhcp; popd; $(MOVE) ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qhc ${QMAKE_FILE_OUT};\"'
+win32:buildhelpcollection.commands= cmd -c '\"pushd ${QMAKE_FILE_PATH} & qcollectiongenerator ${QMAKE_FILE_BASE}.qhcp & popd & $(MOVE) ${QMAKE_FILE_PATH}\\${QMAKE_FILE_BASE}.qhc ${QMAKE_FILE_OUT}\"'
+buildhelpcollection.CONFIG  = no_link recursive
 
-QMAKE_EXTRA_COMPILERS	+= buildcompressedhelp buildhelpcollection
-POST_TARGETDEPS		+= help/qtspim.qch help/qtspim.qhc
+QMAKE_EXTRA_COMPILERS       += buildcompressedhelp buildhelpcollection
+POST_TARGETDEPS             += help/qtspim.qch help/qtspim.qhc
 
 
 # Microsoft Visual C compiler flags
@@ -135,8 +135,8 @@ POST_TARGETDEPS		+= help/qtspim.qch help/qtspim.qhc
 win32-msvc2008 {
   # Compile all files as C++
   #
-  QMAKE_CFLAGS_DEBUG	+= -TP
-  QMAKE_CFLAGS_RELEASE	+= -TP
+  QMAKE_CFLAGS_DEBUG    += -TP
+  QMAKE_CFLAGS_RELEASE  += -TP
 
   # Disable security warnings
   #
@@ -145,8 +145,8 @@ win32-msvc2008 {
 win32-msvc2010 {
   # Compile all files as C++
   #
-  QMAKE_CFLAGS_DEBUG	+= -TP
-  QMAKE_CFLAGS_RELEASE	+= -TP
+  QMAKE_CFLAGS_DEBUG    += -TP
+  QMAKE_CFLAGS_RELEASE  += -TP
 
   # Disable security warnings
   #
@@ -155,8 +155,8 @@ win32-msvc2010 {
 win32-msvc2012 {
   # Compile all files as C++
   #
-  QMAKE_CFLAGS_DEBUG	+= -TP
-  QMAKE_CFLAGS_RELEASE	+= -TP
+  QMAKE_CFLAGS_DEBUG    += -TP
+  QMAKE_CFLAGS_RELEASE  += -TP
 
   # Disable security warnings
   #
@@ -170,30 +170,29 @@ win32-g++ {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings
   QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings
 
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f
-  #QMAKE_DEL_FILE = cmd /c del
-  #QMAKE_MOVE = cmd /c move
+  QMAKE_MOVE = mv
 }
 
 linux-g++-32 {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings
   QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings
 
   # Libraries will be installed in standard location
   QMAKE_RPATHDIR = /usr/lib/qtspim/lib
- 
+
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f
@@ -207,7 +206,7 @@ linux-g++ {
 
   # Libraries will be installed in standard location
   QMAKE_RPATHDIR = /usr/lib/qtspim/lib
- 
+
   # Surpress error when deleting non-existent file.
   #
   QMAKE_DEL_FILE = rm -f
@@ -217,9 +216,9 @@ macx-g++ {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings
   QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings
 
   # Surpress error when deleting non-existent file.
@@ -234,9 +233,9 @@ macx-clang {
   # Compile all files as C++
   # Surpress gcc warning about deprecated conversion from string constant to char*
   #
-  QMAKE_CFLAGS_DEBUG	+= -Wno-write-strings
-  QMAKE_CFLAGS_RELEASE	+= -Wno-write-strings
-  QMAKE_CXXFLAGS_DEBUG	+= -Wno-write-strings
+  QMAKE_CFLAGS_DEBUG    += -Wno-write-strings
+  QMAKE_CFLAGS_RELEASE  += -Wno-write-strings
+  QMAKE_CXXFLAGS_DEBUG  += -Wno-write-strings
   QMAKE_CXXFLAGS_RELEASE += -Wno-write-strings
 
   # Surpress error when deleting non-existent file.

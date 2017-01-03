@@ -4529,7 +4529,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{D27DF00B-88A1-48ED-9343-15427D005C7B}</td><td/></row>
 		<row><td>ProductName</td><td>QtSpim</td><td/></row>
-		<row><td>ProductVersion</td><td>9.1.17</td><td/></row>
+		<row><td>ProductVersion</td><td>9.1.18</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
