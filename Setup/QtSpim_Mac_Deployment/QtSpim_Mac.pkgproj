@@ -375,71 +375,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtMultimedia.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtMultimediaWidgets.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
 															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtNetwork.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtOpenGL.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtPositioning.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -611,103 +547,7 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtQml.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtQuick.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtSensors.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
 															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtSql.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtWebChannel.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtWebKit.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtWebKitWidgets.framework</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -981,22 +821,6 @@
 															<key>GID</key>
 															<integer>80</integer>
 															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/audio</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
 															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/bearer</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
@@ -1080,39 +904,7 @@
 																	<key>GID</key>
 																	<integer>80</integer>
 																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqjp2.dylib</string>
-																	<key>PATH_TYPE</key>
-																	<integer>0</integer>
-																	<key>PERMISSIONS</key>
-																	<integer>493</integer>
-																	<key>TYPE</key>
-																	<integer>3</integer>
-																	<key>UID</key>
-																	<integer>0</integer>
-																</dict>
-																<dict>
-																	<key>CHILDREN</key>
-																	<array/>
-																	<key>GID</key>
-																	<integer>80</integer>
-																	<key>PATH</key>
 																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqjpeg.dylib</string>
-																	<key>PATH_TYPE</key>
-																	<integer>0</integer>
-																	<key>PERMISSIONS</key>
-																	<integer>493</integer>
-																	<key>TYPE</key>
-																	<integer>3</integer>
-																	<key>UID</key>
-																	<integer>0</integer>
-																</dict>
-																<dict>
-																	<key>CHILDREN</key>
-																	<array/>
-																	<key>GID</key>
-																	<integer>80</integer>
-																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqmng.dylib</string>
 																	<key>PATH_TYPE</key>
 																	<integer>0</integer>
 																	<key>PERMISSIONS</key>
@@ -1193,22 +985,6 @@
 															<integer>80</integer>
 															<key>PATH</key>
 															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/PlugIns/mediaservice</string>
 															<key>PATH_TYPE</key>
 															<integer>0</integer>
 															<key>PERMISSIONS</key>
@@ -1943,7 +1719,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>9.1.17</string>
+				<string>9.1.18</string>
 			</dict>
 			<key>UUID</key>
 			<string>240BDC96-9531-4E8F-924E-BB44DCAC62D8</string>
