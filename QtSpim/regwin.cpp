@@ -254,13 +254,15 @@ QString SpimView::formatInt(int value)
 
 QString SpimView::formatFloat(float value)
 {
-    if (st_regDisplayBase == 16 || st_regDisplayBase == 2)
-    {
-        int* ival = (int*)&value;
-        return QString::number(*ival, st_regDisplayBase);
-    }
-    else
-    {
+    int* ival = (int*)&value;
+    switch (st_regDisplayBase) {
+    case 2:
+        return QString::number(*ival, st_regDisplayBase).right(32); // number returns 64 bits
+
+    case 16:
+        return QString::number(*ival, st_regDisplayBase).right(8); // number returns 16 digits
+
+    default:
         return QString::number(value, 'f', 6);
     }
 }

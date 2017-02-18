@@ -1,35 +1,47 @@
+2017-02-18  Larus  <larus@Jim-Macbook-Air>
+
+        * QtSpim/regwin.cpp (formatFloat) [https://sourceforge.net/p/spimsimulator/bugs/76/]:
+        Display binary values for floats to 32 bits.
+
+2017-01-20  Larus  <larus@Jim-Macbook-Air>
+
+        *
+        Rebuild QtSpim on Mac with Qt5.5 because Qt5.7 has broken
+        macdeployqt that does not update paths to frameworks in frameworks
+        copied into the app.
+
 2017-01-03  Larus  <larus@Jim-Macbook-Air>
 
-	*
-	Release 9.1.18
+        *
+        Release 9.1.18
 
 2017-01-03  James Larus  <larus@ubuntu>
 
-	* control.prototype, qtspim.desktop:
-	Update version number.
+        * control.prototype, qtspim.desktop:
+        Update version number.
 
-	* QtSpim/QtSpim.pro, bin/release-debian:
-	Set RPATH in linker rather than using chrpath (which breaks in Ubuntu 16.04).
+        * QtSpim/QtSpim.pro, bin/release-debian:
+        Set RPATH in linker rather than using chrpath (which breaks in Ubuntu 16.04).
 
 2017-01-03  Larus  <larus@Jim-Macbook-Air>
 
-	* spimview.cpp:
-	Update organization name.
+        * spimview.cpp:
+        Update organization name.
 
-	* macinfo.plist:
-	Update version number.
+        * macinfo.plist:
+        Update version number.
 
-	* spim-utils.cpp, version.h:
-	Update copyright date and release date.
+        * spim-utils.cpp, version.h:
+        Update copyright date and release date.
 
 2016-11-25  Larus  <larus@Jim-Macbook-Air>
 
-	* QtSpim/spimview.cpp, menu.cpp, settings.ui [Renaud PACALET pacalet@users.sf.ne]:
-	Add button to reset exception handler to default.
+        * QtSpim/spimview.cpp, menu.cpp, settings.ui [Renaud PACALET pacalet@users.sf.ne]:
+        Add button to reset exception handler to default.
 
-	* QtSpim/QtSpim.pro, CPU/*.c, spim/Makefile:
-	Move over completely to c++ compilation since the new version of
-	Qt requires c++11.
+        * QtSpim/QtSpim.pro, CPU/*.c, spim/Makefile:
+        Move over completely to c++ compilation since the new version of
+        Qt requires c++11.
 
 2016-11-23  Larus  <larus@Jim-Macbook-Air>
 
