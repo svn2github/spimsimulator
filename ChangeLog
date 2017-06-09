@@ -1,3 +1,9 @@
+2017-06-09  Larus  <larus@Jim-Macbook-Air>
+
+	* QtSpim/main.cpp (main):
+	Explicitly specify organization name and url to work around
+	incompatibility on MacOS for settings.
+
 2017-02-18  Larus  <larus@Jim-Macbook-Air>
 
         * QtSpim/regwin.cpp (formatFloat) [https://sourceforge.net/p/spimsimulator/bugs/76/]:
