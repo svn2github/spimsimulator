@@ -1,8 +1,13 @@
+2017-07-25  Larus  <larus@Jim-Macbook-Air>
+
+        * CPU/version.h (SPIM_VERSION):
+        Release 9.1.19
+
 2017-06-09  Larus  <larus@Jim-Macbook-Air>
 
-	* QtSpim/main.cpp (main):
-	Explicitly specify organization name and url to work around
-	incompatibility on MacOS for settings.
+        * QtSpim/main.cpp (main):
+        Explicitly specify organization name and url to work around
+        incompatibility on MacOS for settings.
 
 2017-02-18  Larus  <larus@Jim-Macbook-Air>
 
