@@ -27,22 +27,6 @@
 													<array>
 														<dict>
 															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>80</integer>
-															<key>PATH</key>
-															<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/Assistant.app/Contents/Frameworks/QtCLucene.framework</string>
-															<key>PATH_TYPE</key>
-															<integer>0</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
 															<array>
 																<dict>
 																	<key>CHILDREN</key>
@@ -834,22 +818,6 @@
 														<dict>
 															<key>CHILDREN</key>
 															<array>
-																<dict>
-																	<key>CHILDREN</key>
-																	<array/>
-																	<key>GID</key>
-																	<integer>80</integer>
-																	<key>PATH</key>
-																	<string>/Users/larus/OneDrive/Software/spim-simulator/build_Release/QtSpim.app/Contents/PlugIns/imageformats/libqdds.dylib</string>
-																	<key>PATH_TYPE</key>
-																	<integer>0</integer>
-																	<key>PERMISSIONS</key>
-																	<integer>493</integer>
-																	<key>TYPE</key>
-																	<integer>3</integer>
-																	<key>UID</key>
-																	<integer>0</integer>
-																</dict>
 																<dict>
 																	<key>CHILDREN</key>
 																	<array/>
@@ -1719,7 +1687,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>9.1.18</string>
+				<string>9.1.19</string>
 			</dict>
 			<key>UUID</key>
 			<string>240BDC96-9531-4E8F-924E-BB44DCAC62D8</string>
