@@ -1,7 +1,7 @@
 /* SPIM S20 MIPS simulator.
    Terminal interface for SPIM simulator.
 
-   Copyright (c) 1990-2015, James R. Larus.
+   Copyright (c) 1990-2017, James R. Larus.
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without modification,
@@ -486,7 +486,7 @@ void SpimView::sim_Settings()
     // Mapper from exceptionHandlerResetButton clicked() SIGNAL to exceptionHandlerLineEdit setText() SLOT
     QSignalMapper *exceptionHandlerResetButtonMapper = new QSignalMapper();
     // Connect exceptionHandlerResetButtonMapper to exceptionHandlerLineEdit
-    QObject::connect(exceptionHandlerResetButtonMapper, SIGNAL(mapped(const QString&)), 
+    QObject::connect(exceptionHandlerResetButtonMapper, SIGNAL(mapped(const QString&)),
                      sd.exceptionHandlerLineEdit, SLOT(setText(const QString&)));
     // Connect exceptionHandlerResetButton to exceptionHandlerResetButtonMapper
     QObject::connect(sd.exceptionHandlerResetButton, SIGNAL(clicked()), exceptionHandlerResetButtonMapper, SLOT(map()));
@@ -813,10 +813,10 @@ void SpimView::help_ViewHelp()
     QProcess *process = new QProcess;
     QStringList args;
 
-    char* helpFile[] = {"help/qtspim.qhc",      // Windows
-                        "/Applications/QtSpim.app/Contents/Resources/doc/qtspim.qhc", // Mac
-                        "/usr/lib/qtspim/help/qtspim.qhc", // Linux
-                        0};
+    QString helpFile[] = {qgetenv("PROGRAMFILES") + QString("/QtSpim/help/qtspim.qhc"), // Windows
+                          QString("/Applications/QtSpim.app/Contents/Resources/doc/qtspim.qhc"), // Mac
+                          QString("/usr/lib/qtspim/help/qtspim.qhc"), // Linux
+                          0};
 
     int i;
     for (i = 0; helpFile[i] != 0; i += 1)
@@ -824,7 +824,7 @@ void SpimView::help_ViewHelp()
         QFileInfo fi1(helpFile[i]);
         if (fi1.exists())
         {
-            args << QLatin1String("-collectionFile") << QLatin1String(helpFile[i]);
+            args << QString("-collectionFile") << QString(helpFile[i]);
             break;
         }
     }

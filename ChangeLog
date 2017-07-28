@@ -1,3 +1,12 @@
+2017-07-28    <larus@IC-LMC-ICDO-01>
+
+	* Setup/QtSpim_Win_Deployment:
+	Delete VisualStudio projects (InstallShield no longer works) and
+	move to WiX to build installer.
+
+	* QtSpim/menu.cpp (help_ViewHelp):
+	Use full path for help file on Windows so QtSpim can run anywhere.
+
 2017-07-25  Larus  <larus@Jim-Macbook-Air>
 
         * CPU/version.h (SPIM_VERSION):
@@ -3262,5 +3271,3 @@ Mon May 14 13:35:27 1990  James Larus  (larus at primost)
         Remove typo in string.  Also, change call on strtol to sscanf
         since the first function doesn't appear to be standard BSD. [From:
         Brian R Murphy <hindmost@ATHENA.MIT.EDU>]
-
-
