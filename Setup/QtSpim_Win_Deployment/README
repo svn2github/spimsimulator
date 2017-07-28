@@ -1,0 +1,1 @@
+This installer for QtSpim on Windows uses the WiX Toolset, open source and available from http://wixtoolset.org/. Download and install WiX before using these scripts.
