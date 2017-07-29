@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Shell script to create Windows installation file
+#
+# Usage: build-msi
+#
+
+candle QtSpim.wxs
+light -ext WixUIExtension -cultures:en-us QtSpim.wixobj -out QtSpim.msi

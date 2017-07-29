@@ -62,3 +62,6 @@ mkdir $CACHE_DIR/sqldrivers
 cp -p $QT_PLUGIN_DIR/sqldrivers/qsqlite.dll $CACHE_DIR/sqldrivers
 cp -p $QT_PLUGIN_DIR/sqldrivers/qsqlodbc.dll $CACHE_DIR/sqldrivers
 cp -p $QT_PLUGIN_DIR/sqldrivers/qsqlpsql.dll $CACHE_DIR/sqldrivers
+
+cp -p Setup/QtSpim_License.rtf $CACHE_DIR
+cp -p Setup/WiXBanner.bmp $CACHE_DIR

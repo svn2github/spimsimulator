@@ -12,6 +12,13 @@
     <Media Id='1' Cabinet='QtSpim.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
     <Property Id='DiskPrompt' Value='QtSpim Installer' />
 
+    <!-- UI: -->
+	<UIRef Id='WixUI_InstallDir' />
+	<Property Id='WIXUI_INSTALLDIR' Value='APPLICATIONROOTDIRECTORY' />
+	<WixVariable Id='WixUILicenseRtf' Value='cache/QtSpim_License.rtf' />
+	<WixVariable Id='WixUIDialogBmp' Value='cache/WiXBanner.bmp' />
+
+
     <Directory Id='TARGETDIR' Name='SourceDir'>
       <Directory Id='ProgramFilesFolder'>
         <Directory Id='APPLICATIONROOTDIRECTORY' Name='QtSpim.'>
@@ -21,12 +28,12 @@
             <File Id='QtSpimEXE' Name='QtSpim.exe' DiskId='1'
                   Source='cache/QtSpim.exe'
                   KeyPath='yes' Checksum='yes'>
-              <Shortcut Id="startmenuQtSpim" Directory="ProgramMenuDir" Name="QtSpim"
-                        WorkingDirectory='APPLICATIONROOTDIRECTORY' Icon="QtSpim.exe" IconIndex="0"
-						Advertise="yes" />
-              <Shortcut Id="desktopQtSpim" Directory="DesktopFolder" Name="QtSpim"
-                        WorkingDirectory='APPLICATIONROOTDIRECTORY' Icon="QtSpim.exe" IconIndex="0"
-						Advertise="yes" />
+              <Shortcut Id='startmenuQtSpim' Directory='ProgramMenuDir' Name='QtSpim'
+                        WorkingDirectory='APPLICATIONROOTDIRECTORY' Icon='QtSpim.exe' IconIndex='0'
+						Advertise='yes' />
+              <Shortcut Id='desktopQtSpim' Directory='DesktopFolder' Name='QtSpim'
+                        WorkingDirectory='APPLICATIONROOTDIRECTORY' Icon='QtSpim.exe' IconIndex='0'
+						Advertise='yes' />
             </File>
           </Component>
 
@@ -224,9 +231,9 @@
         </Directory>
       </Directory>
 
-      <Directory Id="ProgramMenuFolder" Name="Programs">
-        <Directory Id="ProgramMenuDir" Name="QtSpim">
-          <Component Id="ProgramMenuDir" Guid="b887001d-041e-4837-8cc5-a39caea4b7ee">
+      <Directory Id='ProgramMenuFolder' Name='Programs'>
+        <Directory Id='ProgramMenuDir' Name='QtSpim'>
+          <Component Id='ProgramMenuDir' Guid='b887001d-041e-4837-8cc5-a39caea4b7ee'>
             <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
             <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string'
                            Value='' KeyPath='yes' />
@@ -234,7 +241,7 @@
         </Directory>
       </Directory>
 
-      <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id='DesktopFolder' Name='Desktop' />
     </Directory>
 
     <Feature Id='Complete' Level='1'>
@@ -276,7 +283,7 @@
       <ComponentRef Id='ProgramMenuDir' />
     </Feature>
 
-    <Icon Id="QtSpim.exe" SourceFile="cache/NewIcon.ico" />
+    <Icon Id='QtSpim.exe' SourceFile='cache/NewIcon.ico' />
 
-  </Product>
+</Product>
 </Wix>
