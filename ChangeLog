@@ -1,3 +1,15 @@
+2017-08-29  Larus  <larus@Jim-Macbook-Air>
+
+	* CPU/version.h (SPIM_VERSION):
+	Release 9.1.20
+
+	* spimview.ui [https://sourceforge.net/p/spimsimulator/bugs/81]:
+	Typo "parmeter"
+
+	* state.cpp [https://sourceforge.net/p/spimsimulator/bugs/81]:
+	Add message warning QtSpim will exit to restore window state.
+
+
 2017-07-28    <larus@IC-LMC-ICDO-01>
 
 	* Setup/QtSpim_Win_Deployment:

@@ -333,7 +333,7 @@
   </action>
   <action name="action_Sim_SetRunParameters">
    <property name="text">
-    <string>Run &amp;Parmeters</string>
+    <string>Run &amp;Parameters</string>
    </property>
   </action>
   <action name="action_Sim_Run">

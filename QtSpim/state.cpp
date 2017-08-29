@@ -31,6 +31,7 @@
 */
 
 #include <QDesktopWidget>
+#include <QMessageBox>
 
 #include "spimview.h"
 #include "ui_spimview.h"
@@ -215,11 +216,17 @@ void SpimView::writeSettings(bool omitWindowState)
 
 void SpimView::win_Restore()
 {
-    settings.beginGroup("MainWin");
-    settings.remove("Geometry");  // Remove current window configuration
-    settings.remove("WindowState");
-    settings.endGroup();
+    QMessageBox msgBox;
+    msgBox.setText("QtSpim will now exit. Restart QtSpim and the windows will be restored to default configuration.");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Abort);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+        settings.beginGroup("MainWin");
+        settings.remove("Geometry");  // Remove current window configuration
+        settings.remove("WindowState");
+        settings.endGroup();
 
-    writeSettings(true); // Write settings without window config, so next startup will revert to default configuration
-    exit(1);
+        writeSettings(true); // Write settings without window config, so next startup will revert to default configuration
+        exit(1);
+    }
 }
