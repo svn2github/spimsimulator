@@ -14,7 +14,7 @@ $QT_BIN_DIR/macdeployqt $RELEASE_DIR/QtSpim.app -verbose=2 -no-strip
 
 #Fix Qt Assistant
 cp -r $QT_BIN_DIR/../libexec/Assistant.app $RELEASE_DIR
-mv $RELEASE_DIR/Assistant-qt5.app $RELEASE_DIR/Assistant.app
+mv $RELEASE_DIR/Assistant.app $RELEASE_DIR/Assistant.app
 $QT_BIN_DIR/macdeployqt $RELEASE_DIR/Assistant.app -verbose=2 -no-strip
 
 
