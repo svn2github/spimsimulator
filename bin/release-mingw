@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# Shell script to create Windows Release Files
+#
+# Usage: release-win
+#
+
+RELEASE_DIR="build_Release"
+QT_DIR="C:\Qt\5.9.1\mingw53_32"
+QT_BIN_DIR=$QT_DIR/bin
+QT_PLUGIN_DIR=$QT_DIR/plugins
+
+WIX_DIR="Setup/QtSpim_Win_Deployment/WiX"
+CACHE_DIR=$WIX_DIR/cache
+
+rm -fr $CACHE_DIR
+mkdir $CACHE_DIR
+
+cp -p $RELEASE_DIR/release/QtSpim.exe $CACHE_DIR
+cp -p $QT_BIN_DIR/assistant.exe $CACHE_DIR
+
+cp -pr $RELEASE_DIR/help $CACHE_DIR
+
+cp -p $QT_BIN_DIR/Qt5Core.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/Qt5Gui.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/Qt5PrintSupport.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/Qt5Widgets.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/Qt5Network.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/Qt5Sql.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/Qt5Help.dll $CACHE_DIR
+
+cp -p $QT_BIN_DIR/libgcc_s_dw2-1.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/libstdc++-6.dll $CACHE_DIR
+cp -p $QT_BIN_DIR/libwinpthread-1.dll $CACHE_DIR
+
+cp -p Setup/NewIcon.ico $CACHE_DIR
+cp -p Setup/NewIcon256x256.png $CACHE_DIR
+cp -p helloworld.s $CACHE_DIR
+
+mkdir $CACHE_DIR/imageformats
+cp -p $QT_PLUGIN_DIR/imageformats/qjpeg.dll $CACHE_DIR/imageformats
+cp -p $QT_PLUGIN_DIR/imageformats/qsvg.dll $CACHE_DIR/imageformats
+
+mkdir $CACHE_DIR/platforms
+cp -p $QT_PLUGIN_DIR/platforms/qwindows.dll $CACHE_DIR/platforms
+
+mkdir $CACHE_DIR/sqldrivers
+cp -p $QT_PLUGIN_DIR/sqldrivers/qsqlite.dll $CACHE_DIR/sqldrivers
+cp -p $QT_PLUGIN_DIR/sqldrivers/qsqlodbc.dll $CACHE_DIR/sqldrivers
+cp -p $QT_PLUGIN_DIR/sqldrivers/qsqlpsql.dll $CACHE_DIR/sqldrivers
+
+cp -p Setup/QtSpim_License.rtf $CACHE_DIR
+cp -p Setup/WiXBanner.bmp $CACHE_DIR

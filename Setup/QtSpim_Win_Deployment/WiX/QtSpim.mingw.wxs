@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='QtSpim' Manufacturer='LarusStone'
+           Id='bf588941-3a73-421f-a619-cdabff1acbc7'
+           UpgradeCode='acf14497-9bbe-4d3d-b0b2-7b599eb18984'
+           Language='1033' Codepage='1252' Version='9.1.20'>
+    <Package Id='*' Keywords='Installer' Description='QtSpim Installer'
+             Comments='Copyright by James R. Larus. All rights reserved.'
+             Manufacturer='LarusStone' InstallerVersion='100' Languages='1033'
+             Compressed='yes' SummaryCodepage='1252' />
+
+    <Media Id='1' Cabinet='QtSpim.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
+    <Property Id='DiskPrompt' Value='QtSpim Installer' />
+
+    <!-- UI: -->
+	<UIRef Id='WixUI_InstallDir' />
+	<Property Id='WIXUI_INSTALLDIR' Value='APPLICATIONROOTDIRECTORY' />
+	<WixVariable Id='WixUILicenseRtf' Value='cache/QtSpim_License.rtf' />
+	<WixVariable Id='WixUIDialogBmp' Value='cache/WiXBanner.bmp' />
+
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder'>
+        <Directory Id='APPLICATIONROOTDIRECTORY' Name='QtSpim.'>
+
+          <!-- C:/Program Files/QtSpim: -->
+          <Component Id='QtSpimExecutable' Guid='d1d697b9-71fe-4e5c-8aad-afc197d44e65'>
+            <File Id='QtSpimEXE' Name='QtSpim.exe' DiskId='1'
+                  Source='cache/QtSpim.exe'
+                  KeyPath='yes' Checksum='yes'>
+              <Shortcut Id='startmenuQtSpim' Directory='ProgramMenuDir' Name='QtSpim'
+                        WorkingDirectory='APPLICATIONROOTDIRECTORY' Icon='QtSpim.exe' IconIndex='0'
+						Advertise='yes' />
+              <Shortcut Id='desktopQtSpim' Directory='DesktopFolder' Name='QtSpim'
+                        WorkingDirectory='APPLICATIONROOTDIRECTORY' Icon='QtSpim.exe' IconIndex='0'
+						Advertise='yes' />
+            </File>
+          </Component>
+
+          <Component Id='QtAssistant' Guid='94426962-4920-478b-8f75-19055d28f2b5'>
+            <File Id='AssistantEXE' Name='Assistant.exe' DiskId='1'
+                  Source='cache/assistant.exe'
+                  KeyPath='yes' Checksum='yes'>
+            </File>
+          </Component>
+
+		  <Component Id='NewIcon' Guid='e488141f-4148-4ef0-8d35-f027d69bab47'>
+            <File Id='NewIconICO' Name='NewIcon.ico' DiskId='1'
+                  Source='cache/NewIcon.ico' KeyPath='yes'>
+            </File>
+          </Component>
+
+		  <Component Id='NewIcon256x256' Guid='97132bd9-0a5e-4f66-ba7e-edb4ed00ec23'>
+            <File Id='NewIcon256x256PNG' Name='NewIcon256x256.png' DiskId='1'
+                  Source='cache/NewIcon256x256.png' KeyPath='yes'>
+            </File>
+          </Component>
+
+		  <Component Id='HelloWorld' Guid='07210b9e-3b9e-4c8b-86f7-47a3c0a50067'>
+            <File Id='HelloWorldS' Name='HelloWorld.s' DiskId='1'
+                  Source='cache/HelloWorld.s' KeyPath='yes'>
+            </File>
+          </Component>
+
+
+		  <!-- DLLs: -->
+
+          <Component Id='Qt5CoreDLL' Guid='9d3a2e2a-7205-4dc6-b7bd-286f90252716'>
+            <File Id='Qt5CoreDLL' Name='Qt5Core.dll' DiskId='1'
+                  Source='cache/Qt5Core.dll' KeyPath='yes' />
+          </Component>
+
+          <Component Id='Qt5GuiDLL' Guid='fe3c04cc-847b-4c82-b788-f564acd1a865'>
+            <File Id='Qt5GuiDLL' Name='Qt5Gui.dll' DiskId='1'
+                  Source='cache/Qt5Gui.dll' KeyPath='yes' />
+          </Component>
+
+          <Component Id='Qt5HelpDLL' Guid='8dc69a1f-909b-45f0-86a8-cbc89563eba1'>
+            <File Id='Qt5HelpDLL' Name='Qt5Help.dll' DiskId='1'
+                  Source='cache/Qt5Help.dll' KeyPath='yes' />
+          </Component>
+
+          <Component Id='Qt5NetworkDLL' Guid='95c5df54-859f-4fd2-8fbf-de1f4f599b2f'>
+            <File Id='Qt5NetworkDLL' Name='Qt5Network.dll' DiskId='1'
+                  Source='cache/Qt5Network.dll' KeyPath='yes' />
+          </Component>
+
+          <Component Id='Qt5PrintSupportDLL' Guid='161294c0-9284-46fc-b717-c57b2037fae5'>
+            <File Id='Qt5PrintSupportDLL' Name='Qt5PrintSupport.dll' DiskId='1'
+                  Source='cache/Qt5PrintSupport.dll' KeyPath='yes' />
+          </Component>
+
+          <Component Id='Qt5SqlDLL' Guid='d01062fe-66ec-4fc3-9504-91046a798d3f'>
+            <File Id='Qt5SqlDLL' Name='Qt5Sql.dll' DiskId='1'
+                  Source='cache/Qt5Sql.dll' KeyPath='yes' />
+          </Component>
+
+          <Component Id='Qt5WidgetsDLL' Guid='a5fad59a-1f46-4c83-9218-c563f7f3109f'>
+            <File Id='Qt5WidgetsDLL' Name='Qt5Widgets.dll' DiskId='1'
+                  Source='cache/Qt5Widgets.dll' KeyPath='yes' />
+          </Component>
+
+		  <Component Id='libgcc_sDLL' Guid='669b7856-7345-4649-8203-bba8896e199a'>
+            <File Id='libgcc_sDLL' Name='libgcc_s_dw2-1.dll' DiskId='1'
+                  Source='cache/libgcc_s_dw2-1.dll' KeyPath='yes' />
+          </Component>
+
+		  <Component Id='libstdcppDLL' Guid='3e5f7cc1-2c35-4c74-a2a1-30f9e75f2494'>
+            <File Id='libstdcppDLL' Name='libstdc++-6.dll' DiskId='1'
+                  Source='cache/libstdc++-6.dll' KeyPath='yes' />
+          </Component>
+
+		  <Component Id='libwinpthreadDLL' Guid='1ff8989c-6513-4c4f-8e1b-88ca61e8fdd4'>
+            <File Id='libwinpthread4DLL' Name='libwinpthread-1.dll' DiskId='1'
+                  Source='cache/libwinpthread-1.dll' KeyPath='yes' />
+          </Component>
+
+          <!-- C:/Program Files/QtSpim/imageformats: -->
+          <Directory Id='IMAGEFORMATS' Name='imageformats'>
+			<Component Id='qjpegDLL' Guid='f2db6006-fe39-4280-b338-2937d211bcad'>
+              <File Id='qjpegDLL' Name='qjpeg.dll' DiskId='1'
+					Source='cache/imageformats/qjpeg.dll' KeyPath='yes' />
+			</Component>
+
+			<Component Id='qsvgDLL' Guid='389a3776-1cae-4e71-ab85-3aed4df907c6'>
+              <File Id='qsvgDLL' Name='qsvg.dll' DiskId='1'
+					Source='cache/imageformats/qsvg.dll' KeyPath='yes' />
+			</Component>
+		  </Directory>
+
+          <!-- C:/Program Files/QtSpim/platforms: -->
+          <Directory Id='PLATFORMS' Name='platforms'>
+			<Component Id='qwindowsDLL' Guid='68232292-ba0a-49c6-a85a-c041f2309c53'>
+              <File Id='qwindowsDLL' Name='qwindows.dll' DiskId='1'
+					Source='cache/platforms/qwindows.dll' KeyPath='yes' />
+			</Component>
+		  </Directory>
+
+          <!-- C:/Program Files/QtSpim/sqldrivers: -->
+          <Directory Id='SQLDRIVERS' Name='sqldrivers'>
+			<Component Id='qsqliteDLL' Guid='f6341ea4-695a-4044-968a-dc7d9aef1d6a'>
+              <File Id='qsqliteDLL' Name='qsqlite.dll' DiskId='1'
+					Source='cache/sqldrivers/qsqlite.dll' KeyPath='yes' />
+			</Component>
+
+			<Component Id='qsqlodbcDLL' Guid='dadfba9d-05fe-4f49-9c5c-bd7a43321046'>
+              <File Id='qsqlodbcDLL' Name='qsqlodbc.dll' DiskId='1'
+					Source='cache/sqldrivers/qsqlodbc.dll' KeyPath='yes' />
+			</Component>
+
+			<Component Id='qsqlpsqlDLL' Guid='5ebdf968-1d03-4a24-aac1-226c1ce8c104'>
+              <File Id='qsqlpsqlDLL' Name='qsqlpsql.dll' DiskId='1'
+					Source='cache/sqldrivers/qsqlpsql.dll' KeyPath='yes' />
+			</Component>
+		  </Directory>
+
+
+          <!-- C:/Program Files/QtSpim/help: -->
+          <Directory Id='HELPDIR' Name='help'>
+            <Component Id='Help' Guid='1923e35c-f1f0-45c4-9d0b-2e553c80e958'>
+              <File Id='helpQCH' Name='qtspim.qch' DiskId='1' KeyPath='yes'
+                    Source='cache/help/qtspim.qch' />
+              <File Id='helpQHC' Name='qtspim.qhc' DiskId='1'
+                    Source='cache/help/qtspim.qhc' />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id='ProgramMenuFolder' Name='Programs'>
+        <Directory Id='ProgramMenuDir' Name='QtSpim'>
+          <Component Id='ProgramMenuDir' Guid='b887001d-041e-4837-8cc5-a39caea4b7ee'>
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string'
+                           Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id='DesktopFolder' Name='Desktop' />
+    </Directory>
+
+    <Feature Id='Complete' Level='1'>
+	  <ComponentRef Id='QtSpimExecutable' />
+	  <ComponentRef Id='QtAssistant' />
+	  <ComponentRef Id='NewIcon' />
+	  <ComponentRef Id='NewIcon256x256' />
+	  <ComponentRef Id='HelloWorld' />
+	  <ComponentRef Id='Qt5CoreDLL' />
+	  <ComponentRef Id='Qt5GuiDLL' />
+	  <ComponentRef Id='Qt5HelpDLL' />
+	  <ComponentRef Id='Qt5NetworkDLL' />
+	  <ComponentRef Id='Qt5PrintSupportDLL' />
+	  <ComponentRef Id='Qt5SqlDLL' />
+	  <ComponentRef Id='Qt5WidgetsDLL' />
+	  <ComponentRef Id='libgcc_sDLL' />
+	  <ComponentRef Id='libstdcppDLL' />
+	  <ComponentRef Id='libwinpthreadDLL' />
+	  <ComponentRef Id='qjpegDLL' />
+	  <ComponentRef Id='qsvgDLL' />
+	  <ComponentRef Id='qwindowsDLL' />
+	  <ComponentRef Id='qsqliteDLL' />
+	  <ComponentRef Id='qsqlodbcDLL' />
+	  <ComponentRef Id='qsqlpsqlDLL' />
+	  <ComponentRef Id='Help' />
+      <ComponentRef Id='ProgramMenuDir' />
+    </Feature>
+
+    <Icon Id='QtSpim.exe' SourceFile='cache/NewIcon.ico' />
+
+</Product>
+</Wix>
