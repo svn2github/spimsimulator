@@ -48,9 +48,6 @@
 #include <unistd.h>
 #endif
 
-#ifndef YY_CHAR
-#define YY_CHAR char
-#endif
 #define YY_NO_UNISTD_H
 
 /* Exported Variables: */
@@ -64,7 +61,7 @@ int line_no;		/* Line number in input file*/
 /* Track which line we are reading and where it began in the buffer. */
 static int current_line_no = 0;
 
-static YY_CHAR *current_line = NULL;
+static char *current_line = NULL;
 
 
 static double scan_float;	/* Where FP values are kept */
@@ -76,9 +73,9 @@ static int eof_returned = 0;	/* Return EOF token yet? */
 
 /* Local functions: */
 
-static int check_keyword (YY_CHAR *id, int allow_pseudo_ops);
-static YY_CHAR *copy_str (YY_CHAR *str, int chop);
-static YY_CHAR scan_escape (YY_CHAR **str);
+static int check_keyword (char *id, int allow_pseudo_ops);
+static char *copy_str (char *str, int chop);
+static char scan_escape (char **str);
 
 
 #undef yywrap
@@ -292,7 +289,7 @@ static YY_CHAR scan_escape (YY_CHAR **str);
 
 			  if (*(yytext + 1) == '\\')
 			    {
-			      YY_CHAR *escape = yytext + 2;
+			      char *escape = yytext + 2;
 			      yylval.i = (int) scan_escape (&escape);
 			    }
 			  else
@@ -395,10 +392,10 @@ int yywrap()
 
 /* A backslash has just been read, return the character designated by *STR.  */
 
-static YY_CHAR
-scan_escape (YY_CHAR **str)
+static char
+scan_escape (char **str)
 {
-  YY_CHAR first = **str;
+  char first = **str;
   *str += 1;
   switch (first)
     {
@@ -415,7 +412,7 @@ scan_escape (YY_CHAR **str)
     case 'x':
     case 'X':
       {
-	YY_CHAR c1 = **str, c2 = *(*str + 1);
+	char c1 = **str, c2 = *(*str + 1);
 	int b = 0;
 
 	if ('0' <= c1 && c1 <= '9') b = c1 - '0';
@@ -430,7 +427,7 @@ scan_escape (YY_CHAR **str)
 	else yyerror ("Bad character in \\X construct in string");
 
 	*str += 2;
-	return (YY_CHAR) b;
+	return (char) b;
       }
 
     default:
@@ -447,11 +444,11 @@ scan_escape (YY_CHAR **str)
 /* Return a freshly-allocated copy of STRING with the last CHOP
    characters removed. */
 
-static YY_CHAR *
-copy_str (YY_CHAR *str, int chop)
+static char *
+copy_str (char *str, int chop)
 {
   int new_len = strlen (str) - chop;
-  YY_CHAR *new_str = (YY_CHAR *) xmalloc (new_len + 1), *n;
+  char *new_str = (char *) xmalloc (new_len + 1), *n;
 
   for (n = new_str; *str != '\0' && new_len > 0; new_len -= 1)
     if (*str == '\\')
@@ -483,7 +480,7 @@ copy_str (YY_CHAR *str, int chop)
 	case '2':
 	case '3':
 	  {
-	    YY_CHAR c2 = *(str + 2), c3 = *(str + 3);
+	    char c2 = *(str + 2), c3 = *(str + 3);
 	    int b = (*(str + 1) - '0') << 3;
 
 	    if ('0' <= c2 && c2 <= '7')
@@ -496,14 +493,14 @@ copy_str (YY_CHAR *str, int chop)
 	    else
 	      yyerror ("Bad character in \\ooo construct in string");
 
-	    *n ++ = (YY_CHAR) b;
+	    *n ++ = (char) b;
 	    str += 4;
 	    new_len -= 3;
 	    continue;
 	  }
 	case 'X':
 	  {
-	    YY_CHAR c2 = *(str + 2), c3 = *(str + 3);
+	    char c2 = *(str + 2), c3 = *(str + 3);
 	    int b = 0;
 
 	    if ('0' <= c2 && c2 <= '9')
@@ -521,7 +518,7 @@ copy_str (YY_CHAR *str, int chop)
 	    else
 	      yyerror ("Bad character in \\X construct in string");
 
-	    *n ++ = (YY_CHAR) b;
+	    *n ++ = (char) b;
 	    str += 4;
 	    new_len -= 3;
 	    continue;
@@ -605,7 +602,7 @@ static name_val_val keyword_tbl [] = {
 
 
 static int
-check_keyword (YY_CHAR *id, int allow_pseudo_ops)
+check_keyword (char *id, int allow_pseudo_ops)
 {
   name_val_val *entry =
     map_string_to_name_val_val (keyword_tbl,
@@ -695,8 +692,8 @@ source_line ()
     return (NULL);
   else
     {
-      YY_CHAR *eol1, c1;
-      YY_CHAR *null1 = NULL;
+      char *eol1, c1;
+      char *null1 = NULL;
       char *r;
 
       /* Find end of line: */
