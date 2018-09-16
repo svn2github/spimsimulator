@@ -38,8 +38,6 @@
 #
 #   make spim
 #
-# Cannot make xpsim under windows.  Use PCSpim instead.
-#
 # To verify spim works, type:
 #
 #   make test
@@ -65,14 +63,17 @@ DOC_DIR = ../Documentation
 
 
 
+# Full path for the parent directory of all installed files:
+PREFIX = /usr
+
 # Full path for the directory that will hold the executable files:
-BIN_DIR = $(DESTDIR)/usr/bin
+BIN_DIR = $(PREFIX)/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = $(DESTDIR)/usr/share/spim
+EXCEPTION_DIR = $(PREFIX)/share/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = $(DESTDIR)/usr/share/man/man1
+MAN_DIR = $(PREFIX)/share/man/man1
 
 
 
@@ -116,7 +117,7 @@ OBJS = spim.o spim-utils.o run.o mem.o inst.o data.o sym-tbl.o parser_yacc.o lex
 
 
 spim:   $(OBJS)
-	$(CXX) -g $(OBJS) $(LDFLAGS) -o spim -lm
+	$(CXX) -g $(OBJS) $(LDFLAGS) -o $@
 
 
 #
@@ -172,17 +173,20 @@ clean:
 	rm -f spim spim.exe *.o TAGS test.out lex.yy.cpp parser_yacc.cpp parser_yacc.h y.output
 
 install: spim
-	install spim $(BIN_DIR)/spim
-	install -d $(EXCEPTION_DIR)
-	install -m 0444 $(CPU_DIR)/exceptions.s $(EXCEPTION_DIR)/exceptions.s
+	install -d $(DESTDIR)$(BIN_DIR)
+	install spim $(DESTDIR)$(BIN_DIR)/spim
+	install -d $(DESTDIR)$(EXCEPTION_DIR)
+	install -m 0444 $(CPU_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_DIR)/exceptions.s
 
 install-man:
-	install -m 0444 $(DOC_DIR)/spim.man $(MAN_DIR)
+	install -d $(DESTDIR)$(MAN_DIR)
+	install -m 0444 $(DOC_DIR)/spim.man $(DESTDIR)$(MAN_DIR)/spim.1
 
 splint: spim
 	splint -weak -preproc -warnposix +matchanyintegral spim.cpp parser_yacc.cpp lex.yy.cpp
 
 
+.PHONY: test test_bare clean install install-man splint
 
 #
 # Dependences not handled well by makedepend:
