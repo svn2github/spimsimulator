@@ -1,3 +1,9 @@
+2018-09-16  Larus  <larus@Jim-Macbook-Air>
+
+	* spim/Makefile, xspim/Makefile
+	[https://sourceforge.net/p/spimsimulator/patches/6]:
+	Improvements to Makefiles
+
 2017-08-29  Larus  <larus@Jim-Macbook-Air>
 
 	* CPU/version.h (SPIM_VERSION):

@@ -1083,14 +1083,17 @@ CXXPROJECT_DEFINES =
 # is compiled and installed:
 #
 
+# Full path for the parent directory of all installed files:
+PREFIX = /usr
+
 # Full path for the directory that will hold the executable files:
-BIN_DIR = $(DESTDIR)/usr/bin
+BIN_DIR = $(PREFIX)/bin
 
 # Full path for the directory that will hold the exception handler:
-EXCEPTION_DIR = $(DESTDIR)/usr/share/spim
+EXCEPTION_DIR = $(PREFIX)/share/spim
 
 # Full path for the directory that will hold the man files:
-MAN_DIR = $(DESTDIR)/usr/share/man/man1
+MAN_DIR = $(PREFIX)/share/man/man1
 
 # If you have flex, use it instead of lex.  If you use flex, define this
 # variable and set LEXFLAGS.
@@ -1172,6 +1175,7 @@ install:: xspim
 	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  xspim $(DESTDIR)$(BIN_DIR)/xspim
 
 install:: $(CPU_DIR)/exceptions.s
+	$(MKDIRHIER) $(DESTDIR)$(EXCEPTION_DIR)
 	$(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $(CPU_DIR)/exceptions.s $(DESTDIR)$(EXCEPTION_DIR)
 
 parser_yacc.h: parser_yacc.c
