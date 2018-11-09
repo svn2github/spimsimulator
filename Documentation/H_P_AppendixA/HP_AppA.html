@@ -148,8 +148,8 @@
         resolves all undefined labels into an executable file.</p>
 </div>
 <div class="body">
-        <p><i>Assembly language</i> is the symbolic representation of a computer’s binary
-        encoding— <dfn class="define">machine language</dfn>. Assembly language
+        <p><i>Assembly language</i> is the symbolic representation of a computerï¿½s binary
+        encodingï¿½ <dfn class="define">machine language</dfn>. Assembly language
         is more readable than machine language because it uses symbols instead of bits.
         The symbols in assembly language name commonly occurring bit patterns, such
         as opcodes and register specifiers, so people can read and remember them. In
@@ -161,16 +161,16 @@
         file.</p>
         <p>A tool called an <dfn class="define">assembler</dfn> translates assembly language
         into binary instructions. Assemblers provide a friendlier representation than a
-        computer’s 0s and 1s that simplifies writing and reading programs. Symbolic names for
+        computerï¿½s 0s and 1s that simplifies writing and reading programs. Symbolic names for
         operations and locations are one facet of this representation. Another facet is
-        programming facilities that increase a program’s clarity. For
+        programming facilities that increase a programï¿½s clarity. For
         example, <dfn class="define">macros</dfn>, discussed earlier, enable a programmer to
         extend the assembly language by defining new operations.</p>
         <p>An assembler reads a single assembly language <i>source file</i> and produces
         an <i>object file</i> containing machine instructions and bookkeeping information
         that helps combine several object files into a program. Figure 1.1 illustrates
-        how a program is built. Most programs consist of several files—also called
-        <i>modules</i> — that are written, compiled, and assembled independently. A program
+        how a program is built. Most programs consist of several filesï¿½also called
+        <i>modules</i> ï¿½ that are written, compiled, and assembled independently. A program
         may also use prewritten routines supplied in a <i>program library </i>. A module
         typically contains <i>references</i> to subroutines and data defined in other
         modules and in libraries. The code in a module cannot be executed when it contains
@@ -208,8 +208,8 @@
         or main, are labels that name the next memory location. This program is as readable
         as most assembly language programs (except for a glaring lack of comments),
         but it is still difficult to follow because many simple operations are required
-        to accomplish simple tasks and because assembly language’s lack of control flow
-        constructs provides few hints about the program’s operation.</p>
+        to accomplish simple tasks and because assembly languageï¿½s lack of control flow
+        constructs provides few hints about the programï¿½s operation.</p>
         <p>By contrast, the C routine in Figure 1.5 is both shorter and clearer since
         variables have mnemonic names and the loop is explicit rather than constructed
         with branches. In fact, the C routine is the only one that we wrote. The other
@@ -218,7 +218,7 @@
         role is the output language of compilers. A <i>compiler</i> translates a program
         written in a <i>high-level language</i> (such as C or Pascal) into an equivalent
         program in machine or assembly language. The high-level language is called the
-        <dfn class="define">source language</dfn>, and the compiler’s
+        <dfn class="define">source language</dfn>, and the compilerï¿½s
         output is its <i>target language</i>.</p>
 </div>
 <div class="sidebar">
@@ -262,7 +262,7 @@
         <p><b>Figure 1.3 The same routine written in assembly language.</b> However,
         the code for the routine does not label registers or memory locations nor include
         comments.</p>
-        <p>Assembly language’s other role is as a language in which to write programs.
+        <p>Assembly languageï¿½s other role is as a language in which to write programs.
         This role used to be the dominant one. Today, however, because of larger main
         memories and better compilers, most programmers write in a high-level language
         and rarely, if ever, see the instructions that a computer executes. Nevertheless,
@@ -319,14 +319,14 @@ str:
         <p>The primary reason to program in assembly language, as opposed to an available
         high-level language, is that the speed or size of a program is critically important.
         For example, consider a computer that controls a piece of machinery, such as
-        a car’s brakes. A computer that is incorporated in another device, such as a
+        a carï¿½s brakes. A computer that is incorporated in another device, such as a
         car, is called an <i>embedded computer</i>. This type of computer needs to respond
         rapidly and predictably to events in the outside world. Because a compiler introduces
         uncertainty about the time cost of operations, programmers may find it difficult
         to ensure that a high-level language program responds within a definite time
-        inter-val—say, 1 millisecond after a sensor detects that a tire is skidding.
+        inter-valï¿½say, 1 millisecond after a sensor detects that a tire is skidding.
         An assembly language programmer, on the other hand, has tight control over which
-        instructions execute. In addition, in embedded applications, reducing a program’s
+        instructions execute. In addition, in embedded applications, reducing a programï¿½s
         size, so that it fits in fewer memory chips, reduces the cost of the embedded
         computer.</p>
         <pre>
@@ -345,17 +345,17 @@ str:
         <p>A hybrid approach, in which most of a program is written in a high-level language and
         time-critical sections are written in assembly language, builds on the strengths of both
         languages. Programs typically spend most of their time executing a small fraction of the
-        program’s source code. This observation is just the principle of locality that
+        programï¿½s source code. This observation is just the principle of locality that
         underlies caches.</p>
         <p>Program profiling measures where a program spends its time and can find the
         time-critical parts of a program. In many cases, this portion of the program
         can be made faster with better data structures or algorithms. Sometimes, however,
         significant performance improvements only come from recoding a critical portion
         of a program in assembly language.</p>
-        <p>This improvement is not necessarily an indication that the high-level language’s
+        <p>This improvement is not necessarily an indication that the high-level languageï¿½s
         compiler has failed. Compilers typically are better than programmers at producing
         uniformly high-quality machine code across an entire program. Programmers, however,
-        understand a program’s algorithms and behavior at a deeper level than a compiler
+        understand a programï¿½s algorithms and behavior at a deeper level than a compiler
         and can expend considerable effort and ingenuity improving small sections of
         the program. In particular, programmers often consider several procedures simultaneously
         while writing their code. Compilers typically compile each procedure in isolation
@@ -367,12 +367,12 @@ str:
         in most cases, cannot determine that a program loop can be replaced by a single
         instruction. However, the programmer who wrote the loop can replace it easily
         with a single instruction.</p>
-        <p>Currently, a programmer’s advantage over a compiler has become difficult
-        to maintain as compilation techniques improve and machines’ pipelines increase
+        <p>Currently, a programmerï¿½s advantage over a compiler has become difficult
+        to maintain as compilation techniques improve and machinesï¿½ pipelines increase
         in complexity (Chapter 6).</p>
         <p>The final reason to use assembly language is that no high-level language
         is available on a particular computer. Many older or specialized computers do
-        not have a compiler, so a programmer’s only alternative is assembly language.
+        not have a compiler, so a programmerï¿½s only alternative is assembly language.
         </p>
         <h3><a name="drawbacks">Drawbacks of Assembly Language</a></h3>
         <p>Assembly language has many disadvantages that strongly argue against its
@@ -448,13 +448,13 @@ str:
         by default and must be explicitly declared global. Subroutines and global variables
         require external labels since they are referenced from many files in a
         program.<dfn class="define">Local labels</dfn> hide names that should not be visible to
-        other modules—for example, static functions in C, which can only be called by other
-        functions in the same file. In addition, compiler-generated names—for example, a name
-        for the instruction at the beginning of a loop—are local so the compiler need not
+        other modulesï¿½for example, static functions in C, which can only be called by other
+        functions in the same file. In addition, compiler-generated namesï¿½for example, a name
+        for the instruction at the beginning of a loopï¿½are local so the compiler need not
         produce unique names in every file.</p>
         <h4>Local and Global Labels</h4>
         <p>Consider the program in Figure 1.4. The subroutine has an external (global) label
-        main. It also contains two local labels—loop and str—that are only visible with
+        main. It also contains two local labelsï¿½loop and strï¿½that are only visible with
         this assembly language file. Finally, the routine also contains an unresolved reference
         to an external label printf, which is the library routine that prints values. Which
         labels in Figure 1.4 could be referenced from another file? </p>
@@ -482,7 +482,7 @@ str:
         of labels to the addresses of the memory words that instructions occupy.</p>
 </div>
 <div class="body">
-        <p>An assembler’s first pass reads each line of an assembly file and breaks
+        <p>An assemblerï¿½s first pass reads each line of an assembly file and breaks
         it into its component pieces. These pieces, which are called <i>lexemes</i>,
          are individual words, numbers, and punctuation characters. For example, the
         line </p>
@@ -495,7 +495,7 @@ str:
         <dfn class="define">symbol table</dfn> the name of the label and the
         address of the memory word that the instruction occupies. The assembler then
         calculates how many words of memory the instruction on the current line will
-        occupy. By keeping track of the instructions’ sizes, the assembler can determine
+        occupy. By keeping track of the instructionsï¿½ sizes, the assembler can determine
         where the next instruction goes. To compute the size of a variable-length instruction,
         like those on the VAX, an assembler has to examine it in detail. Fixed-length
         instructions, like those on MIPS, on the other hand, require only a cursory
@@ -509,7 +509,7 @@ str:
         representations of its opcode and operands (register specifiers or memory address) into
         a legal instruction. Instructions and data words that reference an external symbol
         defined in another file cannot be completely assembled (they are unresolved) since the
-        symbol’s address is not in the symbol table. An assembler does not complain about
+        symbolï¿½s address is not in the symbol table. An assembler does not complain about
         unresolved references since the corresponding label is likely to be defined in another
         file </p>
         <p>Assembly language is a programming language. Its principal difference from
@@ -519,12 +519,12 @@ str:
         apply the appropriate operations (e.g., integer or floating-point addition)
         to a value. In addition, in assembly language, programs must implement all control
         flow with <i>go to</i> s. Both factors make assembly language programming for
-        any machine—MIPS or 80x86—more difficult and error-prone than writing in a high-level
+        any machineï¿½MIPS or 80x86ï¿½more difficult and error-prone than writing in a high-level
         language.</p>
 </div>
 <div class="elaboration">
         <h4>Elaboration:</h4>
-        <p>If an assembler’s speed is important, this two-step process can be done in one
+        <p>If an assemblerï¿½s speed is important, this two-step process can be done in one
         pass over the assembly file with a technique known as <dfn class="define">back
         patching</dfn>. In its pass over the file, the assembler builds a (possibly incomplete)
         binary representation of every instruction. If the instruction references a label that
@@ -590,7 +590,7 @@ str:
         <p><dfn class="define">relocation information</dfn> The segment of
         a UNIX object file that identifies instructions and data words that depend on
         absolute addresses.</p>
-        <p><dfn class="define">absolute address</dfn> A variable’s or routine’s
+        <p><dfn class="define">absolute address</dfn> A variableï¿½s or routineï¿½s
         actual address in memory.</p>
 </div>
 <div class="body">
@@ -616,7 +616,7 @@ str:
         </p>
         <p>In Figure 1.4, the directive </p>
         <pre>
-        .asciiz “The sum from 0 .. 100 is %d\n”
+        .asciiz ï¿½The sum from 0 .. 100 is %d\nï¿½
         </pre>
         <p>stores characters from the string in memory. Contrast this line with the
         alternative of writing each character as its ASCII value (Figure 2.21 in Chapter
@@ -635,7 +635,7 @@ str:
         <h4>String Directive</h4>
         <p>Define the sequence of bytes produced by this directive:</p>
         <pre>
-        .asciiz “The quick brown fox jumps over the lazy dog”
+        .asciiz ï¿½The quick brown fox jumps over the lazy dogï¿½
 
         .byte 84, 104, 101, 32, 113, 117, 105, 99 .byte 107, 32, 98, 114, 111, 119,
         110, 32 .byte 102, 111, 120, 32, 106, 117, 109, 112 .byte 115, 32, 111, 118,
@@ -649,7 +649,7 @@ str:
         sequence of instructions. Macros, like subroutines, permit a programmer to create
         and name a new abstraction for a common operation. Unlike subroutines, however,
         macros do not cause a subroutine call and return when the program runs since
-        a macro call is replaced by the macro’s body when the program is assembled.
+        a macro call is replaced by the macroï¿½s body when the program is assembled.
         After this replacement, the resulting assembly is indistinguishable from the
         equivalent program written without macros.</p>
         <h4>Macros</h4>
@@ -659,7 +659,7 @@ str:
         following instructions:</p>
         <pre>
         .data
-int_str: .asciiz“%d”
+int_str: .asciizï¿½%dï¿½
         .text
         la $a0, int_str         # Load string address into first arg
         mov $a1, $7             # Load value into second arg
@@ -672,18 +672,18 @@ int_str: .asciiz“%d”
         expanded.</p>
 </div>
 <div class="body">
-        <p>The .data directive tells the assembler to store the string in the program’s
+        <p>The .data directive tells the assembler to store the string in the programï¿½s
         data segment, and the .text directive tells the assembler to store the instructions
         in its text segment.</p>
         <p>However, printing many numbers in this fashion is tedious and produces a
         verbose program that is difficult to understand. An alternative is to introduce
         a macro, print_int, to print an integer:</p>
         <pre>
-        int_str:.asciiz “%d”
+        int_str:.asciiz ï¿½%dï¿½
         .text
         .macro print_int($arg)
         la $a0, int_str         # Load string address into first arg
-        mov $a1, $arg           # Load macro’s parameter ($arg) into second arg
+        mov $a1, $arg           # Load macroï¿½s parameter ($arg) into second arg
         jal printf              # Call the printf routine
         .end_macro
 
@@ -691,8 +691,8 @@ int_str: .asciiz“%d”
         </pre>
         <p>The macro has a <dfn class="define">formal parameter</dfn>, $arg,
         that names the argument to the macro. When the macro is expanded, the argument
-        from a call is substituted for the formal parameter throughout the macro’s body.
-        Then the assembler replaces the call with the macro’s newly expanded body. In
+        from a call is substituted for the formal parameter throughout the macroï¿½s body.
+        Then the assembler replaces the call with the macroï¿½s newly expanded body. In
         the first call on print_int, the argument is $7, so the macro expands to the
         code </p>
         <pre>
@@ -734,7 +734,7 @@ int_str: .asciiz“%d”
                 programmer to include or exclude groups of instructions when a program is
                 assembled. This feature is particularly useful when several versions of
                 a program differ by a small amount. Rather than keep these programs in separate
-                files—which greatly complicates fixing bugs in the common code—programmers
+                filesï¿½which greatly complicates fixing bugs in the common codeï¿½programmers
                 typically merge the versions into a single file. Code particular to one
                 version is conditionally assembled, so it can be excluded when other versions
                 of the program are assembled.
@@ -743,7 +743,7 @@ int_str: .asciiz“%d”
                 on these systems write programs in higher-level languages like C. Most of
                 the assembly code is produced by compilers, which find it more convenient
                 to repeat code rather than define macros. Another reason is that other tools
-                on UNIX—such as cpp, the C preprocessor, or m4, a general macro processor—can
+                on UNIXï¿½such as cpp, the C preprocessor, or m4, a general macro processorï¿½can
                 provide macros and conditional assembly for assembly language programs.
                 </p>
 </div>
@@ -771,28 +771,28 @@ int_str: .asciiz“%d”
                 and relocates its instructions by adjusting absolute references </li>
                 <li>Resolves references among files </li>
         </ul>
-        <p>A linker’s first task is to ensure that a program contains no undefined labels.
-        The linker matches the external symbols and unresolved references from a pro-gram’s
+        <p>A linkerï¿½s first task is to ensure that a program contains no undefined labels.
+        The linker matches the external symbols and unresolved references from a pro-gramï¿½s
         files. An external symbol in one file resolves a reference from another file
         if both refer to a label with the same name. Unmatched references mean a symbol
         was used, but not defined anywhere in the program.</p>
         <p>Unresolved references at this stage in the linking process do not necessarily
         mean a programmer made a mistake. The program could have referenced a library
         routine whose code was not in the object files passed to the linker. After matching
-        symbols in the program, the linker searches the system’s program libraries to
+        symbols in the program, the linker searches the systemï¿½s program libraries to
         find predefined subroutines and data structures that the program references.
         The basic libraries contain routines that read and write data, allocate and
         deallocate memory, and perform numeric operations. Other libraries contain routines
         to access a database or manipulate terminal windows. A program that references
         an unresolved symbol that is not in any library is erroneous and cannot be linked.
-        When the program uses a library routine, the linker extracts the routine’s code
+        When the program uses a library routine, the linker extracts the routineï¿½s code
         from the library and incorporates it into the program text segment. This new
         routine, in turn, may depend on other library routines, so the linker continues
         to fetch other library routines until no external references are unresolved
         or a routine cannot be found.</p>
         <p>If all external references are resolved, the linker next determines the memory
         locations that each module will occupy. Since the files were assembled in isolation, the
-        assembler could not know where a module’s instructions or data will be placed
+        assembler could not know where a moduleï¿½s instructions or data will be placed
         relative to other modules. When the linker places a module in memory, all absolute
         references must be <i>relocated</i> to reflect its true location.  Since the linker has
         relocation information that identifies all relocatable references, it can efficiently
@@ -809,7 +809,7 @@ int_str: .asciiz“%d”
 <div class="sidebar">
         <p><dfn class="define">static data</dfn> The portion of memory that
         contains data whose size is known to the compiler and whose lifetime is the
-        program’s entire execution.</p>
+        programï¿½s entire execution.</p>
 </div>
 <div class="body">
         <p>A program that links without an error can be run. Before being run, the program
@@ -817,7 +817,7 @@ int_str: .asciiz“%d”
         system kernel brings a program into memory and starts it running. To start a program,
         the operating system performs the following steps:</p>
         <ol type="1">
-                <li>Reads the executable file’s header to determine the size of the text
+                <li>Reads the executable fileï¿½s header to determine the size of the text
                 and data segments.</li>
                 <li>Creates a new address space for the program. This address space is large
                 enough to hold the text and data segments, along with a stack segment.</li>
@@ -827,8 +827,8 @@ int_str: .asciiz“%d”
                 <li>Initializes the machine registers. In general, most registers are cleared,
                 but the stack pointer must be assigned the address of the first free stack
                 location.</li>
-                <li>Jumps to a start-up routine that copies the program’s arguments from
-                the stack to registers and calls the program’s main routine. If the main
+                <li>Jumps to a start-up routine that copies the programï¿½s arguments from
+                the stack to registers and calls the programï¿½s main routine. If the main
                 routine returns, the start-up routine terminates the program with the exit
                 system call.</li>
         </ol>
@@ -843,15 +843,15 @@ int_str: .asciiz“%d”
         people can work together and make effective use of MIPS hardware.</p>
         <p>Systems based on MIPS processors typically divide memory into three parts
         (see Figure 5.1). The first part, near the bottom of the address space (starting
-        at address 400000hex), is the <i>text segment</i>, which holds the program’s
+        at address 400000hex), is the <i>text segment</i>, which holds the programï¿½s
         instructions.</p>
         <p>The second part, above the text segment, is the <i>data segment</i>, which
         is further divided into two parts.
         <dfn class="define">Static data</dfn> (starting at address 10000000hex) contains objects
-        whose size is known to the compiler and whose lifetime—the interval during which a
-        program can access them—is the program’s entire execution. For example, in C,
+        whose size is known to the compiler and whose lifetimeï¿½the interval during which a
+        program can access themï¿½is the programï¿½s entire execution. For example, in C,
         global variables are statically allocated since they can be referenced anytime during a
-        program’s execution. The linker both assigns static objects to locations in the data
+        programï¿½s execution. The linker both assigns static objects to locations in the data
         segment and resolves references to these objects.</p>
         <img class="hpfig" src="Fig5_1.jpg" height="300" ><p><b>Figure 5.1 Layout of memory.</b></p>
         <h4>Hardware-Software Interface</h4>
@@ -875,7 +875,7 @@ int_str: .asciiz“%d”
         lw $v0, 0x8020($gp)
         </pre>
         <p>Of course, a global pointer register makes addressing locations 10000000
-        <sub>hex </sub>– 10010000 <sub>hex </sub>faster than other heap locations. The
+        <sub>hex </sub>ï¿½ 10010000 <sub>hex </sub>faster than other heap locations. The
         MIPS compiler usually stores <i>global variables</i> in this area because these
         variables have fixed locations and fit better than other global data, such as
         arrays.</p>
@@ -894,15 +894,15 @@ int_str: .asciiz“%d”
         a program will allocate, the operating system expands the dynamic data area to meet
         demand. As the upward arrow in the figure indicates, malloc expands the dynamic area
         with the sbrk system call, which causes the operating system to add more pages to the
-        program’s virtual address space immediately above the dynamic data segment.</p>
+        programï¿½s virtual address space immediately above the dynamic data segment.</p>
         <p>The third part, the program <dfn class="define">stack segment</dfn>,
         resides at the top of the virtual address space (starting at address 7fffffff
-        <sub>hex </sub>). Like dynamic data, the maximum size of a pro-gram’s stack
+        <sub>hex </sub>). Like dynamic data, the maximum size of a pro-gramï¿½s stack
         is not known in advance. As the program pushes values on the stack, the operating
         system expands the stack segment down, toward the data segment.</p>
         <p>This three-part division of memory is not the only possible one. However,
         it has two important characteristics: the two dynamically expandable segments
-        are as far apart as possible, and they can grow to use a program’s entire address
+        are as far apart as possible, and they can grow to use a programï¿½s entire address
         space.</p>
         <h2><a name="procedure">Procedure Call Conventions</a></h2>
         <p>Conventions governing the use of registers are necessary when procedures
@@ -917,19 +917,19 @@ int_str: .asciiz“%d”
         <p>The calling convention described in this section is the one used by the gcc
         compiler. The native MIPS compiler uses a more complex convention that is slightly
         faster.</p>
-        <p>The MIPS CPU contains 32 general-purpose registers that are numbered 0–31.
+        <p>The MIPS CPU contains 32 general-purpose registers that are numbered 0ï¿½31.
         Register $0 always contains the hardwired value 0.</p>
         <ul type="square">
                 <li>Registers $at (1), $k0 (26), and $k1 (27) are reserved for the assembler
                 and operating system and should not be used by user programs or compilers.
                 </li>
-                <li>Registers $a0–$a3 (4–7) are used to pass the first four arguments to
+                <li>Registers $a0ï¿½$a3 (4ï¿½7) are used to pass the first four arguments to
                 routines (remaining arguments are passed on the stack). Registers $v0 and
                 $v1 (2, 3) are used to return values from functions.</li>
-                <li>Registers $t0–$t9 (8–15, 24, 25) are <dfn class="define">caller-saved
+                <li>Registers $t0ï¿½$t9 (8ï¿½15, 24, 25) are <dfn class="define">caller-saved
                 registers</dfn> that are used to hold temporary quantities that need not be
                 preserved across calls.</li>
-                <li>Registers $s0–$s7 (16–23) are <dfn class="define">callee-saved
+                <li>Registers $s0ï¿½$s7 (16ï¿½23) are <dfn class="define">callee-saved
                 registers</dfn> that hold long-lived values that should be preserved
                 across calls.</li>
                 <li>Register $gp (28) is a global pointer that points to the middle of a
@@ -947,12 +947,12 @@ int_str: .asciiz“%d”
         by the routine making a procedure call.</p>
         <p><dfn class="define">procedure call frame</dfn> A block of memory
         that is used to hold values passed to a procedure as arguments, to save registers
-        that a procedure may modify but that the procedure’s caller does not want changed,
+        that a procedure may modify but that the procedureï¿½s caller does not want changed,
         and to provide space for variables local to a procedure.</p>
 </div>
 <div class="body">
-        <p>The two-letter abbreviations and names for these registers—for example, $sp
-        for the stack pointer—reflect the registers’ intended uses in the procedure
+        <p>The two-letter abbreviations and names for these registersï¿½for example, $sp
+        for the stack pointerï¿½reflect the registersï¿½ intended uses in the procedure
         call convention. In describing this convention, we will use the names instead
         of register numbers. Figure 6.1 lists the registers and describes their intended
         uses.</p>
@@ -968,7 +968,7 @@ int_str: .asciiz“%d”
         This memory is used for a variety of purposes:</p>
         <ul type="square">
                 <li>To hold values passed to a procedure as arguments </li>
-                <li>To save registers that a procedure may modify, but which the procedure’s
+                <li>To save registers that a procedure may modify, but which the procedureï¿½s
                 caller does not want changed </li>
                 <li>To provide space for variables local to a procedure </li>
         </ul>
@@ -1177,7 +1177,7 @@ int_str: .asciiz“%d”
         </pre>
         <img class="hpfig" src="Fig6_2.jpg" height="350" ><p><b>Figure 6.2 Layout of a stack
         frame.</b> The frame pointer ($fp) points to the first word in the currently
-        executing procedure’s stack frame. The stack pointer ($sp) points to the last
+        executing procedureï¿½s stack frame. The stack pointer ($sp) points to the last
         word of frame. The first four arguments are passed in registers, so the fifth
         argument is the first one stored on the stack.</p>
         <p>A stack frame may be built in many different ways; however, the caller and
@@ -1189,33 +1189,33 @@ int_str: .asciiz“%d”
         in standard places and invokes the callee to do the following:</p>
         <ol type="1">
                 <li>Pass arguments. By convention, the first four arguments are passed in
-                registers $a0–$a3. Any remaining arguments are pushed on the stack and appear
-                at the beginning of the called procedure’s stack frame.</li>
+                registers $a0ï¿½$a3. Any remaining arguments are pushed on the stack and appear
+                at the beginning of the called procedureï¿½s stack frame.</li>
                 <li>Save caller-saved registers. The called procedure can use these registers
-                ($a0–$a3 and $t0–$t9) without first saving their value. If the caller expects
+                ($a0ï¿½$a3 and $t0ï¿½$t9) without first saving their value. If the caller expects
                 to use one of these registers after a call, it must save its value before
                 the call.</li>
-                <li>Execute a jal instruction, which jumps to the callee’s first instruction
+                <li>Execute a jal instruction, which jumps to the calleeï¿½s first instruction
                 and saves the return address in register $ra.</li>
         </ol>
         <p>Before a called routine starts running, it must take the following steps
         to set up its stack frame:</p>
         <ol type="1">
-                <li>Allocate memory for the frame by subtracting the frame’s size from the
+                <li>Allocate memory for the frame by subtracting the frameï¿½s size from the
                 stack pointer.</li>
                 <li>Save callee-saved registers in the frame. A callee must save the values
-                in these registers ($s0–$s7, $fp, and $ra) before altering them since the
+                in these registers ($s0ï¿½$s7, $fp, and $ra) before altering them since the
                 caller expects to find these registers unchanged after the call. Register
                 $fp is saved by every procedure that allocates a new stack frame. However,
                 register $ra only needs to be saved if the callee itself makes a call. The
                 other calleesaved registers that are used also must be saved.</li>
-                <li>Establish the frame pointer by adding the stack frame’s size minus 4
+                <li>Establish the frame pointer by adding the stack frameï¿½s size minus 4
                 to $sp and storing the sum in register $fp.</li>
         </ol>
         <h4>Hardware-Software Interface</h4>
         <p>The MIPS register use convention provides callee- and caller-saved registers because
         both types of registers are advantageous in different circumstances. Callee-saved
-        registers are better used to hold long-lived values, such as variables from a user’s
+        registers are better used to hold long-lived values, such as variables from a userï¿½s
         program. These registers are only saved during a procedure call if the callee expects to
         use the register. On the other hand, caller-saved registers are better used to hold
         short-lived quantities that do not persist across a call, such as immediate values in an
@@ -1235,9 +1235,9 @@ int_str: .asciiz“%d”
 <div class="elaboration">
       	<h4>Elaboration:</h4>
 	  	<p>A programming language that does not permit <dfn class="define">recursive
-      	   procedures</dfn>— procedures that call themselves either directly or
-                indirectly through a chain of calls—need not allocate frames on a stack. In a
-                nonrecursive language, each procedure’s frame may be statically allocated
+      	   procedures</dfn>ï¿½ procedures that call themselves either directly or
+                indirectly through a chain of callsï¿½need not allocate frames on a stack. In a
+                nonrecursive language, each procedureï¿½s frame may be statically allocated
                 since only one invocation of a procedure can be active at a time. Older versions
                 of Fortran prohibited recursion because statically allocated frames produced
                 faster code on some older machines. However, on load-store architectures like
@@ -1266,15 +1266,15 @@ int_str: .asciiz“%d”
             return (n * fact (n - 1));
         }
         </pre>
-        <p>which computes and prints 10! (the factorial of 10, 10! = 10 × 9 × . . .
-        × 1). fact is a recursive routine that computes <i>n</i> ! by multiplying <i>
-        n</i> times ( <i>n</i> – 1)!. The assembly code for this routine illustrates how
+        <p>which computes and prints 10! (the factorial of 10, 10! = 10 ï¿½ 9 ï¿½ . . .
+        ï¿½ 1). fact is a recursive routine that computes <i>n</i> ! by multiplying <i>
+        n</i> times ( <i>n</i> ï¿½ 1)!. The assembly code for this routine illustrates how
         programs manipulate stack frames.</p>
         <p>Upon entry, the routine main creates its stack frame and saves the two calleesaved
         registers it will modify: $fp and $ra. The frame is larger than required for
         these two registers because the calling convention requires the minimum size
         of a stack frame to be 24 bytes. This minimum frame can hold four argument registers
-        ($a0–$a3) and the return address $ra, padded to a double-word boundary (24 bytes).
+        ($a0ï¿½$a3) and the return address $ra, padded to a double-word boundary (24 bytes).
         Since main also needs to save $fp, its stack frame must be two words larger
         (remember: the stack pointer is kept doubleword aligned).</p>
         <pre>
@@ -1305,7 +1305,7 @@ main:
         jr $ra                  # Return to caller
         .rdata
 $LC:
-        .ascii “The factorial of 10 is %d\n\000”
+        .ascii ï¿½The factorial of 10 is %d\n\000ï¿½
         </pre>
         <p>The factorial routine is similar in structure to main. First, it creates
         a stack frame and saves the callee-saved registers it will use. In addition
@@ -1318,7 +1318,7 @@ $LC:
         jr $ra                  # Return to caller
         .rdata
 $LC:
-        .ascii “The factorial of 10 is %d\n\000”
+        .ascii ï¿½The factorial of 10 is %d\n\000ï¿½
         </pre>
         <p>The heart of the fact routine performs the computation from the C program.
         It tests if the argument is greater than 0. If not, the routine returns the
@@ -1361,7 +1361,7 @@ $L2:
         compiler usually does not use a frame pointer, so this register is available as another
         callee-saved register, $s8. This change saves a couple of instructions in the procedure
         call and return sequence. However, it complicates code generation because a procedure
-        must access its stack frame with $sp, whose value can change during a procedure’s
+        must access its stack frame with $sp, whose value can change during a procedureï¿½s
         execution if values are pushed on the stack.</p>
 </div>
 <div class="body">
@@ -1386,7 +1386,7 @@ $L2:
         </pre>
         <p>The assembly code for this program is below. The tak function first saves its return
         address in its stack frame and its arguments in callee-saved registers, since the
-        routine may make calls that need to use registers $a0–$a2 and $ra.  The function uses
+        routine may make calls that need to use registers $a0ï¿½$a2 and $ra.  The function uses
         callee-saved registers since they hold values that persist over the lifetime of the
         function, which includes several calls that could potentially modify registers.</p>
         <pre>
@@ -1437,8 +1437,8 @@ tak:
         jal tak                 # tak (z - 1, x, y)
         </pre>
         <p>After the three inner recursive calls, we are ready for the final recursive
-        call. After the call, the function’s result is in $v0 and control jumps to the
-        function’s epilogue.</p>
+        call. After the call, the functionï¿½s result is in $v0 and control jumps to the
+        functionï¿½s epilogue.</p>
         <pre>
         move $a0, $s3
         move $a1, $s0
@@ -1455,7 +1455,7 @@ L1:
         move $v0, $s2
         </pre>
         <p>The code below is the function epilogue, which restores the saved registers
-        and returns the function’s result to its caller.</p>
+        and returns the functionï¿½s result to its caller.</p>
         <pre>
 L2:
         lw $ra, 32($sp)
@@ -1467,7 +1467,7 @@ L2:
         jr $ra
         </pre>
         <p>The main routine calls the tak function with its initial arguments, then
-        takes the computed result (7) and prints it using SPIM’s system call for printing
+        takes the computed result (7) and prints it using SPIMï¿½s system call for printing
         integers.</p>
         <pre>
         .globl main
@@ -1487,12 +1487,12 @@ main:
         </pre>
         <h2><a name="exceptions">Exceptions and Interrupts</a></h2>
         <p>The MIPS exception facility, which responds both to exceptions caused by errors
-        during an instruction’s execution and to external interrupts caused by I/O
+        during an instructionï¿½s execution and to external interrupts caused by I/O
         devices. This section describes exception and <dfn class="define">interrupt
         handling</dfn> in more detail.
         <sup>1 </sup>In MIPS processors, a part of the CPU called <i>coprocessor 0
         </i> records the information that software needs to handle exceptions and interrupts.
-        The MIPS simulator SPIM does not implement all of coprocessor 0’s registers,
+        The MIPS simulator SPIM does not implement all of coprocessor 0ï¿½s registers,
         since many are not useful in a simulator or are part of the memory system, which
         SPIM does not model. However, SPIM does provide the following coprocessor 0
         registers:</p>
@@ -1552,7 +1552,7 @@ main:
         is run as a result of an exception or an interrupt.</p>
 </div>
 <div class="body">
-        <p>These seven registers are part of coprocessor 0’s register set. They are
+        <p>These seven registers are part of coprocessor 0ï¿½s register set. They are
         accessed by the mfc0 and mtc0 instructions. After an exception, register EPC
         contains the address of the instruction that was executing when the exception
         occurred. If the exception was caused by an external interrupt, then the instruction
@@ -1564,7 +1564,7 @@ main:
         case, an exception handler properly resumes the program by returning to the
         instruction at EPC.</p>
         <p>If the instruction that caused the exception made a memory access, register
-        BadVAddr contains the referenced memory location’s address.</p>
+        BadVAddr contains the referenced memory locationï¿½s address.</p>
         <p>The Count register is a timer that increments at a fixed rate (by default,
         every 10 milliseconds) while SPIM is running. When the value in the Count register
         equals the value in the Compare register, a hardware interrupt at priority level
@@ -1663,7 +1663,7 @@ main:
         </table>
         <p>Exceptions and interrupts cause a MIPS processor to jump to a piece of code,
         at address 80000180 <sub>hex </sub>(in the kernel, not user address space),
-        called an <i>exception handler</i>. This code examines the exception’s cause
+        called an <i>exception handler</i>. This code examines the exceptionï¿½s cause
         and jumps to an appropriate point in the operating system. The operating system
         responds to an exception either by terminating the process that caused the exception
         or by performing some action. A process that causes an error, such as executing
@@ -1685,7 +1685,7 @@ main:
         stack, as would an ordinary routine, because the cause of the exception might
         have been a memory reference that used a bad value (such as 0) in the stack
         pointer. Instead, the exception handler stores these registers in an exception
-        handler register ($k1, since it can’t access memory without using $at) and two
+        handler register ($k1, since it canï¿½t access memory without using $at) and two
         memory locations (save0 and save1). If the exception routine itself could be
         interrupted, two locations would not be enough since the second exception would
         overwrite values saved during the first exception. However, this simple exception
@@ -1694,14 +1694,14 @@ main:
         <pre>
         .ktext 0x80000180
         mov $k1, $at            # Save $at register
-        sw $a0, save0           # Handler is not re-entrant and can’t use
+        sw $a0, save0           # Handler is not re-entrant and canï¿½t use
         sw $a1, save1           # stack to save $a0, $a1
-        # Don’t need to save $k0/$k1
+        # Donï¿½t need to save $k0/$k1
         </pre>
         <p>The exception handler then moves the Cause and EPC registers into CPU registers.
         The Cause and EPC registers are not part of the CPU register set. Instead, they
         are registers in coprocessor 0, which is the part of the CPU that handles exceptions.
-        The instruction mfc0 $k0, $13 moves coprocessor 0’s register 13 (the Cause register)
+        The instruction mfc0 $k0, $13 moves coprocessor 0ï¿½s register 13 (the Cause register)
         into CPU register $k0. Note that the exception handler need not save registers
         $k0 and $k1 because user programs are not supposed to use these registers. The
         exception handler uses the value from the Cause register to test if the exception
@@ -1747,7 +1747,7 @@ save1:  .word 0
         <h4>Elaboration:</h4>
 	<p>On real MIPS processors, the return from an exception handler is more complex. The
         exception handler cannot always jump to the instruction following EPC. For example, if
-        the instruction that caused the exception was in a branch instruction’s delay slot
+        the instruction that caused the exception was in a branch instructionï¿½s delay slot
         (see Chapter 6), the next instruction to execute may not be the following instruction in
         memory.</p>
 </div>
@@ -1758,7 +1758,7 @@ save1:  .word 0
         own terminal (or a separate console window in the X-window version xspim or
         the Windows version PCSpim) to the processor. A MIPS program running on SPIM
         can read the characters that you type. In addition, if the MIPS program writes
-        characters to the terminal, they appear on SPIM’s terminal or console window.
+        characters to the terminal, they appear on SPIMï¿½s terminal or console window.
         One exception to this rule is control-C: this character is not passed to the
         program, but instead causes SPIM to stop and return to command mode. When the
         program stops running (for example, because you typed control-C or because the
@@ -1775,10 +1775,10 @@ save1:  .word 0
         echoes a character by reading it from the receiver and writing it to the transmitter.
         </p>
         <p>A program controls the terminal with four memory-mapped device registers,
-        as shown in Figure 8.1. “Memory-mapped’’ means that each register appears
+        as shown in Figure 8.1. ï¿½Memory-mappedï¿½ï¿½ means that each register appears
         as a special memory location. The <i>Receiver Control register</i> is at location
         ffff0000 <sub>hex </sub>. Only two of its bits are actually used. Bit 0 is called
-        “ready’’: if it is 1, it means that a character has arrived from the keyboard
+        ï¿½readyï¿½ï¿½: if it is 1, it means that a character has arrived from the keyboard
         but has not yet been read from the Receiver Data register. The ready bit is
         read-only: writes to it are ignored. The ready bit changes from 0 to 1 when
         a character is typed at the keyboard, and it changes from 1 to 0 when the character
@@ -1787,7 +1787,7 @@ save1:  .word 0
         by four device registers, each of which appears as a memory location at the
         given address.</b> Only a few bits of these registers are actually used. The
         others always read as 0s and are ignored on writes.</p>
-        <p>Bit 1 of the Receiver Control register is the keyboard “interrupt enable.” This
+        <p>Bit 1 of the Receiver Control register is the keyboard ï¿½interrupt enable.ï¿½ This
         bit may be both read and written by a program. The interrupt enable is initially 0. If
         it is set to 1 by a program, the terminal requests an interrupt at hardware level 1
         whenever a character is typed and the ready bit becomes 1. However, for the interrupt to
@@ -1803,10 +1803,10 @@ save1:  .word 0
         <p>The third terminal device register is the <i>Transmitter Control register
         </i> (at address ffff0008 <sub>hex </sub>). Only the low-order 2 bits of this
         register are used. They behave much like the corresponding bits of the Receiver
-        Control register. Bit 0 is called “ready’’ and is read-only. If this bit is
+        Control register. Bit 0 is called ï¿½readyï¿½ï¿½ and is read-only. If this bit is
         1, the transmitter is ready to accept a new character for output. If it is 0,
-        the transmitter is still busy writing the previous character. Bit 1 is “interrupt
-        enable’’ and is readable and writable. If this bit is set to 1, then the terminal
+        the transmitter is still busy writing the previous character. Bit 1 is ï¿½interrupt
+        enableï¿½ï¿½ and is readable and writable. If this bit is set to 1, then the terminal
         requests an interrupt at hardware level 0 whenever the transmitter is ready
         for a new character and the ready bit becomes 1.</p>
         <p>The final device register is the <i>Transmitter Data register</i> (at address
@@ -1822,7 +1822,7 @@ save1:  .word 0
         </p>
         <p>Real computers require time to send characters to a console or terminal.
         These time lags are simulated by SPIM. For example, after the transmitter starts
-        to write a character, the transmitter’s ready bit becomes 0 for a while. SPIM
+        to write a character, the transmitterï¿½s ready bit becomes 0 for a while. SPIM
         measures time in instructions executed, not in real clock time. This means that
         the transmitter does not become ready again until the processor executes a fixed
         number of instructions. If you stop the machine and look at the ready bit, it
@@ -1832,10 +1832,10 @@ save1:  .word 0
         <p>SPIM is a software simulator that runs assembly language programs written
         for processors that implement the MIPS32 architecture, specifically Release
         1 of this architecture with a fixed memory mapping, no caches, and only coprocessors
-        0 and 1.<sup>2 </sup>SPIM’s name is just MIPS spelled backwards. SPIM can read
+        0 and 1.<sup>2 </sup>SPIMï¿½s name is just MIPS spelled backwards. SPIM can read
         and immediately execute assembly language files. SPIM is a self-contained system
         for running MIPS programs. It contains a debugger and provides a few operating
-        system–like services. SPIM is much slower than a real computer (100 or more times).
+        systemï¿½like services. SPIM is much slower than a real computer (100 or more times).
         However, its low cost and wide availability cannot be matched by
         real hardware!
         </p>
@@ -1956,7 +1956,7 @@ save1:  .word 0
                         <td align="center" width="25">0 </td>
                 </tr>
         </table>
-        <p>SPIM operates with both byte orders. SPIM’s byte order is the same as the
+        <p>SPIM operates with both byte orders. SPIMï¿½s byte order is the same as the
         byte order of the underlying machine that runs the simulator. For example, on
         a Intel 80x86, SPIM is little-endian, while on a Macintosh or Sun SPARC, SPIM
         is bigendian.</p>
@@ -1964,9 +1964,9 @@ save1:  .word 0
         <p>SPIM provides a small set of operating-system-like services through the system
         call (syscall) instruction. To request a service, a program loads the system
         call code (see Figure 9.1) into register $v0 and arguments into registers
-        $a0–$a3 (or $f12 for floating-point values). System calls that return values
+        $a0ï¿½$a3 (or $f12 for floating-point values). System calls that return values
         put their results in register $v0 (or $f0 for floating-point results). For example,
-        the following code prints “the answer = 5’’:</p>
+        the following code prints ï¿½the answer = 5ï¿½ï¿½:</p>
         <pre>
         .data
 str:
@@ -2101,8 +2101,8 @@ str:
         <p>The system calls read_int, read_float, and read_double read an entire line
         of input up to and including the newline. Characters following the number are
         ignored. read_string has the same semantics as the UNIX library routine fgets.
-        It reads up to <i>n</i> – 1 characters into a buffer and terminates the string
-        with a null byte. If fewer than <i>n</i> – 1 characters are on the current line,
+        It reads up to <i>n</i> ï¿½ 1 characters into a buffer and terminates the string
+        with a null byte. If fewer than <i>n</i> ï¿½ 1 characters are on the current line,
         read_string reads up to and including the newline and again null-terminates
         the string.</p>
         <p><i>Warning:</i> Programs that use these syscalls to read from the terminal should not
@@ -2147,12 +2147,12 @@ str:
                         <td align="left">address of label </td>
                 </tr>
                 <tr>
-                        <td align="left">label ± imm </td>
-                        <td align="left">address of label + or – immediate </td>
+                        <td align="left">label ï¿½ imm </td>
+                        <td align="left">address of label + or ï¿½ immediate </td>
                 </tr>
                 <tr>
-                        <td align="left">label ± imm (register) </td>
-                        <td align="left">address of label + or – (immediate + contents of register)
+                        <td align="left">label ï¿½ imm (register) </td>
+                        <td align="left">address of label + or ï¿½ (immediate + contents of register)
                         </td>
                 </tr>
         </table>
@@ -2180,11 +2180,11 @@ str:
         addu $at, $at, $a1
         lw $a0, 8($at)
         </pre>
-        <p>The first instruction loads the upper bits of the label’s address into register
+        <p>The first instruction loads the upper bits of the labelï¿½s address into register
         $at, which is the register that the assembler reserves for its own use. The
-        second instruction adds the contents of register $a1 to the label’s partial
+        second instruction adds the contents of register $a1 to the labelï¿½s partial
         address. Finally, the load instruction uses the hardware address mode to add
-        the sum of the lower bits of the label’s address and the offset from the original
+        the sum of the lower bits of the labelï¿½s address and the offset from the original
         instruction to the value in register $at.</p>
 </div>
 <div class="body">
@@ -2312,10 +2312,10 @@ str:
         bits) from an instruction. The numbers at the left margin are values for a field.
         For example, the j opcode has a value of 2 in the opcode field. The text at
         the top of a column names a field and specifies which bits it occupies in an
-        instruction. For example, the op field is contained in bits 26–31 of an instruction.
+        instruction. For example, the op field is contained in bits 26ï¿½31 of an instruction.
         This field encodes most instructions. However, some groups of instructions use
         additional fields to distinguish related instructions. For example, the different
-        floating-point instructions are specified by bits 0–5. The arrows from the first
+        floating-point instructions are specified by bits 0ï¿½5. The arrows from the first
         column show which opcodes use these additional fields.</p>
         <h3><a name="instruction">Instruction Format</a></h3>
         <p>The rest of this appendix describes both the instructions implemented by
@@ -2347,7 +2347,7 @@ str:
                         <td align="right">width (bits) </td>
                 </tr>
         </table>
-        <p>The add instruction consists of six fields. Each field’s size in bits is
+        <p>The add instruction consists of six fields. Each fieldï¿½s size in bits is
         the small number below the field. This instruction begins with 6 bits of 0s.
         Register specifiers begin with an <i>r,</i> so the next field is a 5-bit register
         specifier called rs. This is the same register that is the second argument in
@@ -2358,10 +2358,10 @@ str:
         the values in base 10 and the second shows base 16 for the op field (bits 31
         to 26) in the third column. This op field completely specifies the MIPS operation
         except for 6 op values: 0, 1, 16, 17, 18, and 19. These operations are determined
-        by other fields, identified by pointers. The last field (funct) uses “ <b>
-        <i>f</i> </b> ” to mean “s” if rs = 16 and op = 17 or “d” if rs = 17 and op =
-        17. The second field (rs) uses “ <b><i>z</i> </b> ” to mean “0”, “1”, “2”, or
-        “3” if op = 16, 17, 18, or 19, respectively. If rs = 16, the operation is specified
+        by other fields, identified by pointers. The last field (funct) uses ï¿½ <b>
+        <i>f</i> </b> ï¿½ to mean ï¿½sï¿½ if rs = 16 and op = 17 or ï¿½dï¿½ if rs = 17 and op =
+        17. The second field (rs) uses ï¿½ <b><i>z</i> </b> ï¿½ to mean ï¿½0ï¿½, ï¿½1ï¿½, ï¿½2ï¿½, or
+        ï¿½3ï¿½ if op = 16, 17, 18, or 19, respectively. If rs = 16, the operation is specified
         elsewhere: if <b><i>z</i> </b> = 0, the operations are specified in the fourth
         field (bits 4 to 0); if <b><i>z</i> </b> = 1, then the operations are in the last
         field with <b><i>f</i> </b> = s. If rs = 17 and <b><i>z</i> </b> = 1, then the operations
@@ -3381,8 +3381,8 @@ str:
         an instructions branch to a label, and the assembler computes the distance between
         the branch and the target class="instformat" instructions.</p>
         <p>In MIPS32, all actual (not pseudo) conditional branch instructions have a
-        &quot;likely&quot; variant (for example, beq’s likely variant is beql), which does <i>
-        not</i> execute the instruction in the branch’s delay slot if the branch is not
+        &quot;likely&quot; variant (for example, beqï¿½s likely variant is beql), which does <i>
+        not</i> execute the instruction in the branchï¿½s delay slot if the branch is not
         taken. Do not use these instructions; they may be removed in subsequent versions
         of the architecture. SPIM implements these instructions, but they are not described
         further.</p>
@@ -3438,7 +3438,7 @@ str:
                 </tr>
         </table>
         <p>Conditionally branch the number of instructions specified by the offset if
-        the floating point coprocessor’s condition flag numbered <i>cc</i> is false (true).
+        the floating point coprocessorï¿½s condition flag numbered <i>cc</i> is false (true).
         If <i>cc</i> is omitted from the instruction, condition code flag 0 is assumed.</p>
         <h4>Branch on equal</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
@@ -4046,7 +4046,7 @@ str:
                         <th align="center" colspan="9">la rdest, address <i>pseudoinstruction</i></th>
                 </tr>
         </table>
-        <p>Load computed <i>address</i> —not the contents of the location—into register
+        <p>Load computed <i>address</i> ï¿½not the contents of the locationï¿½into register
         rdest.</p>
         <h4>Load byte</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
@@ -4340,7 +4340,7 @@ str:
                         <th align="center" colspan="9">swc1 ft, address</th>
                 </tr>
                 <tr class="instops">
-                        <th align="center" width="40">0x31 </th>
+                        <th align="center" width="40">0x39 </th>
                         <th align="center" width="40">rs </th>
                         <th align="center" width="40">ft </th>
                         <th align="center" width="40">offset </th>
@@ -4628,7 +4628,7 @@ str:
                 </tr>
         </table>
         <p>Coprocessors have their own register sets. These instructions move values
-        between these registers and the CPU’s registers.</p>
+        between these registers and the CPUï¿½s registers.</p>
         <p>Move register rd in a coprocessor (register pfs in the FPU) to CPU register
         rt. The floating-point unit is coprocessor 1.</p>
         <h4>Move double from coprocessor 1</h4>
@@ -4800,17 +4800,17 @@ str:
         <h3><a name="floating">Floating-Point Instructions</a></h3>
         <p>The MIPS has a floating-point coprocessor (numbered 1) that operates on single
         precision (32-bit) and double precision (64-bit) floating-point numbers. This
-        coprocessor has its own registers, which are numbered $f0–$f31. Because these
+        coprocessor has its own registers, which are numbered $f0ï¿½$f31. Because these
         registers are only 32 bits wide, two of them are required to hold doubles, so
         only floating-point registers with even numbers can hold double precision values.
         The floating-point coprocessor also has 8 condition code ( <i>cc</i> ) flags,
-        numbered 0–7, which are set by compare instructions and tested by branch (bc1f
+        numbered 0ï¿½7, which are set by compare instructions and tested by branch (bc1f
         or bc1t) and conditional move instructions.</p>
         <p>Values are moved in or out of these registers one word (32 bits) at a time
         by lwc1, swc1, mtc1, and  class="instformat"mfc1 instructions or one double (64 bits) at a time
         by ldc1 and sdc1 described above, or pby the l.s, l.d, s.s, and s.d pseudoinstructions
         described below.</p class="instformat">
-        <p>In the actual instruct class="instformat"ions below, bits 21–26 are 0 for single precision and
+        <p>In the actual instruct class="instformat"ions below, bits 21ï¿½26 are 0 for single precision and
         1 for double precision. In the pseudoinstructions below, fdest is a floating-point
         register (e.g., $f2).</p>
         <h4>Floating-point absolute value double</h4>
@@ -5999,8 +5999,8 @@ str:
                         <td align="right">width (bits) </td>
                 </tr>
         </table>
-        <p>Set the EXL bit in coprocessor 0’s Status register to 0 and return to the
-        instruction pointed to by coprocessor 0’s EPC register.</p>
+        <p>Set the EXL bit in coprocessor 0ï¿½s Status register to 0 and return to the
+        instruction pointed to by coprocessor 0ï¿½s EPC register.</p>
         <h4>System call</h4>
         <table class="inst" align="center" border="1" cellpadding="2" cellspacing="0" frame="box" rules="all" width="300">
                 <tr class="instformat">
@@ -6066,8 +6066,8 @@ str:
         <p>Do nothing.</p>
         <h2><a name="concluding">Concluding Remarks</a></h2>
         <p>Programming in assembly language requires a programmer to trade off helpful
-        features of high-level languages—such as data structures, type checking, and
-        control constructs—for complete control over the instructions that a computer
+        features of high-level languagesï¿½such as data structures, type checking, and
+        control constructsï¿½for complete control over the instructions that a computer
         executes. External constraints on some applications, such as response time or
         program size, require a programmer to pay close attention to every instruction.
         However, the cost of this level of attention is assembly language programs that
@@ -6075,13 +6075,13 @@ str:
         high-level language programs.</p>
         <p>Moreover, three trends are reducing the need to write programs in assembly
         language. The first trend is toward the improvement of compilers. Modern compilers
-        produce code that is typically comparable to the best handwritten code— and
+        produce code that is typically comparable to the best handwritten codeï¿½ and
         is sometimes better. The second trend is the introduction of new processors
         that are not only faster, but in the case of processors that execute multiple
         instructions simultaneously, also more difficult to program by hand. In addition,
         the rapid evolution of the modern computer favors high-level language programs
         that are not tied to a single architecture. Finally, we witness a trend toward
-        increasingly complex applications—characterized by complex graphic interfaces
+        increasingly complex applicationsï¿½characterized by complex graphic interfaces
         and many more features than their predecessors. Large applications are written
         by teams of programmers and require the modularity and semantic checking features
         provided by high-level languages.</p>
@@ -6103,57 +6103,57 @@ str:
                 <li>
                 <p>
                 <a href="http://www.mips.com/secure-download/index.cfm?filename=mips-architecture/MD00082-2B-MIPS32INT-AFP-02_60.pdf">
-                MIPS32® Architecture for Programmers Volume I: Introduction to the MIPS32®
+                MIPS32ï¿½ Architecture for Programmers Volume I: Introduction to the MIPS32ï¿½
                 Architecture (.pdf)</a> </p>
                 </li>
                 <li>
                 <p>
                 <a href="http://www.mips.com/secure-download/index.cfm?filename=mips-architecture/MD00086-2B-MIPS32BIS-AFP-02_62.pdf">
-                MIPS32® Architecture for Programmers Volume II: The MIPS32® Instruction
+                MIPS32ï¿½ Architecture for Programmers Volume II: The MIPS32ï¿½ Instruction
                 Set (.pdf)</a> </p>
                 </li>
                 <li>
                 <p>
                 <a href="http://www.mips.com/secure-download/index.cfm?filename=mips-architecture/MD00090-2B-MIPS32PRA-AFP-02.80.pdf">
-                MIPS32® Architecture for Programmers Volume III: The MIPS32® Privileged
+                MIPS32ï¿½ Architecture for Programmers Volume III: The MIPS32ï¿½ Privileged
                 Resource Architecture (.pdf)</a> </p>
                 </li>
         </ul>
         <h2><a name="exercises">Exercises</a></h2>
         <ol type="1">
-          <li>[5] &lt;§A.5&gt; Section A.5 described how memory is partitioned on
+          <li>[5] &lt;ï¿½A.5&gt; Section A.5 described how memory is partitioned on
             most MIPS systems. Propose another way of dividing memory that meets the
             same goals.</li>
-          <li>[20] &lt;§A.6&gt; Rewrite the code for fact to use fewer instructions.
+          <li>[20] &lt;ï¿½A.6&gt; Rewrite the code for fact to use fewer instructions.
           </li>
-          <li>[5] &lt;§A.7&gt; Is it ever safe for a user program to use registers
+          <li>[5] &lt;ï¿½A.7&gt; Is it ever safe for a user program to use registers
             $k0 or $k1? </li>
-          <li>[25] &lt;§A.7&gt; Section A.7 contains code for a very simple exception
+          <li>[25] &lt;ï¿½A.7&gt; Section A.7 contains code for a very simple exception
             handler. One serious problem with this handler is that it disables interrupts
             for a long time. This means that interrupts from a fast I/O device may be
             lost. Write a better exception handler that is interruptable and enables
             interrupts as quickly as possible.</li>
-          <li>[15] &lt;§A.7&gt; The simple exception handler always jumps back to
+          <li>[15] &lt;ï¿½A.7&gt; The simple exception handler always jumps back to
             the instruction following the exception. This works fine unless the instruction
             that causes the exception is in the delay slot of a branch. In that case,
             the next instruction is the target of the branch. Write a better handler
             that uses the EPC register to determine which instruction should be executed
             after the exception.</li>
-          <li>[5] &lt;§A.9&gt; Using SPIM, write and test an adding machine program
+          <li>[5] &lt;ï¿½A.9&gt; Using SPIM, write and test an adding machine program
             that repeatedly reads in integers and adds them into a running sum. The
             program should stop when it gets an input that is 0, printing out the sum
             at that point.
           </li>
-          <li>[5] &lt;§A.9&gt; Using SPIM , write and test a program that reads in
+          <li>[5] &lt;ï¿½A.9&gt; Using SPIM , write and test a program that reads in
             three integers and prints out the sum of the largest two of the three. You can
             break ties arbitrarily.</li>
-          <li>[5] &lt;§A.9&gt; Using SPIM, write and test a program that reads in
+          <li>[5] &lt;ï¿½A.9&gt; Using SPIM, write and test a program that reads in
             a positive integer using the SPIM system calls. If the integer is not positive,
-            the program should terminate with the message “Invalid Entry”; otherwise
+            the program should terminate with the message ï¿½Invalid Entryï¿½; otherwise
             the program should print out the names of the digits of the integers, delimited
-            by exactly one space. For example, if the user entered “728,” the output
-            would be “Seven Two Eight.” </li>
-          <li>[25] &lt;§A.9&gt; Write and test a MIPS assembly language program to
+            by exactly one space. For example, if the user entered ï¿½728,ï¿½ the output
+            would be ï¿½Seven Two Eight.ï¿½ </li>
+          <li>[25] &lt;ï¿½A.9&gt; Write and test a MIPS assembly language program to
             compute and print the first 100 prime numbers. A number <i>n</i> is prime
             if no numbers except 1 and <i>n</i> divide it evenly. You should implement
             two routines:
@@ -6165,14 +6165,14 @@ str:
             </ul>
           </li>
           <p>Test your programs by running them on SPIM.</p>
-          <li><p>A.10 [10] &lt;§§A.6, A.9&gt;  Using SPIM, write and test a recursive program
+          <li><p>A.10 [10] &lt;ï¿½ï¿½A.6, A.9&gt;  Using SPIM, write and test a recursive program
               for solving the classic mathematical recreation, the Towers of Hanoi puzzle.
               (This will require the use of stack frames to support recursion.) The puzzle
               consists of three pegs (1, 2, and 3) and <i>n</i> disks (the number <i>n</i>
               can vary; typical values might be in the range from 1 to 8). Disk 1 is smaller
               than disk 2, which is in turn smaller than disk 3, and so forth, with disk
               <i>n</i> being the largest. Initially, all the disks are on peg 1, starting with
-              disk <i>n</i> on the bottom, disk <i>n</i> – 1 on top of that, and so forth, up to
+              disk <i>n</i> on the bottom, disk <i>n</i> ï¿½ 1 on top of that, and so forth, up to
               disk 1 on the top. The goal is to move all the disks to peg 2. You may only move one
               disk at a time, that is, the top disk from any of the three pegs onto the top of either
               of the other two pegs. Moreover, there is a constraint: You must not place a larger disk
@@ -6184,20 +6184,20 @@ str:
         void hanoi(int n, int start, int finish, int extra) {
           if (n != 0) {
                 hanoi(n-1, start, extra, finish);
-                print_string(“Move disk”);
+                print_string(ï¿½Move diskï¿½);
                 print_int(n);
-                print_string(“from peg”);
+                print_string(ï¿½from pegï¿½);
                 print_int(start);
-                print_string(“to peg”);
+                print_string(ï¿½to pegï¿½);
                 print_int(finish);
-                print_string(“.\n”);
+                print_string(ï¿½.\nï¿½);
                 hanoi(n-1, extra, finish, start);
           }
         }
 
         main () {
           int n;
-          print_string(“Enter number of disks “);
+          print_string(ï¿½Enter number of disks ï¿½);
           n = read_int();
           hanoi(n, 1, 2, 3);
           return 0;

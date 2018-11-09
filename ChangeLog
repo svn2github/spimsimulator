@@ -1,3 +1,8 @@
+2018-11-09  Larus  <larus@Jim-Macbook-Air>
+
+	* Documentation/H_P_AppendixA/HP_AppA.html [https://sourceforge.net/p/spimsimulator/bugs/86/]:
+	Opcode for swc1 was documented incorrectly as 0x31 instead of 0x39.
+
 2018-09-16  Larus  <larus@Jim-Macbook-Air>
 
 	* spim/Makefile, xspim/Makefile
