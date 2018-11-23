@@ -133,9 +133,8 @@ It is necessary to build spim and xspim, as they are only distributed as source.
 
    1. Download the source for spimsimulator from sourceforge
    (https://sourceforge.net/projects/spimsimulator/), either through Subversion from the
-   spimsimulator repository (http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/) or
-   by downloading a tarball
-   (http://spimsimulator.svn.sourceforge.net/viewvc/spimsimulator/?view=tar).
+   spimsimulator repository (http://spimsimulator.sourceforge.net) or
+   by downloading the source code (https://sourceforge.net/projects/spimsimulator/files).
 
    2. Decompress the file, using either the program uncompress for the first file or gzip for
       the second file:
